@@ -2696,7 +2696,7 @@ pub mod core {
 	pub fn cholesky(a: &mut f64, astep: size_t, m: i32, b: &mut f64, bstep: size_t, n: i32) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Cholesky_doubleX_size_t_int_doubleX_size_t_int(a, astep, m, b, bstep, n, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2706,7 +2706,7 @@ pub mod core {
 	pub fn cholesky_f32(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n: i32) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Cholesky_floatX_size_t_int_floatX_size_t_int(a, astep, m, b, bstep, n, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2733,7 +2733,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LUT_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), lut.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2743,7 +2743,7 @@ pub mod core {
 	pub fn lu(a: &mut f64, astep: size_t, m: i32, b: &mut f64, bstep: size_t, n: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LU_doubleX_size_t_int_doubleX_size_t_int(a, astep, m, b, bstep, n, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2753,7 +2753,7 @@ pub mod core {
 	pub fn lu_f32(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LU_floatX_size_t_int_floatX_size_t_int(a, astep, m, b, bstep, n, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2775,7 +2775,7 @@ pub mod core {
 		input_array_arg!(icovar);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Mahalanobis_const__InputArrayR_const__InputArrayR_const__InputArrayR(v1.as_raw__InputArray(), v2.as_raw__InputArray(), icovar.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2789,7 +2789,7 @@ pub mod core {
 		output_array_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCABackProject_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2806,7 +2806,7 @@ pub mod core {
 		output_array_arg!(eigenvectors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2824,7 +2824,7 @@ pub mod core {
 		output_array_arg!(eigenvalues);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2838,7 +2838,7 @@ pub mod core {
 		output_array_arg!(eigenvalues);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), retained_variance, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2855,7 +2855,7 @@ pub mod core {
 		output_array_arg!(eigenvalues);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), max_components, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2868,7 +2868,7 @@ pub mod core {
 		output_array_arg!(eigenvectors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), retained_variance, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2884,7 +2884,7 @@ pub mod core {
 		output_array_arg!(eigenvectors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), max_components, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2898,7 +2898,7 @@ pub mod core {
 		output_array_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCAProject_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2929,7 +2929,7 @@ pub mod core {
 		input_array_arg!(src2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PSNR_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2959,7 +2959,7 @@ pub mod core {
 		input_array_arg!(src2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PSNR_const__InputArrayR_const__InputArrayR_double(src1.as_raw__InputArray(), src2.as_raw__InputArray(), r, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2974,7 +2974,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVBackSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2992,7 +2992,7 @@ pub mod core {
 		output_array_arg!(vt);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVDecomp_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3009,7 +3009,7 @@ pub mod core {
 		output_array_arg!(vt);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVDecomp_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3036,7 +3036,7 @@ pub mod core {
 	pub fn abs_matexpr(e: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_abs_const_MatExprR(e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3060,7 +3060,7 @@ pub mod core {
 	pub fn abs(m: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_abs_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3102,7 +3102,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3143,7 +3143,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3183,7 +3183,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR_int(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), dtype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3243,7 +3243,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3303,7 +3303,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3328,7 +3328,7 @@ pub mod core {
 		output_array_arg!(nidx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_batchDistance_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dist.as_raw__OutputArray(), dtype, nidx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3353,7 +3353,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_batchDistance_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__OutputArrayR_int_int_const__InputArrayR_int_bool(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dist.as_raw__OutputArray(), dtype, nidx.as_raw__OutputArray(), norm_type, k, mask.as_raw__InputArray(), update, crosscheck, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3394,7 +3394,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3435,7 +3435,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3464,7 +3464,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_not_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3493,7 +3493,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_not_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3533,7 +3533,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3573,7 +3573,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3614,7 +3614,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3655,7 +3655,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3686,7 +3686,7 @@ pub mod core {
 	pub fn border_interpolate(p: i32, len: i32, border_type: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_borderInterpolate_int_int_int(p, len, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3703,7 +3703,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_broadcast_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), shape.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3728,7 +3728,7 @@ pub mod core {
 		input_output_array_arg!(mean);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int(samples.as_raw__InputArray(), covar.as_raw__OutputArray(), mean.as_raw__InputOutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3767,7 +3767,7 @@ pub mod core {
 		input_output_array_arg!(mean);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int(samples.as_raw__InputArray(), covar.as_raw__OutputArray(), mean.as_raw__InputOutputArray(), flags, ctype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3803,7 +3803,7 @@ pub mod core {
 		output_array_arg!(angle);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3838,7 +3838,7 @@ pub mod core {
 		output_array_arg!(angle);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3855,7 +3855,7 @@ pub mod core {
 	pub fn check_hardware_support(feature: i32) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_checkHardwareSupport_int(feature, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3887,7 +3887,7 @@ pub mod core {
 		input_array_arg!(a);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_checkRange_const__InputArrayR(a.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3918,7 +3918,7 @@ pub mod core {
 		input_array_arg!(a);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_checkRange_const__InputArrayR_bool_PointX_double_double(a.as_raw__InputArray(), quiet, pos, min_val, max_val, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3958,7 +3958,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), cmpop, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3987,7 +3987,7 @@ pub mod core {
 		input_output_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_completeSymm_const__InputOutputArrayR(m.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4015,7 +4015,7 @@ pub mod core {
 		input_output_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_completeSymm_const__InputOutputArrayR_bool(m.as_raw__InputOutputArray(), lower_to_upper, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4040,7 +4040,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convertFp16_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4083,7 +4083,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convertScaleAbs_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4125,7 +4125,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convertScaleAbs_const__InputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4185,7 +4185,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4244,7 +4244,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, &value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4265,7 +4265,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_copyTo_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4294,7 +4294,7 @@ pub mod core {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_countNonZero_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4310,7 +4310,7 @@ pub mod core {
 	pub fn cube_root(val: f32) -> Result<f32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cubeRoot_float(val, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4331,7 +4331,7 @@ pub mod core {
 		output_array_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createContinuous_int_int_int_const__OutputArrayR(rows, cols, typ, arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4352,7 +4352,7 @@ pub mod core {
 	pub fn create_gpu_mat_from_cuda_memory_1_def(size: core::Size, typ: i32, cuda_memory_address: size_t) -> Result<core::GpuMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createGpuMatFromCudaMemory_Size_int_size_t(&size, typ, cuda_memory_address, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -4383,7 +4383,7 @@ pub mod core {
 	pub fn create_gpu_mat_from_cuda_memory_1(size: core::Size, typ: i32, cuda_memory_address: size_t, step: size_t) -> Result<core::GpuMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createGpuMatFromCudaMemory_Size_int_size_t_size_t(&size, typ, cuda_memory_address, step, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -4406,7 +4406,7 @@ pub mod core {
 	pub fn create_gpu_mat_from_cuda_memory_def(rows: i32, cols: i32, typ: i32, cuda_memory_address: size_t) -> Result<core::GpuMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createGpuMatFromCudaMemory_int_int_int_size_t(rows, cols, typ, cuda_memory_address, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -4428,7 +4428,7 @@ pub mod core {
 	pub fn create_gpu_mat_from_cuda_memory(rows: i32, cols: i32, typ: i32, cuda_memory_address: size_t, step: size_t) -> Result<core::GpuMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createGpuMatFromCudaMemory_int_int_int_size_t_size_t(rows, cols, typ, cuda_memory_address, step, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -4439,7 +4439,7 @@ pub mod core {
 	pub fn device_supports(feature_set: core::FeatureSet) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_deviceSupports_FeatureSet(feature_set, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4458,7 +4458,7 @@ pub mod core {
 		output_array_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_ensureSizeIsEnough_int_int_int_const__OutputArrayR(rows, cols, typ, arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4472,7 +4472,7 @@ pub mod core {
 	pub fn get_cuda_enabled_device_count() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_getCudaEnabledDeviceCount(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4482,7 +4482,7 @@ pub mod core {
 	pub fn get_device() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_getDevice(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4491,7 +4491,7 @@ pub mod core {
 	pub fn print_cuda_device_info(device: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_printCudaDeviceInfo_int(device, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4500,7 +4500,7 @@ pub mod core {
 	pub fn print_short_cuda_device_info(device: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_printShortCudaDeviceInfo_int(device, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4513,7 +4513,7 @@ pub mod core {
 	pub fn register_page_locked(m: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_registerPageLocked_MatR(m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4526,7 +4526,7 @@ pub mod core {
 	pub fn reset_device() -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_resetDevice(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4535,7 +4535,7 @@ pub mod core {
 	pub fn set_buffer_pool_config(device_id: i32, stack_size: size_t, stack_count: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_setBufferPoolConfig_int_size_t_int(device_id, stack_size, stack_count, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4545,7 +4545,7 @@ pub mod core {
 	pub fn set_buffer_pool_usage(on: bool) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_setBufferPoolUsage_bool(on, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4560,7 +4560,7 @@ pub mod core {
 	pub fn set_device(device: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_setDevice_int(device, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4579,7 +4579,7 @@ pub mod core {
 	pub fn set_gl_device_def() -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_setGlDevice(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4597,7 +4597,7 @@ pub mod core {
 	pub fn set_gl_device(device: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_setGlDevice_int(device, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4610,7 +4610,7 @@ pub mod core {
 	pub fn unregister_page_locked(m: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_unregisterPageLocked_MatR(m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4624,7 +4624,7 @@ pub mod core {
 	pub fn wrap_stream(cuda_stream_memory_address: size_t) -> Result<core::Stream> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_wrapStream_size_t(cuda_stream_memory_address, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Stream::opencv_from_extern(ret) };
 		Ok(ret)
@@ -4682,7 +4682,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dct_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4738,7 +4738,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dct_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4748,7 +4748,7 @@ pub mod core {
 	pub fn depth_to_string(depth: i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_depthToString_int(depth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -4758,7 +4758,7 @@ pub mod core {
 	pub fn check_failed_mat_channels_1(v: i32, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_MatChannels_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4767,7 +4767,7 @@ pub mod core {
 	pub fn check_failed_mat_channels(v1: i32, v2: i32, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_MatChannels_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4776,7 +4776,7 @@ pub mod core {
 	pub fn check_failed_mat_depth_1(v: i32, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_MatDepth_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4785,7 +4785,7 @@ pub mod core {
 	pub fn check_failed_mat_depth(v1: i32, v2: i32, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_MatDepth_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4794,7 +4794,7 @@ pub mod core {
 	pub fn check_failed_mat_type_1(v: i32, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_MatType_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4803,7 +4803,7 @@ pub mod core {
 	pub fn check_failed_mat_type(v1: i32, v2: i32, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_MatType_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4812,7 +4812,7 @@ pub mod core {
 	pub fn check_failed_auto_10(v: core::Size_<i32>, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_Size_LintG_const_CheckContextR(&v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4821,7 +4821,7 @@ pub mod core {
 	pub fn check_failed_auto_5(v1: core::Size_<i32>, v2: core::Size_<i32>, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_Size_LintG_const_Size_LintG_const_CheckContextR(&v1, &v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4830,7 +4830,7 @@ pub mod core {
 	pub fn check_failed_auto(v1: bool, v2: bool, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_bool_const_bool_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4839,7 +4839,7 @@ pub mod core {
 	pub fn check_failed_auto_9(v: f64, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_double_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4848,7 +4848,7 @@ pub mod core {
 	pub fn check_failed_auto_4(v1: f64, v2: f64, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_double_const_double_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4857,7 +4857,7 @@ pub mod core {
 	pub fn check_failed_auto_8(v: f32, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_float_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4866,7 +4866,7 @@ pub mod core {
 	pub fn check_failed_auto_3(v1: f32, v2: f32, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_float_const_float_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4875,7 +4875,7 @@ pub mod core {
 	pub fn check_failed_auto_6(v: i32, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4884,7 +4884,7 @@ pub mod core {
 	pub fn check_failed_auto_1(v1: i32, v2: i32, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4893,7 +4893,7 @@ pub mod core {
 	pub fn check_failed_auto_7(v: size_t, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_size_t_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4902,7 +4902,7 @@ pub mod core {
 	pub fn check_failed_auto_2(v1: size_t, v2: size_t, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_size_t_const_size_t_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4912,7 +4912,7 @@ pub mod core {
 		extern_container_arg!(v1);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_auto_const_stringR_const_CheckContextR(v1.opencv_as_extern(), ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4921,7 +4921,7 @@ pub mod core {
 	pub fn check_failed_false(v: bool, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_false_const_bool_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4930,7 +4930,7 @@ pub mod core {
 	pub fn check_failed_true(v: bool, ctx: &impl core::Detail_CheckContextTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_check_failed_true_const_bool_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4954,7 +4954,7 @@ pub mod core {
 		input_array_arg!(mtx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_determinant_const__InputArrayR(mtx.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5105,7 +5105,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dft_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5255,7 +5255,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dft_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5268,7 +5268,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_convertFromD3D10Texture2D_ID3D10Texture2DX_const__OutputArrayR(p_d3d10_texture_2d.as_raw_mut_ID3D10Texture2D(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5281,7 +5281,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_convertFromD3D11Texture2D_ID3D11Texture2DX_const__OutputArrayR(p_d3d11_texture_2d.as_raw_mut_ID3D11Texture2D(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5299,7 +5299,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_convertFromDirect3DSurface9_IDirect3DSurface9X_const__OutputArrayR(p_direct_3d_surface9.as_raw_mut_IDirect3DSurface9(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5315,7 +5315,7 @@ pub mod core {
 	pub unsafe fn convert_from_direct_3d_surface9(p_direct_3d_surface9: &mut impl core::IDirect3DSurface9Trait, dst: &mut impl ToOutputArray, surface_shared_handle: *mut c_void) -> Result<()> {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		{ sys::cv_directx_convertFromDirect3DSurface9_IDirect3DSurface9X_const__OutputArrayR_voidX(p_direct_3d_surface9.as_raw_mut_IDirect3DSurface9(), dst.as_raw__OutputArray(), surface_shared_handle, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_directx_convertFromDirect3DSurface9_IDirect3DSurface9X_const__OutputArrayR_voidX(p_direct_3d_surface9.as_raw_mut_IDirect3DSurface9(), dst.as_raw__OutputArray(), surface_shared_handle, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5329,7 +5329,7 @@ pub mod core {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_convertToD3D10Texture2D_const__InputArrayR_ID3D10Texture2DX(src.as_raw__InputArray(), p_d3d10_texture_2d.as_raw_mut_ID3D10Texture2D(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5342,7 +5342,7 @@ pub mod core {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_convertToD3D11Texture2D_const__InputArrayR_ID3D11Texture2DX(src.as_raw__InputArray(), p_d3d11_texture_2d.as_raw_mut_ID3D11Texture2D(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5360,7 +5360,7 @@ pub mod core {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_convertToDirect3DSurface9_const__InputArrayR_IDirect3DSurface9X(src.as_raw__InputArray(), p_direct_3d_surface9.as_raw_mut_IDirect3DSurface9(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5376,7 +5376,7 @@ pub mod core {
 	pub unsafe fn convert_to_direct_3d_surface9(src: &impl ToInputArray, p_direct_3d_surface9: &mut impl core::IDirect3DSurface9Trait, surface_shared_handle: *mut c_void) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
-		{ sys::cv_directx_convertToDirect3DSurface9_const__InputArrayR_IDirect3DSurface9X_voidX(src.as_raw__InputArray(), p_direct_3d_surface9.as_raw_mut_IDirect3DSurface9(), surface_shared_handle, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_directx_convertToDirect3DSurface9_const__InputArrayR_IDirect3DSurface9X_voidX(src.as_raw__InputArray(), p_direct_3d_surface9.as_raw_mut_IDirect3DSurface9(), surface_shared_handle, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5391,7 +5391,7 @@ pub mod core {
 	pub fn get_type_from_d3d_format(id_3d_format: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_getTypeFromD3DFORMAT_const_int(id_3d_format, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5405,7 +5405,7 @@ pub mod core {
 	pub fn get_type_from_dxgi_format(i_dxgi_format: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_getTypeFromDXGI_FORMAT_const_int(i_dxgi_format, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5418,7 +5418,7 @@ pub mod core {
 	pub fn initialize_context_from_d3d10_device(p_d3d10_device: &mut impl core::ID3D10DeviceTrait) -> Result<core::Context> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_ocl_initializeContextFromD3D10Device_ID3D10DeviceX(p_d3d10_device.as_raw_mut_ID3D10Device(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Context::opencv_from_extern(ret) };
 		Ok(ret)
@@ -5432,7 +5432,7 @@ pub mod core {
 	pub fn initialize_context_from_d3d11_device(p_d3d11_device: &mut impl core::ID3D11DeviceTrait) -> Result<core::Context> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_ocl_initializeContextFromD3D11Device_ID3D11DeviceX(p_d3d11_device.as_raw_mut_ID3D11Device(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Context::opencv_from_extern(ret) };
 		Ok(ret)
@@ -5446,7 +5446,7 @@ pub mod core {
 	pub fn initialize_context_from_direct_3d_device9_ex(p_direct_3d_device9_ex: &mut impl core::IDirect3DDevice9ExTrait) -> Result<core::Context> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_ocl_initializeContextFromDirect3DDevice9Ex_IDirect3DDevice9ExX(p_direct_3d_device9_ex.as_raw_mut_IDirect3DDevice9Ex(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Context::opencv_from_extern(ret) };
 		Ok(ret)
@@ -5460,7 +5460,7 @@ pub mod core {
 	pub fn initialize_context_from_direct_3d_device9(p_direct_3d_device9: &mut impl core::IDirect3DDevice9Trait) -> Result<core::Context> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_directx_ocl_initializeContextFromDirect3DDevice9_IDirect3DDevice9X(p_direct_3d_device9.as_raw_mut_IDirect3DDevice9(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Context::opencv_from_extern(ret) };
 		Ok(ret)
@@ -5510,7 +5510,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5558,7 +5558,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5574,7 +5574,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_divide_double_const__InputArrayR_const__OutputArrayR(scale, src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5622,7 +5622,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_divide_double_const__InputArrayR_const__OutputArrayR_int(scale, src2.as_raw__InputArray(), dst.as_raw__OutputArray(), dtype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5651,7 +5651,7 @@ pub mod core {
 		output_array_arg!(eigenvectors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_eigenNonSymmetric_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5688,7 +5688,7 @@ pub mod core {
 		output_array_arg!(eigenvalues);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_eigen_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5725,7 +5725,7 @@ pub mod core {
 		output_array_arg!(eigenvectors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_eigen_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5744,7 +5744,7 @@ pub mod core {
 	pub fn error_1(exc: &impl core::ExceptionTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_error_const_ExceptionR(exc.as_raw_Exception(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5769,7 +5769,7 @@ pub mod core {
 		extern_container_arg!(file);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_error_int_const_StringR_const_charX_const_charX_int(code, err.opencv_as_extern(), func.opencv_as_extern(), file.opencv_as_extern(), line, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5795,7 +5795,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_exp_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5813,7 +5813,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_extractChannel_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), coi, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5829,7 +5829,7 @@ pub mod core {
 	pub fn fast_atan2(y: f32, x: f32) -> Result<f32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastAtan2_float_float(y, x, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5880,7 +5880,7 @@ pub mod core {
 		output_array_arg!(idx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findNonZero_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5896,7 +5896,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_flipND_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5933,7 +5933,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_flip_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5980,7 +5980,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6026,7 +6026,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6040,7 +6040,7 @@ pub mod core {
 	pub fn get_build_information() -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getBuildInformation(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -6059,7 +6059,7 @@ pub mod core {
 	pub fn get_cpu_features_line() -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getCPUFeaturesLine(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -6080,7 +6080,7 @@ pub mod core {
 	pub fn get_cpu_tick_count() -> Result<i64> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getCPUTickCount(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6090,7 +6090,7 @@ pub mod core {
 	pub fn get_default_algorithm_hint() -> Result<core::AlgorithmHint> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getDefaultAlgorithmHint(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6099,7 +6099,7 @@ pub mod core {
 	pub fn get_elem_size(typ: i32) -> Result<size_t> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getElemSize_int(typ, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6111,7 +6111,7 @@ pub mod core {
 	pub fn get_hardware_feature_name(feature: i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getHardwareFeatureName_int(feature, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -6121,7 +6121,7 @@ pub mod core {
 	pub fn get_log_level_1() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getLogLevel(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6146,7 +6146,7 @@ pub mod core {
 	pub fn get_num_threads() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getNumThreads(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6156,7 +6156,7 @@ pub mod core {
 	pub fn get_number_of_cpus() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getNumberOfCPUs(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6187,7 +6187,7 @@ pub mod core {
 	pub fn get_optimal_dft_size(vecsize: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getOptimalDFTSize_int(vecsize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6212,7 +6212,7 @@ pub mod core {
 	pub fn get_thread_num() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getThreadNum(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6228,7 +6228,7 @@ pub mod core {
 	pub fn get_tick_count() -> Result<i64> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getTickCount(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6248,7 +6248,7 @@ pub mod core {
 	pub fn get_tick_frequency() -> Result<f64> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getTickFrequency(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6283,7 +6283,7 @@ pub mod core {
 	pub fn get_version_string() -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getVersionString(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -6313,7 +6313,7 @@ pub mod core {
 		extern_container_arg!(pattern);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_glob_String_vectorLStringGR(pattern.opencv_as_extern(), result.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6341,7 +6341,7 @@ pub mod core {
 		extern_container_arg!(pattern);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_glob_String_vectorLStringGR_bool(pattern.opencv_as_extern(), result.as_raw_mut_VectorOfString(), recursive, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6369,7 +6369,7 @@ pub mod core {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_hasNonZero_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6379,7 +6379,7 @@ pub mod core {
 	pub fn have_openvx() -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_haveOpenVX(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6436,7 +6436,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_hconcat_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6490,7 +6490,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_hconcat_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6514,7 +6514,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_idct_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6537,7 +6537,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_idct_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6567,7 +6567,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_idft_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6596,7 +6596,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_idft_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6628,7 +6628,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_inRange_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), lowerb.as_raw__InputArray(), upperb.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6646,7 +6646,7 @@ pub mod core {
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_insertChannel_const__InputArrayR_const__InputOutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), coi, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6655,7 +6655,7 @@ pub mod core {
 	pub fn get_flags() -> Result<core::FLAGS> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_instr_getFlags(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6664,7 +6664,7 @@ pub mod core {
 	pub fn reset_trace() -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_instr_resetTrace(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6673,7 +6673,7 @@ pub mod core {
 	pub fn set_flags(mode_flags: core::FLAGS) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_instr_setFlags_FLAGS(mode_flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6682,7 +6682,7 @@ pub mod core {
 	pub fn set_use_instrumentation(flag: bool) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_instr_setUseInstrumentation_bool(flag, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6691,7 +6691,7 @@ pub mod core {
 	pub fn use_instrumentation() -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_instr_useInstrumentation(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6732,7 +6732,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_invert_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6772,7 +6772,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_invert_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6781,7 +6781,7 @@ pub mod core {
 	pub fn get_ipp_error_location() -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ipp_getIppErrorLocation(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -6791,7 +6791,7 @@ pub mod core {
 	pub fn get_ipp_features() -> Result<u64> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ipp_getIppFeatures(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6800,7 +6800,7 @@ pub mod core {
 	pub fn get_ipp_status() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ipp_getIppStatus(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6809,7 +6809,7 @@ pub mod core {
 	pub fn get_ipp_version() -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ipp_getIppVersion(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -6824,7 +6824,7 @@ pub mod core {
 	pub fn set_ipp_status_def(status: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ipp_setIppStatus_int(status, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6839,7 +6839,7 @@ pub mod core {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ipp_setIppStatus_int_const_charX_const_charX_int(status, funcname.opencv_as_extern(), filename.opencv_as_extern(), line, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6848,7 +6848,7 @@ pub mod core {
 	pub fn set_use_ipp_not_exact(flag: bool) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ipp_setUseIPP_NotExact_bool(flag, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6857,7 +6857,7 @@ pub mod core {
 	pub fn set_use_ipp(flag: bool) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ipp_setUseIPP_bool(flag, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6866,7 +6866,7 @@ pub mod core {
 	pub fn use_ipp() -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ipp_useIPP(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6875,7 +6875,7 @@ pub mod core {
 	pub fn use_ipp_not_exact() -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ipp_useIPP_NotExact(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6925,7 +6925,7 @@ pub mod core {
 		input_output_array_arg!(best_labels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_kmeans_const__InputArrayR_int_const__InputOutputArrayR_TermCriteria_int_int(data.as_raw__InputArray(), k, best_labels.as_raw__InputOutputArray(), &criteria, attempts, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6975,7 +6975,7 @@ pub mod core {
 		output_array_arg!(centers);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_kmeans_const__InputArrayR_int_const__InputOutputArrayR_TermCriteria_int_int_const__OutputArrayR(data.as_raw__InputArray(), k, best_labels.as_raw__InputOutputArray(), &criteria, attempts, flags, centers.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6998,7 +6998,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_log_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7022,7 +7022,7 @@ pub mod core {
 		output_array_arg!(magnitude);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_magnitude_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7031,7 +7031,7 @@ pub mod core {
 	pub fn max_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_max_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -7057,7 +7057,7 @@ pub mod core {
 	pub fn max_mat_to(src1: &impl core::MatTraitConst, src2: &impl core::MatTraitConst, dst: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_max_const_MatR_const_MatR_MatR(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7066,7 +7066,7 @@ pub mod core {
 	pub fn max_mat_f64(a: &impl core::MatTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_max_const_MatR_double(a.as_raw_Mat(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -7092,7 +7092,7 @@ pub mod core {
 	pub fn max_umat_to(src1: &impl core::UMatTraitConst, src2: &impl core::UMatTraitConst, dst: &mut impl core::UMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_max_const_UMatR_const_UMatR_UMatR(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7116,7 +7116,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7125,7 +7125,7 @@ pub mod core {
 	pub fn max_f64_mat(s: f64, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_max_double_const_MatR(s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -7164,7 +7164,7 @@ pub mod core {
 		output_array_arg!(stddev);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_meanStdDev_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), mean.as_raw__OutputArray(), stddev.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7202,7 +7202,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_meanStdDev_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), mean.as_raw__OutputArray(), stddev.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7228,7 +7228,7 @@ pub mod core {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mean_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7254,7 +7254,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mean_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7292,7 +7292,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_merge_const__InputArrayR_const__OutputArrayR(mv.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7330,7 +7330,7 @@ pub mod core {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7368,7 +7368,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX_doubleX_intX_intX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7391,7 +7391,7 @@ pub mod core {
 	pub fn min_max_loc_sparse_def(a: &impl core::SparseMatTraitConst, min_val: Option<&mut f64>, max_val: Option<&mut f64>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minMaxLoc_const_SparseMatR_doubleX_doubleX(a.as_raw_SparseMat(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7441,7 +7441,7 @@ pub mod core {
 	pub fn min_max_loc_sparse(a: &impl core::SparseMatTraitConst, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_idx: Option<&mut i32>, max_idx: Option<&mut i32>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minMaxLoc_const_SparseMatR_doubleX_doubleX_intX_intX(a.as_raw_SparseMat(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7485,7 +7485,7 @@ pub mod core {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minMaxLoc_const__InputArrayR_doubleX(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7529,7 +7529,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val), min_loc.map_or(::core::ptr::null_mut(), |min_loc| min_loc), max_loc.map_or(::core::ptr::null_mut(), |max_loc| max_loc), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7538,7 +7538,7 @@ pub mod core {
 	pub fn min_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_min_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -7564,7 +7564,7 @@ pub mod core {
 	pub fn min_mat_to(src1: &impl core::MatTraitConst, src2: &impl core::MatTraitConst, dst: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_min_const_MatR_const_MatR_MatR(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7573,7 +7573,7 @@ pub mod core {
 	pub fn min_mat_f64(a: &impl core::MatTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_min_const_MatR_double(a.as_raw_Mat(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -7599,7 +7599,7 @@ pub mod core {
 	pub fn min_umat_to(src1: &impl core::UMatTraitConst, src2: &impl core::UMatTraitConst, dst: &mut impl core::UMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_min_const_UMatR_const_UMatR_UMatR(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7623,7 +7623,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7632,7 +7632,7 @@ pub mod core {
 	pub fn min_f64_mat(s: f64, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_min_double_const_MatR(s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -7703,7 +7703,7 @@ pub mod core {
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_intX_size_t(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_ptr(), from_to.len() / 2, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7772,7 +7772,7 @@ pub mod core {
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_vectorLintGR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7805,7 +7805,7 @@ pub mod core {
 		output_array_arg!(c);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7837,7 +7837,7 @@ pub mod core {
 		output_array_arg!(c);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, conj_b, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7883,7 +7883,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mulTransposed_const__InputArrayR_const__OutputArrayR_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), a_ta, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7929,7 +7929,7 @@ pub mod core {
 		input_array_arg!(delta);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mulTransposed_const__InputArrayR_const__OutputArrayR_bool_const__InputArrayR_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), a_ta, delta.as_raw__InputArray(), scale, dtype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7973,7 +7973,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8016,7 +8016,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8065,7 +8065,7 @@ pub mod core {
 	pub fn norm_sparse(src: &impl core::SparseMatTraitConst, norm_type: i32) -> Result<f64> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_norm_const_SparseMatR_int(src.as_raw_SparseMat(), norm_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8116,7 +8116,7 @@ pub mod core {
 		input_array_arg!(src1);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_norm_const__InputArrayR(src1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8143,7 +8143,7 @@ pub mod core {
 		input_array_arg!(src2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_norm_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8170,7 +8170,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_norm_const__InputArrayR_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), norm_type, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8221,7 +8221,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_norm_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), norm_type, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8298,7 +8298,7 @@ pub mod core {
 	pub fn normalize_sparse(src: &impl core::SparseMatTraitConst, dst: &mut impl core::SparseMatTrait, alpha: f64, norm_type: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_normalize_const_SparseMatR_SparseMatR_double_int(src.as_raw_SparseMat(), dst.as_raw_mut_SparseMat(), alpha, norm_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8377,7 +8377,7 @@ pub mod core {
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_normalize_const__InputArrayR_const__InputOutputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8456,7 +8456,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_normalize_const__InputArrayR_const__InputOutputArrayR_double_double_int_int_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), alpha, beta, norm_type, dtype, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8476,7 +8476,7 @@ pub mod core {
 	pub unsafe fn attach_context(platform_name: &str, platform_id: *mut c_void, context: *mut c_void, device_id: *mut c_void) -> Result<()> {
 		extern_container_arg!(platform_name);
 		return_send!(via ocvrs_return);
-		{ sys::cv_ocl_attachContext_const_StringR_voidX_voidX_voidX(platform_name.opencv_as_extern(), platform_id, context, device_id, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ocl_attachContext_const_StringR_voidX_voidX_voidX(platform_name.opencv_as_extern(), platform_id, context, device_id, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8489,7 +8489,7 @@ pub mod core {
 		input_array_arg!(_m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_buildOptionsAddMatrixDescription_StringR_const_StringR_const__InputArrayR(&mut build_options_via, name.opencv_as_extern(), _m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(build_options_via => build_options);
 		Ok(ret)
@@ -8511,7 +8511,7 @@ pub mod core {
 		input_array_arg!(src1);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_checkOptimalVectorWidth_const_intX_const__InputArrayR(vector_widths, src1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8539,7 +8539,7 @@ pub mod core {
 		input_array_arg!(src9);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_checkOptimalVectorWidth_const_intX_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_OclVectorStrategy(vector_widths, src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8560,7 +8560,7 @@ pub mod core {
 	#[inline]
 	pub unsafe fn convert_from_buffer(cl_mem_buffer: *mut c_void, step: size_t, rows: i32, cols: i32, typ: i32, dst: &mut impl core::UMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
-		{ sys::cv_ocl_convertFromBuffer_voidX_size_t_int_int_int_UMatR(cl_mem_buffer, step, rows, cols, typ, dst.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ocl_convertFromBuffer_voidX_size_t_int_int_int_UMatR(cl_mem_buffer, step, rows, cols, typ, dst.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8577,7 +8577,7 @@ pub mod core {
 	#[inline]
 	pub unsafe fn convert_from_image(cl_mem_image: *mut c_void, dst: &mut impl core::UMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
-		{ sys::cv_ocl_convertFromImage_voidX_UMatR(cl_mem_image, dst.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ocl_convertFromImage_voidX_UMatR(cl_mem_image, dst.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8588,7 +8588,7 @@ pub mod core {
 		string_arg_output_send!(via buf_via);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX(sdepth, ddepth, cn, &mut buf_via, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		string_arg_output_receive!(buf_via => buf);
@@ -8600,7 +8600,7 @@ pub mod core {
 		string_arg_output_send!(via buf_via);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX_size_t(sdepth, ddepth, cn, &mut buf_via, buf_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		string_arg_output_receive!(buf_via => buf);
@@ -8611,7 +8611,7 @@ pub mod core {
 	pub fn finish() -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_finish(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8620,7 +8620,7 @@ pub mod core {
 	pub fn get_opencl_error_string(error_code: i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_getOpenCLErrorString_int(error_code, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8630,7 +8630,7 @@ pub mod core {
 	pub fn get_platfoms_info(platform_info: &mut core::Vector<core::PlatformInfo>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_getPlatfomsInfo_vectorLPlatformInfoGR(platform_info.as_raw_mut_VectorOfPlatformInfo(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8639,7 +8639,7 @@ pub mod core {
 	pub fn have_amd_blas() -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_haveAmdBlas(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8648,7 +8648,7 @@ pub mod core {
 	pub fn have_amd_fft() -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_haveAmdFft(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8657,7 +8657,7 @@ pub mod core {
 	pub fn have_opencl() -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_haveOpenCL(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8666,7 +8666,7 @@ pub mod core {
 	pub fn have_svm() -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_haveSVM(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8680,7 +8680,7 @@ pub mod core {
 		input_array_arg!(_kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_kernelToStr_const__InputArrayR(_kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8695,7 +8695,7 @@ pub mod core {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_kernelToStr_const__InputArrayR_int_const_charX(_kernel.as_raw__InputArray(), ddepth, name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8705,7 +8705,7 @@ pub mod core {
 	pub fn memop_type_to_str(t: i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_memopTypeToStr_int(t, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8726,7 +8726,7 @@ pub mod core {
 		input_array_arg!(src1);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_predictOptimalVectorWidthMax_const__InputArrayR(src1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8753,7 +8753,7 @@ pub mod core {
 		input_array_arg!(src9);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_predictOptimalVectorWidthMax_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8774,7 +8774,7 @@ pub mod core {
 		input_array_arg!(src1);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_predictOptimalVectorWidth_const__InputArrayR(src1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8802,7 +8802,7 @@ pub mod core {
 		input_array_arg!(src9);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_predictOptimalVectorWidth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_OclVectorStrategy(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8811,7 +8811,7 @@ pub mod core {
 	pub fn set_use_opencl(flag: bool) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_setUseOpenCL_bool(flag, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8820,7 +8820,7 @@ pub mod core {
 	pub fn type_to_str(t: i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_typeToStr_int(t, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8830,7 +8830,7 @@ pub mod core {
 	pub fn use_opencl() -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_useOpenCL(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8839,7 +8839,7 @@ pub mod core {
 	pub fn vecop_type_to_str(t: i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_vecopTypeToStr_int(t, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8854,7 +8854,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_convertFromGLTexture2D_const_Texture2DR_const__OutputArrayR(texture.as_raw_Texture2D(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8868,7 +8868,7 @@ pub mod core {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_convertToGLTexture2D_const__InputArrayR_Texture2DR(src.as_raw__InputArray(), texture.as_raw_mut_Texture2D(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8893,7 +8893,7 @@ pub mod core {
 	pub fn map_gl_buffer_def(buffer: &impl core::BufferTraitConst) -> Result<core::UMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_mapGLBuffer_const_BufferR(buffer.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8918,7 +8918,7 @@ pub mod core {
 	pub fn map_gl_buffer(buffer: &impl core::BufferTraitConst, access_flags: core::AccessFlag) -> Result<core::UMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_mapGLBuffer_const_BufferR_AccessFlag(buffer.as_raw_Buffer(), access_flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8931,7 +8931,7 @@ pub mod core {
 	pub fn initialize_context_from_gl() -> Result<core::Context> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_ocl_initializeContextFromGL(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Context::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8951,7 +8951,7 @@ pub mod core {
 	pub fn render_1_def(arr: &impl core::ArraysTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_render_const_ArraysR(arr.as_raw_Arrays(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8972,7 +8972,7 @@ pub mod core {
 		input_array_arg!(indices);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR(arr.as_raw_Arrays(), indices.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8998,7 +8998,7 @@ pub mod core {
 		input_array_arg!(indices);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR_int_Scalar(arr.as_raw_Arrays(), indices.as_raw__InputArray(), mode, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9022,7 +9022,7 @@ pub mod core {
 	pub fn render_1(arr: &impl core::ArraysTraitConst, mode: i32, color: core::Scalar) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_render_const_ArraysR_int_Scalar(arr.as_raw_Arrays(), mode, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9041,7 +9041,7 @@ pub mod core {
 	pub fn render_def(tex: &impl core::Texture2DTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_render_const_Texture2DR(tex.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9059,7 +9059,7 @@ pub mod core {
 	pub fn render(tex: &impl core::Texture2DTraitConst, wnd_rect: core::Rect_<f64>, tex_rect: core::Rect_<f64>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_render_const_Texture2DR_Rect_LdoubleG_Rect_LdoubleG(tex.as_raw_Texture2D(), &wnd_rect, &tex_rect, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9074,7 +9074,7 @@ pub mod core {
 	pub fn unmap_gl_buffer(u: &mut impl core::UMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_unmapGLBuffer_UMatR(u.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9083,7 +9083,7 @@ pub mod core {
 	pub fn add_matexpr_matexpr(e1: &impl core::MatExprTraitConst, e2: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorA_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9093,7 +9093,7 @@ pub mod core {
 	pub fn add_matexpr_mat(e: &impl core::MatExprTraitConst, m: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorA_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9103,7 +9103,7 @@ pub mod core {
 	pub fn add_matexpr_scalar(e: &impl core::MatExprTraitConst, s: core::Scalar) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorA_const_MatExprR_const_ScalarR(e.as_raw_MatExpr(), &s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9113,7 +9113,7 @@ pub mod core {
 	pub fn add_mat_matexpr(m: &impl core::MatTraitConst, e: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorA_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9124,7 +9124,7 @@ pub mod core {
 	pub fn add_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorA_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9134,7 +9134,7 @@ pub mod core {
 	pub fn add_mat_scalar(a: &impl core::MatTraitConst, s: core::Scalar) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorA_const_MatR_const_ScalarR(a.as_raw_Mat(), &s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9144,7 +9144,7 @@ pub mod core {
 	pub fn add_scalar_matexpr(s: core::Scalar, e: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorA_const_ScalarR_const_MatExprR(&s, e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9154,7 +9154,7 @@ pub mod core {
 	pub fn add_scalar_mat(s: core::Scalar, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorA_const_ScalarR_const_MatR(&s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9164,7 +9164,7 @@ pub mod core {
 	pub fn div_matexpr_matexpr(e1: &impl core::MatExprTraitConst, e2: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorD_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9174,7 +9174,7 @@ pub mod core {
 	pub fn div_matexpr_mat(e: &impl core::MatExprTraitConst, m: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorD_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9184,7 +9184,7 @@ pub mod core {
 	pub fn div_matexpr_f64(e: &impl core::MatExprTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorD_const_MatExprR_double(e.as_raw_MatExpr(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9194,7 +9194,7 @@ pub mod core {
 	pub fn div_mat_matexpr(m: &impl core::MatTraitConst, e: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorD_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9204,7 +9204,7 @@ pub mod core {
 	pub fn div_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorD_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9214,7 +9214,7 @@ pub mod core {
 	pub fn div_mat_f64(a: &impl core::MatTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorD_const_MatR_double(a.as_raw_Mat(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9224,7 +9224,7 @@ pub mod core {
 	pub fn div_f64_matexpr(s: f64, e: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorD_double_const_MatExprR(s, e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9234,7 +9234,7 @@ pub mod core {
 	pub fn div_f64_mat(s: f64, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorD_double_const_MatR(s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9244,7 +9244,7 @@ pub mod core {
 	pub fn equals_filenodeiterator_filenodeiterator(it1: &impl core::FileNodeIteratorTraitConst, it2: &impl core::FileNodeIteratorTraitConst) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorEQ_const_FileNodeIteratorR_const_FileNodeIteratorR(it1.as_raw_FileNodeIterator(), it2.as_raw_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9253,7 +9253,7 @@ pub mod core {
 	pub fn equals_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorEQ_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9263,7 +9263,7 @@ pub mod core {
 	pub fn equals_mat_f64(a: &impl core::MatTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorEQ_const_MatR_double(a.as_raw_Mat(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9273,7 +9273,7 @@ pub mod core {
 	pub fn equals_f64_mat(s: f64, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorEQ_double_const_MatR(s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9283,7 +9283,7 @@ pub mod core {
 	pub fn greater_than_or_equal_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorGE_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9293,7 +9293,7 @@ pub mod core {
 	pub fn greater_than_or_equal_mat_f64(a: &impl core::MatTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorGE_const_MatR_double(a.as_raw_Mat(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9303,7 +9303,7 @@ pub mod core {
 	pub fn greater_than_or_equal_f64_mat(s: f64, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorGE_double_const_MatR(s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9313,7 +9313,7 @@ pub mod core {
 	pub fn greater_than_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorG_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9323,7 +9323,7 @@ pub mod core {
 	pub fn greater_than_mat_f64(a: &impl core::MatTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorG_const_MatR_double(a.as_raw_Mat(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9333,7 +9333,7 @@ pub mod core {
 	pub fn greater_than_f64_mat(s: f64, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorG_double_const_MatR(s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9343,7 +9343,7 @@ pub mod core {
 	pub fn less_than_or_equal_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorLE_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9353,7 +9353,7 @@ pub mod core {
 	pub fn less_than_or_equal_mat_f64(a: &impl core::MatTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorLE_const_MatR_double(a.as_raw_Mat(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9363,7 +9363,7 @@ pub mod core {
 	pub fn less_than_or_equal_f64_mat(s: f64, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorLE_double_const_MatR(s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9373,7 +9373,7 @@ pub mod core {
 	pub fn less_than_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorL_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9383,7 +9383,7 @@ pub mod core {
 	pub fn less_than_mat_f64(a: &impl core::MatTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorL_const_MatR_double(a.as_raw_Mat(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9393,7 +9393,7 @@ pub mod core {
 	pub fn less_than_f64_mat(s: f64, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorL_double_const_MatR(s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9403,7 +9403,7 @@ pub mod core {
 	pub fn not_equals_filenodeiterator_filenodeiterator(it1: &impl core::FileNodeIteratorTraitConst, it2: &impl core::FileNodeIteratorTraitConst) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorNE_const_FileNodeIteratorR_const_FileNodeIteratorR(it1.as_raw_FileNodeIterator(), it2.as_raw_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9412,7 +9412,7 @@ pub mod core {
 	pub fn not_equals_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorNE_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9422,7 +9422,7 @@ pub mod core {
 	pub fn not_equals_mat_f64(a: &impl core::MatTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorNE_const_MatR_double(a.as_raw_Mat(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9432,7 +9432,7 @@ pub mod core {
 	pub fn not_equals_f64_mat(s: f64, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorNE_double_const_MatR(s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9442,7 +9442,7 @@ pub mod core {
 	pub fn negate(m: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorNOTB_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9452,7 +9452,7 @@ pub mod core {
 	pub fn or_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorOR_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9462,7 +9462,7 @@ pub mod core {
 	pub fn or_mat_scalar(a: &impl core::MatTraitConst, s: core::Scalar) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorOR_const_MatR_const_ScalarR(a.as_raw_Mat(), &s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9472,7 +9472,7 @@ pub mod core {
 	pub fn or_scalar_mat(s: core::Scalar, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorOR_const_ScalarR_const_MatR(&s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9482,7 +9482,7 @@ pub mod core {
 	pub fn and_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorR_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9492,7 +9492,7 @@ pub mod core {
 	pub fn and_mat_scalar(a: &impl core::MatTraitConst, s: core::Scalar) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorR_const_MatR_const_ScalarR(a.as_raw_Mat(), &s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9502,7 +9502,7 @@ pub mod core {
 	pub fn and_scalar_mat(s: core::Scalar, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorR_const_ScalarR_const_MatR(&s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9512,7 +9512,7 @@ pub mod core {
 	pub fn sub_matexpr(e: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_MatExprR(e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9522,7 +9522,7 @@ pub mod core {
 	pub fn sub_matexpr_matexpr(e1: &impl core::MatExprTraitConst, e2: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9532,7 +9532,7 @@ pub mod core {
 	pub fn sub_matexpr_mat(e: &impl core::MatExprTraitConst, m: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9542,7 +9542,7 @@ pub mod core {
 	pub fn sub_matexpr_scalar(e: &impl core::MatExprTraitConst, s: core::Scalar) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_MatExprR_const_ScalarR(e.as_raw_MatExpr(), &s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9552,7 +9552,7 @@ pub mod core {
 	pub fn sub_mat(m: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9562,7 +9562,7 @@ pub mod core {
 	pub fn sub_mat_matexpr(m: &impl core::MatTraitConst, e: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9572,7 +9572,7 @@ pub mod core {
 	pub fn sub_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9582,7 +9582,7 @@ pub mod core {
 	pub fn sub_mat_scalar(a: &impl core::MatTraitConst, s: core::Scalar) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_MatR_const_ScalarR(a.as_raw_Mat(), &s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9592,7 +9592,7 @@ pub mod core {
 	pub fn sub_scalar_matexpr(s: core::Scalar, e: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_ScalarR_const_MatExprR(&s, e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9602,7 +9602,7 @@ pub mod core {
 	pub fn sub_scalar_mat(s: core::Scalar, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_ScalarR_const_MatR(&s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9612,7 +9612,7 @@ pub mod core {
 	pub fn xor_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorXOR_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9622,7 +9622,7 @@ pub mod core {
 	pub fn xor_mat_scalar(a: &impl core::MatTraitConst, s: core::Scalar) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorXOR_const_MatR_const_ScalarR(a.as_raw_Mat(), &s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9632,7 +9632,7 @@ pub mod core {
 	pub fn xor_scalar_mat(s: core::Scalar, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorXOR_const_ScalarR_const_MatR(&s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9642,7 +9642,7 @@ pub mod core {
 	pub fn mul_matexpr_matexpr(e1: &impl core::MatExprTraitConst, e2: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_const_MatExprR_const_MatExprR(e1.as_raw_MatExpr(), e2.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9652,7 +9652,7 @@ pub mod core {
 	pub fn mul_matexpr_mat(e: &impl core::MatExprTraitConst, m: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_const_MatExprR_const_MatR(e.as_raw_MatExpr(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9662,7 +9662,7 @@ pub mod core {
 	pub fn mul_matexpr_f64(e: &impl core::MatExprTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_const_MatExprR_double(e.as_raw_MatExpr(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9672,7 +9672,7 @@ pub mod core {
 	pub fn mul_mat_matexpr(m: &impl core::MatTraitConst, e: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_const_MatR_const_MatExprR(m.as_raw_Mat(), e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9682,7 +9682,7 @@ pub mod core {
 	pub fn mul_mat_mat(a: &impl core::MatTraitConst, b: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_const_MatR_const_MatR(a.as_raw_Mat(), b.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9692,7 +9692,7 @@ pub mod core {
 	pub fn mul_mat_f64(a: &impl core::MatTraitConst, s: f64) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_const_MatR_double(a.as_raw_Mat(), s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9702,7 +9702,7 @@ pub mod core {
 	pub fn mul_f64_matexpr(s: f64, e: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_double_const_MatExprR(s, e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9712,7 +9712,7 @@ pub mod core {
 	pub fn mul_f64_mat(s: f64, a: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_double_const_MatR(s, a.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 		Ok(ret)
@@ -9729,7 +9729,7 @@ pub mod core {
 	pub fn parallel_for__def(range: &impl core::RangeTraitConst, body: &impl core::ParallelLoopBodyTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_parallel_for__const_RangeR_const_ParallelLoopBodyR(range.as_raw_Range(), body.as_raw_ParallelLoopBody(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9744,7 +9744,7 @@ pub mod core {
 	pub fn parallel_for_(range: &impl core::RangeTraitConst, body: &impl core::ParallelLoopBodyTraitConst, nstripes: f64) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_parallel_for__const_RangeR_const_ParallelLoopBodyR_double(range.as_raw_Range(), body.as_raw_ParallelLoopBody(), nstripes, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9762,7 +9762,7 @@ pub mod core {
 		input_output_array_arg!(a);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_patchNaNs_const__InputOutputArrayR(a.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9779,7 +9779,7 @@ pub mod core {
 		input_output_array_arg!(a);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_patchNaNs_const__InputOutputArrayR_double(a.as_raw__InputOutputArray(), val, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9818,7 +9818,7 @@ pub mod core {
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_perspectiveTransform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9850,7 +9850,7 @@ pub mod core {
 		output_array_arg!(angle);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9881,7 +9881,7 @@ pub mod core {
 		output_array_arg!(angle);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9919,7 +9919,7 @@ pub mod core {
 		output_array_arg!(y);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9956,7 +9956,7 @@ pub mod core {
 		output_array_arg!(y);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9992,7 +9992,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pow_const__InputArrayR_double_const__OutputArrayR(src.as_raw__InputArray(), power, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10019,7 +10019,7 @@ pub mod core {
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_randShuffle_const__InputOutputArrayR(dst.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10045,7 +10045,7 @@ pub mod core {
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_randShuffle_const__InputOutputArrayR_double_RNGX(dst.as_raw__InputOutputArray(), iter_factor, rng.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10069,7 +10069,7 @@ pub mod core {
 		input_array_arg!(stddev);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_randn_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(dst.as_raw__InputOutputArray(), mean.as_raw__InputArray(), stddev.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10092,7 +10092,7 @@ pub mod core {
 		input_array_arg!(high);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_randu_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(dst.as_raw__InputOutputArray(), low.as_raw__InputArray(), high.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10101,7 +10101,7 @@ pub mod core {
 	pub fn read_dmatch(node: &impl core::FileNodeTraitConst, value: &mut core::DMatch, default_value: core::DMatch) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_DMatchR_const_DMatchR(node.as_raw_FileNode(), value, &default_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10110,7 +10110,7 @@ pub mod core {
 	pub fn read_keypoint(node: &impl core::FileNodeTraitConst, value: &mut impl core::KeyPointTrait, default_value: &impl core::KeyPointTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_KeyPointR_const_KeyPointR(node.as_raw_FileNode(), value.as_raw_mut_KeyPoint(), default_value.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10122,7 +10122,7 @@ pub mod core {
 	pub fn read_mat_def(node: &impl core::FileNodeTraitConst, mat: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_MatR(node.as_raw_FileNode(), mat.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10133,7 +10133,7 @@ pub mod core {
 	pub fn read_mat(node: &impl core::FileNodeTraitConst, mat: &mut impl core::MatTrait, default_mat: &impl core::MatTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_MatR_const_MatR(node.as_raw_FileNode(), mat.as_raw_mut_Mat(), default_mat.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10145,7 +10145,7 @@ pub mod core {
 	pub fn read_sparsemat_def(node: &impl core::FileNodeTraitConst, mat: &mut impl core::SparseMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_SparseMatR(node.as_raw_FileNode(), mat.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10156,7 +10156,7 @@ pub mod core {
 	pub fn read_sparsemat(node: &impl core::FileNodeTraitConst, mat: &mut impl core::SparseMatTrait, default_mat: &impl core::SparseMatTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_SparseMatR_const_SparseMatR(node.as_raw_FileNode(), mat.as_raw_mut_SparseMat(), default_mat.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10165,7 +10165,7 @@ pub mod core {
 	pub fn read_f64(node: &impl core::FileNodeTraitConst, value: &mut f64, default_value: f64) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_doubleR_double(node.as_raw_FileNode(), value, default_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10174,7 +10174,7 @@ pub mod core {
 	pub fn read_f32(node: &impl core::FileNodeTraitConst, value: &mut f32, default_value: f32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_floatR_float(node.as_raw_FileNode(), value, default_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10183,7 +10183,7 @@ pub mod core {
 	pub fn read(node: &impl core::FileNodeTraitConst, value: &mut i64, default_value: i64) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_int64_tR_int64_t(node.as_raw_FileNode(), value, default_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10192,7 +10192,7 @@ pub mod core {
 	pub fn read_i32(node: &impl core::FileNodeTraitConst, value: &mut i32, default_value: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_intR_int(node.as_raw_FileNode(), value, default_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10203,7 +10203,7 @@ pub mod core {
 		extern_container_arg!(default_value);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_stringR_const_stringR(node.as_raw_FileNode(), &mut value_via, default_value.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(value_via => value);
 		Ok(ret)
@@ -10213,7 +10213,7 @@ pub mod core {
 	pub fn read_dmatch_vec_legacy(node: &impl core::FileNodeTraitConst, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_vectorLDMatchGR(node.as_raw_FileNode(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10222,7 +10222,7 @@ pub mod core {
 	pub fn read_keypoint_vec_legacy(node: &impl core::FileNodeTraitConst, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_vectorLKeyPointGR(node.as_raw_FileNode(), keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10239,7 +10239,7 @@ pub mod core {
 	pub fn rectangle_intersection_area(a: core::Rect2d, b: core::Rect2d) -> Result<f64> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rectangleIntersectionArea_const_Rect2dR_const_Rect2dR(&a, &b, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10270,7 +10270,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_reduceArgMax_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10300,7 +10300,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_reduceArgMax_const__InputArrayR_const__OutputArrayR_int_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, last_index, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10331,7 +10331,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_reduceArgMin_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10361,7 +10361,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_reduceArgMin_const__InputArrayR_const__OutputArrayR_int_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, last_index, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10401,7 +10401,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_reduce_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dim, rtype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10440,7 +10440,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_reduce_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dim, rtype, dtype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10471,7 +10471,7 @@ pub mod core {
 	pub fn repeat(src: &impl core::MatTraitConst, ny: i32, nx: i32) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_repeat_const_MatR_int_int(src.as_raw_Mat(), ny, nx, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -10497,7 +10497,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_repeat_const__InputArrayR_int_int_const__OutputArrayR(src.as_raw__InputArray(), ny, nx, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10520,7 +10520,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rotate_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), rotate_code, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10537,7 +10537,7 @@ pub mod core {
 		extern_container_arg!(path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_samples_addSamplesDataSearchPath_const_StringR(path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10554,7 +10554,7 @@ pub mod core {
 		extern_container_arg!(subdir);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_samples_addSamplesDataSearchSubDirectory_const_StringR(subdir.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10567,7 +10567,7 @@ pub mod core {
 		extern_container_arg!(relative_path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_samples_findFileOrKeep_const_StringR(relative_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -10580,7 +10580,7 @@ pub mod core {
 		extern_container_arg!(relative_path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_samples_findFileOrKeep_const_StringR_bool(relative_path.opencv_as_extern(), silent_mode, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -10620,7 +10620,7 @@ pub mod core {
 		extern_container_arg!(relative_path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_samples_findFile_const_StringR(relative_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -10659,7 +10659,7 @@ pub mod core {
 		extern_container_arg!(relative_path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_samples_findFile_const_StringR_bool_bool(relative_path.opencv_as_extern(), required, silent_mode, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -10692,7 +10692,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_scaleAdd_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10707,7 +10707,7 @@ pub mod core {
 	pub fn set_break_on_error(flag: bool) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setBreakOnError_bool(flag, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10738,7 +10738,7 @@ pub mod core {
 		input_output_array_arg!(mtx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setIdentity_const__InputOutputArrayR(mtx.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10768,7 +10768,7 @@ pub mod core {
 		input_output_array_arg!(mtx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setIdentity_const__InputOutputArrayR_const_ScalarR(mtx.as_raw__InputOutputArray(), &s, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10778,7 +10778,7 @@ pub mod core {
 	pub fn set_log_level_1(level: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setLogLevel_int(level, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10806,7 +10806,7 @@ pub mod core {
 	pub fn set_num_threads(nthreads: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setNumThreads_int(nthreads, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10822,7 +10822,7 @@ pub mod core {
 	pub fn set_rng_seed(seed: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setRNGSeed_int(seed, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10832,7 +10832,7 @@ pub mod core {
 	pub fn set_use_openvx(flag: bool) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setUseOpenVX_bool(flag, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10854,7 +10854,7 @@ pub mod core {
 	pub fn set_use_optimized(onoff: bool) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setUseOptimized_bool(onoff, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10879,7 +10879,7 @@ pub mod core {
 		output_array_arg!(roots);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solveCubic_const__InputArrayR_const__OutputArrayR(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10923,7 +10923,7 @@ pub mod core {
 		output_array_arg!(z);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solveLP_const__InputArrayR_const__InputArrayR_const__OutputArrayR(func.as_raw__InputArray(), constr.as_raw__InputArray(), z.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10965,7 +10965,7 @@ pub mod core {
 		output_array_arg!(z);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solveLP_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(func.as_raw__InputArray(), constr.as_raw__InputArray(), z.as_raw__OutputArray(), constr_eps, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10988,7 +10988,7 @@ pub mod core {
 		output_array_arg!(roots);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solvePoly_const__InputArrayR_const__OutputArrayR(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11010,7 +11010,7 @@ pub mod core {
 		output_array_arg!(roots);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solvePoly_const__InputArrayR_const__OutputArrayR_int(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray(), max_iters, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11050,7 +11050,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solve_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11089,7 +11089,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solve_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11120,7 +11120,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sortIdx_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11145,7 +11145,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sort_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11170,7 +11170,7 @@ pub mod core {
 	pub fn split_slice(src: &impl core::MatTraitConst, mvbegin: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_split_const_MatR_MatX(src.as_raw_Mat(), mvbegin.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11202,7 +11202,7 @@ pub mod core {
 		output_array_arg!(mv);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_split_const__InputArrayR_const__OutputArrayR(m.as_raw__InputArray(), mv.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11222,7 +11222,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sqrt_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11283,7 +11283,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11344,7 +11344,7 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11362,7 +11362,7 @@ pub mod core {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sum_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11372,7 +11372,7 @@ pub mod core {
 	pub fn swap(a: &mut impl core::MatTrait, b: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_swap_MatR_MatR(a.as_raw_mut_Mat(), b.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11384,7 +11384,7 @@ pub mod core {
 	pub fn swap_umat(a: &mut impl core::UMatTrait, b: &mut impl core::UMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_swap_UMatR_UMatR(a.as_raw_mut_UMat(), b.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11414,7 +11414,7 @@ pub mod core {
 	pub fn tempfile_def() -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_tempfile(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11445,7 +11445,7 @@ pub mod core {
 		extern_container_arg!(suffix);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_tempfile_const_charX(suffix.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11486,7 +11486,7 @@ pub mod core {
 	pub fn the_rng() -> Result<core::RNG> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_theRNG(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::RNG::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11504,7 +11504,7 @@ pub mod core {
 		input_array_arg!(mtx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_trace_const__InputArrayR(mtx.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11541,7 +11541,7 @@ pub mod core {
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_transform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11561,7 +11561,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_transposeND_const__InputArrayR_const_vectorLintGR_const__OutputArrayR(src.as_raw__InputArray(), order.as_raw_VectorOfi32(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11582,7 +11582,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_transpose_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11592,7 +11592,7 @@ pub mod core {
 	pub fn type_to_string(typ: i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_typeToString_int(typ, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11603,7 +11603,7 @@ pub mod core {
 	pub fn use_openvx() -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_useOpenVX(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11615,7 +11615,7 @@ pub mod core {
 	pub fn use_optimized() -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_useOptimized(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11629,7 +11629,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_copyMatAndDumpNamedArguments_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11643,7 +11643,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_copyMatAndDumpNamedArguments_const__InputArrayR_const__OutputArrayR_const_FunctionParamsR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11653,7 +11653,7 @@ pub mod core {
 	pub fn dump_bool(argument: bool) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpBool_bool(argument, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11664,7 +11664,7 @@ pub mod core {
 		extern_container_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpCString_const_charX(argument.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11674,7 +11674,7 @@ pub mod core {
 	pub fn dump_double(argument: f64) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpDouble_double(argument, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11684,7 +11684,7 @@ pub mod core {
 	pub fn dump_float(argument: f32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpFloat_float(argument, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11695,7 +11695,7 @@ pub mod core {
 		input_array_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpInputArrayOfArrays_const__InputArrayR(argument.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11706,7 +11706,7 @@ pub mod core {
 		input_array_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpInputArray_const__InputArrayR(argument.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11717,7 +11717,7 @@ pub mod core {
 		input_output_array_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpInputOutputArrayOfArrays_const__InputOutputArrayR(argument.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11728,7 +11728,7 @@ pub mod core {
 		input_output_array_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpInputOutputArray_const__InputOutputArrayR(argument.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11738,7 +11738,7 @@ pub mod core {
 	pub fn dump_int64(argument: i64) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpInt64_int64_t(argument, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11748,7 +11748,7 @@ pub mod core {
 	pub fn dump_int(argument: i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpInt_int(argument, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11758,7 +11758,7 @@ pub mod core {
 	pub fn dump_range(argument: &impl core::RangeTraitConst) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpRange_const_RangeR(argument.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11768,7 +11768,7 @@ pub mod core {
 	pub fn dump_rect(argument: core::Rect) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpRect_const_RectR(&argument, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11778,7 +11778,7 @@ pub mod core {
 	pub fn dump_rotated_rect(argument: core::RotatedRect) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpRotatedRect_const_RotatedRectR(&argument, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11788,7 +11788,7 @@ pub mod core {
 	pub fn dump_size_t(argument: size_t) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpSizeT_size_t(argument, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11799,7 +11799,7 @@ pub mod core {
 		extern_container_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpString_const_StringR(argument.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11809,7 +11809,7 @@ pub mod core {
 	pub fn dump_term_criteria(argument: core::TermCriteria) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpTermCriteria_const_TermCriteriaR(&argument, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11822,7 +11822,7 @@ pub mod core {
 	pub fn dump_vec2i_def() -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpVec2i(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11834,7 +11834,7 @@ pub mod core {
 	pub fn dump_vec2i(value: core::Vec2i) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpVec2i_const_Vec2i(&value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11844,7 +11844,7 @@ pub mod core {
 	pub fn dump_vector_of_double(vec: &core::Vector<f64>) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpVectorOfDouble_const_vectorLdoubleGR(vec.as_raw_VectorOff64(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11854,7 +11854,7 @@ pub mod core {
 	pub fn dump_vector_of_int(vec: &core::Vector<i32>) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpVectorOfInt_const_vectorLintGR(vec.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11864,7 +11864,7 @@ pub mod core {
 	pub fn dump_vector_of_rect(vec: &core::Vector<core::Rect>) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpVectorOfRect_const_vectorLRectGR(vec.as_raw_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11874,7 +11874,7 @@ pub mod core {
 	pub fn get_cache_directory_for_downloads() -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_fs_getCacheDirectoryForDownloads(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11884,7 +11884,7 @@ pub mod core {
 	pub fn generate_vector_of_int(len: size_t, vec: &mut core::Vector<i32>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_generateVectorOfInt_size_t_vectorLintGR(len, vec.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11893,7 +11893,7 @@ pub mod core {
 	pub fn generate_vector_of_mat(len: size_t, rows: i32, cols: i32, dtype: i32, vec: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_generateVectorOfMat_size_t_int_int_int_vectorLMatGR(len, rows, cols, dtype, vec.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11902,7 +11902,7 @@ pub mod core {
 	pub fn generate_vector_of_rect(len: size_t, vec: &mut core::Vector<core::Rect>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_generateVectorOfRect_size_t_vectorLRectGR(len, vec.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11911,7 +11911,7 @@ pub mod core {
 	pub fn get_thread_id() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_getThreadID(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11921,7 +11921,7 @@ pub mod core {
 	pub fn get_log_level() -> Result<core::LogLevel> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_logging_getLogLevel(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11931,7 +11931,7 @@ pub mod core {
 		extern_container_arg!(tag);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_logging_getLogTagLevel_const_charX(tag.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11941,7 +11941,7 @@ pub mod core {
 	pub fn get_global_log_tag() -> Result<core::LogTag> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_logging_internal_getGlobalLogTag(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::LogTag::opencv_from_extern(ret) };
 		Ok(ret)
@@ -11956,7 +11956,7 @@ pub mod core {
 		extern_container_arg!(message);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_logging_internal_writeLogMessageEx_LogLevel_const_charX_const_charX_int_const_charX_const_charX(log_level, tag.opencv_as_extern(), file.opencv_as_extern(), line, func.opencv_as_extern(), message.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11967,7 +11967,7 @@ pub mod core {
 		extern_container_arg!(message);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_logging_internal_writeLogMessage_LogLevel_const_charX(log_level, message.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11976,7 +11976,7 @@ pub mod core {
 	pub fn register_log_tag(plogtag: &mut impl core::LogTagTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_logging_registerLogTag_LogTagX(plogtag.as_raw_mut_LogTag(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11988,7 +11988,7 @@ pub mod core {
 	pub fn set_log_level(log_level: core::LogLevel) -> Result<core::LogLevel> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_logging_setLogLevel_LogLevel(log_level, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11998,7 +11998,7 @@ pub mod core {
 		extern_container_arg!(tag);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_logging_setLogTagLevel_const_charX_LogLevel(tag.opencv_as_extern(), level, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12007,7 +12007,7 @@ pub mod core {
 	pub fn test_echo_boolean_function(flag: bool) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_nested_testEchoBooleanFunction_bool(flag, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12017,7 +12017,7 @@ pub mod core {
 		input_array_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testAsyncArray_const__InputArrayR(argument.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
 		Ok(ret)
@@ -12027,7 +12027,7 @@ pub mod core {
 	pub fn test_async_exception() -> Result<core::AsyncArray> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testAsyncException(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
 		Ok(ret)
@@ -12037,7 +12037,7 @@ pub mod core {
 	pub fn test_overload_resolution_1(rect: core::Rect) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testOverloadResolution_const_RectR(&rect, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -12052,7 +12052,7 @@ pub mod core {
 	pub fn test_overload_resolution_def(value: i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testOverloadResolution_int(value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -12066,7 +12066,7 @@ pub mod core {
 	pub fn test_overload_resolution(value: i32, point: core::Point) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testOverloadResolution_int_const_PointR(value, &point, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -12076,7 +12076,7 @@ pub mod core {
 	pub fn test_overwrite_native_method(argument: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testOverwriteNativeMethod_int(argument, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12085,7 +12085,7 @@ pub mod core {
 	pub fn test_raise_general_exception() -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testRaiseGeneralException(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12098,7 +12098,7 @@ pub mod core {
 	pub fn test_reserved_keyword_conversion_def(positional_argument: i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testReservedKeywordConversion_int(positional_argument, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -12111,7 +12111,7 @@ pub mod core {
 	pub fn test_reserved_keyword_conversion(positional_argument: i32, lambda: i32, from: i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testReservedKeywordConversion_int_int_int(positional_argument, lambda, from, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -12121,7 +12121,7 @@ pub mod core {
 	pub fn test_rotated_rect_vector(x: f32, y: f32, w: f32, h: f32, angle: f32) -> Result<core::Vector<core::RotatedRect>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testRotatedRectVector_float_float_float_float_float(x, y, w, h, angle, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Vector::<core::RotatedRect>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -12131,7 +12131,7 @@ pub mod core {
 	pub fn test_rotated_rect(x: f32, y: f32, w: f32, h: f32, angle: f32) -> Result<core::RotatedRect> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testRotatedRect_float_float_float_float_float(x, y, w, h, angle, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12146,7 +12146,7 @@ pub mod core {
 	pub unsafe fn convert_from_va_surface(display: core::VADisplay, surface: core::VASurfaceID, size: core::Size, dst: &mut impl ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		{ sys::cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(display, surface, &size, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(display, surface, &size, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -12162,7 +12162,7 @@ pub mod core {
 	pub unsafe fn convert_to_va_surface(display: core::VADisplay, src: &impl ToInputArray, surface: core::VASurfaceID, size: core::Size) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
-		{ sys::cv_va_intel_convertToVASurface_VADisplay_const__InputArrayR_VASurfaceID_Size(display, src.as_raw__InputArray(), surface, &size, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_va_intel_convertToVASurface_VADisplay_const__InputArrayR_VASurfaceID_Size(display, src.as_raw__InputArray(), surface, &size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -12181,10 +12181,10 @@ pub mod core {
 	#[inline]
 	pub unsafe fn initialize_context_from_va_def(display: core::VADisplay) -> Result<core::Context> {
 		return_send!(via ocvrs_return);
-		{ sys::cv_va_intel_ocl_initializeContextFromVA_VADisplay(display, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_va_intel_ocl_initializeContextFromVA_VADisplay(display, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = { core::Context::opencv_from_extern(ret) };
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 
@@ -12200,10 +12200,10 @@ pub mod core {
 	#[inline]
 	pub unsafe fn initialize_context_from_va(display: core::VADisplay, try_interop: bool) -> Result<core::Context> {
 		return_send!(via ocvrs_return);
-		{ sys::cv_va_intel_ocl_initializeContextFromVA_VADisplay_bool(display, try_interop, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_va_intel_ocl_initializeContextFromVA_VADisplay_bool(display, try_interop, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = { core::Context::opencv_from_extern(ret) };
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 
@@ -12261,7 +12261,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_vconcat_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12313,7 +12313,7 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_vconcat_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12323,7 +12323,7 @@ pub mod core {
 		extern_container_arg!(value);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_writeScalar_FileStorageR_const_StringR(fs.as_raw_mut_FileStorage(), value.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12332,7 +12332,7 @@ pub mod core {
 	pub fn write_scalar_f64(fs: &mut impl core::FileStorageTrait, value: f64) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_writeScalar_FileStorageR_double(fs.as_raw_mut_FileStorage(), value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12341,7 +12341,7 @@ pub mod core {
 	pub fn write_scalar_f32(fs: &mut impl core::FileStorageTrait, value: f32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_writeScalar_FileStorageR_float(fs.as_raw_mut_FileStorage(), value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12350,7 +12350,7 @@ pub mod core {
 	pub fn write_scalar_i32(fs: &mut impl core::FileStorageTrait, value: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_writeScalar_FileStorageR_int(fs.as_raw_mut_FileStorage(), value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12359,7 +12359,7 @@ pub mod core {
 	pub fn write_scalar(fs: &mut impl core::FileStorageTrait, value: i64) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_writeScalar_FileStorageR_int64_t(fs.as_raw_mut_FileStorage(), value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12369,7 +12369,7 @@ pub mod core {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_const_MatR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12379,7 +12379,7 @@ pub mod core {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_const_SparseMatR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12390,7 +12390,7 @@ pub mod core {
 		extern_container_arg!(value);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_const_StringR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12400,7 +12400,7 @@ pub mod core {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_const_vectorLDMatchGR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12410,7 +12410,7 @@ pub mod core {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_const_vectorLKeyPointGR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value.as_raw_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12420,7 +12420,7 @@ pub mod core {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_double(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12430,7 +12430,7 @@ pub mod core {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_float(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12441,7 +12441,7 @@ pub mod core {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_int(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12451,7 +12451,7 @@ pub mod core {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_int64_t(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -12486,7 +12486,7 @@ pub mod core {
 		pub fn default() -> Result<core::Algorithm> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Algorithm_Algorithm(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Algorithm::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12503,7 +12503,7 @@ pub mod core {
 		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Algorithm_write_const_FileStorageR(self.as_raw_Algorithm(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12516,7 +12516,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Algorithm_write_const_FileStorageR_const_StringR(self.as_raw_Algorithm(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12530,7 +12530,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Algorithm_write_const_const_PtrLFileStorageGR_const_StringR(self.as_raw_Algorithm(), fs.as_raw_PtrOfFileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12544,7 +12544,7 @@ pub mod core {
 		fn write_with_name_def(&self, fs: &core::Ptr<core::FileStorage>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Algorithm_write_const_const_PtrLFileStorageGR(self.as_raw_Algorithm(), fs.as_raw_PtrOfFileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12554,7 +12554,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Algorithm_empty_const(self.as_raw_Algorithm(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12566,7 +12566,7 @@ pub mod core {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Algorithm_save_const_const_StringR(self.as_raw_Algorithm(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12577,7 +12577,7 @@ pub mod core {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Algorithm_getDefaultName_const(self.as_raw_Algorithm(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12594,7 +12594,7 @@ pub mod core {
 		fn clear(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Algorithm_clear(self.as_raw_mut_Algorithm(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12604,7 +12604,7 @@ pub mod core {
 		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Algorithm_read_const_FileNodeR(self.as_raw_mut_Algorithm(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12675,7 +12675,7 @@ pub mod core {
 		pub fn copy_mut(mut o: core::AsyncArray) -> Result<core::AsyncArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncArray_AsyncArray_AsyncArrayRR(o.as_raw_mut_AsyncArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12703,7 +12703,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12723,7 +12723,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR_int64_t(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12733,7 +12733,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR_double(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12742,7 +12742,7 @@ pub mod core {
 		fn wait_for(&self, timeout_ns: i64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncArray_wait_for_const_int64_t(self.as_raw_AsyncArray(), timeout_ns, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12751,7 +12751,7 @@ pub mod core {
 		fn wait_for_f64(&self, timeout_ns: f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncArray_wait_for_const_double(self.as_raw_AsyncArray(), timeout_ns, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12849,7 +12849,7 @@ pub mod core {
 		pub fn copy_mut(mut o: core::AsyncPromise) -> Result<core::AsyncPromise> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncPromise_AsyncPromise_AsyncPromiseRR(o.as_raw_mut_AsyncPromise(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::AsyncPromise::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12892,7 +12892,7 @@ pub mod core {
 		fn get_array_result(&mut self) -> Result<core::AsyncArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncPromise_getArrayResult(self.as_raw_mut_AsyncPromise(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12906,7 +12906,7 @@ pub mod core {
 			input_array_arg!(value);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncPromise_setValue_const__InputArrayR(self.as_raw_mut_AsyncPromise(), value.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12918,7 +12918,7 @@ pub mod core {
 		fn set_exception(&mut self, exception: &impl core::ExceptionTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncPromise_setException_const_ExceptionR(self.as_raw_mut_AsyncPromise(), exception.as_raw_Exception(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13068,7 +13068,7 @@ pub mod core {
 			extern_container_arg!(keys);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_CommandLineParser_int_const_charXX_const_StringR(argv.len().try_into()?, argv.as_ptr(), keys.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::CommandLineParser::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13079,7 +13079,7 @@ pub mod core {
 		pub fn copy(parser: &impl core::CommandLineParserTraitConst) -> Result<core::CommandLineParser> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_CommandLineParser_const_CommandLineParserR(parser.as_raw_CommandLineParser(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::CommandLineParser::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13105,7 +13105,7 @@ pub mod core {
 		fn get_path_to_application(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_getPathToApplication_const(self.as_raw_CommandLineParser(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13155,7 +13155,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_bool_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13205,7 +13205,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_bool_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13254,7 +13254,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_int_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13304,7 +13304,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_int_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13353,7 +13353,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_double_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13403,7 +13403,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_double_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13452,7 +13452,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_cv_String_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13503,7 +13503,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_cv_String_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13553,7 +13553,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_uint64_t_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13603,7 +13603,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_uint64_t_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13642,7 +13642,7 @@ pub mod core {
 		fn get_bool_idx(&self, index: i32, space_delete: bool) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_bool_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13682,7 +13682,7 @@ pub mod core {
 		fn get_bool_idx_def(&self, index: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_bool_const_int(self.as_raw_CommandLineParser(), index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13721,7 +13721,7 @@ pub mod core {
 		fn get_i32_idx(&self, index: i32, space_delete: bool) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_int_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13761,7 +13761,7 @@ pub mod core {
 		fn get_i32_idx_def(&self, index: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_int_const_int(self.as_raw_CommandLineParser(), index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13800,7 +13800,7 @@ pub mod core {
 		fn get_f64_idx(&self, index: i32, space_delete: bool) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_double_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13840,7 +13840,7 @@ pub mod core {
 		fn get_f64_idx_def(&self, index: i32) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_double_const_int(self.as_raw_CommandLineParser(), index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13879,7 +13879,7 @@ pub mod core {
 		fn get_str_idx(&self, index: i32, space_delete: bool) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_cv_String_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13920,7 +13920,7 @@ pub mod core {
 		fn get_str_idx_def(&self, index: i32) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_cv_String_const_int(self.as_raw_CommandLineParser(), index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13960,7 +13960,7 @@ pub mod core {
 		fn get_u64_idx(&self, index: i32, space_delete: bool) -> Result<u64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_uint64_t_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14000,7 +14000,7 @@ pub mod core {
 		fn get_u64_idx_def(&self, index: i32) -> Result<u64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_uint64_t_const_int(self.as_raw_CommandLineParser(), index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14014,7 +14014,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_has_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14027,7 +14027,7 @@ pub mod core {
 		fn check(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_check_const(self.as_raw_CommandLineParser(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14041,7 +14041,7 @@ pub mod core {
 		fn print_message(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_printMessage_const(self.as_raw_CommandLineParser(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14053,7 +14053,7 @@ pub mod core {
 		fn print_errors(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_printErrors_const(self.as_raw_CommandLineParser(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14069,7 +14069,7 @@ pub mod core {
 		fn set(&mut self, parser: &impl core::CommandLineParserTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_operatorST_const_CommandLineParserR(self.as_raw_mut_CommandLineParser(), parser.as_raw_CommandLineParser(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14082,7 +14082,7 @@ pub mod core {
 			extern_container_arg!(message);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_about_const_StringR(self.as_raw_mut_CommandLineParser(), message.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14179,7 +14179,7 @@ pub mod core {
 		pub fn create(f: &core::Ptr<core::MinProblemSolver_Function>, termcrit: core::TermCriteria) -> Result<core::Ptr<core::ConjGradSolver>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ConjGradSolver_create_const_PtrLFunctionGR_TermCriteria(f.as_raw_PtrOfMinProblemSolver_Function(), &termcrit, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::ConjGradSolver>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14207,7 +14207,7 @@ pub mod core {
 		pub fn create_def() -> Result<core::Ptr<core::ConjGradSolver>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ConjGradSolver_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::ConjGradSolver>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14292,7 +14292,7 @@ pub mod core {
 		pub fn less_than(self, m: core::DMatch) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DMatch_operatorL_const_const_DMatchR(&self, &m, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14302,7 +14302,7 @@ pub mod core {
 		pub fn default() -> Result<core::DMatch> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DMatch_DMatch(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14311,7 +14311,7 @@ pub mod core {
 		pub fn new(_query_idx: i32, _train_idx: i32, _distance: f32) -> Result<core::DMatch> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DMatch_DMatch_int_int_float(_query_idx, _train_idx, _distance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14320,7 +14320,7 @@ pub mod core {
 		pub fn new_index(_query_idx: i32, _train_idx: i32, _img_idx: i32, _distance: f32) -> Result<core::DMatch> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DMatch_DMatch_int_int_int_float(_query_idx, _train_idx, _img_idx, _distance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14401,7 +14401,7 @@ pub mod core {
 			input_array_arg!(init_step);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DownhillSolver_create_const_PtrLFunctionGR_const__InputArrayR_TermCriteria(f.as_raw_PtrOfMinProblemSolver_Function(), init_step.as_raw__InputArray(), &termcrit, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::DownhillSolver>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14433,7 +14433,7 @@ pub mod core {
 		pub fn create_def() -> Result<core::Ptr<core::DownhillSolver>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DownhillSolver_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::DownhillSolver>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14457,7 +14457,7 @@ pub mod core {
 			output_array_arg!(step);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DownhillSolver_getInitStep_const_const__OutputArrayR(self.as_raw_DownhillSolver(), step.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14487,7 +14487,7 @@ pub mod core {
 			input_array_arg!(step);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DownhillSolver_setInitStep_const__InputArrayR(self.as_raw_mut_DownhillSolver(), step.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14565,7 +14565,7 @@ pub mod core {
 		pub fn default() -> Result<core::Exception> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Exception_Exception(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Exception::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14581,7 +14581,7 @@ pub mod core {
 			extern_container_arg!(_file);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Exception_Exception_int_const_StringR_const_StringR_const_StringR_int(_code, _err.opencv_as_extern(), _func.opencv_as_extern(), _file.opencv_as_extern(), _line, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Exception::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14704,7 +14704,7 @@ pub mod core {
 		fn format_message(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Exception_formatMessage(self.as_raw_mut_Exception(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14770,7 +14770,7 @@ pub mod core {
 		pub fn default() -> Result<core::FileNode> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_FileNode(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14793,7 +14793,7 @@ pub mod core {
 		pub fn new(fs: &impl core::FileStorageTraitConst, block_idx: size_t, ofs: size_t) -> Result<core::FileNode> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_FileNode_const_FileStorageX_size_t_size_t(fs.as_raw_FileStorage(), block_idx, ofs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14812,7 +14812,7 @@ pub mod core {
 		pub fn copy(node: &impl core::FileNodeTraitConst) -> Result<core::FileNode> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_FileNode_const_FileNodeR(node.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14822,7 +14822,7 @@ pub mod core {
 		pub fn is_map(flags: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isMap_int(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14831,7 +14831,7 @@ pub mod core {
 		pub fn is_seq(flags: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isSeq_int(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14840,7 +14840,7 @@ pub mod core {
 		pub fn is_collection(flags: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isCollection_int(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14849,7 +14849,7 @@ pub mod core {
 		pub fn is_empty_collection(flags: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isEmptyCollection_int(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14858,7 +14858,7 @@ pub mod core {
 		pub fn is_flow(flags: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isFlow_int(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14891,7 +14891,7 @@ pub mod core {
 			extern_container_arg!(nodename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_operator___const_const_StringR(self.as_raw_FileNode(), nodename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14911,7 +14911,7 @@ pub mod core {
 			extern_container_arg!(nodename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_operator___const_const_charX(self.as_raw_FileNode(), nodename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14930,7 +14930,7 @@ pub mod core {
 		fn at(&self, i: i32) -> Result<core::FileNode> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_operator___const_int(self.as_raw_FileNode(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14943,7 +14943,7 @@ pub mod core {
 		fn keys(&self) -> Result<core::Vector<String>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_keys_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -14956,7 +14956,7 @@ pub mod core {
 		fn typ(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_type_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14966,7 +14966,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_empty_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14976,7 +14976,7 @@ pub mod core {
 		fn is_none(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isNone_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14986,7 +14986,7 @@ pub mod core {
 		fn is_seq(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isSeq_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -14996,7 +14996,7 @@ pub mod core {
 		fn is_map(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isMap_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15006,7 +15006,7 @@ pub mod core {
 		fn is_int(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isInt_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15016,7 +15016,7 @@ pub mod core {
 		fn is_real(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isReal_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15026,7 +15026,7 @@ pub mod core {
 		fn is_string(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isString_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15036,7 +15036,7 @@ pub mod core {
 		fn is_named(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_isNamed_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15046,7 +15046,7 @@ pub mod core {
 		fn name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_name_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15057,7 +15057,7 @@ pub mod core {
 		fn size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_size_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15067,7 +15067,7 @@ pub mod core {
 		fn raw_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_rawSize_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15077,7 +15077,7 @@ pub mod core {
 		fn to_i32(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_operator_int_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15087,7 +15087,7 @@ pub mod core {
 		fn to_i64(&self) -> Result<i64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_operator_int64_t_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15097,7 +15097,7 @@ pub mod core {
 		fn to_f32(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_operator_float_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15107,7 +15107,7 @@ pub mod core {
 		fn to_f64(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_operator_double_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15117,7 +15117,7 @@ pub mod core {
 		fn to_string(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_operator_std_string_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15127,7 +15127,7 @@ pub mod core {
 		fn ptr(&self) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_ptr_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15137,7 +15137,7 @@ pub mod core {
 		fn begin(&self) -> Result<core::FileNodeIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_begin_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15148,7 +15148,7 @@ pub mod core {
 		fn end(&self) -> Result<core::FileNodeIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_end_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15167,7 +15167,7 @@ pub mod core {
 			extern_container_arg!(fmt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_readRaw_const_const_StringR_voidX_size_t(self.as_raw_FileNode(), fmt.opencv_as_extern(), vec.as_mut_ptr().cast(), vec.len(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15177,7 +15177,7 @@ pub mod core {
 		fn real(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_real_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15187,7 +15187,7 @@ pub mod core {
 		fn string(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_string_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15198,7 +15198,7 @@ pub mod core {
 		fn mat(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_mat_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15226,7 +15226,7 @@ pub mod core {
 		fn set(&mut self, node: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_operatorST_const_FileNodeR(self.as_raw_mut_FileNode(), node.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15235,7 +15235,7 @@ pub mod core {
 		fn ptr_1(&mut self) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_ptr(self.as_raw_mut_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15246,7 +15246,7 @@ pub mod core {
 		fn set_value(&mut self, typ: i32, value: &mut [u8]) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_setValue_int_const_voidX_int(self.as_raw_mut_FileNode(), typ, value.as_ptr().cast(), value.len().try_into()?, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15308,7 +15308,7 @@ pub mod core {
 		pub fn default() -> Result<core::FileNodeIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNodeIterator_FileNodeIterator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15332,7 +15332,7 @@ pub mod core {
 		pub fn new(node: &impl core::FileNodeTraitConst, seek_end: bool) -> Result<core::FileNodeIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNodeIterator_FileNodeIterator_const_FileNodeR_bool(node.as_raw_FileNode(), seek_end, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15351,7 +15351,7 @@ pub mod core {
 		pub fn copy(it: &impl core::FileNodeIteratorTraitConst) -> Result<core::FileNodeIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNodeIterator_FileNodeIterator_const_FileNodeIteratorR(it.as_raw_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15368,7 +15368,7 @@ pub mod core {
 		fn try_deref(&self) -> Result<core::FileNode> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNodeIterator_operatorX_const(self.as_raw_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15379,7 +15379,7 @@ pub mod core {
 		fn remaining(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNodeIterator_remaining_const(self.as_raw_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15388,7 +15388,7 @@ pub mod core {
 		fn equal_to(&self, it: &impl core::FileNodeIteratorTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNodeIterator_equalTo_const_const_FileNodeIteratorR(self.as_raw_FileNodeIterator(), it.as_raw_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15403,7 +15403,7 @@ pub mod core {
 		fn set(&mut self, it: &impl core::FileNodeIteratorTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNodeIterator_operatorST_const_FileNodeIteratorR(self.as_raw_mut_FileNodeIterator(), it.as_raw_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15413,7 +15413,7 @@ pub mod core {
 		fn incr(&mut self) -> Result<core::FileNodeIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNodeIterator_operatorAA(self.as_raw_mut_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15432,7 +15432,7 @@ pub mod core {
 			extern_container_arg!(fmt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNodeIterator_readRaw_const_StringR_voidX_size_t(self.as_raw_mut_FileNodeIterator(), fmt.opencv_as_extern(), vec.as_mut_ptr().cast(), vec.len(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15484,7 +15484,7 @@ pub mod core {
 		pub fn default() -> Result<core::FileStorage> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_FileStorage(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15507,7 +15507,7 @@ pub mod core {
 			extern_container_arg!(encoding);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_FileStorage_const_StringR_int_const_StringR(filename.opencv_as_extern(), flags, encoding.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15524,7 +15524,7 @@ pub mod core {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_FileStorage_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15540,7 +15540,7 @@ pub mod core {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_getDefaultObjectName_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15574,7 +15574,7 @@ pub mod core {
 		fn is_opened(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_isOpened_const(self.as_raw_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15586,7 +15586,7 @@ pub mod core {
 		fn get_first_top_level_node(&self) -> Result<core::FileNode> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_getFirstTopLevelNode_const(self.as_raw_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15605,7 +15605,7 @@ pub mod core {
 		fn root(&self, streamidx: i32) -> Result<core::FileNode> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_root_const_int(self.as_raw_FileStorage(), streamidx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15625,7 +15625,7 @@ pub mod core {
 		fn root_def(&self) -> Result<core::FileNode> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_root_const(self.as_raw_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15641,7 +15641,7 @@ pub mod core {
 			extern_container_arg!(nodename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_operator___const_const_StringR(self.as_raw_FileStorage(), nodename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15659,7 +15659,7 @@ pub mod core {
 			extern_container_arg!(nodename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_operator___const_const_charX(self.as_raw_FileStorage(), nodename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15672,7 +15672,7 @@ pub mod core {
 		fn get_format(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_getFormat_const(self.as_raw_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15720,7 +15720,7 @@ pub mod core {
 			extern_container_arg!(encoding);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_open_const_StringR_int_const_StringR(self.as_raw_mut_FileStorage(), filename.opencv_as_extern(), flags, encoding.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15749,7 +15749,7 @@ pub mod core {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_open_const_StringR_int(self.as_raw_mut_FileStorage(), filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15761,7 +15761,7 @@ pub mod core {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_release(self.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15774,7 +15774,7 @@ pub mod core {
 		fn release_and_get_string(&mut self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_releaseAndGetString(self.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -15789,7 +15789,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_write_const_StringR_int(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15805,7 +15805,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_write_const_StringR_int64_t(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15821,7 +15821,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_write_const_StringR_double(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15838,7 +15838,7 @@ pub mod core {
 			extern_container_arg!(val);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_write_const_StringR_const_StringR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15854,7 +15854,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_write_const_StringR_const_MatR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15870,7 +15870,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_write_const_StringR_const_vectorLStringGR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15888,7 +15888,7 @@ pub mod core {
 			extern_container_arg!(fmt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_writeRaw_const_StringR_const_voidX_size_t(self.as_raw_mut_FileStorage(), fmt.opencv_as_extern(), vec.as_ptr().cast(), vec.len(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15909,7 +15909,7 @@ pub mod core {
 			extern_container_arg!(comment);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_writeComment_const_StringR_bool(self.as_raw_mut_FileStorage(), comment.opencv_as_extern(), append, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15931,7 +15931,7 @@ pub mod core {
 			extern_container_arg!(comment);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_writeComment_const_StringR(self.as_raw_mut_FileStorage(), comment.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15951,7 +15951,7 @@ pub mod core {
 			extern_container_arg!(type_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_startWriteStruct_const_StringR_int_const_StringR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, type_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15971,7 +15971,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_startWriteStruct_const_StringR_int(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -15981,7 +15981,7 @@ pub mod core {
 		fn end_write_struct(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_endWriteStruct(self.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16038,7 +16038,7 @@ pub mod core {
 		fn next(&mut self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatted_next(self.as_raw_mut_Formatted(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16048,7 +16048,7 @@ pub mod core {
 		fn reset(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatted_reset(self.as_raw_mut_Formatted(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16096,7 +16096,7 @@ pub mod core {
 		pub fn get(fmt: core::Formatter_FormatType) -> Result<core::Ptr<core::Formatter>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_get_FormatType(fmt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::Formatter>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16109,7 +16109,7 @@ pub mod core {
 		pub fn get_def() -> Result<core::Ptr<core::Formatter>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_get(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::Formatter>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16125,7 +16125,7 @@ pub mod core {
 		fn format(&self, mtx: &impl core::MatTraitConst) -> Result<core::Ptr<core::Formatted>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_format_const_const_MatR(self.as_raw_Formatter(), mtx.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::Formatted>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16143,7 +16143,7 @@ pub mod core {
 		fn set16f_precision(&mut self, p: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_set16fPrecision_int(self.as_raw_mut_Formatter(), p, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16155,7 +16155,7 @@ pub mod core {
 		fn set16f_precision_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_set16fPrecision(self.as_raw_mut_Formatter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16166,7 +16166,7 @@ pub mod core {
 		fn set32f_precision(&mut self, p: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_set32fPrecision_int(self.as_raw_mut_Formatter(), p, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16178,7 +16178,7 @@ pub mod core {
 		fn set32f_precision_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_set32fPrecision(self.as_raw_mut_Formatter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16189,7 +16189,7 @@ pub mod core {
 		fn set64f_precision(&mut self, p: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_set64fPrecision_int(self.as_raw_mut_Formatter(), p, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16201,7 +16201,7 @@ pub mod core {
 		fn set64f_precision_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_set64fPrecision(self.as_raw_mut_Formatter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16212,7 +16212,7 @@ pub mod core {
 		fn set_multiline(&mut self, ml: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_setMultiline_bool(self.as_raw_mut_Formatter(), ml, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16224,7 +16224,7 @@ pub mod core {
 		fn set_multiline_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_setMultiline(self.as_raw_mut_Formatter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16285,7 +16285,7 @@ pub mod core {
 		fn apply(&self, a: &[u8], b: &[u8]) -> Result<core::Hamming_ResultType> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Hamming_operator___const_const_unsigned_charX_const_unsigned_charX_int(self.as_raw_Hamming(), a.as_ptr(), b.as_ptr(), a.len().min(b.len()).try_into()?, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16355,7 +16355,7 @@ pub mod core {
 		pub fn default() -> Result<core::KeyPoint> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_KeyPoint(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KeyPoint::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16378,7 +16378,7 @@ pub mod core {
 		pub fn new_point(pt: core::Point2f, size: f32, angle: f32, response: f32, octave: i32, class_id: i32) -> Result<core::KeyPoint> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int(&pt, size, angle, response, octave, class_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KeyPoint::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16402,7 +16402,7 @@ pub mod core {
 		pub fn new_point_def(pt: core::Point2f, size: f32) -> Result<core::KeyPoint> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_KeyPoint_Point2f_float(&pt, size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KeyPoint::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16426,7 +16426,7 @@ pub mod core {
 		pub fn new_coords(x: f32, y: f32, size: f32, angle: f32, response: f32, octave: i32, class_id: i32) -> Result<core::KeyPoint> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int(x, y, size, angle, response, octave, class_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KeyPoint::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16451,7 +16451,7 @@ pub mod core {
 		pub fn new_coords_def(x: f32, y: f32, size: f32) -> Result<core::KeyPoint> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_KeyPoint_float_float_float(x, y, size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KeyPoint::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16472,7 +16472,7 @@ pub mod core {
 		pub fn convert(keypoints: &core::Vector<core::KeyPoint>, points2f: &mut core::Vector<core::Point2f>, keypoint_indexes: &core::Vector<i32>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_convert_const_vectorLKeyPointGR_vectorLPoint2fGR_const_vectorLintGR(keypoints.as_raw_VectorOfKeyPoint(), points2f.as_raw_mut_VectorOfPoint2f(), keypoint_indexes.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16493,7 +16493,7 @@ pub mod core {
 		pub fn convert_def(keypoints: &core::Vector<core::KeyPoint>, points2f: &mut core::Vector<core::Point2f>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_convert_const_vectorLKeyPointGR_vectorLPoint2fGR(keypoints.as_raw_VectorOfKeyPoint(), points2f.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16525,7 +16525,7 @@ pub mod core {
 		pub fn convert_to(points2f: &core::Vector<core::Point2f>, keypoints: &mut core::Vector<core::KeyPoint>, size: f32, response: f32, octave: i32, class_id: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_convert_const_vectorLPoint2fGR_vectorLKeyPointGR_float_float_int_int(points2f.as_raw_VectorOfPoint2f(), keypoints.as_raw_mut_VectorOfKeyPoint(), size, response, octave, class_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16549,7 +16549,7 @@ pub mod core {
 		pub fn convert_to_def(points2f: &core::Vector<core::Point2f>, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_convert_const_vectorLPoint2fGR_vectorLKeyPointGR(points2f.as_raw_VectorOfPoint2f(), keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16564,7 +16564,7 @@ pub mod core {
 		pub fn overlap(kp1: &impl core::KeyPointTraitConst, kp2: &impl core::KeyPointTraitConst) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_overlap_const_KeyPointR_const_KeyPointR(kp1.as_raw_KeyPoint(), kp2.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16580,7 +16580,7 @@ pub mod core {
 		fn pt(&self) -> core::Point2f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_propPt_const(self.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -16625,7 +16625,7 @@ pub mod core {
 		fn hash(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_hash_const(self.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16740,7 +16740,7 @@ pub mod core {
 		pub fn new(num_components: i32) -> Result<core::LDA> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_LDA_int(num_components, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16756,7 +16756,7 @@ pub mod core {
 		pub fn new_def() -> Result<core::LDA> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_LDA(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16775,7 +16775,7 @@ pub mod core {
 			input_array_arg!(labels);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), labels.as_raw__InputArray(), num_components, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16795,7 +16795,7 @@ pub mod core {
 			input_array_arg!(labels);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), labels.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16808,7 +16808,7 @@ pub mod core {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_subspaceProject_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16821,7 +16821,7 @@ pub mod core {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_subspaceReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16839,7 +16839,7 @@ pub mod core {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_save_const_const_StringR(self.as_raw_LDA(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16849,7 +16849,7 @@ pub mod core {
 		fn save_1(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_save_const_FileStorageR(self.as_raw_LDA(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16859,7 +16859,7 @@ pub mod core {
 		fn eigenvectors(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_eigenvectors_const(self.as_raw_LDA(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16870,7 +16870,7 @@ pub mod core {
 		fn eigenvalues(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_eigenvalues_const(self.as_raw_LDA(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16888,7 +16888,7 @@ pub mod core {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_load_const_StringR(self.as_raw_mut_LDA(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16898,7 +16898,7 @@ pub mod core {
 		fn load_1(&mut self, node: &impl core::FileStorageTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_load_const_FileStorageR(self.as_raw_mut_LDA(), node.as_raw_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16910,7 +16910,7 @@ pub mod core {
 			input_array_arg!(labels);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_compute_const__InputArrayR_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray(), labels.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -16922,7 +16922,7 @@ pub mod core {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_project_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -16935,7 +16935,7 @@ pub mod core {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_reconstruct_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17206,10 +17206,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17228,10 +17228,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_size(size: core::Size, typ: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17254,7 +17254,7 @@ pub mod core {
 		pub fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_int_int_int_const_ScalarR(rows, cols, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17279,7 +17279,7 @@ pub mod core {
 		pub fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_Size_int_const_ScalarR(&size, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17300,10 +17300,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_nd(sizes: &[i32], typ: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_const_intX_int(sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_int_const_intX_int(sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17321,10 +17321,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_nd_vec(sizes: &core::Vector<i32>, typ: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_const_vectorLintGR_int(sizes.as_raw_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_const_vectorLintGR_int(sizes.as_raw_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17347,7 +17347,7 @@ pub mod core {
 		pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_int_const_intX_int_const_ScalarR(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17371,7 +17371,7 @@ pub mod core {
 		pub fn new_nd_vec_with_default(sizes: &core::Vector<i32>, typ: i32, s: core::Scalar) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_const_vectorLintGR_int_const_ScalarR(sizes.as_raw_VectorOfi32(), typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17394,7 +17394,7 @@ pub mod core {
 		pub fn copy(m: &impl core::MatTraitConst) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17411,7 +17411,7 @@ pub mod core {
 		pub fn copy_mut(m: &mut impl core::MatTrait) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_MatR(m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17443,10 +17443,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_rows_cols_with_data_unsafe(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_int_int_voidX_size_t(rows, cols, typ, data, step, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_int_int_int_voidX_size_t(rows, cols, typ, data, step, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17471,10 +17471,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_rows_cols_with_data_unsafe_def(rows: i32, cols: i32, typ: i32, data: *mut c_void) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_int_int_voidX(rows, cols, typ, data, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_int_int_int_voidX(rows, cols, typ, data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17504,10 +17504,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_size_with_data_unsafe(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_Size_int_voidX_size_t(&size, typ, data, step, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_Size_int_voidX_size_t(&size, typ, data, step, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17532,10 +17532,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_size_with_data_unsafe_def(size: core::Size, typ: i32, data: *mut c_void) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_Size_int_voidX(&size, typ, data, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_Size_int_voidX(&size, typ, data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17564,10 +17564,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_nd_with_data_unsafe(sizes: &[i32], typ: i32, data: *mut c_void, steps: Option<&[size_t]>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len().try_into()?, sizes.as_ptr(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr()), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len().try_into()?, sizes.as_ptr(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr()), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17591,10 +17591,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_nd_with_data_unsafe_def(sizes: &[i32], typ: i32, data: *mut c_void) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_const_intX_int_voidX(sizes.len().try_into()?, sizes.as_ptr(), typ, data, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_int_const_intX_int_voidX(sizes.len().try_into()?, sizes.as_ptr(), typ, data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17622,10 +17622,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_nd_vec_with_data_unsafe(sizes: &core::Vector<i32>, typ: i32, data: *mut c_void, steps: Option<&[size_t]>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_const_vectorLintGR_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr()), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_const_vectorLintGR_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr()), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17648,10 +17648,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_nd_vec_with_data_unsafe_def(sizes: &core::Vector<i32>, typ: i32, data: *mut c_void) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_const_vectorLintGR_int_voidX(sizes.as_raw_VectorOfi32(), typ, data, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_const_vectorLintGR_int_voidX(sizes.as_raw_VectorOfi32(), typ, data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -17678,7 +17678,7 @@ pub mod core {
 		pub fn rowscols<'boxed>(m: &'boxed impl core::MatTraitConst, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_const_MatR_const_RangeR_const_RangeR(m.as_raw_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<'boxed, core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17702,7 +17702,7 @@ pub mod core {
 		pub fn rowscols_def_mut<'boxed>(m: &'boxed mut impl core::MatTrait, row_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_MatR_const_RangeR(m.as_raw_mut_Mat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<'boxed, core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17726,7 +17726,7 @@ pub mod core {
 		pub fn rowscols_def<'boxed>(m: &'boxed impl core::MatTraitConst, row_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_const_MatR_const_RangeR(m.as_raw_Mat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<'boxed, core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17749,7 +17749,7 @@ pub mod core {
 		pub fn rowscols_mut<'boxed>(m: &'boxed mut impl core::MatTrait, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_MatR_const_RangeR_const_RangeR(m.as_raw_mut_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<'boxed, core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17773,7 +17773,7 @@ pub mod core {
 		pub fn roi(m: &impl core::MatTraitConst, roi: core::Rect) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_const_MatR_const_RectR(m.as_raw_Mat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17791,7 +17791,7 @@ pub mod core {
 		pub fn roi_mut(m: &mut impl core::MatTrait, roi: core::Rect) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_MatR_const_RectR(m.as_raw_mut_Mat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17815,7 +17815,7 @@ pub mod core {
 		pub fn ranges<'boxed>(m: &'boxed impl core::MatTraitConst, ranges: &core::Vector<core::Range>) -> Result<BoxedRef<'boxed, core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_const_MatR_const_vectorLRangeGR(m.as_raw_Mat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<'boxed, core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17833,7 +17833,7 @@ pub mod core {
 		pub fn ranges_mut<'boxed>(m: &'boxed mut impl core::MatTrait, ranges: &core::Vector<core::Range>) -> Result<BoxedRefMut<'boxed, core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_MatR_const_vectorLRangeGR(m.as_raw_mut_Mat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<'boxed, core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17844,7 +17844,7 @@ pub mod core {
 		pub fn from_gpumat(m: &impl core::GpuMatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_const_GpuMatR(m.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17860,7 +17860,7 @@ pub mod core {
 		pub fn diag_mat(d: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_diag_const_MatR(d.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17886,7 +17886,7 @@ pub mod core {
 		pub fn zeros(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_zeros_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17917,7 +17917,7 @@ pub mod core {
 		pub fn zeros_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_zeros_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17949,7 +17949,7 @@ pub mod core {
 		pub fn zeros_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_zeros_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -17978,7 +17978,7 @@ pub mod core {
 		pub fn ones(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ones_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18012,7 +18012,7 @@ pub mod core {
 		pub fn ones_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ones_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18047,7 +18047,7 @@ pub mod core {
 		pub fn ones_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ones_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18074,7 +18074,7 @@ pub mod core {
 		pub fn eye(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_eye_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18106,7 +18106,7 @@ pub mod core {
 		pub fn eye_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_eye_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18198,7 +18198,7 @@ pub mod core {
 		fn get_umat(&self, access_flags: core::AccessFlag, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags(self.as_raw_Mat(), access_flags, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18213,7 +18213,7 @@ pub mod core {
 		fn get_umat_def(&self, access_flags: core::AccessFlag) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_getUMat_const_AccessFlag(self.as_raw_Mat(), access_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18260,7 +18260,7 @@ pub mod core {
 		fn row(&self, y: i32) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_row_const_int(self.as_raw_Mat(), y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18277,7 +18277,7 @@ pub mod core {
 		fn col(&self, x: i32) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_col_const_int(self.as_raw_Mat(), x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18294,7 +18294,7 @@ pub mod core {
 		fn row_bounds(&self, startrow: i32, endrow: i32) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_rowRange_const_int_int(self.as_raw_Mat(), startrow, endrow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18315,7 +18315,7 @@ pub mod core {
 		fn row_range(&self, r: &impl core::RangeTraitConst) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_rowRange_const_const_RangeR(self.as_raw_Mat(), r.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18332,7 +18332,7 @@ pub mod core {
 		fn col_bounds(&self, startcol: i32, endcol: i32) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_colRange_const_int_int(self.as_raw_Mat(), startcol, endcol, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18353,7 +18353,7 @@ pub mod core {
 		fn col_range(&self, r: &impl core::RangeTraitConst) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_colRange_const_const_RangeR(self.as_raw_Mat(), r.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18402,7 +18402,7 @@ pub mod core {
 		fn diag(&self, d: i32) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_diag_const_int(self.as_raw_Mat(), d, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18452,7 +18452,7 @@ pub mod core {
 		fn diag_def(&self) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_diag_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18467,7 +18467,7 @@ pub mod core {
 		fn try_clone(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_clone_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18494,7 +18494,7 @@ pub mod core {
 			output_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_copyTo_const_const__OutputArrayR(self.as_raw_Mat(), m.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -18528,7 +18528,7 @@ pub mod core {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_Mat(), m.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -18555,7 +18555,7 @@ pub mod core {
 			output_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_Mat(), m.as_raw__OutputArray(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -18583,7 +18583,7 @@ pub mod core {
 			output_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_convertTo_const_const__OutputArrayR_int(self.as_raw_Mat(), m.as_raw__OutputArray(), rtype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -18601,7 +18601,7 @@ pub mod core {
 		fn assign_to(&self, m: &mut impl core::MatTrait, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_assignTo_const_MatR_int(self.as_raw_Mat(), m.as_raw_mut_Mat(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -18620,7 +18620,7 @@ pub mod core {
 		fn assign_to_def(&self, m: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_assignTo_const_MatR(self.as_raw_Mat(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -18671,7 +18671,7 @@ pub mod core {
 		fn reshape(&self, cn: i32, rows: i32) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_reshape_const_int_int(self.as_raw_Mat(), cn, rows, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18724,7 +18724,7 @@ pub mod core {
 		fn reshape_def(&self, cn: i32) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_reshape_const_int(self.as_raw_Mat(), cn, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18780,7 +18780,7 @@ pub mod core {
 		fn reshape_nd(&self, cn: i32, newsz: &[i32]) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_reshape_const_int_int_const_intX(self.as_raw_Mat(), cn, newsz.len().try_into()?, newsz.as_ptr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18835,7 +18835,7 @@ pub mod core {
 		fn reshape_nd_vec(&self, cn: i32, newshape: &core::Vector<i32>) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_reshape_const_int_const_vectorLintGR(self.as_raw_Mat(), cn, newshape.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18855,7 +18855,7 @@ pub mod core {
 		fn t(&self) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_t_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18875,7 +18875,7 @@ pub mod core {
 		fn inv(&self, method: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_inv_const_int(self.as_raw_Mat(), method, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18896,7 +18896,7 @@ pub mod core {
 		fn inv_def(&self) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_inv_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18923,7 +18923,7 @@ pub mod core {
 			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_mul_const_const__InputArrayR_double(self.as_raw_Mat(), m.as_raw__InputArray(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18951,7 +18951,7 @@ pub mod core {
 			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_mul_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18969,7 +18969,7 @@ pub mod core {
 			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_cross_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -18988,7 +18988,7 @@ pub mod core {
 			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_dot_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19008,7 +19008,7 @@ pub mod core {
 		fn locate_roi(&self, whole_size: &mut core::Size, ofs: &mut core::Point) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_locateROI_const_SizeR_PointR(self.as_raw_Mat(), whole_size, ofs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19028,7 +19028,7 @@ pub mod core {
 		fn rowscols(&self, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_operator___const_Range_Range(self.as_raw_Mat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -19053,7 +19053,7 @@ pub mod core {
 		fn roi(&self, roi: core::Rect) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_operator___const_const_RectR(self.as_raw_Mat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -19078,7 +19078,7 @@ pub mod core {
 		fn ranges(&self, ranges: &core::Vector<core::Range>) -> Result<BoxedRef<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_operator___const_const_vectorLRangeGR(self.as_raw_Mat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -19180,7 +19180,7 @@ pub mod core {
 		fn elem_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_elemSize_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19243,7 +19243,7 @@ pub mod core {
 		fn step1(&self, i: i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_step1_const_int(self.as_raw_Mat(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19260,7 +19260,7 @@ pub mod core {
 		fn step1_def(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_step1_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19295,7 +19295,7 @@ pub mod core {
 		fn total_slice(&self, start_dim: i32, end_dim: i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_total_const_int_int(self.as_raw_Mat(), start_dim, end_dim, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19311,7 +19311,7 @@ pub mod core {
 		fn total_slice_def(&self, start_dim: i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_total_const_int(self.as_raw_Mat(), start_dim, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19345,7 +19345,7 @@ pub mod core {
 		fn check_vector(&self, elem_channels: i32, depth: i32, require_continuous: bool) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_checkVector_const_int_int_bool(self.as_raw_Mat(), elem_channels, depth, require_continuous, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19380,7 +19380,7 @@ pub mod core {
 		fn check_vector_def(&self, elem_channels: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_checkVector_const_int(self.as_raw_Mat(), elem_channels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19400,7 +19400,7 @@ pub mod core {
 		fn ptr(&self, i0: i32) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr_const_int(self.as_raw_Mat(), i0, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19414,7 +19414,7 @@ pub mod core {
 		fn ptr_def(&self) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19434,7 +19434,7 @@ pub mod core {
 		fn ptr_2d(&self, row: i32, col: i32) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr_const_int_int(self.as_raw_Mat(), row, col, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19451,7 +19451,7 @@ pub mod core {
 		fn ptr_3d(&self, i0: i32, i1: i32, i2: i32) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr_const_int_int_int(self.as_raw_Mat(), i0, i1, i2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19468,7 +19468,7 @@ pub mod core {
 		fn ptr_nd(&self, idx: &[i32]) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr_const_const_intX(self.as_raw_Mat(), idx.as_ptr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19728,7 +19728,7 @@ pub mod core {
 		fn size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_size_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19738,7 +19738,7 @@ pub mod core {
 		fn get_data_dump(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_getDataDump_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -19792,7 +19792,7 @@ pub mod core {
 		/// pointer to the data
 		#[inline]
 		unsafe fn set_data(&mut self, val: *const u8) {
-			let ret = { sys::cv_Mat_propData_unsigned_charX(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propData_unsigned_charX(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 
@@ -19837,7 +19837,7 @@ pub mod core {
 		fn set_matexpr(&mut self, expr: &impl core::MatExprTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_operatorST_const_MatExprR(self.as_raw_mut_Mat(), expr.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -19883,7 +19883,7 @@ pub mod core {
 		fn row_mut(&mut self, y: i32) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_row_int(self.as_raw_mut_Mat(), y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -19900,7 +19900,7 @@ pub mod core {
 		fn col_mut(&mut self, x: i32) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_col_int(self.as_raw_mut_Mat(), x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -19917,7 +19917,7 @@ pub mod core {
 		fn row_bounds_mut(&mut self, startrow: i32, endrow: i32) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_rowRange_int_int(self.as_raw_mut_Mat(), startrow, endrow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -19930,7 +19930,7 @@ pub mod core {
 		fn row_range_mut(&mut self, r: &impl core::RangeTraitConst) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_rowRange_const_RangeR(self.as_raw_mut_Mat(), r.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -19947,7 +19947,7 @@ pub mod core {
 		fn col_bounds_mut(&mut self, startcol: i32, endcol: i32) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_colRange_int_int(self.as_raw_mut_Mat(), startcol, endcol, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -19960,7 +19960,7 @@ pub mod core {
 		fn col_range_mut(&mut self, r: &impl core::RangeTraitConst) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_colRange_const_RangeR(self.as_raw_mut_Mat(), r.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20010,7 +20010,7 @@ pub mod core {
 		fn diag_def_mut(&mut self) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_diag(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20059,7 +20059,7 @@ pub mod core {
 		fn diag_mut(&mut self, d: i32) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_diag_int(self.as_raw_mut_Mat(), d, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20072,7 +20072,7 @@ pub mod core {
 		fn set_scalar(&mut self, s: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_operatorST_const_ScalarR(self.as_raw_mut_Mat(), &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20093,7 +20093,7 @@ pub mod core {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_setTo_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Mat(), value.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20115,7 +20115,7 @@ pub mod core {
 			input_array_arg!(value);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_setTo_const__InputArrayR(self.as_raw_mut_Mat(), value.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20168,7 +20168,7 @@ pub mod core {
 		fn reshape_def_mut(&mut self, cn: i32) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_reshape_int(self.as_raw_mut_Mat(), cn, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20220,7 +20220,7 @@ pub mod core {
 		fn reshape_mut(&mut self, cn: i32, rows: i32) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_reshape_int_int(self.as_raw_mut_Mat(), cn, rows, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20236,7 +20236,7 @@ pub mod core {
 		fn reshape_nd_mut(&mut self, cn: i32, newsz: &[i32]) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_reshape_int_int_const_intX(self.as_raw_mut_Mat(), cn, newsz.len().try_into()?, newsz.as_ptr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20251,7 +20251,7 @@ pub mod core {
 		fn reshape_nd_vec_mut(&mut self, cn: i32, newshape: &core::Vector<i32>) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_reshape_int_const_vectorLintGR(self.as_raw_mut_Mat(), cn, newshape.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20295,7 +20295,7 @@ pub mod core {
 		#[inline]
 		unsafe fn create_rows_cols(&mut self, rows: i32, cols: i32, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_create_int_int_int(self.as_raw_mut_Mat(), rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_create_int_int_int(self.as_raw_mut_Mat(), rows, cols, typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -20344,7 +20344,7 @@ pub mod core {
 		#[inline]
 		unsafe fn create_size(&mut self, size: core::Size, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_create_Size_int(self.as_raw_mut_Mat(), &size, typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_create_Size_int(self.as_raw_mut_Mat(), &size, typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -20394,7 +20394,7 @@ pub mod core {
 		#[inline]
 		unsafe fn create_nd(&mut self, sizes: &[i32], typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_create_int_const_intX_int(self.as_raw_mut_Mat(), sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_create_int_const_intX_int(self.as_raw_mut_Mat(), sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -20443,7 +20443,7 @@ pub mod core {
 		#[inline]
 		unsafe fn create_nd_vec(&mut self, sizes: &core::Vector<i32>, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_create_const_vectorLintGR_int(self.as_raw_mut_Mat(), sizes.as_raw_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_create_const_vectorLintGR_int(self.as_raw_mut_Mat(), sizes.as_raw_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -20460,7 +20460,7 @@ pub mod core {
 		#[inline]
 		unsafe fn addref(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_addref(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_addref(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -20481,7 +20481,7 @@ pub mod core {
 		#[inline]
 		unsafe fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_release(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_release(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -20492,7 +20492,7 @@ pub mod core {
 		fn deallocate(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_deallocate(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20508,7 +20508,7 @@ pub mod core {
 		fn reserve(&mut self, sz: size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_reserve_size_t(self.as_raw_mut_Mat(), sz, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20523,7 +20523,7 @@ pub mod core {
 		fn reserve_buffer(&mut self, sz: size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_reserveBuffer_size_t(self.as_raw_mut_Mat(), sz, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20539,7 +20539,7 @@ pub mod core {
 		fn resize(&mut self, sz: size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_resize_size_t(self.as_raw_mut_Mat(), sz, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20560,7 +20560,7 @@ pub mod core {
 		fn resize_with_default(&mut self, sz: size_t, s: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_resize_size_t_const_ScalarR(self.as_raw_mut_Mat(), sz, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20580,7 +20580,7 @@ pub mod core {
 		fn push_back(&mut self, m: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_push_back_const_MatR(self.as_raw_mut_Mat(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20598,7 +20598,7 @@ pub mod core {
 		fn pop_back(&mut self, nelems: size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_pop_back_size_t(self.as_raw_mut_Mat(), nelems, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20617,7 +20617,7 @@ pub mod core {
 		fn pop_back_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_pop_back(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20655,7 +20655,7 @@ pub mod core {
 		fn adjust_roi(&mut self, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_adjustROI_int_int_int_int(self.as_raw_mut_Mat(), dtop, dbottom, dleft, dright, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20676,7 +20676,7 @@ pub mod core {
 		fn rowscols_mut(&mut self, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_operator___Range_Range(self.as_raw_mut_Mat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20689,7 +20689,7 @@ pub mod core {
 		fn roi_mut(&mut self, roi: core::Rect) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_operator___const_RectR(self.as_raw_mut_Mat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20702,7 +20702,7 @@ pub mod core {
 		fn ranges_mut(&mut self, ranges: &core::Vector<core::Range>) -> Result<BoxedRefMut<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_operator___const_vectorLRangeGR(self.as_raw_mut_Mat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -20721,7 +20721,7 @@ pub mod core {
 		fn ptr_mut(&mut self, i0: i32) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr_int(self.as_raw_mut_Mat(), i0, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20740,7 +20740,7 @@ pub mod core {
 		fn ptr_mut_def(&mut self) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20760,7 +20760,7 @@ pub mod core {
 		fn ptr_2d_mut(&mut self, row: i32, col: i32) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr_int_int(self.as_raw_mut_Mat(), row, col, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20777,7 +20777,7 @@ pub mod core {
 		fn ptr_3d_mut(&mut self, i0: i32, i1: i32, i2: i32) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr_int_int_int(self.as_raw_mut_Mat(), i0, i1, i2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -20794,7 +20794,7 @@ pub mod core {
 		fn ptr_nd_mut(&mut self, idx: &[i32]) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr_const_intX(self.as_raw_mut_Mat(), idx.as_ptr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21046,7 +21046,7 @@ pub mod core {
 		fn set(&mut self, mut m: core::Mat) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_operatorST_MatRR(self.as_raw_mut_Mat(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21056,7 +21056,7 @@ pub mod core {
 		fn update_continuity_flag(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_updateContinuityFlag(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21111,7 +21111,7 @@ pub mod core {
 		pub fn default() -> Result<core::MatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_MatConstIterator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21122,7 +21122,7 @@ pub mod core {
 		pub fn over(_m: &impl core::MatTraitConst) -> Result<core::MatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX(_m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21136,7 +21136,7 @@ pub mod core {
 		pub fn with_rows_cols(_m: &impl core::MatTraitConst, _row: i32, _col: i32) -> Result<core::MatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_int_int(_m.as_raw_Mat(), _row, _col, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21151,7 +21151,7 @@ pub mod core {
 		pub fn with_rows_cols_def(_m: &impl core::MatTraitConst, _row: i32) -> Result<core::MatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_int(_m.as_raw_Mat(), _row, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21162,7 +21162,7 @@ pub mod core {
 		pub fn with_start(_m: &impl core::MatTraitConst, _pt: core::Point) -> Result<core::MatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_Point(_m.as_raw_Mat(), &_pt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21173,7 +21173,7 @@ pub mod core {
 		pub fn copy(it: &impl core::MatConstIteratorTraitConst) -> Result<core::MatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatConstIteratorR(it.as_raw_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21221,7 +21221,7 @@ pub mod core {
 		fn try_deref(&self) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_operatorX_const(self.as_raw_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21231,7 +21231,7 @@ pub mod core {
 		fn get(&self, i: ptrdiff_t) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_operator___const_ptrdiff_t(self.as_raw_MatConstIterator(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21241,7 +21241,7 @@ pub mod core {
 		fn pos(&self) -> Result<core::Point> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_pos_const(self.as_raw_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21250,7 +21250,7 @@ pub mod core {
 		#[inline]
 		unsafe fn pos_to(&self, _idx: *mut i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_MatConstIterator_pos_const_intX(self.as_raw_MatConstIterator(), _idx, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_MatConstIterator_pos_const_intX(self.as_raw_MatConstIterator(), _idx, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -21260,7 +21260,7 @@ pub mod core {
 		fn lpos(&self) -> Result<ptrdiff_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_lpos_const(self.as_raw_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21288,7 +21288,7 @@ pub mod core {
 		fn set(&mut self, it: &impl core::MatConstIteratorTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_operatorST_const_MatConstIteratorR(self.as_raw_mut_MatConstIterator(), it.as_raw_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21298,7 +21298,7 @@ pub mod core {
 		fn decr(&mut self) -> Result<core::MatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_operatorSS(self.as_raw_mut_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21309,7 +21309,7 @@ pub mod core {
 		fn incr(&mut self) -> Result<core::MatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_operatorAA(self.as_raw_mut_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21321,7 +21321,7 @@ pub mod core {
 		fn seek(&mut self, ofs: ptrdiff_t, relative: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_seek_ptrdiff_t_bool(self.as_raw_mut_MatConstIterator(), ofs, relative, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21333,7 +21333,7 @@ pub mod core {
 		fn seek_def(&mut self, ofs: ptrdiff_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_seek_ptrdiff_t(self.as_raw_mut_MatConstIterator(), ofs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21344,7 +21344,7 @@ pub mod core {
 		fn seek_idx(&mut self, _idx: &i32, relative: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_seek_const_intX_bool(self.as_raw_mut_MatConstIterator(), _idx, relative, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21356,7 +21356,7 @@ pub mod core {
 		fn seek_idx_def(&mut self, _idx: &i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_seek_const_intX(self.as_raw_mut_MatConstIterator(), _idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21453,7 +21453,7 @@ pub mod core {
 		pub fn default() -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_MatExpr(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21463,7 +21463,7 @@ pub mod core {
 		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_MatExpr_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21480,7 +21480,7 @@ pub mod core {
 		pub fn new(_op: &impl core::MatOpTraitConst, _flags: i32, _a: &impl core::MatTraitConst, _b: &impl core::MatTraitConst, _c: &impl core::MatTraitConst, _alpha: f64, _beta: f64, _s: core::Scalar) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_MatExpr_const_MatOpX_int_const_MatR_const_MatR_const_MatR_double_double_const_ScalarR(_op.as_raw_MatOp(), _flags, _a.as_raw_Mat(), _b.as_raw_Mat(), _c.as_raw_Mat(), _alpha, _beta, &_s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21498,7 +21498,7 @@ pub mod core {
 		pub fn new_def(_op: &impl core::MatOpTraitConst, _flags: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_MatExpr_const_MatOpX_int(_op.as_raw_MatOp(), _flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21553,7 +21553,7 @@ pub mod core {
 		fn s(&self) -> core::Scalar {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_propS_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -21561,7 +21561,7 @@ pub mod core {
 		fn to_mat(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_operator_cv_Mat_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21571,7 +21571,7 @@ pub mod core {
 		fn size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_size_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21580,7 +21580,7 @@ pub mod core {
 		fn typ(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_type_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21589,7 +21589,7 @@ pub mod core {
 		fn row(&self, y: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_row_const_int(self.as_raw_MatExpr(), y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21599,7 +21599,7 @@ pub mod core {
 		fn col(&self, x: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_col_const_int(self.as_raw_MatExpr(), x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21611,7 +21611,7 @@ pub mod core {
 		fn diag(&self, d: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_diag_const_int(self.as_raw_MatExpr(), d, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21624,7 +21624,7 @@ pub mod core {
 		fn diag_def(&self) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_diag_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21634,7 +21634,7 @@ pub mod core {
 		fn rowscols(&self, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_operator___const_const_RangeR_const_RangeR(self.as_raw_MatExpr(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21644,7 +21644,7 @@ pub mod core {
 		fn roi(&self, roi: core::Rect) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_operator___const_const_RectR(self.as_raw_MatExpr(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21654,7 +21654,7 @@ pub mod core {
 		fn t(&self) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_t_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21666,7 +21666,7 @@ pub mod core {
 		fn inv(&self, method: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_inv_const_int(self.as_raw_MatExpr(), method, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21679,7 +21679,7 @@ pub mod core {
 		fn inv_def(&self) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_inv_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21691,7 +21691,7 @@ pub mod core {
 		fn mul_matexpr(&self, e: &impl core::MatExprTraitConst, scale: f64) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_mul_const_const_MatExprR_double(self.as_raw_MatExpr(), e.as_raw_MatExpr(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21704,7 +21704,7 @@ pub mod core {
 		fn mul_matexpr_def(&self, e: &impl core::MatExprTraitConst) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_mul_const_const_MatExprR(self.as_raw_MatExpr(), e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21716,7 +21716,7 @@ pub mod core {
 		fn mul(&self, m: &impl core::MatTraitConst, scale: f64) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_mul_const_const_MatR_double(self.as_raw_MatExpr(), m.as_raw_Mat(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21729,7 +21729,7 @@ pub mod core {
 		fn mul_def(&self, m: &impl core::MatTraitConst) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_mul_const_const_MatR(self.as_raw_MatExpr(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21739,7 +21739,7 @@ pub mod core {
 		fn cross(&self, m: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_cross_const_const_MatR(self.as_raw_MatExpr(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -21749,7 +21749,7 @@ pub mod core {
 		fn dot(&self, m: &impl core::MatTraitConst) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_dot_const_const_MatR(self.as_raw_MatExpr(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21806,7 +21806,7 @@ pub mod core {
 		fn swap(&mut self, b: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_swap_MatExprR(self.as_raw_mut_MatExpr(), b.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21862,7 +21862,7 @@ pub mod core {
 		fn element_wise(&self, expr: &impl core::MatExprTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_elementWise_const_const_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21873,7 +21873,7 @@ pub mod core {
 		fn assign(&self, expr: &impl core::MatExprTraitConst, m: &mut impl core::MatTrait, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_assign_const_const_MatExprR_MatR_int(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21885,7 +21885,7 @@ pub mod core {
 		fn assign_def(&self, expr: &impl core::MatExprTraitConst, m: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_assign_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21894,7 +21894,7 @@ pub mod core {
 		fn roi(&self, expr: &impl core::MatExprTraitConst, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_roi_const_const_MatExprR_const_RangeR_const_RangeR_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), row_range.as_raw_Range(), col_range.as_raw_Range(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21903,7 +21903,7 @@ pub mod core {
 		fn diag(&self, expr: &impl core::MatExprTraitConst, d: i32, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_diag_const_const_MatExprR_int_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), d, res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21912,7 +21912,7 @@ pub mod core {
 		fn aug_assign_add(&self, expr: &impl core::MatExprTraitConst, m: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_augAssignAdd_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21921,7 +21921,7 @@ pub mod core {
 		fn aug_assign_subtract(&self, expr: &impl core::MatExprTraitConst, m: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_augAssignSubtract_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21930,7 +21930,7 @@ pub mod core {
 		fn aug_assign_multiply(&self, expr: &impl core::MatExprTraitConst, m: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_augAssignMultiply_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21939,7 +21939,7 @@ pub mod core {
 		fn aug_assign_divide(&self, expr: &impl core::MatExprTraitConst, m: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_augAssignDivide_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21948,7 +21948,7 @@ pub mod core {
 		fn aug_assign_and(&self, expr: &impl core::MatExprTraitConst, m: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_augAssignAnd_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21957,7 +21957,7 @@ pub mod core {
 		fn aug_assign_or(&self, expr: &impl core::MatExprTraitConst, m: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_augAssignOr_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21966,7 +21966,7 @@ pub mod core {
 		fn aug_assign_xor(&self, expr: &impl core::MatExprTraitConst, m: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_augAssignXor_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21975,7 +21975,7 @@ pub mod core {
 		fn add(&self, expr1: &impl core::MatExprTraitConst, expr2: &impl core::MatExprTraitConst, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_add_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21984,7 +21984,7 @@ pub mod core {
 		fn add_scalar(&self, expr1: &impl core::MatExprTraitConst, s: core::Scalar, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_add_const_const_MatExprR_const_ScalarR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), &s, res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21993,7 +21993,7 @@ pub mod core {
 		fn subtract(&self, expr1: &impl core::MatExprTraitConst, expr2: &impl core::MatExprTraitConst, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_subtract_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22002,7 +22002,7 @@ pub mod core {
 		fn subtract_scalar(&self, s: core::Scalar, expr: &impl core::MatExprTraitConst, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_subtract_const_const_ScalarR_const_MatExprR_MatExprR(self.as_raw_MatOp(), &s, expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22013,7 +22013,7 @@ pub mod core {
 		fn multiply(&self, expr1: &impl core::MatExprTraitConst, expr2: &impl core::MatExprTraitConst, res: &mut impl core::MatExprTrait, scale: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_multiply_const_const_MatExprR_const_MatExprR_MatExprR_double(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22025,7 +22025,7 @@ pub mod core {
 		fn multiply_def(&self, expr1: &impl core::MatExprTraitConst, expr2: &impl core::MatExprTraitConst, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_multiply_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22034,7 +22034,7 @@ pub mod core {
 		fn multiply_f64(&self, expr1: &impl core::MatExprTraitConst, s: f64, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_multiply_const_const_MatExprR_double_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), s, res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22045,7 +22045,7 @@ pub mod core {
 		fn divide(&self, expr1: &impl core::MatExprTraitConst, expr2: &impl core::MatExprTraitConst, res: &mut impl core::MatExprTrait, scale: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_divide_const_const_MatExprR_const_MatExprR_MatExprR_double(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22057,7 +22057,7 @@ pub mod core {
 		fn divide_def(&self, expr1: &impl core::MatExprTraitConst, expr2: &impl core::MatExprTraitConst, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_divide_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22066,7 +22066,7 @@ pub mod core {
 		fn divide_f64(&self, s: f64, expr: &impl core::MatExprTraitConst, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_divide_const_double_const_MatExprR_MatExprR(self.as_raw_MatOp(), s, expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22075,7 +22075,7 @@ pub mod core {
 		fn abs(&self, expr: &impl core::MatExprTraitConst, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_abs_const_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22084,7 +22084,7 @@ pub mod core {
 		fn transpose(&self, expr: &impl core::MatExprTraitConst, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_transpose_const_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22093,7 +22093,7 @@ pub mod core {
 		fn matmul(&self, expr1: &impl core::MatExprTraitConst, expr2: &impl core::MatExprTraitConst, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_matmul_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22102,7 +22102,7 @@ pub mod core {
 		fn invert(&self, expr: &impl core::MatExprTraitConst, method: i32, res: &mut impl core::MatExprTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_invert_const_const_MatExprR_int_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), method, res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22111,7 +22111,7 @@ pub mod core {
 		fn size(&self, expr: &impl core::MatExprTraitConst) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_size_const_const_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22120,7 +22120,7 @@ pub mod core {
 		fn typ(&self, expr: &impl core::MatExprTraitConst) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_type_const_const_MatExprR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22170,8 +22170,8 @@ pub mod core {
 		/// ////////////////////////// MatSize ////////////////////////////
 		#[inline]
 		pub unsafe fn new(_p: *mut i32) -> core::MatSize {
-			let ret = { sys::cv_MatSize_MatSize_intX(_p) };
-			let ret = { core::MatSize::opencv_from_extern(ret) };
+			let ret = unsafe { sys::cv_MatSize_MatSize_intX(_p) };
+			let ret = unsafe { core::MatSize::opencv_from_extern(ret) };
 			ret
 		}
 
@@ -22197,7 +22197,7 @@ pub mod core {
 		fn apply(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatSize_operator___const(self.as_raw_MatSize(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22206,7 +22206,7 @@ pub mod core {
 		fn get(&self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatSize_operator___const_int(self.as_raw_MatSize(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22243,7 +22243,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_p(&mut self, val: *const i32) {
-			let ret = { sys::cv_MatSize_propP_intX(self.as_raw_mut_MatSize(), val) };
+			let ret = unsafe { sys::cv_MatSize_propP_intX(self.as_raw_mut_MatSize(), val) };
 			ret
 		}
 
@@ -22251,7 +22251,7 @@ pub mod core {
 		fn get_mut(&mut self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatSize_operator___int(self.as_raw_mut_MatSize(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22328,7 +22328,7 @@ pub mod core {
 		fn to_size_t(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatStep_operator_size_t_const(self.as_raw_MatStep(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22347,7 +22347,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_p(&mut self, val: *const size_t) {
-			let ret = { sys::cv_MatStep_propP_size_tX(self.as_raw_mut_MatStep(), val) };
+			let ret = unsafe { sys::cv_MatStep_propP_size_tX(self.as_raw_mut_MatStep(), val) };
 			ret
 		}
 
@@ -22368,7 +22368,7 @@ pub mod core {
 		fn set_size_t(&mut self, s: size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatStep_operatorST_size_t(self.as_raw_mut_MatStep(), s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22424,7 +22424,7 @@ pub mod core {
 		pub fn default() -> Result<core::Matx_AddOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_AddOp_Matx_AddOp(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_AddOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22434,7 +22434,7 @@ pub mod core {
 		pub fn copy(unnamed: &impl core::Matx_AddOpTraitConst) -> Result<core::Matx_AddOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_AddOp_Matx_AddOp_const_Matx_AddOpR(unnamed.as_raw_Matx_AddOp(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_AddOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22492,7 +22492,7 @@ pub mod core {
 		pub fn default() -> Result<core::Matx_DivOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_DivOp_Matx_DivOp(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_DivOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22502,7 +22502,7 @@ pub mod core {
 		pub fn copy(unnamed: &impl core::Matx_DivOpTraitConst) -> Result<core::Matx_DivOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_DivOp_Matx_DivOp_const_Matx_DivOpR(unnamed.as_raw_Matx_DivOp(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_DivOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22560,7 +22560,7 @@ pub mod core {
 		pub fn default() -> Result<core::Matx_MatMulOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_MatMulOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22570,7 +22570,7 @@ pub mod core {
 		pub fn copy(unnamed: &impl core::Matx_MatMulOpTraitConst) -> Result<core::Matx_MatMulOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp_const_Matx_MatMulOpR(unnamed.as_raw_Matx_MatMulOp(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_MatMulOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22628,7 +22628,7 @@ pub mod core {
 		pub fn default() -> Result<core::Matx_MulOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_MulOp_Matx_MulOp(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_MulOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22638,7 +22638,7 @@ pub mod core {
 		pub fn copy(unnamed: &impl core::Matx_MulOpTraitConst) -> Result<core::Matx_MulOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_MulOp_Matx_MulOp_const_Matx_MulOpR(unnamed.as_raw_Matx_MulOp(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_MulOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22696,7 +22696,7 @@ pub mod core {
 		pub fn default() -> Result<core::Matx_ScaleOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_ScaleOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22706,7 +22706,7 @@ pub mod core {
 		pub fn copy(unnamed: &impl core::Matx_ScaleOpTraitConst) -> Result<core::Matx_ScaleOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp_const_Matx_ScaleOpR(unnamed.as_raw_Matx_ScaleOp(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_ScaleOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22764,7 +22764,7 @@ pub mod core {
 		pub fn default() -> Result<core::Matx_SubOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_SubOp_Matx_SubOp(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_SubOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22774,7 +22774,7 @@ pub mod core {
 		pub fn copy(unnamed: &impl core::Matx_SubOpTraitConst) -> Result<core::Matx_SubOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_SubOp_Matx_SubOp_const_Matx_SubOpR(unnamed.as_raw_Matx_SubOp(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_SubOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22832,7 +22832,7 @@ pub mod core {
 		pub fn default() -> Result<core::Matx_TOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_TOp_Matx_TOp(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_TOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22842,7 +22842,7 @@ pub mod core {
 		pub fn copy(unnamed: &impl core::Matx_TOpTraitConst) -> Result<core::Matx_TOp> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Matx_TOp_Matx_TOp_const_Matx_TOpR(unnamed.as_raw_Matx_TOp(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Matx_TOp::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22912,7 +22912,7 @@ pub mod core {
 		fn get_function(&self) -> Result<core::Ptr<core::MinProblemSolver_Function>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_getFunction_const(self.as_raw_MinProblemSolver(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::MinProblemSolver_Function>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -22926,7 +22926,7 @@ pub mod core {
 		fn get_term_criteria(&self) -> Result<core::TermCriteria> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_getTermCriteria_const(self.as_raw_MinProblemSolver(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22947,7 +22947,7 @@ pub mod core {
 		fn set_function(&mut self, f: &core::Ptr<core::MinProblemSolver_Function>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_setFunction_const_PtrLFunctionGR(self.as_raw_mut_MinProblemSolver(), f.as_raw_PtrOfMinProblemSolver_Function(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22967,7 +22967,7 @@ pub mod core {
 		fn set_term_criteria(&mut self, termcrit: core::TermCriteria) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_setTermCriteria_const_TermCriteriaR(self.as_raw_mut_MinProblemSolver(), &termcrit, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -22990,7 +22990,7 @@ pub mod core {
 			input_output_array_arg!(x);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_minimize_const__InputOutputArrayR(self.as_raw_mut_MinProblemSolver(), x.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23055,7 +23055,7 @@ pub mod core {
 		fn get_dims(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_Function_getDims_const(self.as_raw_MinProblemSolver_Function(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23064,7 +23064,7 @@ pub mod core {
 		fn get_gradient_eps(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_Function_getGradientEps_const(self.as_raw_MinProblemSolver_Function(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23073,7 +23073,7 @@ pub mod core {
 		fn calc(&self, x: &f64) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_Function_calc_const_const_doubleX(self.as_raw_MinProblemSolver_Function(), x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23088,7 +23088,7 @@ pub mod core {
 		fn get_gradient(&mut self, x: &f64, grad: &mut f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_Function_getGradient_const_doubleX_doubleX(self.as_raw_mut_MinProblemSolver_Function(), x, grad, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23207,7 +23207,7 @@ pub mod core {
 		pub fn default() -> Result<core::Moments> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Moments_Moments(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23217,7 +23217,7 @@ pub mod core {
 		pub fn new(m00: f64, m10: f64, m01: f64, m20: f64, m11: f64, m02: f64, m30: f64, m21: f64, m12: f64, m03: f64) -> Result<core::Moments> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Moments_Moments_double_double_double_double_double_double_double_double_double_double(m00, m10, m01, m20, m11, m02, m30, m21, m12, m03, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23313,7 +23313,7 @@ pub mod core {
 		pub fn default() -> Result<core::PCA> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_PCA(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -23343,7 +23343,7 @@ pub mod core {
 			input_array_arg!(mean);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -23368,7 +23368,7 @@ pub mod core {
 			input_array_arg!(mean);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -23396,7 +23396,7 @@ pub mod core {
 			input_array_arg!(mean);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_double(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -23451,7 +23451,7 @@ pub mod core {
 			input_array_arg!(vec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_project_const_const__InputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -23490,7 +23490,7 @@ pub mod core {
 			output_array_arg!(result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_project_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23513,7 +23513,7 @@ pub mod core {
 			input_array_arg!(vec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_backProject_const_const__InputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -23546,7 +23546,7 @@ pub mod core {
 			output_array_arg!(result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_backProject_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23558,7 +23558,7 @@ pub mod core {
 		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_write_const_FileStorageR(self.as_raw_PCA(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23618,7 +23618,7 @@ pub mod core {
 			input_array_arg!(mean);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_operator___const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_PCA(), data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -23653,7 +23653,7 @@ pub mod core {
 			input_array_arg!(mean);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_operator___const__InputArrayR_const__InputArrayR_int(self.as_raw_mut_PCA(), data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -23696,7 +23696,7 @@ pub mod core {
 			input_array_arg!(mean);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_operator___const__InputArrayR_const__InputArrayR_int_double(self.as_raw_mut_PCA(), data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -23709,7 +23709,7 @@ pub mod core {
 		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_read_const_FileNodeR(self.as_raw_mut_PCA(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23763,7 +23763,7 @@ pub mod core {
 		fn apply(&self, range: &impl core::RangeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ParallelLoopBody_operator___const_const_RangeR(self.as_raw_ParallelLoopBody(), range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23832,7 +23832,7 @@ pub mod core {
 		pub fn default() -> Result<core::RNG> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_RNG(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::RNG::opencv_from_extern(ret) };
 			Ok(ret)
@@ -23854,7 +23854,7 @@ pub mod core {
 		pub fn new(state: u64) -> Result<core::RNG> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_RNG_uint64_t(state, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::RNG::opencv_from_extern(ret) };
 			Ok(ret)
@@ -23876,7 +23876,7 @@ pub mod core {
 		fn equals(&self, other: &impl core::RNGTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operatorEQ_const_const_RNGR(self.as_raw_RNG(), other.as_raw_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23899,7 +23899,7 @@ pub mod core {
 		fn next(&mut self) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_next(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23913,7 +23913,7 @@ pub mod core {
 		fn to_u8(&mut self) -> Result<u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operator_unsigned_char(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23923,7 +23923,7 @@ pub mod core {
 		fn to_i8(&mut self) -> Result<i8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operator_signed_char(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23933,7 +23933,7 @@ pub mod core {
 		fn to_u16(&mut self) -> Result<u16> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operator_unsigned_short(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23943,7 +23943,7 @@ pub mod core {
 		fn to_i16(&mut self) -> Result<i16> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operator_short(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23953,7 +23953,7 @@ pub mod core {
 		fn to_u32(&mut self) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operator_unsigned_int(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23963,7 +23963,7 @@ pub mod core {
 		fn to_i32(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operator_int(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23973,7 +23973,7 @@ pub mod core {
 		fn to_f32(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operator_float(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23983,7 +23983,7 @@ pub mod core {
 		fn to_f64(&mut self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operator_double(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -23998,7 +23998,7 @@ pub mod core {
 		fn apply(&mut self) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operator__(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24018,7 +24018,7 @@ pub mod core {
 		fn apply_range(&mut self, n: u32) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operator___unsigned_int(self.as_raw_mut_RNG(), n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24064,7 +24064,7 @@ pub mod core {
 		fn uniform(&mut self, a: i32, b: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_uniform_int_int(self.as_raw_mut_RNG(), a, b, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24112,7 +24112,7 @@ pub mod core {
 		fn uniform_f32(&mut self, a: f32, b: f32) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_uniform_float_float(self.as_raw_mut_RNG(), a, b, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24160,7 +24160,7 @@ pub mod core {
 		fn uniform_f64(&mut self, a: f64, b: f64) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_uniform_double_double(self.as_raw_mut_RNG(), a, b, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24209,7 +24209,7 @@ pub mod core {
 			input_array_arg!(b);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_fill_const__InputOutputArrayR_int_const__InputArrayR_const__InputArrayR_bool(self.as_raw_mut_RNG(), mat.as_raw__InputOutputArray(), dist_type, a.as_raw__InputArray(), b.as_raw__InputArray(), saturate_range, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24259,7 +24259,7 @@ pub mod core {
 			input_array_arg!(b);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_fill_const__InputOutputArrayR_int_const__InputArrayR_const__InputArrayR(self.as_raw_mut_RNG(), mat.as_raw__InputOutputArray(), dist_type, a.as_raw__InputArray(), b.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24276,7 +24276,7 @@ pub mod core {
 		fn gaussian(&mut self, sigma: f64) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_gaussian_double(self.as_raw_mut_RNG(), sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24326,7 +24326,7 @@ pub mod core {
 		pub fn default() -> Result<core::RNG_MT19937> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_RNG_MT19937(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::RNG_MT19937::opencv_from_extern(ret) };
 			Ok(ret)
@@ -24336,7 +24336,7 @@ pub mod core {
 		pub fn new(s: u32) -> Result<core::RNG_MT19937> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_RNG_MT19937_unsigned_int(s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::RNG_MT19937::opencv_from_extern(ret) };
 			Ok(ret)
@@ -24358,7 +24358,7 @@ pub mod core {
 		fn seed(&mut self, s: u32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_seed_unsigned_int(self.as_raw_mut_RNG_MT19937(), s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24367,7 +24367,7 @@ pub mod core {
 		fn next(&mut self) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_next(self.as_raw_mut_RNG_MT19937(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24376,7 +24376,7 @@ pub mod core {
 		fn to_i32(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_operator_int(self.as_raw_mut_RNG_MT19937(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24385,7 +24385,7 @@ pub mod core {
 		fn to_u32(&mut self) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_operator_unsigned_int(self.as_raw_mut_RNG_MT19937(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24394,7 +24394,7 @@ pub mod core {
 		fn to_f32(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_operator_float(self.as_raw_mut_RNG_MT19937(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24403,7 +24403,7 @@ pub mod core {
 		fn to_f64(&mut self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_operator_double(self.as_raw_mut_RNG_MT19937(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24412,7 +24412,7 @@ pub mod core {
 		fn to_u32_with_max(&mut self, n: u32) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_operator___unsigned_int(self.as_raw_mut_RNG_MT19937(), n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24422,7 +24422,7 @@ pub mod core {
 		fn uniform(&mut self, a: i32, b: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_uniform_int_int(self.as_raw_mut_RNG_MT19937(), a, b, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24432,7 +24432,7 @@ pub mod core {
 		fn uniform_1(&mut self, a: f32, b: f32) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_uniform_float_float(self.as_raw_mut_RNG_MT19937(), a, b, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24442,7 +24442,7 @@ pub mod core {
 		fn uniform_2(&mut self, a: f64, b: f64) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_MT19937_uniform_double_double(self.as_raw_mut_RNG_MT19937(), a, b, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24511,7 +24511,7 @@ pub mod core {
 		pub fn default() -> Result<core::Range> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Range_Range(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Range::opencv_from_extern(ret) };
 			Ok(ret)
@@ -24521,7 +24521,7 @@ pub mod core {
 		pub fn new(_start: i32, _end: i32) -> Result<core::Range> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Range_Range_int_int(_start, _end, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Range::opencv_from_extern(ret) };
 			Ok(ret)
@@ -24531,7 +24531,7 @@ pub mod core {
 		pub fn all() -> Result<core::Range> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Range_all(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Range::opencv_from_extern(ret) };
 			Ok(ret)
@@ -24559,7 +24559,7 @@ pub mod core {
 		fn size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Range_size_const(self.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24568,7 +24568,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Range_empty_const(self.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24648,7 +24648,7 @@ pub mod core {
 		pub fn points(self, pts: &mut [core::Point2f; 4]) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RotatedRect_points_const_Point2fXX(&self, pts, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24657,7 +24657,7 @@ pub mod core {
 		pub fn points_vec(self, pts: &mut core::Vector<core::Point2f>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RotatedRect_points_const_vectorLPoint2fGR(&self, pts.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24667,7 +24667,7 @@ pub mod core {
 		pub fn bounding_rect(self) -> Result<core::Rect> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RotatedRect_boundingRect_const(&self, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24677,7 +24677,7 @@ pub mod core {
 		pub fn bounding_rect2f(self) -> Result<core::Rect2f> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RotatedRect_boundingRect2f_const(&self, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24687,7 +24687,7 @@ pub mod core {
 		pub fn default() -> Result<core::RotatedRect> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RotatedRect_RotatedRect(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24702,7 +24702,7 @@ pub mod core {
 		pub fn new(center: core::Point2f, size: core::Size2f, angle: f32) -> Result<core::RotatedRect> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RotatedRect_RotatedRect_const_Point2fR_const_Size2fR_float(&center, &size, angle, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24713,7 +24713,7 @@ pub mod core {
 		pub fn for_points(point1: core::Point2f, point2: core::Point2f, point3: core::Point2f) -> Result<core::RotatedRect> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RotatedRect_RotatedRect_const_Point2fR_const_Point2fR_const_Point2fR(&point1, &point2, &point3, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24756,7 +24756,7 @@ pub mod core {
 		pub fn default() -> Result<core::SVD> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_SVD(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
 			Ok(ret)
@@ -24780,7 +24780,7 @@ pub mod core {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_SVD_const__InputArrayR_int(src.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
 			Ok(ret)
@@ -24800,7 +24800,7 @@ pub mod core {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_SVD_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
 			Ok(ret)
@@ -24835,7 +24835,7 @@ pub mod core {
 			output_array_arg!(vt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24870,7 +24870,7 @@ pub mod core {
 			output_array_arg!(vt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24909,7 +24909,7 @@ pub mod core {
 			output_array_arg!(w);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24930,7 +24930,7 @@ pub mod core {
 			output_array_arg!(w);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), w.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24945,7 +24945,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_backSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -24966,7 +24966,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_solveZ_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25027,7 +25027,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_backSubst_const_const__InputArrayR_const__OutputArrayR(self.as_raw_SVD(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25075,7 +25075,7 @@ pub mod core {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_operator___const__InputArrayR_int(self.as_raw_mut_SVD(), src.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25101,7 +25101,7 @@ pub mod core {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_operator___const__InputArrayR(self.as_raw_mut_SVD(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25232,7 +25232,7 @@ pub mod core {
 		pub fn default() -> Result<core::SparseMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_SparseMat(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25250,7 +25250,7 @@ pub mod core {
 		pub fn new(_sizes: &[i32], _type: i32) -> Result<core::SparseMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_SparseMat_int_const_intX_int(_sizes.len().try_into()?, _sizes.as_ptr(), _type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25267,7 +25267,7 @@ pub mod core {
 		pub fn copy(m: &impl core::SparseMatTraitConst) -> Result<core::SparseMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_SparseMat_const_SparseMatR(m.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25284,7 +25284,7 @@ pub mod core {
 		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<core::SparseMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_SparseMat_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25308,7 +25308,7 @@ pub mod core {
 		fn try_clone(&self) -> Result<core::SparseMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_clone_const(self.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25319,7 +25319,7 @@ pub mod core {
 		fn copy_to(&self, m: &mut impl core::SparseMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_copyTo_const_SparseMatR(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25329,7 +25329,7 @@ pub mod core {
 		fn copy_to_mat(&self, m: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_copyTo_const_MatR(self.as_raw_SparseMat(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25342,7 +25342,7 @@ pub mod core {
 		fn convert_to(&self, m: &mut impl core::SparseMatTrait, rtype: i32, alpha: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_convertTo_const_SparseMatR_int_double(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), rtype, alpha, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25356,7 +25356,7 @@ pub mod core {
 		fn convert_to_def(&self, m: &mut impl core::SparseMatTrait, rtype: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_convertTo_const_SparseMatR_int(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), rtype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25379,7 +25379,7 @@ pub mod core {
 		fn convert_to_1(&self, m: &mut impl core::MatTrait, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_convertTo_const_MatR_int_double_double(self.as_raw_SparseMat(), m.as_raw_mut_Mat(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25403,7 +25403,7 @@ pub mod core {
 		fn convert_to_def_1(&self, m: &mut impl core::MatTrait, rtype: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_convertTo_const_MatR_int(self.as_raw_SparseMat(), m.as_raw_mut_Mat(), rtype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25414,7 +25414,7 @@ pub mod core {
 		fn assign_to(&self, m: &mut impl core::SparseMatTrait, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_assignTo_const_SparseMatR_int(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25426,7 +25426,7 @@ pub mod core {
 		fn assign_to_def(&self, m: &mut impl core::SparseMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_assignTo_const_SparseMatR(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25471,7 +25471,7 @@ pub mod core {
 		fn size(&self) -> Result<*const i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_size_const(self.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25481,7 +25481,7 @@ pub mod core {
 		fn size_1(&self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_size_const_int(self.as_raw_SparseMat(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25491,7 +25491,7 @@ pub mod core {
 		fn dims(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_dims_const(self.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25501,7 +25501,7 @@ pub mod core {
 		fn nzcount(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_nzcount_const(self.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25511,7 +25511,7 @@ pub mod core {
 		fn hash(&self, i0: i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_hash_const_int(self.as_raw_SparseMat(), i0, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25521,7 +25521,7 @@ pub mod core {
 		fn hash_1(&self, i0: i32, i1: i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_hash_const_int_int(self.as_raw_SparseMat(), i0, i1, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25531,7 +25531,7 @@ pub mod core {
 		fn hash_2(&self, i0: i32, i1: i32, i2: i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_hash_const_int_int_int(self.as_raw_SparseMat(), i0, i1, i2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25541,7 +25541,7 @@ pub mod core {
 		fn hash_3(&self, idx: &i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_hash_const_const_intX(self.as_raw_SparseMat(), idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25551,7 +25551,7 @@ pub mod core {
 		fn begin(&self) -> Result<core::SparseMatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_begin_const(self.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25562,7 +25562,7 @@ pub mod core {
 		fn end(&self) -> Result<core::SparseMatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_end_const(self.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25572,7 +25572,7 @@ pub mod core {
 		fn node(&self, nidx: size_t) -> Result<core::SparseMat_Node> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_node_const_size_t(self.as_raw_SparseMat(), nidx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat_Node::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25608,7 +25608,7 @@ pub mod core {
 		fn set(&mut self, m: &impl core::SparseMatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_operatorST_const_SparseMatR(self.as_raw_mut_SparseMat(), m.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25618,7 +25618,7 @@ pub mod core {
 		fn set_mat(&mut self, m: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_operatorST_const_MatR(self.as_raw_mut_SparseMat(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25632,7 +25632,7 @@ pub mod core {
 		fn create(&mut self, _sizes: &[i32], _type: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_create_int_const_intX_int(self.as_raw_mut_SparseMat(), _sizes.len().try_into()?, _sizes.as_ptr(), _type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25642,7 +25642,7 @@ pub mod core {
 		fn clear(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_clear(self.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25651,7 +25651,7 @@ pub mod core {
 		#[inline]
 		unsafe fn addref(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_SparseMat_addref(self.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_addref(self.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -25660,7 +25660,7 @@ pub mod core {
 		#[inline]
 		unsafe fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_SparseMat_release(self.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_release(self.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -25683,7 +25683,7 @@ pub mod core {
 		fn ptr(&mut self, i0: i32, create_missing: bool, hashval: &mut size_t) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_ptr_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, create_missing, hashval, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25706,7 +25706,7 @@ pub mod core {
 		fn ptr_def(&mut self, i0: i32, create_missing: bool) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_ptr_int_bool(self.as_raw_mut_SparseMat(), i0, create_missing, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25719,7 +25719,7 @@ pub mod core {
 		fn ptr_1(&mut self, i0: i32, i1: i32, create_missing: bool, hashval: &mut size_t) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_ptr_int_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, i1, create_missing, hashval, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25733,7 +25733,7 @@ pub mod core {
 		fn ptr_def_1(&mut self, i0: i32, i1: i32, create_missing: bool) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_ptr_int_int_bool(self.as_raw_mut_SparseMat(), i0, i1, create_missing, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25746,7 +25746,7 @@ pub mod core {
 		fn ptr_2(&mut self, i0: i32, i1: i32, i2: i32, create_missing: bool, hashval: &mut size_t) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_ptr_int_int_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, i1, i2, create_missing, hashval, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25760,7 +25760,7 @@ pub mod core {
 		fn ptr_def_2(&mut self, i0: i32, i1: i32, i2: i32, create_missing: bool) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_ptr_int_int_int_bool(self.as_raw_mut_SparseMat(), i0, i1, i2, create_missing, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25773,7 +25773,7 @@ pub mod core {
 		fn ptr_3(&mut self, idx: &i32, create_missing: bool, hashval: &mut size_t) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_ptr_const_intX_bool_size_tX(self.as_raw_mut_SparseMat(), idx, create_missing, hashval, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25787,7 +25787,7 @@ pub mod core {
 		fn ptr_def_3(&mut self, idx: &i32, create_missing: bool) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_ptr_const_intX_bool(self.as_raw_mut_SparseMat(), idx, create_missing, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25800,7 +25800,7 @@ pub mod core {
 		fn erase(&mut self, i0: i32, i1: i32, hashval: &mut size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_erase_int_int_size_tX(self.as_raw_mut_SparseMat(), i0, i1, hashval, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25814,7 +25814,7 @@ pub mod core {
 		fn erase_def(&mut self, i0: i32, i1: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_erase_int_int(self.as_raw_mut_SparseMat(), i0, i1, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25827,7 +25827,7 @@ pub mod core {
 		fn erase_1(&mut self, i0: i32, i1: i32, i2: i32, hashval: &mut size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_erase_int_int_int_size_tX(self.as_raw_mut_SparseMat(), i0, i1, i2, hashval, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25841,7 +25841,7 @@ pub mod core {
 		fn erase_def_1(&mut self, i0: i32, i1: i32, i2: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_erase_int_int_int(self.as_raw_mut_SparseMat(), i0, i1, i2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25854,7 +25854,7 @@ pub mod core {
 		fn erase_2(&mut self, idx: &i32, hashval: &mut size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_erase_const_intX_size_tX(self.as_raw_mut_SparseMat(), idx, hashval, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25868,7 +25868,7 @@ pub mod core {
 		fn erase_def_2(&mut self, idx: &i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_erase_const_intX(self.as_raw_mut_SparseMat(), idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25880,7 +25880,7 @@ pub mod core {
 		fn begin_mut(&mut self) -> Result<core::SparseMatIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_begin(self.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25893,7 +25893,7 @@ pub mod core {
 		fn end_mut(&mut self) -> Result<core::SparseMatIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_end(self.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25904,7 +25904,7 @@ pub mod core {
 		fn node_1(&mut self, nidx: size_t) -> Result<core::SparseMat_Node> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_node_size_t(self.as_raw_mut_SparseMat(), nidx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat_Node::opencv_from_extern(ret) };
 			Ok(ret)
@@ -25914,7 +25914,7 @@ pub mod core {
 		fn new_node(&mut self, idx: &i32, hashval: size_t) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_newNode_const_intX_size_t(self.as_raw_mut_SparseMat(), idx, hashval, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25923,7 +25923,7 @@ pub mod core {
 		fn remove_node(&mut self, hidx: size_t, nidx: size_t, previdx: size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_removeNode_size_t_size_t_size_t(self.as_raw_mut_SparseMat(), hidx, nidx, previdx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25932,7 +25932,7 @@ pub mod core {
 		fn resize_hash_tab(&mut self, newsize: size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_resizeHashTab_size_t(self.as_raw_mut_SparseMat(), newsize, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -25987,7 +25987,7 @@ pub mod core {
 		pub fn new(_sizes: &[i32], _type: i32) -> Result<core::SparseMat_Hdr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_Hdr_Hdr_int_const_intX_int(_sizes.len().try_into()?, _sizes.as_ptr(), _type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat_Hdr::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26121,7 +26121,7 @@ pub mod core {
 		fn clear(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_Hdr_clear(self.as_raw_mut_SparseMat_Hdr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26299,7 +26299,7 @@ pub mod core {
 		pub fn default() -> Result<core::SparseMatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26310,7 +26310,7 @@ pub mod core {
 		pub fn new(_m: &impl core::SparseMatTraitConst) -> Result<core::SparseMatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatX(_m.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26321,7 +26321,7 @@ pub mod core {
 		pub fn copy(it: &impl core::SparseMatConstIteratorTraitConst) -> Result<core::SparseMatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatConstIteratorR(it.as_raw_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26357,7 +26357,7 @@ pub mod core {
 		fn node(&self) -> Result<core::SparseMat_Node> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatConstIterator_node_const(self.as_raw_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat_Node::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26383,7 +26383,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_ptr(&mut self, val: *const u8) {
-			let ret = { sys::cv_SparseMatConstIterator_propPtr_unsigned_charX(self.as_raw_mut_SparseMatConstIterator(), val) };
+			let ret = unsafe { sys::cv_SparseMatConstIterator_propPtr_unsigned_charX(self.as_raw_mut_SparseMatConstIterator(), val) };
 			ret
 		}
 
@@ -26392,7 +26392,7 @@ pub mod core {
 		fn set(&mut self, it: &impl core::SparseMatConstIteratorTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatConstIterator_operatorST_const_SparseMatConstIteratorR(self.as_raw_mut_SparseMatConstIterator(), it.as_raw_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26402,7 +26402,7 @@ pub mod core {
 		fn incr(&mut self) -> Result<core::SparseMatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatConstIterator_operatorAA(self.as_raw_mut_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26413,7 +26413,7 @@ pub mod core {
 		fn seek_end(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatConstIterator_seekEnd(self.as_raw_mut_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26466,7 +26466,7 @@ pub mod core {
 		pub fn default() -> Result<core::SparseMatIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatIterator_SparseMatIterator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26477,7 +26477,7 @@ pub mod core {
 		pub fn new(_m: &mut impl core::SparseMatTrait) -> Result<core::SparseMatIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatIterator_SparseMatIterator_SparseMatX(_m.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26488,7 +26488,7 @@ pub mod core {
 		pub fn copy(it: &impl core::SparseMatIteratorTraitConst) -> Result<core::SparseMatIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorR(it.as_raw_SparseMatIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26505,7 +26505,7 @@ pub mod core {
 		fn node(&self) -> Result<core::SparseMat_Node> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatIterator_node_const(self.as_raw_SparseMatIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat_Node::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26522,7 +26522,7 @@ pub mod core {
 		fn set(&mut self, it: &impl core::SparseMatIteratorTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatIterator_operatorST_const_SparseMatIteratorR(self.as_raw_mut_SparseMatIterator(), it.as_raw_SparseMatIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26532,7 +26532,7 @@ pub mod core {
 		fn incr(&mut self) -> Result<core::SparseMatIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMatIterator_operatorAA(self.as_raw_mut_SparseMatIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26595,7 +26595,7 @@ pub mod core {
 		pub fn is_valid(self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TermCriteria_isValid_const(&self, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26605,7 +26605,7 @@ pub mod core {
 		pub fn default() -> Result<core::TermCriteria> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TermCriteria_TermCriteria(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26618,7 +26618,7 @@ pub mod core {
 		pub fn new(typ: i32, max_count: i32, epsilon: f64) -> Result<core::TermCriteria> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TermCriteria_TermCriteria_int_int_double(typ, max_count, epsilon, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26656,7 +26656,7 @@ pub mod core {
 		pub fn default() -> Result<core::TickMeter> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_TickMeter(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::TickMeter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26673,7 +26673,7 @@ pub mod core {
 		fn get_time_ticks(&self) -> Result<i64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getTimeTicks_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26683,7 +26683,7 @@ pub mod core {
 		fn get_time_micro(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getTimeMicro_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26693,7 +26693,7 @@ pub mod core {
 		fn get_time_milli(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getTimeMilli_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26703,7 +26703,7 @@ pub mod core {
 		fn get_time_sec(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getTimeSec_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26713,7 +26713,7 @@ pub mod core {
 		fn get_last_time_ticks(&self) -> Result<i64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getLastTimeTicks_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26723,7 +26723,7 @@ pub mod core {
 		fn get_last_time_micro(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getLastTimeMicro_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26733,7 +26733,7 @@ pub mod core {
 		fn get_last_time_milli(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getLastTimeMilli_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26743,7 +26743,7 @@ pub mod core {
 		fn get_last_time_sec(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getLastTimeSec_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26753,7 +26753,7 @@ pub mod core {
 		fn get_counter(&self) -> Result<i64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getCounter_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26763,7 +26763,7 @@ pub mod core {
 		fn get_fps(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getFPS_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26773,7 +26773,7 @@ pub mod core {
 		fn get_avg_time_sec(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getAvgTimeSec_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26783,7 +26783,7 @@ pub mod core {
 		fn get_avg_time_milli(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_getAvgTimeMilli_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26799,7 +26799,7 @@ pub mod core {
 		fn start(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_start(self.as_raw_mut_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26809,7 +26809,7 @@ pub mod core {
 		fn stop(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_stop(self.as_raw_mut_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26819,7 +26819,7 @@ pub mod core {
 		fn reset(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TickMeter_reset(self.as_raw_mut_TickMeter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -26891,10 +26891,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_UMat_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_UMat_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::UMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -26907,7 +26907,7 @@ pub mod core {
 		pub fn new_rows_cols_def(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26918,10 +26918,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_size(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_UMat_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_UMat_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::UMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -26932,7 +26932,7 @@ pub mod core {
 		pub fn new_size_def(size: core::Size, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26946,7 +26946,7 @@ pub mod core {
 		pub fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_int_int_int_const_ScalarR_UMatUsageFlags(rows, cols, typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26961,7 +26961,7 @@ pub mod core {
 		pub fn new_rows_cols_with_default_def(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_int_int_int_const_ScalarR(rows, cols, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26973,7 +26973,7 @@ pub mod core {
 		pub fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_Size_int_const_ScalarR_UMatUsageFlags(&size, typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26986,7 +26986,7 @@ pub mod core {
 		pub fn new_size_with_default_def(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_Size_int_const_ScalarR(&size, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -26999,10 +26999,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_nd(sizes: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_UMat_int_const_intX_int_UMatUsageFlags(sizes.len().try_into()?, sizes.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_UMat_int_const_intX_int_UMatUsageFlags(sizes.len().try_into()?, sizes.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::UMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -27015,7 +27015,7 @@ pub mod core {
 		pub fn new_nd_def(sizes: &[i32], typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_int_const_intX_int(sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27027,7 +27027,7 @@ pub mod core {
 		pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR_UMatUsageFlags(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27040,7 +27040,7 @@ pub mod core {
 		pub fn new_nd_with_default_def(sizes: &[i32], typ: i32, s: core::Scalar) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27051,7 +27051,7 @@ pub mod core {
 		pub fn copy(m: &impl core::UMatTraitConst) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27065,7 +27065,7 @@ pub mod core {
 		pub fn rowscols<'boxed>(m: &'boxed impl core::UMatTraitConst, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_const_UMatR_const_RangeR_const_RangeR(m.as_raw_UMat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<'boxed, core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27080,7 +27080,7 @@ pub mod core {
 		pub fn rowscols_def_mut<'boxed>(m: &'boxed mut impl core::UMatTrait, row_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_UMatR_const_RangeR(m.as_raw_mut_UMat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<'boxed, core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27095,7 +27095,7 @@ pub mod core {
 		pub fn rowscols_def<'boxed>(m: &'boxed impl core::UMatTraitConst, row_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_const_UMatR_const_RangeR(m.as_raw_UMat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<'boxed, core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27109,7 +27109,7 @@ pub mod core {
 		pub fn rowscols_mut<'boxed>(m: &'boxed mut impl core::UMatTrait, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_UMatR_const_RangeR_const_RangeR(m.as_raw_mut_UMat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<'boxed, core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27119,7 +27119,7 @@ pub mod core {
 		pub fn roi(m: &impl core::UMatTraitConst, roi: core::Rect) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_const_UMatR_const_RectR(m.as_raw_UMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27129,7 +27129,7 @@ pub mod core {
 		pub fn roi_mut(m: &mut impl core::UMatTrait, roi: core::Rect) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_UMatR_const_RectR(m.as_raw_mut_UMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27139,7 +27139,7 @@ pub mod core {
 		pub fn ranges<'boxed>(m: &'boxed impl core::UMatTraitConst, ranges: &core::Vector<core::Range>) -> Result<BoxedRef<'boxed, core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_const_UMatR_const_vectorLRangeGR(m.as_raw_UMat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<'boxed, core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27149,7 +27149,7 @@ pub mod core {
 		pub fn ranges_mut<'boxed>(m: &'boxed mut impl core::UMatTrait, ranges: &core::Vector<core::Range>) -> Result<BoxedRefMut<'boxed, core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_UMatR_const_vectorLRangeGR(m.as_raw_mut_UMat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<'boxed, core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27161,7 +27161,7 @@ pub mod core {
 		pub fn diag_flags(d: &impl core::UMatTraitConst, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_diag_const_UMatR_UMatUsageFlags(d.as_raw_UMat(), usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27172,7 +27172,7 @@ pub mod core {
 		pub fn diag(d: &impl core::UMatTraitConst) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_diag_const_UMatR(d.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27184,7 +27184,7 @@ pub mod core {
 		pub fn zeros_flags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_zeros_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27195,7 +27195,7 @@ pub mod core {
 		pub fn zeros_size_flags(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_zeros_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27206,7 +27206,7 @@ pub mod core {
 		pub fn zeros_nd_flags(sz: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_zeros_int_const_intX_int_UMatUsageFlags(sz.len().try_into()?, sz.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27217,7 +27217,7 @@ pub mod core {
 		pub fn zeros(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_zeros_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27228,7 +27228,7 @@ pub mod core {
 		pub fn zeros_size(size: core::Size, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_zeros_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27239,7 +27239,7 @@ pub mod core {
 		pub fn zeros_nd(sz: &[i32], typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_zeros_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27250,7 +27250,7 @@ pub mod core {
 		pub fn ones_flags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_ones_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27261,7 +27261,7 @@ pub mod core {
 		pub fn ones_size_flags(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_ones_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27272,7 +27272,7 @@ pub mod core {
 		pub fn ones_nd_flags(sz: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_ones_int_const_intX_int_UMatUsageFlags(sz.len().try_into()?, sz.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27283,7 +27283,7 @@ pub mod core {
 		pub fn ones(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_ones_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27294,7 +27294,7 @@ pub mod core {
 		pub fn ones_size(size: core::Size, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_ones_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27305,7 +27305,7 @@ pub mod core {
 		pub fn ones_nd(sz: &[i32], typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_ones_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27316,7 +27316,7 @@ pub mod core {
 		pub fn eye_flags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_eye_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27327,7 +27327,7 @@ pub mod core {
 		pub fn eye_size_flags(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_eye_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27338,7 +27338,7 @@ pub mod core {
 		pub fn eye(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_eye_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27349,7 +27349,7 @@ pub mod core {
 		pub fn eye_size(size: core::Size, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_eye_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27359,7 +27359,7 @@ pub mod core {
 		pub fn copy_mut(mut m: core::UMat) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_UMatRR(m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27408,7 +27408,7 @@ pub mod core {
 		fn usage_flags(&self) -> core::UMatUsageFlags {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_propUsageFlags_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -27439,7 +27439,7 @@ pub mod core {
 		fn get_mat(&self, flags: core::AccessFlag) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_getMat_const_AccessFlag(self.as_raw_UMat(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27450,7 +27450,7 @@ pub mod core {
 		fn row(&self, y: i32) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_row_const_int(self.as_raw_UMat(), y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27461,7 +27461,7 @@ pub mod core {
 		fn col(&self, x: i32) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_col_const_int(self.as_raw_UMat(), x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27472,7 +27472,7 @@ pub mod core {
 		fn row_bounds(&self, startrow: i32, endrow: i32) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_rowRange_const_int_int(self.as_raw_UMat(), startrow, endrow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27482,7 +27482,7 @@ pub mod core {
 		fn row_range(&self, r: &impl core::RangeTraitConst) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_rowRange_const_const_RangeR(self.as_raw_UMat(), r.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27493,7 +27493,7 @@ pub mod core {
 		fn col_bounds(&self, startcol: i32, endcol: i32) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_colRange_const_int_int(self.as_raw_UMat(), startcol, endcol, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27503,7 +27503,7 @@ pub mod core {
 		fn col_range(&self, r: &impl core::RangeTraitConst) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_colRange_const_const_RangeR(self.as_raw_UMat(), r.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27520,7 +27520,7 @@ pub mod core {
 		fn diag(&self, d: i32) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_diag_const_int(self.as_raw_UMat(), d, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27538,7 +27538,7 @@ pub mod core {
 		fn diag_def(&self) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_diag_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27550,7 +27550,7 @@ pub mod core {
 		fn try_clone(&self) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_clone_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27562,7 +27562,7 @@ pub mod core {
 			output_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_copyTo_const_const__OutputArrayR(self.as_raw_UMat(), m.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27574,7 +27574,7 @@ pub mod core {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_UMat(), m.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27589,7 +27589,7 @@ pub mod core {
 			output_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_UMat(), m.as_raw__OutputArray(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27605,7 +27605,7 @@ pub mod core {
 			output_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_convertTo_const_const__OutputArrayR_int(self.as_raw_UMat(), m.as_raw__OutputArray(), rtype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27616,7 +27616,7 @@ pub mod core {
 		fn assign_to(&self, m: &mut impl core::UMatTrait, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_assignTo_const_UMatR_int(self.as_raw_UMat(), m.as_raw_mut_UMat(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27628,7 +27628,7 @@ pub mod core {
 		fn assign_to_def(&self, m: &mut impl core::UMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_assignTo_const_UMatR(self.as_raw_UMat(), m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27641,7 +27641,7 @@ pub mod core {
 		fn reshape(&self, cn: i32, rows: i32) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_reshape_const_int_int(self.as_raw_UMat(), cn, rows, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27656,7 +27656,7 @@ pub mod core {
 		fn reshape_def(&self, cn: i32) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_reshape_const_int(self.as_raw_UMat(), cn, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27666,7 +27666,7 @@ pub mod core {
 		fn reshape_nd(&self, cn: i32, newsz: &[i32]) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_reshape_const_int_int_const_intX(self.as_raw_UMat(), cn, newsz.len().try_into()?, newsz.as_ptr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27677,7 +27677,7 @@ pub mod core {
 		fn t(&self) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_t_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27691,7 +27691,7 @@ pub mod core {
 		fn inv(&self, method: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_inv_const_int(self.as_raw_UMat(), method, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27706,7 +27706,7 @@ pub mod core {
 		fn inv_def(&self) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_inv_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27721,7 +27721,7 @@ pub mod core {
 			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_mul_const_const__InputArrayR_double(self.as_raw_UMat(), m.as_raw__InputArray(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27737,7 +27737,7 @@ pub mod core {
 			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_mul_const_const__InputArrayR(self.as_raw_UMat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27749,7 +27749,7 @@ pub mod core {
 			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_dot_const_const__InputArrayR(self.as_raw_UMat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27759,7 +27759,7 @@ pub mod core {
 		fn locate_roi(&self, whole_size: &mut core::Size, ofs: &mut core::Point) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_locateROI_const_SizeR_PointR(self.as_raw_UMat(), whole_size, ofs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27769,7 +27769,7 @@ pub mod core {
 		fn rowscols(&self, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_operator___const_Range_Range(self.as_raw_UMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27779,7 +27779,7 @@ pub mod core {
 		fn roi(&self, roi: core::Rect) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_operator___const_const_RectR(self.as_raw_UMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27789,7 +27789,7 @@ pub mod core {
 		fn ranges(&self, ranges: &core::Vector<core::Range>) -> Result<BoxedRef<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_operator___const_const_vectorLRangeGR(self.as_raw_UMat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -27814,7 +27814,7 @@ pub mod core {
 		fn elem_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_elemSize_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27855,7 +27855,7 @@ pub mod core {
 		fn step1(&self, i: i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_step1_const_int(self.as_raw_UMat(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27869,7 +27869,7 @@ pub mod core {
 		fn step1_def(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_step1_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27897,7 +27897,7 @@ pub mod core {
 		fn check_vector(&self, elem_channels: i32, depth: i32, require_continuous: bool) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_checkVector_const_int_int_bool(self.as_raw_UMat(), elem_channels, depth, require_continuous, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27912,7 +27912,7 @@ pub mod core {
 		fn check_vector_def(&self, elem_channels: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_checkVector_const_int(self.as_raw_UMat(), elem_channels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27924,7 +27924,7 @@ pub mod core {
 		fn handle(&self, access_flags: core::AccessFlag) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_handle_const_AccessFlag(self.as_raw_UMat(), access_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27933,7 +27933,7 @@ pub mod core {
 		fn ndoffset(&self, ofs: &mut size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_ndoffset_const_size_tX(self.as_raw_UMat(), ofs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -27942,7 +27942,7 @@ pub mod core {
 		fn size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_size_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28026,7 +28026,7 @@ pub mod core {
 		fn set(&mut self, m: &impl core::UMatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_operatorST_const_UMatR(self.as_raw_mut_UMat(), m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28036,7 +28036,7 @@ pub mod core {
 		fn row_mut(&mut self, y: i32) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_row_int(self.as_raw_mut_UMat(), y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28047,7 +28047,7 @@ pub mod core {
 		fn col_mut(&mut self, x: i32) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_col_int(self.as_raw_mut_UMat(), x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28058,7 +28058,7 @@ pub mod core {
 		fn row_bounds_mut(&mut self, startrow: i32, endrow: i32) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_rowRange_int_int(self.as_raw_mut_UMat(), startrow, endrow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28068,7 +28068,7 @@ pub mod core {
 		fn row_range_mut(&mut self, r: &impl core::RangeTraitConst) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_rowRange_const_RangeR(self.as_raw_mut_UMat(), r.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28079,7 +28079,7 @@ pub mod core {
 		fn col_bounds_mut(&mut self, startcol: i32, endcol: i32) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_colRange_int_int(self.as_raw_mut_UMat(), startcol, endcol, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28089,7 +28089,7 @@ pub mod core {
 		fn col_range_mut(&mut self, r: &impl core::RangeTraitConst) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_colRange_const_RangeR(self.as_raw_mut_UMat(), r.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28107,7 +28107,7 @@ pub mod core {
 		fn diag_def_mut(&mut self) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_diag(self.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28124,7 +28124,7 @@ pub mod core {
 		fn diag_mut(&mut self, d: i32) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_diag_int(self.as_raw_mut_UMat(), d, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28135,7 +28135,7 @@ pub mod core {
 		fn set_scalar(&mut self, s: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_operatorST_const_ScalarR(self.as_raw_mut_UMat(), &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28150,7 +28150,7 @@ pub mod core {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_setTo_const__InputArrayR_const__InputArrayR(self.as_raw_mut_UMat(), value.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28166,7 +28166,7 @@ pub mod core {
 			input_array_arg!(value);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_setTo_const__InputArrayR(self.as_raw_mut_UMat(), value.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28181,7 +28181,7 @@ pub mod core {
 		fn reshape_def_mut(&mut self, cn: i32) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_reshape_int(self.as_raw_mut_UMat(), cn, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28195,7 +28195,7 @@ pub mod core {
 		fn reshape_mut(&mut self, cn: i32, rows: i32) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_reshape_int_int(self.as_raw_mut_UMat(), cn, rows, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28205,7 +28205,7 @@ pub mod core {
 		fn reshape_nd_mut(&mut self, cn: i32, newsz: &[i32]) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_reshape_int_int_const_intX(self.as_raw_mut_UMat(), cn, newsz.len().try_into()?, newsz.as_ptr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28218,7 +28218,7 @@ pub mod core {
 		#[inline]
 		unsafe fn create_rows_cols(&mut self, rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_create_int_int_int_UMatUsageFlags(self.as_raw_mut_UMat(), rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_create_int_int_int_UMatUsageFlags(self.as_raw_mut_UMat(), rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -28233,7 +28233,7 @@ pub mod core {
 		fn create_rows_cols_def(&mut self, rows: i32, cols: i32, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_create_int_int_int(self.as_raw_mut_UMat(), rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28243,7 +28243,7 @@ pub mod core {
 		#[inline]
 		unsafe fn create_size(&mut self, size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_create_Size_int_UMatUsageFlags(self.as_raw_mut_UMat(), &size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_create_Size_int_UMatUsageFlags(self.as_raw_mut_UMat(), &size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -28256,7 +28256,7 @@ pub mod core {
 		fn create_size_def(&mut self, size: core::Size, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_create_Size_int(self.as_raw_mut_UMat(), &size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28266,7 +28266,7 @@ pub mod core {
 		#[inline]
 		unsafe fn create_nd(&mut self, sizes: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_create_int_const_intX_int_UMatUsageFlags(self.as_raw_mut_UMat(), sizes.len().try_into()?, sizes.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_create_int_const_intX_int_UMatUsageFlags(self.as_raw_mut_UMat(), sizes.len().try_into()?, sizes.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -28279,7 +28279,7 @@ pub mod core {
 		fn create_nd_def(&mut self, sizes: &[i32], typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_create_int_const_intX_int(self.as_raw_mut_UMat(), sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28289,7 +28289,7 @@ pub mod core {
 		#[inline]
 		unsafe fn create_nd_vec(&mut self, sizes: &core::Vector<i32>, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_create_const_vectorLintGR_int_UMatUsageFlags(self.as_raw_mut_UMat(), sizes.as_raw_VectorOfi32(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_create_const_vectorLintGR_int_UMatUsageFlags(self.as_raw_mut_UMat(), sizes.as_raw_VectorOfi32(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -28302,7 +28302,7 @@ pub mod core {
 		fn create_nd_vec_def(&mut self, sizes: &core::Vector<i32>, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_create_const_vectorLintGR_int(self.as_raw_mut_UMat(), sizes.as_raw_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28311,7 +28311,7 @@ pub mod core {
 		#[inline]
 		unsafe fn addref(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_addref(self.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_addref(self.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -28321,7 +28321,7 @@ pub mod core {
 		#[inline]
 		unsafe fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_release(self.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_release(self.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -28332,7 +28332,7 @@ pub mod core {
 		fn deallocate(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_deallocate(self.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28342,7 +28342,7 @@ pub mod core {
 		fn adjust_roi(&mut self, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_adjustROI_int_int_int_int(self.as_raw_mut_UMat(), dtop, dbottom, dleft, dright, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28353,7 +28353,7 @@ pub mod core {
 		fn rowscols_mut(&mut self, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_operator___Range_Range(self.as_raw_mut_UMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28363,7 +28363,7 @@ pub mod core {
 		fn roi_mut(&mut self, roi: core::Rect) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_operator___const_RectR(self.as_raw_mut_UMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28373,7 +28373,7 @@ pub mod core {
 		fn ranges_mut(&mut self, ranges: &core::Vector<core::Range>) -> Result<BoxedRefMut<core::UMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_operator___const_vectorLRangeGR(self.as_raw_mut_UMat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28383,7 +28383,7 @@ pub mod core {
 		fn set_1(&mut self, mut m: core::UMat) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_operatorST_UMatRR(self.as_raw_mut_UMat(), m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28393,7 +28393,7 @@ pub mod core {
 		fn update_continuity_flag(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_updateContinuityFlag(self.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28487,7 +28487,7 @@ pub mod core {
 		fn flags(&self) -> core::UMatData_MemoryFlag {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_propFlags_const(self.as_raw_UMatData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -28507,7 +28507,7 @@ pub mod core {
 		fn host_copy_obsolete(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_hostCopyObsolete_const(self.as_raw_UMatData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28516,7 +28516,7 @@ pub mod core {
 		fn device_copy_obsolete(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_deviceCopyObsolete_const(self.as_raw_UMatData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28525,7 +28525,7 @@ pub mod core {
 		fn device_mem_mapped(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_deviceMemMapped_const(self.as_raw_UMatData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28534,7 +28534,7 @@ pub mod core {
 		fn copy_on_map(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_copyOnMap_const(self.as_raw_UMatData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28543,7 +28543,7 @@ pub mod core {
 		fn temp_umat(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_tempUMat_const(self.as_raw_UMatData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28552,7 +28552,7 @@ pub mod core {
 		fn temp_copied_umat(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_tempCopiedUMat_const(self.as_raw_UMatData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28583,7 +28583,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_data(&mut self, val: *const u8) {
-			let ret = { sys::cv_UMatData_propData_unsigned_charX(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propData_unsigned_charX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
@@ -28595,7 +28595,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_origdata(&mut self, val: *const u8) {
-			let ret = { sys::cv_UMatData_propOrigdata_unsigned_charX(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propOrigdata_unsigned_charX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
@@ -28619,7 +28619,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_handle(&mut self, val: *const c_void) {
-			let ret = { sys::cv_UMatData_propHandle_voidX(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propHandle_voidX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
@@ -28631,7 +28631,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_userdata(&mut self, val: *const c_void) {
-			let ret = { sys::cv_UMatData_propUserdata_voidX(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propUserdata_voidX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
@@ -28664,7 +28664,7 @@ pub mod core {
 		fn lock(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_lock(self.as_raw_mut_UMatData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28673,7 +28673,7 @@ pub mod core {
 		fn unlock(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_unlock(self.as_raw_mut_UMatData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28682,7 +28682,7 @@ pub mod core {
 		fn mark_host_copy_obsolete(&mut self, flag: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_markHostCopyObsolete_bool(self.as_raw_mut_UMatData(), flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28691,7 +28691,7 @@ pub mod core {
 		fn mark_device_copy_obsolete(&mut self, flag: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_markDeviceCopyObsolete_bool(self.as_raw_mut_UMatData(), flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28700,7 +28700,7 @@ pub mod core {
 		fn mark_device_mem_mapped(&mut self, flag: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMatData_markDeviceMemMapped_bool(self.as_raw_mut_UMatData(), flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -28840,7 +28840,7 @@ pub mod core {
 		pub fn default() -> Result<core::_InputArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28849,10 +28849,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new(_flags: i32, _obj: *mut c_void) -> Result<core::_InputArray> {
 			return_send!(via ocvrs_return);
-			{ sys::cv__InputArray__InputArray_int_voidX(_flags, _obj, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv__InputArray__InputArray_int_voidX(_flags, _obj, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -28860,7 +28860,7 @@ pub mod core {
 		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28870,7 +28870,7 @@ pub mod core {
 		pub fn from_matexpr(expr: &impl core::MatExprTraitConst) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_MatExprR(expr.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28880,7 +28880,7 @@ pub mod core {
 		pub fn from_mat_vec(vec: &core::Vector<core::Mat>) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_vectorLMatGR(vec.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28890,7 +28890,7 @@ pub mod core {
 		pub fn from_bool_vec(vec: &core::Vector<bool>) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_vectorLboolGR(vec.as_raw_VectorOfbool(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28900,7 +28900,7 @@ pub mod core {
 		pub fn from_f64(val: &f64) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_doubleR(val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28910,7 +28910,7 @@ pub mod core {
 		pub fn from_gpumat(d_mat: &impl core::GpuMatTraitConst) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_GpuMatR(d_mat.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28920,7 +28920,7 @@ pub mod core {
 		pub fn from_gpumat_vec(d_mat_array: &core::Vector<core::GpuMat>) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_vectorLGpuMatGR(d_mat_array.as_raw_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28930,7 +28930,7 @@ pub mod core {
 		pub fn from_opengl(buf: &impl core::BufferTraitConst) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28940,7 +28940,7 @@ pub mod core {
 		pub fn from_hostmem(cuda_mem: &impl core::HostMemTraitConst) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_HostMemR(cuda_mem.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28950,7 +28950,7 @@ pub mod core {
 		pub fn from_umat(um: &impl core::UMatTraitConst) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_UMatR(um.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28960,7 +28960,7 @@ pub mod core {
 		pub fn from_umat_vec(umv: &core::Vector<core::UMat>) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_vectorLUMatGR(umv.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28970,7 +28970,7 @@ pub mod core {
 		pub fn from_byte_slice(vec: &[u8]) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_unsigned_charX_int(vec.as_ptr(), vec.len().try_into()?, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -28988,7 +28988,7 @@ pub mod core {
 		fn get_mat(&self, idx: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getMat_const_int(self.as_raw__InputArray(), idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29001,7 +29001,7 @@ pub mod core {
 		fn get_mat_def(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getMat_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29013,7 +29013,7 @@ pub mod core {
 		fn get_mat_(&self, idx: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getMat__const_int(self.as_raw__InputArray(), idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29026,7 +29026,7 @@ pub mod core {
 		fn get_mat__def(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getMat__const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29038,7 +29038,7 @@ pub mod core {
 		fn get_umat(&self, idx: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getUMat_const_int(self.as_raw__InputArray(), idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29051,7 +29051,7 @@ pub mod core {
 		fn get_umat_def(&self) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getUMat_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29061,7 +29061,7 @@ pub mod core {
 		fn get_mat_vector(&self, mv: &mut core::Vector<core::Mat>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getMatVector_const_vectorLMatGR(self.as_raw__InputArray(), mv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29070,7 +29070,7 @@ pub mod core {
 		fn get_umat_vector(&self, umv: &mut core::Vector<core::UMat>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getUMatVector_const_vectorLUMatGR(self.as_raw__InputArray(), umv.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29079,7 +29079,7 @@ pub mod core {
 		fn get_gpu_mat_vector(&self, gpumv: &mut core::Vector<core::GpuMat>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getGpuMatVector_const_vectorLGpuMatGR(self.as_raw__InputArray(), gpumv.as_raw_mut_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29088,7 +29088,7 @@ pub mod core {
 		fn get_gpu_mat(&self) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getGpuMat_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29098,7 +29098,7 @@ pub mod core {
 		fn get_o_gl_buffer(&self) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getOGlBuffer_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29108,7 +29108,7 @@ pub mod core {
 		fn get_flags(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getFlags_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29117,7 +29117,7 @@ pub mod core {
 		fn get_obj(&self) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getObj_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29126,7 +29126,7 @@ pub mod core {
 		fn get_sz(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getSz_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29135,7 +29135,7 @@ pub mod core {
 		fn kind(&self) -> Result<core::_InputArray_KindFlag> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_kind_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29146,7 +29146,7 @@ pub mod core {
 		fn dims(&self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_dims_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29158,7 +29158,7 @@ pub mod core {
 		fn dims_def(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_dims_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29169,7 +29169,7 @@ pub mod core {
 		fn cols(&self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_cols_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29181,7 +29181,7 @@ pub mod core {
 		fn cols_def(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_cols_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29192,7 +29192,7 @@ pub mod core {
 		fn rows(&self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_rows_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29204,7 +29204,7 @@ pub mod core {
 		fn rows_def(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_rows_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29215,7 +29215,7 @@ pub mod core {
 		fn size(&self, i: i32) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_size_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29227,7 +29227,7 @@ pub mod core {
 		fn size_def(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_size_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29238,7 +29238,7 @@ pub mod core {
 		fn sizend(&self, sz: &mut i32, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_sizend_const_intX_int(self.as_raw__InputArray(), sz, i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29250,7 +29250,7 @@ pub mod core {
 		fn sizend_def(&self, sz: &mut i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_sizend_const_intX(self.as_raw__InputArray(), sz, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29260,7 +29260,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_sameSize_const_const__InputArrayR(self.as_raw__InputArray(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29271,7 +29271,7 @@ pub mod core {
 		fn total(&self, i: i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_total_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29283,7 +29283,7 @@ pub mod core {
 		fn total_def(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_total_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29294,7 +29294,7 @@ pub mod core {
 		fn typ(&self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_type_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29306,7 +29306,7 @@ pub mod core {
 		fn typ_def(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_type_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29317,7 +29317,7 @@ pub mod core {
 		fn depth(&self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_depth_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29329,7 +29329,7 @@ pub mod core {
 		fn depth_def(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_depth_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29340,7 +29340,7 @@ pub mod core {
 		fn channels(&self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_channels_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29352,7 +29352,7 @@ pub mod core {
 		fn channels_def(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_channels_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29363,7 +29363,7 @@ pub mod core {
 		fn is_continuous(&self, i: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isContinuous_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29375,7 +29375,7 @@ pub mod core {
 		fn is_continuous_def(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isContinuous_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29386,7 +29386,7 @@ pub mod core {
 		fn is_submatrix(&self, i: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isSubmatrix_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29398,7 +29398,7 @@ pub mod core {
 		fn is_submatrix_def(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isSubmatrix_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29407,7 +29407,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_empty_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29417,7 +29417,7 @@ pub mod core {
 			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_copyTo_const_const__OutputArrayR(self.as_raw__InputArray(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29428,7 +29428,7 @@ pub mod core {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw__InputArray(), arr.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29439,7 +29439,7 @@ pub mod core {
 		fn offset(&self, i: i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_offset_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29451,7 +29451,7 @@ pub mod core {
 		fn offset_def(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_offset_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29462,7 +29462,7 @@ pub mod core {
 		fn step(&self, i: i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_step_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29474,7 +29474,7 @@ pub mod core {
 		fn step_def(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_step_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29483,7 +29483,7 @@ pub mod core {
 		fn is_mat(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isMat_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29492,7 +29492,7 @@ pub mod core {
 		fn is_umat(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isUMat_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29501,7 +29501,7 @@ pub mod core {
 		fn is_mat_vector(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isMatVector_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29510,7 +29510,7 @@ pub mod core {
 		fn is_umat_vector(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isUMatVector_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29519,7 +29519,7 @@ pub mod core {
 		fn is_matx(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isMatx_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29528,7 +29528,7 @@ pub mod core {
 		fn is_vector(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isVector_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29537,7 +29537,7 @@ pub mod core {
 		fn is_gpu_mat(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isGpuMat_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29546,7 +29546,7 @@ pub mod core {
 		fn is_gpu_mat_vector(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isGpuMatVector_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -29598,7 +29598,7 @@ pub mod core {
 		pub fn default() -> Result<core::_InputOutputArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29607,10 +29607,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new(_flags: i32, _obj: *mut c_void) -> Result<core::_InputOutputArray> {
 			return_send!(via ocvrs_return);
-			{ sys::cv__InputOutputArray__InputOutputArray_int_voidX(_flags, _obj, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv__InputOutputArray__InputOutputArray_int_voidX(_flags, _obj, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -29618,7 +29618,7 @@ pub mod core {
 		pub fn from_mat_mut(m: &mut impl core::MatTrait) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_MatR(m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29628,7 +29628,7 @@ pub mod core {
 		pub fn from_mat_vec_mut(vec: &mut core::Vector<core::Mat>) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_vectorLMatGR(vec.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29638,7 +29638,7 @@ pub mod core {
 		pub fn from_gpumat_mut(d_mat: &mut impl core::GpuMatTrait) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_GpuMatR(d_mat.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29648,7 +29648,7 @@ pub mod core {
 		pub fn from_opengl_mut(buf: &mut impl core::BufferTrait) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_BufferR(buf.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29658,7 +29658,7 @@ pub mod core {
 		pub fn from_hostmem_mut(cuda_mem: &mut impl core::HostMemTrait) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_HostMemR(cuda_mem.as_raw_mut_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29668,7 +29668,7 @@ pub mod core {
 		pub fn from_umat_mut(m: &mut impl core::UMatTrait) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_UMatR(m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29678,7 +29678,7 @@ pub mod core {
 		pub fn from_umat_vec_mut(vec: &mut core::Vector<core::UMat>) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_vectorLUMatGR(vec.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29688,7 +29688,7 @@ pub mod core {
 		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<BoxedRef<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29698,7 +29698,7 @@ pub mod core {
 		pub fn from_mat_vec(vec: &core::Vector<core::Mat>) -> Result<BoxedRef<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_const_vectorLMatGR(vec.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29708,7 +29708,7 @@ pub mod core {
 		pub fn from_gpumat(d_mat: &impl core::GpuMatTraitConst) -> Result<BoxedRef<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_const_GpuMatR(d_mat.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29718,7 +29718,7 @@ pub mod core {
 		pub fn from_gpumat_vec(d_mat: &core::Vector<core::GpuMat>) -> Result<BoxedRef<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_const_vectorLGpuMatGR(d_mat.as_raw_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29728,7 +29728,7 @@ pub mod core {
 		pub fn from_opengl(buf: &impl core::BufferTraitConst) -> Result<BoxedRef<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29738,7 +29738,7 @@ pub mod core {
 		pub fn from_hostmem(cuda_mem: &impl core::HostMemTraitConst) -> Result<BoxedRef<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_const_HostMemR(cuda_mem.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29748,7 +29748,7 @@ pub mod core {
 		pub fn from_umat(m: &impl core::UMatTraitConst) -> Result<BoxedRef<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29758,7 +29758,7 @@ pub mod core {
 		pub fn from_umat_vec(vec: &core::Vector<core::UMat>) -> Result<BoxedRef<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_const_vectorLUMatGR(vec.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29866,7 +29866,7 @@ pub mod core {
 		pub fn default() -> Result<core::_OutputArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29875,10 +29875,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new(_flags: i32, _obj: *mut c_void) -> Result<core::_OutputArray> {
 			return_send!(via ocvrs_return);
-			{ sys::cv__OutputArray__OutputArray_int_voidX(_flags, _obj, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv__OutputArray__OutputArray_int_voidX(_flags, _obj, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -29886,7 +29886,7 @@ pub mod core {
 		pub fn from_mat_mut(m: &mut impl core::MatTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_MatR(m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29896,7 +29896,7 @@ pub mod core {
 		pub fn from_mat_vec_mut(vec: &mut core::Vector<core::Mat>) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_vectorLMatGR(vec.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29906,7 +29906,7 @@ pub mod core {
 		pub fn from_gpumat_mut(d_mat: &mut impl core::GpuMatTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_GpuMatR(d_mat.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29916,7 +29916,7 @@ pub mod core {
 		pub fn from_gpumat_vec_mut(d_mat: &mut core::Vector<core::GpuMat>) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_vectorLGpuMatGR(d_mat.as_raw_mut_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29926,7 +29926,7 @@ pub mod core {
 		pub fn from_opengl_mut(buf: &mut impl core::BufferTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_BufferR(buf.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29936,7 +29936,7 @@ pub mod core {
 		pub fn from_hostmem_mut(cuda_mem: &mut impl core::HostMemTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_HostMemR(cuda_mem.as_raw_mut_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29946,7 +29946,7 @@ pub mod core {
 		pub fn from_umat_mut(m: &mut impl core::UMatTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_UMatR(m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29956,7 +29956,7 @@ pub mod core {
 		pub fn from_umat_vec_mut(vec: &mut core::Vector<core::UMat>) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_vectorLUMatGR(vec.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29966,7 +29966,7 @@ pub mod core {
 		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29976,7 +29976,7 @@ pub mod core {
 		pub fn from_mat_vec(vec: &core::Vector<core::Mat>) -> Result<BoxedRef<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_const_vectorLMatGR(vec.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29986,7 +29986,7 @@ pub mod core {
 		pub fn from_gpumat(d_mat: &impl core::GpuMatTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_const_GpuMatR(d_mat.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -29996,7 +29996,7 @@ pub mod core {
 		pub fn from_opengl(buf: &impl core::BufferTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30006,7 +30006,7 @@ pub mod core {
 		pub fn from_hostmem(cuda_mem: &impl core::HostMemTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_const_HostMemR(cuda_mem.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30016,7 +30016,7 @@ pub mod core {
 		pub fn from_umat(m: &impl core::UMatTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30026,7 +30026,7 @@ pub mod core {
 		pub fn from_umat_vec(vec: &core::Vector<core::UMat>) -> Result<BoxedRef<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_const_vectorLUMatGR(vec.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30042,7 +30042,7 @@ pub mod core {
 		fn fixed_size(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_fixedSize_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30051,7 +30051,7 @@ pub mod core {
 		fn fixed_type(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_fixedType_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30060,7 +30060,7 @@ pub mod core {
 		fn needed(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_needed_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30071,7 +30071,7 @@ pub mod core {
 		fn get_mat_ref(&self, i: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_getMatRef_const_int(self.as_raw__OutputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30084,7 +30084,7 @@ pub mod core {
 		fn get_mat_ref_def(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_getMatRef_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30096,7 +30096,7 @@ pub mod core {
 		fn get_umat_ref(&self, i: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_getUMatRef_const_int(self.as_raw__OutputArray(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30109,7 +30109,7 @@ pub mod core {
 		fn get_umat_ref_def(&self) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_getUMatRef_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30119,7 +30119,7 @@ pub mod core {
 		fn get_gpu_mat_ref(&self) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_getGpuMatRef_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30129,7 +30129,7 @@ pub mod core {
 		fn get_gpu_mat_vec_ref(&self) -> Result<core::Vector<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_getGpuMatVecRef_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30139,7 +30139,7 @@ pub mod core {
 		fn get_o_gl_buffer_ref(&self) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_getOGlBufferRef_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30149,7 +30149,7 @@ pub mod core {
 		fn get_host_mem_ref(&self) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_getHostMemRef_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30163,7 +30163,7 @@ pub mod core {
 		fn create_size(&self, sz: core::Size, typ: i32, i: i32, allow_transposed: bool, fixed_depth_mask: core::_OutputArray_DepthMask) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_create_const_Size_int_int_bool_DepthMask(self.as_raw__OutputArray(), &sz, typ, i, allow_transposed, fixed_depth_mask, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30177,7 +30177,7 @@ pub mod core {
 		fn create_size_def(&self, sz: core::Size, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_create_const_Size_int(self.as_raw__OutputArray(), &sz, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30190,7 +30190,7 @@ pub mod core {
 		fn create(&self, rows: i32, cols: i32, typ: i32, i: i32, allow_transposed: bool, fixed_depth_mask: core::_OutputArray_DepthMask) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_create_const_int_int_int_int_bool_DepthMask(self.as_raw__OutputArray(), rows, cols, typ, i, allow_transposed, fixed_depth_mask, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30204,7 +30204,7 @@ pub mod core {
 		fn create_def(&self, rows: i32, cols: i32, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_create_const_int_int_int(self.as_raw__OutputArray(), rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30217,7 +30217,7 @@ pub mod core {
 		fn create_nd(&self, size: &[i32], typ: i32, i: i32, allow_transposed: bool, fixed_depth_mask: core::_OutputArray_DepthMask) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_create_const_int_const_intX_int_int_bool_DepthMask(self.as_raw__OutputArray(), size.len().try_into()?, size.as_ptr(), typ, i, allow_transposed, fixed_depth_mask, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30231,7 +30231,7 @@ pub mod core {
 		fn create_nd_def(&self, size: &[i32], typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_create_const_int_const_intX_int(self.as_raw__OutputArray(), size.len().try_into()?, size.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30240,7 +30240,7 @@ pub mod core {
 		unsafe fn create_same_size(&self, arr: &impl ToInputArray, mtype: i32) -> Result<()> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			{ sys::cv__OutputArray_createSameSize_const_const__InputArrayR_int(self.as_raw__OutputArray(), arr.as_raw__InputArray(), mtype, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv__OutputArray_createSameSize_const_const__InputArrayR_int(self.as_raw__OutputArray(), arr.as_raw__InputArray(), mtype, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -30250,7 +30250,7 @@ pub mod core {
 		fn release(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_release_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30259,7 +30259,7 @@ pub mod core {
 		fn clear(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_clear_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30272,7 +30272,7 @@ pub mod core {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_setTo_const_const__InputArrayR_const__InputArrayR(self.as_raw__OutputArray(), value.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30285,7 +30285,7 @@ pub mod core {
 			input_array_arg!(value);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_setTo_const_const__InputArrayR(self.as_raw__OutputArray(), value.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30294,7 +30294,7 @@ pub mod core {
 		fn assign_umat(&self, u: &impl core::UMatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_assign_const_const_UMatR(self.as_raw__OutputArray(), u.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30303,7 +30303,7 @@ pub mod core {
 		fn assign_mat(&self, m: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_assign_const_const_MatR(self.as_raw__OutputArray(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30312,7 +30312,7 @@ pub mod core {
 		fn assign_umat_vec(&self, v: &core::Vector<core::UMat>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_assign_const_const_vectorLUMatGR(self.as_raw__OutputArray(), v.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30321,7 +30321,7 @@ pub mod core {
 		fn assign_mat_vec(&self, v: &core::Vector<core::Mat>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_assign_const_const_vectorLMatGR(self.as_raw__OutputArray(), v.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30330,7 +30330,7 @@ pub mod core {
 		fn move_umat(&self, u: &mut impl core::UMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_move_const_UMatR(self.as_raw__OutputArray(), u.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30339,7 +30339,7 @@ pub mod core {
 		fn move_mat(&self, m: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_move_const_MatR(self.as_raw__OutputArray(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30526,7 +30526,7 @@ pub mod core {
 		pub fn new(stream: &mut impl core::StreamTrait) -> Result<core::BufferPool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BufferPool_BufferPool_StreamR(stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::BufferPool::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30543,7 +30543,7 @@ pub mod core {
 		fn get_allocator(&self) -> Result<core::Ptr<core::GpuMat_Allocator>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BufferPool_getAllocator_const(self.as_raw_BufferPool(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::GpuMat_Allocator>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30560,7 +30560,7 @@ pub mod core {
 		fn get_buffer(&mut self, rows: i32, cols: i32, typ: i32) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BufferPool_getBuffer_int_int_int(self.as_raw_mut_BufferPool(), rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30571,7 +30571,7 @@ pub mod core {
 		fn get_buffer_1(&mut self, size: core::Size, typ: i32) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BufferPool_getBuffer_Size_int(self.as_raw_mut_BufferPool(), &size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30619,7 +30619,7 @@ pub mod core {
 		pub fn default() -> Result<core::DeviceInfo> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_DeviceInfo(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::DeviceInfo::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30636,7 +30636,7 @@ pub mod core {
 		pub fn new(device_id: i32) -> Result<core::DeviceInfo> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_DeviceInfo_int(device_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::DeviceInfo::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30653,7 +30653,7 @@ pub mod core {
 		fn device_id(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_deviceID_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30663,7 +30663,7 @@ pub mod core {
 		fn name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_name_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -30674,7 +30674,7 @@ pub mod core {
 		fn total_global_mem(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_totalGlobalMem_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30684,7 +30684,7 @@ pub mod core {
 		fn shared_mem_per_block(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_sharedMemPerBlock_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30694,7 +30694,7 @@ pub mod core {
 		fn regs_per_block(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_regsPerBlock_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30704,7 +30704,7 @@ pub mod core {
 		fn warp_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_warpSize_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30714,7 +30714,7 @@ pub mod core {
 		fn mem_pitch(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_memPitch_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30724,7 +30724,7 @@ pub mod core {
 		fn max_threads_per_block(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxThreadsPerBlock_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30734,7 +30734,7 @@ pub mod core {
 		fn max_threads_dim(&self) -> Result<core::Vec3i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxThreadsDim_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30744,7 +30744,7 @@ pub mod core {
 		fn max_grid_size(&self) -> Result<core::Vec3i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxGridSize_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30754,7 +30754,7 @@ pub mod core {
 		fn clock_rate(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_clockRate_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30764,7 +30764,7 @@ pub mod core {
 		fn total_const_mem(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_totalConstMem_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30774,7 +30774,7 @@ pub mod core {
 		fn major_version(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_majorVersion_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30784,7 +30784,7 @@ pub mod core {
 		fn minor_version(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_minorVersion_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30794,7 +30794,7 @@ pub mod core {
 		fn texture_alignment(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_textureAlignment_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30804,7 +30804,7 @@ pub mod core {
 		fn texture_pitch_alignment(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_texturePitchAlignment_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30814,7 +30814,7 @@ pub mod core {
 		fn multi_processor_count(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_multiProcessorCount_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30824,7 +30824,7 @@ pub mod core {
 		fn kernel_exec_timeout_enabled(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_kernelExecTimeoutEnabled_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30834,7 +30834,7 @@ pub mod core {
 		fn integrated(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_integrated_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30844,7 +30844,7 @@ pub mod core {
 		fn can_map_host_memory(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_canMapHostMemory_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30854,7 +30854,7 @@ pub mod core {
 		fn compute_mode(&self) -> Result<core::DeviceInfo_ComputeMode> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_computeMode_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30864,7 +30864,7 @@ pub mod core {
 		fn max_texture1_d(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture1D_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30874,7 +30874,7 @@ pub mod core {
 		fn max_texture1_d_mipmap(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture1DMipmap_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30884,7 +30884,7 @@ pub mod core {
 		fn max_texture1_d_linear(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture1DLinear_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30894,7 +30894,7 @@ pub mod core {
 		fn max_texture_2d(&self) -> Result<core::Vec2i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture2D_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30904,7 +30904,7 @@ pub mod core {
 		fn max_texture_2d_mipmap(&self) -> Result<core::Vec2i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DMipmap_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30914,7 +30914,7 @@ pub mod core {
 		fn max_texture_2d_linear(&self) -> Result<core::Vec3i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DLinear_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30924,7 +30924,7 @@ pub mod core {
 		fn max_texture_2d_gather(&self) -> Result<core::Vec2i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DGather_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30934,7 +30934,7 @@ pub mod core {
 		fn max_texture_3d(&self) -> Result<core::Vec3i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture3D_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30944,7 +30944,7 @@ pub mod core {
 		fn max_texture_cubemap(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTextureCubemap_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30954,7 +30954,7 @@ pub mod core {
 		fn max_texture1_d_layered(&self) -> Result<core::Vec2i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture1DLayered_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30964,7 +30964,7 @@ pub mod core {
 		fn max_texture_2d_layered(&self) -> Result<core::Vec3i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DLayered_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30974,7 +30974,7 @@ pub mod core {
 		fn max_texture_cubemap_layered(&self) -> Result<core::Vec2i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTextureCubemapLayered_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30984,7 +30984,7 @@ pub mod core {
 		fn max_surface1_d(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxSurface1D_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -30994,7 +30994,7 @@ pub mod core {
 		fn max_surface_2d(&self) -> Result<core::Vec2i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxSurface2D_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31004,7 +31004,7 @@ pub mod core {
 		fn max_surface_3d(&self) -> Result<core::Vec3i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxSurface3D_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31014,7 +31014,7 @@ pub mod core {
 		fn max_surface1_d_layered(&self) -> Result<core::Vec2i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxSurface1DLayered_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31024,7 +31024,7 @@ pub mod core {
 		fn max_surface_2d_layered(&self) -> Result<core::Vec3i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxSurface2DLayered_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31034,7 +31034,7 @@ pub mod core {
 		fn max_surface_cubemap(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxSurfaceCubemap_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31044,7 +31044,7 @@ pub mod core {
 		fn max_surface_cubemap_layered(&self) -> Result<core::Vec2i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxSurfaceCubemapLayered_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31054,7 +31054,7 @@ pub mod core {
 		fn surface_alignment(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_surfaceAlignment_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31064,7 +31064,7 @@ pub mod core {
 		fn concurrent_kernels(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_concurrentKernels_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31074,7 +31074,7 @@ pub mod core {
 		fn ecc_enabled(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_ECCEnabled_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31084,7 +31084,7 @@ pub mod core {
 		fn pci_bus_id(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_pciBusID_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31094,7 +31094,7 @@ pub mod core {
 		fn pci_device_id(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_pciDeviceID_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31104,7 +31104,7 @@ pub mod core {
 		fn pci_domain_id(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_pciDomainID_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31114,7 +31114,7 @@ pub mod core {
 		fn tcc_driver(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_tccDriver_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31124,7 +31124,7 @@ pub mod core {
 		fn async_engine_count(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_asyncEngineCount_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31134,7 +31134,7 @@ pub mod core {
 		fn unified_addressing(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_unifiedAddressing_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31144,7 +31144,7 @@ pub mod core {
 		fn memory_clock_rate(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_memoryClockRate_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31154,7 +31154,7 @@ pub mod core {
 		fn memory_bus_width(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_memoryBusWidth_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31164,7 +31164,7 @@ pub mod core {
 		fn l2_cache_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_l2CacheSize_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31174,7 +31174,7 @@ pub mod core {
 		fn max_threads_per_multi_processor(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxThreadsPerMultiProcessor_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31184,7 +31184,7 @@ pub mod core {
 		fn query_memory(&self, total_memory: &mut size_t, free_memory: &mut size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_queryMemory_const_size_tR_size_tR(self.as_raw_DeviceInfo(), total_memory, free_memory, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31193,7 +31193,7 @@ pub mod core {
 		fn free_memory(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_freeMemory_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31202,7 +31202,7 @@ pub mod core {
 		fn total_memory(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_totalMemory_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31217,7 +31217,7 @@ pub mod core {
 		fn supports(&self, feature_set: core::FeatureSet) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_supports_const_FeatureSet(self.as_raw_DeviceInfo(), feature_set, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31230,7 +31230,7 @@ pub mod core {
 		fn is_compatible(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_isCompatible_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31283,7 +31283,7 @@ pub mod core {
 		pub fn new(flags: core::Event_CreateFlags) -> Result<core::Event> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Event_Event_const_CreateFlags(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Event::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31296,7 +31296,7 @@ pub mod core {
 		pub fn new_def() -> Result<core::Event> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Event_Event(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Event::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31307,7 +31307,7 @@ pub mod core {
 		pub fn elapsed_time(start: &impl core::EventTraitConst, end: &impl core::EventTraitConst) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Event_elapsedTime_const_EventR_const_EventR(start.as_raw_Event(), end.as_raw_Event(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31323,7 +31323,7 @@ pub mod core {
 		fn query_if_complete(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Event_queryIfComplete_const(self.as_raw_Event(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31342,7 +31342,7 @@ pub mod core {
 		fn record(&mut self, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Event_record_StreamR(self.as_raw_mut_Event(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31356,7 +31356,7 @@ pub mod core {
 		fn record_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Event_record(self.as_raw_mut_Event(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31366,7 +31366,7 @@ pub mod core {
 		fn wait_for_completion(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Event_waitForCompletion(self.as_raw_mut_Event(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31411,7 +31411,7 @@ pub mod core {
 		pub fn new(_size: size_t) -> Result<core::GpuData> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuData_GpuData_size_t(_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuData::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31449,7 +31449,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_data(&mut self, val: *const u8) {
-			let ret = { sys::cv_cuda_GpuData_propData_unsigned_charX(self.as_raw_mut_GpuData(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuData_propData_unsigned_charX(self.as_raw_mut_GpuData(), val) };
 			ret
 		}
 
@@ -31534,7 +31534,7 @@ pub mod core {
 		pub fn default_allocator() -> Result<types::AbstractRefMut<'static, core::GpuMat_Allocator>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_defaultAllocator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { types::AbstractRefMut::<'static, core::GpuMat_Allocator>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31544,7 +31544,7 @@ pub mod core {
 		pub fn set_default_allocator(allocator: &'static mut impl core::GpuMat_AllocatorTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_setDefaultAllocator_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31553,7 +31553,7 @@ pub mod core {
 		pub fn get_std_allocator() -> Result<types::AbstractRefMut<'static, core::GpuMat_Allocator>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_getStdAllocator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { types::AbstractRefMut::<'static, core::GpuMat_Allocator>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31566,10 +31566,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new(allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -31582,7 +31582,7 @@ pub mod core {
 		pub fn new_def() -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_GpuMat(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31595,10 +31595,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_AllocatorX(rows, cols, typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int_AllocatorX(rows, cols, typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -31611,7 +31611,7 @@ pub mod core {
 		pub fn new_rows_cols_def(rows: i32, cols: i32, typ: i32) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31622,10 +31622,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_size(size: core::Size, typ: i32, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_AllocatorX(&size, typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int_AllocatorX(&size, typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -31636,7 +31636,7 @@ pub mod core {
 		pub fn new_size_def(size: core::Size, typ: i32) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31649,10 +31649,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar_AllocatorX(rows, cols, typ, &s, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar_AllocatorX(rows, cols, typ, &s, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -31665,7 +31665,7 @@ pub mod core {
 		pub fn new_rows_cols_with_default_def(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar(rows, cols, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31676,10 +31676,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar_AllocatorX(&size, typ, &s, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar_AllocatorX(&size, typ, &s, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -31690,7 +31690,7 @@ pub mod core {
 		pub fn new_size_with_default_def(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar(&size, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31701,7 +31701,7 @@ pub mod core {
 		pub fn copy(m: &impl core::GpuMatTraitConst) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR(m.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31714,10 +31714,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_rows_cols_with_data(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_voidX_size_t(rows, cols, typ, data, step, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int_voidX_size_t(rows, cols, typ, data, step, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -31729,10 +31729,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_rows_cols_with_data_def(rows: i32, cols: i32, typ: i32, data: *mut c_void) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_voidX(rows, cols, typ, data, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int_voidX(rows, cols, typ, data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -31741,10 +31741,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_size_with_data(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX_size_t(&size, typ, data, step, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX_size_t(&size, typ, data, step, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -31754,10 +31754,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_size_with_data_def(size: core::Size, typ: i32, data: *mut c_void) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX(&size, typ, data, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX(&size, typ, data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -31766,7 +31766,7 @@ pub mod core {
 		pub fn rowscols(m: &impl core::GpuMatTraitConst, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR_Range_Range(m.as_raw_GpuMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31777,7 +31777,7 @@ pub mod core {
 		pub fn rowscols_mut(m: &mut impl core::GpuMatTrait, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_GpuMat_GpuMatR_Range_Range(m.as_raw_mut_GpuMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31787,7 +31787,7 @@ pub mod core {
 		pub fn roi(m: &impl core::GpuMatTraitConst, roi: core::Rect) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR_Rect(m.as_raw_GpuMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31797,7 +31797,7 @@ pub mod core {
 		pub fn roi_mut(m: &mut impl core::GpuMatTrait, roi: core::Rect) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_GpuMat_GpuMatR_Rect(m.as_raw_mut_GpuMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31811,10 +31811,10 @@ pub mod core {
 		pub unsafe fn from_hostmem(arr: &impl ToInputArray, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX(arr.as_raw__InputArray(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX(arr.as_raw__InputArray(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -31828,7 +31828,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31909,7 +31909,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_download_const_const__OutputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31926,7 +31926,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_download_const_const__OutputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31936,7 +31936,7 @@ pub mod core {
 		fn try_clone(&self) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_clone_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -31948,7 +31948,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31958,7 +31958,7 @@ pub mod core {
 		fn copy_to_gpu_mat(&self, dst: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_GpuMatR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31969,7 +31969,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31979,7 +31979,7 @@ pub mod core {
 		fn copy_to_gpu_mat_stream(&self, dst: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_GpuMatR_StreamR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -31991,7 +31991,7 @@ pub mod core {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32001,7 +32001,7 @@ pub mod core {
 		fn copy_to_gpu_mat_mask(&self, dst: &mut impl core::GpuMatTrait, mask: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_GpuMatR_GpuMatR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), mask.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32013,7 +32013,7 @@ pub mod core {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32023,7 +32023,7 @@ pub mod core {
 		fn copy_to_gpu_mat_mask_stream(&self, dst: &mut impl core::GpuMatTrait, mask: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_GpuMatR_GpuMatR_StreamR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), mask.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32034,7 +32034,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32045,7 +32045,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32055,7 +32055,7 @@ pub mod core {
 		fn convert_to_2(&self, dst: &mut impl core::GpuMatTrait, rtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int_StreamR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32069,7 +32069,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32084,7 +32084,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32098,7 +32098,7 @@ pub mod core {
 		fn convert_to_4(&self, dst: &mut impl core::GpuMatTrait, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int_double_double(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32113,7 +32113,7 @@ pub mod core {
 		fn convert_to_def_1(&self, dst: &mut impl core::GpuMatTrait, rtype: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32124,7 +32124,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32135,7 +32135,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32145,7 +32145,7 @@ pub mod core {
 		fn convert_to_7(&self, dst: &mut impl core::GpuMatTrait, rtype: i32, alpha: f64, beta: f64, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int_double_double_StreamR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, alpha, beta, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32156,7 +32156,7 @@ pub mod core {
 		fn assign_to(&self, m: &mut impl core::GpuMatTrait, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_assignTo_const_GpuMatR_int(self.as_raw_GpuMat(), m.as_raw_mut_GpuMat(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32168,7 +32168,7 @@ pub mod core {
 		fn assign_to_def(&self, m: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_assignTo_const_GpuMatR(self.as_raw_GpuMat(), m.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32179,7 +32179,7 @@ pub mod core {
 		fn ptr(&self, y: i32) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_ptr_const_int(self.as_raw_GpuMat(), y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32191,7 +32191,7 @@ pub mod core {
 		fn ptr_def(&self) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_ptr_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32201,7 +32201,7 @@ pub mod core {
 		fn row(&self, y: i32) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_row_const_int(self.as_raw_GpuMat(), y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32212,7 +32212,7 @@ pub mod core {
 		fn col(&self, x: i32) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_col_const_int(self.as_raw_GpuMat(), x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32223,7 +32223,7 @@ pub mod core {
 		fn row_bounds(&self, startrow: i32, endrow: i32) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_rowRange_const_int_int(self.as_raw_GpuMat(), startrow, endrow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32233,7 +32233,7 @@ pub mod core {
 		fn row_range(&self, mut r: impl core::RangeTrait) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_rowRange_const_Range(self.as_raw_GpuMat(), r.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32244,7 +32244,7 @@ pub mod core {
 		fn col_bounds(&self, startcol: i32, endcol: i32) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_colRange_const_int_int(self.as_raw_GpuMat(), startcol, endcol, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32254,7 +32254,7 @@ pub mod core {
 		fn col_range(&self, mut r: impl core::RangeTrait) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_colRange_const_Range(self.as_raw_GpuMat(), r.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32265,7 +32265,7 @@ pub mod core {
 		fn rowscols(&self, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_operator___const_Range_Range(self.as_raw_GpuMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32275,7 +32275,7 @@ pub mod core {
 		fn roi(&self, roi: core::Rect) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_operator___const_Rect(self.as_raw_GpuMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32290,7 +32290,7 @@ pub mod core {
 		fn reshape(&self, cn: i32, rows: i32) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_reshape_const_int_int(self.as_raw_GpuMat(), cn, rows, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32306,7 +32306,7 @@ pub mod core {
 		fn reshape_def(&self, cn: i32) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_reshape_const_int(self.as_raw_GpuMat(), cn, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32317,7 +32317,7 @@ pub mod core {
 		fn locate_roi(&self, whole_size: &mut core::Size, ofs: &mut core::Point) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_locateROI_const_SizeR_PointR(self.as_raw_GpuMat(), whole_size, ofs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32328,7 +32328,7 @@ pub mod core {
 		fn is_continuous(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_isContinuous_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32338,7 +32338,7 @@ pub mod core {
 		fn elem_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_elemSize_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32348,7 +32348,7 @@ pub mod core {
 		fn elem_size1(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_elemSize1_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32358,7 +32358,7 @@ pub mod core {
 		fn typ(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_type_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32368,7 +32368,7 @@ pub mod core {
 		fn depth(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_depth_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32378,7 +32378,7 @@ pub mod core {
 		fn channels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_channels_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32388,7 +32388,7 @@ pub mod core {
 		fn step1(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_step1_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32398,7 +32398,7 @@ pub mod core {
 		fn size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_size_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32408,7 +32408,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_empty_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32417,7 +32417,7 @@ pub mod core {
 		fn cuda_ptr(&self) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_cudaPtr_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32470,7 +32470,7 @@ pub mod core {
 		/// pointer to the data
 		#[inline]
 		unsafe fn set_data(&mut self, val: *const u8) {
-			let ret = { sys::cv_cuda_GpuMat_propData_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propData_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 
@@ -32486,7 +32486,7 @@ pub mod core {
 		/// when GpuMat points to user-allocated data, the pointer is NULL
 		#[inline]
 		unsafe fn set_refcount(&mut self, val: *const i32) {
-			let ret = { sys::cv_cuda_GpuMat_propRefcount_intX(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propRefcount_intX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 
@@ -32500,7 +32500,7 @@ pub mod core {
 		/// helper fields used in locateROI and adjustROI
 		#[inline]
 		unsafe fn set_datastart(&mut self, val: *const u8) {
-			let ret = { sys::cv_cuda_GpuMat_propDatastart_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propDatastart_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 
@@ -32524,7 +32524,7 @@ pub mod core {
 		fn set(&mut self, m: &impl core::GpuMatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_operatorST_const_GpuMatR(self.as_raw_mut_GpuMat(), m.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32534,7 +32534,7 @@ pub mod core {
 		fn create(&mut self, rows: i32, cols: i32, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_create_int_int_int(self.as_raw_mut_GpuMat(), rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32543,7 +32543,7 @@ pub mod core {
 		fn create_1(&mut self, size: core::Size, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_create_Size_int(self.as_raw_mut_GpuMat(), &size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32553,7 +32553,7 @@ pub mod core {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_release(self.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32563,7 +32563,7 @@ pub mod core {
 		fn swap(&mut self, mat: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_swap_GpuMatR(self.as_raw_mut_GpuMat(), mat.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32577,7 +32577,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_upload_const__InputArrayR(self.as_raw_mut_GpuMat(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32594,7 +32594,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_upload_const__InputArrayR_StreamR(self.as_raw_mut_GpuMat(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32604,7 +32604,7 @@ pub mod core {
 		fn set_to(&mut self, s: core::Scalar) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_setTo_Scalar(self.as_raw_mut_GpuMat(), &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32615,7 +32615,7 @@ pub mod core {
 		fn set_to_1(&mut self, s: core::Scalar, stream: &mut impl core::StreamTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_StreamR(self.as_raw_mut_GpuMat(), &s, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32627,7 +32627,7 @@ pub mod core {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_const__InputArrayR(self.as_raw_mut_GpuMat(), &s, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32639,7 +32639,7 @@ pub mod core {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_const__InputArrayR_StreamR(self.as_raw_mut_GpuMat(), &s, mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32653,7 +32653,7 @@ pub mod core {
 		fn ptr_mut(&mut self, y: i32) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_ptr_int(self.as_raw_mut_GpuMat(), y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32667,7 +32667,7 @@ pub mod core {
 		fn ptr_mut_def(&mut self) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_ptr(self.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32677,7 +32677,7 @@ pub mod core {
 		fn row_mut(&mut self, y: i32) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_row_int(self.as_raw_mut_GpuMat(), y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32688,7 +32688,7 @@ pub mod core {
 		fn col_mut(&mut self, x: i32) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_col_int(self.as_raw_mut_GpuMat(), x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32699,7 +32699,7 @@ pub mod core {
 		fn row_bounds_mut(&mut self, startrow: i32, endrow: i32) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_rowRange_int_int(self.as_raw_mut_GpuMat(), startrow, endrow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32709,7 +32709,7 @@ pub mod core {
 		fn row_range_mut(&mut self, mut r: impl core::RangeTrait) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_rowRange_Range(self.as_raw_mut_GpuMat(), r.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32720,7 +32720,7 @@ pub mod core {
 		fn col_bounds_mut(&mut self, startcol: i32, endcol: i32) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_colRange_int_int(self.as_raw_mut_GpuMat(), startcol, endcol, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32730,7 +32730,7 @@ pub mod core {
 		fn col_range_mut(&mut self, mut r: impl core::RangeTrait) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_colRange_Range(self.as_raw_mut_GpuMat(), r.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32741,7 +32741,7 @@ pub mod core {
 		fn rowscols_mut(&mut self, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_operator___Range_Range(self.as_raw_mut_GpuMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32751,7 +32751,7 @@ pub mod core {
 		fn roi_mut(&mut self, roi: core::Rect) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_operator___Rect(self.as_raw_mut_GpuMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32767,7 +32767,7 @@ pub mod core {
 		fn reshape_def_mut(&mut self, cn: i32) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_reshape_int(self.as_raw_mut_GpuMat(), cn, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32782,7 +32782,7 @@ pub mod core {
 		fn reshape_mut(&mut self, cn: i32, rows: i32) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_reshape_int_int(self.as_raw_mut_GpuMat(), cn, rows, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32793,7 +32793,7 @@ pub mod core {
 		fn adjust_roi(&mut self, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_adjustROI_int_int_int_int(self.as_raw_mut_GpuMat(), dtop, dbottom, dleft, dright, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32804,7 +32804,7 @@ pub mod core {
 		fn update_continuity_flag(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_updateContinuityFlag(self.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32874,7 +32874,7 @@ pub mod core {
 		fn allocate(&mut self, mat: &mut impl core::GpuMatTrait, rows: i32, cols: i32, elem_size: size_t) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_Allocator_allocate_GpuMatX_int_int_size_t(self.as_raw_mut_GpuMat_Allocator(), mat.as_raw_mut_GpuMat(), rows, cols, elem_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32883,7 +32883,7 @@ pub mod core {
 		fn free(&mut self, mat: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_Allocator_free_GpuMatX(self.as_raw_mut_GpuMat_Allocator(), mat.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -32929,7 +32929,7 @@ pub mod core {
 		pub fn default() -> Result<core::GpuMatND> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_GpuMatND(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32947,7 +32947,7 @@ pub mod core {
 		pub fn new(mut size: core::GpuMatND_SizeArray, typ: i32) -> Result<core::GpuMatND> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int(size.as_raw_mut_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
 			Ok(ret)
@@ -32975,10 +32975,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_1(mut size: core::GpuMatND_SizeArray, typ: i32, data: *mut c_void, mut step: core::GpuMatND_StepArray) -> Result<core::GpuMatND> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX_StepArray(size.as_raw_mut_VectorOfi32(), typ, data, step.as_raw_mut_VectorOfsize_t(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX_StepArray(size.as_raw_mut_VectorOfi32(), typ, data, step.as_raw_mut_VectorOfsize_t(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMatND::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -33002,10 +33002,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_def(mut size: core::GpuMatND_SizeArray, typ: i32, data: *mut c_void) -> Result<core::GpuMatND> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX(size.as_raw_mut_VectorOfi32(), typ, data, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX(size.as_raw_mut_VectorOfi32(), typ, data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::GpuMatND::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -33072,7 +33072,7 @@ pub mod core {
 		fn try_clone(&self) -> Result<core::GpuMatND> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_clone_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33090,7 +33090,7 @@ pub mod core {
 		fn clone(&self, stream: &mut impl core::StreamTrait) -> Result<core::GpuMatND> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_clone_const_StreamR(self.as_raw_GpuMatND(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33105,7 +33105,7 @@ pub mod core {
 		fn ranges(&self, ranges: &core::Vector<core::Range>) -> Result<BoxedRef<core::GpuMatND>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_operator___const_const_vectorLRangeGR(self.as_raw_GpuMatND(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMatND>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33121,7 +33121,7 @@ pub mod core {
 		fn create_gpu_mat_header(&self, mut idx: core::GpuMatND_IndexArray, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_createGpuMatHeader_const_IndexArray_Range_Range(self.as_raw_GpuMatND(), idx.as_raw_mut_VectorOfi32(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33146,7 +33146,7 @@ pub mod core {
 		fn create_gpu_mat_header_1(&self) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_createGpuMatHeader_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33161,7 +33161,7 @@ pub mod core {
 		fn rowscols(&self, mut idx: core::GpuMatND_IndexArray, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRef<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_operator___const_IndexArray_Range_Range(self.as_raw_GpuMatND(), idx.as_raw_mut_VectorOfi32(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33175,7 +33175,7 @@ pub mod core {
 		fn to_gpu_mat(&self) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_operator_cv_cuda_GpuMat_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33186,7 +33186,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33196,7 +33196,7 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR_StreamR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33207,7 +33207,7 @@ pub mod core {
 		fn is_continuous(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_isContinuous_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33217,7 +33217,7 @@ pub mod core {
 		fn is_submatrix(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_isSubmatrix_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33227,7 +33227,7 @@ pub mod core {
 		fn elem_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_elemSize_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33237,7 +33237,7 @@ pub mod core {
 		fn elem_size1(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_elemSize1_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33247,7 +33247,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_empty_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33257,7 +33257,7 @@ pub mod core {
 		fn external(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_external_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33267,7 +33267,7 @@ pub mod core {
 		fn get_device_ptr(&self) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_getDevicePtr_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33277,7 +33277,7 @@ pub mod core {
 		fn total(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_total_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33287,7 +33287,7 @@ pub mod core {
 		fn total_mem_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_totalMemSize_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33297,7 +33297,7 @@ pub mod core {
 		fn typ(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_type_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33351,7 +33351,7 @@ pub mod core {
 		fn create(&mut self, mut size: core::GpuMatND_SizeArray, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_create_SizeArray_int(self.as_raw_mut_GpuMatND(), size.as_raw_mut_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33360,7 +33360,7 @@ pub mod core {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_release(self.as_raw_mut_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33380,7 +33380,7 @@ pub mod core {
 		fn ranges_mut(&mut self, ranges: &core::Vector<core::Range>) -> Result<BoxedRefMut<core::GpuMatND>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_operator___const_vectorLRangeGR(self.as_raw_mut_GpuMatND(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMatND>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33396,7 +33396,7 @@ pub mod core {
 		fn create_gpu_mat_header_mut(&mut self, mut idx: core::GpuMatND_IndexArray, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_createGpuMatHeader_IndexArray_Range_Range(self.as_raw_mut_GpuMatND(), idx.as_raw_mut_VectorOfi32(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33413,7 +33413,7 @@ pub mod core {
 		fn create_gpu_mat_header_mut_1(&mut self) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_createGpuMatHeader(self.as_raw_mut_GpuMatND(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33428,7 +33428,7 @@ pub mod core {
 		fn rowscols_mut(&mut self, mut idx: core::GpuMatND_IndexArray, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRefMut<core::GpuMat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_operator___IndexArray_Range_Range(self.as_raw_mut_GpuMatND(), idx.as_raw_mut_VectorOfi32(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33451,7 +33451,7 @@ pub mod core {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33461,7 +33461,7 @@ pub mod core {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR_StreamR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33535,7 +33535,7 @@ pub mod core {
 		pub fn new(alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem_AllocType(alloc_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33548,7 +33548,7 @@ pub mod core {
 		pub fn new_def() -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33558,7 +33558,7 @@ pub mod core {
 		pub fn copy(m: &impl core::HostMemTraitConst) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem_const_HostMemR(m.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33570,7 +33570,7 @@ pub mod core {
 		pub fn new_1(rows: i32, cols: i32, typ: i32, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem_int_int_int_AllocType(rows, cols, typ, alloc_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33583,7 +33583,7 @@ pub mod core {
 		pub fn new_def_1(rows: i32, cols: i32, typ: i32) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33595,7 +33595,7 @@ pub mod core {
 		pub fn new_2(size: core::Size, typ: i32, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem_Size_int_AllocType(&size, typ, alloc_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33608,7 +33608,7 @@ pub mod core {
 		pub fn new_def_2(size: core::Size, typ: i32) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33623,7 +33623,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR_AllocType(arr.as_raw__InputArray(), alloc_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33639,7 +33639,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33703,7 +33703,7 @@ pub mod core {
 		fn alloc_type(&self) -> core::HostMem_AllocType {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_propAlloc_type_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -33712,7 +33712,7 @@ pub mod core {
 		fn try_clone(&self) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_clone_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33727,7 +33727,7 @@ pub mod core {
 		fn reshape(&self, cn: i32, rows: i32) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_reshape_const_int_int(self.as_raw_HostMem(), cn, rows, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33743,7 +33743,7 @@ pub mod core {
 		fn reshape_def(&self, cn: i32) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_reshape_const_int(self.as_raw_HostMem(), cn, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33754,7 +33754,7 @@ pub mod core {
 		fn create_mat_header(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_createMatHeader_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33770,7 +33770,7 @@ pub mod core {
 		fn create_gpu_mat_header(&self) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_createGpuMatHeader_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -33780,7 +33780,7 @@ pub mod core {
 		fn is_continuous(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_isContinuous_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33789,7 +33789,7 @@ pub mod core {
 		fn elem_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_elemSize_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33798,7 +33798,7 @@ pub mod core {
 		fn elem_size1(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_elemSize1_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33807,7 +33807,7 @@ pub mod core {
 		fn typ(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_type_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33816,7 +33816,7 @@ pub mod core {
 		fn depth(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_depth_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33825,7 +33825,7 @@ pub mod core {
 		fn channels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_channels_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33834,7 +33834,7 @@ pub mod core {
 		fn step1(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_step1_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33843,7 +33843,7 @@ pub mod core {
 		fn size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_size_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33852,7 +33852,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_empty_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33895,7 +33895,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_data(&mut self, val: *const u8) {
-			let ret = { sys::cv_cuda_HostMem_propData_unsigned_charX(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propData_unsigned_charX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 
@@ -33907,7 +33907,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_refcount(&mut self, val: *const i32) {
-			let ret = { sys::cv_cuda_HostMem_propRefcount_intX(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propRefcount_intX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 
@@ -33919,7 +33919,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_datastart(&mut self, val: *const u8) {
-			let ret = { sys::cv_cuda_HostMem_propDatastart_unsigned_charX(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propDatastart_unsigned_charX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 
@@ -33933,7 +33933,7 @@ pub mod core {
 		fn set(&mut self, m: &impl core::HostMemTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_operatorST_const_HostMemR(self.as_raw_mut_HostMem(), m.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33943,7 +33943,7 @@ pub mod core {
 		fn swap(&mut self, b: &mut impl core::HostMemTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_swap_HostMemR(self.as_raw_mut_HostMem(), b.as_raw_mut_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33953,7 +33953,7 @@ pub mod core {
 		fn create(&mut self, rows: i32, cols: i32, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_create_int_int_int(self.as_raw_mut_HostMem(), rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33962,7 +33962,7 @@ pub mod core {
 		fn create_1(&mut self, size: core::Size, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_create_Size_int(self.as_raw_mut_HostMem(), &size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -33972,7 +33972,7 @@ pub mod core {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_release(self.as_raw_mut_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34065,7 +34065,7 @@ pub mod core {
 		pub fn default() -> Result<core::Stream> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Stream_Stream(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34076,7 +34076,7 @@ pub mod core {
 		pub fn new(allocator: &core::Ptr<core::GpuMat_Allocator>) -> Result<core::Stream> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Stream_Stream_const_PtrLAllocatorGR(allocator.as_raw_PtrOfGpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34097,7 +34097,7 @@ pub mod core {
 		pub fn new_1(cuda_flags: size_t) -> Result<core::Stream> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Stream_Stream_const_size_t(cuda_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34108,7 +34108,7 @@ pub mod core {
 		pub fn null() -> Result<core::Stream> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Stream_Null(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34125,7 +34125,7 @@ pub mod core {
 		fn query_if_complete(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Stream_queryIfComplete_const(self.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34135,7 +34135,7 @@ pub mod core {
 		fn cuda_ptr(&self) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Stream_cudaPtr_const(self.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34151,7 +34151,7 @@ pub mod core {
 		fn wait_for_completion(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Stream_waitForCompletion(self.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34161,7 +34161,7 @@ pub mod core {
 		fn wait_event(&mut self, event: &impl core::EventTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Stream_waitEvent_const_EventR(self.as_raw_mut_Stream(), event.as_raw_Event(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34180,7 +34180,7 @@ pub mod core {
 			userdata_arg!(user_data: *mut c_void => callback);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Stream_enqueueHostCallback_StreamCallback_voidX(self.as_raw_mut_Stream(), callback_trampoline, user_data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34242,7 +34242,7 @@ pub mod core {
 		pub fn built_with(feature_set: core::FeatureSet) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_TargetArchs_builtWith_FeatureSet(feature_set, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34257,7 +34257,7 @@ pub mod core {
 		pub fn has(major: i32, minor: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_TargetArchs_has_int_int(major, minor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34266,7 +34266,7 @@ pub mod core {
 		pub fn has_ptx(major: i32, minor: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_TargetArchs_hasPtx_int_int(major, minor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34275,7 +34275,7 @@ pub mod core {
 		pub fn has_bin(major: i32, minor: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_TargetArchs_hasBin_int_int(major, minor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34284,7 +34284,7 @@ pub mod core {
 		pub fn has_equal_or_less_ptx(major: i32, minor: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_TargetArchs_hasEqualOrLessPtx_int_int(major, minor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34293,7 +34293,7 @@ pub mod core {
 		pub fn has_equal_or_greater(major: i32, minor: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_TargetArchs_hasEqualOrGreater_int_int(major, minor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34302,7 +34302,7 @@ pub mod core {
 		pub fn has_equal_or_greater_ptx(major: i32, minor: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_TargetArchs_hasEqualOrGreaterPtx_int_int(major, minor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34311,7 +34311,7 @@ pub mod core {
 		pub fn has_equal_or_greater_bin(major: i32, minor: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_TargetArchs_hasEqualOrGreaterBin_int_int(major, minor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34410,7 +34410,7 @@ pub mod core {
 		fn test_op(&self) -> core::Detail_TestOp {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_CheckContext_propTestOp_const(self.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -34508,7 +34508,7 @@ pub mod core {
 		pub fn to_f32(self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfloat_operator_float_const(&self, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34517,7 +34517,7 @@ pub mod core {
 		pub fn default() -> Result<core::hfloat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfloat_hfloat(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34526,7 +34526,7 @@ pub mod core {
 		pub fn new(x: f32) -> Result<core::hfloat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfloat_hfloat_float(x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34562,10 +34562,10 @@ pub mod core {
 			extern_container_arg!(fun_name);
 			extern_container_arg!(file_name);
 			return_send!(via ocvrs_return);
-			{ sys::cv_instr_NodeData_NodeData_const_charX_const_charX_int_voidX_bool_TYPE_IMPL(fun_name.opencv_as_extern(), file_name.opencv_as_extern(), line_num, ret_address, always_expand, instr_type, impl_type, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_instr_NodeData_NodeData_const_charX_const_charX_int_voidX_bool_TYPE_IMPL(fun_name.opencv_as_extern(), file_name.opencv_as_extern(), line_num, ret_address, always_expand, instr_type, impl_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::NodeData::opencv_from_extern(ret) };
+			let ret = unsafe { core::NodeData::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -34582,7 +34582,7 @@ pub mod core {
 		pub fn new_def() -> Result<core::NodeData> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_instr_NodeData_NodeData(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::NodeData::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34592,7 +34592,7 @@ pub mod core {
 		pub fn copy_mut(ref_: &mut impl core::NodeDataTrait) -> Result<core::NodeData> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_instr_NodeData_NodeData_NodeDataR(ref_.as_raw_mut_NodeData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::NodeData::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34615,7 +34615,7 @@ pub mod core {
 		fn m_instr_type(&self) -> core::TYPE {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_instr_NodeData_propM_instrType_const(self.as_raw_NodeData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -34623,7 +34623,7 @@ pub mod core {
 		fn m_impl_type(&self) -> core::IMPL {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_instr_NodeData_propM_implType_const(self.as_raw_NodeData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -34674,7 +34674,7 @@ pub mod core {
 		fn get_total_ms(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_instr_NodeData_getTotalMs_const(self.as_raw_NodeData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34683,7 +34683,7 @@ pub mod core {
 		fn get_mean_ms(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_instr_NodeData_getMeanMs_const(self.as_raw_NodeData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34727,7 +34727,7 @@ pub mod core {
 
 		#[inline]
 		unsafe fn set_m_ret_address(&mut self, val: *const c_void) {
-			let ret = { sys::cv_instr_NodeData_propM_retAddress_voidX(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_retAddress_voidX(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 
@@ -34765,7 +34765,7 @@ pub mod core {
 		fn set(&mut self, unnamed: &impl core::NodeDataTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_instr_NodeData_operatorST_const_NodeDataR(self.as_raw_mut_NodeData(), unnamed.as_raw_NodeData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34824,7 +34824,7 @@ pub mod core {
 			extern_container_arg!(type_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_internal_WriteStructContext_WriteStructContext_FileStorageR_const_StringR_int_const_StringR(_fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, type_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::WriteStructContext::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34838,7 +34838,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_internal_WriteStructContext_WriteStructContext_FileStorageR_const_StringR_int(_fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::WriteStructContext::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34903,7 +34903,7 @@ pub mod core {
 		pub fn new_with_type(dtype: i32) -> Result<core::Context> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_Context_int(dtype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Context::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34913,7 +34913,7 @@ pub mod core {
 		pub fn copy(c: &impl core::ContextTraitConst) -> Result<core::Context> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_Context_const_ContextR(c.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Context::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34932,7 +34932,7 @@ pub mod core {
 		pub fn get_default(initialize: bool) -> Result<core::Context> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_getDefault_bool(initialize, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Context::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34945,7 +34945,7 @@ pub mod core {
 		pub fn get_default_def() -> Result<core::Context> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_getDefault(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Context::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34956,10 +34956,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn from_handle(context: *mut c_void) -> Result<core::Context> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_Context_fromHandle_voidX(context, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Context_fromHandle_voidX(context, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Context::opencv_from_extern(ret) };
+			let ret = unsafe { core::Context::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -34967,7 +34967,7 @@ pub mod core {
 		pub fn from_device(device: &impl core::DeviceTraitConst) -> Result<core::Context> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_fromDevice_const_DeviceR(device.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Context::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34978,7 +34978,7 @@ pub mod core {
 			extern_container_arg!(configuration);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_create_const_stringR(configuration.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Context::opencv_from_extern(ret) };
 			Ok(ret)
@@ -34994,7 +34994,7 @@ pub mod core {
 		fn ndevices(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_ndevices_const(self.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35003,7 +35003,7 @@ pub mod core {
 		fn device(&self, idx: size_t) -> Result<core::Device> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_device_const_size_t(self.as_raw_Context(), idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Device::opencv_from_extern(ret) };
 			Ok(ret)
@@ -35015,7 +35015,7 @@ pub mod core {
 		fn ptr(&self) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_ptr_const(self.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35029,7 +35029,7 @@ pub mod core {
 		fn get_opencl_context_property(&self, property_id: i32) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_getOpenCLContextProperty_const_int(self.as_raw_Context(), property_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35038,7 +35038,7 @@ pub mod core {
 		fn use_svm(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_useSVM_const(self.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35047,7 +35047,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_empty_const(self.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35062,7 +35062,7 @@ pub mod core {
 		fn set(&mut self, c: &impl core::ContextTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_operatorST_const_ContextR(self.as_raw_mut_Context(), c.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35078,7 +35078,7 @@ pub mod core {
 		fn create(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_create(self.as_raw_mut_Context(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35088,7 +35088,7 @@ pub mod core {
 		fn create_with_type(&mut self, dtype: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_create_int(self.as_raw_mut_Context(), dtype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35099,7 +35099,7 @@ pub mod core {
 			string_arg_output_send!(via errmsg_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_getProg_const_ProgramSourceR_const_StringR_StringR(self.as_raw_mut_Context(), prog.as_raw_ProgramSource(), buildopt.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Program::opencv_from_extern(ret) };
 			string_arg_output_receive!(errmsg_via => errmsg);
@@ -35110,7 +35110,7 @@ pub mod core {
 		fn unload_prog(&mut self, prog: &mut impl core::ProgramTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_unloadProg_ProgramR(self.as_raw_mut_Context(), prog.as_raw_mut_Program(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35119,7 +35119,7 @@ pub mod core {
 		fn set_use_svm(&mut self, enabled: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_setUseSVM_bool(self.as_raw_mut_Context(), enabled, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35128,7 +35128,7 @@ pub mod core {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_release(self.as_raw_mut_Context(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35251,10 +35251,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new(d: *mut c_void) -> Result<core::Device> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_Device_Device_voidX(d, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Device_Device_voidX(d, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Device::opencv_from_extern(ret) };
+			let ret = unsafe { core::Device::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -35262,7 +35262,7 @@ pub mod core {
 		pub fn copy(d: &impl core::DeviceTraitConst) -> Result<core::Device> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_Device_const_DeviceR(d.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Device::opencv_from_extern(ret) };
 			Ok(ret)
@@ -35279,7 +35279,7 @@ pub mod core {
 		pub fn get_default() -> Result<core::Device> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_getDefault(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Device::opencv_from_extern(ret) };
 			Ok(ret)
@@ -35295,10 +35295,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn from_handle(d: *mut c_void) -> Result<core::Device> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_Device_fromHandle_voidX(d, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Device_fromHandle_voidX(d, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::Device::opencv_from_extern(ret) };
+			let ret = unsafe { core::Device::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -35312,7 +35312,7 @@ pub mod core {
 		fn name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_name_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -35322,7 +35322,7 @@ pub mod core {
 		fn extensions(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_extensions_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -35333,7 +35333,7 @@ pub mod core {
 			extern_container_arg!(extension_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_isExtensionSupported_const_const_StringR(self.as_raw_Device(), extension_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35342,7 +35342,7 @@ pub mod core {
 		fn version(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_version_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -35352,7 +35352,7 @@ pub mod core {
 		fn vendor_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_vendorName_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -35362,7 +35362,7 @@ pub mod core {
 		fn opencl_c_version(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_OpenCL_C_Version_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -35372,7 +35372,7 @@ pub mod core {
 		fn opencl_version(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_OpenCLVersion_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -35382,7 +35382,7 @@ pub mod core {
 		fn device_version_major(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_deviceVersionMajor_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35391,7 +35391,7 @@ pub mod core {
 		fn device_version_minor(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_deviceVersionMinor_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35400,7 +35400,7 @@ pub mod core {
 		fn driver_version(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_driverVersion_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -35410,7 +35410,7 @@ pub mod core {
 		fn ptr(&self) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_ptr_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35419,7 +35419,7 @@ pub mod core {
 		fn typ(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_type_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35428,7 +35428,7 @@ pub mod core {
 		fn address_bits(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_addressBits_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35437,7 +35437,7 @@ pub mod core {
 		fn available(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_available_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35446,7 +35446,7 @@ pub mod core {
 		fn compiler_available(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_compilerAvailable_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35455,7 +35455,7 @@ pub mod core {
 		fn linker_available(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_linkerAvailable_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35464,7 +35464,7 @@ pub mod core {
 		fn double_fp_config(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_doubleFPConfig_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35473,7 +35473,7 @@ pub mod core {
 		fn single_fp_config(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_singleFPConfig_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35482,7 +35482,7 @@ pub mod core {
 		fn half_fp_config(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_halfFPConfig_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35492,7 +35492,7 @@ pub mod core {
 		fn has_fp64(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_hasFP64_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35502,7 +35502,7 @@ pub mod core {
 		fn has_fp16(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_hasFP16_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35511,7 +35511,7 @@ pub mod core {
 		fn endian_little(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_endianLittle_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35520,7 +35520,7 @@ pub mod core {
 		fn error_correction_support(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_errorCorrectionSupport_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35529,7 +35529,7 @@ pub mod core {
 		fn execution_capabilities(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_executionCapabilities_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35538,7 +35538,7 @@ pub mod core {
 		fn global_mem_cache_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_globalMemCacheSize_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35547,7 +35547,7 @@ pub mod core {
 		fn global_mem_cache_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_globalMemCacheType_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35556,7 +35556,7 @@ pub mod core {
 		fn global_mem_cache_line_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_globalMemCacheLineSize_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35565,7 +35565,7 @@ pub mod core {
 		fn global_mem_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_globalMemSize_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35574,7 +35574,7 @@ pub mod core {
 		fn local_mem_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_localMemSize_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35583,7 +35583,7 @@ pub mod core {
 		fn local_mem_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_localMemType_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35592,7 +35592,7 @@ pub mod core {
 		fn host_unified_memory(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_hostUnifiedMemory_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35601,7 +35601,7 @@ pub mod core {
 		fn image_support(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_imageSupport_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35610,7 +35610,7 @@ pub mod core {
 		fn image_from_buffer_support(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_imageFromBufferSupport_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35619,7 +35619,7 @@ pub mod core {
 		fn image_pitch_alignment(&self) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_imagePitchAlignment_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35628,7 +35628,7 @@ pub mod core {
 		fn image_base_address_alignment(&self) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_imageBaseAddressAlignment_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35638,7 +35638,7 @@ pub mod core {
 		fn intel_subgroups_support(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_intelSubgroupsSupport_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35647,7 +35647,7 @@ pub mod core {
 		fn image_2d_max_width(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_image2DMaxWidth_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35656,7 +35656,7 @@ pub mod core {
 		fn image_2d_max_height(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_image2DMaxHeight_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35665,7 +35665,7 @@ pub mod core {
 		fn image_3d_max_width(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_image3DMaxWidth_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35674,7 +35674,7 @@ pub mod core {
 		fn image_3d_max_height(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_image3DMaxHeight_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35683,7 +35683,7 @@ pub mod core {
 		fn image_3d_max_depth(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_image3DMaxDepth_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35692,7 +35692,7 @@ pub mod core {
 		fn image_max_buffer_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_imageMaxBufferSize_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35701,7 +35701,7 @@ pub mod core {
 		fn image_max_array_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_imageMaxArraySize_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35710,7 +35710,7 @@ pub mod core {
 		fn vendor_id(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_vendorID_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35719,7 +35719,7 @@ pub mod core {
 		fn is_amd(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_isAMD_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35728,7 +35728,7 @@ pub mod core {
 		fn is_intel(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_isIntel_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35737,7 +35737,7 @@ pub mod core {
 		fn is_n_vidia(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_isNVidia_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35746,7 +35746,7 @@ pub mod core {
 		fn max_clock_frequency(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxClockFrequency_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35755,7 +35755,7 @@ pub mod core {
 		fn max_compute_units(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxComputeUnits_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35764,7 +35764,7 @@ pub mod core {
 		fn max_constant_args(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxConstantArgs_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35773,7 +35773,7 @@ pub mod core {
 		fn max_constant_buffer_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxConstantBufferSize_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35782,7 +35782,7 @@ pub mod core {
 		fn max_mem_alloc_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxMemAllocSize_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35791,7 +35791,7 @@ pub mod core {
 		fn max_parameter_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxParameterSize_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35800,7 +35800,7 @@ pub mod core {
 		fn max_read_image_args(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxReadImageArgs_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35809,7 +35809,7 @@ pub mod core {
 		fn max_write_image_args(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxWriteImageArgs_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35818,7 +35818,7 @@ pub mod core {
 		fn max_samplers(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxSamplers_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35827,7 +35827,7 @@ pub mod core {
 		fn max_work_group_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxWorkGroupSize_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35836,7 +35836,7 @@ pub mod core {
 		fn max_work_item_dims(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxWorkItemDims_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35845,7 +35845,7 @@ pub mod core {
 		fn max_work_item_sizes(&self, unnamed: &mut size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_maxWorkItemSizes_const_size_tX(self.as_raw_Device(), unnamed, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35854,7 +35854,7 @@ pub mod core {
 		fn mem_base_addr_align(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_memBaseAddrAlign_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35863,7 +35863,7 @@ pub mod core {
 		fn native_vector_width_char(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_nativeVectorWidthChar_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35872,7 +35872,7 @@ pub mod core {
 		fn native_vector_width_short(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_nativeVectorWidthShort_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35881,7 +35881,7 @@ pub mod core {
 		fn native_vector_width_int(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_nativeVectorWidthInt_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35890,7 +35890,7 @@ pub mod core {
 		fn native_vector_width_long(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_nativeVectorWidthLong_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35899,7 +35899,7 @@ pub mod core {
 		fn native_vector_width_float(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_nativeVectorWidthFloat_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35908,7 +35908,7 @@ pub mod core {
 		fn native_vector_width_double(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_nativeVectorWidthDouble_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35917,7 +35917,7 @@ pub mod core {
 		fn native_vector_width_half(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_nativeVectorWidthHalf_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35926,7 +35926,7 @@ pub mod core {
 		fn preferred_vector_width_char(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_preferredVectorWidthChar_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35935,7 +35935,7 @@ pub mod core {
 		fn preferred_vector_width_short(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_preferredVectorWidthShort_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35944,7 +35944,7 @@ pub mod core {
 		fn preferred_vector_width_int(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_preferredVectorWidthInt_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35953,7 +35953,7 @@ pub mod core {
 		fn preferred_vector_width_long(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_preferredVectorWidthLong_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35962,7 +35962,7 @@ pub mod core {
 		fn preferred_vector_width_float(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_preferredVectorWidthFloat_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35971,7 +35971,7 @@ pub mod core {
 		fn preferred_vector_width_double(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_preferredVectorWidthDouble_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35980,7 +35980,7 @@ pub mod core {
 		fn preferred_vector_width_half(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_preferredVectorWidthHalf_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35989,7 +35989,7 @@ pub mod core {
 		fn printf_buffer_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_printfBufferSize_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -35998,7 +35998,7 @@ pub mod core {
 		fn profiling_timer_resolution(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_profilingTimerResolution_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36007,7 +36007,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_empty_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36022,7 +36022,7 @@ pub mod core {
 		fn set(&mut self, d: &impl core::DeviceTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_operatorST_const_DeviceR(self.as_raw_mut_Device(), d.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36036,7 +36036,7 @@ pub mod core {
 		#[inline]
 		unsafe fn set_2(&mut self, d: *mut c_void) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_Device_set_voidX(self.as_raw_mut_Device(), d, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Device_set_voidX(self.as_raw_mut_Device(), d, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -36113,7 +36113,7 @@ pub mod core {
 		pub fn new(src: &impl core::UMatTraitConst, norm: bool, alias: bool) -> Result<core::Image2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Image2D_Image2D_const_UMatR_bool_bool(src.as_raw_UMat(), norm, alias, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Image2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36133,7 +36133,7 @@ pub mod core {
 		pub fn new_def(src: &impl core::UMatTraitConst) -> Result<core::Image2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Image2D_Image2D_const_UMatR(src.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Image2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36143,7 +36143,7 @@ pub mod core {
 		pub fn copy(i: &impl core::Image2DTraitConst) -> Result<core::Image2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Image2D_Image2D_const_Image2DR(i.as_raw_Image2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Image2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36162,7 +36162,7 @@ pub mod core {
 		pub fn can_create_alias(u: &impl core::UMatTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Image2D_canCreateAlias_const_UMatR(u.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36172,7 +36172,7 @@ pub mod core {
 		pub fn is_format_supported(depth: i32, cn: i32, norm: bool) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Image2D_isFormatSupported_int_int_bool(depth, cn, norm, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36187,7 +36187,7 @@ pub mod core {
 		fn ptr(&self) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Image2D_ptr_const(self.as_raw_Image2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36202,7 +36202,7 @@ pub mod core {
 		fn set(&mut self, i: &impl core::Image2DTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Image2D_operatorST_const_Image2DR(self.as_raw_mut_Image2D(), i.as_raw_Image2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36269,7 +36269,7 @@ pub mod core {
 			extern_container_arg!(kname);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramR(kname.opencv_as_extern(), prog.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36285,7 +36285,7 @@ pub mod core {
 			string_arg_output_send!(via errmsg_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR_const_StringR_StringX(kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
 			string_arg_output_receive!(errmsg_via => errmsg);
@@ -36301,7 +36301,7 @@ pub mod core {
 			extern_container_arg!(kname);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR(kname.opencv_as_extern(), prog.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36311,7 +36311,7 @@ pub mod core {
 		pub fn copy(k: &impl core::KernelTraitConst) -> Result<core::Kernel> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_Kernel_const_KernelR(k.as_raw_Kernel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36334,7 +36334,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_empty_const(self.as_raw_Kernel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36343,7 +36343,7 @@ pub mod core {
 		fn work_group_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_workGroupSize_const(self.as_raw_Kernel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36352,7 +36352,7 @@ pub mod core {
 		fn prefered_work_group_size_multiple(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_preferedWorkGroupSizeMultiple_const(self.as_raw_Kernel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36361,7 +36361,7 @@ pub mod core {
 		fn compile_work_group_size(&self, wsz: &mut [size_t]) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_compileWorkGroupSize_const_size_tX(self.as_raw_Kernel(), wsz.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36370,7 +36370,7 @@ pub mod core {
 		fn local_mem_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_localMemSize_const(self.as_raw_Kernel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36379,7 +36379,7 @@ pub mod core {
 		fn ptr(&self) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_ptr_const(self.as_raw_Kernel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36394,7 +36394,7 @@ pub mod core {
 		fn set(&mut self, k: &impl core::KernelTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_operatorST_const_KernelR(self.as_raw_mut_Kernel(), k.as_raw_Kernel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36410,7 +36410,7 @@ pub mod core {
 			extern_container_arg!(kname);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_create_const_charX_const_ProgramR(self.as_raw_mut_Kernel(), kname.opencv_as_extern(), prog.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36424,7 +36424,7 @@ pub mod core {
 			string_arg_output_send!(via errmsg_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_create_const_charX_const_ProgramSourceR_const_StringR_StringX(self.as_raw_mut_Kernel(), kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(errmsg_via => errmsg);
 			Ok(ret)
@@ -36439,7 +36439,7 @@ pub mod core {
 			extern_container_arg!(buildopts);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_create_const_charX_const_ProgramSourceR_const_StringR(self.as_raw_mut_Kernel(), kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36447,7 +36447,7 @@ pub mod core {
 		#[inline]
 		unsafe fn set_2(&mut self, i: i32, value: *const c_void, sz: size_t) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_Kernel_set_int_const_voidX_size_t(self.as_raw_mut_Kernel(), i, value, sz, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Kernel_set_int_const_voidX_size_t(self.as_raw_mut_Kernel(), i, value, sz, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -36457,7 +36457,7 @@ pub mod core {
 		fn set_3(&mut self, i: i32, image_2d: &impl core::Image2DTraitConst) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_set_int_const_Image2DR(self.as_raw_mut_Kernel(), i, image_2d.as_raw_Image2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36466,7 +36466,7 @@ pub mod core {
 		fn set_umat(&mut self, i: i32, m: &impl core::UMatTraitConst) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_set_int_const_UMatR(self.as_raw_mut_Kernel(), i, m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36475,7 +36475,7 @@ pub mod core {
 		fn set_kernel_arg(&mut self, i: i32, arg: &impl core::KernelArgTraitConst) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_set_int_const_KernelArgR(self.as_raw_mut_Kernel(), i, arg.as_raw_KernelArg(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36501,7 +36501,7 @@ pub mod core {
 		fn run(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool, q: &impl core::QueueTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_run_int_size_tX_size_tX_bool_const_QueueR(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36528,7 +36528,7 @@ pub mod core {
 		fn run_def(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_run_int_size_tX_size_tX_bool(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36548,7 +36548,7 @@ pub mod core {
 		fn run_(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool, q: &impl core::QueueTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_run__int_size_tX_size_tX_bool_const_QueueR(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36569,7 +36569,7 @@ pub mod core {
 		fn run__def(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_run__int_size_tX_size_tX_bool(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36580,7 +36580,7 @@ pub mod core {
 		fn run_task(&mut self, sync: bool, q: &impl core::QueueTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_runTask_bool_const_QueueR(self.as_raw_mut_Kernel(), sync, q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36592,7 +36592,7 @@ pub mod core {
 		fn run_task_def(&mut self, sync: bool) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_runTask_bool(self.as_raw_mut_Kernel(), sync, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36609,7 +36609,7 @@ pub mod core {
 		fn run_profiling(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t], q: &impl core::QueueTraitConst) -> Result<i64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_runProfiling_int_size_tX_size_tX_const_QueueR(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36627,7 +36627,7 @@ pub mod core {
 		fn run_profiling_def(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t]) -> Result<i64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_runProfiling_int_size_tX_size_tX(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -36684,10 +36684,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new(_flags: i32, _m: &mut impl core::UMatTrait, wscale: i32, iwscale: i32, _obj: *const c_void, _sz: size_t) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_KernelArg_KernelArg_int_UMatX_int_int_const_voidX_size_t(_flags, _m.as_raw_mut_UMat(), wscale, iwscale, _obj, _sz, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_KernelArg_KernelArg_int_UMatX_int_int_const_voidX_size_t(_flags, _m.as_raw_mut_UMat(), wscale, iwscale, _obj, _sz, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::KernelArg::opencv_from_extern(ret) };
+			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -36701,7 +36701,7 @@ pub mod core {
 		pub fn new_def(_flags: i32, _m: &mut impl core::UMatTrait) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_KernelArg_int_UMatX(_flags, _m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36718,7 +36718,7 @@ pub mod core {
 		pub fn local(local_mem_size: size_t) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_Local_size_t(local_mem_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36728,7 +36728,7 @@ pub mod core {
 		pub fn ptr_write_only(m: &impl core::UMatTraitConst) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_PtrWriteOnly_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36738,7 +36738,7 @@ pub mod core {
 		pub fn ptr_read_only(m: &impl core::UMatTraitConst) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_PtrReadOnly_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36748,7 +36748,7 @@ pub mod core {
 		pub fn ptr_read_write(m: &impl core::UMatTraitConst) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_PtrReadWrite_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36761,7 +36761,7 @@ pub mod core {
 		pub fn read_write(m: &impl core::UMatTraitConst, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_ReadWrite_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36775,7 +36775,7 @@ pub mod core {
 		pub fn read_write_def(m: &impl core::UMatTraitConst) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_ReadWrite_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36788,7 +36788,7 @@ pub mod core {
 		pub fn read_write_no_size(m: &impl core::UMatTraitConst, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_ReadWriteNoSize_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36802,7 +36802,7 @@ pub mod core {
 		pub fn read_write_no_size_def(m: &impl core::UMatTraitConst) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_ReadWriteNoSize_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36815,7 +36815,7 @@ pub mod core {
 		pub fn read_only(m: &impl core::UMatTraitConst, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_ReadOnly_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36829,7 +36829,7 @@ pub mod core {
 		pub fn read_only_def(m: &impl core::UMatTraitConst) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_ReadOnly_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36842,7 +36842,7 @@ pub mod core {
 		pub fn write_only(m: &impl core::UMatTraitConst, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_WriteOnly_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36856,7 +36856,7 @@ pub mod core {
 		pub fn write_only_def(m: &impl core::UMatTraitConst) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_WriteOnly_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36869,7 +36869,7 @@ pub mod core {
 		pub fn read_only_no_size(m: &impl core::UMatTraitConst, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_ReadOnlyNoSize_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36883,7 +36883,7 @@ pub mod core {
 		pub fn read_only_no_size_def(m: &impl core::UMatTraitConst) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_ReadOnlyNoSize_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36896,7 +36896,7 @@ pub mod core {
 		pub fn write_only_no_size(m: &impl core::UMatTraitConst, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_WriteOnlyNoSize_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36910,7 +36910,7 @@ pub mod core {
 		pub fn write_only_no_size_def(m: &impl core::UMatTraitConst) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_WriteOnlyNoSize_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -36920,7 +36920,7 @@ pub mod core {
 		pub fn constant(m: &impl core::MatTraitConst) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_Constant_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37084,7 +37084,7 @@ pub mod core {
 		pub fn get_current() -> Result<core::OpenCLExecutionContext> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrent(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37095,7 +37095,7 @@ pub mod core {
 		pub fn get_current_ref() -> Result<core::OpenCLExecutionContext> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrentRef(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37120,10 +37120,10 @@ pub mod core {
 		pub unsafe fn create(platform_name: &str, platform_id: *mut c_void, context: *mut c_void, device_id: *mut c_void) -> Result<core::OpenCLExecutionContext> {
 			extern_container_arg!(platform_name);
 			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_OpenCLExecutionContext_create_const_stringR_voidX_voidX_voidX(platform_name.opencv_as_extern(), platform_id, context, device_id, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_stringR_voidX_voidX_voidX(platform_name.opencv_as_extern(), platform_id, context, device_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -37137,7 +37137,7 @@ pub mod core {
 		pub fn create_1(context: &impl core::ContextTraitConst, device: &impl core::DeviceTraitConst, queue: &impl core::QueueTraitConst) -> Result<core::OpenCLExecutionContext> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR_const_QueueR(context.as_raw_Context(), device.as_raw_Device(), queue.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37155,7 +37155,7 @@ pub mod core {
 		pub fn create_2(context: &impl core::ContextTraitConst, device: &impl core::DeviceTraitConst) -> Result<core::OpenCLExecutionContext> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR(context.as_raw_Context(), device.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37172,7 +37172,7 @@ pub mod core {
 		fn get_context(&self) -> Result<core::Context> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_getContext_const(self.as_raw_OpenCLExecutionContext(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Context::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37183,7 +37183,7 @@ pub mod core {
 		fn get_device(&self) -> Result<core::Device> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_getDevice_const(self.as_raw_OpenCLExecutionContext(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Device::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37195,7 +37195,7 @@ pub mod core {
 		fn get_queue(&self) -> Result<core::Queue> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_getQueue_const(self.as_raw_OpenCLExecutionContext(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37205,7 +37205,7 @@ pub mod core {
 		fn use_opencl(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_useOpenCL_const(self.as_raw_OpenCLExecutionContext(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37220,7 +37220,7 @@ pub mod core {
 		fn bind(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_bind_const(self.as_raw_OpenCLExecutionContext(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37233,7 +37233,7 @@ pub mod core {
 		fn clone_with_new_queue(&self, q: &impl core::QueueTraitConst) -> Result<core::OpenCLExecutionContext> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const_const_QueueR(self.as_raw_OpenCLExecutionContext(), q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37249,7 +37249,7 @@ pub mod core {
 		fn clone_with_new_queue_1(&self) -> Result<core::OpenCLExecutionContext> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_cloneWithNewQueue_const(self.as_raw_OpenCLExecutionContext(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37259,7 +37259,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_empty_const(self.as_raw_OpenCLExecutionContext(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37286,7 +37286,7 @@ pub mod core {
 		fn set_use_opencl(&mut self, flag: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_setUseOpenCL_bool(self.as_raw_mut_OpenCLExecutionContext(), flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37295,7 +37295,7 @@ pub mod core {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_OpenCLExecutionContext_release(self.as_raw_mut_OpenCLExecutionContext(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37356,7 +37356,7 @@ pub mod core {
 		pub fn copy(p: &impl core::PlatformTraitConst) -> Result<core::Platform> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Platform_Platform_const_PlatformR(p.as_raw_Platform(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Platform::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37374,7 +37374,7 @@ pub mod core {
 		pub fn get_default() -> Result<core::Platform> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Platform_getDefault(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Platform::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37390,7 +37390,7 @@ pub mod core {
 		fn ptr(&self) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Platform_ptr_const(self.as_raw_Platform(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37399,7 +37399,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Platform_empty_const(self.as_raw_Platform(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37414,7 +37414,7 @@ pub mod core {
 		fn set(&mut self, p: &impl core::PlatformTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Platform_operatorST_const_PlatformR(self.as_raw_mut_Platform(), p.as_raw_Platform(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37481,10 +37481,10 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new(id: *mut c_void) -> Result<core::PlatformInfo> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_PlatformInfo_PlatformInfo_voidX(id, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_voidX(id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = { core::PlatformInfo::opencv_from_extern(ret) };
+			let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -37492,7 +37492,7 @@ pub mod core {
 		pub fn copy(i: &impl core::PlatformInfoTraitConst) -> Result<core::PlatformInfo> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_const_PlatformInfoR(i.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37515,7 +37515,7 @@ pub mod core {
 		fn name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_PlatformInfo_name_const(self.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37525,7 +37525,7 @@ pub mod core {
 		fn vendor(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_PlatformInfo_vendor_const(self.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37536,7 +37536,7 @@ pub mod core {
 		fn version(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_PlatformInfo_version_const(self.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37546,7 +37546,7 @@ pub mod core {
 		fn version_major(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_PlatformInfo_versionMajor_const(self.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37555,7 +37555,7 @@ pub mod core {
 		fn version_minor(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_PlatformInfo_versionMinor_const(self.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37564,7 +37564,7 @@ pub mod core {
 		fn device_number(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_PlatformInfo_deviceNumber_const(self.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37573,7 +37573,7 @@ pub mod core {
 		fn get_device(&self, device: &mut impl core::DeviceTrait, d: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_PlatformInfo_getDevice_const_DeviceR_int(self.as_raw_PlatformInfo(), device.as_raw_mut_Device(), d, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37582,7 +37582,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_PlatformInfo_empty_const(self.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37597,7 +37597,7 @@ pub mod core {
 		fn set(&mut self, i: &impl core::PlatformInfoTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_PlatformInfo_operatorST_const_PlatformInfoR(self.as_raw_mut_PlatformInfo(), i.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37665,7 +37665,7 @@ pub mod core {
 			string_arg_output_send!(via errmsg_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_Program_const_ProgramSourceR_const_StringR_StringR(src.as_raw_ProgramSource(), buildflags.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Program::opencv_from_extern(ret) };
 			string_arg_output_receive!(errmsg_via => errmsg);
@@ -37676,7 +37676,7 @@ pub mod core {
 		pub fn copy(prog: &impl core::ProgramTraitConst) -> Result<core::Program> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_Program_const_ProgramR(prog.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Program::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37694,7 +37694,7 @@ pub mod core {
 			extern_container_arg!(buildflags);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_getPrefix_const_StringR(buildflags.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37710,7 +37710,7 @@ pub mod core {
 		fn ptr(&self) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_ptr_const(self.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37727,7 +37727,7 @@ pub mod core {
 		fn get_binary(&self, binary: &mut core::Vector<c_char>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_getBinary_const_vectorLcharGR(self.as_raw_Program(), binary.as_raw_mut_VectorOfc_char(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37736,7 +37736,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_empty_const(self.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37746,7 +37746,7 @@ pub mod core {
 			string_arg_output_send!(via buf_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_write_const_StringR(self.as_raw_Program(), &mut buf_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(buf_via => buf);
 			Ok(ret)
@@ -37756,7 +37756,7 @@ pub mod core {
 		fn source(&self) -> Result<core::ProgramSource> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_source_const(self.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37766,7 +37766,7 @@ pub mod core {
 		fn get_prefix(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_getPrefix_const(self.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37782,7 +37782,7 @@ pub mod core {
 		fn set(&mut self, prog: &impl core::ProgramTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_operatorST_const_ProgramR(self.as_raw_mut_Program(), prog.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37799,7 +37799,7 @@ pub mod core {
 			string_arg_output_send!(via errmsg_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_create_const_ProgramSourceR_const_StringR_StringR(self.as_raw_mut_Program(), src.as_raw_ProgramSource(), buildflags.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(errmsg_via => errmsg);
 			Ok(ret)
@@ -37811,7 +37811,7 @@ pub mod core {
 			extern_container_arg!(buildflags);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_read_const_StringR_const_StringR(self.as_raw_mut_Program(), buf.opencv_as_extern(), buildflags.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -37875,7 +37875,7 @@ pub mod core {
 			extern_container_arg!(code_hash);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_ProgramSource_const_StringR_const_StringR_const_StringR_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), code_str.opencv_as_extern(), code_hash.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37886,7 +37886,7 @@ pub mod core {
 			extern_container_arg!(prog);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_ProgramSource_const_StringR(prog.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37896,7 +37896,7 @@ pub mod core {
 		pub fn copy(prog: &impl core::ProgramSourceTraitConst) -> Result<core::ProgramSource> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_ProgramSource_const_ProgramSourceR(prog.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37934,7 +37934,7 @@ pub mod core {
 			extern_container_arg!(build_options);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_fromBinary_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), binary.as_ptr(), binary.len(), build_options.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
 			Ok(ret)
@@ -37965,7 +37965,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_fromBinary_const_StringR_const_StringR_const_unsigned_charX_const_size_t(module.opencv_as_extern(), name.opencv_as_extern(), binary.as_ptr(), binary.len(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38003,7 +38003,7 @@ pub mod core {
 			extern_container_arg!(build_options);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_fromSPIR_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), binary.as_ptr(), binary.len(), build_options.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38041,7 +38041,7 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_fromSPIR_const_StringR_const_StringR_const_unsigned_charX_const_size_t(module.opencv_as_extern(), name.opencv_as_extern(), binary.as_ptr(), binary.len(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38057,7 +38057,7 @@ pub mod core {
 		fn source(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_source_const(self.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38067,7 +38067,7 @@ pub mod core {
 		fn hash(&self) -> Result<core::ProgramSource_hash_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_hash_const(self.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38076,7 +38076,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_empty_const(self.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38091,7 +38091,7 @@ pub mod core {
 		fn set(&mut self, prog: &impl core::ProgramSourceTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_operatorST_const_ProgramSourceR(self.as_raw_mut_ProgramSource(), prog.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38159,7 +38159,7 @@ pub mod core {
 		pub fn new(c: &impl core::ContextTraitConst, d: &impl core::DeviceTraitConst) -> Result<core::Queue> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_Queue_const_ContextR_const_DeviceR(c.as_raw_Context(), d.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38172,7 +38172,7 @@ pub mod core {
 		pub fn new_def(c: &impl core::ContextTraitConst) -> Result<core::Queue> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_Queue_const_ContextR(c.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38182,7 +38182,7 @@ pub mod core {
 		pub fn copy(q: &impl core::QueueTraitConst) -> Result<core::Queue> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_Queue_const_QueueR(q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38199,7 +38199,7 @@ pub mod core {
 		pub fn get_default() -> Result<core::Queue> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_getDefault(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38215,7 +38215,7 @@ pub mod core {
 		fn ptr(&self) -> Result<*mut c_void> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_ptr_const(self.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38225,7 +38225,7 @@ pub mod core {
 		fn get_profiling_queue(&self) -> Result<core::Queue> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_getProfilingQueue_const(self.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38235,7 +38235,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_empty_const(self.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38250,7 +38250,7 @@ pub mod core {
 		fn set(&mut self, q: &impl core::QueueTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_operatorST_const_QueueR(self.as_raw_mut_Queue(), q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38268,7 +38268,7 @@ pub mod core {
 		fn create(&mut self, c: &impl core::ContextTraitConst, d: &impl core::DeviceTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_create_const_ContextR_const_DeviceR(self.as_raw_mut_Queue(), c.as_raw_Context(), d.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38281,7 +38281,7 @@ pub mod core {
 		fn create_def(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_create(self.as_raw_mut_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38290,7 +38290,7 @@ pub mod core {
 		fn finish(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_finish(self.as_raw_mut_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38343,7 +38343,7 @@ pub mod core {
 		pub fn new(q: &impl core::QueueTraitConst) -> Result<core::Timer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Timer_Timer_const_QueueR(q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Timer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38359,7 +38359,7 @@ pub mod core {
 		fn duration_ns(&self) -> Result<u64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Timer_durationNS_const(self.as_raw_Timer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38374,7 +38374,7 @@ pub mod core {
 		fn start(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Timer_start(self.as_raw_mut_Timer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38383,7 +38383,7 @@ pub mod core {
 		fn stop(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Timer_stop(self.as_raw_mut_Timer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38432,7 +38432,7 @@ pub mod core {
 		pub fn default() -> Result<core::Arrays> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_Arrays(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Arrays::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38449,7 +38449,7 @@ pub mod core {
 		fn bind(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_bind_const(self.as_raw_Arrays(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38459,7 +38459,7 @@ pub mod core {
 		fn size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_size_const(self.as_raw_Arrays(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38468,7 +38468,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_empty_const(self.as_raw_Arrays(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38487,7 +38487,7 @@ pub mod core {
 			input_array_arg!(vertex);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_setVertexArray_const__InputArrayR(self.as_raw_mut_Arrays(), vertex.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38497,7 +38497,7 @@ pub mod core {
 		fn reset_vertex_array(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_resetVertexArray(self.as_raw_mut_Arrays(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38510,7 +38510,7 @@ pub mod core {
 			input_array_arg!(color);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_setColorArray_const__InputArrayR(self.as_raw_mut_Arrays(), color.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38520,7 +38520,7 @@ pub mod core {
 		fn reset_color_array(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_resetColorArray(self.as_raw_mut_Arrays(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38533,7 +38533,7 @@ pub mod core {
 			input_array_arg!(normal);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_setNormalArray_const__InputArrayR(self.as_raw_mut_Arrays(), normal.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38543,7 +38543,7 @@ pub mod core {
 		fn reset_normal_array(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_resetNormalArray(self.as_raw_mut_Arrays(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38556,7 +38556,7 @@ pub mod core {
 			input_array_arg!(tex_coord);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_setTexCoordArray_const__InputArrayR(self.as_raw_mut_Arrays(), tex_coord.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38566,7 +38566,7 @@ pub mod core {
 		fn reset_tex_coord_array(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_resetTexCoordArray(self.as_raw_mut_Arrays(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38576,7 +38576,7 @@ pub mod core {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_release(self.as_raw_mut_Arrays(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38588,7 +38588,7 @@ pub mod core {
 		fn set_auto_release(&mut self, flag: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_setAutoRelease_bool(self.as_raw_mut_Arrays(), flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38646,7 +38646,7 @@ pub mod core {
 		pub fn default() -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38672,7 +38672,7 @@ pub mod core {
 		pub fn new(arows: i32, acols: i32, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int_bool(arows, acols, atype, abuf_id, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38693,7 +38693,7 @@ pub mod core {
 		pub fn new_def(arows: i32, acols: i32, atype: i32, abuf_id: u32) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int(arows, acols, atype, abuf_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38718,7 +38718,7 @@ pub mod core {
 		pub fn new_1(asize: core::Size, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int_bool(&asize, atype, abuf_id, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38738,7 +38738,7 @@ pub mod core {
 		pub fn new_def_1(asize: core::Size, atype: i32, abuf_id: u32) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int(&asize, atype, abuf_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38765,7 +38765,7 @@ pub mod core {
 		pub fn new_2(arows: i32, acols: i32, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_Target_bool(arows, acols, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38787,7 +38787,7 @@ pub mod core {
 		pub fn new_def_2(arows: i32, acols: i32, atype: i32) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int(arows, acols, atype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38813,7 +38813,7 @@ pub mod core {
 		pub fn new_3(asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_Target_bool(&asize, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38834,7 +38834,7 @@ pub mod core {
 		pub fn new_def_3(asize: core::Size, atype: i32) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int(&asize, atype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38860,7 +38860,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR_Target_bool(arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38881,7 +38881,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38895,7 +38895,7 @@ pub mod core {
 		pub fn unbind(target: core::Buffer_Target) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_unbind_Target(target, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38916,7 +38916,7 @@ pub mod core {
 			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR(self.as_raw_Buffer(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38933,7 +38933,7 @@ pub mod core {
 			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_Buffer(), arr.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38951,7 +38951,7 @@ pub mod core {
 		fn clone(&self, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_clone_const_Target_bool(self.as_raw_Buffer(), target, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38971,7 +38971,7 @@ pub mod core {
 		fn clone_def(&self) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_clone_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -38985,7 +38985,7 @@ pub mod core {
 		fn bind(&self, target: core::Buffer_Target) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_bind_const_Target(self.as_raw_Buffer(), target, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -38994,7 +38994,7 @@ pub mod core {
 		fn rows(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_rows_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39003,7 +39003,7 @@ pub mod core {
 		fn cols(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_cols_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39012,7 +39012,7 @@ pub mod core {
 		fn size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_size_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39021,7 +39021,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_empty_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39030,7 +39030,7 @@ pub mod core {
 		fn typ(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_type_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39039,7 +39039,7 @@ pub mod core {
 		fn depth(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_depth_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39048,7 +39048,7 @@ pub mod core {
 		fn channels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_channels_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39057,7 +39057,7 @@ pub mod core {
 		fn elem_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_elemSize_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39066,7 +39066,7 @@ pub mod core {
 		fn elem_size1(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_elemSize1_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39076,7 +39076,7 @@ pub mod core {
 		fn buf_id(&self) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_bufId_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39103,7 +39103,7 @@ pub mod core {
 		fn create(&mut self, arows: i32, acols: i32, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_create_int_int_int_Target_bool(self.as_raw_mut_Buffer(), arows, acols, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39125,7 +39125,7 @@ pub mod core {
 		fn create_def(&mut self, arows: i32, acols: i32, atype: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_create_int_int_int(self.as_raw_mut_Buffer(), arows, acols, atype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39153,7 +39153,7 @@ pub mod core {
 		fn create_size(&mut self, asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_create_Size_int_Target_bool(self.as_raw_mut_Buffer(), &asize, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39173,7 +39173,7 @@ pub mod core {
 		fn create_size_def(&mut self, asize: core::Size, atype: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_create_Size_int(self.as_raw_mut_Buffer(), &asize, atype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39185,7 +39185,7 @@ pub mod core {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_release(self.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39203,7 +39203,7 @@ pub mod core {
 		fn set_auto_release(&mut self, flag: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_setAutoRelease_bool(self.as_raw_mut_Buffer(), flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39222,7 +39222,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39242,7 +39242,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39263,7 +39263,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), target, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39279,7 +39279,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39303,7 +39303,7 @@ pub mod core {
 		fn map_host(&mut self, access: core::Buffer_Access) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_mapHost_Access(self.as_raw_mut_Buffer(), access, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39314,7 +39314,7 @@ pub mod core {
 		fn unmap_host(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_unmapHost(self.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39324,7 +39324,7 @@ pub mod core {
 		fn map_device(&mut self) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_mapDevice(self.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39334,7 +39334,7 @@ pub mod core {
 		fn unmap_device(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_unmapDevice(self.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39348,7 +39348,7 @@ pub mod core {
 		fn map_device_1(&mut self, stream: &mut impl core::StreamTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_mapDevice_StreamR(self.as_raw_mut_Buffer(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39359,7 +39359,7 @@ pub mod core {
 		fn unmap_device_1(&mut self, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_unmapDevice_StreamR(self.as_raw_mut_Buffer(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39409,7 +39409,7 @@ pub mod core {
 		pub fn default() -> Result<core::Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39428,7 +39428,7 @@ pub mod core {
 		pub fn new(arows: i32, acols: i32, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int_bool(arows, acols, aformat, atex_id, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39443,7 +39443,7 @@ pub mod core {
 		pub fn new_def(arows: i32, acols: i32, aformat: core::Texture2D_Format, atex_id: u32) -> Result<core::Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int(arows, acols, aformat, atex_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39462,7 +39462,7 @@ pub mod core {
 		pub fn new_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int_bool(&asize, aformat, atex_id, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39477,7 +39477,7 @@ pub mod core {
 		pub fn new_def_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32) -> Result<core::Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int(&asize, aformat, atex_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39502,7 +39502,7 @@ pub mod core {
 		pub fn new_2(arows: i32, acols: i32, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_bool(arows, acols, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39522,7 +39522,7 @@ pub mod core {
 		pub fn new_def_2(arows: i32, acols: i32, aformat: core::Texture2D_Format) -> Result<core::Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format(arows, acols, aformat, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39546,7 +39546,7 @@ pub mod core {
 		pub fn new_3(asize: core::Size, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_bool(&asize, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39565,7 +39565,7 @@ pub mod core {
 		pub fn new_def_3(asize: core::Size, aformat: core::Texture2D_Format) -> Result<core::Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format(&asize, aformat, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39589,7 +39589,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR_bool(arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39608,7 +39608,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -39636,7 +39636,7 @@ pub mod core {
 			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR_int_bool(self.as_raw_Texture2D(), arr.as_raw__OutputArray(), ddepth, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39658,7 +39658,7 @@ pub mod core {
 			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR(self.as_raw_Texture2D(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39668,7 +39668,7 @@ pub mod core {
 		fn bind(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_bind_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39677,7 +39677,7 @@ pub mod core {
 		fn rows(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_rows_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39686,7 +39686,7 @@ pub mod core {
 		fn cols(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_cols_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39695,7 +39695,7 @@ pub mod core {
 		fn size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_size_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39704,7 +39704,7 @@ pub mod core {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_empty_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39713,7 +39713,7 @@ pub mod core {
 		fn format(&self) -> Result<core::Texture2D_Format> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_format_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39723,7 +39723,7 @@ pub mod core {
 		fn tex_id(&self) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_texId_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39748,7 +39748,7 @@ pub mod core {
 		fn create(&mut self, arows: i32, acols: i32, aformat: core::Texture2D_Format, auto_release: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_create_int_int_Format_bool(self.as_raw_mut_Texture2D(), arows, acols, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39768,7 +39768,7 @@ pub mod core {
 		fn create_def(&mut self, arows: i32, acols: i32, aformat: core::Texture2D_Format) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_create_int_int_Format(self.as_raw_mut_Texture2D(), arows, acols, aformat, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39793,7 +39793,7 @@ pub mod core {
 		fn create_1(&mut self, asize: core::Size, aformat: core::Texture2D_Format, auto_release: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_create_Size_Format_bool(self.as_raw_mut_Texture2D(), &asize, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39811,7 +39811,7 @@ pub mod core {
 		fn create_def_1(&mut self, asize: core::Size, aformat: core::Texture2D_Format) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_create_Size_Format(self.as_raw_mut_Texture2D(), &asize, aformat, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39823,7 +39823,7 @@ pub mod core {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_release(self.as_raw_mut_Texture2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39842,7 +39842,7 @@ pub mod core {
 		fn set_auto_release(&mut self, flag: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_setAutoRelease_bool(self.as_raw_mut_Texture2D(), flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39860,7 +39860,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR_bool(self.as_raw_mut_Texture2D(), arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39879,7 +39879,7 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR(self.as_raw_mut_Texture2D(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39921,7 +39921,7 @@ pub mod core {
 		pub fn new(lambda_arg: i32, except_arg: i32) -> Result<core::ClassWithKeywordProperties> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_ClassWithKeywordProperties_ClassWithKeywordProperties_int_int(lambda_arg, except_arg, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39934,7 +39934,7 @@ pub mod core {
 		pub fn new_def() -> Result<core::ClassWithKeywordProperties> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_ClassWithKeywordProperties_ClassWithKeywordProperties(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -39955,7 +39955,7 @@ pub mod core {
 		pub fn set_lambda(self, value: i32) -> core::FunctionParams {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_FunctionParams_setLambda_int(&self, value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -39963,7 +39963,7 @@ pub mod core {
 		pub fn set_sigma(self, value: f32) -> core::FunctionParams {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_FunctionParams_setSigma_float(&self, value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -39990,7 +39990,7 @@ pub mod core {
 			extern_container_arg!(_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_logging_LogTag_LogTag_const_charX_LogLevel(_name.opencv_as_extern(), _level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::LogTag::opencv_from_extern(ret) };
 			Ok(ret)
@@ -40013,7 +40013,7 @@ pub mod core {
 		fn level(&self) -> core::LogLevel {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_logging_LogTag_propLevel_const(self.as_raw_LogTag(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -40073,7 +40073,7 @@ pub mod core {
 		pub fn new(params: core::OriginalClassName_Params) -> Result<core::OriginalClassName> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_nested_OriginalClassName_OriginalClassName_const_ParamsR(&params, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::OriginalClassName::opencv_from_extern(ret) };
 			Ok(ret)
@@ -40086,7 +40086,7 @@ pub mod core {
 		pub fn new_def() -> Result<core::OriginalClassName> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_nested_OriginalClassName_OriginalClassName(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::OriginalClassName::opencv_from_extern(ret) };
 			Ok(ret)
@@ -40096,7 +40096,7 @@ pub mod core {
 		pub fn original_name() -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_nested_OriginalClassName_originalName(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -40108,7 +40108,7 @@ pub mod core {
 		pub fn create(params: core::OriginalClassName_Params) -> Result<core::Ptr<core::OriginalClassName>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_nested_OriginalClassName_create_const_ParamsR(&params, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::OriginalClassName>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -40121,7 +40121,7 @@ pub mod core {
 		pub fn create_def() -> Result<core::Ptr<core::OriginalClassName>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_nested_OriginalClassName_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::OriginalClassName>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -40137,7 +40137,7 @@ pub mod core {
 		fn get_int_param(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_nested_OriginalClassName_getIntParam_const(self.as_raw_OriginalClassName(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -40146,7 +40146,7 @@ pub mod core {
 		fn get_float_param(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_nested_OriginalClassName_getFloatParam_const(self.as_raw_OriginalClassName(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -40194,7 +40194,7 @@ pub mod core {
 		pub fn new(int_param: i32, float_param: f32) -> Result<core::OriginalClassName_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_nested_OriginalClassName_Params_Params_int_float(int_param, float_param, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -40207,7 +40207,7 @@ pub mod core {
 		pub fn new_def() -> Result<core::OriginalClassName_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_nested_OriginalClassName_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

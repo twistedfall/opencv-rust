@@ -41,7 +41,7 @@ pub mod fuzzy {
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT02D_FL_process_const__InputArrayR_const_int_const__OutputArrayR(matrix.as_raw__InputArray(), radius, output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -59,7 +59,7 @@ pub mod fuzzy {
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT02D_FL_process_float_const__InputArrayR_const_int_const__OutputArrayR(matrix.as_raw__InputArray(), radius, output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -83,7 +83,7 @@ pub mod fuzzy {
 		output_array_arg!(components);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT02D_components_const__InputArrayR_const__InputArrayR_const__OutputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), components.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -107,7 +107,7 @@ pub mod fuzzy {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT02D_components_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), components.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -128,7 +128,7 @@ pub mod fuzzy {
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT02D_inverseFT_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int(components.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), width, height, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -152,7 +152,7 @@ pub mod fuzzy {
 		output_array_arg!(mask_output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT02D_iteration_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__OutputArrayR_bool(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray(), mask_output.as_raw__OutputArray(), first_stop, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -176,7 +176,7 @@ pub mod fuzzy {
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT02D_process_const__InputArrayR_const__InputArrayR_const__OutputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -200,7 +200,7 @@ pub mod fuzzy {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT02D_process_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -219,7 +219,7 @@ pub mod fuzzy {
 		output_array_arg!(components);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT12D_components_const__InputArrayR_const__InputArrayR_const__OutputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), components.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -236,7 +236,7 @@ pub mod fuzzy {
 		output_array_arg!(matrix);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT12D_createPolynomMatrixHorizontal_int_const__OutputArrayR_const_int(radius, matrix.as_raw__OutputArray(), chn, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -253,7 +253,7 @@ pub mod fuzzy {
 		output_array_arg!(matrix);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT12D_createPolynomMatrixVertical_int_const__OutputArrayR_const_int(radius, matrix.as_raw__OutputArray(), chn, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -274,7 +274,7 @@ pub mod fuzzy {
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT12D_inverseFT_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int(components.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), width, height, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -304,7 +304,7 @@ pub mod fuzzy {
 		output_array_arg!(components);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT12D_polynomial_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), c00.as_raw__OutputArray(), c10.as_raw__OutputArray(), c01.as_raw__OutputArray(), components.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -334,7 +334,7 @@ pub mod fuzzy {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT12D_polynomial_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), c00.as_raw__OutputArray(), c10.as_raw__OutputArray(), c01.as_raw__OutputArray(), components.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -362,7 +362,7 @@ pub mod fuzzy {
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT12D_process_const__InputArrayR_const__InputArrayR_const__OutputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -390,7 +390,7 @@ pub mod fuzzy {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT12D_process_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -410,7 +410,7 @@ pub mod fuzzy {
 		output_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_createKernel_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_int(a.as_raw__InputArray(), b.as_raw__InputArray(), kernel.as_raw__OutputArray(), chn, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -429,7 +429,7 @@ pub mod fuzzy {
 		output_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_createKernel_int_int_const__OutputArrayR_const_int(function, radius, kernel.as_raw__OutputArray(), chn, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -448,7 +448,7 @@ pub mod fuzzy {
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -478,7 +478,7 @@ pub mod fuzzy {
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_inpaint_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int(image.as_raw__InputArray(), mask.as_raw__InputArray(), output.as_raw__OutputArray(), radius, function, algorithm, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}

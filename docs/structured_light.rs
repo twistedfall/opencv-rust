@@ -66,7 +66,7 @@ pub mod structured_light {
 		pub fn create(parameters: &impl crate::structured_light::GrayCodePattern_ParamsTraitConst) -> Result<core::Ptr<crate::structured_light::GrayCodePattern>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_GrayCodePattern_create_const_ParamsR(parameters.as_raw_GrayCodePattern_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::structured_light::GrayCodePattern>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -83,7 +83,7 @@ pub mod structured_light {
 		pub fn create_def() -> Result<core::Ptr<crate::structured_light::GrayCodePattern>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_GrayCodePattern_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::structured_light::GrayCodePattern>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -93,7 +93,7 @@ pub mod structured_light {
 		pub fn create_1(width: i32, height: i32) -> Result<core::Ptr<crate::structured_light::GrayCodePattern>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_GrayCodePattern_create_int_int(width, height, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::structured_light::GrayCodePattern>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -113,7 +113,7 @@ pub mod structured_light {
 		fn get_number_of_pattern_images(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_GrayCodePattern_getNumberOfPatternImages_const(self.as_raw_GrayCodePattern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -133,7 +133,7 @@ pub mod structured_light {
 			input_output_array_arg!(white_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_GrayCodePattern_getImagesForShadowMasks_const_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_GrayCodePattern(), black_image.as_raw__InputOutputArray(), white_image.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -153,7 +153,7 @@ pub mod structured_light {
 			input_array_arg!(pattern_images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_GrayCodePattern_getProjPixel_const_const__InputArrayR_int_int_PointR(self.as_raw_GrayCodePattern(), pattern_images.as_raw__InputArray(), x, y, proj_pix, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -174,7 +174,7 @@ pub mod structured_light {
 		fn set_white_threshold(&mut self, value: size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_GrayCodePattern_setWhiteThreshold_size_t(self.as_raw_mut_GrayCodePattern(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -189,7 +189,7 @@ pub mod structured_light {
 		fn set_black_threshold(&mut self, value: size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_GrayCodePattern_setBlackThreshold_size_t(self.as_raw_mut_GrayCodePattern(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -262,7 +262,7 @@ pub mod structured_light {
 		pub fn default() -> Result<crate::structured_light::GrayCodePattern_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_GrayCodePattern_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::structured_light::GrayCodePattern_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -356,7 +356,7 @@ pub mod structured_light {
 		pub fn create(mut parameters: core::Ptr<crate::structured_light::SinusoidalPattern_Params>) -> Result<core::Ptr<crate::structured_light::SinusoidalPattern>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_create_PtrLParamsG(parameters.as_raw_mut_PtrOfSinusoidalPattern_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::structured_light::SinusoidalPattern>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -373,7 +373,7 @@ pub mod structured_light {
 		pub fn create_def() -> Result<core::Ptr<crate::structured_light::SinusoidalPattern>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::structured_light::SinusoidalPattern>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -409,7 +409,7 @@ pub mod structured_light {
 			input_array_arg!(fundamental);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_computePhaseMap_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_SinusoidalPattern(), pattern_images.as_raw__InputArray(), wrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__OutputArray(), fundamental.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -431,7 +431,7 @@ pub mod structured_light {
 			output_array_arg!(wrapped_phase_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_computePhaseMap_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_SinusoidalPattern(), pattern_images.as_raw__InputArray(), wrapped_phase_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -452,7 +452,7 @@ pub mod structured_light {
 			input_array_arg!(shadow_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_Size_const__InputArrayR(self.as_raw_mut_SinusoidalPattern(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), &cam_size, shadow_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -473,7 +473,7 @@ pub mod structured_light {
 			output_array_arg!(unwrapped_phase_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_Size(self.as_raw_mut_SinusoidalPattern(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), &cam_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -490,7 +490,7 @@ pub mod structured_light {
 			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_findProCamMatches_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_SinusoidalPattern(), proj_unwrapped_phase_map.as_raw__InputArray(), cam_unwrapped_phase_map.as_raw__InputArray(), matches.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -507,7 +507,7 @@ pub mod structured_light {
 			input_array_arg!(shadow_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_computeDataModulationTerm_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_SinusoidalPattern(), pattern_images.as_raw__InputArray(), data_modulation_term.as_raw__OutputArray(), shadow_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -586,7 +586,7 @@ pub mod structured_light {
 		pub fn default() -> Result<crate::structured_light::SinusoidalPattern_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::structured_light::SinusoidalPattern_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -784,7 +784,7 @@ pub mod structured_light {
 			input_array_arg!(white_images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_StructuredLightPattern_decode_const_const_vectorLvectorLMatGGR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(self.as_raw_StructuredLightPattern(), pattern_images.as_raw_VectorOfVectorOfMat(), disparity_map.as_raw__OutputArray(), black_images.as_raw__InputArray(), white_images.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -810,7 +810,7 @@ pub mod structured_light {
 			output_array_arg!(disparity_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_StructuredLightPattern_decode_const_const_vectorLvectorLMatGGR_const__OutputArrayR(self.as_raw_StructuredLightPattern(), pattern_images.as_raw_VectorOfVectorOfMat(), disparity_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -830,7 +830,7 @@ pub mod structured_light {
 			output_array_arg!(pattern_images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_StructuredLightPattern_generate_const__OutputArrayR(self.as_raw_mut_StructuredLightPattern(), pattern_images.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

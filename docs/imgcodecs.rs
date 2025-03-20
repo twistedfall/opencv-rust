@@ -833,7 +833,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_haveImageReader_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -859,7 +859,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_haveImageWriter_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -881,7 +881,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imcount_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -902,7 +902,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imcount_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -924,7 +924,7 @@ pub mod imgcodecs {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecode_const__InputArrayR_int(buf.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -955,7 +955,7 @@ pub mod imgcodecs {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecode_const__InputArrayR_int_MatX(buf.as_raw__InputArray(), flags, dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -984,7 +984,7 @@ pub mod imgcodecs {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR(buf.as_raw__InputArray(), flags, mats.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1011,7 +1011,7 @@ pub mod imgcodecs {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR_const_RangeR(buf.as_raw__InputArray(), flags, mats.as_raw_mut_VectorOfMat(), range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1036,7 +1036,7 @@ pub mod imgcodecs {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vectorLunsigned_charGR(ext.opencv_as_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1060,7 +1060,7 @@ pub mod imgcodecs {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vectorLunsigned_charGR_const_vectorLintGR(ext.opencv_as_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1085,7 +1085,7 @@ pub mod imgcodecs {
 		input_array_arg!(imgs);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imencodemulti_const_StringR_const__InputArrayR_vectorLunsigned_charGR(ext.opencv_as_extern(), imgs.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1109,7 +1109,7 @@ pub mod imgcodecs {
 		input_array_arg!(imgs);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imencodemulti_const_StringR_const__InputArrayR_vectorLunsigned_charGR_const_vectorLintGR(ext.opencv_as_extern(), imgs.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1176,7 +1176,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imread_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1202,7 +1202,7 @@ pub mod imgcodecs {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imread_const_StringR_const__OutputArrayR(filename.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1226,7 +1226,7 @@ pub mod imgcodecs {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imread_const_StringR_const__OutputArrayR_int(filename.opencv_as_extern(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1292,7 +1292,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imread_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1320,7 +1320,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imreadanimation_const_StringR_AnimationR(filename.opencv_as_extern(), animation.as_raw_mut_Animation(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1346,7 +1346,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imreadanimation_const_StringR_AnimationR_int_int(filename.opencv_as_extern(), animation.as_raw_mut_Animation(), start, count, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1369,7 +1369,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imreadmulti_const_StringR_vectorLMatGR(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1391,7 +1391,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imreadmulti_const_StringR_vectorLMatGR_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1416,7 +1416,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imreadmulti_const_StringR_vectorLMatGR_int_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), start, count, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1440,7 +1440,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imreadmulti_const_StringR_vectorLMatGR_int_int_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), start, count, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1498,7 +1498,7 @@ pub mod imgcodecs {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR(filename.opencv_as_extern(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1555,7 +1555,7 @@ pub mod imgcodecs {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR_const_vectorLintGR(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1582,7 +1582,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imwriteanimation_const_StringR_const_AnimationR(filename.opencv_as_extern(), animation.as_raw_Animation(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1608,7 +1608,7 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imwriteanimation_const_StringR_const_AnimationR_const_vectorLintGR(filename.opencv_as_extern(), animation.as_raw_Animation(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1624,7 +1624,7 @@ pub mod imgcodecs {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imwritemulti_const_StringR_const__InputArrayR(filename.opencv_as_extern(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1639,7 +1639,7 @@ pub mod imgcodecs {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imwritemulti_const_StringR_const__InputArrayR_const_vectorLintGR(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1683,7 +1683,7 @@ pub mod imgcodecs {
 		pub fn new(loop_count: i32, bg_color: core::Scalar) -> Result<crate::imgcodecs::Animation> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Animation_Animation_int_Scalar(loop_count, &bg_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgcodecs::Animation::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1710,7 +1710,7 @@ pub mod imgcodecs {
 		pub fn new_def() -> Result<crate::imgcodecs::Animation> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Animation_Animation(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgcodecs::Animation::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1734,7 +1734,7 @@ pub mod imgcodecs {
 		fn bgcolor(&self) -> core::Scalar {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Animation_propBgcolor_const(self.as_raw_Animation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -1851,7 +1851,7 @@ pub mod imgcodecs {
 		pub fn default() -> Result<crate::imgcodecs::ImageCollection> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_ImageCollection(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgcodecs::ImageCollection::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1862,7 +1862,7 @@ pub mod imgcodecs {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_ImageCollection_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgcodecs::ImageCollection::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1878,7 +1878,7 @@ pub mod imgcodecs {
 		fn size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_size_const(self.as_raw_ImageCollection(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1894,7 +1894,7 @@ pub mod imgcodecs {
 			extern_container_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_init_const_StringR_int(self.as_raw_mut_ImageCollection(), img.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1903,7 +1903,7 @@ pub mod imgcodecs {
 		fn at(&mut self, index: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_at_int(self.as_raw_mut_ImageCollection(), index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1913,7 +1913,7 @@ pub mod imgcodecs {
 		fn get_mut(&mut self, index: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_operator___int(self.as_raw_mut_ImageCollection(), index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1923,7 +1923,7 @@ pub mod imgcodecs {
 		fn release_cache(&mut self, index: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_releaseCache_int(self.as_raw_mut_ImageCollection(), index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1932,7 +1932,7 @@ pub mod imgcodecs {
 		fn begin(&mut self) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_begin(self.as_raw_mut_ImageCollection(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1942,7 +1942,7 @@ pub mod imgcodecs {
 		fn end(&mut self) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_end(self.as_raw_mut_ImageCollection(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1988,7 +1988,7 @@ pub mod imgcodecs {
 		pub fn new(col: &mut impl crate::imgcodecs::ImageCollectionTrait) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX(col.as_raw_mut_ImageCollection(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1998,7 +1998,7 @@ pub mod imgcodecs {
 		pub fn new_1(col: &mut impl crate::imgcodecs::ImageCollectionTrait, end: i32) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX_int(col.as_raw_mut_ImageCollection(), end, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2020,7 +2020,7 @@ pub mod imgcodecs {
 		fn try_deref_mut(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_iterator_operatorX(self.as_raw_mut_ImageCollection_iterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2030,7 +2030,7 @@ pub mod imgcodecs {
 		fn incr(&mut self) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_iterator_operatorAA(self.as_raw_mut_ImageCollection_iterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
 			Ok(ret)

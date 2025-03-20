@@ -43,7 +43,7 @@ pub mod intensity_transform {
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR(input.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -71,7 +71,7 @@ pub mod intensity_transform {
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), mu, a, b, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -97,7 +97,7 @@ pub mod intensity_transform {
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), k, mu, a, b, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -112,7 +112,7 @@ pub mod intensity_transform {
 	pub fn autoscaling(input: impl core::MatTraitConst, output: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_autoscaling_const_Mat_MatR(input.as_raw_Mat(), output.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -131,7 +131,7 @@ pub mod intensity_transform {
 	pub fn contrast_stretching(input: impl core::MatTraitConst, output: &mut impl core::MatTrait, r1: i32, s1: i32, r2: i32, s2: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_contrastStretching_const_Mat_MatR_const_int_const_int_const_int_const_int(input.as_raw_Mat(), output.as_raw_mut_Mat(), r1, s1, r2, s2, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -147,7 +147,7 @@ pub mod intensity_transform {
 	pub fn gamma_correction(input: impl core::MatTraitConst, output: &mut impl core::MatTrait, gamma: f32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_gammaCorrection_const_Mat_MatR_const_float(input.as_raw_Mat(), output.as_raw_mut_Mat(), gamma, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -162,7 +162,7 @@ pub mod intensity_transform {
 	pub fn log_transform(input: impl core::MatTraitConst, output: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_logTransform_const_Mat_MatR(input.as_raw_Mat(), output.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}

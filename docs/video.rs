@@ -42,7 +42,7 @@ pub mod video {
 		input_array_arg!(prob_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_CamShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, &criteria, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -76,7 +76,7 @@ pub mod video {
 		output_array_arg!(pyramid);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), &win_size, max_level, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -109,7 +109,7 @@ pub mod video {
 		output_array_arg!(pyramid);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int_bool_int_int_bool(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), &win_size, max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -160,7 +160,7 @@ pub mod video {
 		input_output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcOpticalFlowFarneback_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_double_int_int_int_int_double_int(prev.as_raw__InputArray(), next.as_raw__InputArray(), flow.as_raw__InputOutputArray(), pyr_scale, levels, winsize, iterations, poly_n, poly_sigma, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -231,7 +231,7 @@ pub mod video {
 		output_array_arg!(err);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -301,7 +301,7 @@ pub mod video {
 		output_array_arg!(err);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_Size_int_TermCriteria_int_double(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), &win_size, max_level, &criteria, flags, min_eig_threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -325,7 +325,7 @@ pub mod video {
 		input_array_arg!(input_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_computeECC_const__InputArrayR_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -349,7 +349,7 @@ pub mod video {
 		input_array_arg!(input_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_computeECC_const__InputArrayR_const__InputArrayR_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), input_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -372,7 +372,7 @@ pub mod video {
 	pub fn create_background_subtractor_knn_def() -> Result<core::Ptr<crate::video::BackgroundSubtractorKNN>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createBackgroundSubtractorKNN(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::BackgroundSubtractorKNN>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -395,7 +395,7 @@ pub mod video {
 	pub fn create_background_subtractor_knn(history: i32, dist2_threshold: f64, detect_shadows: bool) -> Result<core::Ptr<crate::video::BackgroundSubtractorKNN>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createBackgroundSubtractorKNN_int_double_bool(history, dist2_threshold, detect_shadows, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::BackgroundSubtractorKNN>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -420,7 +420,7 @@ pub mod video {
 	pub fn create_background_subtractor_mog2_def() -> Result<core::Ptr<crate::video::BackgroundSubtractorMOG2>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createBackgroundSubtractorMOG2(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::BackgroundSubtractorMOG2>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -444,7 +444,7 @@ pub mod video {
 	pub fn create_background_subtractor_mog2(history: i32, var_threshold: f64, detect_shadows: bool) -> Result<core::Ptr<crate::video::BackgroundSubtractorMOG2>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createBackgroundSubtractorMOG2_int_double_bool(history, var_threshold, detect_shadows, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::BackgroundSubtractorMOG2>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -487,7 +487,7 @@ pub mod video {
 		input_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_estimateRigidTransform_const__InputArrayR_const__InputArrayR_bool(src.as_raw__InputArray(), dst.as_raw__InputArray(), full_affine, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -507,7 +507,7 @@ pub mod video {
 		input_output_array_arg!(warp_matrix);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -577,7 +577,7 @@ pub mod video {
 		input_array_arg!(input_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, &criteria, input_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -640,7 +640,7 @@ pub mod video {
 		input_array_arg!(input_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR_int(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, &criteria, input_mask.as_raw__InputArray(), gauss_filt_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -668,7 +668,7 @@ pub mod video {
 		input_array_arg!(prob_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_meanShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, &criteria, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -686,7 +686,7 @@ pub mod video {
 		extern_container_arg!(path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_readOpticalFlow_const_StringR(path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -707,7 +707,7 @@ pub mod video {
 		input_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_writeOpticalFlow_const_StringR_const__InputArrayR(path.opencv_as_extern(), flow.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -748,7 +748,7 @@ pub mod video {
 			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractor_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractor(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -777,7 +777,7 @@ pub mod video {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractor_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractor(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -801,7 +801,7 @@ pub mod video {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractor_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractor(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -870,7 +870,7 @@ pub mod video {
 		fn get_history(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_getHistory_const(self.as_raw_BackgroundSubtractorKNN(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -880,7 +880,7 @@ pub mod video {
 		fn get_n_samples(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_getNSamples_const(self.as_raw_BackgroundSubtractorKNN(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -893,7 +893,7 @@ pub mod video {
 		fn get_dist2_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_getDist2Threshold_const(self.as_raw_BackgroundSubtractorKNN(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -906,7 +906,7 @@ pub mod video {
 		fn getk_nn_samples(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_getkNNSamples_const(self.as_raw_BackgroundSubtractorKNN(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -919,7 +919,7 @@ pub mod video {
 		fn get_detect_shadows(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_getDetectShadows_const(self.as_raw_BackgroundSubtractorKNN(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -932,7 +932,7 @@ pub mod video {
 		fn get_shadow_value(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_getShadowValue_const(self.as_raw_BackgroundSubtractorKNN(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -947,7 +947,7 @@ pub mod video {
 		fn get_shadow_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_getShadowThreshold_const(self.as_raw_BackgroundSubtractorKNN(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -963,7 +963,7 @@ pub mod video {
 		fn set_history(&mut self, history: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_setHistory_int(self.as_raw_mut_BackgroundSubtractorKNN(), history, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -975,7 +975,7 @@ pub mod video {
 		fn set_n_samples(&mut self, _n_n: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_setNSamples_int(self.as_raw_mut_BackgroundSubtractorKNN(), _n_n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -985,7 +985,7 @@ pub mod video {
 		fn set_dist2_threshold(&mut self, _dist2_threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_setDist2Threshold_double(self.as_raw_mut_BackgroundSubtractorKNN(), _dist2_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -995,7 +995,7 @@ pub mod video {
 		fn setk_nn_samples(&mut self, _nk_nn: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_setkNNSamples_int(self.as_raw_mut_BackgroundSubtractorKNN(), _nk_nn, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1005,7 +1005,7 @@ pub mod video {
 		fn set_detect_shadows(&mut self, detect_shadows: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_setDetectShadows_bool(self.as_raw_mut_BackgroundSubtractorKNN(), detect_shadows, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1015,7 +1015,7 @@ pub mod video {
 		fn set_shadow_value(&mut self, value: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_setShadowValue_int(self.as_raw_mut_BackgroundSubtractorKNN(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1025,7 +1025,7 @@ pub mod video {
 		fn set_shadow_threshold(&mut self, threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorKNN_setShadowThreshold_double(self.as_raw_mut_BackgroundSubtractorKNN(), threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1102,7 +1102,7 @@ pub mod video {
 		fn get_history(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getHistory_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1112,7 +1112,7 @@ pub mod video {
 		fn get_n_mixtures(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getNMixtures_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1126,7 +1126,7 @@ pub mod video {
 		fn get_background_ratio(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getBackgroundRatio_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1139,7 +1139,7 @@ pub mod video {
 		fn get_var_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getVarThreshold_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1155,7 +1155,7 @@ pub mod video {
 		fn get_var_threshold_gen(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getVarThresholdGen_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1165,7 +1165,7 @@ pub mod video {
 		fn get_var_init(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getVarInit_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1174,7 +1174,7 @@ pub mod video {
 		fn get_var_min(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getVarMin_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1183,7 +1183,7 @@ pub mod video {
 		fn get_var_max(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getVarMax_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1197,7 +1197,7 @@ pub mod video {
 		fn get_complexity_reduction_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getComplexityReductionThreshold_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1210,7 +1210,7 @@ pub mod video {
 		fn get_detect_shadows(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getDetectShadows_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1223,7 +1223,7 @@ pub mod video {
 		fn get_shadow_value(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getShadowValue_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1238,7 +1238,7 @@ pub mod video {
 		fn get_shadow_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_getShadowThreshold_const(self.as_raw_BackgroundSubtractorMOG2(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1254,7 +1254,7 @@ pub mod video {
 		fn set_history(&mut self, history: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setHistory_int(self.as_raw_mut_BackgroundSubtractorMOG2(), history, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1266,7 +1266,7 @@ pub mod video {
 		fn set_n_mixtures(&mut self, nmixtures: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setNMixtures_int(self.as_raw_mut_BackgroundSubtractorMOG2(), nmixtures, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1276,7 +1276,7 @@ pub mod video {
 		fn set_background_ratio(&mut self, ratio: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setBackgroundRatio_double(self.as_raw_mut_BackgroundSubtractorMOG2(), ratio, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1286,7 +1286,7 @@ pub mod video {
 		fn set_var_threshold(&mut self, var_threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setVarThreshold_double(self.as_raw_mut_BackgroundSubtractorMOG2(), var_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1296,7 +1296,7 @@ pub mod video {
 		fn set_var_threshold_gen(&mut self, var_threshold_gen: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setVarThresholdGen_double(self.as_raw_mut_BackgroundSubtractorMOG2(), var_threshold_gen, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1306,7 +1306,7 @@ pub mod video {
 		fn set_var_init(&mut self, var_init: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setVarInit_double(self.as_raw_mut_BackgroundSubtractorMOG2(), var_init, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1315,7 +1315,7 @@ pub mod video {
 		fn set_var_min(&mut self, var_min: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setVarMin_double(self.as_raw_mut_BackgroundSubtractorMOG2(), var_min, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1324,7 +1324,7 @@ pub mod video {
 		fn set_var_max(&mut self, var_max: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setVarMax_double(self.as_raw_mut_BackgroundSubtractorMOG2(), var_max, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1334,7 +1334,7 @@ pub mod video {
 		fn set_complexity_reduction_threshold(&mut self, ct: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setComplexityReductionThreshold_double(self.as_raw_mut_BackgroundSubtractorMOG2(), ct, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1344,7 +1344,7 @@ pub mod video {
 		fn set_detect_shadows(&mut self, detect_shadows: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setDetectShadows_bool(self.as_raw_mut_BackgroundSubtractorMOG2(), detect_shadows, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1354,7 +1354,7 @@ pub mod video {
 		fn set_shadow_value(&mut self, value: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setShadowValue_int(self.as_raw_mut_BackgroundSubtractorMOG2(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1364,7 +1364,7 @@ pub mod video {
 		fn set_shadow_threshold(&mut self, threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_setShadowThreshold_double(self.as_raw_mut_BackgroundSubtractorMOG2(), threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1387,7 +1387,7 @@ pub mod video {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorMOG2(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1411,7 +1411,7 @@ pub mod video {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorMOG2(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1498,7 +1498,7 @@ pub mod video {
 		pub fn create(preset: i32) -> Result<core::Ptr<crate::video::DISOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_create_int(preset, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::DISOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1516,7 +1516,7 @@ pub mod video {
 		pub fn create_def() -> Result<core::Ptr<crate::video::DISOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::DISOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1536,7 +1536,7 @@ pub mod video {
 		fn get_finest_scale(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getFinestScale_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1549,7 +1549,7 @@ pub mod video {
 		fn get_patch_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getPatchSize_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1562,7 +1562,7 @@ pub mod video {
 		fn get_patch_stride(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getPatchStride_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1575,7 +1575,7 @@ pub mod video {
 		fn get_gradient_descent_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getGradientDescentIterations_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1589,7 +1589,7 @@ pub mod video {
 		fn get_variational_refinement_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getVariationalRefinementIterations_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1601,7 +1601,7 @@ pub mod video {
 		fn get_variational_refinement_alpha(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getVariationalRefinementAlpha_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1613,7 +1613,7 @@ pub mod video {
 		fn get_variational_refinement_delta(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getVariationalRefinementDelta_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1625,7 +1625,7 @@ pub mod video {
 		fn get_variational_refinement_gamma(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getVariationalRefinementGamma_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1637,7 +1637,7 @@ pub mod video {
 		fn get_variational_refinement_epsilon(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getVariationalRefinementEpsilon_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1652,7 +1652,7 @@ pub mod video {
 		fn get_use_mean_normalization(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getUseMeanNormalization_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1667,7 +1667,7 @@ pub mod video {
 		fn get_use_spatial_propagation(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getUseSpatialPropagation_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1686,7 +1686,7 @@ pub mod video {
 		fn set_finest_scale(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setFinestScale_int(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1699,7 +1699,7 @@ pub mod video {
 		fn set_patch_size(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setPatchSize_int(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1712,7 +1712,7 @@ pub mod video {
 		fn set_patch_stride(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setPatchStride_int(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1725,7 +1725,7 @@ pub mod video {
 		fn set_gradient_descent_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setGradientDescentIterations_int(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1738,7 +1738,7 @@ pub mod video {
 		fn set_variational_refinement_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setVariationalRefinementIterations_int(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1750,7 +1750,7 @@ pub mod video {
 		fn set_variational_refinement_alpha(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setVariationalRefinementAlpha_float(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1762,7 +1762,7 @@ pub mod video {
 		fn set_variational_refinement_delta(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setVariationalRefinementDelta_float(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1774,7 +1774,7 @@ pub mod video {
 		fn set_variational_refinement_gamma(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setVariationalRefinementGamma_float(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1786,7 +1786,7 @@ pub mod video {
 		fn set_variational_refinement_epsilon(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setVariationalRefinementEpsilon_float(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1801,7 +1801,7 @@ pub mod video {
 		fn set_use_mean_normalization(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setUseMeanNormalization_bool(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1816,7 +1816,7 @@ pub mod video {
 		fn set_use_spatial_propagation(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setUseSpatialPropagation_bool(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1904,7 +1904,7 @@ pub mod video {
 			input_output_array_arg!(flow);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DenseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_DenseOpticalFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1914,7 +1914,7 @@ pub mod video {
 		fn collect_garbage(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DenseOpticalFlow_collectGarbage(self.as_raw_mut_DenseOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1987,7 +1987,7 @@ pub mod video {
 		pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<core::Ptr<crate::video::FarnebackOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::FarnebackOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2007,7 +2007,7 @@ pub mod video {
 		pub fn create_def() -> Result<core::Ptr<crate::video::FarnebackOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::FarnebackOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2023,7 +2023,7 @@ pub mod video {
 		fn get_num_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_getNumLevels_const(self.as_raw_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2032,7 +2032,7 @@ pub mod video {
 		fn get_pyr_scale(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_getPyrScale_const(self.as_raw_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2041,7 +2041,7 @@ pub mod video {
 		fn get_fast_pyramids(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_getFastPyramids_const(self.as_raw_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2050,7 +2050,7 @@ pub mod video {
 		fn get_win_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_getWinSize_const(self.as_raw_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2059,7 +2059,7 @@ pub mod video {
 		fn get_num_iters(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_getNumIters_const(self.as_raw_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2068,7 +2068,7 @@ pub mod video {
 		fn get_poly_n(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_getPolyN_const(self.as_raw_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2077,7 +2077,7 @@ pub mod video {
 		fn get_poly_sigma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_getPolySigma_const(self.as_raw_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2086,7 +2086,7 @@ pub mod video {
 		fn get_flags(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_getFlags_const(self.as_raw_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2101,7 +2101,7 @@ pub mod video {
 		fn set_num_levels(&mut self, num_levels: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_setNumLevels_int(self.as_raw_mut_FarnebackOpticalFlow(), num_levels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2110,7 +2110,7 @@ pub mod video {
 		fn set_pyr_scale(&mut self, pyr_scale: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_setPyrScale_double(self.as_raw_mut_FarnebackOpticalFlow(), pyr_scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2119,7 +2119,7 @@ pub mod video {
 		fn set_fast_pyramids(&mut self, fast_pyramids: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_setFastPyramids_bool(self.as_raw_mut_FarnebackOpticalFlow(), fast_pyramids, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2128,7 +2128,7 @@ pub mod video {
 		fn set_win_size(&mut self, win_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_setWinSize_int(self.as_raw_mut_FarnebackOpticalFlow(), win_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2137,7 +2137,7 @@ pub mod video {
 		fn set_num_iters(&mut self, num_iters: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_setNumIters_int(self.as_raw_mut_FarnebackOpticalFlow(), num_iters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2146,7 +2146,7 @@ pub mod video {
 		fn set_poly_n(&mut self, poly_n: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_setPolyN_int(self.as_raw_mut_FarnebackOpticalFlow(), poly_n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2155,7 +2155,7 @@ pub mod video {
 		fn set_poly_sigma(&mut self, poly_sigma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_setPolySigma_double(self.as_raw_mut_FarnebackOpticalFlow(), poly_sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2164,7 +2164,7 @@ pub mod video {
 		fn set_flags(&mut self, flags: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_setFlags_int(self.as_raw_mut_FarnebackOpticalFlow(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2241,7 +2241,7 @@ pub mod video {
 		pub fn default() -> Result<crate::video::KalmanFilter> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_KalmanFilter(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2261,7 +2261,7 @@ pub mod video {
 		pub fn new(dynam_params: i32, measure_params: i32, control_params: i32, typ: i32) -> Result<crate::video::KalmanFilter> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int_int_int(dynam_params, measure_params, control_params, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2282,7 +2282,7 @@ pub mod video {
 		pub fn new_def(dynam_params: i32, measure_params: i32) -> Result<crate::video::KalmanFilter> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int(dynam_params, measure_params, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2530,7 +2530,7 @@ pub mod video {
 		fn init(&mut self, dynam_params: i32, measure_params: i32, control_params: i32, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_init_int_int_int_int(self.as_raw_mut_KalmanFilter(), dynam_params, measure_params, control_params, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2551,7 +2551,7 @@ pub mod video {
 		fn init_def(&mut self, dynam_params: i32, measure_params: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_init_int_int(self.as_raw_mut_KalmanFilter(), dynam_params, measure_params, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2567,7 +2567,7 @@ pub mod video {
 		fn predict(&mut self, control: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_predict_const_MatR(self.as_raw_mut_KalmanFilter(), control.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2585,7 +2585,7 @@ pub mod video {
 		fn predict_def(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_predict(self.as_raw_mut_KalmanFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2599,7 +2599,7 @@ pub mod video {
 		fn correct(&mut self, measurement: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_correct_const_MatR(self.as_raw_mut_KalmanFilter(), measurement.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2689,7 +2689,7 @@ pub mod video {
 			output_array_arg!(err);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2717,7 +2717,7 @@ pub mod video {
 			output_array_arg!(status);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR(self.as_raw_mut_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2788,7 +2788,7 @@ pub mod video {
 		pub fn create(win_size: core::Size, max_level: i32, crit: core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<core::Ptr<crate::video::SparsePyrLKOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(&win_size, max_level, &crit, flags, min_eig_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2805,7 +2805,7 @@ pub mod video {
 		pub fn create_def() -> Result<core::Ptr<crate::video::SparsePyrLKOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2821,7 +2821,7 @@ pub mod video {
 		fn get_win_size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_getWinSize_const(self.as_raw_SparsePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2830,7 +2830,7 @@ pub mod video {
 		fn get_max_level(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_getMaxLevel_const(self.as_raw_SparsePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2839,7 +2839,7 @@ pub mod video {
 		fn get_term_criteria(&self) -> Result<core::TermCriteria> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_getTermCriteria_const(self.as_raw_SparsePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2848,7 +2848,7 @@ pub mod video {
 		fn get_flags(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_getFlags_const(self.as_raw_SparsePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2857,7 +2857,7 @@ pub mod video {
 		fn get_min_eig_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_getMinEigThreshold_const(self.as_raw_SparsePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2872,7 +2872,7 @@ pub mod video {
 		fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_SparsePyrLKOpticalFlow(), &win_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2881,7 +2881,7 @@ pub mod video {
 		fn set_max_level(&mut self, max_level: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_setMaxLevel_int(self.as_raw_mut_SparsePyrLKOpticalFlow(), max_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2890,7 +2890,7 @@ pub mod video {
 		fn set_term_criteria(&mut self, crit: &mut core::TermCriteria) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_setTermCriteria_TermCriteriaR(self.as_raw_mut_SparsePyrLKOpticalFlow(), crit, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2899,7 +2899,7 @@ pub mod video {
 		fn set_flags(&mut self, flags: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_setFlags_int(self.as_raw_mut_SparsePyrLKOpticalFlow(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2908,7 +2908,7 @@ pub mod video {
 		fn set_min_eig_threshold(&mut self, min_eig_threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparsePyrLKOpticalFlow_setMinEigThreshold_double(self.as_raw_mut_SparsePyrLKOpticalFlow(), min_eig_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2992,7 +2992,7 @@ pub mod video {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Tracker_init_const__InputArrayR_const_RectR(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), &bounding_box, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3012,7 +3012,7 @@ pub mod video {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Tracker_update_const__InputArrayR_RectR(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), bounding_box, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3073,7 +3073,7 @@ pub mod video {
 		pub fn create(parameters: &impl crate::video::TrackerDaSiamRPN_ParamsTraitConst) -> Result<core::Ptr<crate::video::TrackerDaSiamRPN>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerDaSiamRPN_create_const_ParamsR(parameters.as_raw_TrackerDaSiamRPN_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerDaSiamRPN>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3090,7 +3090,7 @@ pub mod video {
 		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerDaSiamRPN>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerDaSiamRPN_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerDaSiamRPN>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3113,7 +3113,7 @@ pub mod video {
 		fn get_tracking_score(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerDaSiamRPN_getTrackingScore(self.as_raw_mut_TrackerDaSiamRPN(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3170,7 +3170,7 @@ pub mod video {
 		pub fn default() -> Result<crate::video::TrackerDaSiamRPN_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerDaSiamRPN_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::video::TrackerDaSiamRPN_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3326,7 +3326,7 @@ pub mod video {
 		pub fn create(parameters: &impl crate::video::TrackerGOTURN_ParamsTraitConst) -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerGOTURN_create_const_ParamsR(parameters.as_raw_TrackerGOTURN_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerGOTURN>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3343,7 +3343,7 @@ pub mod video {
 		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerGOTURN_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerGOTURN>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3413,7 +3413,7 @@ pub mod video {
 		pub fn default() -> Result<crate::video::TrackerGOTURN_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerGOTURN_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::video::TrackerGOTURN_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3521,7 +3521,7 @@ pub mod video {
 		pub fn create(parameters: crate::video::TrackerMIL_Params) -> Result<core::Ptr<crate::video::TrackerMIL>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerMIL_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerMIL>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3538,7 +3538,7 @@ pub mod video {
 		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerMIL>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerMIL_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerMIL>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3614,7 +3614,7 @@ pub mod video {
 		pub fn default() -> Result<crate::video::TrackerMIL_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerMIL_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3654,7 +3654,7 @@ pub mod video {
 		pub fn create(parameters: &impl crate::video::TrackerNano_ParamsTraitConst) -> Result<core::Ptr<crate::video::TrackerNano>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerNano_create_const_ParamsR(parameters.as_raw_TrackerNano_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerNano>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3671,7 +3671,7 @@ pub mod video {
 		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerNano>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerNano_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerNano>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3694,7 +3694,7 @@ pub mod video {
 		fn get_tracking_score(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerNano_getTrackingScore(self.as_raw_mut_TrackerNano(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3751,7 +3751,7 @@ pub mod video {
 		pub fn default() -> Result<crate::video::TrackerNano_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerNano_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::video::TrackerNano_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3883,7 +3883,7 @@ pub mod video {
 		pub fn create(parameters: &impl crate::video::TrackerVit_ParamsTraitConst) -> Result<core::Ptr<crate::video::TrackerVit>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerVit_create_const_ParamsR(parameters.as_raw_TrackerVit_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerVit>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3900,7 +3900,7 @@ pub mod video {
 		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerVit>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerVit_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerVit>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3923,7 +3923,7 @@ pub mod video {
 		fn get_tracking_score(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerVit_getTrackingScore(self.as_raw_mut_TrackerVit(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3980,7 +3980,7 @@ pub mod video {
 		pub fn default() -> Result<crate::video::TrackerVit_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerVit_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::video::TrackerVit_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4015,7 +4015,7 @@ pub mod video {
 		fn meanvalue(&self) -> core::Scalar {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerVit_Params_propMeanvalue_const(self.as_raw_TrackerVit_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -4023,7 +4023,7 @@ pub mod video {
 		fn stdvalue(&self) -> core::Scalar {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerVit_Params_propStdvalue_const(self.as_raw_TrackerVit_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -4139,7 +4139,7 @@ pub mod video {
 		pub fn create() -> Result<core::Ptr<crate::video::VariationalRefinement>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::VariationalRefinement>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4158,7 +4158,7 @@ pub mod video {
 		fn get_fixed_point_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_getFixedPointIterations_const(self.as_raw_VariationalRefinement(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4171,7 +4171,7 @@ pub mod video {
 		fn get_sor_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_getSorIterations_const(self.as_raw_VariationalRefinement(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4183,7 +4183,7 @@ pub mod video {
 		fn get_omega(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_getOmega_const(self.as_raw_VariationalRefinement(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4195,7 +4195,7 @@ pub mod video {
 		fn get_alpha(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_getAlpha_const(self.as_raw_VariationalRefinement(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4207,7 +4207,7 @@ pub mod video {
 		fn get_delta(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_getDelta_const(self.as_raw_VariationalRefinement(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4219,7 +4219,7 @@ pub mod video {
 		fn get_gamma(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_getGamma_const(self.as_raw_VariationalRefinement(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4231,7 +4231,7 @@ pub mod video {
 		fn get_epsilon(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_getEpsilon_const(self.as_raw_VariationalRefinement(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4252,7 +4252,7 @@ pub mod video {
 			input_output_array_arg!(flow_v);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_calcUV_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_VariationalRefinement(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow_u.as_raw__InputOutputArray(), flow_v.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4264,7 +4264,7 @@ pub mod video {
 		fn set_fixed_point_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_setFixedPointIterations_int(self.as_raw_mut_VariationalRefinement(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4277,7 +4277,7 @@ pub mod video {
 		fn set_sor_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_setSorIterations_int(self.as_raw_mut_VariationalRefinement(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4289,7 +4289,7 @@ pub mod video {
 		fn set_omega(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_setOmega_float(self.as_raw_mut_VariationalRefinement(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4301,7 +4301,7 @@ pub mod video {
 		fn set_alpha(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_setAlpha_float(self.as_raw_mut_VariationalRefinement(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4313,7 +4313,7 @@ pub mod video {
 		fn set_delta(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_setDelta_float(self.as_raw_mut_VariationalRefinement(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4325,7 +4325,7 @@ pub mod video {
 		fn set_gamma(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_setGamma_float(self.as_raw_mut_VariationalRefinement(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4337,7 +4337,7 @@ pub mod video {
 		fn set_epsilon(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_setEpsilon_float(self.as_raw_mut_VariationalRefinement(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

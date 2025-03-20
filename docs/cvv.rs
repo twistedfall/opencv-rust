@@ -24,7 +24,7 @@ pub mod cvv {
 		extern_container_arg!(view);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cvv_impl_debugDMatch_const__InputArrayR_vectorLKeyPointG_const__InputArrayR_vectorLKeyPointG_vectorLDMatchG_const_CallMetaDataR_const_charX_const_charX_bool(img1.as_raw__InputArray(), keypoints1.as_raw_mut_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_mut_VectorOfKeyPoint(), matches.as_raw_mut_VectorOfDMatch(), data.as_raw_CallMetaData(), description.opencv_as_extern(), view.opencv_as_extern(), use_train_descriptor, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -37,7 +37,7 @@ pub mod cvv {
 		extern_container_arg!(view);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cvv_impl_debugFilter_const__InputArrayR_const__InputArrayR_const_CallMetaDataR_const_charX_const_charX(original.as_raw__InputArray(), result.as_raw__InputArray(), data.as_raw_CallMetaData(), description.opencv_as_extern(), view.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -46,7 +46,7 @@ pub mod cvv {
 	pub fn final_show() -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cvv_impl_finalShow(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -58,7 +58,7 @@ pub mod cvv {
 		extern_container_arg!(view);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cvv_impl_showImage_const__InputArrayR_const_CallMetaDataR_const_charX_const_charX(img.as_raw__InputArray(), data.as_raw_CallMetaData(), description.opencv_as_extern(), view.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -85,7 +85,7 @@ pub mod cvv {
 		pub fn default() -> Result<crate::cvv::CallMetaData> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cvv_impl_CallMetaData_CallMetaData(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::cvv::CallMetaData::opencv_from_extern(ret) };
 			Ok(ret)
@@ -100,7 +100,7 @@ pub mod cvv {
 			extern_container_arg!(function);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cvv_impl_CallMetaData_CallMetaData_const_charX_size_t_const_charX(file.opencv_as_extern(), line, function.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::cvv::CallMetaData::opencv_from_extern(ret) };
 			Ok(ret)
@@ -149,7 +149,7 @@ pub mod cvv {
 		fn to_bool(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cvv_impl_CallMetaData_operator_bool(self.as_raw_mut_CallMetaData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

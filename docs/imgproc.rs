@@ -3014,7 +3014,7 @@ pub mod imgproc {
 		output_array_arg!(edges);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Canny_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double(dx.as_raw__InputArray(), dy.as_raw__InputArray(), edges.as_raw__OutputArray(), threshold1, threshold2, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3043,7 +3043,7 @@ pub mod imgproc {
 		output_array_arg!(edges);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Canny_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool(dx.as_raw__InputArray(), dy.as_raw__InputArray(), edges.as_raw__OutputArray(), threshold1, threshold2, l2gradient, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3076,7 +3076,7 @@ pub mod imgproc {
 		output_array_arg!(edges);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Canny_const__InputArrayR_const__OutputArrayR_double_double(image.as_raw__InputArray(), edges.as_raw__OutputArray(), threshold1, threshold2, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3108,7 +3108,7 @@ pub mod imgproc {
 		output_array_arg!(edges);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Canny_const__InputArrayR_const__OutputArrayR_double_double_int_bool(image.as_raw__InputArray(), edges.as_raw__OutputArray(), threshold1, threshold2, aperture_size, l2gradient, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3159,7 +3159,7 @@ pub mod imgproc {
 		input_array_arg!(signature2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_EMD_const__InputArrayR_const__InputArrayR_int(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3211,7 +3211,7 @@ pub mod imgproc {
 		output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_EMD_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_floatX_const__OutputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, cost.as_raw__InputArray(), lower_bound.map_or(::core::ptr::null_mut(), |lower_bound| lower_bound), flow.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3249,7 +3249,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &ksize, sigma_x, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3286,7 +3286,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double_double_int_AlgorithmHint(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &ksize, sigma_x, sigma_y, border_type, hint, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3348,7 +3348,7 @@ pub mod imgproc {
 		output_array_arg!(circles);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_HoughCircles_const__InputArrayR_const__OutputArrayR_int_double_double(image.as_raw__InputArray(), circles.as_raw__OutputArray(), method, dp, min_dist, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3409,7 +3409,7 @@ pub mod imgproc {
 		output_array_arg!(circles);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_HoughCircles_const__InputArrayR_const__OutputArrayR_int_double_double_double_double_int_int(image.as_raw__InputArray(), circles.as_raw__OutputArray(), method, dp, min_dist, param1, param2, min_radius, max_radius, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3453,7 +3453,7 @@ pub mod imgproc {
 		output_array_arg!(lines);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_HoughLinesP_const__InputArrayR_const__OutputArrayR_double_double_int(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3496,7 +3496,7 @@ pub mod imgproc {
 		output_array_arg!(lines);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_HoughLinesP_const__InputArrayR_const__OutputArrayR_double_double_int_double_double(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, min_line_length, max_line_gap, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3525,7 +3525,7 @@ pub mod imgproc {
 		output_array_arg!(lines);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_HoughLinesPointSet_const__InputArrayR_const__OutputArrayR_int_int_double_double_double_double_double_double(point.as_raw__InputArray(), lines.as_raw__OutputArray(), lines_max, threshold, min_rho, max_rho, rho_step, min_theta, max_theta, theta_step, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3572,7 +3572,7 @@ pub mod imgproc {
 		output_array_arg!(lines);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_HoughLines_const__InputArrayR_const__OutputArrayR_double_double_int(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3618,7 +3618,7 @@ pub mod imgproc {
 		output_array_arg!(lines);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_HoughLines_const__InputArrayR_const__OutputArrayR_double_double_int_double_double_double_double_bool(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, srn, stn, min_theta, max_theta, use_edgeval, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3649,7 +3649,7 @@ pub mod imgproc {
 		output_array_arg!(hu);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_HuMoments_const_MomentsR_const__OutputArrayR(&m, hu.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3677,7 +3677,7 @@ pub mod imgproc {
 	pub fn hu_moments(moments: core::Moments, hu: &mut [f64; 7]) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_HuMoments_const_MomentsR_doubleXX(&moments, hu, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3719,7 +3719,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Laplacian_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3760,7 +3760,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Laplacian_const__InputArrayR_const__OutputArrayR_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize, scale, delta, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3800,7 +3800,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Scharr_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, dx, dy, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3839,7 +3839,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Scharr_const__InputArrayR_const__OutputArrayR_int_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, dx, dy, scale, delta, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3900,7 +3900,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Sobel_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, dx, dy, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3960,7 +3960,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Sobel_const__InputArrayR_const__OutputArrayR_int_int_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, dx, dy, ksize, scale, delta, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3992,7 +3992,7 @@ pub mod imgproc {
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_accumulateProduct_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4024,7 +4024,7 @@ pub mod imgproc {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_accumulateProduct_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4055,7 +4055,7 @@ pub mod imgproc {
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_accumulateSquare_const__InputArrayR_const__InputOutputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4086,7 +4086,7 @@ pub mod imgproc {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_accumulateSquare_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4119,7 +4119,7 @@ pub mod imgproc {
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_accumulateWeighted_const__InputArrayR_const__InputOutputArrayR_double(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), alpha, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4152,7 +4152,7 @@ pub mod imgproc {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_accumulateWeighted_const__InputArrayR_const__InputOutputArrayR_double_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), alpha, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4184,7 +4184,7 @@ pub mod imgproc {
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_accumulate_const__InputArrayR_const__InputOutputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4216,7 +4216,7 @@ pub mod imgproc {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_accumulate_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4252,7 +4252,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_adaptiveThreshold_const__InputArrayR_const__OutputArrayR_double_int_int_int_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), max_value, adaptive_method, threshold_type, block_size, c, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4270,7 +4270,7 @@ pub mod imgproc {
 		input_array_arg!(user_color);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_applyColorMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), user_color.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4287,7 +4287,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_applyColorMap_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), colormap, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4311,7 +4311,7 @@ pub mod imgproc {
 		output_array_arg!(approx_curve);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_approxPolyDP_const__InputArrayR_const__OutputArrayR_double_bool(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), epsilon, closed, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4345,7 +4345,7 @@ pub mod imgproc {
 		output_array_arg!(approx_curve);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_approxPolyN_const__InputArrayR_const__OutputArrayR_int(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), nsides, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4378,7 +4378,7 @@ pub mod imgproc {
 		output_array_arg!(approx_curve);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_approxPolyN_const__InputArrayR_const__OutputArrayR_int_float_bool(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), nsides, epsilon_percentage, ensure_convex, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4395,7 +4395,7 @@ pub mod imgproc {
 		input_array_arg!(curve);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_arcLength_const__InputArrayR_bool(curve.as_raw__InputArray(), closed, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4425,7 +4425,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_arrowedLine_const__InputOutputArrayR_Point_Point_const_ScalarR(img.as_raw__InputOutputArray(), &pt1, &pt2, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4454,7 +4454,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_arrowedLine_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int_double(img.as_raw__InputOutputArray(), &pt1, &pt2, &color, thickness, line_type, shift, tip_length, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4497,7 +4497,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bilateralFilter_const__InputArrayR_const__OutputArrayR_int_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), d, sigma_color, sigma_space, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4539,7 +4539,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bilateralFilter_const__InputArrayR_const__OutputArrayR_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), d, sigma_color, sigma_space, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4561,7 +4561,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_blendLinear_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), weights1.as_raw__InputArray(), weights2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4596,7 +4596,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_blur_const__InputArrayR_const__OutputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &ksize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4630,7 +4630,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_blur_const__InputArrayR_const__OutputArrayR_Size_Point_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &ksize, &anchor, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4647,7 +4647,7 @@ pub mod imgproc {
 		input_array_arg!(array);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_boundingRect_const__InputArrayR(array.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4689,7 +4689,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_boxFilter_const__InputArrayR_const__OutputArrayR_int_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, &ksize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4730,7 +4730,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_boxFilter_const__InputArrayR_const__OutputArrayR_int_Size_Point_bool_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, &ksize, &anchor, normalize, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4749,7 +4749,7 @@ pub mod imgproc {
 		output_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_boxPoints_RotatedRect_const__OutputArrayR(&box_, points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4775,7 +4775,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_buildPyramid_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), maxlevel, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4800,7 +4800,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_buildPyramid_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), maxlevel, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4853,7 +4853,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcBackProject_const__InputArrayR_const_vectorLintGR_const__InputArrayR_const__OutputArrayR_const_vectorLfloatGR_double(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), hist.as_raw__InputArray(), dst.as_raw__OutputArray(), ranges.as_raw_VectorOff32(), scale, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4876,7 +4876,7 @@ pub mod imgproc {
 		output_array_arg!(hist);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcHist_const__InputArrayR_const_vectorLintGR_const__InputArrayR_const__OutputArrayR_const_vectorLintGR_const_vectorLfloatGR(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), mask.as_raw__InputArray(), hist.as_raw__OutputArray(), hist_size.as_raw_VectorOfi32(), ranges.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4933,7 +4933,7 @@ pub mod imgproc {
 		output_array_arg!(hist);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcHist_const__InputArrayR_const_vectorLintGR_const__InputArrayR_const__OutputArrayR_const_vectorLintGR_const_vectorLfloatGR_bool(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), mask.as_raw__InputArray(), hist.as_raw__OutputArray(), hist_size.as_raw_VectorOfi32(), ranges.as_raw_VectorOff32(), accumulate, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4961,7 +4961,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_circle_const__InputOutputArrayR_Point_int_const_ScalarR(img.as_raw__InputOutputArray(), &center, radius, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -4988,7 +4988,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_circle_const__InputOutputArrayR_Point_int_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), &center, radius, &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5012,7 +5012,7 @@ pub mod imgproc {
 	pub fn clip_line(img_rect: core::Rect, pt1: &mut core::Point, pt2: &mut core::Point) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_clipLine_Rect_PointR_PointR(&img_rect, pt1, pt2, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5036,7 +5036,7 @@ pub mod imgproc {
 	pub fn clip_line_size_i64(img_size: core::Size2l, pt1: &mut core::Point2l, pt2: &mut core::Point2l) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_clipLine_Size2l_Point2lR_Point2lR(&img_size, pt1, pt2, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5054,7 +5054,7 @@ pub mod imgproc {
 	pub fn clip_line_size(img_size: core::Size, pt1: &mut core::Point, pt2: &mut core::Point) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_clipLine_Size_PointR_PointR(&img_size, pt1, pt2, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5080,7 +5080,7 @@ pub mod imgproc {
 	pub fn compare_hist_1(h1: &impl core::SparseMatTraitConst, h2: &impl core::SparseMatTraitConst, method: i32) -> Result<f64> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_compareHist_const_SparseMatR_const_SparseMatR_int(h1.as_raw_SparseMat(), h2.as_raw_SparseMat(), method, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5106,7 +5106,7 @@ pub mod imgproc {
 		input_array_arg!(h2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_compareHist_const__InputArrayR_const__InputArrayR_int(h1.as_raw__InputArray(), h2.as_raw__InputArray(), method, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5135,7 +5135,7 @@ pub mod imgproc {
 		output_array_arg!(centroids);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_connectedComponentsWithStats_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(image.as_raw__InputArray(), labels.as_raw__OutputArray(), stats.as_raw__OutputArray(), centroids.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5187,7 +5187,7 @@ pub mod imgproc {
 		output_array_arg!(centroids);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_connectedComponentsWithStats_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), stats.as_raw__OutputArray(), centroids.as_raw__OutputArray(), connectivity, ltype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5223,7 +5223,7 @@ pub mod imgproc {
 		output_array_arg!(centroids);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_connectedComponentsWithStats_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), stats.as_raw__OutputArray(), centroids.as_raw__OutputArray(), connectivity, ltype, ccltype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5246,7 +5246,7 @@ pub mod imgproc {
 		output_array_arg!(labels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_connectedComponents_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), labels.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5287,7 +5287,7 @@ pub mod imgproc {
 		output_array_arg!(labels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_connectedComponents_const__InputArrayR_const__OutputArrayR_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), connectivity, ltype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5316,7 +5316,7 @@ pub mod imgproc {
 		output_array_arg!(labels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_connectedComponents_const__InputArrayR_const__OutputArrayR_int_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), connectivity, ltype, ccltype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5361,7 +5361,7 @@ pub mod imgproc {
 		input_array_arg!(contour);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_contourArea_const__InputArrayR(contour.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5405,7 +5405,7 @@ pub mod imgproc {
 		input_array_arg!(contour);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_contourArea_const__InputArrayR_bool(contour.as_raw__InputArray(), oriented, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5452,7 +5452,7 @@ pub mod imgproc {
 		output_array_arg!(dstmap2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convertMaps_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(map1.as_raw__InputArray(), map2.as_raw__InputArray(), dstmap1.as_raw__OutputArray(), dstmap2.as_raw__OutputArray(), dstmap1type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5498,7 +5498,7 @@ pub mod imgproc {
 		output_array_arg!(dstmap2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convertMaps_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_bool(map1.as_raw__InputArray(), map2.as_raw__InputArray(), dstmap1.as_raw__OutputArray(), dstmap2.as_raw__OutputArray(), dstmap1type, nninterpolation, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5542,7 +5542,7 @@ pub mod imgproc {
 		output_array_arg!(hull);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convexHull_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), hull.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5585,7 +5585,7 @@ pub mod imgproc {
 		output_array_arg!(hull);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convexHull_const__InputArrayR_const__OutputArrayR_bool_bool(points.as_raw__InputArray(), hull.as_raw__OutputArray(), clockwise, return_points, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5614,7 +5614,7 @@ pub mod imgproc {
 		output_array_arg!(convexity_defects);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convexityDefects_const__InputArrayR_const__InputArrayR_const__OutputArrayR(contour.as_raw__InputArray(), convexhull.as_raw__InputArray(), convexity_defects.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5655,7 +5655,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cornerEigenValsAndVecs_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5695,7 +5695,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cornerEigenValsAndVecs_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5729,7 +5729,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cornerHarris_const__InputArrayR_const__OutputArrayR_int_int_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, k, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5762,7 +5762,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cornerHarris_const__InputArrayR_const__OutputArrayR_int_int_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, k, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5791,7 +5791,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cornerMinEigenVal_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5819,7 +5819,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cornerMinEigenVal_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5870,7 +5870,7 @@ pub mod imgproc {
 		input_output_array_arg!(corners);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cornerSubPix_const__InputArrayR_const__InputOutputArrayR_Size_Size_TermCriteria(image.as_raw__InputArray(), corners.as_raw__InputOutputArray(), &win_size, &zero_zone, &criteria, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5890,7 +5890,7 @@ pub mod imgproc {
 	pub fn create_clahe_def() -> Result<core::Ptr<crate::imgproc::CLAHE>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createCLAHE(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::imgproc::CLAHE>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -5910,7 +5910,7 @@ pub mod imgproc {
 	pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr<crate::imgproc::CLAHE>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createCLAHE_double_Size(clip_limit, &tile_grid_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::imgproc::CLAHE>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -5921,7 +5921,7 @@ pub mod imgproc {
 	pub fn create_generalized_hough_ballard() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughBallard>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createGeneralizedHoughBallard(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::imgproc::GeneralizedHoughBallard>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -5932,7 +5932,7 @@ pub mod imgproc {
 	pub fn create_generalized_hough_guil() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughGuil>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createGeneralizedHoughGuil(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -5959,7 +5959,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createHanningWindow_const__OutputArrayR_Size_int(dst.as_raw__OutputArray(), &win_size, typ, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -5993,7 +5993,7 @@ pub mod imgproc {
 	pub fn create_line_segment_detector_def() -> Result<core::Ptr<crate::imgproc::LineSegmentDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createLineSegmentDetector(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::imgproc::LineSegmentDetector>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -6027,7 +6027,7 @@ pub mod imgproc {
 	pub fn create_line_segment_detector(refine: i32, scale: f64, sigma_scale: f64, quant: f64, ang_th: f64, log_eps: f64, density_th: f64, n_bins: i32) -> Result<core::Ptr<crate::imgproc::LineSegmentDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createLineSegmentDetector_int_double_double_double_double_double_double_int(refine, scale, sigma_scale, quant, ang_th, log_eps, density_th, n_bins, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::imgproc::LineSegmentDetector>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -6063,7 +6063,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cvtColorTwoPlane_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), code, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6097,7 +6097,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cvtColorTwoPlane_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_AlgorithmHint(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), code, hint, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6156,7 +6156,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cvtColor_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6214,7 +6214,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cvtColor_const__InputArrayR_const__OutputArrayR_int_int_AlgorithmHint(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dst_cn, hint, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6259,7 +6259,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_demosaicing_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6303,7 +6303,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_demosaicing_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dst_cn, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6344,7 +6344,7 @@ pub mod imgproc {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6384,7 +6384,7 @@ pub mod imgproc {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), &anchor, iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6452,7 +6452,7 @@ pub mod imgproc {
 		output_array_arg!(labels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_distanceTransform_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), labels.as_raw__OutputArray(), distance_type, mask_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6519,7 +6519,7 @@ pub mod imgproc {
 		output_array_arg!(labels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_distanceTransform_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), labels.as_raw__OutputArray(), distance_type, mask_size, label_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6545,7 +6545,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_distanceTransform_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), distance_type, mask_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6623,7 +6623,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_distanceTransform_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), distance_type, mask_size, dst_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6652,7 +6652,7 @@ pub mod imgproc {
 		output_array_arg!(c);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_divSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6680,7 +6680,7 @@ pub mod imgproc {
 		output_array_arg!(c);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_divSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, conj_b, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6728,7 +6728,7 @@ pub mod imgproc {
 		input_array_arg!(contours);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawContours_const__InputOutputArrayR_const__InputArrayR_int_const_ScalarR(image.as_raw__InputOutputArray(), contours.as_raw__InputArray(), contour_idx, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6776,7 +6776,7 @@ pub mod imgproc {
 		input_array_arg!(hierarchy);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawContours_const__InputOutputArrayR_const__InputArrayR_int_const_ScalarR_int_int_const__InputArrayR_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__InputArray(), contour_idx, &color, thickness, line_type, hierarchy.as_raw__InputArray(), max_level, &offset, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6806,7 +6806,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMarker_const__InputOutputArrayR_Point_const_ScalarR(img.as_raw__InputOutputArray(), &position, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6835,7 +6835,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMarker_const__InputOutputArrayR_Point_const_ScalarR_int_int_int_int(img.as_raw__InputOutputArray(), &position, &color, marker_type, marker_size, thickness, line_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6868,7 +6868,7 @@ pub mod imgproc {
 	pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector<core::Point2d>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vectorLPoint2dGR(&center, &axes, angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint2d(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6891,7 +6891,7 @@ pub mod imgproc {
 	pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector<core::Point>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ellipse2Poly_Point_Size_int_int_int_int_vectorLPointGR(&center, &axes, angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6932,7 +6932,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ellipse_const__InputOutputArrayR_Point_Size_double_double_double_const_ScalarR(img.as_raw__InputOutputArray(), &center, &axes, angle, start_angle, end_angle, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6972,7 +6972,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ellipse_const__InputOutputArrayR_Point_Size_double_double_double_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), &center, &axes, angle, start_angle, end_angle, &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -6996,7 +6996,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ellipse_const__InputOutputArrayR_const_RotatedRectR_const_ScalarR(img.as_raw__InputOutputArray(), &box_, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7045,7 +7045,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ellipse_const__InputOutputArrayR_const_RotatedRectR_const_ScalarR_int_int(img.as_raw__InputOutputArray(), &box_, &color, thickness, line_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7071,7 +7071,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_equalizeHist_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7113,7 +7113,7 @@ pub mod imgproc {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7154,7 +7154,7 @@ pub mod imgproc {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), &anchor, iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7183,7 +7183,7 @@ pub mod imgproc {
 		input_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fillConvexPoly_const__InputOutputArrayR_const__InputArrayR_const_ScalarR(img.as_raw__InputOutputArray(), points.as_raw__InputArray(), &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7211,7 +7211,7 @@ pub mod imgproc {
 		input_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fillConvexPoly_const__InputOutputArrayR_const__InputArrayR_const_ScalarR_int_int(img.as_raw__InputOutputArray(), points.as_raw__InputArray(), &color, line_type, shift, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7241,7 +7241,7 @@ pub mod imgproc {
 		input_array_arg!(pts);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fillPoly_const__InputOutputArrayR_const__InputArrayR_const_ScalarR(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7270,7 +7270,7 @@ pub mod imgproc {
 		input_array_arg!(pts);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fillPoly_const__InputOutputArrayR_const__InputArrayR_const_ScalarR_int_int_Point(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), &color, line_type, shift, &offset, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7319,7 +7319,7 @@ pub mod imgproc {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_filter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7367,7 +7367,7 @@ pub mod imgproc {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_filter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel.as_raw__InputArray(), &anchor, delta, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7388,7 +7388,7 @@ pub mod imgproc {
 		output_array_arg!(contours);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findContoursLinkRuns_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), contours.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7408,7 +7408,7 @@ pub mod imgproc {
 		output_array_arg!(hierarchy);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findContoursLinkRuns_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(image.as_raw__InputArray(), contours.as_raw__OutputArray(), hierarchy.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7452,7 +7452,7 @@ pub mod imgproc {
 		output_array_arg!(hierarchy);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findContours_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(image.as_raw__InputArray(), contours.as_raw__OutputArray(), hierarchy.as_raw__OutputArray(), mode, method, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7495,7 +7495,7 @@ pub mod imgproc {
 		output_array_arg!(hierarchy);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findContours_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point(image.as_raw__InputArray(), contours.as_raw__OutputArray(), hierarchy.as_raw__OutputArray(), mode, method, &offset, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7511,7 +7511,7 @@ pub mod imgproc {
 		output_array_arg!(contours);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findContours_const__InputArrayR_const__OutputArrayR_int_int(image.as_raw__InputArray(), contours.as_raw__OutputArray(), mode, method, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7555,7 +7555,7 @@ pub mod imgproc {
 		output_array_arg!(contours);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findContours_const__InputArrayR_const__OutputArrayR_int_int_Point(image.as_raw__InputArray(), contours.as_raw__OutputArray(), mode, method, &offset, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7600,7 +7600,7 @@ pub mod imgproc {
 		input_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fitEllipseAMS_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7652,7 +7652,7 @@ pub mod imgproc {
 		input_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fitEllipseDirect_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7672,7 +7672,7 @@ pub mod imgproc {
 		input_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fitEllipse_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7717,7 +7717,7 @@ pub mod imgproc {
 		output_array_arg!(line);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fitLine_const__InputArrayR_const__OutputArrayR_int_double_double_double(points.as_raw__InputArray(), line.as_raw__OutputArray(), dist_type, param, reps, aeps, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7737,7 +7737,7 @@ pub mod imgproc {
 		input_output_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_floodFill_const__InputOutputArrayR_Point_Scalar(image.as_raw__InputOutputArray(), &seed_point, &new_val, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7831,7 +7831,7 @@ pub mod imgproc {
 		input_output_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_floodFill_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), &seed_point, &new_val, rect, &lo_diff, &up_diff, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -7922,7 +7922,7 @@ pub mod imgproc {
 		input_output_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar(image.as_raw__InputOutputArray(), mask.as_raw__InputOutputArray(), &seed_point, &new_val, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8012,7 +8012,7 @@ pub mod imgproc {
 		input_output_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), mask.as_raw__InputOutputArray(), &seed_point, &new_val, rect, &lo_diff, &up_diff, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8036,7 +8036,7 @@ pub mod imgproc {
 	pub fn get_affine_transform_slice(src: &[core::Point2f; 3], dst: &[core::Point2f; 3]) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getAffineTransform_const_Point2fXX_const_Point2fXX(src, dst, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8048,7 +8048,7 @@ pub mod imgproc {
 		input_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getAffineTransform_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8083,7 +8083,7 @@ pub mod imgproc {
 		output_array_arg!(ky);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getDerivKernels_const__OutputArrayR_const__OutputArrayR_int_int_int(kx.as_raw__OutputArray(), ky.as_raw__OutputArray(), dx, dy, ksize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8116,7 +8116,7 @@ pub mod imgproc {
 		output_array_arg!(ky);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getDerivKernels_const__OutputArrayR_const__OutputArrayR_int_int_int_bool_int(kx.as_raw__OutputArray(), ky.as_raw__OutputArray(), dx, dy, ksize, normalize, ktype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8139,7 +8139,7 @@ pub mod imgproc {
 	pub fn get_font_scale_from_height_def(font_face: i32, pixel_height: i32) -> Result<f64> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getFontScaleFromHeight_const_int_const_int(font_face, pixel_height, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8161,7 +8161,7 @@ pub mod imgproc {
 	pub fn get_font_scale_from_height(font_face: i32, pixel_height: i32, thickness: i32) -> Result<f64> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getFontScaleFromHeight_const_int_const_int_const_int(font_face, pixel_height, thickness, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8188,7 +8188,7 @@ pub mod imgproc {
 	pub fn get_gabor_kernel_def(ksize: core::Size, sigma: f64, theta: f64, lambd: f64, gamma: f64) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getGaborKernel_Size_double_double_double_double(&ksize, sigma, theta, lambd, gamma, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8215,7 +8215,7 @@ pub mod imgproc {
 	pub fn get_gabor_kernel(ksize: core::Size, sigma: f64, theta: f64, lambd: f64, gamma: f64, psi: f64, ktype: i32) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getGaborKernel_Size_double_double_double_double_double_int(&ksize, sigma, theta, lambd, gamma, psi, ktype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8248,7 +8248,7 @@ pub mod imgproc {
 	pub fn get_gaussian_kernel_def(ksize: i32, sigma: f64) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getGaussianKernel_int_double(ksize, sigma, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8280,7 +8280,7 @@ pub mod imgproc {
 	pub fn get_gaussian_kernel(ksize: i32, sigma: f64, ktype: i32) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getGaussianKernel_int_double_int(ksize, sigma, ktype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8295,7 +8295,7 @@ pub mod imgproc {
 	pub fn get_perspective_transform_slice_def(src: &[core::Point2f; 4], dst: &[core::Point2f; 4]) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX(src, dst, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8326,7 +8326,7 @@ pub mod imgproc {
 	pub fn get_perspective_transform_slice(src: &[core::Point2f; 4], dst: &[core::Point2f; 4], solve_method: i32) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX_int(src, dst, solve_method, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8358,7 +8358,7 @@ pub mod imgproc {
 		input_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getPerspectiveTransform_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8389,7 +8389,7 @@ pub mod imgproc {
 		input_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getPerspectiveTransform_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), solve_method, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8425,7 +8425,7 @@ pub mod imgproc {
 		output_array_arg!(patch);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getRectSubPix_const__InputArrayR_Size_Point2f_const__OutputArrayR(image.as_raw__InputArray(), &patch_size, &center, patch.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8459,7 +8459,7 @@ pub mod imgproc {
 		output_array_arg!(patch);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getRectSubPix_const__InputArrayR_Size_Point2f_const__OutputArrayR_int(image.as_raw__InputArray(), &patch_size, &center, patch.as_raw__OutputArray(), patch_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8487,7 +8487,7 @@ pub mod imgproc {
 	pub fn get_rotation_matrix_2d(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getRotationMatrix2D_Point2f_double_double(&center, angle, scale, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8500,7 +8500,7 @@ pub mod imgproc {
 	pub fn get_rotation_matrix_2d_matx(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Matx23d> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getRotationMatrix2D__Point2f_double_double(&center, angle, scale, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8526,7 +8526,7 @@ pub mod imgproc {
 	pub fn get_structuring_element_def(shape: i32, ksize: core::Size) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getStructuringElement_int_Size(shape, &ksize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8552,7 +8552,7 @@ pub mod imgproc {
 	pub fn get_structuring_element(shape: i32, ksize: core::Size, anchor: core::Point) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getStructuringElement_int_Size_Point(shape, &ksize, &anchor, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -8610,7 +8610,7 @@ pub mod imgproc {
 		extern_container_arg!(text);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getTextSize_const_StringR_int_double_int_intX(text.opencv_as_extern(), font_face, font_scale, thickness, base_line, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8672,7 +8672,7 @@ pub mod imgproc {
 		output_array_arg!(corners);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8717,7 +8717,7 @@ pub mod imgproc {
 		output_array_arg!(corners_quality);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), corners_quality.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8761,7 +8761,7 @@ pub mod imgproc {
 		output_array_arg!(corners_quality);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_const__OutputArrayR_int_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), corners_quality.as_raw__OutputArray(), block_size, gradient_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8823,7 +8823,7 @@ pub mod imgproc {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8839,7 +8839,7 @@ pub mod imgproc {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_int(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, gradient_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8854,7 +8854,7 @@ pub mod imgproc {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, gradient_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8889,7 +8889,7 @@ pub mod imgproc {
 		input_output_array_arg!(fgd_model);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_grabCut_const__InputArrayR_const__InputOutputArrayR_Rect_const__InputOutputArrayR_const__InputOutputArrayR_int(img.as_raw__InputArray(), mask.as_raw__InputOutputArray(), &rect, bgd_model.as_raw__InputOutputArray(), fgd_model.as_raw__InputOutputArray(), iter_count, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8923,7 +8923,7 @@ pub mod imgproc {
 		input_output_array_arg!(fgd_model);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_grabCut_const__InputArrayR_const__InputOutputArrayR_Rect_const__InputOutputArrayR_const__InputOutputArrayR_int_int(img.as_raw__InputArray(), mask.as_raw__InputOutputArray(), &rect, bgd_model.as_raw__InputOutputArray(), fgd_model.as_raw__InputOutputArray(), iter_count, mode, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8939,7 +8939,7 @@ pub mod imgproc {
 		output_array_arg!(sum);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), sum.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -8957,7 +8957,7 @@ pub mod imgproc {
 		output_array_arg!(sqsum);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sqsum.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9009,7 +9009,7 @@ pub mod imgproc {
 		output_array_arg!(tilted);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sqsum.as_raw__OutputArray(), tilted.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9060,7 +9060,7 @@ pub mod imgproc {
 		output_array_arg!(tilted);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sqsum.as_raw__OutputArray(), tilted.as_raw__OutputArray(), sdepth, sqdepth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9112,7 +9112,7 @@ pub mod imgproc {
 		output_array_arg!(sqsum);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sqsum.as_raw__OutputArray(), sdepth, sqdepth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9162,7 +9162,7 @@ pub mod imgproc {
 		output_array_arg!(sum);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sdepth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9193,7 +9193,7 @@ pub mod imgproc {
 		output_array_arg!(p12);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intersectConvexConvex_const__InputArrayR_const__InputArrayR_const__OutputArrayR(p1.as_raw__InputArray(), p2.as_raw__InputArray(), p12.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9223,7 +9223,7 @@ pub mod imgproc {
 		output_array_arg!(p12);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intersectConvexConvex_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(p1.as_raw__InputArray(), p2.as_raw__InputArray(), p12.as_raw__OutputArray(), handle_nested, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9245,7 +9245,7 @@ pub mod imgproc {
 		output_array_arg!(i_m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_invertAffineTransform_const__InputArrayR_const__OutputArrayR(m.as_raw__InputArray(), i_m.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9262,7 +9262,7 @@ pub mod imgproc {
 		input_array_arg!(contour);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_isContourConvex_const__InputArrayR(contour.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9293,7 +9293,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_line_const__InputOutputArrayR_Point_Point_const_ScalarR(img.as_raw__InputOutputArray(), &pt1, &pt2, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9323,7 +9323,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_line_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), &pt1, &pt2, &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9365,7 +9365,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_linearPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &center, max_radius, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9408,7 +9408,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_logPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &center, m, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9428,7 +9428,7 @@ pub mod imgproc {
 		input_array_arg!(contour2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_matchShapes_const__InputArrayR_const__InputArrayR_int_double(contour1.as_raw__InputArray(), contour2.as_raw__InputArray(), method, parameter, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9472,7 +9472,7 @@ pub mod imgproc {
 		output_array_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_matchTemplate_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), method, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9516,7 +9516,7 @@ pub mod imgproc {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_matchTemplate_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR(image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), method, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9542,7 +9542,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_medianBlur_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9560,7 +9560,7 @@ pub mod imgproc {
 		input_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minAreaRect_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9578,7 +9578,7 @@ pub mod imgproc {
 		input_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minEnclosingCircle_const__InputArrayR_Point2fR_floatR(points.as_raw__InputArray(), center, radius, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9608,7 +9608,7 @@ pub mod imgproc {
 		output_array_arg!(triangle);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minEnclosingTriangle_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), triangle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9640,7 +9640,7 @@ pub mod imgproc {
 		input_array_arg!(array);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_moments_const__InputArrayR(array.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9671,7 +9671,7 @@ pub mod imgproc {
 		input_array_arg!(array);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_moments_const__InputArrayR_bool(array.as_raw__InputArray(), binary_image, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9681,7 +9681,7 @@ pub mod imgproc {
 	pub fn morphology_default_border_value() -> Result<core::Scalar> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_morphologyDefaultBorderValue(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9726,7 +9726,7 @@ pub mod imgproc {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), op, kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9770,7 +9770,7 @@ pub mod imgproc {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), op, kernel.as_raw__InputArray(), &anchor, iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9822,7 +9822,7 @@ pub mod imgproc {
 		input_array_arg!(src2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_phaseCorrelate_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9874,7 +9874,7 @@ pub mod imgproc {
 		input_array_arg!(window);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_phaseCorrelate_const__InputArrayR_const__InputArrayR_const__InputArrayR_doubleX(src1.as_raw__InputArray(), src2.as_raw__InputArray(), window.as_raw__InputArray(), response, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9900,7 +9900,7 @@ pub mod imgproc {
 		input_array_arg!(contour);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pointPolygonTest_const__InputArrayR_Point2f_bool(contour.as_raw__InputArray(), &pt, measure_dist, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9930,7 +9930,7 @@ pub mod imgproc {
 		input_array_arg!(pts);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_polylines_const__InputOutputArrayR_const__InputArrayR_bool_const_ScalarR(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), is_closed, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9959,7 +9959,7 @@ pub mod imgproc {
 		input_array_arg!(pts);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_polylines_const__InputOutputArrayR_const__InputArrayR_bool_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), is_closed, &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -9998,7 +9998,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_preCornerDetect_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10036,7 +10036,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_preCornerDetect_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10070,7 +10070,7 @@ pub mod imgproc {
 		extern_container_arg!(text);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_putText_const__InputOutputArrayR_const_StringR_Point_int_double_Scalar(img.as_raw__InputOutputArray(), text.opencv_as_extern(), &org, font_face, font_scale, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10103,7 +10103,7 @@ pub mod imgproc {
 		extern_container_arg!(text);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_putText_const__InputOutputArrayR_const_StringR_Point_int_double_Scalar_int_int_bool(img.as_raw__InputOutputArray(), text.opencv_as_extern(), &org, font_face, font_scale, &color, thickness, line_type, bottom_left_origin, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10138,7 +10138,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pyrDown_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10172,7 +10172,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pyrDown_const__InputArrayR_const__OutputArrayR_const_SizeR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dstsize, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10224,7 +10224,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pyrMeanShiftFiltering_const__InputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10275,7 +10275,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pyrMeanShiftFiltering_const__InputArrayR_const__OutputArrayR_double_double_int_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, max_level, &termcrit, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10308,7 +10308,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pyrUp_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10340,7 +10340,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pyrUp_const__InputArrayR_const__OutputArrayR_const_SizeR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dstsize, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10370,7 +10370,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rectangle_const__InputOutputArrayR_Point_Point_const_ScalarR(img.as_raw__InputOutputArray(), &pt1, &pt2, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10399,7 +10399,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rectangle_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), &pt1, &pt2, &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10419,7 +10419,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rectangle_const__InputOutputArrayR_Rect_const_ScalarR(img.as_raw__InputOutputArray(), &rec, &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10454,7 +10454,7 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rectangle_const__InputOutputArrayR_Rect_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), &rec, &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10511,7 +10511,7 @@ pub mod imgproc {
 		input_array_arg!(map2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_remap_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), map1.as_raw__InputArray(), map2.as_raw__InputArray(), interpolation, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10567,7 +10567,7 @@ pub mod imgproc {
 		input_array_arg!(map2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_remap_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), map1.as_raw__InputArray(), map2.as_raw__InputArray(), interpolation, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10620,7 +10620,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_resize_const__InputArrayR_const__OutputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dsize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10672,7 +10672,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_resize_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dsize, fx, fy, interpolation, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10698,7 +10698,7 @@ pub mod imgproc {
 		output_array_arg!(intersecting_region);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rotatedRectangleIntersection_const_RotatedRectR_const_RotatedRectR_const__OutputArrayR(&rect1, &rect2, intersecting_region.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10735,7 +10735,7 @@ pub mod imgproc {
 		input_array_arg!(kernel_y);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sepFilter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel_x.as_raw__InputArray(), kernel_y.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10771,7 +10771,7 @@ pub mod imgproc {
 		input_array_arg!(kernel_y);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sepFilter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_const__InputArrayR_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel_x.as_raw__InputArray(), kernel_y.as_raw__InputArray(), &anchor, delta, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10807,7 +10807,7 @@ pub mod imgproc {
 		output_array_arg!(dy);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_spatialGradient_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dx.as_raw__OutputArray(), dy.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10842,7 +10842,7 @@ pub mod imgproc {
 		output_array_arg!(dy);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_spatialGradient_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dx.as_raw__OutputArray(), dy.as_raw__OutputArray(), ksize, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10878,7 +10878,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sqrBoxFilter_const__InputArrayR_const__OutputArrayR_int_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, &ksize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10913,7 +10913,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sqrBoxFilter_const__InputArrayR_const__OutputArrayR_int_Size_Point_bool_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, &ksize, &anchor, normalize, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10939,7 +10939,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_stackBlur_const__InputArrayR_const__OutputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &ksize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -10976,7 +10976,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_threshold_const__InputArrayR_const__OutputArrayR_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), thresh, maxval, typ, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11018,7 +11018,7 @@ pub mod imgproc {
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11059,7 +11059,7 @@ pub mod imgproc {
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, flags, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11098,7 +11098,7 @@ pub mod imgproc {
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11136,7 +11136,7 @@ pub mod imgproc {
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, flags, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11211,7 +11211,7 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_warpPolar_const__InputArrayR_const__OutputArrayR_Size_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dsize, &center, max_radius, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11247,7 +11247,7 @@ pub mod imgproc {
 		input_output_array_arg!(markers);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_watershed_const__InputArrayR_const__InputOutputArrayR(image.as_raw__InputArray(), markers.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11263,7 +11263,7 @@ pub mod imgproc {
 		input_array_arg!(signature2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_wrapperEMD_const__InputArrayR_const__InputArrayR_int(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11280,7 +11280,7 @@ pub mod imgproc {
 		output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_wrapperEMD_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_PtrLfloatG_const__OutputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, cost.as_raw__InputArray(), lower_bound.as_raw_mut_PtrOff32(), flow.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -11310,7 +11310,7 @@ pub mod imgproc {
 		fn get_clip_limit(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CLAHE_getClipLimit_const(self.as_raw_CLAHE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11320,7 +11320,7 @@ pub mod imgproc {
 		fn get_tiles_grid_size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CLAHE_getTilesGridSize_const(self.as_raw_CLAHE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11342,7 +11342,7 @@ pub mod imgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CLAHE_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CLAHE(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11355,7 +11355,7 @@ pub mod imgproc {
 		fn set_clip_limit(&mut self, clip_limit: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CLAHE_setClipLimit_double(self.as_raw_mut_CLAHE(), clip_limit, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11369,7 +11369,7 @@ pub mod imgproc {
 		fn set_tiles_grid_size(&mut self, tile_grid_size: core::Size) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CLAHE_setTilesGridSize_Size(self.as_raw_mut_CLAHE(), &tile_grid_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11378,7 +11378,7 @@ pub mod imgproc {
 		fn collect_garbage(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CLAHE_collectGarbage(self.as_raw_mut_CLAHE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11439,7 +11439,7 @@ pub mod imgproc {
 		fn get_canny_low_thresh(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_getCannyLowThresh_const(self.as_raw_GeneralizedHough(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11448,7 +11448,7 @@ pub mod imgproc {
 		fn get_canny_high_thresh(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_getCannyHighThresh_const(self.as_raw_GeneralizedHough(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11457,7 +11457,7 @@ pub mod imgproc {
 		fn get_min_dist(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_getMinDist_const(self.as_raw_GeneralizedHough(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11466,7 +11466,7 @@ pub mod imgproc {
 		fn get_dp(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_getDp_const(self.as_raw_GeneralizedHough(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11475,7 +11475,7 @@ pub mod imgproc {
 		fn get_max_buffer_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_getMaxBufferSize_const(self.as_raw_GeneralizedHough(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11495,7 +11495,7 @@ pub mod imgproc {
 			input_array_arg!(templ);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR_Point(self.as_raw_mut_GeneralizedHough(), templ.as_raw__InputArray(), &templ_center, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11510,7 +11510,7 @@ pub mod imgproc {
 			input_array_arg!(templ);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR(self.as_raw_mut_GeneralizedHough(), templ.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11524,7 +11524,7 @@ pub mod imgproc {
 			input_array_arg!(dy);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), &templ_center, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11539,7 +11539,7 @@ pub mod imgproc {
 			input_array_arg!(dy);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11555,7 +11555,7 @@ pub mod imgproc {
 			output_array_arg!(votes);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_detect_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_GeneralizedHough(), image.as_raw__InputArray(), positions.as_raw__OutputArray(), votes.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11571,7 +11571,7 @@ pub mod imgproc {
 			output_array_arg!(positions);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_detect_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_GeneralizedHough(), image.as_raw__InputArray(), positions.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11587,7 +11587,7 @@ pub mod imgproc {
 			output_array_arg!(votes);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_detect_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), positions.as_raw__OutputArray(), votes.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11603,7 +11603,7 @@ pub mod imgproc {
 			output_array_arg!(positions);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_detect_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), positions.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11613,7 +11613,7 @@ pub mod imgproc {
 		fn set_canny_low_thresh(&mut self, canny_low_thresh: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_setCannyLowThresh_int(self.as_raw_mut_GeneralizedHough(), canny_low_thresh, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11623,7 +11623,7 @@ pub mod imgproc {
 		fn set_canny_high_thresh(&mut self, canny_high_thresh: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_setCannyHighThresh_int(self.as_raw_mut_GeneralizedHough(), canny_high_thresh, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11633,7 +11633,7 @@ pub mod imgproc {
 		fn set_min_dist(&mut self, min_dist: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_setMinDist_double(self.as_raw_mut_GeneralizedHough(), min_dist, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11643,7 +11643,7 @@ pub mod imgproc {
 		fn set_dp(&mut self, dp: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_setDp_double(self.as_raw_mut_GeneralizedHough(), dp, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11653,7 +11653,7 @@ pub mod imgproc {
 		fn set_max_buffer_size(&mut self, max_buffer_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHough_setMaxBufferSize_int(self.as_raw_mut_GeneralizedHough(), max_buffer_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11720,7 +11720,7 @@ pub mod imgproc {
 		fn get_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughBallard_getLevels_const(self.as_raw_GeneralizedHoughBallard(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11729,7 +11729,7 @@ pub mod imgproc {
 		fn get_votes_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughBallard_getVotesThreshold_const(self.as_raw_GeneralizedHoughBallard(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11745,7 +11745,7 @@ pub mod imgproc {
 		fn set_levels(&mut self, levels: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughBallard_setLevels_int(self.as_raw_mut_GeneralizedHoughBallard(), levels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11755,7 +11755,7 @@ pub mod imgproc {
 		fn set_votes_threshold(&mut self, votes_threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughBallard_setVotesThreshold_int(self.as_raw_mut_GeneralizedHoughBallard(), votes_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11830,7 +11830,7 @@ pub mod imgproc {
 		fn get_xi(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getXi_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11839,7 +11839,7 @@ pub mod imgproc {
 		fn get_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getLevels_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11848,7 +11848,7 @@ pub mod imgproc {
 		fn get_angle_epsilon(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getAngleEpsilon_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11857,7 +11857,7 @@ pub mod imgproc {
 		fn get_min_angle(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getMinAngle_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11866,7 +11866,7 @@ pub mod imgproc {
 		fn get_max_angle(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getMaxAngle_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11875,7 +11875,7 @@ pub mod imgproc {
 		fn get_angle_step(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getAngleStep_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11884,7 +11884,7 @@ pub mod imgproc {
 		fn get_angle_thresh(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getAngleThresh_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11893,7 +11893,7 @@ pub mod imgproc {
 		fn get_min_scale(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getMinScale_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11902,7 +11902,7 @@ pub mod imgproc {
 		fn get_max_scale(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getMaxScale_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11911,7 +11911,7 @@ pub mod imgproc {
 		fn get_scale_step(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getScaleStep_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11920,7 +11920,7 @@ pub mod imgproc {
 		fn get_scale_thresh(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getScaleThresh_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11929,7 +11929,7 @@ pub mod imgproc {
 		fn get_pos_thresh(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_getPosThresh_const(self.as_raw_GeneralizedHoughGuil(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11945,7 +11945,7 @@ pub mod imgproc {
 		fn set_xi(&mut self, xi: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setXi_double(self.as_raw_mut_GeneralizedHoughGuil(), xi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11955,7 +11955,7 @@ pub mod imgproc {
 		fn set_levels(&mut self, levels: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setLevels_int(self.as_raw_mut_GeneralizedHoughGuil(), levels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11965,7 +11965,7 @@ pub mod imgproc {
 		fn set_angle_epsilon(&mut self, angle_epsilon: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setAngleEpsilon_double(self.as_raw_mut_GeneralizedHoughGuil(), angle_epsilon, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11975,7 +11975,7 @@ pub mod imgproc {
 		fn set_min_angle(&mut self, min_angle: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setMinAngle_double(self.as_raw_mut_GeneralizedHoughGuil(), min_angle, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11985,7 +11985,7 @@ pub mod imgproc {
 		fn set_max_angle(&mut self, max_angle: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setMaxAngle_double(self.as_raw_mut_GeneralizedHoughGuil(), max_angle, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -11995,7 +11995,7 @@ pub mod imgproc {
 		fn set_angle_step(&mut self, angle_step: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setAngleStep_double(self.as_raw_mut_GeneralizedHoughGuil(), angle_step, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12005,7 +12005,7 @@ pub mod imgproc {
 		fn set_angle_thresh(&mut self, angle_thresh: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setAngleThresh_int(self.as_raw_mut_GeneralizedHoughGuil(), angle_thresh, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12015,7 +12015,7 @@ pub mod imgproc {
 		fn set_min_scale(&mut self, min_scale: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setMinScale_double(self.as_raw_mut_GeneralizedHoughGuil(), min_scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12025,7 +12025,7 @@ pub mod imgproc {
 		fn set_max_scale(&mut self, max_scale: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setMaxScale_double(self.as_raw_mut_GeneralizedHoughGuil(), max_scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12035,7 +12035,7 @@ pub mod imgproc {
 		fn set_scale_step(&mut self, scale_step: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setScaleStep_double(self.as_raw_mut_GeneralizedHoughGuil(), scale_step, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12045,7 +12045,7 @@ pub mod imgproc {
 		fn set_scale_thresh(&mut self, scale_thresh: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setScaleThresh_int(self.as_raw_mut_GeneralizedHoughGuil(), scale_thresh, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12055,7 +12055,7 @@ pub mod imgproc {
 		fn set_pos_thresh(&mut self, pos_thresh: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GeneralizedHoughGuil_setPosThresh_int(self.as_raw_mut_GeneralizedHoughGuil(), pos_thresh, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12172,7 +12172,7 @@ pub mod imgproc {
 		pub fn new(img: &impl core::MatTraitConst, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_LineIterator_const_MatR_Point_Point_int_bool(img.as_raw_Mat(), &pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12201,7 +12201,7 @@ pub mod imgproc {
 		pub fn new_def(img: &impl core::MatTraitConst, pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_LineIterator_const_MatR_Point_Point(img.as_raw_Mat(), &pt1, &pt2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12214,7 +12214,7 @@ pub mod imgproc {
 		pub fn new_1(pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_LineIterator_Point_Point_int_bool(&pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12228,7 +12228,7 @@ pub mod imgproc {
 		pub fn new_def_1(pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_LineIterator_Point_Point(&pt1, &pt2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12241,7 +12241,7 @@ pub mod imgproc {
 		pub fn new_2(bounding_area_size: core::Size, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_LineIterator_Size_Point_Point_int_bool(&bounding_area_size, &pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12255,7 +12255,7 @@ pub mod imgproc {
 		pub fn new_def_2(bounding_area_size: core::Size, pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_LineIterator_Size_Point_Point(&bounding_area_size, &pt1, &pt2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12268,7 +12268,7 @@ pub mod imgproc {
 		pub fn new_3(bounding_area_rect: core::Rect, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_LineIterator_Rect_Point_Point_int_bool(&bounding_area_rect, &pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12282,7 +12282,7 @@ pub mod imgproc {
 		pub fn new_def_3(bounding_area_rect: core::Rect, pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_LineIterator_Rect_Point_Point(&bounding_area_rect, &pt1, &pt2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12370,7 +12370,7 @@ pub mod imgproc {
 		fn p(&self) -> core::Point {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_propP_const(self.as_raw_LineIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -12385,7 +12385,7 @@ pub mod imgproc {
 		fn pos(&self) -> Result<core::Point> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_pos_const(self.as_raw_LineIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12404,7 +12404,7 @@ pub mod imgproc {
 
 		#[inline]
 		unsafe fn set_ptr(&mut self, val: *const u8) {
-			let ret = { sys::cv_LineIterator_propPtr_unsigned_charX(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propPtr_unsigned_charX(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 
@@ -12484,7 +12484,7 @@ pub mod imgproc {
 		fn init(&mut self, img: &impl core::MatTraitConst, bounding_area_rect: core::Rect, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_init_const_MatX_Rect_Point_Point_int_bool(self.as_raw_mut_LineIterator(), img.as_raw_Mat(), &bounding_area_rect, &pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12494,7 +12494,7 @@ pub mod imgproc {
 		fn try_deref_mut(&mut self) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_operatorX(self.as_raw_mut_LineIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12506,7 +12506,7 @@ pub mod imgproc {
 		fn incr(&mut self) -> Result<crate::imgproc::LineIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineIterator_operatorAA(self.as_raw_mut_LineIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12612,7 +12612,7 @@ pub mod imgproc {
 			output_array_arg!(nfa);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineSegmentDetector_detect_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_LineSegmentDetector(), image.as_raw__InputArray(), lines.as_raw__OutputArray(), width.as_raw__OutputArray(), prec.as_raw__OutputArray(), nfa.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12649,7 +12649,7 @@ pub mod imgproc {
 			output_array_arg!(lines);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineSegmentDetector_detect_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_LineSegmentDetector(), image.as_raw__InputArray(), lines.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12665,7 +12665,7 @@ pub mod imgproc {
 			input_array_arg!(lines);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineSegmentDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR(self.as_raw_mut_LineSegmentDetector(), image.as_raw__InputOutputArray(), lines.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12688,7 +12688,7 @@ pub mod imgproc {
 			input_output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineSegmentDetector_compareSegments_const_SizeR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_LineSegmentDetector(), &size, lines1.as_raw__InputArray(), lines2.as_raw__InputArray(), image.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12711,7 +12711,7 @@ pub mod imgproc {
 			input_array_arg!(lines2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LineSegmentDetector_compareSegments_const_SizeR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_LineSegmentDetector(), &size, lines1.as_raw__InputArray(), lines2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12770,7 +12770,7 @@ pub mod imgproc {
 		pub fn default() -> Result<crate::imgproc::Subdiv2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_Subdiv2D(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12792,7 +12792,7 @@ pub mod imgproc {
 		pub fn new(rect: core::Rect) -> Result<crate::imgproc::Subdiv2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_Subdiv2D_Rect(&rect, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(ret) };
 			Ok(ret)
@@ -12815,7 +12815,7 @@ pub mod imgproc {
 		fn get_edge_list(&self, edge_list: &mut core::Vector<core::Vec4f>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_getEdgeList_const_vectorLVec4fGR(self.as_raw_Subdiv2D(), edge_list.as_raw_mut_VectorOfVec4f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12830,7 +12830,7 @@ pub mod imgproc {
 		fn get_leading_edge_list(&self, leading_edge_list: &mut core::Vector<i32>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_getLeadingEdgeList_const_vectorLintGR(self.as_raw_Subdiv2D(), leading_edge_list.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12846,7 +12846,7 @@ pub mod imgproc {
 		fn get_triangle_list(&self, triangle_list: &mut core::Vector<core::Vec6f>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_getTriangleList_const_vectorLVec6fGR(self.as_raw_Subdiv2D(), triangle_list.as_raw_mut_VectorOfVec6f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12865,7 +12865,7 @@ pub mod imgproc {
 		fn get_vertex(&self, vertex: i32, first_edge: &mut i32) -> Result<core::Point2f> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_getVertex_const_int_intX(self.as_raw_Subdiv2D(), vertex, first_edge, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12885,7 +12885,7 @@ pub mod imgproc {
 		fn get_vertex_def(&self, vertex: i32) -> Result<core::Point2f> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_getVertex_const_int(self.as_raw_Subdiv2D(), vertex, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12913,7 +12913,7 @@ pub mod imgproc {
 		fn get_edge(&self, edge: i32, next_edge_type: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_getEdge_const_int_int(self.as_raw_Subdiv2D(), edge, next_edge_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12930,7 +12930,7 @@ pub mod imgproc {
 		fn next_edge(&self, edge: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_nextEdge_const_int(self.as_raw_Subdiv2D(), edge, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12952,7 +12952,7 @@ pub mod imgproc {
 		fn rotate_edge(&self, edge: i32, rotate: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_rotateEdge_const_int_int(self.as_raw_Subdiv2D(), edge, rotate, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12961,7 +12961,7 @@ pub mod imgproc {
 		fn sym_edge(&self, edge: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_symEdge_const_int(self.as_raw_Subdiv2D(), edge, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -12981,7 +12981,7 @@ pub mod imgproc {
 		fn edge_org(&self, edge: i32, orgpt: &mut core::Point2f) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_edgeOrg_const_int_Point2fX(self.as_raw_Subdiv2D(), edge, orgpt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13002,7 +13002,7 @@ pub mod imgproc {
 		fn edge_org_def(&self, edge: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_edgeOrg_const_int(self.as_raw_Subdiv2D(), edge, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13022,7 +13022,7 @@ pub mod imgproc {
 		fn edge_dst(&self, edge: i32, dstpt: &mut core::Point2f) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_edgeDst_const_int_Point2fX(self.as_raw_Subdiv2D(), edge, dstpt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13043,7 +13043,7 @@ pub mod imgproc {
 		fn edge_dst_def(&self, edge: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_edgeDst_const_int(self.as_raw_Subdiv2D(), edge, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13062,7 +13062,7 @@ pub mod imgproc {
 		fn init_delaunay(&mut self, rect: core::Rect) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_initDelaunay_Rect(self.as_raw_mut_Subdiv2D(), &rect, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13083,7 +13083,7 @@ pub mod imgproc {
 		fn insert(&mut self, pt: core::Point2f) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_insert_Point2f(self.as_raw_mut_Subdiv2D(), &pt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13099,7 +13099,7 @@ pub mod imgproc {
 		fn insert_multiple(&mut self, ptvec: &core::Vector<core::Point2f>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_insert_const_vectorLPoint2fGR(self.as_raw_mut_Subdiv2D(), ptvec.as_raw_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13129,7 +13129,7 @@ pub mod imgproc {
 		fn locate(&mut self, pt: core::Point2f, edge: &mut i32, vertex: &mut i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_locate_Point2f_intR_intR(self.as_raw_mut_Subdiv2D(), &pt, edge, vertex, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13154,7 +13154,7 @@ pub mod imgproc {
 		fn find_nearest(&mut self, pt: core::Point2f, nearest_pt: &mut core::Point2f) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_findNearest_Point2f_Point2fX(self.as_raw_mut_Subdiv2D(), &pt, nearest_pt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13180,7 +13180,7 @@ pub mod imgproc {
 		fn find_nearest_def(&mut self, pt: core::Point2f) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_findNearest_Point2f(self.as_raw_mut_Subdiv2D(), &pt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13195,7 +13195,7 @@ pub mod imgproc {
 		fn get_voronoi_facet_list(&mut self, idx: &core::Vector<i32>, facet_list: &mut core::Vector<core::Vector<core::Point2f>>, facet_centers: &mut core::Vector<core::Point2f>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Subdiv2D_getVoronoiFacetList_const_vectorLintGR_vectorLvectorLPoint2fGGR_vectorLPoint2fGR(self.as_raw_mut_Subdiv2D(), idx.as_raw_VectorOfi32(), facet_list.as_raw_mut_VectorOfVectorOfPoint2f(), facet_centers.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13251,7 +13251,7 @@ pub mod imgproc {
 		pub fn default() -> Result<crate::imgproc::IntelligentScissorsMB> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_IntelligentScissorsMB(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13280,7 +13280,7 @@ pub mod imgproc {
 			output_array_arg!(contour);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_getContour_const_const_PointR_const__OutputArrayR_bool(self.as_raw_IntelligentScissorsMB(), &target_pt, contour.as_raw__OutputArray(), backward, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13303,7 +13303,7 @@ pub mod imgproc {
 			output_array_arg!(contour);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_getContour_const_const_PointR_const__OutputArrayR(self.as_raw_IntelligentScissorsMB(), &target_pt, contour.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -13327,7 +13327,7 @@ pub mod imgproc {
 		fn set_weights(&mut self, weight_non_edge: f32, weight_gradient_direction: f32, weight_gradient_magnitude: f32) -> Result<crate::imgproc::IntelligentScissorsMB> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setWeights_float_float_float(self.as_raw_mut_IntelligentScissorsMB(), weight_non_edge, weight_gradient_direction, weight_gradient_magnitude, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13350,7 +13350,7 @@ pub mod imgproc {
 		fn set_gradient_magnitude_max_limit(&mut self, gradient_magnitude_threshold_max: f32) -> Result<crate::imgproc::IntelligentScissorsMB> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setGradientMagnitudeMaxLimit_float(self.as_raw_mut_IntelligentScissorsMB(), gradient_magnitude_threshold_max, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13374,7 +13374,7 @@ pub mod imgproc {
 		fn set_gradient_magnitude_max_limit_def(&mut self) -> Result<crate::imgproc::IntelligentScissorsMB> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setGradientMagnitudeMaxLimit(self.as_raw_mut_IntelligentScissorsMB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13402,7 +13402,7 @@ pub mod imgproc {
 		fn set_edge_feature_zero_crossing_parameters(&mut self, gradient_magnitude_min_value: f32) -> Result<crate::imgproc::IntelligentScissorsMB> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureZeroCrossingParameters_float(self.as_raw_mut_IntelligentScissorsMB(), gradient_magnitude_min_value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13431,7 +13431,7 @@ pub mod imgproc {
 		fn set_edge_feature_zero_crossing_parameters_def(&mut self) -> Result<crate::imgproc::IntelligentScissorsMB> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureZeroCrossingParameters(self.as_raw_mut_IntelligentScissorsMB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13451,7 +13451,7 @@ pub mod imgproc {
 		fn set_edge_feature_canny_parameters(&mut self, threshold1: f64, threshold2: f64, aperture_size: i32, l2gradient: bool) -> Result<crate::imgproc::IntelligentScissorsMB> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureCannyParameters_double_double_int_bool(self.as_raw_mut_IntelligentScissorsMB(), threshold1, threshold2, aperture_size, l2gradient, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13472,7 +13472,7 @@ pub mod imgproc {
 		fn set_edge_feature_canny_parameters_def(&mut self, threshold1: f64, threshold2: f64) -> Result<crate::imgproc::IntelligentScissorsMB> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureCannyParameters_double_double(self.as_raw_mut_IntelligentScissorsMB(), threshold1, threshold2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13487,7 +13487,7 @@ pub mod imgproc {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImage_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13513,7 +13513,7 @@ pub mod imgproc {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImageFeatures_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), non_edge.as_raw__InputArray(), gradient_direction.as_raw__InputArray(), gradient_magnitude.as_raw__InputArray(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13539,7 +13539,7 @@ pub mod imgproc {
 			input_array_arg!(gradient_magnitude);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImageFeatures_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), non_edge.as_raw__InputArray(), gradient_direction.as_raw__InputArray(), gradient_magnitude.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
 			Ok(ret)
@@ -13556,7 +13556,7 @@ pub mod imgproc {
 		fn build_map(&mut self, source_pt: core::Point) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_segmentation_IntelligentScissorsMB_buildMap_const_PointR(self.as_raw_mut_IntelligentScissorsMB(), &source_pt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

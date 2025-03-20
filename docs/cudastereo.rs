@@ -22,7 +22,7 @@ pub mod cudastereo {
 	pub fn create_disparity_bilateral_filter_def() -> Result<core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createDisparityBilateralFilter(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_DisparityBilateralFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -43,7 +43,7 @@ pub mod cudastereo {
 	pub fn create_disparity_bilateral_filter(ndisp: i32, radius: i32, iters: i32) -> Result<core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createDisparityBilateralFilter_int_int_int(ndisp, radius, iters, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_DisparityBilateralFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -68,7 +68,7 @@ pub mod cudastereo {
 	pub fn create_stereo_bm_def() -> Result<core::Ptr<crate::cudastereo::CUDA_StereoBM>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoBM(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoBM>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -92,7 +92,7 @@ pub mod cudastereo {
 	pub fn create_stereo_bm(num_disparities: i32, block_size: i32) -> Result<core::Ptr<crate::cudastereo::CUDA_StereoBM>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoBM_int_int(num_disparities, block_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoBM>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -116,7 +116,7 @@ pub mod cudastereo {
 	pub fn create_stereo_belief_propagation_def() -> Result<core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoBeliefPropagation(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoBeliefPropagation>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -139,7 +139,7 @@ pub mod cudastereo {
 	pub fn create_stereo_belief_propagation(ndisp: i32, iters: i32, levels: i32, msg_type: i32) -> Result<core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoBeliefPropagation_int_int_int_int(ndisp, iters, levels, msg_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoBeliefPropagation>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -165,7 +165,7 @@ pub mod cudastereo {
 	pub fn create_stereo_constant_space_bp_def() -> Result<core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoConstantSpaceBP(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoConstantSpaceBP>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -190,7 +190,7 @@ pub mod cudastereo {
 	pub fn create_stereo_constant_space_bp(ndisp: i32, iters: i32, levels: i32, nr_plane: i32, msg_type: i32) -> Result<core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoConstantSpaceBP_int_int_int_int_int(ndisp, iters, levels, nr_plane, msg_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoConstantSpaceBP>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -221,7 +221,7 @@ pub mod cudastereo {
 	pub fn create_stereo_sgm_def() -> Result<core::Ptr<crate::cudastereo::CUDA_StereoSGM>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoSGM(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoSGM>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -251,7 +251,7 @@ pub mod cudastereo {
 	pub fn create_stereo_sgm(min_disparity: i32, num_disparities: i32, p1: i32, p2: i32, uniqueness_ratio: i32, mode: i32) -> Result<core::Ptr<crate::cudastereo::CUDA_StereoSGM>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoSGM_int_int_int_int_int_int(min_disparity, num_disparities, p1, p2, uniqueness_ratio, mode, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoSGM>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -281,7 +281,7 @@ pub mod cudastereo {
 		output_array_arg!(dst_disp);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_drawColorDisp_const__InputArrayR_const__OutputArrayR_int(src_disp.as_raw__InputArray(), dst_disp.as_raw__OutputArray(), ndisp, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -309,7 +309,7 @@ pub mod cudastereo {
 		output_array_arg!(dst_disp);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_drawColorDisp_const__InputArrayR_const__OutputArrayR_int_StreamR(src_disp.as_raw__InputArray(), dst_disp.as_raw__OutputArray(), ndisp, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -322,7 +322,7 @@ pub mod cudastereo {
 	pub fn reproject_image_to_3d_1_def(mut disp: impl core::GpuMatTrait, xyzw: &mut impl core::GpuMatTrait, mut q: impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_reprojectImageTo3D_GpuMat_GpuMatR_Mat(disp.as_raw_mut_GpuMat(), xyzw.as_raw_mut_GpuMat(), q.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -334,7 +334,7 @@ pub mod cudastereo {
 	pub fn reproject_image_to_3d_1(mut disp: impl core::GpuMatTrait, xyzw: &mut impl core::GpuMatTrait, mut q: impl core::MatTrait, dst_cn: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_reprojectImageTo3D_GpuMat_GpuMatR_Mat_int_StreamR(disp.as_raw_mut_GpuMat(), xyzw.as_raw_mut_GpuMat(), q.as_raw_mut_Mat(), dst_cn, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -365,7 +365,7 @@ pub mod cudastereo {
 		input_array_arg!(q);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_reprojectImageTo3D_const__InputArrayR_const__OutputArrayR_const__InputArrayR(disp.as_raw__InputArray(), xyzw.as_raw__OutputArray(), q.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -395,7 +395,7 @@ pub mod cudastereo {
 		input_array_arg!(q);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_reprojectImageTo3D_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(disp.as_raw__InputArray(), xyzw.as_raw__OutputArray(), q.as_raw__InputArray(), dst_cn, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -426,7 +426,7 @@ pub mod cudastereo {
 		fn get_num_disparities(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_getNumDisparities_const(self.as_raw_CUDA_DisparityBilateralFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -435,7 +435,7 @@ pub mod cudastereo {
 		fn get_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_getRadius_const(self.as_raw_CUDA_DisparityBilateralFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -444,7 +444,7 @@ pub mod cudastereo {
 		fn get_num_iters(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_getNumIters_const(self.as_raw_CUDA_DisparityBilateralFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -454,7 +454,7 @@ pub mod cudastereo {
 		fn get_edge_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_getEdgeThreshold_const(self.as_raw_CUDA_DisparityBilateralFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -464,7 +464,7 @@ pub mod cudastereo {
 		fn get_max_disc_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_getMaxDiscThreshold_const(self.as_raw_CUDA_DisparityBilateralFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -474,7 +474,7 @@ pub mod cudastereo {
 		fn get_sigma_range(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_getSigmaRange_const(self.as_raw_CUDA_DisparityBilateralFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -502,7 +502,7 @@ pub mod cudastereo {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_DisparityBilateralFilter(), disparity.as_raw__InputArray(), image.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -525,7 +525,7 @@ pub mod cudastereo {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_DisparityBilateralFilter(), disparity.as_raw__InputArray(), image.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -534,7 +534,7 @@ pub mod cudastereo {
 		fn set_num_disparities(&mut self, num_disparities: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_setNumDisparities_int(self.as_raw_mut_CUDA_DisparityBilateralFilter(), num_disparities, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -543,7 +543,7 @@ pub mod cudastereo {
 		fn set_radius(&mut self, radius: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_setRadius_int(self.as_raw_mut_CUDA_DisparityBilateralFilter(), radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -552,7 +552,7 @@ pub mod cudastereo {
 		fn set_num_iters(&mut self, iters: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_setNumIters_int(self.as_raw_mut_CUDA_DisparityBilateralFilter(), iters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -561,7 +561,7 @@ pub mod cudastereo {
 		fn set_edge_threshold(&mut self, edge_threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_setEdgeThreshold_double(self.as_raw_mut_CUDA_DisparityBilateralFilter(), edge_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -570,7 +570,7 @@ pub mod cudastereo {
 		fn set_max_disc_threshold(&mut self, max_disc_threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_setMaxDiscThreshold_double(self.as_raw_mut_CUDA_DisparityBilateralFilter(), max_disc_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -579,7 +579,7 @@ pub mod cudastereo {
 		fn set_sigma_range(&mut self, sigma_range: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_setSigmaRange_double(self.as_raw_mut_CUDA_DisparityBilateralFilter(), sigma_range, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -651,7 +651,7 @@ pub mod cudastereo {
 			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -767,7 +767,7 @@ pub mod cudastereo {
 		pub fn estimate_recommended_params(width: i32, height: i32, ndisp: &mut i32, iters: &mut i32, levels: &mut i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_estimateRecommendedParams_int_int_intR_intR_intR(width, height, ndisp, iters, levels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -783,7 +783,7 @@ pub mod cudastereo {
 		fn get_num_iters(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_getNumIters_const(self.as_raw_CUDA_StereoBeliefPropagation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -793,7 +793,7 @@ pub mod cudastereo {
 		fn get_num_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_getNumLevels_const(self.as_raw_CUDA_StereoBeliefPropagation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -803,7 +803,7 @@ pub mod cudastereo {
 		fn get_max_data_term(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_getMaxDataTerm_const(self.as_raw_CUDA_StereoBeliefPropagation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -813,7 +813,7 @@ pub mod cudastereo {
 		fn get_data_weight(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_getDataWeight_const(self.as_raw_CUDA_StereoBeliefPropagation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -823,7 +823,7 @@ pub mod cudastereo {
 		fn get_max_disc_term(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_getMaxDiscTerm_const(self.as_raw_CUDA_StereoBeliefPropagation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -833,7 +833,7 @@ pub mod cudastereo {
 		fn get_disc_single_jump(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_getDiscSingleJump_const(self.as_raw_CUDA_StereoBeliefPropagation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -843,7 +843,7 @@ pub mod cudastereo {
 		fn get_msg_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_getMsgType_const(self.as_raw_CUDA_StereoBeliefPropagation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -872,7 +872,7 @@ pub mod cudastereo {
 			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -895,7 +895,7 @@ pub mod cudastereo {
 			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), data.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -919,7 +919,7 @@ pub mod cudastereo {
 			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), data.as_raw__InputArray(), disparity.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -928,7 +928,7 @@ pub mod cudastereo {
 		fn set_num_iters(&mut self, iters: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_setNumIters_int(self.as_raw_mut_CUDA_StereoBeliefPropagation(), iters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -937,7 +937,7 @@ pub mod cudastereo {
 		fn set_num_levels(&mut self, levels: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_setNumLevels_int(self.as_raw_mut_CUDA_StereoBeliefPropagation(), levels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -946,7 +946,7 @@ pub mod cudastereo {
 		fn set_max_data_term(&mut self, max_data_term: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_setMaxDataTerm_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), max_data_term, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -955,7 +955,7 @@ pub mod cudastereo {
 		fn set_data_weight(&mut self, data_weight: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_setDataWeight_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), data_weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -964,7 +964,7 @@ pub mod cudastereo {
 		fn set_max_disc_term(&mut self, max_disc_term: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_setMaxDiscTerm_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), max_disc_term, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -973,7 +973,7 @@ pub mod cudastereo {
 		fn set_disc_single_jump(&mut self, disc_single_jump: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_setDiscSingleJump_double(self.as_raw_mut_CUDA_StereoBeliefPropagation(), disc_single_jump, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -982,7 +982,7 @@ pub mod cudastereo {
 		fn set_msg_type(&mut self, msg_type: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_setMsgType_int(self.as_raw_mut_CUDA_StereoBeliefPropagation(), msg_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1076,7 +1076,7 @@ pub mod cudastereo {
 		pub fn estimate_recommended_params(width: i32, height: i32, ndisp: &mut i32, iters: &mut i32, levels: &mut i32, nr_plane: &mut i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoConstantSpaceBP_estimateRecommendedParams_int_int_intR_intR_intR_intR(width, height, ndisp, iters, levels, nr_plane, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1092,7 +1092,7 @@ pub mod cudastereo {
 		fn get_nr_plane(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoConstantSpaceBP_getNrPlane_const(self.as_raw_CUDA_StereoConstantSpaceBP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1101,7 +1101,7 @@ pub mod cudastereo {
 		fn get_use_local_init_data_cost(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoConstantSpaceBP_getUseLocalInitDataCost_const(self.as_raw_CUDA_StereoConstantSpaceBP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1116,7 +1116,7 @@ pub mod cudastereo {
 		fn set_nr_plane(&mut self, nr_plane: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoConstantSpaceBP_setNrPlane_int(self.as_raw_mut_CUDA_StereoConstantSpaceBP(), nr_plane, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1125,7 +1125,7 @@ pub mod cudastereo {
 		fn set_use_local_init_data_cost(&mut self, use_local_init_data_cost: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoConstantSpaceBP_setUseLocalInitDataCost_bool(self.as_raw_mut_CUDA_StereoConstantSpaceBP(), use_local_init_data_cost, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1235,7 +1235,7 @@ pub mod cudastereo {
 			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1250,7 +1250,7 @@ pub mod cudastereo {
 			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

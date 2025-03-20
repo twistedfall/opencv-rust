@@ -195,7 +195,7 @@ pub mod cudaoptflow {
 		pub fn create(alpha: f64, gamma: f64, scale_factor: f64, inner_iterations: i32, outer_iterations: i32, solver_iterations: i32) -> Result<core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_create_double_double_double_int_int_int(alpha, gamma, scale_factor, inner_iterations, outer_iterations, solver_iterations, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_BroxOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -213,7 +213,7 @@ pub mod cudaoptflow {
 		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_BroxOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -229,7 +229,7 @@ pub mod cudaoptflow {
 		fn get_flow_smoothness(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_getFlowSmoothness_const(self.as_raw_CUDA_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -238,7 +238,7 @@ pub mod cudaoptflow {
 		fn get_gradient_constancy_importance(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_getGradientConstancyImportance_const(self.as_raw_CUDA_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -247,7 +247,7 @@ pub mod cudaoptflow {
 		fn get_pyramid_scale_factor(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_getPyramidScaleFactor_const(self.as_raw_CUDA_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -257,7 +257,7 @@ pub mod cudaoptflow {
 		fn get_inner_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_getInnerIterations_const(self.as_raw_CUDA_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -267,7 +267,7 @@ pub mod cudaoptflow {
 		fn get_outer_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_getOuterIterations_const(self.as_raw_CUDA_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -277,7 +277,7 @@ pub mod cudaoptflow {
 		fn get_solver_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_getSolverIterations_const(self.as_raw_CUDA_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -292,7 +292,7 @@ pub mod cudaoptflow {
 		fn set_flow_smoothness(&mut self, alpha: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_setFlowSmoothness_double(self.as_raw_mut_CUDA_BroxOpticalFlow(), alpha, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -301,7 +301,7 @@ pub mod cudaoptflow {
 		fn set_gradient_constancy_importance(&mut self, gamma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_setGradientConstancyImportance_double(self.as_raw_mut_CUDA_BroxOpticalFlow(), gamma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -310,7 +310,7 @@ pub mod cudaoptflow {
 		fn set_pyramid_scale_factor(&mut self, scale_factor: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_setPyramidScaleFactor_double(self.as_raw_mut_CUDA_BroxOpticalFlow(), scale_factor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -319,7 +319,7 @@ pub mod cudaoptflow {
 		fn set_inner_iterations(&mut self, inner_iterations: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_setInnerIterations_int(self.as_raw_mut_CUDA_BroxOpticalFlow(), inner_iterations, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -328,7 +328,7 @@ pub mod cudaoptflow {
 		fn set_outer_iterations(&mut self, outer_iterations: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_setOuterIterations_int(self.as_raw_mut_CUDA_BroxOpticalFlow(), outer_iterations, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -337,7 +337,7 @@ pub mod cudaoptflow {
 		fn set_solver_iterations(&mut self, solver_iterations: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BroxOpticalFlow_setSolverIterations_int(self.as_raw_mut_CUDA_BroxOpticalFlow(), solver_iterations, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -429,7 +429,7 @@ pub mod cudaoptflow {
 			input_output_array_arg!(flow);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DenseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_StreamR(self.as_raw_mut_CUDA_DenseOpticalFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -452,7 +452,7 @@ pub mod cudaoptflow {
 			input_output_array_arg!(flow);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DenseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_CUDA_DenseOpticalFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -526,7 +526,7 @@ pub mod cudaoptflow {
 		pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create_Size_int_int_bool(&win_size, max_level, iters, use_initial_flow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -542,7 +542,7 @@ pub mod cudaoptflow {
 		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -558,7 +558,7 @@ pub mod cudaoptflow {
 		fn get_win_size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getWinSize_const(self.as_raw_CUDA_DensePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -567,7 +567,7 @@ pub mod cudaoptflow {
 		fn get_max_level(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getMaxLevel_const(self.as_raw_CUDA_DensePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -576,7 +576,7 @@ pub mod cudaoptflow {
 		fn get_num_iters(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getNumIters_const(self.as_raw_CUDA_DensePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -585,7 +585,7 @@ pub mod cudaoptflow {
 		fn get_use_initial_flow(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_getUseInitialFlow_const(self.as_raw_CUDA_DensePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -600,7 +600,7 @@ pub mod cudaoptflow {
 		fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), &win_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -609,7 +609,7 @@ pub mod cudaoptflow {
 		fn set_max_level(&mut self, max_level: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setMaxLevel_int(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), max_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -618,7 +618,7 @@ pub mod cudaoptflow {
 		fn set_num_iters(&mut self, iters: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setNumIters_int(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), iters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -627,7 +627,7 @@ pub mod cudaoptflow {
 		fn set_use_initial_flow(&mut self, use_initial_flow: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow(), use_initial_flow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -706,7 +706,7 @@ pub mod cudaoptflow {
 		pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -726,7 +726,7 @@ pub mod cudaoptflow {
 		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -742,7 +742,7 @@ pub mod cudaoptflow {
 		fn get_num_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_getNumLevels_const(self.as_raw_CUDA_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -751,7 +751,7 @@ pub mod cudaoptflow {
 		fn get_pyr_scale(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_getPyrScale_const(self.as_raw_CUDA_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -760,7 +760,7 @@ pub mod cudaoptflow {
 		fn get_fast_pyramids(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_getFastPyramids_const(self.as_raw_CUDA_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -769,7 +769,7 @@ pub mod cudaoptflow {
 		fn get_win_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_getWinSize_const(self.as_raw_CUDA_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -778,7 +778,7 @@ pub mod cudaoptflow {
 		fn get_num_iters(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_getNumIters_const(self.as_raw_CUDA_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -787,7 +787,7 @@ pub mod cudaoptflow {
 		fn get_poly_n(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_getPolyN_const(self.as_raw_CUDA_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -796,7 +796,7 @@ pub mod cudaoptflow {
 		fn get_poly_sigma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_getPolySigma_const(self.as_raw_CUDA_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -805,7 +805,7 @@ pub mod cudaoptflow {
 		fn get_flags(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_getFlags_const(self.as_raw_CUDA_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -820,7 +820,7 @@ pub mod cudaoptflow {
 		fn set_num_levels(&mut self, num_levels: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_setNumLevels_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), num_levels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -829,7 +829,7 @@ pub mod cudaoptflow {
 		fn set_pyr_scale(&mut self, pyr_scale: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_setPyrScale_double(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), pyr_scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -838,7 +838,7 @@ pub mod cudaoptflow {
 		fn set_fast_pyramids(&mut self, fast_pyramids: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_setFastPyramids_bool(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), fast_pyramids, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -847,7 +847,7 @@ pub mod cudaoptflow {
 		fn set_win_size(&mut self, win_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_setWinSize_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), win_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -856,7 +856,7 @@ pub mod cudaoptflow {
 		fn set_num_iters(&mut self, num_iters: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_setNumIters_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), num_iters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -865,7 +865,7 @@ pub mod cudaoptflow {
 		fn set_poly_n(&mut self, poly_n: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_setPolyN_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), poly_n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -874,7 +874,7 @@ pub mod cudaoptflow {
 		fn set_poly_sigma(&mut self, poly_sigma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_setPolySigma_double(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), poly_sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -883,7 +883,7 @@ pub mod cudaoptflow {
 		fn set_flags(&mut self, flags: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FarnebackOpticalFlow_setFlags_int(self.as_raw_mut_CUDA_FarnebackOpticalFlow(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -957,7 +957,7 @@ pub mod cudaoptflow {
 		fn get_grid_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_getGridSize_const(self.as_raw_CUDA_NvidiaHWOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1005,7 +1005,7 @@ pub mod cudaoptflow {
 			output_array_arg!(cost);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_StreamR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow(), input_image.as_raw__InputArray(), reference_image.as_raw__InputArray(), flow.as_raw__InputOutputArray(), stream.as_raw_mut_Stream(), hint.as_raw__InputArray(), cost.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1046,7 +1046,7 @@ pub mod cudaoptflow {
 			input_output_array_arg!(flow);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow(), input_image.as_raw__InputArray(), reference_image.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1056,7 +1056,7 @@ pub mod cudaoptflow {
 		fn collect_garbage(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_collectGarbage(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1151,7 +1151,7 @@ pub mod cudaoptflow {
 		pub fn create(image_size: core::Size, perf_preset: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0_NVIDIA_OF_PERF_LEVEL, enable_temporal_hints: bool, enable_external_hints: bool, enable_cost_buffer: bool, gpu_id: i32, input_stream: &mut impl core::StreamTrait, output_stream: &mut impl core::StreamTrait) -> Result<core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_create_Size_NVIDIA_OF_PERF_LEVEL_bool_bool_bool_int_StreamR_StreamR(&image_size, perf_preset, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id, input_stream.as_raw_mut_Stream(), output_stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1189,7 +1189,7 @@ pub mod cudaoptflow {
 		pub fn create_def(image_size: core::Size) -> Result<core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_create_Size(&image_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1222,7 +1222,7 @@ pub mod cudaoptflow {
 			input_output_array_arg!(upsampled_flow);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_upSampler_const__InputArrayR_Size_int_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaOpticalFlow_1_0(), flow.as_raw__InputArray(), &image_size, grid_size, upsampled_flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1331,7 +1331,7 @@ pub mod cudaoptflow {
 		pub fn create(image_size: core::Size, perf_preset: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL, output_grid_size: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE, hint_grid_size: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HINT_VECTOR_GRID_SIZE, enable_temporal_hints: bool, enable_external_hints: bool, enable_cost_buffer: bool, gpu_id: i32, input_stream: &mut impl core::StreamTrait, output_stream: &mut impl core::StreamTrait) -> Result<core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_create_Size_NVIDIA_OF_PERF_LEVEL_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE_NVIDIA_OF_HINT_VECTOR_GRID_SIZE_bool_bool_bool_int_StreamR_StreamR(&image_size, perf_preset, output_grid_size, hint_grid_size, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id, input_stream.as_raw_mut_Stream(), output_stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1375,7 +1375,7 @@ pub mod cudaoptflow {
 		pub fn create_def(image_size: core::Size) -> Result<core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_create_Size(&image_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1419,7 +1419,7 @@ pub mod cudaoptflow {
 		pub fn create_1(image_size: core::Size, mut roi_data: core::Vector<core::Rect>, perf_preset: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL, output_grid_size: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE, hint_grid_size: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HINT_VECTOR_GRID_SIZE, enable_temporal_hints: bool, enable_external_hints: bool, enable_cost_buffer: bool, gpu_id: i32, input_stream: &mut impl core::StreamTrait, output_stream: &mut impl core::StreamTrait) -> Result<core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_create_Size_vectorLRectG_NVIDIA_OF_PERF_LEVEL_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE_NVIDIA_OF_HINT_VECTOR_GRID_SIZE_bool_bool_bool_int_StreamR_StreamR(&image_size, roi_data.as_raw_mut_VectorOfRect(), perf_preset, output_grid_size, hint_grid_size, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id, input_stream.as_raw_mut_Stream(), output_stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1464,7 +1464,7 @@ pub mod cudaoptflow {
 		pub fn create_def_1(image_size: core::Size, mut roi_data: core::Vector<core::Rect>) -> Result<core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_create_Size_vectorLRectG(&image_size, roi_data.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1494,7 +1494,7 @@ pub mod cudaoptflow {
 			input_output_array_arg!(float_flow);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_convertToFloat_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaOpticalFlow_2_0(), flow.as_raw__InputArray(), float_flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1580,7 +1580,7 @@ pub mod cudaoptflow {
 		pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, iterations: i32, scale_step: f64, gamma: f64, use_initial_flow: bool) -> Result<core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_create_double_double_double_int_int_double_int_double_double_bool(tau, lambda, theta, nscales, warps, epsilon, iterations, scale_step, gamma, use_initial_flow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1602,7 +1602,7 @@ pub mod cudaoptflow {
 		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1619,7 +1619,7 @@ pub mod cudaoptflow {
 		fn get_tau(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getTau_const(self.as_raw_CUDA_OpticalFlowDual_TVL1(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1632,7 +1632,7 @@ pub mod cudaoptflow {
 		fn get_lambda(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getLambda_const(self.as_raw_CUDA_OpticalFlowDual_TVL1(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1645,7 +1645,7 @@ pub mod cudaoptflow {
 		fn get_gamma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getGamma_const(self.as_raw_CUDA_OpticalFlowDual_TVL1(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1658,7 +1658,7 @@ pub mod cudaoptflow {
 		fn get_theta(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getTheta_const(self.as_raw_CUDA_OpticalFlowDual_TVL1(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1668,7 +1668,7 @@ pub mod cudaoptflow {
 		fn get_num_scales(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getNumScales_const(self.as_raw_CUDA_OpticalFlowDual_TVL1(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1681,7 +1681,7 @@ pub mod cudaoptflow {
 		fn get_num_warps(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getNumWarps_const(self.as_raw_CUDA_OpticalFlowDual_TVL1(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1692,7 +1692,7 @@ pub mod cudaoptflow {
 		fn get_epsilon(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getEpsilon_const(self.as_raw_CUDA_OpticalFlowDual_TVL1(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1702,7 +1702,7 @@ pub mod cudaoptflow {
 		fn get_num_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getNumIterations_const(self.as_raw_CUDA_OpticalFlowDual_TVL1(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1711,7 +1711,7 @@ pub mod cudaoptflow {
 		fn get_scale_step(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getScaleStep_const(self.as_raw_CUDA_OpticalFlowDual_TVL1(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1720,7 +1720,7 @@ pub mod cudaoptflow {
 		fn get_use_initial_flow(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_getUseInitialFlow_const(self.as_raw_CUDA_OpticalFlowDual_TVL1(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1735,7 +1735,7 @@ pub mod cudaoptflow {
 		fn set_tau(&mut self, tau: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setTau_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), tau, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1744,7 +1744,7 @@ pub mod cudaoptflow {
 		fn set_lambda(&mut self, lambda: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setLambda_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), lambda, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1753,7 +1753,7 @@ pub mod cudaoptflow {
 		fn set_gamma(&mut self, gamma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setGamma_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), gamma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1762,7 +1762,7 @@ pub mod cudaoptflow {
 		fn set_theta(&mut self, theta: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setTheta_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), theta, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1771,7 +1771,7 @@ pub mod cudaoptflow {
 		fn set_num_scales(&mut self, nscales: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setNumScales_int(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), nscales, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1780,7 +1780,7 @@ pub mod cudaoptflow {
 		fn set_num_warps(&mut self, warps: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setNumWarps_int(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), warps, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1789,7 +1789,7 @@ pub mod cudaoptflow {
 		fn set_epsilon(&mut self, epsilon: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setEpsilon_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), epsilon, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1798,7 +1798,7 @@ pub mod cudaoptflow {
 		fn set_num_iterations(&mut self, iterations: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setNumIterations_int(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), iterations, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1807,7 +1807,7 @@ pub mod cudaoptflow {
 		fn set_scale_step(&mut self, scale_step: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setScaleStep_double(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), scale_step, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1816,7 +1816,7 @@ pub mod cudaoptflow {
 		fn set_use_initial_flow(&mut self, use_initial_flow: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_setUseInitialFlow_bool(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1(), use_initial_flow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1916,7 +1916,7 @@ pub mod cudaoptflow {
 			output_array_arg!(err);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1946,7 +1946,7 @@ pub mod cudaoptflow {
 			output_array_arg!(status);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2021,7 +2021,7 @@ pub mod cudaoptflow {
 		pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create_Size_int_int_bool(&win_size, max_level, iters, use_initial_flow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2037,7 +2037,7 @@ pub mod cudaoptflow {
 		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2053,7 +2053,7 @@ pub mod cudaoptflow {
 		fn get_win_size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getWinSize_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2062,7 +2062,7 @@ pub mod cudaoptflow {
 		fn get_max_level(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getMaxLevel_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2071,7 +2071,7 @@ pub mod cudaoptflow {
 		fn get_num_iters(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getNumIters_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2080,7 +2080,7 @@ pub mod cudaoptflow {
 		fn get_use_initial_flow(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_getUseInitialFlow_const(self.as_raw_CUDA_SparsePyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2095,7 +2095,7 @@ pub mod cudaoptflow {
 		fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), &win_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2104,7 +2104,7 @@ pub mod cudaoptflow {
 		fn set_max_level(&mut self, max_level: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setMaxLevel_int(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), max_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2113,7 +2113,7 @@ pub mod cudaoptflow {
 		fn set_num_iters(&mut self, iters: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setNumIters_int(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), iters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2122,7 +2122,7 @@ pub mod cudaoptflow {
 		fn set_use_initial_flow(&mut self, use_initial_flow: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow(), use_initial_flow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

@@ -150,7 +150,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_colorChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -179,7 +179,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_colorChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), red_mul, green_mul, blue_mul, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -202,7 +202,7 @@ pub mod photo {
 	pub fn create_align_mtb_def() -> Result<core::Ptr<crate::photo::AlignMTB>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createAlignMTB(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::AlignMTB>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -225,7 +225,7 @@ pub mod photo {
 	pub fn create_align_mtb(max_bits: i32, exclude_range: i32, cut: bool) -> Result<core::Ptr<crate::photo::AlignMTB>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createAlignMTB_int_int_bool(max_bits, exclude_range, cut, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::AlignMTB>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -249,7 +249,7 @@ pub mod photo {
 	pub fn create_calibrate_debevec_def() -> Result<core::Ptr<crate::photo::CalibrateDebevec>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createCalibrateDebevec(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::CalibrateDebevec>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -272,7 +272,7 @@ pub mod photo {
 	pub fn create_calibrate_debevec(samples: i32, lambda: f32, random: bool) -> Result<core::Ptr<crate::photo::CalibrateDebevec>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createCalibrateDebevec_int_float_bool(samples, lambda, random, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::CalibrateDebevec>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -292,7 +292,7 @@ pub mod photo {
 	pub fn create_calibrate_robertson_def() -> Result<core::Ptr<crate::photo::CalibrateRobertson>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createCalibrateRobertson(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::CalibrateRobertson>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -311,7 +311,7 @@ pub mod photo {
 	pub fn create_calibrate_robertson(max_iter: i32, threshold: f32) -> Result<core::Ptr<crate::photo::CalibrateRobertson>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createCalibrateRobertson_int_float(max_iter, threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::CalibrateRobertson>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -322,7 +322,7 @@ pub mod photo {
 	pub fn create_merge_debevec() -> Result<core::Ptr<crate::photo::MergeDebevec>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createMergeDebevec(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::MergeDebevec>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -344,7 +344,7 @@ pub mod photo {
 	pub fn create_merge_mertens_def() -> Result<core::Ptr<crate::photo::MergeMertens>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createMergeMertens(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::MergeMertens>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -365,7 +365,7 @@ pub mod photo {
 	pub fn create_merge_mertens(contrast_weight: f32, saturation_weight: f32, exposure_weight: f32) -> Result<core::Ptr<crate::photo::MergeMertens>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createMergeMertens_float_float_float(contrast_weight, saturation_weight, exposure_weight, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::MergeMertens>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -376,7 +376,7 @@ pub mod photo {
 	pub fn create_merge_robertson() -> Result<core::Ptr<crate::photo::MergeRobertson>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createMergeRobertson(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::MergeRobertson>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -396,7 +396,7 @@ pub mod photo {
 	pub fn create_tonemap_def() -> Result<core::Ptr<crate::photo::Tonemap>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createTonemap(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::Tonemap>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -420,7 +420,7 @@ pub mod photo {
 	pub fn create_tonemap_drago_def() -> Result<core::Ptr<crate::photo::TonemapDrago>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createTonemapDrago(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::TonemapDrago>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -443,7 +443,7 @@ pub mod photo {
 	pub fn create_tonemap_drago(gamma: f32, saturation: f32, bias: f32) -> Result<core::Ptr<crate::photo::TonemapDrago>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createTonemapDrago_float_float_float(gamma, saturation, bias, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::TonemapDrago>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -466,7 +466,7 @@ pub mod photo {
 	pub fn create_tonemap_mantiuk_def() -> Result<core::Ptr<crate::photo::TonemapMantiuk>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createTonemapMantiuk(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::TonemapMantiuk>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -488,7 +488,7 @@ pub mod photo {
 	pub fn create_tonemap_mantiuk(gamma: f32, scale: f32, saturation: f32) -> Result<core::Ptr<crate::photo::TonemapMantiuk>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createTonemapMantiuk_float_float_float(gamma, scale, saturation, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::TonemapMantiuk>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -514,7 +514,7 @@ pub mod photo {
 	pub fn create_tonemap_reinhard_def() -> Result<core::Ptr<crate::photo::TonemapReinhard>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createTonemapReinhard(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::TonemapReinhard>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -539,7 +539,7 @@ pub mod photo {
 	pub fn create_tonemap_reinhard(gamma: f32, intensity: f32, light_adapt: f32, color_adapt: f32) -> Result<core::Ptr<crate::photo::TonemapReinhard>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createTonemapReinhard_float_float_float_float(gamma, intensity, light_adapt, color_adapt, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::TonemapReinhard>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -558,7 +558,7 @@ pub mod photo {
 	pub fn create_tonemap(gamma: f32) -> Result<core::Ptr<crate::photo::Tonemap>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createTonemap_float(gamma, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::Tonemap>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -573,7 +573,7 @@ pub mod photo {
 	pub fn fast_nl_means_denoising_colored_1_def(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h_luminance: f32, photo_render: f32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const_GpuMatR_GpuMatR_float_float(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h_luminance, photo_render, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -586,7 +586,7 @@ pub mod photo {
 	pub fn fast_nl_means_denoising_colored_1(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const_GpuMatR_GpuMatR_float_float_int_int_StreamR(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h_luminance, photo_render, search_window, block_size, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -623,7 +623,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h_luminance, photo_render, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -659,7 +659,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h_luminance, photo_render, search_window, block_size, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -673,7 +673,7 @@ pub mod photo {
 	pub fn fast_nl_means_denoising_1_def(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h: f32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoising_const_GpuMatR_GpuMatR_float(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -686,7 +686,7 @@ pub mod photo {
 	pub fn fast_nl_means_denoising_1(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h: f32, search_window: i32, block_size: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoising_const_GpuMatR_GpuMatR_float_int_int_StreamR(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, search_window, block_size, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -723,7 +723,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -759,7 +759,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, search_window, block_size, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -774,7 +774,7 @@ pub mod photo {
 	pub fn non_local_means_1_def(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h: f32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_nonLocalMeans_const_GpuMatR_GpuMatR_float(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -788,7 +788,7 @@ pub mod photo {
 	pub fn non_local_means_1(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h: f32, search_window: i32, block_size: i32, border_mode: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_nonLocalMeans_const_GpuMatR_GpuMatR_float_int_int_int_StreamR(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, search_window, block_size, border_mode, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -819,7 +819,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_nonLocalMeans_const__InputArrayR_const__OutputArrayR_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -849,7 +849,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_nonLocalMeans_const__InputArrayR_const__OutputArrayR_float_int_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, search_window, block_size, border_mode, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -871,7 +871,7 @@ pub mod photo {
 		output_array_arg!(color_boost);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_decolor_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), grayscale.as_raw__OutputArray(), color_boost.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -922,7 +922,7 @@ pub mod photo {
 	pub fn denoise_tvl1_def(observations: &core::Vector<core::Mat>, result: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_denoise_TVL1_const_vectorLMatGR_MatR(observations.as_raw_VectorOfMat(), result.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -972,7 +972,7 @@ pub mod photo {
 	pub fn denoise_tvl1(observations: &core::Vector<core::Mat>, result: &mut impl core::MatTrait, lambda: f64, niters: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_denoise_TVL1_const_vectorLMatGR_MatR_double_int(observations.as_raw_VectorOfMat(), result.as_raw_mut_Mat(), lambda, niters, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -995,7 +995,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detailEnhance_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1017,7 +1017,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detailEnhance_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1043,7 +1043,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_edgePreservingFilter_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1068,7 +1068,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_edgePreservingFilter_const__InputArrayR_const__OutputArrayR_int_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1109,7 +1109,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingColoredMulti_const__InputArrayR_const__OutputArrayR_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1149,7 +1149,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingColoredMulti_const__InputArrayR_const__OutputArrayR_int_int_float_float_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h, h_color, template_window_size, search_window_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1185,7 +1185,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1220,7 +1220,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, h_color, template_window_size, search_window_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1260,7 +1260,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1302,7 +1302,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vectorLfloatGR(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1343,7 +1343,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vectorLfloatGR_int_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1382,7 +1382,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_float_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h, template_window_size, search_window_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1419,7 +1419,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1460,7 +1460,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vectorLfloatGR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1500,7 +1500,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vectorLfloatGR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1536,7 +1536,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, template_window_size, search_window_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1564,7 +1564,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_illuminationChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1591,7 +1591,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_illuminationChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1624,7 +1624,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_inpaint_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src.as_raw__InputArray(), inpaint_mask.as_raw__InputArray(), dst.as_raw__OutputArray(), inpaint_radius, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1654,7 +1654,7 @@ pub mod photo {
 		output_array_arg!(dst2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pencilSketch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst1.as_raw__OutputArray(), dst2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1683,7 +1683,7 @@ pub mod photo {
 		output_array_arg!(dst2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pencilSketch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), dst1.as_raw__OutputArray(), dst2.as_raw__OutputArray(), sigma_s, sigma_r, shade_factor, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1713,7 +1713,7 @@ pub mod photo {
 		output_array_arg!(blend);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_seamlessClone_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), mask.as_raw__InputArray(), &p, blend.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1738,7 +1738,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_stylization_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1762,7 +1762,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_stylization_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1796,7 +1796,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_textureFlattening_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1829,7 +1829,7 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_textureFlattening_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float_int(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), low_threshold, high_threshold, kernel_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1875,7 +1875,7 @@ pub mod photo {
 			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignExposures_process_const__InputArrayR_vectorLMatGR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignExposures(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1945,7 +1945,7 @@ pub mod photo {
 		fn get_max_bits(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_getMaxBits_const(self.as_raw_AlignMTB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1954,7 +1954,7 @@ pub mod photo {
 		fn get_exclude_range(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_getExcludeRange_const(self.as_raw_AlignMTB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1963,7 +1963,7 @@ pub mod photo {
 		fn get_cut(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_getCut_const(self.as_raw_AlignMTB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1981,7 +1981,7 @@ pub mod photo {
 			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vectorLMatGR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1996,7 +1996,7 @@ pub mod photo {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vectorLMatGR(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2013,7 +2013,7 @@ pub mod photo {
 			input_array_arg!(img1);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_calculateShift_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignMTB(), img0.as_raw__InputArray(), img1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2030,7 +2030,7 @@ pub mod photo {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_const_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), &shift, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2048,7 +2048,7 @@ pub mod photo {
 			output_array_arg!(eb);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_computeBitmaps_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_AlignMTB(), img.as_raw__InputArray(), tb.as_raw__OutputArray(), eb.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2057,7 +2057,7 @@ pub mod photo {
 		fn set_max_bits(&mut self, max_bits: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_setMaxBits_int(self.as_raw_mut_AlignMTB(), max_bits, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2066,7 +2066,7 @@ pub mod photo {
 		fn set_exclude_range(&mut self, exclude_range: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_setExcludeRange_int(self.as_raw_mut_AlignMTB(), exclude_range, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2075,7 +2075,7 @@ pub mod photo {
 		fn set_cut(&mut self, value: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_setCut_bool(self.as_raw_mut_AlignMTB(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2163,7 +2163,7 @@ pub mod photo {
 			input_array_arg!(times);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateCRF_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_CalibrateCRF(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2232,7 +2232,7 @@ pub mod photo {
 		fn get_lambda(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateDebevec_getLambda_const(self.as_raw_CalibrateDebevec(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2241,7 +2241,7 @@ pub mod photo {
 		fn get_samples(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateDebevec_getSamples_const(self.as_raw_CalibrateDebevec(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2250,7 +2250,7 @@ pub mod photo {
 		fn get_random(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateDebevec_getRandom_const(self.as_raw_CalibrateDebevec(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2265,7 +2265,7 @@ pub mod photo {
 		fn set_lambda(&mut self, lambda: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateDebevec_setLambda_float(self.as_raw_mut_CalibrateDebevec(), lambda, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2274,7 +2274,7 @@ pub mod photo {
 		fn set_samples(&mut self, samples: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateDebevec_setSamples_int(self.as_raw_mut_CalibrateDebevec(), samples, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2283,7 +2283,7 @@ pub mod photo {
 		fn set_random(&mut self, random: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateDebevec_setRandom_bool(self.as_raw_mut_CalibrateDebevec(), random, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2359,7 +2359,7 @@ pub mod photo {
 		fn get_max_iter(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateRobertson_getMaxIter_const(self.as_raw_CalibrateRobertson(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2368,7 +2368,7 @@ pub mod photo {
 		fn get_threshold(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateRobertson_getThreshold_const(self.as_raw_CalibrateRobertson(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2377,7 +2377,7 @@ pub mod photo {
 		fn get_radiance(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateRobertson_getRadiance_const(self.as_raw_CalibrateRobertson(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2393,7 +2393,7 @@ pub mod photo {
 		fn set_max_iter(&mut self, max_iter: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateRobertson_setMaxIter_int(self.as_raw_mut_CalibrateRobertson(), max_iter, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2402,7 +2402,7 @@ pub mod photo {
 		fn set_threshold(&mut self, threshold: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateRobertson_setThreshold_float(self.as_raw_mut_CalibrateRobertson(), threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2488,7 +2488,7 @@ pub mod photo {
 			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeDebevec_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeDebevec(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2500,7 +2500,7 @@ pub mod photo {
 			input_array_arg!(times);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeDebevec_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_MergeDebevec(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2591,7 +2591,7 @@ pub mod photo {
 			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeExposures_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeExposures(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2667,7 +2667,7 @@ pub mod photo {
 		fn get_contrast_weight(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeMertens_getContrastWeight_const(self.as_raw_MergeMertens(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2676,7 +2676,7 @@ pub mod photo {
 		fn get_saturation_weight(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeMertens_getSaturationWeight_const(self.as_raw_MergeMertens(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2685,7 +2685,7 @@ pub mod photo {
 		fn get_exposure_weight(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeMertens_getExposureWeight_const(self.as_raw_MergeMertens(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2704,7 +2704,7 @@ pub mod photo {
 			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeMertens_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeMertens(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2720,7 +2720,7 @@ pub mod photo {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeMertens_process_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_MergeMertens(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2729,7 +2729,7 @@ pub mod photo {
 		fn set_contrast_weight(&mut self, contrast_weiht: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeMertens_setContrastWeight_float(self.as_raw_mut_MergeMertens(), contrast_weiht, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2738,7 +2738,7 @@ pub mod photo {
 		fn set_saturation_weight(&mut self, saturation_weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeMertens_setSaturationWeight_float(self.as_raw_mut_MergeMertens(), saturation_weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2747,7 +2747,7 @@ pub mod photo {
 		fn set_exposure_weight(&mut self, exposure_weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeMertens_setExposureWeight_float(self.as_raw_mut_MergeMertens(), exposure_weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2833,7 +2833,7 @@ pub mod photo {
 			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeRobertson_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeRobertson(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2845,7 +2845,7 @@ pub mod photo {
 			input_array_arg!(times);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeRobertson_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_MergeRobertson(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2918,7 +2918,7 @@ pub mod photo {
 		fn get_gamma(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Tonemap_getGamma_const(self.as_raw_Tonemap(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2940,7 +2940,7 @@ pub mod photo {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Tonemap_process_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Tonemap(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2949,7 +2949,7 @@ pub mod photo {
 		fn set_gamma(&mut self, gamma: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Tonemap_setGamma_float(self.as_raw_mut_Tonemap(), gamma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3024,7 +3024,7 @@ pub mod photo {
 		fn get_saturation(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapDrago_getSaturation_const(self.as_raw_TonemapDrago(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3033,7 +3033,7 @@ pub mod photo {
 		fn get_bias(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapDrago_getBias_const(self.as_raw_TonemapDrago(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3048,7 +3048,7 @@ pub mod photo {
 		fn set_saturation(&mut self, saturation: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapDrago_setSaturation_float(self.as_raw_mut_TonemapDrago(), saturation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3057,7 +3057,7 @@ pub mod photo {
 		fn set_bias(&mut self, bias: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapDrago_setBias_float(self.as_raw_mut_TonemapDrago(), bias, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3134,7 +3134,7 @@ pub mod photo {
 		fn get_scale(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapMantiuk_getScale_const(self.as_raw_TonemapMantiuk(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3143,7 +3143,7 @@ pub mod photo {
 		fn get_saturation(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapMantiuk_getSaturation_const(self.as_raw_TonemapMantiuk(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3158,7 +3158,7 @@ pub mod photo {
 		fn set_scale(&mut self, scale: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapMantiuk_setScale_float(self.as_raw_mut_TonemapMantiuk(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3167,7 +3167,7 @@ pub mod photo {
 		fn set_saturation(&mut self, saturation: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapMantiuk_setSaturation_float(self.as_raw_mut_TonemapMantiuk(), saturation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3245,7 +3245,7 @@ pub mod photo {
 		fn get_intensity(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapReinhard_getIntensity_const(self.as_raw_TonemapReinhard(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3254,7 +3254,7 @@ pub mod photo {
 		fn get_light_adaptation(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapReinhard_getLightAdaptation_const(self.as_raw_TonemapReinhard(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3263,7 +3263,7 @@ pub mod photo {
 		fn get_color_adaptation(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapReinhard_getColorAdaptation_const(self.as_raw_TonemapReinhard(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3278,7 +3278,7 @@ pub mod photo {
 		fn set_intensity(&mut self, intensity: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapReinhard_setIntensity_float(self.as_raw_mut_TonemapReinhard(), intensity, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3287,7 +3287,7 @@ pub mod photo {
 		fn set_light_adaptation(&mut self, light_adapt: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapReinhard_setLightAdaptation_float(self.as_raw_mut_TonemapReinhard(), light_adapt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3296,7 +3296,7 @@ pub mod photo {
 		fn set_color_adaptation(&mut self, color_adapt: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TonemapReinhard_setColorAdaptation_float(self.as_raw_mut_TonemapReinhard(), color_adapt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

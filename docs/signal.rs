@@ -23,7 +23,7 @@ pub mod signal {
 		output_array_arg!(out_signal);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_signal_resampleSignal_const__InputArrayR_const__OutputArrayR_const_int_const_int(input_signal.as_raw__InputArray(), out_signal.as_raw__OutputArray(), in_freq, out_freq, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}

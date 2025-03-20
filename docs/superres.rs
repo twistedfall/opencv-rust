@@ -17,7 +17,7 @@ pub mod superres {
 	pub fn create_frame_source_camera_def() -> Result<core::Ptr<crate::superres::SuperRes_FrameSource>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createFrameSource_Camera(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_FrameSource>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -29,7 +29,7 @@ pub mod superres {
 	pub fn create_frame_source_camera(device_id: i32) -> Result<core::Ptr<crate::superres::SuperRes_FrameSource>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createFrameSource_Camera_int(device_id, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_FrameSource>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -39,7 +39,7 @@ pub mod superres {
 	pub fn create_frame_source_empty() -> Result<core::Ptr<crate::superres::SuperRes_FrameSource>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createFrameSource_Empty(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_FrameSource>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -50,7 +50,7 @@ pub mod superres {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createFrameSource_Video_CUDA_const_StringR(file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_FrameSource>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -61,7 +61,7 @@ pub mod superres {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createFrameSource_Video_const_StringR(file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_FrameSource>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -71,7 +71,7 @@ pub mod superres {
 	pub fn create_opt_flow_brox_cuda() -> Result<core::Ptr<crate::superres::SuperRes_BroxOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_Brox_CUDA(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_BroxOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -81,7 +81,7 @@ pub mod superres {
 	pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_DualTVL1(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_DualTVL1OpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -91,7 +91,7 @@ pub mod superres {
 	pub fn create_opt_flow_dual_tvl1_cuda() -> Result<core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_DualTVL1_CUDA(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_DualTVL1OpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -101,7 +101,7 @@ pub mod superres {
 	pub fn create_opt_flow_farneback() -> Result<core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_Farneback(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_FarnebackOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -111,7 +111,7 @@ pub mod superres {
 	pub fn create_opt_flow_farneback_cuda() -> Result<core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_Farneback_CUDA(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_FarnebackOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -121,7 +121,7 @@ pub mod superres {
 	pub fn create_opt_flow_pyr_lk_cuda() -> Result<core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_PyrLK_CUDA(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_PyrLKOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -149,7 +149,7 @@ pub mod superres {
 	pub fn create_super_resolution_btvl1() -> Result<core::Ptr<crate::superres::SuperRes_SuperResolution>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createSuperResolution_BTVL1(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_SuperResolution>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -159,7 +159,7 @@ pub mod superres {
 	pub fn create_super_resolution_btvl1_cuda() -> Result<core::Ptr<crate::superres::SuperRes_SuperResolution>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createSuperResolution_BTVL1_CUDA(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_SuperResolution>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -191,7 +191,7 @@ pub mod superres {
 		fn get_alpha(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_getAlpha_const(self.as_raw_SuperRes_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -203,7 +203,7 @@ pub mod superres {
 		fn get_gamma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_getGamma_const(self.as_raw_SuperRes_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -215,7 +215,7 @@ pub mod superres {
 		fn get_scale_factor(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_getScaleFactor_const(self.as_raw_SuperRes_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -227,7 +227,7 @@ pub mod superres {
 		fn get_inner_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_getInnerIterations_const(self.as_raw_SuperRes_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -239,7 +239,7 @@ pub mod superres {
 		fn get_outer_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_getOuterIterations_const(self.as_raw_SuperRes_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -251,7 +251,7 @@ pub mod superres {
 		fn get_solver_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_getSolverIterations_const(self.as_raw_SuperRes_BroxOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -269,7 +269,7 @@ pub mod superres {
 		fn set_alpha(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_setAlpha_double(self.as_raw_mut_SuperRes_BroxOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -281,7 +281,7 @@ pub mod superres {
 		fn set_gamma(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_setGamma_double(self.as_raw_mut_SuperRes_BroxOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -293,7 +293,7 @@ pub mod superres {
 		fn set_scale_factor(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_setScaleFactor_double(self.as_raw_mut_SuperRes_BroxOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -305,7 +305,7 @@ pub mod superres {
 		fn set_inner_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_setInnerIterations_int(self.as_raw_mut_SuperRes_BroxOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -317,7 +317,7 @@ pub mod superres {
 		fn set_outer_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_setOuterIterations_int(self.as_raw_mut_SuperRes_BroxOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -329,7 +329,7 @@ pub mod superres {
 		fn set_solver_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_BroxOpticalFlow_setSolverIterations_int(self.as_raw_mut_SuperRes_BroxOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -413,7 +413,7 @@ pub mod superres {
 			output_array_arg!(flow2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DenseOpticalFlowExt_calc_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SuperRes_DenseOpticalFlowExt(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow1.as_raw__OutputArray(), flow2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -428,7 +428,7 @@ pub mod superres {
 			output_array_arg!(flow1);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DenseOpticalFlowExt_calc_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_SuperRes_DenseOpticalFlowExt(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow1.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -437,7 +437,7 @@ pub mod superres {
 		fn collect_garbage(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DenseOpticalFlowExt_collectGarbage(self.as_raw_mut_SuperRes_DenseOpticalFlowExt(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -507,7 +507,7 @@ pub mod superres {
 		fn get_tau(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_getTau_const(self.as_raw_SuperRes_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -518,7 +518,7 @@ pub mod superres {
 		fn get_lambda(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_getLambda_const(self.as_raw_SuperRes_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -529,7 +529,7 @@ pub mod superres {
 		fn get_theta(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_getTheta_const(self.as_raw_SuperRes_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -540,7 +540,7 @@ pub mod superres {
 		fn get_scales_number(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_getScalesNumber_const(self.as_raw_SuperRes_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -551,7 +551,7 @@ pub mod superres {
 		fn get_warpings_number(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_getWarpingsNumber_const(self.as_raw_SuperRes_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -562,7 +562,7 @@ pub mod superres {
 		fn get_epsilon(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_getEpsilon_const(self.as_raw_SuperRes_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -573,7 +573,7 @@ pub mod superres {
 		fn get_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_getIterations_const(self.as_raw_SuperRes_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -584,7 +584,7 @@ pub mod superres {
 		fn get_use_initial_flow(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_getUseInitialFlow_const(self.as_raw_SuperRes_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -601,7 +601,7 @@ pub mod superres {
 		fn set_tau(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_setTau_double(self.as_raw_mut_SuperRes_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -612,7 +612,7 @@ pub mod superres {
 		fn set_lambda(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_setLambda_double(self.as_raw_mut_SuperRes_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -623,7 +623,7 @@ pub mod superres {
 		fn set_theta(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_setTheta_double(self.as_raw_mut_SuperRes_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -634,7 +634,7 @@ pub mod superres {
 		fn set_scales_number(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_setScalesNumber_int(self.as_raw_mut_SuperRes_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -645,7 +645,7 @@ pub mod superres {
 		fn set_warpings_number(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_setWarpingsNumber_int(self.as_raw_mut_SuperRes_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -656,7 +656,7 @@ pub mod superres {
 		fn set_epsilon(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_setEpsilon_double(self.as_raw_mut_SuperRes_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -667,7 +667,7 @@ pub mod superres {
 		fn set_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_setIterations_int(self.as_raw_mut_SuperRes_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -678,7 +678,7 @@ pub mod superres {
 		fn set_use_initial_flow(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DualTVL1OpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_SuperRes_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -752,7 +752,7 @@ pub mod superres {
 		fn get_pyr_scale(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_getPyrScale_const(self.as_raw_SuperRes_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -763,7 +763,7 @@ pub mod superres {
 		fn get_levels_number(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_getLevelsNumber_const(self.as_raw_SuperRes_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -774,7 +774,7 @@ pub mod superres {
 		fn get_window_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_getWindowSize_const(self.as_raw_SuperRes_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -785,7 +785,7 @@ pub mod superres {
 		fn get_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_getIterations_const(self.as_raw_SuperRes_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -796,7 +796,7 @@ pub mod superres {
 		fn get_poly_n(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_getPolyN_const(self.as_raw_SuperRes_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -807,7 +807,7 @@ pub mod superres {
 		fn get_poly_sigma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_getPolySigma_const(self.as_raw_SuperRes_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -818,7 +818,7 @@ pub mod superres {
 		fn get_flags(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_getFlags_const(self.as_raw_SuperRes_FarnebackOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -835,7 +835,7 @@ pub mod superres {
 		fn set_pyr_scale(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_setPyrScale_double(self.as_raw_mut_SuperRes_FarnebackOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -846,7 +846,7 @@ pub mod superres {
 		fn set_levels_number(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_setLevelsNumber_int(self.as_raw_mut_SuperRes_FarnebackOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -857,7 +857,7 @@ pub mod superres {
 		fn set_window_size(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_setWindowSize_int(self.as_raw_mut_SuperRes_FarnebackOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -868,7 +868,7 @@ pub mod superres {
 		fn set_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_setIterations_int(self.as_raw_mut_SuperRes_FarnebackOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -879,7 +879,7 @@ pub mod superres {
 		fn set_poly_n(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_setPolyN_int(self.as_raw_mut_SuperRes_FarnebackOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -890,7 +890,7 @@ pub mod superres {
 		fn set_poly_sigma(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_setPolySigma_double(self.as_raw_mut_SuperRes_FarnebackOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -901,7 +901,7 @@ pub mod superres {
 		fn set_flags(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FarnebackOpticalFlow_setFlags_int(self.as_raw_mut_SuperRes_FarnebackOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -980,7 +980,7 @@ pub mod superres {
 			output_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FrameSource_nextFrame_const__OutputArrayR(self.as_raw_mut_SuperRes_FrameSource(), frame.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -989,7 +989,7 @@ pub mod superres {
 		fn reset(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FrameSource_reset(self.as_raw_mut_SuperRes_FrameSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1041,7 +1041,7 @@ pub mod superres {
 		fn get_window_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_PyrLKOpticalFlow_getWindowSize_const(self.as_raw_SuperRes_PyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1052,7 +1052,7 @@ pub mod superres {
 		fn get_max_level(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_PyrLKOpticalFlow_getMaxLevel_const(self.as_raw_SuperRes_PyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1063,7 +1063,7 @@ pub mod superres {
 		fn get_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_PyrLKOpticalFlow_getIterations_const(self.as_raw_SuperRes_PyrLKOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1080,7 +1080,7 @@ pub mod superres {
 		fn set_window_size(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_PyrLKOpticalFlow_setWindowSize_int(self.as_raw_mut_SuperRes_PyrLKOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1091,7 +1091,7 @@ pub mod superres {
 		fn set_max_level(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_PyrLKOpticalFlow_setMaxLevel_int(self.as_raw_mut_SuperRes_PyrLKOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1102,7 +1102,7 @@ pub mod superres {
 		fn set_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_PyrLKOpticalFlow_setIterations_int(self.as_raw_mut_SuperRes_PyrLKOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1181,7 +1181,7 @@ pub mod superres {
 		fn get_scale(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_getScale_const(self.as_raw_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1193,7 +1193,7 @@ pub mod superres {
 		fn get_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_getIterations_const(self.as_raw_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1205,7 +1205,7 @@ pub mod superres {
 		fn get_tau(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_getTau_const(self.as_raw_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1217,7 +1217,7 @@ pub mod superres {
 		fn get_lambda(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_getLambda_const(self.as_raw_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1229,7 +1229,7 @@ pub mod superres {
 		fn get_alpha(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_getAlpha_const(self.as_raw_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1241,7 +1241,7 @@ pub mod superres {
 		fn get_kernel_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_getKernelSize_const(self.as_raw_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1253,7 +1253,7 @@ pub mod superres {
 		fn get_blur_kernel_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_getBlurKernelSize_const(self.as_raw_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1265,7 +1265,7 @@ pub mod superres {
 		fn get_blur_sigma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_getBlurSigma_const(self.as_raw_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1277,7 +1277,7 @@ pub mod superres {
 		fn get_temporal_area_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_getTemporalAreaRadius_const(self.as_raw_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1289,7 +1289,7 @@ pub mod superres {
 		fn get_optical_flow(&self) -> Result<core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_getOpticalFlow_const(self.as_raw_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::superres::SuperRes_DenseOpticalFlowExt>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1309,7 +1309,7 @@ pub mod superres {
 		fn set_input(&mut self, frame_source: &core::Ptr<crate::superres::SuperRes_FrameSource>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setInput_const_PtrLFrameSourceGR(self.as_raw_mut_SuperRes_SuperResolution(), frame_source.as_raw_PtrOfSuperRes_FrameSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1323,7 +1323,7 @@ pub mod superres {
 			output_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_nextFrame_const__OutputArrayR(self.as_raw_mut_SuperRes_SuperResolution(), frame.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1332,7 +1332,7 @@ pub mod superres {
 		fn reset(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_reset(self.as_raw_mut_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1342,7 +1342,7 @@ pub mod superres {
 		fn collect_garbage(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_collectGarbage(self.as_raw_mut_SuperRes_SuperResolution(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1354,7 +1354,7 @@ pub mod superres {
 		fn set_scale(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setScale_int(self.as_raw_mut_SuperRes_SuperResolution(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1366,7 +1366,7 @@ pub mod superres {
 		fn set_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setIterations_int(self.as_raw_mut_SuperRes_SuperResolution(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1378,7 +1378,7 @@ pub mod superres {
 		fn set_tau(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setTau_double(self.as_raw_mut_SuperRes_SuperResolution(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1390,7 +1390,7 @@ pub mod superres {
 		fn set_lambda(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setLambda_double(self.as_raw_mut_SuperRes_SuperResolution(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1402,7 +1402,7 @@ pub mod superres {
 		fn set_alpha(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setAlpha_double(self.as_raw_mut_SuperRes_SuperResolution(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1414,7 +1414,7 @@ pub mod superres {
 		fn set_kernel_size(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setKernelSize_int(self.as_raw_mut_SuperRes_SuperResolution(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1426,7 +1426,7 @@ pub mod superres {
 		fn set_blur_kernel_size(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setBlurKernelSize_int(self.as_raw_mut_SuperRes_SuperResolution(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1438,7 +1438,7 @@ pub mod superres {
 		fn set_blur_sigma(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setBlurSigma_double(self.as_raw_mut_SuperRes_SuperResolution(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1450,7 +1450,7 @@ pub mod superres {
 		fn set_temporal_area_radius(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setTemporalAreaRadius_int(self.as_raw_mut_SuperRes_SuperResolution(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1462,7 +1462,7 @@ pub mod superres {
 		fn set_optical_flow(&mut self, val: &core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setOpticalFlow_const_PtrLDenseOpticalFlowExtGR(self.as_raw_mut_SuperRes_SuperResolution(), val.as_raw_PtrOfSuperRes_DenseOpticalFlowExt(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

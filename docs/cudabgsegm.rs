@@ -25,7 +25,7 @@ pub mod cudabgsegm {
 	pub fn create_background_subtractor_mog_def() -> Result<core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createBackgroundSubtractorMOG(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -50,7 +50,7 @@ pub mod cudabgsegm {
 	pub fn create_background_subtractor_mog2_def() -> Result<core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createBackgroundSubtractorMOG2(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -74,7 +74,7 @@ pub mod cudabgsegm {
 	pub fn create_background_subtractor_mog2(history: i32, var_threshold: f64, detect_shadows: bool) -> Result<core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createBackgroundSubtractorMOG2_int_double_bool(history, var_threshold, detect_shadows, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -98,7 +98,7 @@ pub mod cudabgsegm {
 	pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background_ratio: f64, noise_sigma: f64) -> Result<core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createBackgroundSubtractorMOG_int_int_double_double(history, nmixtures, background_ratio, noise_sigma, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -140,7 +140,7 @@ pub mod cudabgsegm {
 			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_getBackgroundImage_const_const__OutputArrayR_StreamR(self.as_raw_CUDA_BackgroundSubtractorMOG(), background_image.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -149,7 +149,7 @@ pub mod cudabgsegm {
 		fn get_history(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_getHistory_const(self.as_raw_CUDA_BackgroundSubtractorMOG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -158,7 +158,7 @@ pub mod cudabgsegm {
 		fn get_n_mixtures(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_getNMixtures_const(self.as_raw_CUDA_BackgroundSubtractorMOG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -167,7 +167,7 @@ pub mod cudabgsegm {
 		fn get_background_ratio(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_getBackgroundRatio_const(self.as_raw_CUDA_BackgroundSubtractorMOG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -176,7 +176,7 @@ pub mod cudabgsegm {
 		fn get_noise_sigma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_getNoiseSigma_const(self.as_raw_CUDA_BackgroundSubtractorMOG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -193,7 +193,7 @@ pub mod cudabgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_apply_const__InputArrayR_const__OutputArrayR_double_StreamR(self.as_raw_mut_CUDA_BackgroundSubtractorMOG(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -202,7 +202,7 @@ pub mod cudabgsegm {
 		fn get_background_image_1(&mut self, background_image: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_getBackgroundImage_GpuMatR_StreamR(self.as_raw_mut_CUDA_BackgroundSubtractorMOG(), background_image.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -211,7 +211,7 @@ pub mod cudabgsegm {
 		fn set_history(&mut self, nframes: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_setHistory_int(self.as_raw_mut_CUDA_BackgroundSubtractorMOG(), nframes, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -220,7 +220,7 @@ pub mod cudabgsegm {
 		fn set_n_mixtures(&mut self, nmix: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_setNMixtures_int(self.as_raw_mut_CUDA_BackgroundSubtractorMOG(), nmix, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -229,7 +229,7 @@ pub mod cudabgsegm {
 		fn set_background_ratio(&mut self, background_ratio: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_setBackgroundRatio_double(self.as_raw_mut_CUDA_BackgroundSubtractorMOG(), background_ratio, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -238,7 +238,7 @@ pub mod cudabgsegm {
 		fn set_noise_sigma(&mut self, noise_sigma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_setNoiseSigma_double(self.as_raw_mut_CUDA_BackgroundSubtractorMOG(), noise_sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -318,7 +318,7 @@ pub mod cudabgsegm {
 			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG2_getBackgroundImage_const_const__OutputArrayR_StreamR(self.as_raw_CUDA_BackgroundSubtractorMOG2(), background_image.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -335,7 +335,7 @@ pub mod cudabgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG2_apply_const__InputArrayR_const__OutputArrayR_double_StreamR(self.as_raw_mut_CUDA_BackgroundSubtractorMOG2(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -344,7 +344,7 @@ pub mod cudabgsegm {
 		fn get_background_image_1(&mut self, background_image: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG2_getBackgroundImage_GpuMatR_StreamR(self.as_raw_mut_CUDA_BackgroundSubtractorMOG2(), background_image.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

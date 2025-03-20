@@ -47,7 +47,7 @@ pub mod bgsegm {
 	pub fn create_background_subtractor_cnt_def() -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorCNT>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createBackgroundSubtractorCNT(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorCNT>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -70,7 +70,7 @@ pub mod bgsegm {
 	pub fn create_background_subtractor_cnt(min_pixel_stability: i32, use_history: bool, max_pixel_stability: i32, is_parallel: bool) -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorCNT>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createBackgroundSubtractorCNT_int_bool_int_bool(min_pixel_stability, use_history, max_pixel_stability, is_parallel, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorCNT>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -90,7 +90,7 @@ pub mod bgsegm {
 	pub fn create_background_subtractor_gmg_def() -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorGMG>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createBackgroundSubtractorGMG(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorGMG>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -109,7 +109,7 @@ pub mod bgsegm {
 	pub fn create_background_subtractor_gmg(initialization_frames: i32, decision_threshold: f64) -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorGMG>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createBackgroundSubtractorGMG_int_double(initialization_frames, decision_threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorGMG>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -149,7 +149,7 @@ pub mod bgsegm {
 	pub fn create_background_subtractor_gsoc_def() -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createBackgroundSubtractorGSOC(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorGSOC>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -188,7 +188,7 @@ pub mod bgsegm {
 	pub fn create_background_subtractor_gsoc(mc: i32, n_samples: i32, replace_rate: f32, propagation_rate: f32, hits_threshold: i32, alpha: f32, beta: f32, blinking_supression_decay: f32, blinking_supression_multiplier: f32, noise_removal_threshold_fac_bg: f32, noise_removal_threshold_fac_fg: f32) -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createBackgroundSubtractorGSOC_int_int_float_float_int_float_float_float_float_float_float(mc, n_samples, replace_rate, propagation_rate, hits_threshold, alpha, beta, blinking_supression_decay, blinking_supression_multiplier, noise_removal_threshold_fac_bg, noise_removal_threshold_fac_fg, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorGSOC>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -232,7 +232,7 @@ pub mod bgsegm {
 	pub fn create_background_subtractor_lsbp_def() -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createBackgroundSubtractorLSBP(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorLSBP>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -275,7 +275,7 @@ pub mod bgsegm {
 	pub fn create_background_subtractor_lsbp(mc: i32, n_samples: i32, lsbp_radius: i32, tlower: f32, tupper: f32, tinc: f32, tdec: f32, rscale: f32, rincdec: f32, noise_removal_threshold_fac_bg: f32, noise_removal_threshold_fac_fg: f32, lsb_pthreshold: i32, min_count: i32) -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createBackgroundSubtractorLSBP_int_int_int_float_float_float_float_float_float_float_float_int_int(mc, n_samples, lsbp_radius, tlower, tupper, tinc, tdec, rscale, rincdec, noise_removal_threshold_fac_bg, noise_removal_threshold_fac_fg, lsb_pthreshold, min_count, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorLSBP>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -300,7 +300,7 @@ pub mod bgsegm {
 	pub fn create_background_subtractor_mog_def() -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorMOG>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createBackgroundSubtractorMOG(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorMOG>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -324,7 +324,7 @@ pub mod bgsegm {
 	pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background_ratio: f64, noise_sigma: f64) -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorMOG>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createBackgroundSubtractorMOG_int_int_double_double(history, nmixtures, background_ratio, noise_sigma, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorMOG>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -352,7 +352,7 @@ pub mod bgsegm {
 		input_array_arg!(object);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createSyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR(background.as_raw__InputArray(), object.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -379,7 +379,7 @@ pub mod bgsegm {
 		input_array_arg!(object);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createSyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -415,7 +415,7 @@ pub mod bgsegm {
 			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorCNT(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -425,7 +425,7 @@ pub mod bgsegm {
 		fn get_min_pixel_stability(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_getMinPixelStability_const(self.as_raw_BackgroundSubtractorCNT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -435,7 +435,7 @@ pub mod bgsegm {
 		fn get_max_pixel_stability(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_getMaxPixelStability_const(self.as_raw_BackgroundSubtractorCNT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -445,7 +445,7 @@ pub mod bgsegm {
 		fn get_use_history(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_getUseHistory_const(self.as_raw_BackgroundSubtractorCNT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -455,7 +455,7 @@ pub mod bgsegm {
 		fn get_is_parallel(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_getIsParallel_const(self.as_raw_BackgroundSubtractorCNT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -474,7 +474,7 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorCNT(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -488,7 +488,7 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorCNT(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -498,7 +498,7 @@ pub mod bgsegm {
 		fn set_min_pixel_stability(&mut self, value: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_setMinPixelStability_int(self.as_raw_mut_BackgroundSubtractorCNT(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -508,7 +508,7 @@ pub mod bgsegm {
 		fn set_max_pixel_stability(&mut self, value: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_setMaxPixelStability_int(self.as_raw_mut_BackgroundSubtractorCNT(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -518,7 +518,7 @@ pub mod bgsegm {
 		fn set_use_history(&mut self, value: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_setUseHistory_bool(self.as_raw_mut_BackgroundSubtractorCNT(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -528,7 +528,7 @@ pub mod bgsegm {
 		fn set_is_parallel(&mut self, value: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_setIsParallel_bool(self.as_raw_mut_BackgroundSubtractorCNT(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -608,7 +608,7 @@ pub mod bgsegm {
 			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorGMG(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -618,7 +618,7 @@ pub mod bgsegm {
 		fn get_max_features(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getMaxFeatures_const(self.as_raw_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -631,7 +631,7 @@ pub mod bgsegm {
 		fn get_default_learning_rate(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getDefaultLearningRate_const(self.as_raw_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -641,7 +641,7 @@ pub mod bgsegm {
 		fn get_num_frames(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getNumFrames_const(self.as_raw_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -653,7 +653,7 @@ pub mod bgsegm {
 		fn get_quantization_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getQuantizationLevels_const(self.as_raw_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -663,7 +663,7 @@ pub mod bgsegm {
 		fn get_background_prior(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getBackgroundPrior_const(self.as_raw_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -673,7 +673,7 @@ pub mod bgsegm {
 		fn get_smoothing_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getSmoothingRadius_const(self.as_raw_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -685,7 +685,7 @@ pub mod bgsegm {
 		fn get_decision_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getDecisionThreshold_const(self.as_raw_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -695,7 +695,7 @@ pub mod bgsegm {
 		fn get_update_background_model(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getUpdateBackgroundModel_const(self.as_raw_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -705,7 +705,7 @@ pub mod bgsegm {
 		fn get_min_val(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getMinVal_const(self.as_raw_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -715,7 +715,7 @@ pub mod bgsegm {
 		fn get_max_val(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getMaxVal_const(self.as_raw_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -744,7 +744,7 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorGMG(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -768,7 +768,7 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorGMG(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -778,7 +778,7 @@ pub mod bgsegm {
 		fn set_max_features(&mut self, max_features: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setMaxFeatures_int(self.as_raw_mut_BackgroundSubtractorGMG(), max_features, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -788,7 +788,7 @@ pub mod bgsegm {
 		fn set_default_learning_rate(&mut self, lr: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setDefaultLearningRate_double(self.as_raw_mut_BackgroundSubtractorGMG(), lr, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -798,7 +798,7 @@ pub mod bgsegm {
 		fn set_num_frames(&mut self, nframes: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setNumFrames_int(self.as_raw_mut_BackgroundSubtractorGMG(), nframes, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -808,7 +808,7 @@ pub mod bgsegm {
 		fn set_quantization_levels(&mut self, nlevels: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setQuantizationLevels_int(self.as_raw_mut_BackgroundSubtractorGMG(), nlevels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -818,7 +818,7 @@ pub mod bgsegm {
 		fn set_background_prior(&mut self, bgprior: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setBackgroundPrior_double(self.as_raw_mut_BackgroundSubtractorGMG(), bgprior, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -828,7 +828,7 @@ pub mod bgsegm {
 		fn set_smoothing_radius(&mut self, radius: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setSmoothingRadius_int(self.as_raw_mut_BackgroundSubtractorGMG(), radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -838,7 +838,7 @@ pub mod bgsegm {
 		fn set_decision_threshold(&mut self, thresh: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setDecisionThreshold_double(self.as_raw_mut_BackgroundSubtractorGMG(), thresh, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -848,7 +848,7 @@ pub mod bgsegm {
 		fn set_update_background_model(&mut self, update: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setUpdateBackgroundModel_bool(self.as_raw_mut_BackgroundSubtractorGMG(), update, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -858,7 +858,7 @@ pub mod bgsegm {
 		fn set_min_val(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setMinVal_double(self.as_raw_mut_BackgroundSubtractorGMG(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -868,7 +868,7 @@ pub mod bgsegm {
 		fn set_max_val(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setMaxVal_double(self.as_raw_mut_BackgroundSubtractorGMG(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -944,7 +944,7 @@ pub mod bgsegm {
 			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorGSOC(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -963,7 +963,7 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorGSOC(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -977,7 +977,7 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorGSOC(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1051,7 +1051,7 @@ pub mod bgsegm {
 			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorLSBP(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1070,7 +1070,7 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorLSBP(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1084,7 +1084,7 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorLSBP(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1163,7 +1163,7 @@ pub mod bgsegm {
 			output_array_arg!(local_svd_values);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_calcLocalSVDValues_const__OutputArrayR_const_MatR(local_svd_values.as_raw__OutputArray(), frame.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1173,7 +1173,7 @@ pub mod bgsegm {
 			output_array_arg!(desc);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_computeFromLocalSVDValues_const__OutputArrayR_const_MatR_const_Point2iX(desc.as_raw__OutputArray(), local_svd_values.as_raw_Mat(), lsbp_sample_points, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1183,7 +1183,7 @@ pub mod bgsegm {
 			output_array_arg!(desc);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_compute_const__OutputArrayR_const_MatR_const_Point2iX(desc.as_raw__OutputArray(), frame.as_raw_Mat(), lsbp_sample_points, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1254,7 +1254,7 @@ pub mod bgsegm {
 		fn get_history(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_getHistory_const(self.as_raw_BackgroundSubtractorMOG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1263,7 +1263,7 @@ pub mod bgsegm {
 		fn get_n_mixtures(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_getNMixtures_const(self.as_raw_BackgroundSubtractorMOG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1272,7 +1272,7 @@ pub mod bgsegm {
 		fn get_background_ratio(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_getBackgroundRatio_const(self.as_raw_BackgroundSubtractorMOG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1281,7 +1281,7 @@ pub mod bgsegm {
 		fn get_noise_sigma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_getNoiseSigma_const(self.as_raw_BackgroundSubtractorMOG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1296,7 +1296,7 @@ pub mod bgsegm {
 		fn set_history(&mut self, nframes: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setHistory_int(self.as_raw_mut_BackgroundSubtractorMOG(), nframes, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1305,7 +1305,7 @@ pub mod bgsegm {
 		fn set_n_mixtures(&mut self, nmix: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setNMixtures_int(self.as_raw_mut_BackgroundSubtractorMOG(), nmix, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1314,7 +1314,7 @@ pub mod bgsegm {
 		fn set_background_ratio(&mut self, background_ratio: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setBackgroundRatio_double(self.as_raw_mut_BackgroundSubtractorMOG(), background_ratio, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1323,7 +1323,7 @@ pub mod bgsegm {
 		fn set_noise_sigma(&mut self, noise_sigma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setNoiseSigma_double(self.as_raw_mut_BackgroundSubtractorMOG(), noise_sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1407,7 +1407,7 @@ pub mod bgsegm {
 			input_array_arg!(object);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_SyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::bgsegm::SyntheticSequenceGenerator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1436,7 +1436,7 @@ pub mod bgsegm {
 			output_array_arg!(gt_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_getNextFrame_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SyntheticSequenceGenerator(), frame.as_raw__OutputArray(), gt_mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

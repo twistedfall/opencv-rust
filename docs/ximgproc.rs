@@ -404,7 +404,7 @@ pub mod ximgproc {
 	pub fn bright_edges_def(_original: &mut impl core::MatTrait, _edgeview: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_BrightEdges_MatR_MatR(_original.as_raw_mut_Mat(), _edgeview.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -417,7 +417,7 @@ pub mod ximgproc {
 	pub fn bright_edges(_original: &mut impl core::MatTrait, _edgeview: &mut impl core::MatTrait, contrast: i32, shortrange: i32, longrange: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_BrightEdges_MatR_MatR_int_int_int(_original.as_raw_mut_Mat(), _edgeview.as_raw_mut_Mat(), contrast, shortrange, longrange, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -445,7 +445,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_FastHoughTransform_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dst_mat_depth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -472,7 +472,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_FastHoughTransform_const__InputArrayR_const__OutputArrayR_int_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dst_mat_depth, angle_range, op, make_skew, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -492,7 +492,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_GradientDericheX_const__InputArrayR_const__OutputArrayR_double_double(op.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, omega, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -512,7 +512,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_GradientDericheY_const__InputArrayR_const__OutputArrayR_double_double(op.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, omega, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -523,7 +523,7 @@ pub mod ximgproc {
 		output_array_arg!(_dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_GradientPaillouX_const__InputArrayR_const__OutputArrayR_double_double(op.as_raw__InputArray(), _dst.as_raw__OutputArray(), alpha, omega, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -545,7 +545,7 @@ pub mod ximgproc {
 		output_array_arg!(_dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_GradientPaillouY_const__InputArrayR_const__OutputArrayR_double_double(op.as_raw__InputArray(), _dst.as_raw__OutputArray(), alpha, omega, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -575,7 +575,7 @@ pub mod ximgproc {
 		input_array_arg!(src_img_info);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_HoughPoint2Line_const_PointR_const__InputArrayR(&hough_point, src_img_info.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -604,7 +604,7 @@ pub mod ximgproc {
 		input_array_arg!(src_img_info);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_HoughPoint2Line_const_PointR_const__InputArrayR_int_int_int(&hough_point, src_img_info.as_raw__InputArray(), angle_range, make_skew, rules, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -625,7 +625,7 @@ pub mod ximgproc {
 		input_array_arg!(i);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_PeiLinNormalization_const__InputArrayR(i.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -649,7 +649,7 @@ pub mod ximgproc {
 		output_array_arg!(t);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_PeiLinNormalization_const__InputArrayR_const__OutputArrayR(i.as_raw__InputArray(), t.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -685,7 +685,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_RadonTransform_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -720,7 +720,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_RadonTransform_const__InputArrayR_const__OutputArrayR_double_double_double_bool_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), theta, start_angle, end_angle, crop, norm, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -757,7 +757,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_amFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double(joint.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -793,7 +793,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_amFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool(joint.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r, adjust_outliers, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -824,7 +824,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_anisotropicDiffusion_const__InputArrayR_const__OutputArrayR_float_float_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, k, niters, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -861,7 +861,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_bilateralTextureFilter_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -897,7 +897,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_bilateralTextureFilter_const__InputArrayR_const__OutputArrayR_int_int_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), fr, num_iter, sigma_alpha, sigma_avg, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -915,7 +915,7 @@ pub mod ximgproc {
 		output_array_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_colorMatchTemplate_const__InputArrayR_const__InputArrayR_const__OutputArrayR(img.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -943,7 +943,7 @@ pub mod ximgproc {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_computeBadPixelPercent_const__InputArrayR_const__InputArrayR_Rect(gt.as_raw__InputArray(), src.as_raw__InputArray(), &roi, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -970,7 +970,7 @@ pub mod ximgproc {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_computeBadPixelPercent_const__InputArrayR_const__InputArrayR_Rect_int(gt.as_raw__InputArray(), src.as_raw__InputArray(), &roi, thresh, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -991,7 +991,7 @@ pub mod ximgproc {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_computeMSE_const__InputArrayR_const__InputArrayR_Rect(gt.as_raw__InputArray(), src.as_raw__InputArray(), &roi, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1008,7 +1008,7 @@ pub mod ximgproc {
 		output_array_arg!(out);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_contourSampling_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), out.as_raw__OutputArray(), nb_elt, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1033,7 +1033,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_covarianceEstimation_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), window_rows, window_cols, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1063,7 +1063,7 @@ pub mod ximgproc {
 	pub fn create_am_filter_def(sigma_s: f64, sigma_r: f64) -> Result<core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createAMFilter_double_double(sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::AdaptiveManifoldFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1093,7 +1093,7 @@ pub mod ximgproc {
 	pub fn create_am_filter(sigma_s: f64, sigma_r: f64, adjust_outliers: bool) -> Result<core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createAMFilter_double_double_bool(sigma_s, sigma_r, adjust_outliers, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::AdaptiveManifoldFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1113,7 +1113,7 @@ pub mod ximgproc {
 	pub fn create_contour_fitting_def() -> Result<core::Ptr<crate::ximgproc::ContourFitting>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createContourFitting(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::ContourFitting>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1132,7 +1132,7 @@ pub mod ximgproc {
 	pub fn create_contour_fitting(ctr: i32, fd: i32) -> Result<core::Ptr<crate::ximgproc::ContourFitting>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createContourFitting_int_int(ctr, fd, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::ContourFitting>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1167,7 +1167,7 @@ pub mod ximgproc {
 		input_array_arg!(guide);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createDTFilter_const__InputArrayR_double_double(guide.as_raw__InputArray(), sigma_spatial, sigma_color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::DTFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1201,7 +1201,7 @@ pub mod ximgproc {
 		input_array_arg!(guide);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createDTFilter_const__InputArrayR_double_double_int_int(guide.as_raw__InputArray(), sigma_spatial, sigma_color, mode, num_iters, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::DTFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1218,7 +1218,7 @@ pub mod ximgproc {
 	pub fn create_disparity_wls_filter_generic(use_confidence: bool) -> Result<core::Ptr<crate::ximgproc::DisparityWLSFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createDisparityWLSFilterGeneric_bool(use_confidence, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::DisparityWLSFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1233,7 +1233,7 @@ pub mod ximgproc {
 	pub fn create_disparity_wls_filter(mut matcher_left: core::Ptr<crate::calib3d::StereoMatcher>) -> Result<core::Ptr<crate::ximgproc::DisparityWLSFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createDisparityWLSFilter_PtrLStereoMatcherG(matcher_left.as_raw_mut_PtrOfStereoMatcher(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::DisparityWLSFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1245,7 +1245,7 @@ pub mod ximgproc {
 	pub fn create_edge_aware_interpolator() -> Result<core::Ptr<crate::ximgproc::EdgeAwareInterpolator>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createEdgeAwareInterpolator(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::EdgeAwareInterpolator>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1285,7 +1285,7 @@ pub mod ximgproc {
 	pub fn create_edge_boxes_def() -> Result<core::Ptr<crate::ximgproc::EdgeBoxes>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createEdgeBoxes(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::EdgeBoxes>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1324,7 +1324,7 @@ pub mod ximgproc {
 	pub fn create_edge_boxes(alpha: f32, beta: f32, eta: f32, min_score: f32, max_boxes: i32, edge_min_mag: f32, edge_merge_thr: f32, cluster_min_mag: f32, max_aspect_ratio: f32, min_box_area: f32, gamma: f32, kappa: f32) -> Result<core::Ptr<crate::ximgproc::EdgeBoxes>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createEdgeBoxes_float_float_float_float_int_float_float_float_float_float_float_float(alpha, beta, eta, min_score, max_boxes, edge_min_mag, edge_merge_thr, cluster_min_mag, max_aspect_ratio, min_box_area, gamma, kappa, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::EdgeBoxes>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1335,7 +1335,7 @@ pub mod ximgproc {
 	pub fn create_edge_drawing() -> Result<core::Ptr<crate::ximgproc::EdgeDrawing>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createEdgeDrawing(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::EdgeDrawing>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1370,7 +1370,7 @@ pub mod ximgproc {
 		input_array_arg!(guide);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createFastBilateralSolverFilter_const__InputArrayR_double_double_double(guide.as_raw__InputArray(), sigma_spatial, sigma_luma, sigma_chroma, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::FastBilateralSolverFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1404,7 +1404,7 @@ pub mod ximgproc {
 		input_array_arg!(guide);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createFastBilateralSolverFilter_const__InputArrayR_double_double_double_double_int_double(guide.as_raw__InputArray(), sigma_spatial, sigma_luma, sigma_chroma, lambda, num_iter, max_tol, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::FastBilateralSolverFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1440,7 +1440,7 @@ pub mod ximgproc {
 		input_array_arg!(guide);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createFastGlobalSmootherFilter_const__InputArrayR_double_double(guide.as_raw__InputArray(), lambda, sigma_color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::FastGlobalSmootherFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1475,7 +1475,7 @@ pub mod ximgproc {
 		input_array_arg!(guide);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createFastGlobalSmootherFilter_const__InputArrayR_double_double_double_int(guide.as_raw__InputArray(), lambda, sigma_color, lambda_attenuation, num_iter, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::FastGlobalSmootherFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1505,7 +1505,7 @@ pub mod ximgproc {
 	pub fn create_fast_line_detector_def() -> Result<core::Ptr<crate::ximgproc::FastLineDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createFastLineDetector(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::FastLineDetector>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1534,7 +1534,7 @@ pub mod ximgproc {
 	pub fn create_fast_line_detector(length_threshold: i32, distance_threshold: f32, canny_th1: f64, canny_th2: f64, canny_aperture_size: i32, do_merge: bool) -> Result<core::Ptr<crate::ximgproc::FastLineDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createFastLineDetector_int_float_double_double_int_bool(length_threshold, distance_threshold, canny_th1, canny_th2, canny_aperture_size, do_merge, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::FastLineDetector>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1564,7 +1564,7 @@ pub mod ximgproc {
 		input_array_arg!(guide);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createGuidedFilter_const__InputArrayR_int_double(guide.as_raw__InputArray(), radius, eps, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::GuidedFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1593,7 +1593,7 @@ pub mod ximgproc {
 		input_array_arg!(guide);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createGuidedFilter_const__InputArrayR_int_double_double(guide.as_raw__InputArray(), radius, eps, scale, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::GuidedFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1610,7 +1610,7 @@ pub mod ximgproc {
 		output_array_arg!(qimg);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createQuaternionImage_const__InputArrayR_const__OutputArrayR(img.as_raw__InputArray(), qimg.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1619,7 +1619,7 @@ pub mod ximgproc {
 	pub fn create_rf_feature_getter() -> Result<core::Ptr<crate::ximgproc::RFFeatureGetter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createRFFeatureGetter(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::RFFeatureGetter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1631,7 +1631,7 @@ pub mod ximgproc {
 	pub fn create_ric_interpolator() -> Result<core::Ptr<crate::ximgproc::RICInterpolator>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createRICInterpolator(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::RICInterpolator>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1646,7 +1646,7 @@ pub mod ximgproc {
 	pub fn create_right_matcher(mut matcher_left: core::Ptr<crate::calib3d::StereoMatcher>) -> Result<core::Ptr<crate::calib3d::StereoMatcher>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createRightMatcher_PtrLStereoMatcherG(matcher_left.as_raw_mut_PtrOfStereoMatcher(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::calib3d::StereoMatcher>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1677,7 +1677,7 @@ pub mod ximgproc {
 	pub fn create_scan_segment_def(image_width: i32, image_height: i32, num_superpixels: i32) -> Result<core::Ptr<crate::ximgproc::ScanSegment>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createScanSegment_int_int_int(image_width, image_height, num_superpixels, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::ScanSegment>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1707,7 +1707,7 @@ pub mod ximgproc {
 	pub fn create_scan_segment(image_width: i32, image_height: i32, num_superpixels: i32, slices: i32, merge_small: bool) -> Result<core::Ptr<crate::ximgproc::ScanSegment>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createScanSegment_int_int_int_int_bool(image_width, image_height, num_superpixels, slices, merge_small, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::ScanSegment>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1729,7 +1729,7 @@ pub mod ximgproc {
 		extern_container_arg!(model);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1748,10 +1748,10 @@ pub mod ximgproc {
 	#[inline]
 	pub fn create_structured_edge_detection(model: &str, how_to_get_features: Option<core::Ptr<crate::ximgproc::RFFeatureGetter>>) -> Result<core::Ptr<crate::ximgproc::StructuredEdgeDetection>> {
 		extern_container_arg!(model);
-		smart_ptr_option_arg!(unsafe how_to_get_features);
+		smart_ptr_option_arg!(how_to_get_features);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_PtrLconst_RFFeatureGetterG(model.opencv_as_extern(), how_to_get_features.as_raw_PtrOfRFFeatureGetter(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1781,7 +1781,7 @@ pub mod ximgproc {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createSuperpixelLSC_const__InputArrayR(image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SuperpixelLSC>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1810,7 +1810,7 @@ pub mod ximgproc {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createSuperpixelLSC_const__InputArrayR_int_float(image.as_raw__InputArray(), region_size, ratio, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SuperpixelLSC>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1855,7 +1855,7 @@ pub mod ximgproc {
 	pub fn create_superpixel_seeds_def(image_width: i32, image_height: i32, image_channels: i32, num_superpixels: i32, num_levels: i32) -> Result<core::Ptr<crate::ximgproc::SuperpixelSEEDS>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createSuperpixelSEEDS_int_int_int_int_int(image_width, image_height, image_channels, num_superpixels, num_levels, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SuperpixelSEEDS>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1899,7 +1899,7 @@ pub mod ximgproc {
 	pub fn create_superpixel_seeds(image_width: i32, image_height: i32, image_channels: i32, num_superpixels: i32, num_levels: i32, prior: i32, histogram_bins: i32, double_step: bool) -> Result<core::Ptr<crate::ximgproc::SuperpixelSEEDS>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createSuperpixelSEEDS_int_int_int_int_int_int_int_bool(image_width, image_height, image_channels, num_superpixels, num_levels, prior, histogram_bins, double_step, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SuperpixelSEEDS>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1933,7 +1933,7 @@ pub mod ximgproc {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createSuperpixelSLIC_const__InputArrayR(image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SuperpixelSLIC>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1966,7 +1966,7 @@ pub mod ximgproc {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_createSuperpixelSLIC_const__InputArrayR_int_int_float(image.as_raw__InputArray(), algorithm, region_size, ruler, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SuperpixelSLIC>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -2001,7 +2001,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_dtFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double(guide.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_spatial, sigma_color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2034,7 +2034,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_dtFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_int_int(guide.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_spatial, sigma_color, mode, num_iters, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2056,7 +2056,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_edgePreservingFilter_const__InputArrayR_const__OutputArrayR_int_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), d, threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2106,7 +2106,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_fastBilateralSolverFilter_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(guide.as_raw__InputArray(), src.as_raw__InputArray(), confidence.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2155,7 +2155,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_fastBilateralSolverFilter_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_double_double_int_double(guide.as_raw__InputArray(), src.as_raw__InputArray(), confidence.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_spatial, sigma_luma, sigma_chroma, lambda, num_iter, max_tol, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2190,7 +2190,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_fastGlobalSmootherFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double(guide.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), lambda, sigma_color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2224,7 +2224,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_fastGlobalSmootherFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_double_int(guide.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), lambda, sigma_color, lambda_attenuation, num_iter, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2254,7 +2254,7 @@ pub mod ximgproc {
 		output_array_arg!(ellipses);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_findEllipses_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), ellipses.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2283,7 +2283,7 @@ pub mod ximgproc {
 		output_array_arg!(ellipses);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_findEllipses_const__InputArrayR_const__OutputArrayR_float_float_float(image.as_raw__InputArray(), ellipses.as_raw__OutputArray(), score_threshold, reliability_threshold, center_distance_threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2308,7 +2308,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_fourierDescriptor_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2332,7 +2332,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_fourierDescriptor_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), nb_elt, nb_fd, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2355,7 +2355,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_getDisparityVis_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2377,7 +2377,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_getDisparityVis_const__InputArrayR_const__OutputArrayR_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2418,7 +2418,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_guidedFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double(guide.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), radius, eps, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2458,7 +2458,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_guidedFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_int_double(guide.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), radius, eps, d_depth, scale, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2502,7 +2502,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_jointBilateralFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double(joint.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), d, sigma_color, sigma_space, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2545,7 +2545,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_jointBilateralFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double_int(joint.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), d, sigma_color, sigma_space, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2573,7 +2573,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_l0Smooth_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2600,7 +2600,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_l0Smooth_const__InputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), lambda, kappa, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2649,7 +2649,7 @@ pub mod ximgproc {
 		output_array_arg!(_dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_niBlackThreshold_const__InputArrayR_const__OutputArrayR_double_int_int_double(_src.as_raw__InputArray(), _dst.as_raw__OutputArray(), max_value, typ, block_size, k, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2697,7 +2697,7 @@ pub mod ximgproc {
 		output_array_arg!(_dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_niBlackThreshold_const__InputArrayR_const__OutputArrayR_double_int_int_double_int_double(_src.as_raw__InputArray(), _dst.as_raw__OutputArray(), max_value, typ, block_size, k, binarization_method, r, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2713,7 +2713,7 @@ pub mod ximgproc {
 		output_array_arg!(qcimg);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_qconj_const__InputArrayR_const__OutputArrayR(qimg.as_raw__InputArray(), qcimg.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2731,7 +2731,7 @@ pub mod ximgproc {
 		output_array_arg!(qimg);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_qdft_const__InputArrayR_const__OutputArrayR_int_bool(img.as_raw__InputArray(), qimg.as_raw__OutputArray(), flags, side_left, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2749,7 +2749,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_qmultiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2765,7 +2765,7 @@ pub mod ximgproc {
 		output_array_arg!(qnimg);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_qunitary_const__InputArrayR_const__OutputArrayR(qimg.as_raw__InputArray(), qnimg.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2785,7 +2785,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_readGT_String_const__OutputArrayR(src_path.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2806,7 +2806,7 @@ pub mod ximgproc {
 		output_array_arg!(res);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_createRLEImage_const_vectorLPoint3iGR_const__OutputArrayR(runs.as_raw_VectorOfPoint3i(), res.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2826,7 +2826,7 @@ pub mod ximgproc {
 		output_array_arg!(res);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_createRLEImage_const_vectorLPoint3iGR_const__OutputArrayR_Size(runs.as_raw_VectorOfPoint3i(), res.as_raw__OutputArray(), &size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2851,7 +2851,7 @@ pub mod ximgproc {
 		input_array_arg!(rl_kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), rl_kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2875,7 +2875,7 @@ pub mod ximgproc {
 		input_array_arg!(rl_kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), rl_kernel.as_raw__InputArray(), &anchor, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2903,7 +2903,7 @@ pub mod ximgproc {
 		input_array_arg!(rl_kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), rl_kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2930,7 +2930,7 @@ pub mod ximgproc {
 		input_array_arg!(rl_kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR_bool_Point(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), rl_kernel.as_raw__InputArray(), b_boundary_on, &anchor, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2945,7 +2945,7 @@ pub mod ximgproc {
 	pub fn get_structuring_element(shape: i32, ksize: core::Size) -> Result<core::Mat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_getStructuringElement_int_Size(shape, &ksize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -2961,7 +2961,7 @@ pub mod ximgproc {
 		input_array_arg!(rl_structuring_element);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_isRLMorphologyPossible_const__InputArrayR(rl_structuring_element.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -2990,7 +2990,7 @@ pub mod ximgproc {
 		input_array_arg!(rl_kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), op, rl_kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3018,7 +3018,7 @@ pub mod ximgproc {
 		input_array_arg!(rl_kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_bool_Point(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), op, rl_kernel.as_raw__InputArray(), b_boundary_on_for_erosion, &anchor, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3036,7 +3036,7 @@ pub mod ximgproc {
 		input_array_arg!(rl_src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_paint_const__InputOutputArrayR_const__InputArrayR_const_ScalarR(image.as_raw__InputOutputArray(), rl_src.as_raw__InputArray(), &value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3055,7 +3055,7 @@ pub mod ximgproc {
 		output_array_arg!(rl_dest);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_threshold_const__InputArrayR_const__OutputArrayR_double_int(src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), thresh, typ, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3103,7 +3103,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rollingGuidanceFilter_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3150,7 +3150,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rollingGuidanceFilter_const__InputArrayR_const__OutputArrayR_int_double_double_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), d, sigma_color, sigma_space, num_of_iter, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3170,7 +3170,7 @@ pub mod ximgproc {
 	pub fn create_graph_segmentation_def() -> Result<core::Ptr<crate::ximgproc::GraphSegmentation>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createGraphSegmentation(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::GraphSegmentation>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3190,7 +3190,7 @@ pub mod ximgproc {
 	pub fn create_graph_segmentation(sigma: f64, k: f32, min_size: i32) -> Result<core::Ptr<crate::ximgproc::GraphSegmentation>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createGraphSegmentation_double_float_int(sigma, k, min_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::GraphSegmentation>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3201,7 +3201,7 @@ pub mod ximgproc {
 	pub fn create_selective_search_segmentation() -> Result<core::Ptr<crate::ximgproc::SelectiveSearchSegmentation>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentation(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SelectiveSearchSegmentation>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3212,7 +3212,7 @@ pub mod ximgproc {
 	pub fn create_selective_search_segmentation_strategy_color() -> Result<core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyColor(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SelectiveSearchSegmentationStrategyColor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3223,7 +3223,7 @@ pub mod ximgproc {
 	pub fn create_selective_search_segmentation_strategy_fill() -> Result<core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyFill(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SelectiveSearchSegmentationStrategyFill>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3234,7 +3234,7 @@ pub mod ximgproc {
 	pub fn create_selective_search_segmentation_strategy_multiple() -> Result<core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3247,7 +3247,7 @@ pub mod ximgproc {
 	pub fn create_selective_search_segmentation_strategy_multiple_1(mut s1: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_PtrLSelectiveSearchSegmentationStrategyG(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3261,7 +3261,7 @@ pub mod ximgproc {
 	pub fn create_selective_search_segmentation_strategy_multiple_2(mut s1: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3276,7 +3276,7 @@ pub mod ximgproc {
 	pub fn create_selective_search_segmentation_strategy_multiple_3(mut s1: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s3: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s3.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3292,7 +3292,7 @@ pub mod ximgproc {
 	pub fn create_selective_search_segmentation_strategy_multiple_4(mut s1: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s3: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s4: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s3.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s4.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3303,7 +3303,7 @@ pub mod ximgproc {
 	pub fn create_selective_search_segmentation_strategy_size() -> Result<core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategySize(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SelectiveSearchSegmentationStrategySize>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3314,7 +3314,7 @@ pub mod ximgproc {
 	pub fn create_selective_search_segmentation_strategy_texture() -> Result<core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyTexture(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -3338,7 +3338,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_thinning_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3360,7 +3360,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_thinning_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), thinning_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3383,7 +3383,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_transformFD_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), t.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3405,7 +3405,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_transformFD_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(src.as_raw__InputArray(), t.as_raw__InputArray(), dst.as_raw__OutputArray(), fd_contour, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3438,7 +3438,7 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_weightedMedianFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(joint.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), r, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3471,7 +3471,7 @@ pub mod ximgproc {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_weightedMedianFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_int_const__InputArrayR(joint.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), r, sigma, weight_type, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -3513,7 +3513,7 @@ pub mod ximgproc {
 		pub fn create() -> Result<core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ximgproc::AdaptiveManifoldFilter>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3531,7 +3531,7 @@ pub mod ximgproc {
 		fn get_sigma_s(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getSigmaS_const(self.as_raw_AdaptiveManifoldFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3542,7 +3542,7 @@ pub mod ximgproc {
 		fn get_sigma_r(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getSigmaR_const(self.as_raw_AdaptiveManifoldFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3553,7 +3553,7 @@ pub mod ximgproc {
 		fn get_tree_height(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getTreeHeight_const(self.as_raw_AdaptiveManifoldFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3564,7 +3564,7 @@ pub mod ximgproc {
 		fn get_pca_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getPCAIterations_const(self.as_raw_AdaptiveManifoldFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3575,7 +3575,7 @@ pub mod ximgproc {
 		fn get_adjust_outliers(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getAdjustOutliers_const(self.as_raw_AdaptiveManifoldFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3586,7 +3586,7 @@ pub mod ximgproc {
 		fn get_use_rng(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_getUseRNG_const(self.as_raw_AdaptiveManifoldFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3615,7 +3615,7 @@ pub mod ximgproc {
 			input_array_arg!(joint);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_filter_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_AdaptiveManifoldFilter(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), joint.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3638,7 +3638,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_filter_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_AdaptiveManifoldFilter(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3647,7 +3647,7 @@ pub mod ximgproc {
 		fn collect_garbage(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_collectGarbage(self.as_raw_mut_AdaptiveManifoldFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3658,7 +3658,7 @@ pub mod ximgproc {
 		fn set_sigma_s(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_setSigmaS_double(self.as_raw_mut_AdaptiveManifoldFilter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3669,7 +3669,7 @@ pub mod ximgproc {
 		fn set_sigma_r(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_setSigmaR_double(self.as_raw_mut_AdaptiveManifoldFilter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3680,7 +3680,7 @@ pub mod ximgproc {
 		fn set_tree_height(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_setTreeHeight_int(self.as_raw_mut_AdaptiveManifoldFilter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3691,7 +3691,7 @@ pub mod ximgproc {
 		fn set_pca_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_setPCAIterations_int(self.as_raw_mut_AdaptiveManifoldFilter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3702,7 +3702,7 @@ pub mod ximgproc {
 		fn set_adjust_outliers(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_setAdjustOutliers_bool(self.as_raw_mut_AdaptiveManifoldFilter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3713,7 +3713,7 @@ pub mod ximgproc {
 		fn set_use_rng(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_setUseRNG_bool(self.as_raw_mut_AdaptiveManifoldFilter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3794,7 +3794,7 @@ pub mod ximgproc {
 		pub fn new(ctr: i32, fd: i32) -> Result<crate::ximgproc::ContourFitting> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_ContourFitting_int_int(ctr, fd, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ximgproc::ContourFitting::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3814,7 +3814,7 @@ pub mod ximgproc {
 		pub fn new_def() -> Result<crate::ximgproc::ContourFitting> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_ContourFitting(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ximgproc::ContourFitting::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3851,7 +3851,7 @@ pub mod ximgproc {
 			output_array_arg!(alpha_phi_st);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_estimateTransformation_const__InputArrayR_const__InputArrayR_const__OutputArrayR_doubleX_bool(self.as_raw_mut_ContourFitting(), src.as_raw__InputArray(), dst.as_raw__InputArray(), alpha_phi_st.as_raw__OutputArray(), dist, fd_contour, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3876,7 +3876,7 @@ pub mod ximgproc {
 			output_array_arg!(alpha_phi_st);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_estimateTransformation_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ContourFitting(), src.as_raw__InputArray(), dst.as_raw__InputArray(), alpha_phi_st.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3899,7 +3899,7 @@ pub mod ximgproc {
 			output_array_arg!(alpha_phi_st);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_estimateTransformation_const__InputArrayR_const__InputArrayR_const__OutputArrayR_doubleR_bool(self.as_raw_mut_ContourFitting(), src.as_raw__InputArray(), dst.as_raw__InputArray(), alpha_phi_st.as_raw__OutputArray(), dist, fd_contour, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3923,7 +3923,7 @@ pub mod ximgproc {
 			output_array_arg!(alpha_phi_st);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_estimateTransformation_const__InputArrayR_const__InputArrayR_const__OutputArrayR_doubleR(self.as_raw_mut_ContourFitting(), src.as_raw__InputArray(), dst.as_raw__InputArray(), alpha_phi_st.as_raw__OutputArray(), dist, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3936,7 +3936,7 @@ pub mod ximgproc {
 		fn set_ctr_size(&mut self, n: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_setCtrSize_int(self.as_raw_mut_ContourFitting(), n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3949,7 +3949,7 @@ pub mod ximgproc {
 		fn set_fd_size(&mut self, n: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_setFDSize_int(self.as_raw_mut_ContourFitting(), n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3960,7 +3960,7 @@ pub mod ximgproc {
 		fn get_ctr_size(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_getCtrSize(self.as_raw_mut_ContourFitting(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3971,7 +3971,7 @@ pub mod ximgproc {
 		fn get_fd_size(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_getFDSize(self.as_raw_mut_ContourFitting(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4054,7 +4054,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DTFilter_filter_const__InputArrayR_const__OutputArrayR_int(self.as_raw_mut_DTFilter(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), d_depth, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4078,7 +4078,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DTFilter_filter_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DTFilter(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4174,7 +4174,7 @@ pub mod ximgproc {
 			input_array_arg!(right_view);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Rect_const__InputArrayR(self.as_raw_mut_DisparityFilter(), disparity_map_left.as_raw__InputArray(), left_view.as_raw__InputArray(), filtered_disparity_map.as_raw__OutputArray(), disparity_map_right.as_raw__InputArray(), &roi, right_view.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4211,7 +4211,7 @@ pub mod ximgproc {
 			output_array_arg!(filtered_disparity_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DisparityFilter(), disparity_map_left.as_raw__InputArray(), left_view.as_raw__InputArray(), filtered_disparity_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4284,7 +4284,7 @@ pub mod ximgproc {
 		fn get_lambda(&mut self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityWLSFilter_getLambda(self.as_raw_mut_DisparityWLSFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4295,7 +4295,7 @@ pub mod ximgproc {
 		fn set_lambda(&mut self, _lambda: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityWLSFilter_setLambda_double(self.as_raw_mut_DisparityWLSFilter(), _lambda, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4307,7 +4307,7 @@ pub mod ximgproc {
 		fn get_sigma_color(&mut self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityWLSFilter_getSigmaColor(self.as_raw_mut_DisparityWLSFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4318,7 +4318,7 @@ pub mod ximgproc {
 		fn set_sigma_color(&mut self, _sigma_color: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityWLSFilter_setSigmaColor_double(self.as_raw_mut_DisparityWLSFilter(), _sigma_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4329,7 +4329,7 @@ pub mod ximgproc {
 		fn get_lr_cthresh(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityWLSFilter_getLRCthresh(self.as_raw_mut_DisparityWLSFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4340,7 +4340,7 @@ pub mod ximgproc {
 		fn set_lr_cthresh(&mut self, _lrc_thresh: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityWLSFilter_setLRCthresh_int(self.as_raw_mut_DisparityWLSFilter(), _lrc_thresh, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4351,7 +4351,7 @@ pub mod ximgproc {
 		fn get_depth_discontinuity_radius(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityWLSFilter_getDepthDiscontinuityRadius(self.as_raw_mut_DisparityWLSFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4362,7 +4362,7 @@ pub mod ximgproc {
 		fn set_depth_discontinuity_radius(&mut self, _disc_radius: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityWLSFilter_setDepthDiscontinuityRadius_int(self.as_raw_mut_DisparityWLSFilter(), _disc_radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4374,7 +4374,7 @@ pub mod ximgproc {
 		fn get_confidence_map(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityWLSFilter_getConfidenceMap(self.as_raw_mut_DisparityWLSFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4385,7 +4385,7 @@ pub mod ximgproc {
 		fn get_roi(&mut self) -> Result<core::Rect> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityWLSFilter_getROI(self.as_raw_mut_DisparityWLSFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4474,7 +4474,7 @@ pub mod ximgproc {
 		fn set_cost_map(&mut self, _cost_map: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_setCostMap_const_MatR(self.as_raw_mut_EdgeAwareInterpolator(), _cost_map.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4490,7 +4490,7 @@ pub mod ximgproc {
 		fn set_k(&mut self, _k: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_setK_int(self.as_raw_mut_EdgeAwareInterpolator(), _k, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4501,7 +4501,7 @@ pub mod ximgproc {
 		fn get_k(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_getK(self.as_raw_mut_EdgeAwareInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4513,7 +4513,7 @@ pub mod ximgproc {
 		fn set_sigma(&mut self, _sigma: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_setSigma_float(self.as_raw_mut_EdgeAwareInterpolator(), _sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4524,7 +4524,7 @@ pub mod ximgproc {
 		fn get_sigma(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_getSigma(self.as_raw_mut_EdgeAwareInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4535,7 +4535,7 @@ pub mod ximgproc {
 		fn set_lambda(&mut self, _lambda: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_setLambda_float(self.as_raw_mut_EdgeAwareInterpolator(), _lambda, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4546,7 +4546,7 @@ pub mod ximgproc {
 		fn get_lambda(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_getLambda(self.as_raw_mut_EdgeAwareInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4557,7 +4557,7 @@ pub mod ximgproc {
 		fn set_use_post_processing(&mut self, _use_post_proc: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_setUsePostProcessing_bool(self.as_raw_mut_EdgeAwareInterpolator(), _use_post_proc, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4568,7 +4568,7 @@ pub mod ximgproc {
 		fn get_use_post_processing(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_getUsePostProcessing(self.as_raw_mut_EdgeAwareInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4578,7 +4578,7 @@ pub mod ximgproc {
 		fn set_fgs_lambda(&mut self, _lambda: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_setFGSLambda_float(self.as_raw_mut_EdgeAwareInterpolator(), _lambda, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4589,7 +4589,7 @@ pub mod ximgproc {
 		fn get_fgs_lambda(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_getFGSLambda(self.as_raw_mut_EdgeAwareInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4600,7 +4600,7 @@ pub mod ximgproc {
 		fn set_fgs_sigma(&mut self, _sigma: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_setFGSSigma_float(self.as_raw_mut_EdgeAwareInterpolator(), _sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4611,7 +4611,7 @@ pub mod ximgproc {
 		fn get_fgs_sigma(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_getFGSSigma(self.as_raw_mut_EdgeAwareInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4685,7 +4685,7 @@ pub mod ximgproc {
 		fn get_alpha(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getAlpha_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4695,7 +4695,7 @@ pub mod ximgproc {
 		fn get_beta(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getBeta_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4705,7 +4705,7 @@ pub mod ximgproc {
 		fn get_eta(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getEta_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4715,7 +4715,7 @@ pub mod ximgproc {
 		fn get_min_score(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getMinScore_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4725,7 +4725,7 @@ pub mod ximgproc {
 		fn get_max_boxes(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getMaxBoxes_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4735,7 +4735,7 @@ pub mod ximgproc {
 		fn get_edge_min_mag(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getEdgeMinMag_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4745,7 +4745,7 @@ pub mod ximgproc {
 		fn get_edge_merge_thr(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getEdgeMergeThr_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4755,7 +4755,7 @@ pub mod ximgproc {
 		fn get_cluster_min_mag(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getClusterMinMag_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4765,7 +4765,7 @@ pub mod ximgproc {
 		fn get_max_aspect_ratio(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getMaxAspectRatio_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4775,7 +4775,7 @@ pub mod ximgproc {
 		fn get_min_box_area(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getMinBoxArea_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4785,7 +4785,7 @@ pub mod ximgproc {
 		fn get_gamma(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getGamma_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4795,7 +4795,7 @@ pub mod ximgproc {
 		fn get_kappa(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getKappa_const(self.as_raw_EdgeBoxes(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4823,7 +4823,7 @@ pub mod ximgproc {
 			output_array_arg!(scores);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getBoundingBoxes_const__InputArrayR_const__InputArrayR_vectorLRectGR_const__OutputArrayR(self.as_raw_mut_EdgeBoxes(), edge_map.as_raw__InputArray(), orientation_map.as_raw__InputArray(), boxes.as_raw_mut_VectorOfRect(), scores.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4845,7 +4845,7 @@ pub mod ximgproc {
 			input_array_arg!(orientation_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_getBoundingBoxes_const__InputArrayR_const__InputArrayR_vectorLRectGR(self.as_raw_mut_EdgeBoxes(), edge_map.as_raw__InputArray(), orientation_map.as_raw__InputArray(), boxes.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4855,7 +4855,7 @@ pub mod ximgproc {
 		fn set_alpha(&mut self, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setAlpha_float(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4865,7 +4865,7 @@ pub mod ximgproc {
 		fn set_beta(&mut self, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setBeta_float(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4875,7 +4875,7 @@ pub mod ximgproc {
 		fn set_eta(&mut self, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setEta_float(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4885,7 +4885,7 @@ pub mod ximgproc {
 		fn set_min_score(&mut self, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setMinScore_float(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4895,7 +4895,7 @@ pub mod ximgproc {
 		fn set_max_boxes(&mut self, value: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setMaxBoxes_int(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4905,7 +4905,7 @@ pub mod ximgproc {
 		fn set_edge_min_mag(&mut self, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setEdgeMinMag_float(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4915,7 +4915,7 @@ pub mod ximgproc {
 		fn set_edge_merge_thr(&mut self, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setEdgeMergeThr_float(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4925,7 +4925,7 @@ pub mod ximgproc {
 		fn set_cluster_min_mag(&mut self, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setClusterMinMag_float(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4935,7 +4935,7 @@ pub mod ximgproc {
 		fn set_max_aspect_ratio(&mut self, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setMaxAspectRatio_float(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4945,7 +4945,7 @@ pub mod ximgproc {
 		fn set_min_box_area(&mut self, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setMinBoxArea_float(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4955,7 +4955,7 @@ pub mod ximgproc {
 		fn set_gamma(&mut self, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setGamma_float(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4965,7 +4965,7 @@ pub mod ximgproc {
 		fn set_kappa(&mut self, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeBoxes_setKappa_float(self.as_raw_mut_EdgeBoxes(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5026,7 +5026,7 @@ pub mod ximgproc {
 		fn params(&self) -> crate::ximgproc::EdgeDrawing_Params {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_propParams_const(self.as_raw_EdgeDrawing(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -5035,7 +5035,7 @@ pub mod ximgproc {
 		fn get_segment_indices_of_lines(&self) -> Result<core::Vector<i32>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_getSegmentIndicesOfLines_const(self.as_raw_EdgeDrawing(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5062,7 +5062,7 @@ pub mod ximgproc {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_detectEdges_const__InputArrayR(self.as_raw_mut_EdgeDrawing(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5076,7 +5076,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_getEdgeImage_const__OutputArrayR(self.as_raw_mut_EdgeDrawing(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5090,7 +5090,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_getGradientImage_const__OutputArrayR(self.as_raw_mut_EdgeDrawing(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5100,7 +5100,7 @@ pub mod ximgproc {
 		fn get_segments(&mut self) -> Result<core::Vector<core::Vector<core::Point>>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_getSegments(self.as_raw_mut_EdgeDrawing(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Vector<core::Point>>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5117,7 +5117,7 @@ pub mod ximgproc {
 			output_array_arg!(lines);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_detectLines_const__OutputArrayR(self.as_raw_mut_EdgeDrawing(), lines.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5133,7 +5133,7 @@ pub mod ximgproc {
 			output_array_arg!(ellipses);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_detectEllipses_const__OutputArrayR(self.as_raw_mut_EdgeDrawing(), ellipses.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5147,7 +5147,7 @@ pub mod ximgproc {
 		fn set_params_1(&mut self, parameters: crate::ximgproc::EdgeDrawing_Params) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_setParams_const_ParamsR(self.as_raw_mut_EdgeDrawing(), &parameters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5227,7 +5227,7 @@ pub mod ximgproc {
 		pub fn write(self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_Params_write_const_FileStorageR(&self, fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5236,7 +5236,7 @@ pub mod ximgproc {
 		pub fn default() -> Result<crate::ximgproc::EdgeDrawing_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5245,7 +5245,7 @@ pub mod ximgproc {
 		pub fn read(self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_EdgeDrawing_Params_read_const_FileNodeR(&self, fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5298,7 +5298,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_FastBilateralSolverFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_FastBilateralSolverFilter(), src.as_raw__InputArray(), confidence.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5375,7 +5375,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_FastGlobalSmootherFilter_filter_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_FastGlobalSmootherFilter(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5461,7 +5461,7 @@ pub mod ximgproc {
 			output_array_arg!(lines);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_FastLineDetector_detect_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_FastLineDetector(), image.as_raw__InputArray(), lines.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5485,7 +5485,7 @@ pub mod ximgproc {
 			input_array_arg!(lines);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_FastLineDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR_bool_Scalar_int(self.as_raw_mut_FastLineDetector(), image.as_raw__InputOutputArray(), lines.as_raw__InputArray(), draw_arrow, &linecolor, linethickness, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5510,7 +5510,7 @@ pub mod ximgproc {
 			input_array_arg!(lines);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_FastLineDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR(self.as_raw_mut_FastLineDetector(), image.as_raw__InputOutputArray(), lines.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5593,7 +5593,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_GuidedFilter_filter_const__InputArrayR_const__OutputArrayR_int(self.as_raw_mut_GuidedFilter(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), d_depth, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5617,7 +5617,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_GuidedFilter_filter_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_GuidedFilter(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5692,7 +5692,7 @@ pub mod ximgproc {
 		fn get_features(&self, src: &impl core::MatTraitConst, features: &mut impl core::MatTrait, gnrm_rad: i32, gsmth_rad: i32, shrink: i32, out_num: i32, grad_num: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RFFeatureGetter_getFeatures_const_const_MatR_MatR_const_int_const_int_const_int_const_int_const_int(self.as_raw_RFFeatureGetter(), src.as_raw_Mat(), features.as_raw_mut_Mat(), gnrm_rad, gsmth_rad, shrink, out_num, grad_num, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5768,7 +5768,7 @@ pub mod ximgproc {
 		fn get_k(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getK_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5781,7 +5781,7 @@ pub mod ximgproc {
 		fn get_superpixel_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelSize_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5794,7 +5794,7 @@ pub mod ximgproc {
 		fn get_superpixel_nn_cnt(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelNNCnt_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5807,7 +5807,7 @@ pub mod ximgproc {
 		fn get_superpixel_ruler(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelRuler_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5823,7 +5823,7 @@ pub mod ximgproc {
 		fn get_superpixel_mode(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getSuperpixelMode_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5835,7 +5835,7 @@ pub mod ximgproc {
 		fn get_alpha(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getAlpha_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5847,7 +5847,7 @@ pub mod ximgproc {
 		fn get_model_iter(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getModelIter_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5859,7 +5859,7 @@ pub mod ximgproc {
 		fn get_refine_models(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getRefineModels_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5872,7 +5872,7 @@ pub mod ximgproc {
 		fn get_max_flow(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getMaxFlow_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5884,7 +5884,7 @@ pub mod ximgproc {
 		fn get_use_variational_refinement(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getUseVariationalRefinement_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5896,7 +5896,7 @@ pub mod ximgproc {
 		fn get_use_global_smoother_filter(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getUseGlobalSmootherFilter_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5908,7 +5908,7 @@ pub mod ximgproc {
 		fn get_fgs_lambda(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getFGSLambda_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5920,7 +5920,7 @@ pub mod ximgproc {
 		fn get_fgs_sigma(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_getFGSSigma_const(self.as_raw_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5941,7 +5941,7 @@ pub mod ximgproc {
 		fn set_k(&mut self, k: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setK_int(self.as_raw_mut_RICInterpolator(), k, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5957,7 +5957,7 @@ pub mod ximgproc {
 		fn set_k_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setK(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5975,7 +5975,7 @@ pub mod ximgproc {
 		fn set_cost_map(&mut self, cost_map: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setCostMap_const_MatR(self.as_raw_mut_RICInterpolator(), cost_map.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5990,7 +5990,7 @@ pub mod ximgproc {
 		fn set_superpixel_size(&mut self, sp_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelSize_int(self.as_raw_mut_RICInterpolator(), sp_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6006,7 +6006,7 @@ pub mod ximgproc {
 		fn set_superpixel_size_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelSize(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6020,7 +6020,7 @@ pub mod ximgproc {
 		fn set_superpixel_nn_cnt(&mut self, sp_nn: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelNNCnt_int(self.as_raw_mut_RICInterpolator(), sp_nn, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6035,7 +6035,7 @@ pub mod ximgproc {
 		fn set_superpixel_nn_cnt_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelNNCnt(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6050,7 +6050,7 @@ pub mod ximgproc {
 		fn set_superpixel_ruler(&mut self, ruler: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelRuler_float(self.as_raw_mut_RICInterpolator(), ruler, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6066,7 +6066,7 @@ pub mod ximgproc {
 		fn set_superpixel_ruler_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelRuler(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6084,7 +6084,7 @@ pub mod ximgproc {
 		fn set_superpixel_mode(&mut self, mode: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelMode_int(self.as_raw_mut_RICInterpolator(), mode, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6103,7 +6103,7 @@ pub mod ximgproc {
 		fn set_superpixel_mode_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelMode(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6116,7 +6116,7 @@ pub mod ximgproc {
 		fn set_alpha(&mut self, alpha: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setAlpha_float(self.as_raw_mut_RICInterpolator(), alpha, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6130,7 +6130,7 @@ pub mod ximgproc {
 		fn set_alpha_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setAlpha(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6143,7 +6143,7 @@ pub mod ximgproc {
 		fn set_model_iter(&mut self, model_iter: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setModelIter_int(self.as_raw_mut_RICInterpolator(), model_iter, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6157,7 +6157,7 @@ pub mod ximgproc {
 		fn set_model_iter_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setModelIter(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6170,7 +6170,7 @@ pub mod ximgproc {
 		fn set_refine_models(&mut self, refine_modles: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setRefineModels_bool(self.as_raw_mut_RICInterpolator(), refine_modles, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6184,7 +6184,7 @@ pub mod ximgproc {
 		fn set_refine_models_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setRefineModels(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6198,7 +6198,7 @@ pub mod ximgproc {
 		fn set_max_flow(&mut self, max_flow: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setMaxFlow_float(self.as_raw_mut_RICInterpolator(), max_flow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6213,7 +6213,7 @@ pub mod ximgproc {
 		fn set_max_flow_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setMaxFlow(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6226,7 +6226,7 @@ pub mod ximgproc {
 		fn set_use_variational_refinement(&mut self, use_variational_refinement: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setUseVariationalRefinement_bool(self.as_raw_mut_RICInterpolator(), use_variational_refinement, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6240,7 +6240,7 @@ pub mod ximgproc {
 		fn set_use_variational_refinement_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setUseVariationalRefinement(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6253,7 +6253,7 @@ pub mod ximgproc {
 		fn set_use_global_smoother_filter(&mut self, use_fgs: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setUseGlobalSmootherFilter_bool(self.as_raw_mut_RICInterpolator(), use_fgs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6267,7 +6267,7 @@ pub mod ximgproc {
 		fn set_use_global_smoother_filter_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setUseGlobalSmootherFilter(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6280,7 +6280,7 @@ pub mod ximgproc {
 		fn set_fgs_lambda(&mut self, lambda: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setFGSLambda_float(self.as_raw_mut_RICInterpolator(), lambda, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6294,7 +6294,7 @@ pub mod ximgproc {
 		fn set_fgs_lambda_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setFGSLambda(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6307,7 +6307,7 @@ pub mod ximgproc {
 		fn set_fgs_sigma(&mut self, sigma: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setFGSSigma_float(self.as_raw_mut_RICInterpolator(), sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6321,7 +6321,7 @@ pub mod ximgproc {
 		fn set_fgs_sigma_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setFGSSigma(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6416,7 +6416,7 @@ pub mod ximgproc {
 		pub fn create(ddepth: i32, dx: i32, dy: i32, ksize: i32, out_dtype: i32, scale: f64, delta: f64, border_type: i32) -> Result<core::Ptr<crate::ximgproc::RidgeDetectionFilter>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RidgeDetectionFilter_create_int_int_int_int_int_double_double_int(ddepth, dx, dy, ksize, out_dtype, scale, delta, border_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ximgproc::RidgeDetectionFilter>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6449,7 +6449,7 @@ pub mod ximgproc {
 		pub fn create_def() -> Result<core::Ptr<crate::ximgproc::RidgeDetectionFilter>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RidgeDetectionFilter_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ximgproc::RidgeDetectionFilter>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6477,7 +6477,7 @@ pub mod ximgproc {
 			output_array_arg!(out);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RidgeDetectionFilter_getRidgeFilteredImage_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_RidgeDetectionFilter(), _img.as_raw__InputArray(), out.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6554,7 +6554,7 @@ pub mod ximgproc {
 		fn get_number_of_superpixels(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ScanSegment_getNumberOfSuperpixels(self.as_raw_mut_ScanSegment(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6573,7 +6573,7 @@ pub mod ximgproc {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ScanSegment_iterate_const__InputArrayR(self.as_raw_mut_ScanSegment(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6590,7 +6590,7 @@ pub mod ximgproc {
 			output_array_arg!(labels_out);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ScanSegment_getLabels_const__OutputArrayR(self.as_raw_mut_ScanSegment(), labels_out.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6610,7 +6610,7 @@ pub mod ximgproc {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ScanSegment_getLabelContourMask_const__OutputArrayR_bool(self.as_raw_mut_ScanSegment(), image.as_raw__OutputArray(), thick_line, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6631,7 +6631,7 @@ pub mod ximgproc {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ScanSegment_getLabelContourMask_const__OutputArrayR(self.as_raw_mut_ScanSegment(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6718,7 +6718,7 @@ pub mod ximgproc {
 			output_array_arg!(dense_flow);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SparseMatchInterpolator_interpolate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_SparseMatchInterpolator(), from_image.as_raw__InputArray(), from_points.as_raw__InputArray(), to_image.as_raw__InputArray(), to_points.as_raw__InputArray(), dense_flow.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6794,7 +6794,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_StructuredEdgeDetection_detectEdges_const_const__InputArrayR_const__OutputArrayR(self.as_raw_StructuredEdgeDetection(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6810,7 +6810,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_StructuredEdgeDetection_computeOrientation_const_const__InputArrayR_const__OutputArrayR(self.as_raw_StructuredEdgeDetection(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6838,7 +6838,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_StructuredEdgeDetection_edgesNms_const_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_float_bool(self.as_raw_StructuredEdgeDetection(), edge_image.as_raw__InputArray(), orientation_image.as_raw__InputArray(), dst.as_raw__OutputArray(), r, s, m, is_parallel, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6867,7 +6867,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_StructuredEdgeDetection_edgesNms_const_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_StructuredEdgeDetection(), edge_image.as_raw__InputArray(), orientation_image.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6943,7 +6943,7 @@ pub mod ximgproc {
 		fn get_number_of_superpixels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelLSC_getNumberOfSuperpixels_const(self.as_raw_SuperpixelLSC(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6963,7 +6963,7 @@ pub mod ximgproc {
 			output_array_arg!(labels_out);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelLSC_getLabels_const_const__OutputArrayR(self.as_raw_SuperpixelLSC(), labels_out.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6986,7 +6986,7 @@ pub mod ximgproc {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelLSC_getLabelContourMask_const_const__OutputArrayR_bool(self.as_raw_SuperpixelLSC(), image.as_raw__OutputArray(), thick_line, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7010,7 +7010,7 @@ pub mod ximgproc {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelLSC_getLabelContourMask_const_const__OutputArrayR(self.as_raw_SuperpixelLSC(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7041,7 +7041,7 @@ pub mod ximgproc {
 		fn iterate(&mut self, num_iterations: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelLSC_iterate_int(self.as_raw_mut_SuperpixelLSC(), num_iterations, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7067,7 +7067,7 @@ pub mod ximgproc {
 		fn iterate_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelLSC_iterate(self.as_raw_mut_SuperpixelLSC(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7088,7 +7088,7 @@ pub mod ximgproc {
 		fn enforce_label_connectivity(&mut self, min_element_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelLSC_enforceLabelConnectivity_int(self.as_raw_mut_SuperpixelLSC(), min_element_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7110,7 +7110,7 @@ pub mod ximgproc {
 		fn enforce_label_connectivity_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelLSC_enforceLabelConnectivity(self.as_raw_mut_SuperpixelLSC(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7189,7 +7189,7 @@ pub mod ximgproc {
 		fn get_number_of_superpixels(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_getNumberOfSuperpixels(self.as_raw_mut_SuperpixelSEEDS(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7224,7 +7224,7 @@ pub mod ximgproc {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_iterate_const__InputArrayR_int(self.as_raw_mut_SuperpixelSEEDS(), img.as_raw__InputArray(), num_iterations, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7260,7 +7260,7 @@ pub mod ximgproc {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_iterate_const__InputArrayR(self.as_raw_mut_SuperpixelSEEDS(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7280,7 +7280,7 @@ pub mod ximgproc {
 			output_array_arg!(labels_out);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_getLabels_const__OutputArrayR(self.as_raw_mut_SuperpixelSEEDS(), labels_out.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7320,7 +7320,7 @@ pub mod ximgproc {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_getLabelContourMask_const__OutputArrayR_bool(self.as_raw_mut_SuperpixelSEEDS(), image.as_raw__OutputArray(), thick_line, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7361,7 +7361,7 @@ pub mod ximgproc {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_getLabelContourMask_const__OutputArrayR(self.as_raw_mut_SuperpixelSEEDS(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7433,7 +7433,7 @@ pub mod ximgproc {
 		fn get_number_of_superpixels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSLIC_getNumberOfSuperpixels_const(self.as_raw_SuperpixelSLIC(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7453,7 +7453,7 @@ pub mod ximgproc {
 			output_array_arg!(labels_out);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSLIC_getLabels_const_const__OutputArrayR(self.as_raw_SuperpixelSLIC(), labels_out.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7476,7 +7476,7 @@ pub mod ximgproc {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSLIC_getLabelContourMask_const_const__OutputArrayR_bool(self.as_raw_SuperpixelSLIC(), image.as_raw__OutputArray(), thick_line, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7500,7 +7500,7 @@ pub mod ximgproc {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSLIC_getLabelContourMask_const_const__OutputArrayR(self.as_raw_SuperpixelSLIC(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7531,7 +7531,7 @@ pub mod ximgproc {
 		fn iterate(&mut self, num_iterations: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSLIC_iterate_int(self.as_raw_mut_SuperpixelSLIC(), num_iterations, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7557,7 +7557,7 @@ pub mod ximgproc {
 		fn iterate_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSLIC_iterate(self.as_raw_mut_SuperpixelSLIC(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7578,7 +7578,7 @@ pub mod ximgproc {
 		fn enforce_label_connectivity(&mut self, min_element_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSLIC_enforceLabelConnectivity_int(self.as_raw_mut_SuperpixelSLIC(), min_element_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7600,7 +7600,7 @@ pub mod ximgproc {
 		fn enforce_label_connectivity_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSLIC_enforceLabelConnectivity(self.as_raw_mut_SuperpixelSLIC(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7674,7 +7674,7 @@ pub mod ximgproc {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_GraphSegmentation_processImage_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_GraphSegmentation(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7683,7 +7683,7 @@ pub mod ximgproc {
 		fn set_sigma(&mut self, sigma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_GraphSegmentation_setSigma_double(self.as_raw_mut_GraphSegmentation(), sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7692,7 +7692,7 @@ pub mod ximgproc {
 		fn get_sigma(&mut self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_GraphSegmentation_getSigma(self.as_raw_mut_GraphSegmentation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7701,7 +7701,7 @@ pub mod ximgproc {
 		fn set_k(&mut self, k: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_GraphSegmentation_setK_float(self.as_raw_mut_GraphSegmentation(), k, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7710,7 +7710,7 @@ pub mod ximgproc {
 		fn get_k(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_GraphSegmentation_getK(self.as_raw_mut_GraphSegmentation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7719,7 +7719,7 @@ pub mod ximgproc {
 		fn set_min_size(&mut self, min_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_GraphSegmentation_setMinSize_int(self.as_raw_mut_GraphSegmentation(), min_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7728,7 +7728,7 @@ pub mod ximgproc {
 		fn get_min_size(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_GraphSegmentation_getMinSize(self.as_raw_mut_GraphSegmentation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7800,7 +7800,7 @@ pub mod ximgproc {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_setBaseImage_const__InputArrayR(self.as_raw_mut_SelectiveSearchSegmentation(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7817,7 +7817,7 @@ pub mod ximgproc {
 		fn switch_to_single_strategy(&mut self, k: i32, sigma: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_switchToSingleStrategy_int_float(self.as_raw_mut_SelectiveSearchSegmentation(), k, sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7835,7 +7835,7 @@ pub mod ximgproc {
 		fn switch_to_single_strategy_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_switchToSingleStrategy(self.as_raw_mut_SelectiveSearchSegmentation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7854,7 +7854,7 @@ pub mod ximgproc {
 		fn switch_to_selective_search_fast(&mut self, base_k: i32, inc_k: i32, sigma: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_switchToSelectiveSearchFast_int_int_float(self.as_raw_mut_SelectiveSearchSegmentation(), base_k, inc_k, sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7874,7 +7874,7 @@ pub mod ximgproc {
 		fn switch_to_selective_search_fast_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_switchToSelectiveSearchFast(self.as_raw_mut_SelectiveSearchSegmentation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7893,7 +7893,7 @@ pub mod ximgproc {
 		fn switch_to_selective_search_quality(&mut self, base_k: i32, inc_k: i32, sigma: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_switchToSelectiveSearchQuality_int_int_float(self.as_raw_mut_SelectiveSearchSegmentation(), base_k, inc_k, sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7913,7 +7913,7 @@ pub mod ximgproc {
 		fn switch_to_selective_search_quality_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_switchToSelectiveSearchQuality(self.as_raw_mut_SelectiveSearchSegmentation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7926,7 +7926,7 @@ pub mod ximgproc {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_addImage_const__InputArrayR(self.as_raw_mut_SelectiveSearchSegmentation(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7936,7 +7936,7 @@ pub mod ximgproc {
 		fn clear_images(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_clearImages(self.as_raw_mut_SelectiveSearchSegmentation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7948,7 +7948,7 @@ pub mod ximgproc {
 		fn add_graph_segmentation(&mut self, mut g: core::Ptr<crate::ximgproc::GraphSegmentation>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_addGraphSegmentation_PtrLGraphSegmentationG(self.as_raw_mut_SelectiveSearchSegmentation(), g.as_raw_mut_PtrOfGraphSegmentation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7958,7 +7958,7 @@ pub mod ximgproc {
 		fn clear_graph_segmentations(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_clearGraphSegmentations(self.as_raw_mut_SelectiveSearchSegmentation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7970,7 +7970,7 @@ pub mod ximgproc {
 		fn add_strategy(&mut self, mut s: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_addStrategy_PtrLSelectiveSearchSegmentationStrategyG(self.as_raw_mut_SelectiveSearchSegmentation(), s.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7980,7 +7980,7 @@ pub mod ximgproc {
 		fn clear_strategies(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_clearStrategies(self.as_raw_mut_SelectiveSearchSegmentation(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7992,7 +7992,7 @@ pub mod ximgproc {
 		fn process(&mut self, rects: &mut core::Vector<core::Rect>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_process_vectorLRectGR(self.as_raw_mut_SelectiveSearchSegmentation(), rects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -8072,7 +8072,7 @@ pub mod ximgproc {
 			input_array_arg!(sizes);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_setImage_const__InputArrayR_const__InputArrayR_const__InputArrayR_int(self.as_raw_mut_SelectiveSearchSegmentationStrategy(), img.as_raw__InputArray(), regions.as_raw__InputArray(), sizes.as_raw__InputArray(), image_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -8094,7 +8094,7 @@ pub mod ximgproc {
 			input_array_arg!(sizes);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_setImage_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_SelectiveSearchSegmentationStrategy(), img.as_raw__InputArray(), regions.as_raw__InputArray(), sizes.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -8107,7 +8107,7 @@ pub mod ximgproc {
 		fn get(&mut self, r1: i32, r2: i32) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_get_int_int(self.as_raw_mut_SelectiveSearchSegmentationStrategy(), r1, r2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -8120,7 +8120,7 @@ pub mod ximgproc {
 		fn merge(&mut self, r1: i32, r2: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_merge_int_int(self.as_raw_mut_SelectiveSearchSegmentationStrategy(), r1, r2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -8343,7 +8343,7 @@ pub mod ximgproc {
 		fn add_strategy(&mut self, mut g: core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_addStrategy_PtrLSelectiveSearchSegmentationStrategyG_float(self.as_raw_mut_SelectiveSearchSegmentationStrategyMultiple(), g.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -8353,7 +8353,7 @@ pub mod ximgproc {
 		fn clear_strategies(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_clearStrategies(self.as_raw_mut_SelectiveSearchSegmentationStrategyMultiple(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

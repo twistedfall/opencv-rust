@@ -50,7 +50,7 @@ pub mod wechat_qrcode {
 			extern_container_arg!(super_resolution_caffe_model_path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode_const_stringR_const_stringR_const_stringR_const_stringR(detector_prototxt_path.opencv_as_extern(), detector_caffe_model_path.opencv_as_extern(), super_resolution_prototxt_path.opencv_as_extern(), super_resolution_caffe_model_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -76,7 +76,7 @@ pub mod wechat_qrcode {
 		pub fn new_def() -> Result<crate::wechat_qrcode::WeChatQRCode> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(ret) };
 			Ok(ret)
@@ -112,7 +112,7 @@ pub mod wechat_qrcode {
 			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_detectAndDecode_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_WeChatQRCode(), img.as_raw__InputArray(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -136,7 +136,7 @@ pub mod wechat_qrcode {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_detectAndDecode_const__InputArrayR(self.as_raw_mut_WeChatQRCode(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -156,7 +156,7 @@ pub mod wechat_qrcode {
 		fn set_scale_factor(&mut self, _scaling_factor: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_setScaleFactor_float(self.as_raw_mut_WeChatQRCode(), _scaling_factor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -165,7 +165,7 @@ pub mod wechat_qrcode {
 		fn get_scale_factor(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_getScaleFactor(self.as_raw_mut_WeChatQRCode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

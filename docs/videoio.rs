@@ -1310,7 +1310,7 @@ pub mod videoio {
 	pub fn get_backend_name(api: crate::videoio::VideoCaptureAPIs) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_getBackendName_VideoCaptureAPIs(api, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1321,7 +1321,7 @@ pub mod videoio {
 	pub fn get_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_getBackends(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1332,7 +1332,7 @@ pub mod videoio {
 	pub fn get_camera_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_getCameraBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1343,7 +1343,7 @@ pub mod videoio {
 	pub fn get_camera_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_getCameraBackends(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1354,7 +1354,7 @@ pub mod videoio {
 	pub fn get_stream_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_getStreamBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1365,7 +1365,7 @@ pub mod videoio {
 	pub fn get_stream_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_getStreamBackends(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1376,7 +1376,7 @@ pub mod videoio {
 	pub fn get_stream_buffered_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_getStreamBufferedBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1387,7 +1387,7 @@ pub mod videoio {
 	pub fn get_stream_buffered_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_getStreamBufferedBackends(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1398,7 +1398,7 @@ pub mod videoio {
 	pub fn get_writer_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_getWriterBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1409,7 +1409,7 @@ pub mod videoio {
 	pub fn get_writer_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_getWriterBackends(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -1420,7 +1420,7 @@ pub mod videoio {
 	pub fn has_backend(api: crate::videoio::VideoCaptureAPIs) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_hasBackend_VideoCaptureAPIs(api, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1430,7 +1430,7 @@ pub mod videoio {
 	pub fn is_backend_built_in(api: crate::videoio::VideoCaptureAPIs) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videoio_registry_isBackendBuiltIn_VideoCaptureAPIs(api, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1467,7 +1467,7 @@ pub mod videoio {
 			string_arg_output_send!(via buffer_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_IStreamReader_read_charX_long_long(self.as_raw_mut_IStreamReader(), &mut buffer_via, size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(buffer_via => buffer);
 			Ok(ret)
@@ -1484,7 +1484,7 @@ pub mod videoio {
 		fn seek(&mut self, offset: i64, origin: i32) -> Result<i64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_IStreamReader_seek_long_long_int(self.as_raw_mut_IStreamReader(), offset, origin, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1553,7 +1553,7 @@ pub mod videoio {
 		pub fn default() -> Result<crate::videoio::VideoCapture> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_VideoCapture(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1589,7 +1589,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int(filename.opencv_as_extern(), api_preference, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1619,7 +1619,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1642,7 +1642,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int_const_vectorLintGR(filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1672,7 +1672,7 @@ pub mod videoio {
 		pub fn new(index: i32, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_VideoCapture_int_int(index, api_preference, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1696,7 +1696,7 @@ pub mod videoio {
 		pub fn new_def(index: i32) -> Result<crate::videoio::VideoCapture> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_VideoCapture_int(index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1718,7 +1718,7 @@ pub mod videoio {
 		pub fn new_with_params(index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<crate::videoio::VideoCapture> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_VideoCapture_int_int_const_vectorLintGR(index, api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1740,7 +1740,7 @@ pub mod videoio {
 		pub fn new_1(source: &core::Ptr<crate::videoio::IStreamReader>, api_preference: i32, params: &core::Vector<i32>) -> Result<crate::videoio::VideoCapture> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_VideoCapture_const_PtrLIStreamReaderGR_int_const_vectorLintGR(source.as_raw_PtrOfIStreamReader(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1768,7 +1768,7 @@ pub mod videoio {
 		pub fn wait_any(streams: &core::Vector<crate::videoio::VideoCapture>, ready_index: &mut core::Vector<i32>, timeout_ns: i64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_waitAny_const_vectorLVideoCaptureGR_vectorLintGR_int64_t(streams.as_raw_VectorOfVideoCapture(), ready_index.as_raw_mut_VectorOfi32(), timeout_ns, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1796,7 +1796,7 @@ pub mod videoio {
 		pub fn wait_any_def(streams: &core::Vector<crate::videoio::VideoCapture>, ready_index: &mut core::Vector<i32>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_waitAny_const_vectorLVideoCaptureGR_vectorLintGR(streams.as_raw_VectorOfVideoCapture(), ready_index.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1815,7 +1815,7 @@ pub mod videoio {
 		fn is_opened(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_isOpened_const(self.as_raw_VideoCapture(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1843,7 +1843,7 @@ pub mod videoio {
 		fn get(&self, prop_id: i32) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_get_const_int(self.as_raw_VideoCapture(), prop_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1856,7 +1856,7 @@ pub mod videoio {
 		fn get_backend_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_getBackendName_const(self.as_raw_VideoCapture(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1867,7 +1867,7 @@ pub mod videoio {
 		fn get_exception_mode(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_getExceptionMode_const(self.as_raw_VideoCapture(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1895,7 +1895,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_open_const_StringR_int(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), api_preference, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1918,7 +1918,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_open_const_StringR(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1939,7 +1939,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_open_const_StringR_int_const_vectorLintGR(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1960,7 +1960,7 @@ pub mod videoio {
 		fn open(&mut self, index: i32, api_preference: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_open_int_int(self.as_raw_mut_VideoCapture(), index, api_preference, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1982,7 +1982,7 @@ pub mod videoio {
 		fn open_def(&mut self, index: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_open_int(self.as_raw_mut_VideoCapture(), index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2002,7 +2002,7 @@ pub mod videoio {
 		fn open_with_params(&mut self, index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_open_int_int_const_vectorLintGR(self.as_raw_mut_VideoCapture(), index, api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2022,7 +2022,7 @@ pub mod videoio {
 		fn open_1(&mut self, source: &core::Ptr<crate::videoio::IStreamReader>, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_open_const_PtrLIStreamReaderGR_int_const_vectorLintGR(self.as_raw_mut_VideoCapture(), source.as_raw_PtrOfIStreamReader(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2037,7 +2037,7 @@ pub mod videoio {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_release(self.as_raw_mut_VideoCapture(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2065,7 +2065,7 @@ pub mod videoio {
 		fn grab(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_grab(self.as_raw_mut_VideoCapture(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2096,7 +2096,7 @@ pub mod videoio {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_retrieve_const__OutputArrayR_int(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2128,7 +2128,7 @@ pub mod videoio {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_retrieve_const__OutputArrayR(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2154,7 +2154,7 @@ pub mod videoio {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_read_const__OutputArrayR(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2174,7 +2174,7 @@ pub mod videoio {
 		fn set(&mut self, prop_id: i32, value: f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_set_int_double(self.as_raw_mut_VideoCapture(), prop_id, value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2186,7 +2186,7 @@ pub mod videoio {
 		fn set_exception_mode(&mut self, enable: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_setExceptionMode_bool(self.as_raw_mut_VideoCapture(), enable, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2240,7 +2240,7 @@ pub mod videoio {
 		pub fn default() -> Result<crate::videoio::VideoWriter> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_VideoWriter(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2288,7 +2288,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_Size_bool(filename.opencv_as_extern(), fourcc, fps, &frame_size, is_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2329,7 +2329,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_Size(filename.opencv_as_extern(), fourcc, fps, &frame_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2354,7 +2354,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size_bool(filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, is_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2372,7 +2372,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size(filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2394,7 +2394,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_const_SizeR_const_vectorLintGR(filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2413,7 +2413,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_const_SizeR_const_vectorLintGR(filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2430,7 +2430,7 @@ pub mod videoio {
 		pub fn fourcc(c1: char, c2: char, c3: char, c4: char) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_fourcc_char_char_char_char(u8::try_from(c1)? as c_char, u8::try_from(c2)? as c_char, u8::try_from(c3)? as c_char, u8::try_from(c4)? as c_char, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2446,7 +2446,7 @@ pub mod videoio {
 		fn is_opened(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_isOpened_const(self.as_raw_VideoWriter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2464,7 +2464,7 @@ pub mod videoio {
 		fn get(&self, prop_id: i32) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_get_const_int(self.as_raw_VideoWriter(), prop_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2477,7 +2477,7 @@ pub mod videoio {
 		fn get_backend_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_getBackendName_const(self.as_raw_VideoWriter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2505,7 +2505,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, &frame_size, is_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2527,7 +2527,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_Size(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, &frame_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2550,7 +2550,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, is_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2565,7 +2565,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_Size(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2585,7 +2585,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_const_SizeR_const_vectorLintGR(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2605,7 +2605,7 @@ pub mod videoio {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_const_SizeR_const_vectorLintGR(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2618,7 +2618,7 @@ pub mod videoio {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_release(self.as_raw_mut_VideoWriter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2635,7 +2635,7 @@ pub mod videoio {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_write_const__InputArrayR(self.as_raw_mut_VideoWriter(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2653,7 +2653,7 @@ pub mod videoio {
 		fn set(&mut self, prop_id: i32, value: f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_set_int_double(self.as_raw_mut_VideoWriter(), prop_id, value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

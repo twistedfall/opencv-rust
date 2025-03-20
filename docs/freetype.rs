@@ -24,7 +24,7 @@ pub mod freetype {
 	pub fn create_free_type2() -> Result<core::Ptr<crate::freetype::FreeType2>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_freetype_createFreeType2(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::freetype::FreeType2>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -67,7 +67,7 @@ pub mod freetype {
 			extern_container_arg!(font_file_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_as_extern(), idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -85,7 +85,7 @@ pub mod freetype {
 		#[inline]
 		unsafe fn load_font_data_1(&mut self, p_buf: *mut c_char, buf_size: size_t, idx: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_freetype_FreeType2_loadFontData_charX_size_t_int(self.as_raw_mut_FreeType2(), p_buf, buf_size, idx, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_freetype_FreeType2_loadFontData_charX_size_t_int(self.as_raw_mut_FreeType2(), p_buf, buf_size, idx, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -103,7 +103,7 @@ pub mod freetype {
 		fn set_split_number(&mut self, num: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_freetype_FreeType2_setSplitNumber_int(self.as_raw_mut_FreeType2(), num, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -127,7 +127,7 @@ pub mod freetype {
 			extern_container_arg!(text);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_as_extern(), &org, font_height, &color, thickness, line_type, bottom_left_origin, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -194,7 +194,7 @@ pub mod freetype {
 			extern_container_arg!(text);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_freetype_FreeType2_getTextSize_const_StringR_int_int_intX(self.as_raw_mut_FreeType2(), text.opencv_as_extern(), font_height, thickness, base_line, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

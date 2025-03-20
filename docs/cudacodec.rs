@@ -680,7 +680,7 @@ pub mod cudacodec {
 	pub fn map_hist(hist: &impl core::GpuMatTraitConst, hist_full: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_MapHist_const_GpuMatR_MatR(hist.as_raw_GpuMat(), hist_full.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -697,7 +697,7 @@ pub mod cudacodec {
 	pub fn create_nv_surface_to_color_converter_def(color_space: crate::cudacodec::CUDA_ColorSpaceStandard) -> Result<core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createNVSurfaceToColorConverter_const_ColorSpaceStandard(color_space, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_NVSurfaceToColorConverter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -714,7 +714,7 @@ pub mod cudacodec {
 	pub fn create_nv_surface_to_color_converter(color_space: crate::cudacodec::CUDA_ColorSpaceStandard, video_full_range_flag: bool) -> Result<core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createNVSurfaceToColorConverter_const_ColorSpaceStandard_const_bool(color_space, video_full_range_flag, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_NVSurfaceToColorConverter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -732,7 +732,7 @@ pub mod cudacodec {
 	pub fn create_video_reader_1_def(source: &core::Ptr<crate::cudacodec::CUDA_RawVideoSource>) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoReader>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoReader_const_PtrLRawVideoSourceGR(source.as_raw_PtrOfCUDA_RawVideoSource(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -761,7 +761,7 @@ pub mod cudacodec {
 	pub fn create_video_reader_1(source: &core::Ptr<crate::cudacodec::CUDA_RawVideoSource>, params: crate::cudacodec::CUDA_VideoReaderInitParams) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoReader>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoReader_const_PtrLRawVideoSourceGR_const_VideoReaderInitParams(source.as_raw_PtrOfCUDA_RawVideoSource(), &params, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -788,7 +788,7 @@ pub mod cudacodec {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoReader_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -814,7 +814,7 @@ pub mod cudacodec {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoReader_const_StringR_const_vectorLintGR_const_VideoReaderInitParams(filename.opencv_as_extern(), source_params.as_raw_VectorOfi32(), &params, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -843,7 +843,7 @@ pub mod cudacodec {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size(file_name.opencv_as_extern(), &frame_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -871,7 +871,7 @@ pub mod cudacodec {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_PtrLEncoderCallbackG_const_StreamR(file_name.opencv_as_extern(), &frame_size, codec, fps, color_format, encoder_callback.as_raw_mut_PtrOfCUDA_EncoderCallback(), stream.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -898,7 +898,7 @@ pub mod cudacodec {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_const_EncoderParamsR(file_name.opencv_as_extern(), &frame_size, codec, fps, color_format, &params, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -924,7 +924,7 @@ pub mod cudacodec {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_const_EncoderParamsR_PtrLEncoderCallbackG_const_StreamR(file_name.opencv_as_extern(), &frame_size, codec, fps, color_format, &params, encoder_callback.as_raw_mut_PtrOfCUDA_EncoderCallback(), stream.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -934,7 +934,7 @@ pub mod cudacodec {
 	pub fn equals_cuda_encoderparams_cuda_encoderparams(lhs: crate::cudacodec::CUDA_EncoderParams, rhs: crate::cudacodec::CUDA_EncoderParams) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_operatorEQ_const_EncoderParamsR_const_EncoderParamsR(&lhs, &rhs, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -990,7 +990,7 @@ pub mod cudacodec {
 		fn on_encoded(&mut self, v_packet: &core::Vector<core::Vector<u8>>, pts: &core::Vector<u64>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_EncoderCallback_onEncoded_const_vectorLvectorLuint8_tGGR_const_vectorLuint64_tGR(self.as_raw_mut_CUDA_EncoderCallback(), v_packet.as_raw_VectorOfVectorOfu8(), pts.as_raw_VectorOfu64(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1003,7 +1003,7 @@ pub mod cudacodec {
 		fn set_frame_interval_p(&mut self, frame_interval_p: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_EncoderCallback_setFrameIntervalP_const_int(self.as_raw_mut_CUDA_EncoderCallback(), frame_interval_p, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1013,7 +1013,7 @@ pub mod cudacodec {
 		fn on_encoding_finished(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_EncoderCallback_onEncodingFinished(self.as_raw_mut_CUDA_EncoderCallback(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1068,7 +1068,7 @@ pub mod cudacodec {
 		pub fn default() -> Result<crate::cudacodec::CUDA_EncoderParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1127,7 +1127,7 @@ pub mod cudacodec {
 		pub fn default() -> Result<crate::cudacodec::CUDA_FormatInfo> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_FormatInfo_FormatInfo(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1182,7 +1182,7 @@ pub mod cudacodec {
 			output_array_arg!(color);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_NVSurfaceToColorConverter_convert_const__InputArrayR_const__OutputArrayR_const_SurfaceFormat_const_ColorFormat_const_BitDepth_const_bool_const_bool_StreamR(self.as_raw_mut_CUDA_NVSurfaceToColorConverter(), yuv.as_raw__InputArray(), color.as_raw__OutputArray(), surface_format, output_format, bit_depth, planar, video_full_range_flag, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1210,7 +1210,7 @@ pub mod cudacodec {
 			output_array_arg!(color);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_NVSurfaceToColorConverter_convert_const__InputArrayR_const__OutputArrayR_const_SurfaceFormat_const_ColorFormat(self.as_raw_mut_CUDA_NVSurfaceToColorConverter(), yuv.as_raw__InputArray(), color.as_raw__OutputArray(), surface_format, output_format, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1262,7 +1262,7 @@ pub mod cudacodec {
 		fn last_packet_contains_key_frame(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_RawVideoSource_lastPacketContainsKeyFrame_const(self.as_raw_CUDA_RawVideoSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1272,7 +1272,7 @@ pub mod cudacodec {
 		fn format(&self) -> Result<crate::cudacodec::CUDA_FormatInfo> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_RawVideoSource_format_const(self.as_raw_CUDA_RawVideoSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1285,7 +1285,7 @@ pub mod cudacodec {
 		fn get_extra_data(&self, extra_data: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_RawVideoSource_getExtraData_const_MatR(self.as_raw_CUDA_RawVideoSource(), extra_data.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1303,7 +1303,7 @@ pub mod cudacodec {
 		fn get(&self, property_id: i32, property_val: &mut f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_RawVideoSource_get_const_const_int_doubleR(self.as_raw_CUDA_RawVideoSource(), property_id, property_val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1319,7 +1319,7 @@ pub mod cudacodec {
 		fn get_first_frame_idx(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_RawVideoSource_getFirstFrameIdx_const(self.as_raw_CUDA_RawVideoSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1338,7 +1338,7 @@ pub mod cudacodec {
 		#[inline]
 		unsafe fn get_next_packet(&mut self, data: *mut *mut u8, size: &mut size_t) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cudacodec_RawVideoSource_getNextPacket_unsigned_charXX_size_tX(self.as_raw_mut_CUDA_RawVideoSource(), data, size, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cudacodec_RawVideoSource_getNextPacket_unsigned_charXX_size_tX(self.as_raw_mut_CUDA_RawVideoSource(), data, size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1349,7 +1349,7 @@ pub mod cudacodec {
 		fn update_format(&mut self, video_format: crate::cudacodec::CUDA_FormatInfo) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_RawVideoSource_updateFormat_const_FormatInfoR(self.as_raw_mut_CUDA_RawVideoSource(), &video_format, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1408,7 +1408,7 @@ pub mod cudacodec {
 		fn format(&self) -> Result<crate::cudacodec::CUDA_FormatInfo> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_format_const(self.as_raw_CUDA_VideoReader(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1434,7 +1434,7 @@ pub mod cudacodec {
 			output_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_const__OutputArrayR_const_size_t(self.as_raw_CUDA_VideoReader(), frame.as_raw__OutputArray(), idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1461,7 +1461,7 @@ pub mod cudacodec {
 			output_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_const__OutputArrayR(self.as_raw_CUDA_VideoReader(), frame.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1482,7 +1482,7 @@ pub mod cudacodec {
 		fn retrieve_1(&self, frame: &mut impl core::MatTrait, idx: size_t) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_MatR_const_size_t(self.as_raw_CUDA_VideoReader(), frame.as_raw_mut_Mat(), idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1500,7 +1500,7 @@ pub mod cudacodec {
 		fn retrieve_2(&self, frame: &mut impl core::GpuMatTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_GpuMatR(self.as_raw_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1519,7 +1519,7 @@ pub mod cudacodec {
 		fn get(&self, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val: &mut f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_get_const_const_VideoReaderProps_doubleR(self.as_raw_CUDA_VideoReader(), property_id, property_val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1530,7 +1530,7 @@ pub mod cudacodec {
 		fn get_video_reader_props(&self, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val_out: &mut f64, property_val_in: f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_getVideoReaderProps_const_const_VideoReaderProps_doubleR_double(self.as_raw_CUDA_VideoReader(), property_id, property_val_out, property_val_in, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1542,7 +1542,7 @@ pub mod cudacodec {
 		fn get_video_reader_props_def(&self, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val_out: &mut f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_getVideoReaderProps_const_const_VideoReaderProps_doubleR(self.as_raw_CUDA_VideoReader(), property_id, property_val_out, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1560,7 +1560,7 @@ pub mod cudacodec {
 		fn get_1(&self, property_id: i32, property_val: &mut f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_get_const_const_int_doubleR(self.as_raw_CUDA_VideoReader(), property_id, property_val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1588,7 +1588,7 @@ pub mod cudacodec {
 		fn next_frame(&mut self, frame: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_StreamR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1611,7 +1611,7 @@ pub mod cudacodec {
 		fn next_frame_def(&mut self, frame: &mut impl core::GpuMatTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1637,7 +1637,7 @@ pub mod cudacodec {
 		fn next_frame_with_hist(&mut self, frame: &mut impl core::GpuMatTrait, histogram: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_GpuMatR_StreamR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), histogram.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1664,7 +1664,7 @@ pub mod cudacodec {
 		fn next_frame_with_hist_def(&mut self, frame: &mut impl core::GpuMatTrait, histogram: &mut impl core::GpuMatTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_GpuMatR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), histogram.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1688,7 +1688,7 @@ pub mod cudacodec {
 		fn grab(&mut self, stream: &mut impl core::StreamTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_grab_StreamR(self.as_raw_mut_CUDA_VideoReader(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1713,7 +1713,7 @@ pub mod cudacodec {
 		fn grab_def(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_grab(self.as_raw_mut_CUDA_VideoReader(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1730,7 +1730,7 @@ pub mod cudacodec {
 		fn set(&mut self, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val: f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_set_const_VideoReaderProps_const_double(self.as_raw_mut_CUDA_VideoReader(), property_id, property_val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1739,7 +1739,7 @@ pub mod cudacodec {
 		fn set_video_reader_props(&mut self, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val: f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_setVideoReaderProps_const_VideoReaderProps_double(self.as_raw_mut_CUDA_VideoReader(), property_id, property_val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1760,7 +1760,7 @@ pub mod cudacodec {
 		fn set_1(&mut self, color_format: crate::cudacodec::CUDA_ColorFormat, bit_depth: crate::cudacodec::CUDA_BitDepth, planar: bool) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_set_const_ColorFormat_const_BitDepth_const_bool(self.as_raw_mut_CUDA_VideoReader(), color_format, bit_depth, planar, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1782,7 +1782,7 @@ pub mod cudacodec {
 		fn set_def(&mut self, color_format: crate::cudacodec::CUDA_ColorFormat) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_set_const_ColorFormat(self.as_raw_mut_CUDA_VideoReader(), color_format, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1845,7 +1845,7 @@ pub mod cudacodec {
 		pub fn default() -> Result<crate::cudacodec::CUDA_VideoReaderInitParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReaderInitParams_VideoReaderInitParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1886,7 +1886,7 @@ pub mod cudacodec {
 		fn get_encoder_params(&self) -> Result<crate::cudacodec::CUDA_EncoderParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoWriter_getEncoderParams_const(self.as_raw_CUDA_VideoWriter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1909,7 +1909,7 @@ pub mod cudacodec {
 			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoWriter_write_const__InputArrayR(self.as_raw_mut_CUDA_VideoWriter(), frame.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1919,7 +1919,7 @@ pub mod cudacodec {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoWriter_release(self.as_raw_mut_CUDA_VideoWriter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

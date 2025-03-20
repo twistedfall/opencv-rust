@@ -57,7 +57,7 @@ pub mod phase_unwrapping {
 		pub fn create(parameters: crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -75,7 +75,7 @@ pub mod phase_unwrapping {
 		pub fn create_def() -> Result<core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -102,7 +102,7 @@ pub mod phase_unwrapping {
 			output_array_arg!(reliability_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayR(self.as_raw_mut_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -176,7 +176,7 @@ pub mod phase_unwrapping {
 		pub fn default() -> Result<crate::phase_unwrapping::HistogramPhaseUnwrapping_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -225,7 +225,7 @@ pub mod phase_unwrapping {
 			input_array_arg!(shadow_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -246,7 +246,7 @@ pub mod phase_unwrapping {
 			output_array_arg!(unwrapped_phase_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

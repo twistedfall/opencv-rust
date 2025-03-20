@@ -115,7 +115,7 @@ pub mod rgbd {
 	pub fn make_volume(_volume_type: crate::rgbd::Kinfu_VolumeType, _voxel_size: f32, _pose: core::Matx44f, _raycast_step_factor: f32, _trunc_dist: f32, _max_weight: i32, _truncate_threshold: f32, _resolution: core::Vec3i) -> Result<core::Ptr<crate::rgbd::Kinfu_Volume>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_kinfu_makeVolume_VolumeType_float_Matx44f_float_float_int_float_Vec3i(_volume_type, _voxel_size, &_pose, _raycast_step_factor, _trunc_dist, _max_weight, _truncate_threshold, &_resolution, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_Volume>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -126,7 +126,7 @@ pub mod rgbd {
 	pub fn colormap(quantized: &impl core::MatTraitConst, dst: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_linemod_colormap_const_MatR_MatR(quantized.as_raw_Mat(), dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -146,7 +146,7 @@ pub mod rgbd {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_linemod_drawFeatures_const__InputOutputArrayR_const_vectorLTemplateGR_const_Point2iR(img.as_raw__InputOutputArray(), templates.as_raw_VectorOfLineMod_Template(), &tl, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -165,7 +165,7 @@ pub mod rgbd {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_linemod_drawFeatures_const__InputOutputArrayR_const_vectorLTemplateGR_const_Point2iR_int(img.as_raw__InputOutputArray(), templates.as_raw_VectorOfLineMod_Template(), &tl, size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -177,7 +177,7 @@ pub mod rgbd {
 	pub fn get_default_line() -> Result<core::Ptr<crate::rgbd::LineMod_Detector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_linemod_getDefaultLINE(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_Detector>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -191,7 +191,7 @@ pub mod rgbd {
 	pub fn get_default_linemod() -> Result<core::Ptr<crate::rgbd::LineMod_Detector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_linemod_getDefaultLINEMOD(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_Detector>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -210,7 +210,7 @@ pub mod rgbd {
 		output_array_arg!(points3d);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_depthTo3dSparse_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(depth.as_raw__InputArray(), in_k.as_raw__InputArray(), in_points.as_raw__InputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -235,7 +235,7 @@ pub mod rgbd {
 		output_array_arg!(points3d);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_depthTo3d_const__InputArrayR_const__InputArrayR_const__OutputArrayR(depth.as_raw__InputArray(), k.as_raw__InputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -260,7 +260,7 @@ pub mod rgbd {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_depthTo3d_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(depth.as_raw__InputArray(), k.as_raw__InputArray(), points3d.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -269,7 +269,7 @@ pub mod rgbd {
 	pub fn is_valid_depth_1(depth: &f64) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_isValidDepth_const_doubleR(depth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -282,7 +282,7 @@ pub mod rgbd {
 	pub fn is_valid_depth(depth: &f32) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_isValidDepth_const_floatR(depth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -291,7 +291,7 @@ pub mod rgbd {
 	pub fn is_valid_depth_4(depth: &i32) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_isValidDepth_const_intR(depth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -300,7 +300,7 @@ pub mod rgbd {
 	pub fn is_valid_depth_2(depth: &i16) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_isValidDepth_const_shortR(depth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -309,7 +309,7 @@ pub mod rgbd {
 	pub fn is_valid_depth_5(depth: &u32) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_isValidDepth_const_unsigned_intR(depth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -318,7 +318,7 @@ pub mod rgbd {
 	pub fn is_valid_depth_3(depth: &u16) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_isValidDepth_const_unsigned_shortR(depth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -355,7 +355,7 @@ pub mod rgbd {
 		output_array_arg!(registered_depth);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_registerDepth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__OutputArrayR(unregistered_camera_matrix.as_raw__InputArray(), registered_camera_matrix.as_raw__InputArray(), registered_dist_coeffs.as_raw__InputArray(), rt.as_raw__InputArray(), unregistered_depth.as_raw__InputArray(), &output_image_plane_size, registered_depth.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -391,7 +391,7 @@ pub mod rgbd {
 		output_array_arg!(registered_depth);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_registerDepth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__OutputArrayR_bool(unregistered_camera_matrix.as_raw__InputArray(), registered_camera_matrix.as_raw__InputArray(), registered_dist_coeffs.as_raw__InputArray(), rt.as_raw__InputArray(), unregistered_depth.as_raw__InputArray(), &output_image_plane_size, registered_depth.as_raw__OutputArray(), depth_dilation, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -415,7 +415,7 @@ pub mod rgbd {
 		output_array_arg!(out);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_rescaleDepth_const__InputArrayR_int_const__OutputArrayR(in_.as_raw__InputArray(), depth, out.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -438,7 +438,7 @@ pub mod rgbd {
 		output_array_arg!(out);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_rescaleDepth_const__InputArrayR_int_const__OutputArrayR_double(in_.as_raw__InputArray(), depth, out.as_raw__OutputArray(), depth_factor, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -466,7 +466,7 @@ pub mod rgbd {
 		output_array_arg!(warped_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_warpFrame_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), rt.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeff.as_raw_Mat(), warped_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -495,7 +495,7 @@ pub mod rgbd {
 		output_array_arg!(warped_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_warpFrame_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), rt.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeff.as_raw_Mat(), warped_image.as_raw__OutputArray(), warped_depth.as_raw__OutputArray(), warped_mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -543,7 +543,7 @@ pub mod rgbd {
 		pub fn create(_params: &core::Ptr<crate::rgbd::ColoredKinfu_Params>) -> Result<core::Ptr<crate::rgbd::ColoredKinfu_ColoredKinFu>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_create_const_PtrLParamsGR(_params.as_raw_PtrOfColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::ColoredKinfu_ColoredKinFu>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -560,7 +560,7 @@ pub mod rgbd {
 		fn get_params(&self) -> Result<crate::rgbd::ColoredKinfu_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_getParams_const(self.as_raw_ColoredKinfu_ColoredKinFu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::ColoredKinfu_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -578,7 +578,7 @@ pub mod rgbd {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_render_const_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -597,7 +597,7 @@ pub mod rgbd {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_render_const_const__OutputArrayR_const_Matx44fR(self.as_raw_ColoredKinfu_ColoredKinFu(), image.as_raw__OutputArray(), &camera_pose, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -621,7 +621,7 @@ pub mod rgbd {
 			output_array_arg!(colors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_getCloud_const_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), colors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -645,7 +645,7 @@ pub mod rgbd {
 			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_getCloud_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -661,7 +661,7 @@ pub mod rgbd {
 			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_getPoints_const_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -676,7 +676,7 @@ pub mod rgbd {
 			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_getNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), points.as_raw__InputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -686,7 +686,7 @@ pub mod rgbd {
 		fn get_pose(&self) -> Result<core::Affine3f> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_getPose_const(self.as_raw_ColoredKinfu_ColoredKinFu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -704,7 +704,7 @@ pub mod rgbd {
 		fn reset(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_reset(self.as_raw_mut_ColoredKinfu_ColoredKinFu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -722,7 +722,7 @@ pub mod rgbd {
 			input_array_arg!(rgb);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_update_const__InputArrayR_const__InputArrayR(self.as_raw_mut_ColoredKinfu_ColoredKinFu(), depth.as_raw__InputArray(), rgb.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -767,7 +767,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::ColoredKinfu_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::ColoredKinfu_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -782,7 +782,7 @@ pub mod rgbd {
 		pub fn new(volume_initial_pose_rot: core::Matx33f, volume_initial_pose_transl: core::Vec3f) -> Result<crate::rgbd::ColoredKinfu_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_Params_Matx33f_Vec3f(&volume_initial_pose_rot, &volume_initial_pose_transl, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::ColoredKinfu_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -796,7 +796,7 @@ pub mod rgbd {
 		pub fn new_1(volume_initial_pose: core::Matx44f) -> Result<crate::rgbd::ColoredKinfu_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_Params_Matx44f(&volume_initial_pose, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::ColoredKinfu_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -808,7 +808,7 @@ pub mod rgbd {
 		pub fn default_params() -> Result<core::Ptr<crate::rgbd::ColoredKinfu_Params>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_defaultParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::ColoredKinfu_Params>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -821,7 +821,7 @@ pub mod rgbd {
 		pub fn coarse_params() -> Result<core::Ptr<crate::rgbd::ColoredKinfu_Params>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_coarseParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::ColoredKinfu_Params>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -833,7 +833,7 @@ pub mod rgbd {
 		pub fn hash_tsdf_params(is_coarse: bool) -> Result<core::Ptr<crate::rgbd::ColoredKinfu_Params>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_hashTSDFParams_bool(is_coarse, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::ColoredKinfu_Params>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -845,7 +845,7 @@ pub mod rgbd {
 		pub fn colored_tsdf_params(is_coarse: bool) -> Result<core::Ptr<crate::rgbd::ColoredKinfu_Params>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_coloredTSDFParams_bool(is_coarse, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::ColoredKinfu_Params>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -862,7 +862,7 @@ pub mod rgbd {
 		fn frame_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_propFrameSize_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -871,7 +871,7 @@ pub mod rgbd {
 		fn rgb_frame_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_propRgb_frameSize_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -879,7 +879,7 @@ pub mod rgbd {
 		fn volume_type(&self) -> crate::rgbd::Kinfu_VolumeType {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_propVolumeType_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -888,7 +888,7 @@ pub mod rgbd {
 		fn intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_propIntr_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -897,7 +897,7 @@ pub mod rgbd {
 		fn rgb_intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_propRgb_intr_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -948,7 +948,7 @@ pub mod rgbd {
 		fn volume_dims(&self) -> core::Vec3i {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_propVolumeDims_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -973,7 +973,7 @@ pub mod rgbd {
 		fn volume_pose(&self) -> core::Affine3f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_propVolumePose_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -1009,7 +1009,7 @@ pub mod rgbd {
 		fn light_pose(&self) -> core::Vec3f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_propLightPose_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -1229,7 +1229,7 @@ pub mod rgbd {
 		fn set_initial_volume_pose(&mut self, r: core::Matx33f, t: core::Vec3f) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_setInitialVolumePose_Matx33f_Vec3f(self.as_raw_mut_ColoredKinfu_Params(), &r, &t, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1242,7 +1242,7 @@ pub mod rgbd {
 		fn set_initial_volume_pose_1(&mut self, homogen_tf: core::Matx44f) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_Params_setInitialVolumePose_Matx44f(self.as_raw_mut_ColoredKinfu_Params(), &homogen_tf, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1309,7 +1309,7 @@ pub mod rgbd {
 		pub fn create(_params: &core::Ptr<crate::rgbd::Kinfu_Params>) -> Result<core::Ptr<crate::rgbd::Dynafu_DynaFu>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_create_const_PtrLParamsGR(_params.as_raw_PtrOfKinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Dynafu_DynaFu>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1326,7 +1326,7 @@ pub mod rgbd {
 		fn get_params(&self) -> Result<crate::rgbd::Kinfu_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_getParams_const(self.as_raw_Dynafu_DynaFu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::Kinfu_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1349,7 +1349,7 @@ pub mod rgbd {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_render_const_const__OutputArrayR_const_Matx44fR(self.as_raw_Dynafu_DynaFu(), image.as_raw__OutputArray(), &camera_pose, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1372,7 +1372,7 @@ pub mod rgbd {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_render_const_const__OutputArrayR(self.as_raw_Dynafu_DynaFu(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1391,7 +1391,7 @@ pub mod rgbd {
 			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_getCloud_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_Dynafu_DynaFu(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1407,7 +1407,7 @@ pub mod rgbd {
 			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_getPoints_const_const__OutputArrayR(self.as_raw_Dynafu_DynaFu(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1422,7 +1422,7 @@ pub mod rgbd {
 			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_getNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_Dynafu_DynaFu(), points.as_raw__InputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1432,7 +1432,7 @@ pub mod rgbd {
 		fn get_pose(&self) -> Result<core::Affine3f> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_getPose_const(self.as_raw_Dynafu_DynaFu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1441,7 +1441,7 @@ pub mod rgbd {
 		fn get_nodes_pos(&self) -> Result<core::Vector<core::Point3f>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_getNodesPos_const(self.as_raw_Dynafu_DynaFu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Point3f>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1453,7 +1453,7 @@ pub mod rgbd {
 			output_array_arg!(edges);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_marchCubes_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_Dynafu_DynaFu(), vertices.as_raw__OutputArray(), edges.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1471,7 +1471,7 @@ pub mod rgbd {
 		fn reset(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_reset(self.as_raw_mut_Dynafu_DynaFu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1490,7 +1490,7 @@ pub mod rgbd {
 			input_array_arg!(depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_update_const__InputArrayR(self.as_raw_mut_Dynafu_DynaFu(), depth.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1504,7 +1504,7 @@ pub mod rgbd {
 			output_array_arg!(norm_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_renderSurface_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_bool(self.as_raw_mut_Dynafu_DynaFu(), depth_image.as_raw__OutputArray(), vert_image.as_raw__OutputArray(), norm_image.as_raw__OutputArray(), warp, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1519,7 +1519,7 @@ pub mod rgbd {
 			output_array_arg!(norm_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_renderSurface_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Dynafu_DynaFu(), depth_image.as_raw__OutputArray(), vert_image.as_raw__OutputArray(), norm_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1560,7 +1560,7 @@ pub mod rgbd {
 		pub fn scale(self, pyr: i32) -> Result<crate::rgbd::Kinfu_Intr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Intr_scale_const_int(&self, pyr, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1569,7 +1569,7 @@ pub mod rgbd {
 		pub fn make_reprojector(self) -> Result<crate::rgbd::Kinfu_Intr_Reprojector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Intr_makeReprojector_const(&self, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1578,7 +1578,7 @@ pub mod rgbd {
 		pub fn make_projector(self) -> Result<crate::rgbd::Kinfu_Intr_Projector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Intr_makeProjector_const(&self, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1587,7 +1587,7 @@ pub mod rgbd {
 		pub fn get_mat(self) -> Result<core::Matx33f> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Intr_getMat_const(&self, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1596,7 +1596,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::Kinfu_Intr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Intr_Intr(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1605,7 +1605,7 @@ pub mod rgbd {
 		pub fn new(_fx: f32, _fy: f32, _cx: f32, _cy: f32) -> Result<crate::rgbd::Kinfu_Intr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Intr_Intr_float_float_float_float(_fx, _fy, _cx, _cy, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1614,7 +1614,7 @@ pub mod rgbd {
 		pub fn new_1(m: core::Matx33f) -> Result<crate::rgbd::Kinfu_Intr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Intr_Intr_Matx33f(&m, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1638,7 +1638,7 @@ pub mod rgbd {
 		pub fn new(intr: crate::rgbd::Kinfu_Intr) -> Result<crate::rgbd::Kinfu_Intr_Projector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Intr_Projector_Projector_Intr(&intr, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1663,7 +1663,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::Kinfu_Intr_Reprojector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Intr_Reprojector_Reprojector(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1672,7 +1672,7 @@ pub mod rgbd {
 		pub fn new(intr: crate::rgbd::Kinfu_Intr) -> Result<crate::rgbd::Kinfu_Intr_Reprojector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Intr_Reprojector_Reprojector_Intr(&intr, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1722,7 +1722,7 @@ pub mod rgbd {
 		pub fn create(_params: &core::Ptr<crate::rgbd::Kinfu_Params>) -> Result<core::Ptr<crate::rgbd::Kinfu_KinFu>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_create_const_PtrLParamsGR(_params.as_raw_PtrOfKinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_KinFu>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1739,7 +1739,7 @@ pub mod rgbd {
 		fn get_params(&self) -> Result<crate::rgbd::Kinfu_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_getParams_const(self.as_raw_Kinfu_KinFu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::Kinfu_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1757,7 +1757,7 @@ pub mod rgbd {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_render_const_const__OutputArrayR(self.as_raw_Kinfu_KinFu(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1776,7 +1776,7 @@ pub mod rgbd {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_render_const_const__OutputArrayR_const_Matx44fR(self.as_raw_Kinfu_KinFu(), image.as_raw__OutputArray(), &camera_pose, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1795,7 +1795,7 @@ pub mod rgbd {
 			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_getCloud_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_KinFu(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1811,7 +1811,7 @@ pub mod rgbd {
 			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_getPoints_const_const__OutputArrayR(self.as_raw_Kinfu_KinFu(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1826,7 +1826,7 @@ pub mod rgbd {
 			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_getNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_Kinfu_KinFu(), points.as_raw__InputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1836,7 +1836,7 @@ pub mod rgbd {
 		fn get_pose(&self) -> Result<core::Affine3f> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_getPose_const(self.as_raw_Kinfu_KinFu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1854,7 +1854,7 @@ pub mod rgbd {
 		fn reset(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_reset(self.as_raw_mut_Kinfu_KinFu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1873,7 +1873,7 @@ pub mod rgbd {
 			input_array_arg!(depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_update_const__InputArrayR(self.as_raw_mut_Kinfu_KinFu(), depth.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1918,7 +1918,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::Kinfu_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::Kinfu_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1933,7 +1933,7 @@ pub mod rgbd {
 		pub fn new(volume_initial_pose_rot: core::Matx33f, volume_initial_pose_transl: core::Vec3f) -> Result<crate::rgbd::Kinfu_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_Params_Matx33f_Vec3f(&volume_initial_pose_rot, &volume_initial_pose_transl, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::Kinfu_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1947,7 +1947,7 @@ pub mod rgbd {
 		pub fn new_1(volume_initial_pose: core::Matx44f) -> Result<crate::rgbd::Kinfu_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_Params_Matx44f(&volume_initial_pose, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::Kinfu_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1959,7 +1959,7 @@ pub mod rgbd {
 		pub fn default_params() -> Result<core::Ptr<crate::rgbd::Kinfu_Params>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_defaultParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_Params>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1972,7 +1972,7 @@ pub mod rgbd {
 		pub fn coarse_params() -> Result<core::Ptr<crate::rgbd::Kinfu_Params>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_coarseParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_Params>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1984,7 +1984,7 @@ pub mod rgbd {
 		pub fn hash_tsdf_params(is_coarse: bool) -> Result<core::Ptr<crate::rgbd::Kinfu_Params>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_hashTSDFParams_bool(is_coarse, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_Params>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1996,7 +1996,7 @@ pub mod rgbd {
 		pub fn colored_tsdf_params(is_coarse: bool) -> Result<core::Ptr<crate::rgbd::Kinfu_Params>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_coloredTSDFParams_bool(is_coarse, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_Params>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2013,7 +2013,7 @@ pub mod rgbd {
 		fn frame_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_propFrameSize_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2022,7 +2022,7 @@ pub mod rgbd {
 		fn volume_type(&self) -> crate::rgbd::Kinfu_VolumeType {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_propVolumeType_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2031,7 +2031,7 @@ pub mod rgbd {
 		fn intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_propIntr_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2040,7 +2040,7 @@ pub mod rgbd {
 		fn rgb_intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_propRgb_intr_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2091,7 +2091,7 @@ pub mod rgbd {
 		fn volume_dims(&self) -> core::Vec3i {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_propVolumeDims_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2116,7 +2116,7 @@ pub mod rgbd {
 		fn volume_pose(&self) -> core::Affine3f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_propVolumePose_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2152,7 +2152,7 @@ pub mod rgbd {
 		fn light_pose(&self) -> core::Vec3f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_propLightPose_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2366,7 +2366,7 @@ pub mod rgbd {
 		fn set_initial_volume_pose(&mut self, r: core::Matx33f, t: core::Vec3f) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_setInitialVolumePose_Matx33f_Vec3f(self.as_raw_mut_Kinfu_Params(), &r, &t, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2379,7 +2379,7 @@ pub mod rgbd {
 		fn set_initial_volume_pose_1(&mut self, homogen_tf: core::Matx44f) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Params_setInitialVolumePose_Matx44f(self.as_raw_mut_Kinfu_Params(), &homogen_tf, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2460,7 +2460,7 @@ pub mod rgbd {
 		fn pose(&self) -> core::Affine3f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_propPose_const(self.as_raw_Kinfu_Volume(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2476,7 +2476,7 @@ pub mod rgbd {
 			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_raycast_const_const_Matx44fR_const_IntrR_const_SizeR_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), &camera_pose, &intrinsics, &frame_size, points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2488,7 +2488,7 @@ pub mod rgbd {
 			output_array_arg!(colors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_raycast_const_const_Matx44fR_const_IntrR_const_SizeR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), &camera_pose, &intrinsics, &frame_size, points.as_raw__OutputArray(), normals.as_raw__OutputArray(), colors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2499,7 +2499,7 @@ pub mod rgbd {
 			output_array_arg!(_normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_fetchNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), points.as_raw__InputArray(), _normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2510,7 +2510,7 @@ pub mod rgbd {
 			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_fetchPointsNormals_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2522,7 +2522,7 @@ pub mod rgbd {
 			output_array_arg!(unnamed_2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_fetchPointsNormalsColors_const_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), unnamed.as_raw__OutputArray(), unnamed_1.as_raw__OutputArray(), unnamed_2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2540,7 +2540,7 @@ pub mod rgbd {
 			input_array_arg!(_depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_float_const_Matx44fR_const_IntrR_const_int(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics, frame_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2553,7 +2553,7 @@ pub mod rgbd {
 			input_array_arg!(_depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_float_const_Matx44fR_const_IntrR(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2566,7 +2566,7 @@ pub mod rgbd {
 			input_array_arg!(_rgb);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_const__InputArrayR_float_const_Matx44fR_const_IntrR_const_IntrR_const_int(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), _rgb.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics, &rgb_intrinsics, frame_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2580,7 +2580,7 @@ pub mod rgbd {
 			input_array_arg!(_rgb);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_const__InputArrayR_float_const_Matx44fR_const_IntrR_const_IntrR(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), _rgb.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics, &rgb_intrinsics, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2589,7 +2589,7 @@ pub mod rgbd {
 		fn reset(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_reset(self.as_raw_mut_Kinfu_Volume(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2648,7 +2648,7 @@ pub mod rgbd {
 		pub fn default_params(_volume_type: crate::rgbd::Kinfu_VolumeType) -> Result<core::Ptr<crate::rgbd::Kinfu_VolumeParams>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_VolumeParams_defaultParams_VolumeType(_volume_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_VolumeParams>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2660,7 +2660,7 @@ pub mod rgbd {
 		pub fn coarse_params(_volume_type: crate::rgbd::Kinfu_VolumeType) -> Result<core::Ptr<crate::rgbd::Kinfu_VolumeParams>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_VolumeParams_coarseParams_VolumeType(_volume_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_VolumeParams>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2678,7 +2678,7 @@ pub mod rgbd {
 		fn typ(&self) -> crate::rgbd::Kinfu_VolumeType {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_VolumeParams_propType_const(self.as_raw_Kinfu_VolumeParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2690,7 +2690,7 @@ pub mod rgbd {
 		fn resolution(&self) -> core::Vec3i {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_VolumeParams_propResolution_const(self.as_raw_Kinfu_VolumeParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2708,7 +2708,7 @@ pub mod rgbd {
 		fn pose(&self) -> core::Affine3f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_VolumeParams_propPose_const(self.as_raw_Kinfu_VolumeParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2892,7 +2892,7 @@ pub mod rgbd {
 		pub fn create() -> Result<core::Ptr<crate::rgbd::Kinfu_Detail_PoseGraph>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_Detail_PoseGraph>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2908,7 +2908,7 @@ pub mod rgbd {
 		fn is_node_exist(&self, node_id: size_t) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_isNodeExist_const_size_t(self.as_raw_Kinfu_Detail_PoseGraph(), node_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2917,7 +2917,7 @@ pub mod rgbd {
 		fn is_node_fixed(&self, node_id: size_t) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_isNodeFixed_const_size_t(self.as_raw_Kinfu_Detail_PoseGraph(), node_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2926,7 +2926,7 @@ pub mod rgbd {
 		fn get_node_pose(&self, node_id: size_t) -> Result<core::Affine3d> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_getNodePose_const_size_t(self.as_raw_Kinfu_Detail_PoseGraph(), node_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2935,7 +2935,7 @@ pub mod rgbd {
 		fn get_nodes_ids(&self) -> Result<core::Vector<size_t>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_getNodesIds_const(self.as_raw_Kinfu_Detail_PoseGraph(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2945,7 +2945,7 @@ pub mod rgbd {
 		fn get_num_nodes(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_getNumNodes_const(self.as_raw_Kinfu_Detail_PoseGraph(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2954,7 +2954,7 @@ pub mod rgbd {
 		fn get_edge_start(&self, i: size_t) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_getEdgeStart_const_size_t(self.as_raw_Kinfu_Detail_PoseGraph(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2963,7 +2963,7 @@ pub mod rgbd {
 		fn get_edge_end(&self, i: size_t) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_getEdgeEnd_const_size_t(self.as_raw_Kinfu_Detail_PoseGraph(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2972,7 +2972,7 @@ pub mod rgbd {
 		fn get_num_edges(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_getNumEdges_const(self.as_raw_Kinfu_Detail_PoseGraph(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2981,7 +2981,7 @@ pub mod rgbd {
 		fn is_valid(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_isValid_const(self.as_raw_Kinfu_Detail_PoseGraph(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2990,7 +2990,7 @@ pub mod rgbd {
 		fn calc_energy(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_calcEnergy_const(self.as_raw_Kinfu_Detail_PoseGraph(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3005,7 +3005,7 @@ pub mod rgbd {
 		fn add_node(&mut self, _node_id: size_t, _pose: core::Affine3d, fixed: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_addNode_size_t_const_Affine3dR_bool(self.as_raw_mut_Kinfu_Detail_PoseGraph(), _node_id, &_pose, fixed, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3014,7 +3014,7 @@ pub mod rgbd {
 		fn set_node_fixed(&mut self, node_id: size_t, fixed: bool) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_setNodeFixed_size_t_bool(self.as_raw_mut_Kinfu_Detail_PoseGraph(), node_id, fixed, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3025,7 +3025,7 @@ pub mod rgbd {
 		fn add_edge(&mut self, _source_node_id: size_t, _target_node_id: size_t, _transformation: core::Affine3f, _information: core::Matx66f) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_addEdge_size_t_size_t_const_Affine3fR_const_Matx66fR(self.as_raw_mut_Kinfu_Detail_PoseGraph(), _source_node_id, _target_node_id, &_transformation, &_information, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3037,7 +3037,7 @@ pub mod rgbd {
 		fn add_edge_def(&mut self, _source_node_id: size_t, _target_node_id: size_t, _transformation: core::Affine3f) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_addEdge_size_t_size_t_const_Affine3fR(self.as_raw_mut_Kinfu_Detail_PoseGraph(), _source_node_id, _target_node_id, &_transformation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3048,7 +3048,7 @@ pub mod rgbd {
 		fn optimize(&mut self, tc: core::TermCriteria) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_optimize_const_TermCriteriaR(self.as_raw_mut_Kinfu_Detail_PoseGraph(), &tc, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3060,7 +3060,7 @@ pub mod rgbd {
 		fn optimize_def(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_optimize(self.as_raw_mut_Kinfu_Detail_PoseGraph(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3134,7 +3134,7 @@ pub mod rgbd {
 		pub fn create(_params: &core::Ptr<crate::rgbd::Params>) -> Result<core::Ptr<crate::rgbd::LargeKinfu>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_create_const_PtrLParamsGR(_params.as_raw_PtrOfParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::LargeKinfu>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3150,7 +3150,7 @@ pub mod rgbd {
 		fn get_params(&self) -> Result<crate::rgbd::Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_getParams_const(self.as_raw_LargeKinfu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3161,7 +3161,7 @@ pub mod rgbd {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_render_const_const__OutputArrayR(self.as_raw_LargeKinfu(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3171,7 +3171,7 @@ pub mod rgbd {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_render_const_const__OutputArrayR_const_Matx44fR(self.as_raw_LargeKinfu(), image.as_raw__OutputArray(), &camera_pose, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3182,7 +3182,7 @@ pub mod rgbd {
 			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_getCloud_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_LargeKinfu(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3192,7 +3192,7 @@ pub mod rgbd {
 			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_getPoints_const_const__OutputArrayR(self.as_raw_LargeKinfu(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3203,7 +3203,7 @@ pub mod rgbd {
 			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_getNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_LargeKinfu(), points.as_raw__InputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3212,7 +3212,7 @@ pub mod rgbd {
 		fn get_pose(&self) -> Result<core::Affine3f> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_getPose_const(self.as_raw_LargeKinfu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3227,7 +3227,7 @@ pub mod rgbd {
 		fn reset(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_reset(self.as_raw_mut_LargeKinfu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3237,7 +3237,7 @@ pub mod rgbd {
 			input_array_arg!(depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_update_const__InputArrayR(self.as_raw_mut_LargeKinfu(), depth.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3292,7 +3292,7 @@ pub mod rgbd {
 		pub fn default_params() -> Result<core::Ptr<crate::rgbd::Params>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_Params_defaultParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Params>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3305,7 +3305,7 @@ pub mod rgbd {
 		pub fn coarse_params() -> Result<core::Ptr<crate::rgbd::Params>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_Params_coarseParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Params>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3317,7 +3317,7 @@ pub mod rgbd {
 		pub fn hash_tsdf_params(is_coarse: bool) -> Result<core::Ptr<crate::rgbd::Params>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_Params_hashTSDFParams_bool(is_coarse, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Params>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3334,7 +3334,7 @@ pub mod rgbd {
 		fn frame_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_Params_propFrameSize_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -3343,7 +3343,7 @@ pub mod rgbd {
 		fn intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_Params_propIntr_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -3352,7 +3352,7 @@ pub mod rgbd {
 		fn rgb_intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_Params_propRgb_intr_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -3408,7 +3408,7 @@ pub mod rgbd {
 		fn light_pose(&self) -> core::Vec3f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_Params_propLightPose_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -3632,7 +3632,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::LineMod_ColorGradient> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_ColorGradient_ColorGradient(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::LineMod_ColorGradient::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3648,7 +3648,7 @@ pub mod rgbd {
 		pub fn new(weak_threshold: f32, num_features: size_t, strong_threshold: f32) -> Result<crate::rgbd::LineMod_ColorGradient> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_ColorGradient_ColorGradient_float_size_t_float(weak_threshold, num_features, strong_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::LineMod_ColorGradient::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3658,7 +3658,7 @@ pub mod rgbd {
 		pub fn create(weak_threshold: f32, num_features: size_t, strong_threshold: f32) -> Result<core::Ptr<crate::rgbd::LineMod_ColorGradient>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_ColorGradient_create_float_size_t_float(weak_threshold, num_features, strong_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_ColorGradient>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3692,7 +3692,7 @@ pub mod rgbd {
 		fn name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_ColorGradient_name_const(self.as_raw_LineMod_ColorGradient(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3702,7 +3702,7 @@ pub mod rgbd {
 		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_ColorGradient_write_const_FileStorageR(self.as_raw_LineMod_ColorGradient(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3735,7 +3735,7 @@ pub mod rgbd {
 		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_ColorGradient_read_const_FileNodeR(self.as_raw_mut_LineMod_ColorGradient(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3797,7 +3797,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::LineMod_DepthNormal> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_DepthNormal_DepthNormal(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::LineMod_DepthNormal::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3815,7 +3815,7 @@ pub mod rgbd {
 		pub fn new(distance_threshold: i32, difference_threshold: i32, num_features: size_t, extract_threshold: i32) -> Result<crate::rgbd::LineMod_DepthNormal> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_DepthNormal_DepthNormal_int_int_size_t_int(distance_threshold, difference_threshold, num_features, extract_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::LineMod_DepthNormal::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3825,7 +3825,7 @@ pub mod rgbd {
 		pub fn create(distance_threshold: i32, difference_threshold: i32, num_features: size_t, extract_threshold: i32) -> Result<core::Ptr<crate::rgbd::LineMod_DepthNormal>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_DepthNormal_create_int_int_size_t_int(distance_threshold, difference_threshold, num_features, extract_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_DepthNormal>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3865,7 +3865,7 @@ pub mod rgbd {
 		fn name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_DepthNormal_name_const(self.as_raw_LineMod_DepthNormal(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3875,7 +3875,7 @@ pub mod rgbd {
 		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_DepthNormal_write_const_FileStorageR(self.as_raw_LineMod_DepthNormal(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3914,7 +3914,7 @@ pub mod rgbd {
 		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_DepthNormal_read_const_FileNodeR(self.as_raw_mut_LineMod_DepthNormal(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3978,7 +3978,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::LineMod_Detector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_Detector(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::LineMod_Detector::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3993,7 +3993,7 @@ pub mod rgbd {
 		pub fn new(modalities: &core::Vector<core::Ptr<crate::rgbd::LineMod_Modality>>, t_pyramid: &core::Vector<i32>) -> Result<crate::rgbd::LineMod_Detector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_Detector_const_vectorLPtrLModalityGGR_const_vectorLintGR(modalities.as_raw_VectorOfPtrOfLineMod_Modality(), t_pyramid.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::LineMod_Detector::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4028,7 +4028,7 @@ pub mod rgbd {
 			output_array_arg!(quantized_images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_match_const_const_vectorLMatGR_float_vectorLMatchGR_const_vectorLStringGR_const__OutputArrayR_const_vectorLMatGR(self.as_raw_LineMod_Detector(), sources.as_raw_VectorOfMat(), threshold, matches.as_raw_mut_VectorOfLineMod_Match(), class_ids.as_raw_VectorOfString(), quantized_images.as_raw__OutputArray(), masks.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4056,7 +4056,7 @@ pub mod rgbd {
 		fn match__def(&self, sources: &core::Vector<core::Mat>, threshold: f32, matches: &mut core::Vector<crate::rgbd::LineMod_Match>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_match_const_const_vectorLMatGR_float_vectorLMatchGR(self.as_raw_LineMod_Detector(), sources.as_raw_VectorOfMat(), threshold, matches.as_raw_mut_VectorOfLineMod_Match(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4069,7 +4069,7 @@ pub mod rgbd {
 		fn get_modalities(&self) -> Result<core::Vector<core::Ptr<crate::rgbd::LineMod_Modality>>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_getModalities_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Ptr<crate::rgbd::LineMod_Modality>>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4080,7 +4080,7 @@ pub mod rgbd {
 		fn get_t(&self, pyramid_level: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_getT_const_int(self.as_raw_LineMod_Detector(), pyramid_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4090,7 +4090,7 @@ pub mod rgbd {
 		fn pyramid_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_pyramidLevels_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4104,7 +4104,7 @@ pub mod rgbd {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_getTemplates_const_const_StringR_int(self.as_raw_LineMod_Detector(), class_id.opencv_as_extern(), template_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<crate::rgbd::LineMod_Template>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4114,7 +4114,7 @@ pub mod rgbd {
 		fn num_templates(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_numTemplates_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4124,7 +4124,7 @@ pub mod rgbd {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_numTemplates_const_const_StringR(self.as_raw_LineMod_Detector(), class_id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4133,7 +4133,7 @@ pub mod rgbd {
 		fn num_classes(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_numClasses_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4142,7 +4142,7 @@ pub mod rgbd {
 		fn class_ids(&self) -> Result<core::Vector<String>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_classIds_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4152,7 +4152,7 @@ pub mod rgbd {
 		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_write_const_FileStorageR(self.as_raw_LineMod_Detector(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4162,7 +4162,7 @@ pub mod rgbd {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_writeClass_const_const_StringR_FileStorageR(self.as_raw_LineMod_Detector(), class_id.opencv_as_extern(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4174,7 +4174,7 @@ pub mod rgbd {
 			extern_container_arg!(format);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_writeClasses_const_const_StringR(self.as_raw_LineMod_Detector(), format.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4186,7 +4186,7 @@ pub mod rgbd {
 		fn write_classes_def(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_writeClasses_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4213,7 +4213,7 @@ pub mod rgbd {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_addTemplate_const_vectorLMatGR_const_StringR_const_MatR_RectX(self.as_raw_mut_LineMod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_as_extern(), object_mask.as_raw_Mat(), bounding_box, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4235,7 +4235,7 @@ pub mod rgbd {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_addTemplate_const_vectorLMatGR_const_StringR_const_MatR(self.as_raw_mut_LineMod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_as_extern(), object_mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4246,7 +4246,7 @@ pub mod rgbd {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_addSyntheticTemplate_const_vectorLTemplateGR_const_StringR(self.as_raw_mut_LineMod_Detector(), templates.as_raw_VectorOfLineMod_Template(), class_id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4255,7 +4255,7 @@ pub mod rgbd {
 		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_read_const_FileNodeR(self.as_raw_mut_LineMod_Detector(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4267,7 +4267,7 @@ pub mod rgbd {
 			extern_container_arg!(class_id_override);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_readClass_const_FileNodeR_const_StringR(self.as_raw_mut_LineMod_Detector(), fn_.as_raw_FileNode(), class_id_override.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4280,7 +4280,7 @@ pub mod rgbd {
 		fn read_class_def(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_readClass_const_FileNodeR(self.as_raw_mut_LineMod_Detector(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4293,7 +4293,7 @@ pub mod rgbd {
 			extern_container_arg!(format);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_readClasses_const_vectorLStringGR_const_StringR(self.as_raw_mut_LineMod_Detector(), class_ids.as_raw_VectorOfString(), format.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4305,7 +4305,7 @@ pub mod rgbd {
 		fn read_classes_def(&mut self, class_ids: &core::Vector<String>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_readClasses_const_vectorLStringGR(self.as_raw_mut_LineMod_Detector(), class_ids.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4349,7 +4349,7 @@ pub mod rgbd {
 		pub fn write(self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Feature_write_const_FileStorageR(&self, fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4358,7 +4358,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::LineMod_Feature> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Feature_Feature(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4367,7 +4367,7 @@ pub mod rgbd {
 		pub fn new(x: i32, y: i32, label: i32) -> Result<crate::rgbd::LineMod_Feature> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Feature_Feature_int_int_int(x, y, label, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4376,7 +4376,7 @@ pub mod rgbd {
 		pub fn read(self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Feature_read_const_FileNodeR(&self, fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4404,7 +4404,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::LineMod_Match> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Match_Match(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::LineMod_Match::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4415,7 +4415,7 @@ pub mod rgbd {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Match_Match_int_int_float_const_StringR_int(x, y, similarity, class_id.opencv_as_extern(), template_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::LineMod_Match::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4463,7 +4463,7 @@ pub mod rgbd {
 		fn less_than(&self, rhs: &impl crate::rgbd::LineMod_MatchTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Match_operatorL_const_const_MatchR(self.as_raw_LineMod_Match(), rhs.as_raw_LineMod_Match(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4472,7 +4472,7 @@ pub mod rgbd {
 		fn equals(&self, rhs: &impl crate::rgbd::LineMod_MatchTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Match_operatorEQ_const_const_MatchR(self.as_raw_LineMod_Match(), rhs.as_raw_LineMod_Match(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4575,7 +4575,7 @@ pub mod rgbd {
 			extern_container_arg!(modality_type);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_create_const_StringR(modality_type.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_Modality>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4586,7 +4586,7 @@ pub mod rgbd {
 		pub fn create_1(fn_: &impl core::FileNodeTraitConst) -> Result<core::Ptr<crate::rgbd::LineMod_Modality>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_create_const_FileNodeR(fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_Modality>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4610,7 +4610,7 @@ pub mod rgbd {
 		fn process(&self, src: &impl core::MatTraitConst, mask: &impl core::MatTraitConst) -> Result<core::Ptr<crate::rgbd::LineMod_QuantizedPyramid>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_process_const_const_MatR_const_MatR(self.as_raw_LineMod_Modality(), src.as_raw_Mat(), mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_QuantizedPyramid>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4629,7 +4629,7 @@ pub mod rgbd {
 		fn process_def(&self, src: &impl core::MatTraitConst) -> Result<core::Ptr<crate::rgbd::LineMod_QuantizedPyramid>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_process_const_const_MatR(self.as_raw_LineMod_Modality(), src.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_QuantizedPyramid>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4639,7 +4639,7 @@ pub mod rgbd {
 		fn name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_name_const(self.as_raw_LineMod_Modality(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4649,7 +4649,7 @@ pub mod rgbd {
 		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_write_const_FileStorageR(self.as_raw_LineMod_Modality(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4664,7 +4664,7 @@ pub mod rgbd {
 		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_read_const_FileNodeR(self.as_raw_mut_LineMod_Modality(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4721,7 +4721,7 @@ pub mod rgbd {
 		fn quantize(&self, dst: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_QuantizedPyramid_quantize_const_MatR(self.as_raw_LineMod_QuantizedPyramid(), dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4733,7 +4733,7 @@ pub mod rgbd {
 		fn extract_template(&self, templ: &mut impl crate::rgbd::LineMod_TemplateTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_QuantizedPyramid_extractTemplate_const_TemplateR(self.as_raw_LineMod_QuantizedPyramid(), templ.as_raw_mut_LineMod_Template(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4751,7 +4751,7 @@ pub mod rgbd {
 		fn pyr_down(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_QuantizedPyramid_pyrDown(self.as_raw_mut_LineMod_QuantizedPyramid(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4835,7 +4835,7 @@ pub mod rgbd {
 		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Template_write_const_FileStorageR(self.as_raw_LineMod_Template(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4874,7 +4874,7 @@ pub mod rgbd {
 		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Template_read_const_FileNodeR(self.as_raw_mut_LineMod_Template(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4939,7 +4939,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::DepthCleaner> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_DepthCleaner(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::DepthCleaner::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4958,7 +4958,7 @@ pub mod rgbd {
 		pub fn new(depth: i32, window_size: i32, method: i32) -> Result<crate::rgbd::DepthCleaner> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_DepthCleaner_int_int_int(depth, window_size, method, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::DepthCleaner::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4978,7 +4978,7 @@ pub mod rgbd {
 		pub fn new_def(depth: i32) -> Result<crate::rgbd::DepthCleaner> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_DepthCleaner_int(depth, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::DepthCleaner::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4991,7 +4991,7 @@ pub mod rgbd {
 		pub fn create(depth: i32, window_size: i32, method: i32) -> Result<core::Ptr<crate::rgbd::DepthCleaner>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_create_int_int_int(depth, window_size, method, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::DepthCleaner>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5005,7 +5005,7 @@ pub mod rgbd {
 		pub fn create_def(depth: i32) -> Result<core::Ptr<crate::rgbd::DepthCleaner>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_create_int(depth, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::DepthCleaner>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5027,7 +5027,7 @@ pub mod rgbd {
 			output_array_arg!(depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_operator___const_const__InputArrayR_const__OutputArrayR(self.as_raw_DepthCleaner(), points.as_raw__InputArray(), depth.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5038,7 +5038,7 @@ pub mod rgbd {
 		fn initialize(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_initialize_const(self.as_raw_DepthCleaner(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5047,7 +5047,7 @@ pub mod rgbd {
 		fn get_window_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_getWindowSize_const(self.as_raw_DepthCleaner(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5056,7 +5056,7 @@ pub mod rgbd {
 		fn get_depth(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_getDepth_const(self.as_raw_DepthCleaner(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5065,7 +5065,7 @@ pub mod rgbd {
 		fn get_method(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_getMethod_const(self.as_raw_DepthCleaner(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5080,7 +5080,7 @@ pub mod rgbd {
 		fn set_window_size(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_setWindowSize_int(self.as_raw_mut_DepthCleaner(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5089,7 +5089,7 @@ pub mod rgbd {
 		fn set_depth(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_setDepth_int(self.as_raw_mut_DepthCleaner(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5098,7 +5098,7 @@ pub mod rgbd {
 		fn set_method(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_setMethod_int(self.as_raw_mut_DepthCleaner(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5165,7 +5165,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::FastICPOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_FastICPOdometry(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::FastICPOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5194,7 +5194,7 @@ pub mod rgbd {
 		pub fn new(camera_matrix: &impl core::MatTraitConst, max_dist_diff: f32, angle_threshold: f32, sigma_depth: f32, sigma_spatial: f32, kernel_size: i32, iter_counts: &core::Vector<i32>) -> Result<crate::rgbd::FastICPOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_FastICPOdometry_const_MatR_float_float_float_float_int_const_vectorLintGR(camera_matrix.as_raw_Mat(), max_dist_diff, angle_threshold, sigma_depth, sigma_spatial, kernel_size, iter_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::FastICPOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5224,7 +5224,7 @@ pub mod rgbd {
 		pub fn new_def(camera_matrix: &impl core::MatTraitConst) -> Result<crate::rgbd::FastICPOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_FastICPOdometry_const_MatR(camera_matrix.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::FastICPOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5241,7 +5241,7 @@ pub mod rgbd {
 		pub fn create(camera_matrix: &impl core::MatTraitConst, max_dist_diff: f32, angle_threshold: f32, sigma_depth: f32, sigma_spatial: f32, kernel_size: i32, iter_counts: &core::Vector<i32>) -> Result<core::Ptr<crate::rgbd::FastICPOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_create_const_MatR_float_float_float_float_int_const_vectorLintGR(camera_matrix.as_raw_Mat(), max_dist_diff, angle_threshold, sigma_depth, sigma_spatial, kernel_size, iter_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::FastICPOdometry>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5259,7 +5259,7 @@ pub mod rgbd {
 		pub fn create_def(camera_matrix: &impl core::MatTraitConst) -> Result<core::Ptr<crate::rgbd::FastICPOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_create_const_MatR(camera_matrix.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::FastICPOdometry>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5275,7 +5275,7 @@ pub mod rgbd {
 		fn prepare_frame_cache(&self, frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_prepareFrameCache_const_PtrLOdometryFrameGR_int(self.as_raw_FastICPOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5284,7 +5284,7 @@ pub mod rgbd {
 		fn get_camera_matrix(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_getCameraMatrix_const(self.as_raw_FastICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5294,7 +5294,7 @@ pub mod rgbd {
 		fn get_max_dist_diff(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_getMaxDistDiff_const(self.as_raw_FastICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5303,7 +5303,7 @@ pub mod rgbd {
 		fn get_angle_threshold(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_getAngleThreshold_const(self.as_raw_FastICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5312,7 +5312,7 @@ pub mod rgbd {
 		fn get_sigma_depth(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_getSigmaDepth_const(self.as_raw_FastICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5321,7 +5321,7 @@ pub mod rgbd {
 		fn get_sigma_spatial(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_getSigmaSpatial_const(self.as_raw_FastICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5330,7 +5330,7 @@ pub mod rgbd {
 		fn get_kernel_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_getKernelSize_const(self.as_raw_FastICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5339,7 +5339,7 @@ pub mod rgbd {
 		fn get_iteration_counts(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_getIterationCounts_const(self.as_raw_FastICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5349,7 +5349,7 @@ pub mod rgbd {
 		fn get_transform_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_getTransformType_const(self.as_raw_FastICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5364,7 +5364,7 @@ pub mod rgbd {
 		fn set_camera_matrix(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_setCameraMatrix_const_MatR(self.as_raw_mut_FastICPOdometry(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5373,7 +5373,7 @@ pub mod rgbd {
 		fn set_max_dist_diff(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_setMaxDistDiff_float(self.as_raw_mut_FastICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5382,7 +5382,7 @@ pub mod rgbd {
 		fn set_angle_threshold(&mut self, f: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_setAngleThreshold_float(self.as_raw_mut_FastICPOdometry(), f, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5391,7 +5391,7 @@ pub mod rgbd {
 		fn set_sigma_depth(&mut self, f: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_setSigmaDepth_float(self.as_raw_mut_FastICPOdometry(), f, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5400,7 +5400,7 @@ pub mod rgbd {
 		fn set_sigma_spatial(&mut self, f: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_setSigmaSpatial_float(self.as_raw_mut_FastICPOdometry(), f, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5409,7 +5409,7 @@ pub mod rgbd {
 		fn set_kernel_size(&mut self, f: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_setKernelSize_int(self.as_raw_mut_FastICPOdometry(), f, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5418,7 +5418,7 @@ pub mod rgbd {
 		fn set_iteration_counts(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_setIterationCounts_const_MatR(self.as_raw_mut_FastICPOdometry(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5427,7 +5427,7 @@ pub mod rgbd {
 		fn set_transform_type(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_setTransformType_int(self.as_raw_mut_FastICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5498,7 +5498,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::ICPOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_ICPOdometry(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::ICPOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5526,7 +5526,7 @@ pub mod rgbd {
 		pub fn new(camera_matrix: &impl core::MatTraitConst, min_depth: f32, max_depth: f32, max_depth_diff: f32, max_points_part: f32, iter_counts: &core::Vector<i32>, transform_type: i32) -> Result<crate::rgbd::ICPOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_ICPOdometry_const_MatR_float_float_float_float_const_vectorLintGR_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), transform_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::ICPOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5555,7 +5555,7 @@ pub mod rgbd {
 		pub fn new_def(camera_matrix: &impl core::MatTraitConst) -> Result<crate::rgbd::ICPOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_ICPOdometry_const_MatR(camera_matrix.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::ICPOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5573,7 +5573,7 @@ pub mod rgbd {
 		pub fn create(camera_matrix: &impl core::MatTraitConst, min_depth: f32, max_depth: f32, max_depth_diff: f32, max_points_part: f32, iter_counts: &core::Vector<i32>, transform_type: i32) -> Result<core::Ptr<crate::rgbd::ICPOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_create_const_MatR_float_float_float_float_const_vectorLintGR_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), transform_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::ICPOdometry>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5592,7 +5592,7 @@ pub mod rgbd {
 		pub fn create_def() -> Result<core::Ptr<crate::rgbd::ICPOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::ICPOdometry>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5608,7 +5608,7 @@ pub mod rgbd {
 		fn prepare_frame_cache(&self, frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_prepareFrameCache_const_PtrLOdometryFrameGR_int(self.as_raw_ICPOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5617,7 +5617,7 @@ pub mod rgbd {
 		fn get_camera_matrix(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_getCameraMatrix_const(self.as_raw_ICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5627,7 +5627,7 @@ pub mod rgbd {
 		fn get_min_depth(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_getMinDepth_const(self.as_raw_ICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5636,7 +5636,7 @@ pub mod rgbd {
 		fn get_max_depth(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_getMaxDepth_const(self.as_raw_ICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5645,7 +5645,7 @@ pub mod rgbd {
 		fn get_max_depth_diff(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_getMaxDepthDiff_const(self.as_raw_ICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5654,7 +5654,7 @@ pub mod rgbd {
 		fn get_iteration_counts(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_getIterationCounts_const(self.as_raw_ICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5664,7 +5664,7 @@ pub mod rgbd {
 		fn get_max_points_part(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_getMaxPointsPart_const(self.as_raw_ICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5673,7 +5673,7 @@ pub mod rgbd {
 		fn get_transform_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_getTransformType_const(self.as_raw_ICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5682,7 +5682,7 @@ pub mod rgbd {
 		fn get_max_translation(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_getMaxTranslation_const(self.as_raw_ICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5691,7 +5691,7 @@ pub mod rgbd {
 		fn get_max_rotation(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_getMaxRotation_const(self.as_raw_ICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5700,7 +5700,7 @@ pub mod rgbd {
 		fn get_normals_computer(&self) -> Result<core::Ptr<crate::rgbd::RgbdNormals>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_getNormalsComputer_const(self.as_raw_ICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdNormals>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5716,7 +5716,7 @@ pub mod rgbd {
 		fn set_camera_matrix(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_setCameraMatrix_const_MatR(self.as_raw_mut_ICPOdometry(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5725,7 +5725,7 @@ pub mod rgbd {
 		fn set_min_depth(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_setMinDepth_double(self.as_raw_mut_ICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5734,7 +5734,7 @@ pub mod rgbd {
 		fn set_max_depth(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_setMaxDepth_double(self.as_raw_mut_ICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5743,7 +5743,7 @@ pub mod rgbd {
 		fn set_max_depth_diff(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_setMaxDepthDiff_double(self.as_raw_mut_ICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5752,7 +5752,7 @@ pub mod rgbd {
 		fn set_iteration_counts(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_setIterationCounts_const_MatR(self.as_raw_mut_ICPOdometry(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5761,7 +5761,7 @@ pub mod rgbd {
 		fn set_max_points_part(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_setMaxPointsPart_double(self.as_raw_mut_ICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5770,7 +5770,7 @@ pub mod rgbd {
 		fn set_transform_type(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_setTransformType_int(self.as_raw_mut_ICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5779,7 +5779,7 @@ pub mod rgbd {
 		fn set_max_translation(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_setMaxTranslation_double(self.as_raw_mut_ICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5788,7 +5788,7 @@ pub mod rgbd {
 		fn set_max_rotation(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_setMaxRotation_double(self.as_raw_mut_ICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5858,7 +5858,7 @@ pub mod rgbd {
 		pub fn default_min_depth() -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_DEFAULT_MIN_DEPTH(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5867,7 +5867,7 @@ pub mod rgbd {
 		pub fn default_max_depth() -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_DEFAULT_MAX_DEPTH(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5876,7 +5876,7 @@ pub mod rgbd {
 		pub fn default_max_depth_diff() -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_DEFAULT_MAX_DEPTH_DIFF(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5885,7 +5885,7 @@ pub mod rgbd {
 		pub fn default_max_points_part() -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_DEFAULT_MAX_POINTS_PART(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5894,7 +5894,7 @@ pub mod rgbd {
 		pub fn default_max_translation() -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_DEFAULT_MAX_TRANSLATION(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5903,7 +5903,7 @@ pub mod rgbd {
 		pub fn default_max_rotation() -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_DEFAULT_MAX_ROTATION(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5913,7 +5913,7 @@ pub mod rgbd {
 			extern_container_arg!(odometry_type);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_create_const_StringR(odometry_type.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::Odometry>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5951,7 +5951,7 @@ pub mod rgbd {
 			output_array_arg!(rt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_compute_const_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR_const_MatR(self.as_raw_Odometry(), src_image.as_raw_Mat(), src_depth.as_raw_Mat(), src_mask.as_raw_Mat(), dst_image.as_raw_Mat(), dst_depth.as_raw_Mat(), dst_mask.as_raw_Mat(), rt.as_raw__OutputArray(), init_rt.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5983,7 +5983,7 @@ pub mod rgbd {
 			output_array_arg!(rt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_compute_const_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR(self.as_raw_Odometry(), src_image.as_raw_Mat(), src_depth.as_raw_Mat(), src_mask.as_raw_Mat(), dst_image.as_raw_Mat(), dst_depth.as_raw_Mat(), dst_mask.as_raw_Mat(), rt.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5998,7 +5998,7 @@ pub mod rgbd {
 			output_array_arg!(rt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_compute_const_PtrLOdometryFrameGR_PtrLOdometryFrameGR_const__OutputArrayR_const_MatR(self.as_raw_Odometry(), src_frame.as_raw_mut_PtrOfOdometryFrame(), dst_frame.as_raw_mut_PtrOfOdometryFrame(), rt.as_raw__OutputArray(), init_rt.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6014,7 +6014,7 @@ pub mod rgbd {
 			output_array_arg!(rt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_compute_const_PtrLOdometryFrameGR_PtrLOdometryFrameGR_const__OutputArrayR(self.as_raw_Odometry(), src_frame.as_raw_mut_PtrOfOdometryFrame(), dst_frame.as_raw_mut_PtrOfOdometryFrame(), rt.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6029,7 +6029,7 @@ pub mod rgbd {
 		fn prepare_frame_cache(&self, frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_prepareFrameCache_const_PtrLOdometryFrameGR_int(self.as_raw_Odometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6040,7 +6040,7 @@ pub mod rgbd {
 		fn get_camera_matrix(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_getCameraMatrix_const(self.as_raw_Odometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6052,7 +6052,7 @@ pub mod rgbd {
 		fn get_transform_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_getTransformType_const(self.as_raw_Odometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6069,7 +6069,7 @@ pub mod rgbd {
 		fn set_camera_matrix(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_setCameraMatrix_const_MatR(self.as_raw_mut_Odometry(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6080,7 +6080,7 @@ pub mod rgbd {
 		fn set_transform_type(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_setTransformType_int(self.as_raw_mut_Odometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6148,7 +6148,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::OdometryFrame> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_OdometryFrame_OdometryFrame(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::OdometryFrame::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6162,7 +6162,7 @@ pub mod rgbd {
 		pub fn new(image: &impl core::MatTraitConst, depth: &impl core::MatTraitConst, mask: &impl core::MatTraitConst, normals: &impl core::MatTraitConst, id: i32) -> Result<crate::rgbd::OdometryFrame> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_OdometryFrame_OdometryFrame_const_MatR_const_MatR_const_MatR_const_MatR_int(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), normals.as_raw_Mat(), id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::OdometryFrame::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6177,7 +6177,7 @@ pub mod rgbd {
 		pub fn new_def(image: &impl core::MatTraitConst, depth: &impl core::MatTraitConst) -> Result<crate::rgbd::OdometryFrame> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_OdometryFrame_OdometryFrame_const_MatR_const_MatR(image.as_raw_Mat(), depth.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::OdometryFrame::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6193,7 +6193,7 @@ pub mod rgbd {
 		pub fn create(image: &impl core::MatTraitConst, depth: &impl core::MatTraitConst, mask: &impl core::MatTraitConst, normals: &impl core::MatTraitConst, id: i32) -> Result<core::Ptr<crate::rgbd::OdometryFrame>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_OdometryFrame_create_const_MatR_const_MatR_const_MatR_const_MatR_int(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), normals.as_raw_Mat(), id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::OdometryFrame>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6210,7 +6210,7 @@ pub mod rgbd {
 		pub fn create_def() -> Result<core::Ptr<crate::rgbd::OdometryFrame>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_OdometryFrame_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::OdometryFrame>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6349,7 +6349,7 @@ pub mod rgbd {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_OdometryFrame_release(self.as_raw_mut_OdometryFrame(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6358,7 +6358,7 @@ pub mod rgbd {
 		fn release_pyramids(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_OdometryFrame_releasePyramids(self.as_raw_mut_OdometryFrame(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6430,7 +6430,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::RgbdFrame> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdFrame_RgbdFrame(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdFrame::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6444,7 +6444,7 @@ pub mod rgbd {
 		pub fn new(image: &impl core::MatTraitConst, depth: &impl core::MatTraitConst, mask: &impl core::MatTraitConst, normals: &impl core::MatTraitConst, id: i32) -> Result<crate::rgbd::RgbdFrame> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdFrame_RgbdFrame_const_MatR_const_MatR_const_MatR_const_MatR_int(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), normals.as_raw_Mat(), id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdFrame::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6459,7 +6459,7 @@ pub mod rgbd {
 		pub fn new_def(image: &impl core::MatTraitConst, depth: &impl core::MatTraitConst) -> Result<crate::rgbd::RgbdFrame> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdFrame_RgbdFrame_const_MatR_const_MatR(image.as_raw_Mat(), depth.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdFrame::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6475,7 +6475,7 @@ pub mod rgbd {
 		pub fn create(image: &impl core::MatTraitConst, depth: &impl core::MatTraitConst, mask: &impl core::MatTraitConst, normals: &impl core::MatTraitConst, id: i32) -> Result<core::Ptr<crate::rgbd::RgbdFrame>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdFrame_create_const_MatR_const_MatR_const_MatR_const_MatR_int(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), normals.as_raw_Mat(), id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdFrame>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6492,7 +6492,7 @@ pub mod rgbd {
 		pub fn create_def() -> Result<core::Ptr<crate::rgbd::RgbdFrame>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdFrame_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdFrame>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6578,7 +6578,7 @@ pub mod rgbd {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdFrame_release(self.as_raw_mut_RgbdFrame(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6631,7 +6631,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::RgbdICPOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_RgbdICPOdometry(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdICPOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6662,7 +6662,7 @@ pub mod rgbd {
 		pub fn new(camera_matrix: &impl core::MatTraitConst, min_depth: f32, max_depth: f32, max_depth_diff: f32, max_points_part: f32, iter_counts: &core::Vector<i32>, min_gradient_magnitudes: &core::Vector<f32>, transform_type: i32) -> Result<crate::rgbd::RgbdICPOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_RgbdICPOdometry_const_MatR_float_float_float_float_const_vectorLintGR_const_vectorLfloatGR_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), transform_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdICPOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6694,7 +6694,7 @@ pub mod rgbd {
 		pub fn new_def(camera_matrix: &impl core::MatTraitConst) -> Result<crate::rgbd::RgbdICPOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_RgbdICPOdometry_const_MatR(camera_matrix.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdICPOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6713,7 +6713,7 @@ pub mod rgbd {
 		pub fn create(camera_matrix: &impl core::MatTraitConst, min_depth: f32, max_depth: f32, max_depth_diff: f32, max_points_part: f32, iter_counts: &core::Vector<i32>, min_gradient_magnitudes: &core::Vector<f32>, transform_type: i32) -> Result<core::Ptr<crate::rgbd::RgbdICPOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_create_const_MatR_float_float_float_float_const_vectorLintGR_const_vectorLfloatGR_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), transform_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdICPOdometry>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6733,7 +6733,7 @@ pub mod rgbd {
 		pub fn create_def() -> Result<core::Ptr<crate::rgbd::RgbdICPOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdICPOdometry>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6749,7 +6749,7 @@ pub mod rgbd {
 		fn prepare_frame_cache(&self, frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_prepareFrameCache_const_PtrLOdometryFrameGR_int(self.as_raw_RgbdICPOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6758,7 +6758,7 @@ pub mod rgbd {
 		fn get_camera_matrix(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_getCameraMatrix_const(self.as_raw_RgbdICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6768,7 +6768,7 @@ pub mod rgbd {
 		fn get_min_depth(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_getMinDepth_const(self.as_raw_RgbdICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6777,7 +6777,7 @@ pub mod rgbd {
 		fn get_max_depth(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_getMaxDepth_const(self.as_raw_RgbdICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6786,7 +6786,7 @@ pub mod rgbd {
 		fn get_max_depth_diff(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_getMaxDepthDiff_const(self.as_raw_RgbdICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6795,7 +6795,7 @@ pub mod rgbd {
 		fn get_max_points_part(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_getMaxPointsPart_const(self.as_raw_RgbdICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6804,7 +6804,7 @@ pub mod rgbd {
 		fn get_iteration_counts(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_getIterationCounts_const(self.as_raw_RgbdICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6814,7 +6814,7 @@ pub mod rgbd {
 		fn get_min_gradient_magnitudes(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_getMinGradientMagnitudes_const(self.as_raw_RgbdICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6824,7 +6824,7 @@ pub mod rgbd {
 		fn get_transform_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_getTransformType_const(self.as_raw_RgbdICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6833,7 +6833,7 @@ pub mod rgbd {
 		fn get_max_translation(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_getMaxTranslation_const(self.as_raw_RgbdICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6842,7 +6842,7 @@ pub mod rgbd {
 		fn get_max_rotation(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_getMaxRotation_const(self.as_raw_RgbdICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6851,7 +6851,7 @@ pub mod rgbd {
 		fn get_normals_computer(&self) -> Result<core::Ptr<crate::rgbd::RgbdNormals>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_getNormalsComputer_const(self.as_raw_RgbdICPOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdNormals>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6867,7 +6867,7 @@ pub mod rgbd {
 		fn set_camera_matrix(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_setCameraMatrix_const_MatR(self.as_raw_mut_RgbdICPOdometry(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6876,7 +6876,7 @@ pub mod rgbd {
 		fn set_min_depth(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_setMinDepth_double(self.as_raw_mut_RgbdICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6885,7 +6885,7 @@ pub mod rgbd {
 		fn set_max_depth(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_setMaxDepth_double(self.as_raw_mut_RgbdICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6894,7 +6894,7 @@ pub mod rgbd {
 		fn set_max_depth_diff(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_setMaxDepthDiff_double(self.as_raw_mut_RgbdICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6903,7 +6903,7 @@ pub mod rgbd {
 		fn set_max_points_part(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_setMaxPointsPart_double(self.as_raw_mut_RgbdICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6912,7 +6912,7 @@ pub mod rgbd {
 		fn set_iteration_counts(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_setIterationCounts_const_MatR(self.as_raw_mut_RgbdICPOdometry(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6921,7 +6921,7 @@ pub mod rgbd {
 		fn set_min_gradient_magnitudes(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_setMinGradientMagnitudes_const_MatR(self.as_raw_mut_RgbdICPOdometry(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6930,7 +6930,7 @@ pub mod rgbd {
 		fn set_transform_type(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_setTransformType_int(self.as_raw_mut_RgbdICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6939,7 +6939,7 @@ pub mod rgbd {
 		fn set_max_translation(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_setMaxTranslation_double(self.as_raw_mut_RgbdICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6948,7 +6948,7 @@ pub mod rgbd {
 		fn set_max_rotation(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_setMaxRotation_double(self.as_raw_mut_RgbdICPOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7026,7 +7026,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::RgbdNormals> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_RgbdNormals(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdNormals::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7049,7 +7049,7 @@ pub mod rgbd {
 			input_array_arg!(k);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_RgbdNormals_int_int_int_const__InputArrayR_int_int(rows, cols, depth, k.as_raw__InputArray(), window_size, method, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdNormals::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7073,7 +7073,7 @@ pub mod rgbd {
 			input_array_arg!(k);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_RgbdNormals_int_int_int_const__InputArrayR(rows, cols, depth, k.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdNormals::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7087,7 +7087,7 @@ pub mod rgbd {
 			input_array_arg!(k);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_create_int_int_int_const__InputArrayR_int_int(rows, cols, depth, k.as_raw__InputArray(), window_size, method, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdNormals>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7102,7 +7102,7 @@ pub mod rgbd {
 			input_array_arg!(k);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_create_int_int_int_const__InputArrayR(rows, cols, depth, k.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdNormals>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7124,7 +7124,7 @@ pub mod rgbd {
 			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_operator___const_const__InputArrayR_const__OutputArrayR(self.as_raw_RgbdNormals(), points.as_raw__InputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7135,7 +7135,7 @@ pub mod rgbd {
 		fn initialize(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_initialize_const(self.as_raw_RgbdNormals(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7144,7 +7144,7 @@ pub mod rgbd {
 		fn get_rows(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_getRows_const(self.as_raw_RgbdNormals(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7153,7 +7153,7 @@ pub mod rgbd {
 		fn get_cols(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_getCols_const(self.as_raw_RgbdNormals(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7162,7 +7162,7 @@ pub mod rgbd {
 		fn get_window_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_getWindowSize_const(self.as_raw_RgbdNormals(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7171,7 +7171,7 @@ pub mod rgbd {
 		fn get_depth(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_getDepth_const(self.as_raw_RgbdNormals(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7180,7 +7180,7 @@ pub mod rgbd {
 		fn get_k(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_getK_const(self.as_raw_RgbdNormals(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7190,7 +7190,7 @@ pub mod rgbd {
 		fn get_method(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_getMethod_const(self.as_raw_RgbdNormals(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7205,7 +7205,7 @@ pub mod rgbd {
 		fn set_rows(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_setRows_int(self.as_raw_mut_RgbdNormals(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7214,7 +7214,7 @@ pub mod rgbd {
 		fn set_cols(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_setCols_int(self.as_raw_mut_RgbdNormals(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7223,7 +7223,7 @@ pub mod rgbd {
 		fn set_window_size(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_setWindowSize_int(self.as_raw_mut_RgbdNormals(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7232,7 +7232,7 @@ pub mod rgbd {
 		fn set_depth(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_setDepth_int(self.as_raw_mut_RgbdNormals(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7241,7 +7241,7 @@ pub mod rgbd {
 		fn set_k(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_setK_const_MatR(self.as_raw_mut_RgbdNormals(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7250,7 +7250,7 @@ pub mod rgbd {
 		fn set_method(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_setMethod_int(self.as_raw_mut_RgbdNormals(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7309,7 +7309,7 @@ pub mod rgbd {
 		pub fn default() -> Result<crate::rgbd::RgbdOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_RgbdOdometry(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7340,7 +7340,7 @@ pub mod rgbd {
 		pub fn new(camera_matrix: &impl core::MatTraitConst, min_depth: f32, max_depth: f32, max_depth_diff: f32, iter_counts: &core::Vector<i32>, min_gradient_magnitudes: &core::Vector<f32>, max_points_part: f32, transform_type: i32) -> Result<crate::rgbd::RgbdOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_RgbdOdometry_const_MatR_float_float_float_const_vectorLintGR_const_vectorLfloatGR_float_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), max_points_part, transform_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7372,7 +7372,7 @@ pub mod rgbd {
 		pub fn new_def(camera_matrix: &impl core::MatTraitConst) -> Result<crate::rgbd::RgbdOdometry> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_RgbdOdometry_const_MatR(camera_matrix.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdOdometry::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7391,7 +7391,7 @@ pub mod rgbd {
 		pub fn create(camera_matrix: &impl core::MatTraitConst, min_depth: f32, max_depth: f32, max_depth_diff: f32, iter_counts: &core::Vector<i32>, min_gradient_magnitudes: &core::Vector<f32>, max_points_part: f32, transform_type: i32) -> Result<core::Ptr<crate::rgbd::RgbdOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_create_const_MatR_float_float_float_const_vectorLintGR_const_vectorLfloatGR_float_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), max_points_part, transform_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdOdometry>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7411,7 +7411,7 @@ pub mod rgbd {
 		pub fn create_def() -> Result<core::Ptr<crate::rgbd::RgbdOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdOdometry>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7427,7 +7427,7 @@ pub mod rgbd {
 		fn prepare_frame_cache(&self, frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_prepareFrameCache_const_PtrLOdometryFrameGR_int(self.as_raw_RgbdOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7436,7 +7436,7 @@ pub mod rgbd {
 		fn get_camera_matrix(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_getCameraMatrix_const(self.as_raw_RgbdOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7446,7 +7446,7 @@ pub mod rgbd {
 		fn get_min_depth(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_getMinDepth_const(self.as_raw_RgbdOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7455,7 +7455,7 @@ pub mod rgbd {
 		fn get_max_depth(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_getMaxDepth_const(self.as_raw_RgbdOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7464,7 +7464,7 @@ pub mod rgbd {
 		fn get_max_depth_diff(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_getMaxDepthDiff_const(self.as_raw_RgbdOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7473,7 +7473,7 @@ pub mod rgbd {
 		fn get_iteration_counts(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_getIterationCounts_const(self.as_raw_RgbdOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7483,7 +7483,7 @@ pub mod rgbd {
 		fn get_min_gradient_magnitudes(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_getMinGradientMagnitudes_const(self.as_raw_RgbdOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7493,7 +7493,7 @@ pub mod rgbd {
 		fn get_max_points_part(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_getMaxPointsPart_const(self.as_raw_RgbdOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7502,7 +7502,7 @@ pub mod rgbd {
 		fn get_transform_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_getTransformType_const(self.as_raw_RgbdOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7511,7 +7511,7 @@ pub mod rgbd {
 		fn get_max_translation(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_getMaxTranslation_const(self.as_raw_RgbdOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7520,7 +7520,7 @@ pub mod rgbd {
 		fn get_max_rotation(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_getMaxRotation_const(self.as_raw_RgbdOdometry(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7535,7 +7535,7 @@ pub mod rgbd {
 		fn set_camera_matrix(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_setCameraMatrix_const_MatR(self.as_raw_mut_RgbdOdometry(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7544,7 +7544,7 @@ pub mod rgbd {
 		fn set_min_depth(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_setMinDepth_double(self.as_raw_mut_RgbdOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7553,7 +7553,7 @@ pub mod rgbd {
 		fn set_max_depth(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_setMaxDepth_double(self.as_raw_mut_RgbdOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7562,7 +7562,7 @@ pub mod rgbd {
 		fn set_max_depth_diff(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_setMaxDepthDiff_double(self.as_raw_mut_RgbdOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7571,7 +7571,7 @@ pub mod rgbd {
 		fn set_iteration_counts(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_setIterationCounts_const_MatR(self.as_raw_mut_RgbdOdometry(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7580,7 +7580,7 @@ pub mod rgbd {
 		fn set_min_gradient_magnitudes(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_setMinGradientMagnitudes_const_MatR(self.as_raw_mut_RgbdOdometry(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7589,7 +7589,7 @@ pub mod rgbd {
 		fn set_max_points_part(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_setMaxPointsPart_double(self.as_raw_mut_RgbdOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7598,7 +7598,7 @@ pub mod rgbd {
 		fn set_transform_type(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_setTransformType_int(self.as_raw_mut_RgbdOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7607,7 +7607,7 @@ pub mod rgbd {
 		fn set_max_translation(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_setMaxTranslation_double(self.as_raw_mut_RgbdOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7616,7 +7616,7 @@ pub mod rgbd {
 		fn set_max_rotation(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_setMaxRotation_double(self.as_raw_mut_RgbdOdometry(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7688,7 +7688,7 @@ pub mod rgbd {
 		pub fn new(method: i32) -> Result<crate::rgbd::RgbdPlane> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_RgbdPlane_int(method, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdPlane::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7701,7 +7701,7 @@ pub mod rgbd {
 		pub fn new_def() -> Result<crate::rgbd::RgbdPlane> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_RgbdPlane(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdPlane::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7725,7 +7725,7 @@ pub mod rgbd {
 		pub fn new_1(method: i32, block_size: i32, min_size: i32, threshold: f64, sensor_error_a: f64, sensor_error_b: f64, sensor_error_c: f64) -> Result<crate::rgbd::RgbdPlane> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_RgbdPlane_int_int_int_double_double_double_double(method, block_size, min_size, threshold, sensor_error_a, sensor_error_b, sensor_error_c, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdPlane::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7750,7 +7750,7 @@ pub mod rgbd {
 		pub fn new_def_1(method: i32, block_size: i32, min_size: i32, threshold: f64) -> Result<crate::rgbd::RgbdPlane> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_RgbdPlane_int_int_int_double(method, block_size, min_size, threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::rgbd::RgbdPlane::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7764,7 +7764,7 @@ pub mod rgbd {
 		pub fn create(method: i32, block_size: i32, min_size: i32, threshold: f64, sensor_error_a: f64, sensor_error_b: f64, sensor_error_c: f64) -> Result<core::Ptr<crate::rgbd::RgbdPlane>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_create_int_int_int_double_double_double_double(method, block_size, min_size, threshold, sensor_error_a, sensor_error_b, sensor_error_c, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdPlane>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7779,7 +7779,7 @@ pub mod rgbd {
 		pub fn create_def(method: i32, block_size: i32, min_size: i32, threshold: f64) -> Result<core::Ptr<crate::rgbd::RgbdPlane>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_create_int_int_int_double(method, block_size, min_size, threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdPlane>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -7795,7 +7795,7 @@ pub mod rgbd {
 		fn get_block_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_getBlockSize_const(self.as_raw_RgbdPlane(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7804,7 +7804,7 @@ pub mod rgbd {
 		fn get_min_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_getMinSize_const(self.as_raw_RgbdPlane(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7813,7 +7813,7 @@ pub mod rgbd {
 		fn get_method(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_getMethod_const(self.as_raw_RgbdPlane(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7822,7 +7822,7 @@ pub mod rgbd {
 		fn get_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_getThreshold_const(self.as_raw_RgbdPlane(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7831,7 +7831,7 @@ pub mod rgbd {
 		fn get_sensor_error_a(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_getSensorErrorA_const(self.as_raw_RgbdPlane(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7840,7 +7840,7 @@ pub mod rgbd {
 		fn get_sensor_error_b(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_getSensorErrorB_const(self.as_raw_RgbdPlane(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7849,7 +7849,7 @@ pub mod rgbd {
 		fn get_sensor_error_c(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_getSensorErrorC_const(self.as_raw_RgbdPlane(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7876,7 +7876,7 @@ pub mod rgbd {
 			output_array_arg!(plane_coefficients);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_operator___const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_RgbdPlane(), points3d.as_raw__InputArray(), normals.as_raw__InputArray(), mask.as_raw__OutputArray(), plane_coefficients.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7894,7 +7894,7 @@ pub mod rgbd {
 			output_array_arg!(plane_coefficients);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_operator___const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_RgbdPlane(), points3d.as_raw__InputArray(), mask.as_raw__OutputArray(), plane_coefficients.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7903,7 +7903,7 @@ pub mod rgbd {
 		fn set_block_size(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_setBlockSize_int(self.as_raw_mut_RgbdPlane(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7912,7 +7912,7 @@ pub mod rgbd {
 		fn set_min_size(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_setMinSize_int(self.as_raw_mut_RgbdPlane(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7921,7 +7921,7 @@ pub mod rgbd {
 		fn set_method(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_setMethod_int(self.as_raw_mut_RgbdPlane(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7930,7 +7930,7 @@ pub mod rgbd {
 		fn set_threshold(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_setThreshold_double(self.as_raw_mut_RgbdPlane(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7939,7 +7939,7 @@ pub mod rgbd {
 		fn set_sensor_error_a(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_setSensorErrorA_double(self.as_raw_mut_RgbdPlane(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7948,7 +7948,7 @@ pub mod rgbd {
 		fn set_sensor_error_b(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_setSensorErrorB_double(self.as_raw_mut_RgbdPlane(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -7957,7 +7957,7 @@ pub mod rgbd {
 		fn set_sensor_error_c(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_setSensorErrorC_double(self.as_raw_mut_RgbdPlane(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

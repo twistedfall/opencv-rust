@@ -15,7 +15,7 @@ pub mod face {
 	pub fn create_facemark_aam() -> Result<core::Ptr<crate::face::Facemark>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_createFacemarkAAM(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::face::Facemark>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -26,7 +26,7 @@ pub mod face {
 	pub fn create_facemark_kazemi() -> Result<core::Ptr<crate::face::Facemark>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_createFacemarkKazemi(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::face::Facemark>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -37,7 +37,7 @@ pub mod face {
 	pub fn create_facemark_lbf() -> Result<core::Ptr<crate::face::Facemark>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_createFacemarkLBF(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::face::Facemark>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -71,7 +71,7 @@ pub mod face {
 		input_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_drawFacemarks_const__InputOutputArrayR_const__InputArrayR(image.as_raw__InputOutputArray(), points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -103,7 +103,7 @@ pub mod face {
 		input_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_drawFacemarks_const__InputOutputArrayR_const__InputArrayR_Scalar(image.as_raw__InputOutputArray(), points.as_raw__InputArray(), &color, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -115,7 +115,7 @@ pub mod face {
 		extern_container_arg!(face_cascade_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_getFacesHAAR_const__InputArrayR_const__OutputArrayR_const_StringR(image.as_raw__InputArray(), faces.as_raw__OutputArray(), face_cascade_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -148,7 +148,7 @@ pub mod face {
 		output_array_arg!(faces);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_getFaces_const__InputArrayR_const__OutputArrayR_CParamsX(image.as_raw__InputArray(), faces.as_raw__OutputArray(), params.as_raw_mut_CParams(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -175,7 +175,7 @@ pub mod face {
 		extern_container_arg!(annotation_list);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_loadDatasetList_String_String_vectorLStringGR_vectorLStringGR(image_list.opencv_as_extern(), annotation_list.opencv_as_extern(), images.as_raw_mut_VectorOfString(), annotations.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -217,7 +217,7 @@ pub mod face {
 		output_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_loadFacePoints_String_const__OutputArrayR(filename.opencv_as_extern(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -258,7 +258,7 @@ pub mod face {
 		output_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_loadFacePoints_String_const__OutputArrayR_float(filename.opencv_as_extern(), points.as_raw__OutputArray(), offset, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -313,7 +313,7 @@ pub mod face {
 		output_array_arg!(face_points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_loadTrainingData_String_String_vectorLStringGR_const__OutputArrayR(image_list.opencv_as_extern(), ground_truth.opencv_as_extern(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -367,7 +367,7 @@ pub mod face {
 		output_array_arg!(face_points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_loadTrainingData_String_String_vectorLStringGR_const__OutputArrayR_float(image_list.opencv_as_extern(), ground_truth.opencv_as_extern(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), offset, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -410,7 +410,7 @@ pub mod face {
 		output_array_arg!(face_points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_loadTrainingData_String_vectorLStringGR_const__OutputArrayR(filename.opencv_as_extern(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -452,7 +452,7 @@ pub mod face {
 		output_array_arg!(face_points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_loadTrainingData_String_vectorLStringGR_const__OutputArrayR_char_float(filename.opencv_as_extern(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), u8::try_from(delim)? as c_char, offset, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -478,7 +478,7 @@ pub mod face {
 	pub fn load_training_data_2(mut filename: core::Vector<String>, trainlandmarks: &mut core::Vector<core::Vector<core::Point2f>>, trainimages: &mut core::Vector<String>) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_loadTrainingData_vectorLStringG_vectorLvectorLPoint2fGGR_vectorLStringGR(filename.as_raw_mut_VectorOfString(), trainlandmarks.as_raw_mut_VectorOfVectorOfPoint2f(), trainimages.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -515,7 +515,7 @@ pub mod face {
 		pub fn create(num_bands: i32, num_rotations: i32) -> Result<core::Ptr<crate::face::BIF>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BIF_create_int_int(num_bands, num_rotations, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::BIF>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -535,7 +535,7 @@ pub mod face {
 		pub fn create_def() -> Result<core::Ptr<crate::face::BIF>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BIF_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::BIF>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -553,7 +553,7 @@ pub mod face {
 		fn get_num_bands(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BIF_getNumBands_const(self.as_raw_BIF(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -564,7 +564,7 @@ pub mod face {
 		fn get_num_rotations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BIF_getNumRotations_const(self.as_raw_BIF(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -579,7 +579,7 @@ pub mod face {
 			output_array_arg!(features);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BIF_compute_const_const__InputArrayR_const__OutputArrayR(self.as_raw_BIF(), image.as_raw__InputArray(), features.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -647,7 +647,7 @@ pub mod face {
 		fn get_num_components(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_getNumComponents_const(self.as_raw_BasicFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -658,7 +658,7 @@ pub mod face {
 		fn get_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_getThreshold_const(self.as_raw_BasicFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -667,7 +667,7 @@ pub mod face {
 		fn get_projections(&self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_getProjections_const(self.as_raw_BasicFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -677,7 +677,7 @@ pub mod face {
 		fn get_labels(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_getLabels_const(self.as_raw_BasicFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -687,7 +687,7 @@ pub mod face {
 		fn get_eigen_values(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_getEigenValues_const(self.as_raw_BasicFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -697,7 +697,7 @@ pub mod face {
 		fn get_eigen_vectors(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_getEigenVectors_const(self.as_raw_BasicFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -707,7 +707,7 @@ pub mod face {
 		fn get_mean(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_getMean_const(self.as_raw_BasicFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -717,7 +717,7 @@ pub mod face {
 		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_write_const_FileStorageR(self.as_raw_BasicFaceRecognizer(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -726,7 +726,7 @@ pub mod face {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_empty_const(self.as_raw_BasicFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -743,7 +743,7 @@ pub mod face {
 		fn set_num_components(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_setNumComponents_int(self.as_raw_mut_BasicFaceRecognizer(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -754,7 +754,7 @@ pub mod face {
 		fn set_threshold(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_setThreshold_double(self.as_raw_mut_BasicFaceRecognizer(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -763,7 +763,7 @@ pub mod face {
 		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BasicFaceRecognizer_read_const_FileNodeR(self.as_raw_mut_BasicFaceRecognizer(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -842,7 +842,7 @@ pub mod face {
 			extern_container_arg!(cascade_model);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_CParams_CParams_String_double_int_Size_Size(cascade_model.opencv_as_extern(), sf, min_n, &min_sz, &max_sz, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::face::CParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -859,7 +859,7 @@ pub mod face {
 			extern_container_arg!(cascade_model);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_CParams_CParams_String(cascade_model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::face::CParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -898,7 +898,7 @@ pub mod face {
 		fn min_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_CParams_propMinSize_const(self.as_raw_CParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -907,7 +907,7 @@ pub mod face {
 		fn max_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_CParams_propMaxSize_const(self.as_raw_CParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -1044,7 +1044,7 @@ pub mod face {
 		pub fn create(num_components: i32, threshold: f64) -> Result<core::Ptr<crate::face::EigenFaceRecognizer>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_EigenFaceRecognizer_create_int_double(num_components, threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::EigenFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1087,7 +1087,7 @@ pub mod face {
 		pub fn create_def() -> Result<core::Ptr<crate::face::EigenFaceRecognizer>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_EigenFaceRecognizer_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::EigenFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1325,7 +1325,7 @@ pub mod face {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1372,7 +1372,7 @@ pub mod face {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_intR_doubleR(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), label, confidence, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1389,7 +1389,7 @@ pub mod face {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_PtrLPredictCollectorG(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), collector.as_raw_mut_PtrOfPredictCollector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1411,7 +1411,7 @@ pub mod face {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_write_const_const_StringR(self.as_raw_FaceRecognizer(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1437,7 +1437,7 @@ pub mod face {
 		fn write_1(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_write_const_FileStorageR(self.as_raw_FaceRecognizer(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1447,7 +1447,7 @@ pub mod face {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_empty_const(self.as_raw_FaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1460,7 +1460,7 @@ pub mod face {
 		fn get_label_info(&self, label: i32) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_getLabelInfo_const_int(self.as_raw_FaceRecognizer(), label, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1475,7 +1475,7 @@ pub mod face {
 			extern_container_arg!(str);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_getLabelsByString_const_const_StringR(self.as_raw_FaceRecognizer(), str.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1486,7 +1486,7 @@ pub mod face {
 		fn get_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_getThreshold_const(self.as_raw_FaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1555,7 +1555,7 @@ pub mod face {
 			input_array_arg!(labels);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_train_const__InputArrayR_const__InputArrayR(self.as_raw_mut_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1616,7 +1616,7 @@ pub mod face {
 			input_array_arg!(labels);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_update_const__InputArrayR_const__InputArrayR(self.as_raw_mut_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1632,7 +1632,7 @@ pub mod face {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_read_const_StringR(self.as_raw_mut_FaceRecognizer(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1649,7 +1649,7 @@ pub mod face {
 		fn read_1(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_read_const_FileNodeR(self.as_raw_mut_FaceRecognizer(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1662,7 +1662,7 @@ pub mod face {
 			extern_container_arg!(str_info);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_setLabelInfo_int_const_StringR(self.as_raw_mut_FaceRecognizer(), label, str_info.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1672,7 +1672,7 @@ pub mod face {
 		fn set_threshold(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_setThreshold_double(self.as_raw_mut_FaceRecognizer(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1774,7 +1774,7 @@ pub mod face {
 			extern_container_arg!(model);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_Facemark_loadModel_String(self.as_raw_mut_Facemark(), model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1801,7 +1801,7 @@ pub mod face {
 			output_array_arg!(landmarks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_Facemark_fit_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Facemark(), image.as_raw__InputArray(), faces.as_raw__InputArray(), landmarks.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1870,7 +1870,7 @@ pub mod face {
 		pub fn create(parameters: &impl crate::face::FacemarkAAM_ParamsTraitConst) -> Result<core::Ptr<crate::face::FacemarkAAM>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkAAM_create_const_ParamsR(parameters.as_raw_FacemarkAAM_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkAAM>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1885,7 +1885,7 @@ pub mod face {
 		pub fn create_def() -> Result<core::Ptr<crate::face::FacemarkAAM>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkAAM_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkAAM>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1911,7 +1911,7 @@ pub mod face {
 			output_array_arg!(_landmarks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkAAM_fitConfig_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_vectorLConfigGR(self.as_raw_mut_FacemarkAAM(), image.as_raw__InputArray(), roi.as_raw__InputArray(), _landmarks.as_raw__OutputArray(), runtime_params.as_raw_VectorOfFacemarkAAM_Config(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1998,7 +1998,7 @@ pub mod face {
 		pub fn new(mut rot: impl core::MatTrait, trans: core::Point2f, scaling: f32, scale_id: i32) -> Result<crate::face::FacemarkAAM_Config> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkAAM_Config_Config_Mat_Point2f_float_int(rot.as_raw_mut_Mat(), &trans, scaling, scale_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::face::FacemarkAAM_Config::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2014,7 +2014,7 @@ pub mod face {
 		pub fn new_def() -> Result<crate::face::FacemarkAAM_Config> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkAAM_Config_Config(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::face::FacemarkAAM_Config::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2037,7 +2037,7 @@ pub mod face {
 		fn t(&self) -> core::Point2f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkAAM_Config_propT_const(self.as_raw_FacemarkAAM_Config(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2376,7 +2376,7 @@ pub mod face {
 		fn resolution(&self) -> core::Rect {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propResolution_const(self.as_raw_FacemarkAAM_Model_Texture(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2562,7 +2562,7 @@ pub mod face {
 		pub fn default() -> Result<crate::face::FacemarkAAM_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkAAM_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::face::FacemarkAAM_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2641,7 +2641,7 @@ pub mod face {
 		fn write(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkAAM_Params_write_const_FileStorageR(self.as_raw_FacemarkAAM_Params(), unnamed.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2718,7 +2718,7 @@ pub mod face {
 		fn read(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkAAM_Params_read_const_FileNodeR(self.as_raw_mut_FacemarkAAM_Params(), unnamed.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2775,7 +2775,7 @@ pub mod face {
 		pub fn create(parameters: &impl crate::face::FacemarkKazemi_ParamsTraitConst) -> Result<core::Ptr<crate::face::FacemarkKazemi>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkKazemi_create_const_ParamsR(parameters.as_raw_FacemarkKazemi_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkKazemi>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2788,7 +2788,7 @@ pub mod face {
 		pub fn create_def() -> Result<core::Ptr<crate::face::FacemarkKazemi>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkKazemi_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkKazemi>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2825,7 +2825,7 @@ pub mod face {
 			extern_container_arg!(model_filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkKazemi_training_vectorLMatGR_vectorLvectorLPoint2fGGR_string_Size_string(self.as_raw_mut_FacemarkKazemi(), images.as_raw_mut_VectorOfMat(), landmarks.as_raw_mut_VectorOfVectorOfPoint2f(), configfile.opencv_as_extern(), &scale, model_filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2849,7 +2849,7 @@ pub mod face {
 			extern_container_arg!(configfile);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkKazemi_training_vectorLMatGR_vectorLvectorLPoint2fGGR_string_Size(self.as_raw_mut_FacemarkKazemi(), images.as_raw_mut_VectorOfMat(), landmarks.as_raw_mut_VectorOfVectorOfPoint2f(), configfile.opencv_as_extern(), &scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2861,7 +2861,7 @@ pub mod face {
 			userdata_arg!(user_data: *mut c_void => f);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkKazemi_setFaceDetector_bool__X__const_cv__InputArrayR__const_cv__OutputArrayR__voidX__voidX(self.as_raw_mut_FacemarkKazemi(), f_trampoline, user_data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2873,7 +2873,7 @@ pub mod face {
 			output_array_arg!(faces);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkKazemi_getFaces_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_FacemarkKazemi(), image.as_raw__InputArray(), faces.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2943,7 +2943,7 @@ pub mod face {
 		pub fn default() -> Result<crate::face::FacemarkKazemi_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkKazemi_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::face::FacemarkKazemi_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3140,7 +3140,7 @@ pub mod face {
 		pub fn create(parameters: &impl crate::face::FacemarkLBF_ParamsTraitConst) -> Result<core::Ptr<crate::face::FacemarkLBF>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkLBF_create_const_ParamsR(parameters.as_raw_FacemarkLBF_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkLBF>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3153,7 +3153,7 @@ pub mod face {
 		pub fn create_def() -> Result<core::Ptr<crate::face::FacemarkLBF>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkLBF_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkLBF>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3248,7 +3248,7 @@ pub mod face {
 		pub fn default() -> Result<crate::face::FacemarkLBF_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkLBF_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::face::FacemarkLBF_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3354,7 +3354,7 @@ pub mod face {
 		fn detect_roi(&self) -> core::Rect {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkLBF_Params_propDetectROI_const(self.as_raw_FacemarkLBF_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -3362,7 +3362,7 @@ pub mod face {
 		fn write(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkLBF_Params_write_const_FileStorageR(self.as_raw_FacemarkLBF_Params(), unnamed.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3471,7 +3471,7 @@ pub mod face {
 		fn read(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkLBF_Params_read_const_FileNodeR(self.as_raw_mut_FacemarkLBF_Params(), unnamed.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3614,7 +3614,7 @@ pub mod face {
 			input_array_arg!(landmarks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkTrain_addTrainingSample_const__InputArrayR_const__InputArrayR(self.as_raw_mut_FacemarkTrain(), image.as_raw__InputArray(), landmarks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3643,7 +3643,7 @@ pub mod face {
 		#[inline]
 		unsafe fn training(&mut self, parameters: *mut c_void) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_face_FacemarkTrain_training_voidX(self.as_raw_mut_FacemarkTrain(), parameters, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_face_FacemarkTrain_training_voidX(self.as_raw_mut_FacemarkTrain(), parameters, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3675,7 +3675,7 @@ pub mod face {
 		fn training_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkTrain_training(self.as_raw_mut_FacemarkTrain(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3709,7 +3709,7 @@ pub mod face {
 			userdata_arg!(user_data: *mut c_void => detector);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkTrain_setFaceDetector_FN_FaceDetector_voidX(self.as_raw_mut_FacemarkTrain(), detector_trampoline, user_data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3736,7 +3736,7 @@ pub mod face {
 			output_array_arg!(faces);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkTrain_getFaces_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_FacemarkTrain(), image.as_raw__InputArray(), faces.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3764,7 +3764,7 @@ pub mod face {
 		#[inline]
 		unsafe fn get_data(&mut self, items: *mut c_void) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_face_FacemarkTrain_getData_voidX(self.as_raw_mut_FacemarkTrain(), items, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_face_FacemarkTrain_getData_voidX(self.as_raw_mut_FacemarkTrain(), items, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3795,7 +3795,7 @@ pub mod face {
 		fn get_data_def(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkTrain_getData(self.as_raw_mut_FacemarkTrain(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3901,7 +3901,7 @@ pub mod face {
 		pub fn create(num_components: i32, threshold: f64) -> Result<core::Ptr<crate::face::FisherFaceRecognizer>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FisherFaceRecognizer_create_int_double(num_components, threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::FisherFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3945,7 +3945,7 @@ pub mod face {
 		pub fn create_def() -> Result<core::Ptr<crate::face::FisherFaceRecognizer>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FisherFaceRecognizer_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::FisherFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4077,7 +4077,7 @@ pub mod face {
 		pub fn create(radius: i32, neighbors: i32, grid_x: i32, grid_y: i32, threshold: f64) -> Result<core::Ptr<crate::face::LBPHFaceRecognizer>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_create_int_int_int_int_double(radius, neighbors, grid_x, grid_y, threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::LBPHFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4126,7 +4126,7 @@ pub mod face {
 		pub fn create_def() -> Result<core::Ptr<crate::face::LBPHFaceRecognizer>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::LBPHFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4144,7 +4144,7 @@ pub mod face {
 		fn get_grid_x(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_getGridX_const(self.as_raw_LBPHFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4155,7 +4155,7 @@ pub mod face {
 		fn get_grid_y(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_getGridY_const(self.as_raw_LBPHFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4166,7 +4166,7 @@ pub mod face {
 		fn get_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_getRadius_const(self.as_raw_LBPHFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4177,7 +4177,7 @@ pub mod face {
 		fn get_neighbors(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_getNeighbors_const(self.as_raw_LBPHFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4188,7 +4188,7 @@ pub mod face {
 		fn get_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_getThreshold_const(self.as_raw_LBPHFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4197,7 +4197,7 @@ pub mod face {
 		fn get_histograms(&self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_getHistograms_const(self.as_raw_LBPHFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4207,7 +4207,7 @@ pub mod face {
 		fn get_labels(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_getLabels_const(self.as_raw_LBPHFaceRecognizer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4225,7 +4225,7 @@ pub mod face {
 		fn set_grid_x(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_setGridX_int(self.as_raw_mut_LBPHFaceRecognizer(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4236,7 +4236,7 @@ pub mod face {
 		fn set_grid_y(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_setGridY_int(self.as_raw_mut_LBPHFaceRecognizer(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4247,7 +4247,7 @@ pub mod face {
 		fn set_radius(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_setRadius_int(self.as_raw_mut_LBPHFaceRecognizer(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4258,7 +4258,7 @@ pub mod face {
 		fn set_neighbors(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_setNeighbors_int(self.as_raw_mut_LBPHFaceRecognizer(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4269,7 +4269,7 @@ pub mod face {
 		fn set_threshold(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_LBPHFaceRecognizer_setThreshold_double(self.as_raw_mut_LBPHFaceRecognizer(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4399,7 +4399,7 @@ pub mod face {
 			extern_container_arg!(objname);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_MACE_load_const_StringR_const_StringR(filename.opencv_as_extern(), objname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::MACE>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4418,7 +4418,7 @@ pub mod face {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_MACE_load_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::MACE>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4434,7 +4434,7 @@ pub mod face {
 		pub fn create(imgsize: i32) -> Result<core::Ptr<crate::face::MACE>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_MACE_create_int(imgsize, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::MACE>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4451,7 +4451,7 @@ pub mod face {
 		pub fn create_def() -> Result<core::Ptr<crate::face::MACE>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_MACE_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::MACE>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4471,7 +4471,7 @@ pub mod face {
 			input_array_arg!(query);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_MACE_same_const_const__InputArrayR(self.as_raw_MACE(), query.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4490,7 +4490,7 @@ pub mod face {
 			extern_container_arg!(passphrase);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_MACE_salt_const_StringR(self.as_raw_mut_MACE(), passphrase.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4505,7 +4505,7 @@ pub mod face {
 			input_array_arg!(images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_MACE_train_const__InputArrayR(self.as_raw_mut_MACE(), images.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4575,7 +4575,7 @@ pub mod face {
 		fn init(&mut self, size: size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_PredictCollector_init_size_t(self.as_raw_mut_PredictCollector(), size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4588,7 +4588,7 @@ pub mod face {
 		fn collect(&mut self, label: i32, dist: f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_PredictCollector_collect_int_double(self.as_raw_mut_PredictCollector(), label, dist, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4644,7 +4644,7 @@ pub mod face {
 		pub fn new(threshold_: f64) -> Result<crate::face::StandardCollector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_StandardCollector_double(threshold_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::face::StandardCollector::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4661,7 +4661,7 @@ pub mod face {
 		pub fn new_def() -> Result<crate::face::StandardCollector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_StandardCollector(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::face::StandardCollector::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4677,7 +4677,7 @@ pub mod face {
 		pub fn create(threshold: f64) -> Result<core::Ptr<crate::face::StandardCollector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_create_double(threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::StandardCollector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4694,7 +4694,7 @@ pub mod face {
 		pub fn create_def() -> Result<core::Ptr<crate::face::StandardCollector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::face::StandardCollector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4711,7 +4711,7 @@ pub mod face {
 		fn get_min_label(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_getMinLabel_const(self.as_raw_StandardCollector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4721,7 +4721,7 @@ pub mod face {
 		fn get_min_dist(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_getMinDist_const(self.as_raw_StandardCollector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4737,7 +4737,7 @@ pub mod face {
 		fn get_results(&self, sorted: bool) -> Result<core::Vector<core::Tuple<(i32, f64)>>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_getResults_const_bool(self.as_raw_StandardCollector(), sorted, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Tuple<(i32, f64)>>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4755,7 +4755,7 @@ pub mod face {
 		fn get_results_def(&self) -> Result<core::Vector<core::Tuple<(i32, f64)>>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_getResults_const(self.as_raw_StandardCollector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Tuple<(i32, f64)>>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4772,7 +4772,7 @@ pub mod face {
 		fn init(&mut self, size: size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_init_size_t(self.as_raw_mut_StandardCollector(), size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4782,7 +4782,7 @@ pub mod face {
 		fn collect(&mut self, label: i32, dist: f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_collect_int_double(self.as_raw_mut_StandardCollector(), label, dist, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4836,7 +4836,7 @@ pub mod face {
 		pub fn new(label_: i32, distance_: f64) -> Result<crate::face::StandardCollector_PredictResult> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_PredictResult_PredictResult_int_double(label_, distance_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4849,7 +4849,7 @@ pub mod face {
 		pub fn new_def() -> Result<crate::face::StandardCollector_PredictResult> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_StandardCollector_PredictResult_PredictResult(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

@@ -67,7 +67,7 @@ pub mod dpm {
 		pub fn create(filenames: &core::Vector<String>, class_names: &core::Vector<String>) -> Result<core::Ptr<crate::dpm::DPMDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_create_const_vectorLstringGR_const_vectorLstringGR(filenames.as_raw_VectorOfString(), class_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::dpm::DPMDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -88,7 +88,7 @@ pub mod dpm {
 		pub fn create_def(filenames: &core::Vector<String>) -> Result<core::Ptr<crate::dpm::DPMDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_create_const_vectorLstringGR(filenames.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::dpm::DPMDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -104,7 +104,7 @@ pub mod dpm {
 		fn is_empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_isEmpty_const(self.as_raw_DPMDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -115,7 +115,7 @@ pub mod dpm {
 		fn get_class_names(&self) -> Result<core::Vector<String>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_getClassNames_const(self.as_raw_DPMDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -126,7 +126,7 @@ pub mod dpm {
 		fn get_class_count(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_getClassCount_const(self.as_raw_DPMDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -146,7 +146,7 @@ pub mod dpm {
 		fn detect(&mut self, image: &mut impl core::MatTrait, objects: &mut core::Vector<crate::dpm::DPMDetector_ObjectDetection>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_detect_MatR_vectorLObjectDetectionGR(self.as_raw_mut_DPMDetector(), image.as_raw_mut_Mat(), objects.as_raw_mut_VectorOfDPMDetector_ObjectDetection(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -191,7 +191,7 @@ pub mod dpm {
 		pub fn default() -> Result<crate::dpm::DPMDetector_ObjectDetection> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
 			Ok(ret)
@@ -203,7 +203,7 @@ pub mod dpm {
 		pub fn new(rect: core::Rect, score: f32, class_id: i32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(&rect, score, class_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
 			Ok(ret)
@@ -216,7 +216,7 @@ pub mod dpm {
 		pub fn new_def(rect: core::Rect, score: f32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float(&rect, score, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
 			Ok(ret)
@@ -232,7 +232,7 @@ pub mod dpm {
 		fn rect(&self) -> core::Rect {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propRect_const(self.as_raw_DPMDetector_ObjectDetection(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 

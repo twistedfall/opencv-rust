@@ -57,7 +57,7 @@ pub mod ccalib {
 		output_array_arg!(tvecs);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &size, k.as_raw__InputOutputArray(), xi.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -94,7 +94,7 @@ pub mod ccalib {
 		output_array_arg!(idx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &size, k.as_raw__InputOutputArray(), xi.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -127,7 +127,7 @@ pub mod ccalib {
 		output_array_arg!(map2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR_int(k.as_raw__InputArray(), d.as_raw__InputArray(), xi.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -145,7 +145,7 @@ pub mod ccalib {
 		input_array_arg!(d);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_projectPoints_const__InputArrayR_const__OutputArrayR_const_Affine3dR_const__InputArrayR_double_const__InputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), &affine, k.as_raw__InputArray(), xi, d.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -183,7 +183,7 @@ pub mod ccalib {
 		output_array_arg!(jacobian);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_projectPoints_const__InputArrayR_const__OutputArrayR_const_Affine3dR_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), &affine, k.as_raw__InputArray(), xi, d.as_raw__InputArray(), jacobian.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -221,7 +221,7 @@ pub mod ccalib {
 		input_array_arg!(d);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_projectPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_const__InputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), k.as_raw__InputArray(), xi, d.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -259,7 +259,7 @@ pub mod ccalib {
 		output_array_arg!(jacobian);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_projectPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), k.as_raw__InputArray(), xi, d.as_raw__InputArray(), jacobian.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -312,7 +312,7 @@ pub mod ccalib {
 		output_array_arg!(tvecs_l);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_stereoCalibrate_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_SizeR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputOutputArray(), image_points1.as_raw__InputOutputArray(), image_points2.as_raw__InputOutputArray(), &image_size1, &image_size2, k1.as_raw__InputOutputArray(), xi1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), xi2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), rvecs_l.as_raw__OutputArray(), tvecs_l.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -365,7 +365,7 @@ pub mod ccalib {
 		output_array_arg!(idx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_stereoCalibrate_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_SizeR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria_const__OutputArrayR(object_points.as_raw__InputOutputArray(), image_points1.as_raw__InputOutputArray(), image_points2.as_raw__InputOutputArray(), &image_size1, &image_size2, k1.as_raw__InputOutputArray(), xi1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), xi2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), rvecs_l.as_raw__OutputArray(), tvecs_l.as_raw__OutputArray(), flags, &criteria, idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -417,7 +417,7 @@ pub mod ccalib {
 		output_array_arg!(image2_rec);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_stereoReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_int_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(image1.as_raw__InputArray(), image2.as_raw__InputArray(), k1.as_raw__InputArray(), d1.as_raw__InputArray(), xi1.as_raw__InputArray(), k2.as_raw__InputArray(), d2.as_raw__InputArray(), xi2.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), flag, num_disparities, sad_window_size, disparity.as_raw__OutputArray(), image1_rec.as_raw__OutputArray(), image2_rec.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -470,7 +470,7 @@ pub mod ccalib {
 		output_array_arg!(point_cloud);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_stereoReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_int_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const_SizeR_const__InputArrayR_const__OutputArrayR_int(image1.as_raw__InputArray(), image2.as_raw__InputArray(), k1.as_raw__InputArray(), d1.as_raw__InputArray(), xi1.as_raw__InputArray(), k2.as_raw__InputArray(), d2.as_raw__InputArray(), xi2.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), flag, num_disparities, sad_window_size, disparity.as_raw__OutputArray(), image1_rec.as_raw__OutputArray(), image2_rec.as_raw__OutputArray(), &new_size, knew.as_raw__InputArray(), point_cloud.as_raw__OutputArray(), point_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -490,7 +490,7 @@ pub mod ccalib {
 		output_array_arg!(r2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_stereoRectify_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -522,7 +522,7 @@ pub mod ccalib {
 		input_array_arg!(xi);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), xi.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -555,7 +555,7 @@ pub mod ccalib {
 		input_array_arg!(r);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_const_SizeR_const__InputArrayR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), xi.as_raw__InputArray(), flags, knew.as_raw__InputArray(), &new_size, r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -582,7 +582,7 @@ pub mod ccalib {
 		input_array_arg!(r);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), xi.as_raw__InputArray(), r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -607,7 +607,7 @@ pub mod ccalib {
 		pub fn default() -> Result<crate::ccalib::CustomPattern> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_CustomPattern(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::CustomPattern::opencv_from_extern(ret) };
 			Ok(ret)
@@ -633,7 +633,7 @@ pub mod ccalib {
 			output_array_arg!(output);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_create_const__InputArrayR_const_Size2f_const__OutputArrayR(self.as_raw_mut_CustomPattern(), pattern.as_raw__InputArray(), &board_size, output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -646,7 +646,7 @@ pub mod ccalib {
 			input_array_arg!(pattern);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_create_const__InputArrayR_const_Size2f(self.as_raw_mut_CustomPattern(), pattern.as_raw__InputArray(), &board_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -668,7 +668,7 @@ pub mod ccalib {
 			output_array_arg!(pattern_corners);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findPattern_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const_double_const_double_const_bool_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), matched_features.as_raw__OutputArray(), pattern_points.as_raw__OutputArray(), ratio, proj_error, refine_position, out.as_raw__OutputArray(), h.as_raw__OutputArray(), pattern_corners.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -688,7 +688,7 @@ pub mod ccalib {
 			output_array_arg!(pattern_points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findPattern_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), matched_features.as_raw__OutputArray(), pattern_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -697,7 +697,7 @@ pub mod ccalib {
 		fn is_initialized(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_isInitialized(self.as_raw_mut_CustomPattern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -706,7 +706,7 @@ pub mod ccalib {
 		fn get_pattern_points(&mut self, original_points: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_getPatternPoints_vectorLKeyPointGR(self.as_raw_mut_CustomPattern(), original_points.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -715,7 +715,7 @@ pub mod ccalib {
 		fn get_pixel_size(&mut self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_getPixelSize(self.as_raw_mut_CustomPattern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -724,7 +724,7 @@ pub mod ccalib {
 		fn set_feature_detector(&mut self, mut feature_detector: core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_setFeatureDetector_PtrLFeature2DG(self.as_raw_mut_CustomPattern(), feature_detector.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -733,7 +733,7 @@ pub mod ccalib {
 		fn set_descriptor_extractor(&mut self, mut extractor: core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_setDescriptorExtractor_PtrLFeature2DG(self.as_raw_mut_CustomPattern(), extractor.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -742,7 +742,7 @@ pub mod ccalib {
 		fn set_descriptor_matcher(&mut self, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_setDescriptorMatcher_PtrLDescriptorMatcherG(self.as_raw_mut_CustomPattern(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -751,7 +751,7 @@ pub mod ccalib {
 		fn get_feature_detector(&mut self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_getFeatureDetector(self.as_raw_mut_CustomPattern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -761,7 +761,7 @@ pub mod ccalib {
 		fn get_descriptor_extractor(&mut self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_getDescriptorExtractor(self.as_raw_mut_CustomPattern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -771,7 +771,7 @@ pub mod ccalib {
 		fn get_descriptor_matcher(&mut self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_getDescriptorMatcher(self.as_raw_mut_CustomPattern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -790,7 +790,7 @@ pub mod ccalib {
 			output_array_arg!(tvecs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -809,7 +809,7 @@ pub mod ccalib {
 			output_array_arg!(tvecs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -827,7 +827,7 @@ pub mod ccalib {
 			input_output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_bool_int(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -846,7 +846,7 @@ pub mod ccalib {
 			input_output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -863,7 +863,7 @@ pub mod ccalib {
 			input_output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_bool_int(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -881,7 +881,7 @@ pub mod ccalib {
 			input_output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -904,7 +904,7 @@ pub mod ccalib {
 			output_array_arg!(inliers);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_bool_int_float_int_const__OutputArrayR_int(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, min_inliers_count, inliers.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -927,7 +927,7 @@ pub mod ccalib {
 			input_output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -949,7 +949,7 @@ pub mod ccalib {
 			output_array_arg!(inliers);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_bool_int_float_int_const__OutputArrayR_int(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, min_inliers_count, inliers.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -971,7 +971,7 @@ pub mod ccalib {
 			input_output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -988,7 +988,7 @@ pub mod ccalib {
 			input_array_arg!(dist_coeffs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_drawOrientation_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_int(self.as_raw_mut_CustomPattern(), image.as_raw__InputOutputArray(), tvec.as_raw__InputArray(), rvec.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), axis_length, axis_width, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1006,7 +1006,7 @@ pub mod ccalib {
 			input_array_arg!(dist_coeffs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_drawOrientation_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputOutputArray(), tvec.as_raw__InputArray(), rvec.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1085,7 +1085,7 @@ pub mod ccalib {
 			extern_container_arg!(file_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float_int_int_int_int_TermCriteria_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, verbose, show_extration, n_mini_matches, flags, &criteria, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1106,7 +1106,7 @@ pub mod ccalib {
 			extern_container_arg!(file_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1128,7 +1128,7 @@ pub mod ccalib {
 		fn load_images(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_loadImages(self.as_raw_mut_MultiCameraCalibration(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1137,7 +1137,7 @@ pub mod ccalib {
 		fn initialize(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_initialize(self.as_raw_mut_MultiCameraCalibration(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1146,7 +1146,7 @@ pub mod ccalib {
 		fn optimize_extrinsics(&mut self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_optimizeExtrinsics(self.as_raw_mut_MultiCameraCalibration(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1155,7 +1155,7 @@ pub mod ccalib {
 		fn run(&mut self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_run(self.as_raw_mut_MultiCameraCalibration(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1165,7 +1165,7 @@ pub mod ccalib {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_writeParameters_const_stringR(self.as_raw_mut_MultiCameraCalibration(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1210,7 +1210,7 @@ pub mod ccalib {
 		pub fn new(cv: i32, pv: i32, pi: i32, mut trans: impl core::MatTrait) -> Result<crate::ccalib::MultiCameraCalibration_edge> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_edge_int_int_int_Mat(cv, pv, pi, trans.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration_edge::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1321,7 +1321,7 @@ pub mod ccalib {
 		pub fn new(mut po: impl core::MatTrait, ts: i32) -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex_Mat_int(po.as_raw_mut_Mat(), ts, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration_vertex::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1331,7 +1331,7 @@ pub mod ccalib {
 		pub fn default() -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration_vertex::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1433,7 +1433,7 @@ pub mod ccalib {
 		pub fn new(pattern_width: f32, pattern_height: f32, nmini_match: i32, depth: i32, verbose: i32, show_extraction: i32, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::RandomPatternCornerFinder> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float_int_int_int_int_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(pattern_width, pattern_height, nmini_match, depth, verbose, show_extraction, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1452,7 +1452,7 @@ pub mod ccalib {
 		pub fn new_def(pattern_width: f32, pattern_height: f32) -> Result<crate::ccalib::RandomPatternCornerFinder> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float(pattern_width, pattern_height, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1474,7 +1474,7 @@ pub mod ccalib {
 		fn load_pattern(&mut self, pattern_image: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_loadPattern_const_MatR(self.as_raw_mut_RandomPatternCornerFinder(), pattern_image.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1483,7 +1483,7 @@ pub mod ccalib {
 		fn load_pattern_1(&mut self, pattern_image: &impl core::MatTraitConst, pattern_key_points: &core::Vector<core::KeyPoint>, pattern_descriptors: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_loadPattern_const_MatR_const_vectorLKeyPointGR_const_MatR(self.as_raw_mut_RandomPatternCornerFinder(), pattern_image.as_raw_Mat(), pattern_key_points.as_raw_VectorOfKeyPoint(), pattern_descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1492,7 +1492,7 @@ pub mod ccalib {
 		fn compute_object_image_points(&mut self, mut input_images: core::Vector<core::Mat>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_computeObjectImagePoints_vectorLMatG(self.as_raw_mut_RandomPatternCornerFinder(), input_images.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1501,7 +1501,7 @@ pub mod ccalib {
 		fn compute_object_image_points_for_single(&mut self, mut input_image: impl core::MatTrait) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_computeObjectImagePointsForSingle_Mat(self.as_raw_mut_RandomPatternCornerFinder(), input_image.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1511,7 +1511,7 @@ pub mod ccalib {
 		fn get_object_points(&mut self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_getObjectPoints(self.as_raw_mut_RandomPatternCornerFinder(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1521,7 +1521,7 @@ pub mod ccalib {
 		fn get_image_points(&mut self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_getImagePoints(self.as_raw_mut_RandomPatternCornerFinder(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1567,7 +1567,7 @@ pub mod ccalib {
 		pub fn new(image_width: i32, image_height: i32) -> Result<crate::ccalib::RandomPatternGenerator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternGenerator_RandomPatternGenerator_int_int(image_width, image_height, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::RandomPatternGenerator::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1589,7 +1589,7 @@ pub mod ccalib {
 		fn generate_pattern(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternGenerator_generatePattern(self.as_raw_mut_RandomPatternGenerator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1598,7 +1598,7 @@ pub mod ccalib {
 		fn get_pattern(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternGenerator_getPattern(self.as_raw_mut_RandomPatternGenerator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)

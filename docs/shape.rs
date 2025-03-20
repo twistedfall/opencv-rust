@@ -21,7 +21,7 @@ pub mod shape {
 		input_array_arg!(signature2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_EMDL1_const__InputArrayR_const__InputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -31,7 +31,7 @@ pub mod shape {
 	pub fn create_affine_transformer(full_affine: bool) -> Result<core::Ptr<crate::shape::AffineTransformer>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createAffineTransformer_bool(full_affine, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::AffineTransformer>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -45,7 +45,7 @@ pub mod shape {
 	pub fn create_chi_histogram_cost_extractor_def() -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createChiHistogramCostExtractor(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -58,7 +58,7 @@ pub mod shape {
 	pub fn create_chi_histogram_cost_extractor(n_dummies: i32, default_cost: f32) -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createChiHistogramCostExtractor_int_float(n_dummies, default_cost, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -73,7 +73,7 @@ pub mod shape {
 	pub fn create_emd_histogram_cost_extractor_def() -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createEMDHistogramCostExtractor(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -87,7 +87,7 @@ pub mod shape {
 	pub fn create_emd_histogram_cost_extractor(flag: i32, n_dummies: i32, default_cost: f32) -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createEMDHistogramCostExtractor_int_int_float(flag, n_dummies, default_cost, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -101,7 +101,7 @@ pub mod shape {
 	pub fn create_emdl1_histogram_cost_extractor_def() -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createEMDL1HistogramCostExtractor(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -114,7 +114,7 @@ pub mod shape {
 	pub fn create_emdl1_histogram_cost_extractor(n_dummies: i32, default_cost: f32) -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createEMDL1HistogramCostExtractor_int_float(n_dummies, default_cost, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -128,7 +128,7 @@ pub mod shape {
 	pub fn create_hausdorff_distance_extractor_def() -> Result<core::Ptr<crate::shape::HausdorffDistanceExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createHausdorffDistanceExtractor(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HausdorffDistanceExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -141,7 +141,7 @@ pub mod shape {
 	pub fn create_hausdorff_distance_extractor(distance_flag: i32, rank_prop: f32) -> Result<core::Ptr<crate::shape::HausdorffDistanceExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createHausdorffDistanceExtractor_int_float(distance_flag, rank_prop, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HausdorffDistanceExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -156,7 +156,7 @@ pub mod shape {
 	pub fn create_norm_histogram_cost_extractor_def() -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createNormHistogramCostExtractor(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -170,7 +170,7 @@ pub mod shape {
 	pub fn create_norm_histogram_cost_extractor(flag: i32, n_dummies: i32, default_cost: f32) -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createNormHistogramCostExtractor_int_int_float(flag, n_dummies, default_cost, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -189,7 +189,7 @@ pub mod shape {
 	pub fn create_shape_context_distance_extractor_def() -> Result<core::Ptr<crate::shape::ShapeContextDistanceExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createShapeContextDistanceExtractor(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::ShapeContextDistanceExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -207,7 +207,7 @@ pub mod shape {
 	pub fn create_shape_context_distance_extractor(n_angular_bins: i32, n_radial_bins: i32, inner_radius: f32, outer_radius: f32, iterations: i32, comparer: &core::Ptr<crate::shape::HistogramCostExtractor>, transformer: &core::Ptr<crate::shape::ShapeTransformer>) -> Result<core::Ptr<crate::shape::ShapeContextDistanceExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createShapeContextDistanceExtractor_int_int_float_float_int_const_PtrLHistogramCostExtractorGR_const_PtrLShapeTransformerGR(n_angular_bins, n_radial_bins, inner_radius, outer_radius, iterations, comparer.as_raw_PtrOfHistogramCostExtractor(), transformer.as_raw_PtrOfShapeTransformer(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::ShapeContextDistanceExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -222,7 +222,7 @@ pub mod shape {
 	pub fn create_thin_plate_spline_shape_transformer_def() -> Result<core::Ptr<crate::shape::ThinPlateSplineShapeTransformer>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createThinPlateSplineShapeTransformer(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::ThinPlateSplineShapeTransformer>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -236,7 +236,7 @@ pub mod shape {
 	pub fn create_thin_plate_spline_shape_transformer(regularization_parameter: f64) -> Result<core::Ptr<crate::shape::ThinPlateSplineShapeTransformer>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createThinPlateSplineShapeTransformer_double(regularization_parameter, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::ThinPlateSplineShapeTransformer>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -266,7 +266,7 @@ pub mod shape {
 		fn get_full_affine(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AffineTransformer_getFullAffine_const(self.as_raw_AffineTransformer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -281,7 +281,7 @@ pub mod shape {
 		fn set_full_affine(&mut self, full_affine: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AffineTransformer_setFullAffine_bool(self.as_raw_mut_AffineTransformer(), full_affine, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -424,7 +424,7 @@ pub mod shape {
 		fn get_norm_flag(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_EMDHistogramCostExtractor_getNormFlag_const(self.as_raw_EMDHistogramCostExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -439,7 +439,7 @@ pub mod shape {
 		fn set_norm_flag(&mut self, flag: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_EMDHistogramCostExtractor_setNormFlag_int(self.as_raw_mut_EMDHistogramCostExtractor(), flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -588,7 +588,7 @@ pub mod shape {
 		fn get_distance_flag(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HausdorffDistanceExtractor_getDistanceFlag_const(self.as_raw_HausdorffDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -597,7 +597,7 @@ pub mod shape {
 		fn get_rank_proportion(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HausdorffDistanceExtractor_getRankProportion_const(self.as_raw_HausdorffDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -617,7 +617,7 @@ pub mod shape {
 		fn set_distance_flag(&mut self, distance_flag: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HausdorffDistanceExtractor_setDistanceFlag_int(self.as_raw_mut_HausdorffDistanceExtractor(), distance_flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -632,7 +632,7 @@ pub mod shape {
 		fn set_rank_proportion(&mut self, rank_proportion: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HausdorffDistanceExtractor_setRankProportion_float(self.as_raw_mut_HausdorffDistanceExtractor(), rank_proportion, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -705,7 +705,7 @@ pub mod shape {
 		fn get_n_dummies(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HistogramCostExtractor_getNDummies_const(self.as_raw_HistogramCostExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -714,7 +714,7 @@ pub mod shape {
 		fn get_default_cost(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HistogramCostExtractor_getDefaultCost_const(self.as_raw_HistogramCostExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -732,7 +732,7 @@ pub mod shape {
 			output_array_arg!(cost_matrix);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HistogramCostExtractor_buildCostMatrix_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_HistogramCostExtractor(), descriptors1.as_raw__InputArray(), descriptors2.as_raw__InputArray(), cost_matrix.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -741,7 +741,7 @@ pub mod shape {
 		fn set_n_dummies(&mut self, n_dummies: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HistogramCostExtractor_setNDummies_int(self.as_raw_mut_HistogramCostExtractor(), n_dummies, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -750,7 +750,7 @@ pub mod shape {
 		fn set_default_cost(&mut self, default_cost: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HistogramCostExtractor_setDefaultCost_float(self.as_raw_mut_HistogramCostExtractor(), default_cost, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -819,7 +819,7 @@ pub mod shape {
 		fn get_norm_flag(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_NormHistogramCostExtractor_getNormFlag_const(self.as_raw_NormHistogramCostExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -834,7 +834,7 @@ pub mod shape {
 		fn set_norm_flag(&mut self, flag: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_NormHistogramCostExtractor_setNormFlag_int(self.as_raw_mut_NormHistogramCostExtractor(), flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -914,7 +914,7 @@ pub mod shape {
 		fn get_angular_bins(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getAngularBins_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -923,7 +923,7 @@ pub mod shape {
 		fn get_radial_bins(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getRadialBins_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -932,7 +932,7 @@ pub mod shape {
 		fn get_inner_radius(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getInnerRadius_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -941,7 +941,7 @@ pub mod shape {
 		fn get_outer_radius(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getOuterRadius_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -950,7 +950,7 @@ pub mod shape {
 		fn get_rotation_invariant(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getRotationInvariant_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -959,7 +959,7 @@ pub mod shape {
 		fn get_shape_context_weight(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getShapeContextWeight_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -968,7 +968,7 @@ pub mod shape {
 		fn get_image_appearance_weight(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getImageAppearanceWeight_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -977,7 +977,7 @@ pub mod shape {
 		fn get_bending_energy_weight(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getBendingEnergyWeight_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -988,7 +988,7 @@ pub mod shape {
 			output_array_arg!(image2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getImages_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_ShapeContextDistanceExtractor(), image1.as_raw__OutputArray(), image2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -997,7 +997,7 @@ pub mod shape {
 		fn get_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getIterations_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1006,7 +1006,7 @@ pub mod shape {
 		fn get_cost_extractor(&self) -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getCostExtractor_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1016,7 +1016,7 @@ pub mod shape {
 		fn get_std_dev(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getStdDev_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1025,7 +1025,7 @@ pub mod shape {
 		fn get_transform_algorithm(&self) -> Result<core::Ptr<crate::shape::ShapeTransformer>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getTransformAlgorithm_const(self.as_raw_ShapeContextDistanceExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::shape::ShapeTransformer>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1046,7 +1046,7 @@ pub mod shape {
 		fn set_angular_bins(&mut self, n_angular_bins: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setAngularBins_int(self.as_raw_mut_ShapeContextDistanceExtractor(), n_angular_bins, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1060,7 +1060,7 @@ pub mod shape {
 		fn set_radial_bins(&mut self, n_radial_bins: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setRadialBins_int(self.as_raw_mut_ShapeContextDistanceExtractor(), n_radial_bins, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1073,7 +1073,7 @@ pub mod shape {
 		fn set_inner_radius(&mut self, inner_radius: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setInnerRadius_float(self.as_raw_mut_ShapeContextDistanceExtractor(), inner_radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1086,7 +1086,7 @@ pub mod shape {
 		fn set_outer_radius(&mut self, outer_radius: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setOuterRadius_float(self.as_raw_mut_ShapeContextDistanceExtractor(), outer_radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1095,7 +1095,7 @@ pub mod shape {
 		fn set_rotation_invariant(&mut self, rotation_invariant: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setRotationInvariant_bool(self.as_raw_mut_ShapeContextDistanceExtractor(), rotation_invariant, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1111,7 +1111,7 @@ pub mod shape {
 		fn set_shape_context_weight(&mut self, shape_context_weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setShapeContextWeight_float(self.as_raw_mut_ShapeContextDistanceExtractor(), shape_context_weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1129,7 +1129,7 @@ pub mod shape {
 		fn set_image_appearance_weight(&mut self, image_appearance_weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setImageAppearanceWeight_float(self.as_raw_mut_ShapeContextDistanceExtractor(), image_appearance_weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1145,7 +1145,7 @@ pub mod shape {
 		fn set_bending_energy_weight(&mut self, bending_energy_weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setBendingEnergyWeight_float(self.as_raw_mut_ShapeContextDistanceExtractor(), bending_energy_weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1162,7 +1162,7 @@ pub mod shape {
 			input_array_arg!(image2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setImages_const__InputArrayR_const__InputArrayR(self.as_raw_mut_ShapeContextDistanceExtractor(), image1.as_raw__InputArray(), image2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1171,7 +1171,7 @@ pub mod shape {
 		fn set_iterations(&mut self, iterations: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setIterations_int(self.as_raw_mut_ShapeContextDistanceExtractor(), iterations, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1185,7 +1185,7 @@ pub mod shape {
 		fn set_cost_extractor(&mut self, mut comparer: core::Ptr<crate::shape::HistogramCostExtractor>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setCostExtractor_PtrLHistogramCostExtractorG(self.as_raw_mut_ShapeContextDistanceExtractor(), comparer.as_raw_mut_PtrOfHistogramCostExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1198,7 +1198,7 @@ pub mod shape {
 		fn set_std_dev(&mut self, sigma: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setStdDev_float(self.as_raw_mut_ShapeContextDistanceExtractor(), sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1212,7 +1212,7 @@ pub mod shape {
 		fn set_transform_algorithm(&mut self, mut transformer: core::Ptr<crate::shape::ShapeTransformer>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setTransformAlgorithm_PtrLShapeTransformerG(self.as_raw_mut_ShapeContextDistanceExtractor(), transformer.as_raw_mut_PtrOfShapeTransformer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1301,7 +1301,7 @@ pub mod shape {
 			input_array_arg!(contour2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeDistanceExtractor_computeDistance_const__InputArrayR_const__InputArrayR(self.as_raw_mut_ShapeDistanceExtractor(), contour1.as_raw__InputArray(), contour2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1381,7 +1381,7 @@ pub mod shape {
 			output_array_arg!(output);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeTransformer_warpImage_const_const__InputArrayR_const__OutputArrayR_int_int_const_ScalarR(self.as_raw_ShapeTransformer(), transforming_image.as_raw__InputArray(), output.as_raw__OutputArray(), flags, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1406,7 +1406,7 @@ pub mod shape {
 			output_array_arg!(output);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeTransformer_warpImage_const_const__InputArrayR_const__OutputArrayR(self.as_raw_ShapeTransformer(), transforming_image.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1429,7 +1429,7 @@ pub mod shape {
 			input_array_arg!(target_shape);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeTransformer_estimateTransformation_const__InputArrayR_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_ShapeTransformer(), transforming_shape.as_raw__InputArray(), target_shape.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1448,7 +1448,7 @@ pub mod shape {
 			output_array_arg!(output);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeTransformer_applyTransformation_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ShapeTransformer(), input.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1467,7 +1467,7 @@ pub mod shape {
 			input_array_arg!(input);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeTransformer_applyTransformation_const__InputArrayR(self.as_raw_mut_ShapeTransformer(), input.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1535,7 +1535,7 @@ pub mod shape {
 		fn get_regularization_parameter(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ThinPlateSplineShapeTransformer_getRegularizationParameter_const(self.as_raw_ThinPlateSplineShapeTransformer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1555,7 +1555,7 @@ pub mod shape {
 		fn set_regularization_parameter(&mut self, beta: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ThinPlateSplineShapeTransformer_setRegularizationParameter_double(self.as_raw_mut_ThinPlateSplineShapeTransformer(), beta, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

@@ -68,7 +68,7 @@ pub mod tracking {
 		pub fn create(parameters: &impl crate::tracking::TrackerCSRT_ParamsTraitConst) -> Result<core::Ptr<crate::tracking::TrackerCSRT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerCSRT_create_const_ParamsR(parameters.as_raw_TrackerCSRT_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::tracking::TrackerCSRT>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -85,7 +85,7 @@ pub mod tracking {
 		pub fn create_def() -> Result<core::Ptr<crate::tracking::TrackerCSRT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerCSRT_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::tracking::TrackerCSRT>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -108,7 +108,7 @@ pub mod tracking {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerCSRT_setInitialMask_const__InputArrayR(self.as_raw_mut_TrackerCSRT(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -165,7 +165,7 @@ pub mod tracking {
 		pub fn default() -> Result<crate::tracking::TrackerCSRT_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerCSRT_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::tracking::TrackerCSRT_Params::opencv_from_extern(ret) };
 			Ok(ret)
@@ -600,7 +600,7 @@ pub mod tracking {
 		pub fn create(parameters: crate::tracking::TrackerKCF_Params) -> Result<core::Ptr<crate::tracking::TrackerKCF>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerKCF_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::tracking::TrackerKCF>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -617,7 +617,7 @@ pub mod tracking {
 		pub fn create_def() -> Result<core::Ptr<crate::tracking::TrackerKCF>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerKCF_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::tracking::TrackerKCF>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -641,7 +641,7 @@ pub mod tracking {
 		fn set_feature_extractor(&mut self, callback: crate::tracking::TrackerKCF_FeatureExtractorCallbackFN, pca_func: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerKCF_setFeatureExtractor_FeatureExtractorCallbackFN_bool(self.as_raw_mut_TrackerKCF(), callback, pca_func, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -653,7 +653,7 @@ pub mod tracking {
 		fn set_feature_extractor_def(&mut self, callback: crate::tracking::TrackerKCF_FeatureExtractorCallbackFN) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerKCF_setFeatureExtractor_FeatureExtractorCallbackFN(self.as_raw_mut_TrackerKCF(), callback, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -730,7 +730,7 @@ pub mod tracking {
 		pub fn default() -> Result<crate::tracking::TrackerKCF_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerKCF_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

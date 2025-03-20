@@ -138,7 +138,7 @@ pub mod saliency {
 		pub fn default() -> Result<crate::saliency::MotionSaliencyBinWangApr2014> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_MotionSaliencyBinWangApr2014(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::saliency::MotionSaliencyBinWangApr2014::opencv_from_extern(ret) };
 			Ok(ret)
@@ -148,7 +148,7 @@ pub mod saliency {
 		pub fn create() -> Result<core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::saliency::MotionSaliencyBinWangApr2014>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -164,7 +164,7 @@ pub mod saliency {
 		fn get_image_width(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_getImageWidth_const(self.as_raw_MotionSaliencyBinWangApr2014(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -173,7 +173,7 @@ pub mod saliency {
 		fn get_image_height(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_getImageHeight_const(self.as_raw_MotionSaliencyBinWangApr2014(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -190,7 +190,7 @@ pub mod saliency {
 			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_MotionSaliencyBinWangApr2014(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -204,7 +204,7 @@ pub mod saliency {
 		fn set_imagesize(&mut self, w: i32, h: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImagesize_int_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), w, h, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -215,7 +215,7 @@ pub mod saliency {
 		fn init(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_init(self.as_raw_mut_MotionSaliencyBinWangApr2014(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -224,7 +224,7 @@ pub mod saliency {
 		fn set_image_width(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImageWidth_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -233,7 +233,7 @@ pub mod saliency {
 		fn set_image_height(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_setImageHeight_int(self.as_raw_mut_MotionSaliencyBinWangApr2014(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -387,7 +387,7 @@ pub mod saliency {
 		pub fn default() -> Result<crate::saliency::ObjectnessBING> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_ObjectnessBING(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::saliency::ObjectnessBING::opencv_from_extern(ret) };
 			Ok(ret)
@@ -397,7 +397,7 @@ pub mod saliency {
 		pub fn create() -> Result<core::Ptr<crate::saliency::ObjectnessBING>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::saliency::ObjectnessBING>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -413,7 +413,7 @@ pub mod saliency {
 		fn write(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_write_const(self.as_raw_ObjectnessBING(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -422,7 +422,7 @@ pub mod saliency {
 		fn get_base(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_getBase_const(self.as_raw_ObjectnessBING(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -431,7 +431,7 @@ pub mod saliency {
 		fn get_nss(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_getNSS_const(self.as_raw_ObjectnessBING(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -440,7 +440,7 @@ pub mod saliency {
 		fn get_w(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_getW_const(self.as_raw_ObjectnessBING(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -457,7 +457,7 @@ pub mod saliency {
 			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ObjectnessBING(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -466,7 +466,7 @@ pub mod saliency {
 		fn read(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_read(self.as_raw_mut_ObjectnessBING(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -480,7 +480,7 @@ pub mod saliency {
 		fn getobjectness_values(&mut self) -> Result<core::Vector<f32>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_getobjectnessValues(self.as_raw_mut_ObjectnessBING(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<f32>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -495,7 +495,7 @@ pub mod saliency {
 			extern_container_arg!(training_path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_setTrainingPath_const_StringR(self.as_raw_mut_ObjectnessBING(), training_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -512,7 +512,7 @@ pub mod saliency {
 			extern_container_arg!(results_dir);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_setBBResDir_const_StringR(self.as_raw_mut_ObjectnessBING(), results_dir.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -521,7 +521,7 @@ pub mod saliency {
 		fn set_base(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_setBase_double(self.as_raw_mut_ObjectnessBING(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -530,7 +530,7 @@ pub mod saliency {
 		fn set_nss(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_setNSS_int(self.as_raw_mut_ObjectnessBING(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -539,7 +539,7 @@ pub mod saliency {
 		fn set_w(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_setW_int(self.as_raw_mut_ObjectnessBING(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -636,7 +636,7 @@ pub mod saliency {
 			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_Saliency_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Saliency(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -734,7 +734,7 @@ pub mod saliency {
 			output_array_arg!(_binary_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliency_computeBinaryMap_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliency(), _saliency_map.as_raw__InputArray(), _binary_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -811,7 +811,7 @@ pub mod saliency {
 		pub fn default() -> Result<crate::saliency::StaticSaliencyFineGrained> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencyFineGrained_StaticSaliencyFineGrained(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::saliency::StaticSaliencyFineGrained::opencv_from_extern(ret) };
 			Ok(ret)
@@ -821,7 +821,7 @@ pub mod saliency {
 		pub fn create() -> Result<core::Ptr<crate::saliency::StaticSaliencyFineGrained>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencyFineGrained_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::saliency::StaticSaliencyFineGrained>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -845,7 +845,7 @@ pub mod saliency {
 			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencyFineGrained_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliencyFineGrained(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -932,7 +932,7 @@ pub mod saliency {
 		pub fn default() -> Result<crate::saliency::StaticSaliencySpectralResidual> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_StaticSaliencySpectralResidual(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::saliency::StaticSaliencySpectralResidual::opencv_from_extern(ret) };
 			Ok(ret)
@@ -942,7 +942,7 @@ pub mod saliency {
 		pub fn create() -> Result<core::Ptr<crate::saliency::StaticSaliencySpectralResidual>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::saliency::StaticSaliencySpectralResidual>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -958,7 +958,7 @@ pub mod saliency {
 		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_write_const_FileStorageR(self.as_raw_StaticSaliencySpectralResidual(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -967,7 +967,7 @@ pub mod saliency {
 		fn get_image_width(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_getImageWidth_const(self.as_raw_StaticSaliencySpectralResidual(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -976,7 +976,7 @@ pub mod saliency {
 		fn get_image_height(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_getImageHeight_const(self.as_raw_StaticSaliencySpectralResidual(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -993,7 +993,7 @@ pub mod saliency {
 			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliencySpectralResidual(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1002,7 +1002,7 @@ pub mod saliency {
 		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_read_const_FileNodeR(self.as_raw_mut_StaticSaliencySpectralResidual(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1011,7 +1011,7 @@ pub mod saliency {
 		fn set_image_width(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_setImageWidth_int(self.as_raw_mut_StaticSaliencySpectralResidual(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1020,7 +1020,7 @@ pub mod saliency {
 		fn set_image_height(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_setImageHeight_int(self.as_raw_mut_StaticSaliencySpectralResidual(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

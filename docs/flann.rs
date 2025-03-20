@@ -408,7 +408,7 @@ pub mod flann {
 	pub fn flann_distance_type() -> Result<crate::flann::flann_distance_t> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cvflann_flann_distance_type(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -417,7 +417,7 @@ pub mod flann {
 	pub fn set_distance_type(distance_type: crate::flann::flann_distance_t, order: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cvflann_set_distance_type_flann_distance_t_int(distance_type, order, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -447,7 +447,7 @@ pub mod flann {
 		pub fn new(target_precision: f32, build_weight: f32, memory_weight: f32, sample_fraction: f32) -> Result<crate::flann::AutotunedIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_AutotunedIndexParams_AutotunedIndexParams_float_float_float_float(target_precision, build_weight, memory_weight, sample_fraction, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::AutotunedIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -463,7 +463,7 @@ pub mod flann {
 		pub fn new_def() -> Result<crate::flann::AutotunedIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_AutotunedIndexParams_AutotunedIndexParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::AutotunedIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -539,7 +539,7 @@ pub mod flann {
 		pub fn new(trees: i32, branching: i32, iterations: i32, centers_init: crate::flann::flann_centers_init_t, cb_index: f32) -> Result<crate::flann::CompositeIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_CompositeIndexParams_CompositeIndexParams_int_int_int_flann_centers_init_t_float(trees, branching, iterations, centers_init, cb_index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::CompositeIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -556,7 +556,7 @@ pub mod flann {
 		pub fn new_def() -> Result<crate::flann::CompositeIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_CompositeIndexParams_CompositeIndexParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::CompositeIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -631,7 +631,7 @@ pub mod flann {
 		pub fn new(branching: i32, centers_init: crate::flann::flann_centers_init_t, trees: i32, leaf_size: i32) -> Result<crate::flann::HierarchicalClusteringIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_HierarchicalClusteringIndexParams_HierarchicalClusteringIndexParams_int_flann_centers_init_t_int_int(branching, centers_init, trees, leaf_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::HierarchicalClusteringIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -647,7 +647,7 @@ pub mod flann {
 		pub fn new_def() -> Result<crate::flann::HierarchicalClusteringIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_HierarchicalClusteringIndexParams_HierarchicalClusteringIndexParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::HierarchicalClusteringIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -717,7 +717,7 @@ pub mod flann {
 		pub fn default() -> Result<crate::flann::Index> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_Index(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::Index::opencv_from_extern(ret) };
 			Ok(ret)
@@ -730,7 +730,7 @@ pub mod flann {
 			input_array_arg!(features);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_Index_const__InputArrayR_const_IndexParamsR_flann_distance_t(features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::Index::opencv_from_extern(ret) };
 			Ok(ret)
@@ -744,7 +744,7 @@ pub mod flann {
 			input_array_arg!(features);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_Index_const__InputArrayR_const_IndexParamsR(features.as_raw__InputArray(), params.as_raw_IndexParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::Index::opencv_from_extern(ret) };
 			Ok(ret)
@@ -761,7 +761,7 @@ pub mod flann {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_save_const_const_StringR(self.as_raw_Index(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -770,7 +770,7 @@ pub mod flann {
 		fn get_distance(&self) -> Result<crate::flann::flann_distance_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_getDistance_const(self.as_raw_Index(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -779,7 +779,7 @@ pub mod flann {
 		fn get_algorithm(&self) -> Result<crate::flann::flann_algorithm_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_getAlgorithm_const(self.as_raw_Index(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -797,7 +797,7 @@ pub mod flann {
 			input_array_arg!(features);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_build_const__InputArrayR_const_IndexParamsR_flann_distance_t(self.as_raw_mut_Index(), features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -810,7 +810,7 @@ pub mod flann {
 			input_array_arg!(features);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_build_const__InputArrayR_const_IndexParamsR(self.as_raw_mut_Index(), features.as_raw__InputArray(), params.as_raw_IndexParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -824,7 +824,7 @@ pub mod flann {
 			output_array_arg!(dists);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_knnSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_SearchParamsR(self.as_raw_mut_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), knn, params.as_raw_SearchParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -839,7 +839,7 @@ pub mod flann {
 			output_array_arg!(dists);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_knnSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(self.as_raw_mut_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), knn, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -853,7 +853,7 @@ pub mod flann {
 			output_array_arg!(dists);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_radiusSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_int_const_SearchParamsR(self.as_raw_mut_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), radius, max_results, params.as_raw_SearchParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -868,7 +868,7 @@ pub mod flann {
 			output_array_arg!(dists);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_radiusSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_int(self.as_raw_mut_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), radius, max_results, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -879,7 +879,7 @@ pub mod flann {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_load_const__InputArrayR_const_StringR(self.as_raw_mut_Index(), features.as_raw__InputArray(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -888,7 +888,7 @@ pub mod flann {
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_release(self.as_raw_mut_Index(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -933,7 +933,7 @@ pub mod flann {
 		pub fn default() -> Result<crate::flann::IndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_IndexParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::IndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -953,7 +953,7 @@ pub mod flann {
 			extern_container_arg!(default_val);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_getString_const_const_StringR_const_StringR(self.as_raw_IndexParams(), key.opencv_as_extern(), default_val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -967,7 +967,7 @@ pub mod flann {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_getString_const_const_StringR(self.as_raw_IndexParams(), key.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -980,7 +980,7 @@ pub mod flann {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_getInt_const_const_StringR_int(self.as_raw_IndexParams(), key.opencv_as_extern(), default_val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -993,7 +993,7 @@ pub mod flann {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_getInt_const_const_StringR(self.as_raw_IndexParams(), key.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1005,7 +1005,7 @@ pub mod flann {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_getDouble_const_const_StringR_double(self.as_raw_IndexParams(), key.opencv_as_extern(), default_val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1018,7 +1018,7 @@ pub mod flann {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_getDouble_const_const_StringR(self.as_raw_IndexParams(), key.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1027,7 +1027,7 @@ pub mod flann {
 		fn get_all(&self, names: &mut core::Vector<String>, types: &mut core::Vector<crate::flann::FlannIndexType>, str_values: &mut core::Vector<String>, num_values: &mut core::Vector<f64>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_getAll_const_vectorLStringGR_vectorLFlannIndexTypeGR_vectorLStringGR_vectorLdoubleGR(self.as_raw_IndexParams(), names.as_raw_mut_VectorOfString(), types.as_raw_mut_VectorOfFlannIndexType(), str_values.as_raw_mut_VectorOfString(), num_values.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1046,7 +1046,7 @@ pub mod flann {
 
 		#[inline]
 		unsafe fn set_params(&mut self, val: *const c_void) {
-			let ret = { sys::cv_flann_IndexParams_propParams_voidX(self.as_raw_mut_IndexParams(), val) };
+			let ret = unsafe { sys::cv_flann_IndexParams_propParams_voidX(self.as_raw_mut_IndexParams(), val) };
 			ret
 		}
 
@@ -1056,7 +1056,7 @@ pub mod flann {
 			extern_container_arg!(value);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_setString_const_StringR_const_StringR(self.as_raw_mut_IndexParams(), key.opencv_as_extern(), value.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1066,7 +1066,7 @@ pub mod flann {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_setInt_const_StringR_int(self.as_raw_mut_IndexParams(), key.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1076,7 +1076,7 @@ pub mod flann {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_setDouble_const_StringR_double(self.as_raw_mut_IndexParams(), key.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1086,7 +1086,7 @@ pub mod flann {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_setFloat_const_StringR_float(self.as_raw_mut_IndexParams(), key.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1096,7 +1096,7 @@ pub mod flann {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_setBool_const_StringR_bool(self.as_raw_mut_IndexParams(), key.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1105,7 +1105,7 @@ pub mod flann {
 		fn set_algorithm(&mut self, value: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_setAlgorithm_int(self.as_raw_mut_IndexParams(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1152,7 +1152,7 @@ pub mod flann {
 		pub fn new(trees: i32) -> Result<crate::flann::KDTreeIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_KDTreeIndexParams_KDTreeIndexParams_int(trees, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::KDTreeIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1165,7 +1165,7 @@ pub mod flann {
 		pub fn new_def() -> Result<crate::flann::KDTreeIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_KDTreeIndexParams_KDTreeIndexParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::KDTreeIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1240,7 +1240,7 @@ pub mod flann {
 		pub fn new(branching: i32, iterations: i32, centers_init: crate::flann::flann_centers_init_t, cb_index: f32) -> Result<crate::flann::KMeansIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_KMeansIndexParams_KMeansIndexParams_int_int_flann_centers_init_t_float(branching, iterations, centers_init, cb_index, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::KMeansIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1256,7 +1256,7 @@ pub mod flann {
 		pub fn new_def() -> Result<crate::flann::KMeansIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_KMeansIndexParams_KMeansIndexParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::KMeansIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1326,7 +1326,7 @@ pub mod flann {
 		pub fn default() -> Result<crate::flann::LinearIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_LinearIndexParams_LinearIndexParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::LinearIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1396,7 +1396,7 @@ pub mod flann {
 		pub fn new(table_number: i32, key_size: i32, multi_probe_level: i32) -> Result<crate::flann::LshIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_LshIndexParams_LshIndexParams_int_int_int(table_number, key_size, multi_probe_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::LshIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1467,7 +1467,7 @@ pub mod flann {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_SavedIndexParams_SavedIndexParams_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::SavedIndexParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1537,7 +1537,7 @@ pub mod flann {
 		pub fn new(checks: i32, eps: f32, sorted: bool, explore_all_trees: bool) -> Result<crate::flann::SearchParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_SearchParams_SearchParams_int_float_bool_bool(checks, eps, sorted, explore_all_trees, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::SearchParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1551,7 +1551,7 @@ pub mod flann {
 		pub fn new_1(checks: i32, eps: f32, sorted: bool) -> Result<crate::flann::SearchParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_SearchParams_SearchParams_int_float_bool(checks, eps, sorted, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::SearchParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1566,7 +1566,7 @@ pub mod flann {
 		pub fn new_def() -> Result<crate::flann::SearchParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_SearchParams_SearchParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::SearchParams::opencv_from_extern(ret) };
 			Ok(ret)

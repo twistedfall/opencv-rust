@@ -76,7 +76,7 @@ pub mod hfs {
 		pub fn create(height: i32, width: i32, seg_egb_threshold_i: f32, min_region_size_i: i32, seg_egb_threshold_ii: f32, min_region_size_ii: i32, spatial_weight: f32, slic_spixel_size: i32, num_slic_iter: i32) -> Result<core::Ptr<crate::hfs::HfsSegment>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_create_int_int_float_int_float_int_float_int_int(height, width, seg_egb_threshold_i, min_region_size_i, seg_egb_threshold_ii, min_region_size_ii, spatial_weight, slic_spixel_size, num_slic_iter, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::hfs::HfsSegment>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -107,7 +107,7 @@ pub mod hfs {
 		pub fn create_def(height: i32, width: i32) -> Result<core::Ptr<crate::hfs::HfsSegment>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_create_int_int(height, width, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::hfs::HfsSegment>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -134,7 +134,7 @@ pub mod hfs {
 		fn set_seg_egb_threshold_i(&mut self, c: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_setSegEgbThresholdI_float(self.as_raw_mut_HfsSegment(), c, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -143,7 +143,7 @@ pub mod hfs {
 		fn get_seg_egb_threshold_i(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_getSegEgbThresholdI(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -156,7 +156,7 @@ pub mod hfs {
 		fn set_min_region_size_i(&mut self, n: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_setMinRegionSizeI_int(self.as_raw_mut_HfsSegment(), n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -165,7 +165,7 @@ pub mod hfs {
 		fn get_min_region_size_i(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_getMinRegionSizeI(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -179,7 +179,7 @@ pub mod hfs {
 		fn set_seg_egb_threshold_ii(&mut self, c: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_setSegEgbThresholdII_float(self.as_raw_mut_HfsSegment(), c, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -188,7 +188,7 @@ pub mod hfs {
 		fn get_seg_egb_threshold_ii(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_getSegEgbThresholdII(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -200,7 +200,7 @@ pub mod hfs {
 		fn set_min_region_size_ii(&mut self, n: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_setMinRegionSizeII_int(self.as_raw_mut_HfsSegment(), n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -209,7 +209,7 @@ pub mod hfs {
 		fn get_min_region_size_ii(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_getMinRegionSizeII(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -226,7 +226,7 @@ pub mod hfs {
 		fn set_spatial_weight(&mut self, w: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_setSpatialWeight_float(self.as_raw_mut_HfsSegment(), w, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -235,7 +235,7 @@ pub mod hfs {
 		fn get_spatial_weight(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_getSpatialWeight(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -250,7 +250,7 @@ pub mod hfs {
 		fn set_slic_spixel_size(&mut self, n: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_setSlicSpixelSize_int(self.as_raw_mut_HfsSegment(), n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -259,7 +259,7 @@ pub mod hfs {
 		fn get_slic_spixel_size(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_getSlicSpixelSize(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -271,7 +271,7 @@ pub mod hfs {
 		fn set_num_slic_iter(&mut self, n: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_setNumSlicIter_int(self.as_raw_mut_HfsSegment(), n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -280,7 +280,7 @@ pub mod hfs {
 		fn get_num_slic_iter(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_getNumSlicIter(self.as_raw_mut_HfsSegment(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -302,7 +302,7 @@ pub mod hfs {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -326,7 +326,7 @@ pub mod hfs {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -343,7 +343,7 @@ pub mod hfs {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -361,7 +361,7 @@ pub mod hfs {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)

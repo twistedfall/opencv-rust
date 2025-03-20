@@ -27,7 +27,7 @@ pub mod alphamat {
 		output_array_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_alphamat_infoFlow_const__InputArrayR_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), tmap.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}

@@ -471,7 +471,7 @@ pub mod highgui {
 		extern_container_arg!(text);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_addText_const_MatR_const_StringR_Point_const_QtFontR(img.as_raw_Mat(), text.opencv_as_extern(), &org, font.as_raw_QtFont(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -504,7 +504,7 @@ pub mod highgui {
 		extern_container_arg!(name_font);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_addText_const_MatR_const_StringR_Point_const_StringR(img.as_raw_Mat(), text.opencv_as_extern(), &org, name_font.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -536,7 +536,7 @@ pub mod highgui {
 		extern_container_arg!(name_font);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_addText_const_MatR_const_StringR_Point_const_StringR_int_Scalar_int_int_int(img.as_raw_Mat(), text.opencv_as_extern(), &org, name_font.opencv_as_extern(), point_size, &color, weight, style, spacing, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -580,7 +580,7 @@ pub mod highgui {
 		userdata_arg!(userdata: *mut c_void => on_change);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createButton_const_StringR_ButtonCallback_voidX(bar_name.opencv_as_extern(), on_change_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -623,7 +623,7 @@ pub mod highgui {
 		userdata_arg!(userdata: *mut c_void => on_change);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createButton_const_StringR_ButtonCallback_voidX_int_bool(bar_name.opencv_as_extern(), on_change_trampoline, userdata, typ, initial_button_state, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -667,7 +667,7 @@ pub mod highgui {
 		userdata_arg!(userdata: *mut c_void => on_change);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createTrackbar_const_StringR_const_StringR_intX_int_TrackbarCallback_voidX(trackbarname.opencv_as_extern(), winname.opencv_as_extern(), value.map_or(::core::ptr::null_mut(), |value| value), count, on_change_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -680,7 +680,7 @@ pub mod highgui {
 	pub fn current_ui_framework() -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_currentUIFramework(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
@@ -693,7 +693,7 @@ pub mod highgui {
 	pub fn destroy_all_windows() -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_destroyAllWindows(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -709,7 +709,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_destroyWindow_const_StringR(winname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -736,7 +736,7 @@ pub mod highgui {
 		extern_container_arg!(text);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_displayOverlay_const_StringR_const_StringR(winname.opencv_as_extern(), text.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -762,7 +762,7 @@ pub mod highgui {
 		extern_container_arg!(text);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_displayOverlay_const_StringR_const_StringR_int(winname.opencv_as_extern(), text.opencv_as_extern(), delayms, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -789,7 +789,7 @@ pub mod highgui {
 		extern_container_arg!(text);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_displayStatusBar_const_StringR_const_StringR(winname.opencv_as_extern(), text.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -815,7 +815,7 @@ pub mod highgui {
 		extern_container_arg!(text);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_displayStatusBar_const_StringR_const_StringR_int(winname.opencv_as_extern(), text.opencv_as_extern(), delayms, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -854,7 +854,7 @@ pub mod highgui {
 		extern_container_arg!(name_font);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fontQt_const_StringR(name_font.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::highgui::QtFont::opencv_from_extern(ret) };
 		Ok(ret)
@@ -893,7 +893,7 @@ pub mod highgui {
 		extern_container_arg!(name_font);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fontQt_const_StringR_int_Scalar_int_int_int(name_font.opencv_as_extern(), point_size, &color, weight, style, spacing, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::highgui::QtFont::opencv_from_extern(ret) };
 		Ok(ret)
@@ -920,7 +920,7 @@ pub mod highgui {
 	pub fn get_mouse_wheel_delta(flags: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getMouseWheelDelta_int(flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -942,7 +942,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getTrackbarPos_const_StringR_const_StringR(trackbarname.opencv_as_extern(), winname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -963,7 +963,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getWindowImageRect_const_StringR(winname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -985,7 +985,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getWindowProperty_const_StringR_int(winname.opencv_as_extern(), prop_id, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1037,7 +1037,7 @@ pub mod highgui {
 		input_array_arg!(mat);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imshow_const_StringR_const__InputArrayR(winname.opencv_as_extern(), mat.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1054,7 +1054,7 @@ pub mod highgui {
 		extern_container_arg!(window_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_loadWindowParameters_const_StringR(window_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1073,7 +1073,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_moveWindow_const_StringR_int_int(winname.opencv_as_extern(), x, y, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1112,7 +1112,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_namedWindow_const_StringR(winname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1150,7 +1150,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_namedWindow_const_StringR_int(winname.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1172,7 +1172,7 @@ pub mod highgui {
 	pub fn poll_key() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pollKey(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1197,7 +1197,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_resizeWindow_const_StringR_const_SizeR(winname.opencv_as_extern(), &size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1217,7 +1217,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_resizeWindow_const_StringR_int_int(winname.opencv_as_extern(), width, height, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1234,7 +1234,7 @@ pub mod highgui {
 		extern_container_arg!(window_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_saveWindowParameters_const_StringR(window_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1269,7 +1269,7 @@ pub mod highgui {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_selectROI_const_StringR_const__InputArrayR(window_name.opencv_as_extern(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1303,7 +1303,7 @@ pub mod highgui {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_selectROI_const_StringR_const__InputArrayR_bool_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), show_crosshair, from_center, print_notice, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1320,7 +1320,7 @@ pub mod highgui {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_selectROI_const__InputArrayR(img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1355,7 +1355,7 @@ pub mod highgui {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_selectROI_const__InputArrayR_bool_bool_bool(img.as_raw__InputArray(), show_crosshair, from_center, print_notice, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1390,7 +1390,7 @@ pub mod highgui {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_selectROIs_const_StringR_const__InputArrayR_vectorLRectGR(window_name.opencv_as_extern(), img.as_raw__InputArray(), bounding_boxes.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1424,7 +1424,7 @@ pub mod highgui {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_selectROIs_const_StringR_const__InputArrayR_vectorLRectGR_bool_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), bounding_boxes.as_raw_mut_VectorOfRect(), show_crosshair, from_center, print_notice, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1445,7 +1445,7 @@ pub mod highgui {
 		userdata_arg!(userdata: *mut c_void => on_mouse);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setMouseCallback_const_StringR_MouseCallback_voidX(winname.opencv_as_extern(), on_mouse_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1459,7 +1459,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setOpenGlContext_const_StringR(winname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1512,7 +1512,7 @@ pub mod highgui {
 		userdata_arg!(userdata: *mut c_void => on_opengl_draw);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setOpenGlDrawCallback_const_StringR_OpenGlDrawCallback_voidX(winname.opencv_as_extern(), on_opengl_draw_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1535,7 +1535,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setTrackbarMax_const_StringR_const_StringR_int(trackbarname.opencv_as_extern(), winname.opencv_as_extern(), maxval, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1558,7 +1558,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setTrackbarMin_const_StringR_const_StringR_int(trackbarname.opencv_as_extern(), winname.opencv_as_extern(), minval, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1581,7 +1581,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setTrackbarPos_const_StringR_const_StringR_int(trackbarname.opencv_as_extern(), winname.opencv_as_extern(), pos, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1602,7 +1602,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setWindowProperty_const_StringR_int_double(winname.opencv_as_extern(), prop_id, prop_value, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1617,7 +1617,7 @@ pub mod highgui {
 		extern_container_arg!(title);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setWindowTitle_const_StringR_const_StringR(winname.opencv_as_extern(), title.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1627,7 +1627,7 @@ pub mod highgui {
 		string_array_arg_mut!(argv);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_startLoop_int__X__int__charXX__int_charXX(pt2_func, argv.len().try_into()?, argv.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1636,7 +1636,7 @@ pub mod highgui {
 	pub fn start_window_thread() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_startWindowThread(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1645,7 +1645,7 @@ pub mod highgui {
 	pub fn stop_loop() -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_stopLoop(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1659,7 +1659,7 @@ pub mod highgui {
 		extern_container_arg!(winname);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_updateWindow_const_StringR(winname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1692,7 +1692,7 @@ pub mod highgui {
 	pub fn wait_key_def() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_waitKey(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1709,7 +1709,7 @@ pub mod highgui {
 	pub fn wait_key_ex_def() -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_waitKeyEx(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1725,7 +1725,7 @@ pub mod highgui {
 	pub fn wait_key_ex(delay: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_waitKeyEx_int(delay, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1757,7 +1757,7 @@ pub mod highgui {
 	pub fn wait_key(delay: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_waitKey_int(delay, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -1806,7 +1806,7 @@ pub mod highgui {
 		fn color(&self) -> core::Scalar {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QtFont_propColor_const(self.as_raw_QtFont(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 

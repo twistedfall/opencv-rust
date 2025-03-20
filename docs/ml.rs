@@ -724,7 +724,7 @@ pub mod ml {
 		output_array_arg!(responses);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_createConcentricSpheresTestSet_int_int_int_const__OutputArrayR_const__OutputArrayR(nsamples, nfeatures, nclasses, samples.as_raw__OutputArray(), responses.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -743,7 +743,7 @@ pub mod ml {
 		output_array_arg!(samples);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_randMVNormal_const__InputArrayR_const__InputArrayR_int_const__OutputArrayR(mean.as_raw__InputArray(), cov.as_raw__InputArray(), nsamples, samples.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -783,7 +783,7 @@ pub mod ml {
 		pub fn create() -> Result<core::Ptr<crate::ml::ANN_MLP>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::ANN_MLP>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -801,7 +801,7 @@ pub mod ml {
 			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::ANN_MLP>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -818,7 +818,7 @@ pub mod ml {
 		fn get_train_method(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getTrainMethod_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -832,7 +832,7 @@ pub mod ml {
 		fn get_layer_sizes(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getLayerSizes_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -848,7 +848,7 @@ pub mod ml {
 		fn get_term_criteria(&self) -> Result<core::TermCriteria> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getTermCriteria_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -861,7 +861,7 @@ pub mod ml {
 		fn get_backprop_weight_scale(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getBackpropWeightScale_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -876,7 +876,7 @@ pub mod ml {
 		fn get_backprop_momentum_scale(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getBackpropMomentumScale_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -889,7 +889,7 @@ pub mod ml {
 		fn get_rprop_dw0(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getRpropDW0_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -902,7 +902,7 @@ pub mod ml {
 		fn get_rprop_dw_plus(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getRpropDWPlus_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -915,7 +915,7 @@ pub mod ml {
 		fn get_rprop_dw_minus(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getRpropDWMinus_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -928,7 +928,7 @@ pub mod ml {
 		fn get_rprop_dw_min(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getRpropDWMin_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -941,7 +941,7 @@ pub mod ml {
 		fn get_rprop_dw_max(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getRpropDWMax_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -954,7 +954,7 @@ pub mod ml {
 		fn get_anneal_initial_t(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getAnnealInitialT_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -967,7 +967,7 @@ pub mod ml {
 		fn get_anneal_final_t(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getAnnealFinalT_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -980,7 +980,7 @@ pub mod ml {
 		fn get_anneal_cooling_ratio(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getAnnealCoolingRatio_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -993,7 +993,7 @@ pub mod ml {
 		fn get_anneal_ite_per_step(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getAnnealItePerStep_const(self.as_raw_ANN_MLP(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1002,7 +1002,7 @@ pub mod ml {
 		fn get_weights(&self, layer_idx: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_getWeights_const_int(self.as_raw_ANN_MLP(), layer_idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1027,7 +1027,7 @@ pub mod ml {
 		fn set_train_method(&mut self, method: i32, param1: f64, param2: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setTrainMethod_int_double_double(self.as_raw_mut_ANN_MLP(), method, param1, param2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1046,7 +1046,7 @@ pub mod ml {
 		fn set_train_method_def(&mut self, method: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setTrainMethod_int(self.as_raw_mut_ANN_MLP(), method, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1065,7 +1065,7 @@ pub mod ml {
 		fn set_activation_function(&mut self, typ: i32, param1: f64, param2: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setActivationFunction_int_double_double(self.as_raw_mut_ANN_MLP(), typ, param1, param2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1085,7 +1085,7 @@ pub mod ml {
 		fn set_activation_function_def(&mut self, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setActivationFunction_int(self.as_raw_mut_ANN_MLP(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1100,7 +1100,7 @@ pub mod ml {
 			input_array_arg!(_layer_sizes);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setLayerSizes_const__InputArrayR(self.as_raw_mut_ANN_MLP(), _layer_sizes.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1115,7 +1115,7 @@ pub mod ml {
 		fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setTermCriteria_TermCriteria(self.as_raw_mut_ANN_MLP(), &val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1128,7 +1128,7 @@ pub mod ml {
 		fn set_backprop_weight_scale(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setBackpropWeightScale_double(self.as_raw_mut_ANN_MLP(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1143,7 +1143,7 @@ pub mod ml {
 		fn set_backprop_momentum_scale(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setBackpropMomentumScale_double(self.as_raw_mut_ANN_MLP(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1156,7 +1156,7 @@ pub mod ml {
 		fn set_rprop_dw0(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setRpropDW0_double(self.as_raw_mut_ANN_MLP(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1169,7 +1169,7 @@ pub mod ml {
 		fn set_rprop_dw_plus(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setRpropDWPlus_double(self.as_raw_mut_ANN_MLP(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1182,7 +1182,7 @@ pub mod ml {
 		fn set_rprop_dw_minus(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setRpropDWMinus_double(self.as_raw_mut_ANN_MLP(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1195,7 +1195,7 @@ pub mod ml {
 		fn set_rprop_dw_min(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setRpropDWMin_double(self.as_raw_mut_ANN_MLP(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1208,7 +1208,7 @@ pub mod ml {
 		fn set_rprop_dw_max(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setRpropDWMax_double(self.as_raw_mut_ANN_MLP(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1221,7 +1221,7 @@ pub mod ml {
 		fn set_anneal_initial_t(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setAnnealInitialT_double(self.as_raw_mut_ANN_MLP(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1234,7 +1234,7 @@ pub mod ml {
 		fn set_anneal_final_t(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setAnnealFinalT_double(self.as_raw_mut_ANN_MLP(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1247,7 +1247,7 @@ pub mod ml {
 		fn set_anneal_cooling_ratio(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setAnnealCoolingRatio_double(self.as_raw_mut_ANN_MLP(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1260,7 +1260,7 @@ pub mod ml {
 		fn set_anneal_ite_per_step(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setAnnealItePerStep_int(self.as_raw_mut_ANN_MLP(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1270,7 +1270,7 @@ pub mod ml {
 		fn set_anneal_energy_rng(&mut self, rng: &impl core::RNGTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setAnnealEnergyRNG_const_RNGR(self.as_raw_mut_ANN_MLP(), rng.as_raw_RNG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1344,7 +1344,7 @@ pub mod ml {
 		pub fn create() -> Result<core::Ptr<crate::ml::Boost>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_Boost_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::Boost>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1368,7 +1368,7 @@ pub mod ml {
 			extern_container_arg!(node_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_Boost_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::Boost>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1392,7 +1392,7 @@ pub mod ml {
 			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_Boost_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::Boost>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1412,7 +1412,7 @@ pub mod ml {
 		fn get_boost_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_Boost_getBoostType_const(self.as_raw_Boost(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1425,7 +1425,7 @@ pub mod ml {
 		fn get_weak_count(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_Boost_getWeakCount_const(self.as_raw_Boost(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1439,7 +1439,7 @@ pub mod ml {
 		fn get_weight_trim_rate(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_Boost_getWeightTrimRate_const(self.as_raw_Boost(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1458,7 +1458,7 @@ pub mod ml {
 		fn set_boost_type(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_Boost_setBoostType_int(self.as_raw_mut_Boost(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1471,7 +1471,7 @@ pub mod ml {
 		fn set_weak_count(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_Boost_setWeakCount_int(self.as_raw_mut_Boost(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1485,7 +1485,7 @@ pub mod ml {
 		fn set_weight_trim_rate(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_Boost_setWeightTrimRate_double(self.as_raw_mut_Boost(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1579,7 +1579,7 @@ pub mod ml {
 		pub fn create() -> Result<core::Ptr<crate::ml::DTrees>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::DTrees>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1603,7 +1603,7 @@ pub mod ml {
 			extern_container_arg!(node_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::DTrees>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1627,7 +1627,7 @@ pub mod ml {
 			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::DTrees>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1656,7 +1656,7 @@ pub mod ml {
 		fn get_max_categories(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getMaxCategories_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1672,7 +1672,7 @@ pub mod ml {
 		fn get_max_depth(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getMaxDepth_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1686,7 +1686,7 @@ pub mod ml {
 		fn get_min_sample_count(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getMinSampleCount_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1700,7 +1700,7 @@ pub mod ml {
 		fn get_cv_folds(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getCVFolds_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1716,7 +1716,7 @@ pub mod ml {
 		fn get_use_surrogates(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getUseSurrogates_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1730,7 +1730,7 @@ pub mod ml {
 		fn get_use1_se_rule(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getUse1SERule_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1744,7 +1744,7 @@ pub mod ml {
 		fn get_truncate_pruned_tree(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getTruncatePrunedTree_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1759,7 +1759,7 @@ pub mod ml {
 		fn get_regression_accuracy(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getRegressionAccuracy_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1785,7 +1785,7 @@ pub mod ml {
 		fn get_priors(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getPriors_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1796,7 +1796,7 @@ pub mod ml {
 		fn get_roots(&self) -> Result<core::Vector<i32>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getRoots_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1809,7 +1809,7 @@ pub mod ml {
 		fn get_nodes(&self) -> Result<core::Vector<crate::ml::DTrees_Node>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getNodes_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<crate::ml::DTrees_Node>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1822,7 +1822,7 @@ pub mod ml {
 		fn get_splits(&self) -> Result<core::Vector<crate::ml::DTrees_Split>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getSplits_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<crate::ml::DTrees_Split>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1835,7 +1835,7 @@ pub mod ml {
 		fn get_subsets(&self) -> Result<core::Vector<i32>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_getSubsets_const(self.as_raw_DTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1864,7 +1864,7 @@ pub mod ml {
 		fn set_max_categories(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_setMaxCategories_int(self.as_raw_mut_DTrees(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1880,7 +1880,7 @@ pub mod ml {
 		fn set_max_depth(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_setMaxDepth_int(self.as_raw_mut_DTrees(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1894,7 +1894,7 @@ pub mod ml {
 		fn set_min_sample_count(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_setMinSampleCount_int(self.as_raw_mut_DTrees(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1908,7 +1908,7 @@ pub mod ml {
 		fn set_cv_folds(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_setCVFolds_int(self.as_raw_mut_DTrees(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1924,7 +1924,7 @@ pub mod ml {
 		fn set_use_surrogates(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_setUseSurrogates_bool(self.as_raw_mut_DTrees(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1938,7 +1938,7 @@ pub mod ml {
 		fn set_use1_se_rule(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_setUse1SERule_bool(self.as_raw_mut_DTrees(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1952,7 +1952,7 @@ pub mod ml {
 		fn set_truncate_pruned_tree(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_setTruncatePrunedTree_bool(self.as_raw_mut_DTrees(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1967,7 +1967,7 @@ pub mod ml {
 		fn set_regression_accuracy(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_setRegressionAccuracy_float(self.as_raw_mut_DTrees(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1993,7 +1993,7 @@ pub mod ml {
 		fn set_priors(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_setPriors_const_MatR(self.as_raw_mut_DTrees(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2067,7 +2067,7 @@ pub mod ml {
 		pub fn default() -> Result<crate::ml::DTrees_Node> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_Node_Node(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ml::DTrees_Node::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2237,7 +2237,7 @@ pub mod ml {
 		pub fn default() -> Result<crate::ml::DTrees_Split> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_Split_Split(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ml::DTrees_Split::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2421,7 +2421,7 @@ pub mod ml {
 		pub fn create() -> Result<core::Ptr<crate::ml::EM>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::EM>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2445,7 +2445,7 @@ pub mod ml {
 			extern_container_arg!(node_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::EM>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2469,7 +2469,7 @@ pub mod ml {
 			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::EM>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2491,7 +2491,7 @@ pub mod ml {
 		fn get_clusters_number(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_getClustersNumber_const(self.as_raw_EM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2504,7 +2504,7 @@ pub mod ml {
 		fn get_covariance_matrix_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_getCovarianceMatrixType_const(self.as_raw_EM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2519,7 +2519,7 @@ pub mod ml {
 		fn get_term_criteria(&self) -> Result<core::TermCriteria> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_getTermCriteria_const(self.as_raw_EM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2531,7 +2531,7 @@ pub mod ml {
 		fn get_weights(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_getWeights_const(self.as_raw_EM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2545,7 +2545,7 @@ pub mod ml {
 		fn get_means(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_getMeans_const(self.as_raw_EM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2559,7 +2559,7 @@ pub mod ml {
 		fn get_covs(&self, covs: &mut core::Vector<core::Mat>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_getCovs_const_vectorLMatGR(self.as_raw_EM(), covs.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2581,7 +2581,7 @@ pub mod ml {
 			output_array_arg!(results);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_predict_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_EM(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2603,7 +2603,7 @@ pub mod ml {
 			input_array_arg!(samples);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_predict_const_const__InputArrayR(self.as_raw_EM(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2626,7 +2626,7 @@ pub mod ml {
 			output_array_arg!(probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_predict2_const_const__InputArrayR_const__OutputArrayR(self.as_raw_EM(), sample.as_raw__InputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2647,7 +2647,7 @@ pub mod ml {
 		fn set_clusters_number(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_setClustersNumber_int(self.as_raw_mut_EM(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2660,7 +2660,7 @@ pub mod ml {
 		fn set_covariance_matrix_type(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_setCovarianceMatrixType_int(self.as_raw_mut_EM(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2675,7 +2675,7 @@ pub mod ml {
 		fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_setTermCriteria_const_TermCriteriaR(self.as_raw_mut_EM(), &val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2721,7 +2721,7 @@ pub mod ml {
 			output_array_arg!(probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_trainEM_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2765,7 +2765,7 @@ pub mod ml {
 			input_array_arg!(samples);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_trainEM_const__InputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2815,7 +2815,7 @@ pub mod ml {
 			output_array_arg!(probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_trainE_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), means0.as_raw__InputArray(), covs0.as_raw__InputArray(), weights0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2861,7 +2861,7 @@ pub mod ml {
 			input_array_arg!(means0);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_trainE_const__InputArrayR_const__InputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), means0.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2898,7 +2898,7 @@ pub mod ml {
 			output_array_arg!(probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_trainM_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), probs0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2933,7 +2933,7 @@ pub mod ml {
 			input_array_arg!(probs0);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_trainM_const__InputArrayR_const__InputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), probs0.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3008,7 +3008,7 @@ pub mod ml {
 		pub fn create() -> Result<core::Ptr<crate::ml::KNearest>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::KNearest>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3026,7 +3026,7 @@ pub mod ml {
 			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::KNearest>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3045,7 +3045,7 @@ pub mod ml {
 		fn get_default_k(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_getDefaultK_const(self.as_raw_KNearest(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3057,7 +3057,7 @@ pub mod ml {
 		fn get_is_classifier(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_getIsClassifier_const(self.as_raw_KNearest(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3069,7 +3069,7 @@ pub mod ml {
 		fn get_emax(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_getEmax_const(self.as_raw_KNearest(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3081,7 +3081,7 @@ pub mod ml {
 		fn get_algorithm_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_getAlgorithmType_const(self.as_raw_KNearest(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3124,7 +3124,7 @@ pub mod ml {
 			output_array_arg!(dist);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_findNearest_const_const__InputArrayR_int_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_KNearest(), samples.as_raw__InputArray(), k, results.as_raw__OutputArray(), neighbor_responses.as_raw__OutputArray(), dist.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3166,7 +3166,7 @@ pub mod ml {
 			output_array_arg!(results);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_findNearest_const_const__InputArrayR_int_const__OutputArrayR(self.as_raw_KNearest(), samples.as_raw__InputArray(), k, results.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3184,7 +3184,7 @@ pub mod ml {
 		fn set_default_k(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_setDefaultK_int(self.as_raw_mut_KNearest(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3196,7 +3196,7 @@ pub mod ml {
 		fn set_is_classifier(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_setIsClassifier_bool(self.as_raw_mut_KNearest(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3208,7 +3208,7 @@ pub mod ml {
 		fn set_emax(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_setEmax_int(self.as_raw_mut_KNearest(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3220,7 +3220,7 @@ pub mod ml {
 		fn set_algorithm_type(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_setAlgorithmType_int(self.as_raw_mut_KNearest(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3295,7 +3295,7 @@ pub mod ml {
 		pub fn create() -> Result<core::Ptr<crate::ml::LogisticRegression>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::LogisticRegression>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3319,7 +3319,7 @@ pub mod ml {
 			extern_container_arg!(node_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::LogisticRegression>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3343,7 +3343,7 @@ pub mod ml {
 			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::LogisticRegression>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3362,7 +3362,7 @@ pub mod ml {
 		fn get_learning_rate(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_getLearningRate_const(self.as_raw_LogisticRegression(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3374,7 +3374,7 @@ pub mod ml {
 		fn get_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_getIterations_const(self.as_raw_LogisticRegression(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3386,7 +3386,7 @@ pub mod ml {
 		fn get_regularization(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_getRegularization_const(self.as_raw_LogisticRegression(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3398,7 +3398,7 @@ pub mod ml {
 		fn get_train_method(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_getTrainMethod_const(self.as_raw_LogisticRegression(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3412,7 +3412,7 @@ pub mod ml {
 		fn get_mini_batch_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_getMiniBatchSize_const(self.as_raw_LogisticRegression(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3424,7 +3424,7 @@ pub mod ml {
 		fn get_term_criteria(&self) -> Result<core::TermCriteria> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_getTermCriteria_const(self.as_raw_LogisticRegression(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3446,7 +3446,7 @@ pub mod ml {
 			output_array_arg!(results);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_predict_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_LogisticRegression(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3468,7 +3468,7 @@ pub mod ml {
 			input_array_arg!(samples);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_predict_const_const__InputArrayR(self.as_raw_LogisticRegression(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3481,7 +3481,7 @@ pub mod ml {
 		fn get_learnt_thetas(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_get_learnt_thetas_const(self.as_raw_LogisticRegression(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3500,7 +3500,7 @@ pub mod ml {
 		fn set_learning_rate(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_setLearningRate_double(self.as_raw_mut_LogisticRegression(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3512,7 +3512,7 @@ pub mod ml {
 		fn set_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_setIterations_int(self.as_raw_mut_LogisticRegression(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3524,7 +3524,7 @@ pub mod ml {
 		fn set_regularization(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_setRegularization_int(self.as_raw_mut_LogisticRegression(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3536,7 +3536,7 @@ pub mod ml {
 		fn set_train_method(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_setTrainMethod_int(self.as_raw_mut_LogisticRegression(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3550,7 +3550,7 @@ pub mod ml {
 		fn set_mini_batch_size(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_setMiniBatchSize_int(self.as_raw_mut_LogisticRegression(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3562,7 +3562,7 @@ pub mod ml {
 		fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_setTermCriteria_TermCriteria(self.as_raw_mut_LogisticRegression(), &val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3636,7 +3636,7 @@ pub mod ml {
 		pub fn create() -> Result<core::Ptr<crate::ml::NormalBayesClassifier>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_NormalBayesClassifier_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::NormalBayesClassifier>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3660,7 +3660,7 @@ pub mod ml {
 			extern_container_arg!(node_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_NormalBayesClassifier_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::NormalBayesClassifier>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3684,7 +3684,7 @@ pub mod ml {
 			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_NormalBayesClassifier_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::NormalBayesClassifier>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3713,7 +3713,7 @@ pub mod ml {
 			output_array_arg!(output_probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_NormalBayesClassifier_predictProb_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(self.as_raw_NormalBayesClassifier(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), output_probs.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3736,7 +3736,7 @@ pub mod ml {
 			output_array_arg!(output_probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_NormalBayesClassifier_predictProb_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_NormalBayesClassifier(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), output_probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3816,7 +3816,7 @@ pub mod ml {
 		pub fn default() -> Result<crate::ml::ParamGrid> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ParamGrid_ParamGrid(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ml::ParamGrid::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3827,7 +3827,7 @@ pub mod ml {
 		pub fn for_range(_min_val: f64, _max_val: f64, _log_step: f64) -> Result<crate::ml::ParamGrid> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ParamGrid_ParamGrid_double_double_double(_min_val, _max_val, _log_step, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ml::ParamGrid::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3848,7 +3848,7 @@ pub mod ml {
 		pub fn create(min_val: f64, max_val: f64, logstep: f64) -> Result<core::Ptr<crate::ml::ParamGrid>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ParamGrid_create_double_double_double(min_val, max_val, logstep, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::ParamGrid>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3870,7 +3870,7 @@ pub mod ml {
 		pub fn create_def() -> Result<core::Ptr<crate::ml::ParamGrid>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ParamGrid_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::ParamGrid>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3991,7 +3991,7 @@ pub mod ml {
 		pub fn create() -> Result<core::Ptr<crate::ml::RTrees>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::RTrees>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4015,7 +4015,7 @@ pub mod ml {
 			extern_container_arg!(node_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::RTrees>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4039,7 +4039,7 @@ pub mod ml {
 			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::RTrees>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4059,7 +4059,7 @@ pub mod ml {
 		fn get_calculate_var_importance(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_getCalculateVarImportance_const(self.as_raw_RTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4074,7 +4074,7 @@ pub mod ml {
 		fn get_active_var_count(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_getActiveVarCount_const(self.as_raw_RTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4092,7 +4092,7 @@ pub mod ml {
 		fn get_term_criteria(&self) -> Result<core::TermCriteria> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_getTermCriteria_const(self.as_raw_RTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4105,7 +4105,7 @@ pub mod ml {
 		fn get_var_importance(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_getVarImportance_const(self.as_raw_RTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4126,7 +4126,7 @@ pub mod ml {
 			output_array_arg!(results);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_getVotes_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_RTrees(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4135,7 +4135,7 @@ pub mod ml {
 		fn get_oob_error(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_getOOBError_const(self.as_raw_RTrees(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4154,7 +4154,7 @@ pub mod ml {
 		fn set_calculate_var_importance(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_setCalculateVarImportance_bool(self.as_raw_mut_RTrees(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4169,7 +4169,7 @@ pub mod ml {
 		fn set_active_var_count(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_setActiveVarCount_int(self.as_raw_mut_RTrees(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4187,7 +4187,7 @@ pub mod ml {
 		fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_setTermCriteria_const_TermCriteriaR(self.as_raw_mut_RTrees(), &val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4279,7 +4279,7 @@ pub mod ml {
 		pub fn get_default_grid(param_id: i32) -> Result<crate::ml::ParamGrid> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getDefaultGrid_int(param_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ml::ParamGrid::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4297,7 +4297,7 @@ pub mod ml {
 		pub fn get_default_grid_ptr(param_id: i32) -> Result<core::Ptr<crate::ml::ParamGrid>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getDefaultGridPtr_int(param_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::ParamGrid>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4310,7 +4310,7 @@ pub mod ml {
 		pub fn create() -> Result<core::Ptr<crate::ml::SVM>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::SVM>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4328,7 +4328,7 @@ pub mod ml {
 			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::SVM>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4348,7 +4348,7 @@ pub mod ml {
 		fn get_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getType_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4361,7 +4361,7 @@ pub mod ml {
 		fn get_gamma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getGamma_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4374,7 +4374,7 @@ pub mod ml {
 		fn get_coef0(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getCoef0_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4387,7 +4387,7 @@ pub mod ml {
 		fn get_degree(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getDegree_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4400,7 +4400,7 @@ pub mod ml {
 		fn get_c(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getC_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4413,7 +4413,7 @@ pub mod ml {
 		fn get_nu(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getNu_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4426,7 +4426,7 @@ pub mod ml {
 		fn get_p(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getP_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4442,7 +4442,7 @@ pub mod ml {
 		fn get_class_weights(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getClassWeights_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4458,7 +4458,7 @@ pub mod ml {
 		fn get_term_criteria(&self) -> Result<core::TermCriteria> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getTermCriteria_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4469,7 +4469,7 @@ pub mod ml {
 		fn get_kernel_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getKernelType_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4482,7 +4482,7 @@ pub mod ml {
 		fn get_support_vectors(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getSupportVectors_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4497,7 +4497,7 @@ pub mod ml {
 		fn get_uncompressed_support_vectors(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getUncompressedSupportVectors_const(self.as_raw_SVM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4524,7 +4524,7 @@ pub mod ml {
 			output_array_arg!(svidx);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getDecisionFunction_const_int_const__OutputArrayR_const__OutputArrayR(self.as_raw_SVM(), i, alpha.as_raw__OutputArray(), svidx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4543,7 +4543,7 @@ pub mod ml {
 		fn set_type(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setType_int(self.as_raw_mut_SVM(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4556,7 +4556,7 @@ pub mod ml {
 		fn set_gamma(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setGamma_double(self.as_raw_mut_SVM(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4569,7 +4569,7 @@ pub mod ml {
 		fn set_coef0(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setCoef0_double(self.as_raw_mut_SVM(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4582,7 +4582,7 @@ pub mod ml {
 		fn set_degree(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setDegree_double(self.as_raw_mut_SVM(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4595,7 +4595,7 @@ pub mod ml {
 		fn set_c(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setC_double(self.as_raw_mut_SVM(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4608,7 +4608,7 @@ pub mod ml {
 		fn set_nu(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setNu_double(self.as_raw_mut_SVM(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4621,7 +4621,7 @@ pub mod ml {
 		fn set_p(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setP_double(self.as_raw_mut_SVM(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4637,7 +4637,7 @@ pub mod ml {
 		fn set_class_weights(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setClassWeights_const_MatR(self.as_raw_mut_SVM(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4652,7 +4652,7 @@ pub mod ml {
 		fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setTermCriteria_const_TermCriteriaR(self.as_raw_mut_SVM(), &val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4663,7 +4663,7 @@ pub mod ml {
 		fn set_kernel(&mut self, kernel_type: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setKernel_int(self.as_raw_mut_SVM(), kernel_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4674,7 +4674,7 @@ pub mod ml {
 		fn set_custom_kernel(&mut self, _kernel: &core::Ptr<crate::ml::SVM_Kernel>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setCustomKernel_const_PtrLKernelGR(self.as_raw_mut_SVM(), _kernel.as_raw_PtrOfSVM_Kernel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4727,7 +4727,7 @@ pub mod ml {
 		fn train_auto(&mut self, data: &core::Ptr<crate::ml::TrainData>, k_fold: i32, mut cgrid: impl crate::ml::ParamGridTrait, mut gamma_grid: impl crate::ml::ParamGridTrait, mut p_grid: impl crate::ml::ParamGridTrait, mut nu_grid: impl crate::ml::ParamGridTrait, mut coeff_grid: impl crate::ml::ParamGridTrait, mut degree_grid: impl crate::ml::ParamGridTrait, balanced: bool) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_trainAuto_const_PtrLTrainDataGR_int_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_bool(self.as_raw_mut_SVM(), data.as_raw_PtrOfTrainData(), k_fold, cgrid.as_raw_mut_ParamGrid(), gamma_grid.as_raw_mut_ParamGrid(), p_grid.as_raw_mut_ParamGrid(), nu_grid.as_raw_mut_ParamGrid(), coeff_grid.as_raw_mut_ParamGrid(), degree_grid.as_raw_mut_ParamGrid(), balanced, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4781,7 +4781,7 @@ pub mod ml {
 		fn train_auto_def(&mut self, data: &core::Ptr<crate::ml::TrainData>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_trainAuto_const_PtrLTrainDataGR(self.as_raw_mut_SVM(), data.as_raw_PtrOfTrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4830,7 +4830,7 @@ pub mod ml {
 			input_array_arg!(responses);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR_int_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_bool(self.as_raw_mut_SVM(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), k_fold, cgrid.as_raw_mut_PtrOfParamGrid(), gamma_grid.as_raw_mut_PtrOfParamGrid(), p_grid.as_raw_mut_PtrOfParamGrid(), nu_grid.as_raw_mut_PtrOfParamGrid(), coeff_grid.as_raw_mut_PtrOfParamGrid(), degree_grid.as_raw_mut_PtrOfParamGrid(), balanced, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4880,7 +4880,7 @@ pub mod ml {
 			input_array_arg!(responses);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR(self.as_raw_mut_SVM(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4952,7 +4952,7 @@ pub mod ml {
 		fn get_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_Kernel_getType_const(self.as_raw_SVM_Kernel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4967,7 +4967,7 @@ pub mod ml {
 		fn calc(&mut self, vcount: i32, n: i32, vecs: &f32, another: &f32, results: &mut f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_Kernel_calc_int_int_const_floatX_const_floatX_floatX(self.as_raw_mut_SVM_Kernel(), vcount, n, vecs, another, results, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5098,7 +5098,7 @@ pub mod ml {
 		pub fn create() -> Result<core::Ptr<crate::ml::SVMSGD>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::SVMSGD>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5122,7 +5122,7 @@ pub mod ml {
 			extern_container_arg!(node_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::SVMSGD>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5146,7 +5146,7 @@ pub mod ml {
 			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::SVMSGD>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5165,7 +5165,7 @@ pub mod ml {
 		fn get_svmsgd_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_getSvmsgdType_const(self.as_raw_SVMSGD(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5177,7 +5177,7 @@ pub mod ml {
 		fn get_margin_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_getMarginType_const(self.as_raw_SVMSGD(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5189,7 +5189,7 @@ pub mod ml {
 		fn get_margin_regularization(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_getMarginRegularization_const(self.as_raw_SVMSGD(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5201,7 +5201,7 @@ pub mod ml {
 		fn get_initial_step_size(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_getInitialStepSize_const(self.as_raw_SVMSGD(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5213,7 +5213,7 @@ pub mod ml {
 		fn get_step_decreasing_power(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_getStepDecreasingPower_const(self.as_raw_SVMSGD(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5227,7 +5227,7 @@ pub mod ml {
 		fn get_term_criteria(&self) -> Result<core::TermCriteria> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_getTermCriteria_const(self.as_raw_SVMSGD(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5244,7 +5244,7 @@ pub mod ml {
 		fn get_weights(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_getWeights(self.as_raw_mut_SVMSGD(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5256,7 +5256,7 @@ pub mod ml {
 		fn get_shift(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_getShift(self.as_raw_mut_SVMSGD(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5273,7 +5273,7 @@ pub mod ml {
 		fn set_optimal_parameters(&mut self, svmsgd_type: i32, margin_type: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_setOptimalParameters_int_int(self.as_raw_mut_SVMSGD(), svmsgd_type, margin_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5291,7 +5291,7 @@ pub mod ml {
 		fn set_optimal_parameters_def(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_setOptimalParameters(self.as_raw_mut_SVMSGD(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5303,7 +5303,7 @@ pub mod ml {
 		fn set_svmsgd_type(&mut self, svmsgd_type: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_setSvmsgdType_int(self.as_raw_mut_SVMSGD(), svmsgd_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5315,7 +5315,7 @@ pub mod ml {
 		fn set_margin_type(&mut self, margin_type: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_setMarginType_int(self.as_raw_mut_SVMSGD(), margin_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5327,7 +5327,7 @@ pub mod ml {
 		fn set_margin_regularization(&mut self, margin_regularization: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_setMarginRegularization_float(self.as_raw_mut_SVMSGD(), margin_regularization, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5339,7 +5339,7 @@ pub mod ml {
 		fn set_initial_step_size(&mut self, initial_step_size: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_setInitialStepSize_float(self.as_raw_mut_SVMSGD(), initial_step_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5351,7 +5351,7 @@ pub mod ml {
 		fn set_step_decreasing_power(&mut self, step_decreasing_power: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_setStepDecreasingPower_float(self.as_raw_mut_SVMSGD(), step_decreasing_power, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5365,7 +5365,7 @@ pub mod ml {
 		fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVMSGD_setTermCriteria_const_TermCriteriaR(self.as_raw_mut_SVMSGD(), &val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5439,7 +5439,7 @@ pub mod ml {
 		fn get_var_count(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_getVarCount_const(self.as_raw_StatModel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5448,7 +5448,7 @@ pub mod ml {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_empty_const(self.as_raw_StatModel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5458,7 +5458,7 @@ pub mod ml {
 		fn is_trained(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_isTrained_const(self.as_raw_StatModel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5468,7 +5468,7 @@ pub mod ml {
 		fn is_classifier(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_isClassifier_const(self.as_raw_StatModel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5491,7 +5491,7 @@ pub mod ml {
 			output_array_arg!(resp);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_calcError_const_const_PtrLTrainDataGR_bool_const__OutputArrayR(self.as_raw_StatModel(), data.as_raw_PtrOfTrainData(), test, resp.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5512,7 +5512,7 @@ pub mod ml {
 			output_array_arg!(results);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_predict_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_StatModel(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5533,7 +5533,7 @@ pub mod ml {
 			input_array_arg!(samples);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_predict_const_const__InputArrayR(self.as_raw_StatModel(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5558,7 +5558,7 @@ pub mod ml {
 		fn train_with_data(&mut self, train_data: &core::Ptr<crate::ml::TrainData>, flags: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_train_const_PtrLTrainDataGR_int(self.as_raw_mut_StatModel(), train_data.as_raw_PtrOfTrainData(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5578,7 +5578,7 @@ pub mod ml {
 		fn train_with_data_def(&mut self, train_data: &core::Ptr<crate::ml::TrainData>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_train_const_PtrLTrainDataGR(self.as_raw_mut_StatModel(), train_data.as_raw_PtrOfTrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5595,7 +5595,7 @@ pub mod ml {
 			input_array_arg!(responses);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_train_const__InputArrayR_int_const__InputArrayR(self.as_raw_mut_StatModel(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5680,7 +5680,7 @@ pub mod ml {
 		pub fn missing_value() -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_missingValue(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5693,7 +5693,7 @@ pub mod ml {
 		pub fn get_sub_vector(vec: &impl core::MatTraitConst, idx: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getSubVector_const_MatR_const_MatR(vec.as_raw_Mat(), idx.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5708,7 +5708,7 @@ pub mod ml {
 		pub fn get_sub_matrix(matrix: &impl core::MatTraitConst, idx: &impl core::MatTraitConst, layout: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getSubMatrix_const_MatR_const_MatR_int(matrix.as_raw_Mat(), idx.as_raw_Mat(), layout, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5757,7 +5757,7 @@ pub mod ml {
 			extern_container_arg!(var_type_spec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_loadFromCSV_const_StringR_int_int_int_const_StringR_char_char(filename.opencv_as_extern(), header_line_count, response_start_idx, response_end_idx, var_type_spec.opencv_as_extern(), u8::try_from(delimiter)? as c_char, u8::try_from(missch)? as c_char, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5806,7 +5806,7 @@ pub mod ml {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_loadFromCSV_const_StringR_int(filename.opencv_as_extern(), header_line_count, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5847,7 +5847,7 @@ pub mod ml {
 			input_array_arg!(var_type);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_create_const__InputArrayR_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), var_idx.as_raw__InputArray(), sample_idx.as_raw__InputArray(), sample_weights.as_raw__InputArray(), var_type.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5885,7 +5885,7 @@ pub mod ml {
 			input_array_arg!(responses);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_create_const__InputArrayR_int_const__InputArrayR(samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5901,7 +5901,7 @@ pub mod ml {
 		fn get_layout(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getLayout_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5910,7 +5910,7 @@ pub mod ml {
 		fn get_n_train_samples(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getNTrainSamples_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5919,7 +5919,7 @@ pub mod ml {
 		fn get_n_test_samples(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getNTestSamples_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5928,7 +5928,7 @@ pub mod ml {
 		fn get_n_samples(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getNSamples_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5937,7 +5937,7 @@ pub mod ml {
 		fn get_n_vars(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getNVars_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5946,7 +5946,7 @@ pub mod ml {
 		fn get_n_all_vars(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getNAllVars_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5956,7 +5956,7 @@ pub mod ml {
 			input_array_arg!(var_idx);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getSample_const_const__InputArrayR_int_floatX(self.as_raw_TrainData(), var_idx.as_raw__InputArray(), sidx, buf, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5965,7 +5965,7 @@ pub mod ml {
 		fn get_samples(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getSamples_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5975,7 +5975,7 @@ pub mod ml {
 		fn get_missing(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getMissing_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6002,7 +6002,7 @@ pub mod ml {
 		fn get_train_samples(&self, layout: i32, compress_samples: bool, compress_vars: bool) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTrainSamples_const_int_bool_bool(self.as_raw_TrainData(), layout, compress_samples, compress_vars, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6030,7 +6030,7 @@ pub mod ml {
 		fn get_train_samples_def(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTrainSamples_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6044,7 +6044,7 @@ pub mod ml {
 		fn get_train_responses(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTrainResponses_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6059,7 +6059,7 @@ pub mod ml {
 		fn get_train_norm_cat_responses(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTrainNormCatResponses_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6069,7 +6069,7 @@ pub mod ml {
 		fn get_test_responses(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTestResponses_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6079,7 +6079,7 @@ pub mod ml {
 		fn get_test_norm_cat_responses(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTestNormCatResponses_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6089,7 +6089,7 @@ pub mod ml {
 		fn get_responses(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getResponses_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6099,7 +6099,7 @@ pub mod ml {
 		fn get_norm_cat_responses(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getNormCatResponses_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6109,7 +6109,7 @@ pub mod ml {
 		fn get_sample_weights(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getSampleWeights_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6119,7 +6119,7 @@ pub mod ml {
 		fn get_train_sample_weights(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTrainSampleWeights_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6129,7 +6129,7 @@ pub mod ml {
 		fn get_test_sample_weights(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTestSampleWeights_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6139,7 +6139,7 @@ pub mod ml {
 		fn get_var_idx(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getVarIdx_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6149,7 +6149,7 @@ pub mod ml {
 		fn get_var_type(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getVarType_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6159,7 +6159,7 @@ pub mod ml {
 		fn get_var_symbol_flags(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getVarSymbolFlags_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6169,7 +6169,7 @@ pub mod ml {
 		fn get_response_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getResponseType_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6178,7 +6178,7 @@ pub mod ml {
 		fn get_train_sample_idx(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTrainSampleIdx_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6188,7 +6188,7 @@ pub mod ml {
 		fn get_test_sample_idx(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTestSampleIdx_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6199,7 +6199,7 @@ pub mod ml {
 			input_array_arg!(sidx);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getValues_const_int_const__InputArrayR_floatX(self.as_raw_TrainData(), vi, sidx.as_raw__InputArray(), values, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6209,7 +6209,7 @@ pub mod ml {
 			input_array_arg!(sidx);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getNormCatValues_const_int_const__InputArrayR_intX(self.as_raw_TrainData(), vi, sidx.as_raw__InputArray(), values, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6218,7 +6218,7 @@ pub mod ml {
 		fn get_default_subst_values(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getDefaultSubstValues_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6228,7 +6228,7 @@ pub mod ml {
 		fn get_cat_count(&self, vi: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getCatCount_const_int(self.as_raw_TrainData(), vi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6240,7 +6240,7 @@ pub mod ml {
 		fn get_class_labels(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getClassLabels_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6250,7 +6250,7 @@ pub mod ml {
 		fn get_cat_ofs(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getCatOfs_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6260,7 +6260,7 @@ pub mod ml {
 		fn get_cat_map(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getCatMap_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6271,7 +6271,7 @@ pub mod ml {
 		fn get_test_samples(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTestSamples_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -6282,7 +6282,7 @@ pub mod ml {
 		fn get_names(&self, names: &mut core::Vector<String>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getNames_const_vectorLStringGR(self.as_raw_TrainData(), names.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6303,7 +6303,7 @@ pub mod ml {
 		fn set_train_test_split(&mut self, count: i32, shuffle: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_setTrainTestSplit_int_bool(self.as_raw_mut_TrainData(), count, shuffle, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6319,7 +6319,7 @@ pub mod ml {
 		fn set_train_test_split_def(&mut self, count: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_setTrainTestSplit_int(self.as_raw_mut_TrainData(), count, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6339,7 +6339,7 @@ pub mod ml {
 		fn set_train_test_split_ratio(&mut self, ratio: f64, shuffle: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_setTrainTestSplitRatio_double_bool(self.as_raw_mut_TrainData(), ratio, shuffle, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6360,7 +6360,7 @@ pub mod ml {
 		fn set_train_test_split_ratio_def(&mut self, ratio: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_setTrainTestSplitRatio_double(self.as_raw_mut_TrainData(), ratio, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -6369,7 +6369,7 @@ pub mod ml {
 		fn shuffle_train_test(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_shuffleTrainTest(self.as_raw_mut_TrainData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

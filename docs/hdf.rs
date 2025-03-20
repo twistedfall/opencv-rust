@@ -76,7 +76,7 @@ pub mod hdf {
 		extern_container_arg!(hdf5_filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_hdf_open_const_StringR(hdf5_filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::hdf::HDF5>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -117,7 +117,7 @@ pub mod hdf {
 			extern_container_arg!(label);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_hlexists_const_const_StringR(self.as_raw_HDF5(), label.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -135,7 +135,7 @@ pub mod hdf {
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atexists_const_const_StringR(self.as_raw_HDF5(), atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -221,7 +221,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dscreate_const_const_int_const_int_const_int_const_StringR(self.as_raw_HDF5(), rows, cols, typ, dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -307,7 +307,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dscreate_const_const_int_const_int_const_int_const_StringR_const_int(self.as_raw_HDF5(), rows, cols, typ, dslabel.opencv_as_extern(), compresslevel, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -393,7 +393,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dscreate_const_const_int_const_int_const_int_const_StringR_const_int_const_vectorLintGR(self.as_raw_HDF5(), rows, cols, typ, dslabel.opencv_as_extern(), compresslevel, dims_chunks.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -403,7 +403,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dscreate_const_const_int_const_intX_const_int_const_StringR(self.as_raw_HDF5(), sizes.len().try_into()?, sizes.as_ptr(), typ, dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -413,7 +413,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dscreate_const_const_int_const_intX_const_int_const_StringR_const_int(self.as_raw_HDF5(), sizes.len().try_into()?, sizes.as_ptr(), typ, dslabel.opencv_as_extern(), compresslevel, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -426,7 +426,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dscreate_const_const_vectorLintGR_const_int_const_StringR_const_int_const_vectorLintGR(self.as_raw_HDF5(), sizes.as_raw_VectorOfi32(), typ, dslabel.opencv_as_extern(), compresslevel, dims_chunks.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -440,7 +440,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dscreate_const_const_vectorLintGR_const_int_const_StringR(self.as_raw_HDF5(), sizes.as_raw_VectorOfi32(), typ, dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -527,7 +527,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dscreate_const_const_int_const_intX_const_int_const_StringR_const_int_const_intX(self.as_raw_HDF5(), sizes.len().try_into()?, sizes.as_ptr(), typ, dslabel.opencv_as_extern(), compresslevel, dims_chunks, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -556,7 +556,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsgetsize_const_const_StringR_int(self.as_raw_HDF5(), dslabel.opencv_as_extern(), dims_flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -587,7 +587,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsgetsize_const_const_StringR(self.as_raw_HDF5(), dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -608,7 +608,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsgettype_const_const_StringR(self.as_raw_HDF5(), dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -619,7 +619,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -632,7 +632,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_vectorLintGR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -646,7 +646,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -657,7 +657,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -670,7 +670,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_vectorLintGR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -684,7 +684,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -695,7 +695,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -708,7 +708,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_vectorLintGR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -722,7 +722,7 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -749,7 +749,7 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpgetsize_const_const_StringR_int(self.as_raw_HDF5(), kplabel.opencv_as_extern(), dims_flag, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -777,7 +777,7 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpgetsize_const_const_StringR(self.as_raw_HDF5(), kplabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -830,7 +830,7 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpcreate_const_const_int_const_StringR_const_int_const_int(self.as_raw_HDF5(), size, kplabel.opencv_as_extern(), compresslevel, chunks, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -884,7 +884,7 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpcreate_const_const_int_const_StringR(self.as_raw_HDF5(), size, kplabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -951,7 +951,7 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpwrite_const_const_vectorLKeyPointG_const_StringR_const_int_const_int(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.opencv_as_extern(), offset, counts, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1019,7 +1019,7 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpwrite_const_const_vectorLKeyPointG_const_StringR(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1067,7 +1067,7 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpinsert_const_const_vectorLKeyPointG_const_StringR_const_int_const_int(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.opencv_as_extern(), offset, counts, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1116,7 +1116,7 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpinsert_const_const_vectorLKeyPointG_const_StringR(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1168,7 +1168,7 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpread_const_vectorLKeyPointGR_const_StringR_const_int_const_int(self.as_raw_HDF5(), keypoints.as_raw_mut_VectorOfKeyPoint(), kplabel.opencv_as_extern(), offset, counts, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1221,7 +1221,7 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpread_const_vectorLKeyPointGR_const_StringR(self.as_raw_HDF5(), keypoints.as_raw_mut_VectorOfKeyPoint(), kplabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1237,7 +1237,7 @@ pub mod hdf {
 		fn close(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_close(self.as_raw_mut_HDF5(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1269,7 +1269,7 @@ pub mod hdf {
 			extern_container_arg!(grlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_grcreate_const_StringR(self.as_raw_mut_HDF5(), grlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1289,7 +1289,7 @@ pub mod hdf {
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atdelete_const_StringR(self.as_raw_mut_HDF5(), atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1315,7 +1315,7 @@ pub mod hdf {
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atwrite_const_int_const_StringR(self.as_raw_mut_HDF5(), value, atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1340,7 +1340,7 @@ pub mod hdf {
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atread_intX_const_StringR(self.as_raw_mut_HDF5(), value, atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1368,7 +1368,7 @@ pub mod hdf {
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atwrite_const_double_const_StringR(self.as_raw_mut_HDF5(), value, atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1395,7 +1395,7 @@ pub mod hdf {
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atread_doubleX_const_StringR(self.as_raw_mut_HDF5(), value, atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1424,7 +1424,7 @@ pub mod hdf {
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atwrite_const_StringR_const_StringR(self.as_raw_mut_HDF5(), value.opencv_as_extern(), atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1452,7 +1452,7 @@ pub mod hdf {
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atread_StringX_const_StringR(self.as_raw_mut_HDF5(), &mut value_via, atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(value_via => value);
 			Ok(ret)
@@ -1476,7 +1476,7 @@ pub mod hdf {
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atwrite_const__InputArrayR_const_StringR(self.as_raw_mut_HDF5(), value.as_raw__InputArray(), atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1498,7 +1498,7 @@ pub mod hdf {
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atread_const__OutputArrayR_const_StringR(self.as_raw_mut_HDF5(), value.as_raw__OutputArray(), atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

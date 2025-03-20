@@ -205,7 +205,7 @@ pub mod cudalegacy {
 	pub fn calc_optical_flow_bm_def(prev: &impl core::GpuMatTraitConst, curr: &impl core::GpuMatTraitConst, block_size: core::Size, shift_size: core::Size, max_range: core::Size, use_previous: bool, velx: &mut impl core::GpuMatTrait, vely: &mut impl core::GpuMatTrait, buf: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_calcOpticalFlowBM_const_GpuMatR_const_GpuMatR_Size_Size_Size_bool_GpuMatR_GpuMatR_GpuMatR(prev.as_raw_GpuMat(), curr.as_raw_GpuMat(), &block_size, &shift_size, &max_range, use_previous, velx.as_raw_mut_GpuMat(), vely.as_raw_mut_GpuMat(), buf.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -218,7 +218,7 @@ pub mod cudalegacy {
 	pub fn calc_optical_flow_bm(prev: &impl core::GpuMatTraitConst, curr: &impl core::GpuMatTraitConst, block_size: core::Size, shift_size: core::Size, max_range: core::Size, use_previous: bool, velx: &mut impl core::GpuMatTrait, vely: &mut impl core::GpuMatTrait, buf: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_calcOpticalFlowBM_const_GpuMatR_const_GpuMatR_Size_Size_Size_bool_GpuMatR_GpuMatR_GpuMatR_StreamR(prev.as_raw_GpuMat(), curr.as_raw_GpuMat(), &block_size, &shift_size, &max_range, use_previous, velx.as_raw_mut_GpuMat(), vely.as_raw_mut_GpuMat(), buf.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -232,7 +232,7 @@ pub mod cudalegacy {
 	pub fn connectivity_mask_def(image: &impl core::GpuMatTraitConst, mask: &mut impl core::GpuMatTrait, lo: core::Scalar, hi: core::Scalar) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_connectivityMask_const_GpuMatR_GpuMatR_const_ScalarR_const_ScalarR(image.as_raw_GpuMat(), mask.as_raw_mut_GpuMat(), &lo, &hi, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -245,7 +245,7 @@ pub mod cudalegacy {
 	pub fn connectivity_mask(image: &impl core::GpuMatTraitConst, mask: &mut impl core::GpuMatTrait, lo: core::Scalar, hi: core::Scalar, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_connectivityMask_const_GpuMatR_GpuMatR_const_ScalarR_const_ScalarR_StreamR(image.as_raw_GpuMat(), mask.as_raw_mut_GpuMat(), &lo, &hi, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -262,7 +262,7 @@ pub mod cudalegacy {
 	pub fn create_background_subtractor_fgd_def() -> Result<core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createBackgroundSubtractorFGD(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudalegacy::CUDA_BackgroundSubtractorFGD>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -279,7 +279,7 @@ pub mod cudalegacy {
 	pub fn create_background_subtractor_fgd(params: &impl crate::cudalegacy::CUDA_FGDParamsTraitConst) -> Result<core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createBackgroundSubtractorFGD_const_FGDParamsR(params.as_raw_CUDA_FGDParams(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudalegacy::CUDA_BackgroundSubtractorFGD>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -299,7 +299,7 @@ pub mod cudalegacy {
 	pub fn create_background_subtractor_gmg_def() -> Result<core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createBackgroundSubtractorGMG(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudalegacy::CUDA_BackgroundSubtractorGMG>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -318,7 +318,7 @@ pub mod cudalegacy {
 	pub fn create_background_subtractor_gmg(initialization_frames: i32, decision_threshold: f64) -> Result<core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createBackgroundSubtractorGMG_int_double(initialization_frames, decision_threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudalegacy::CUDA_BackgroundSubtractorGMG>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -333,7 +333,7 @@ pub mod cudalegacy {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createImagePyramid_const__InputArrayR(img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudalegacy::CUDA_ImagePyramid>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -347,7 +347,7 @@ pub mod cudalegacy {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createImagePyramid_const__InputArrayR_int_StreamR(img.as_raw__InputArray(), n_layers, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudalegacy::CUDA_ImagePyramid>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -357,7 +357,7 @@ pub mod cudalegacy {
 	pub fn create_optical_flow_needle_map(u: &impl core::GpuMatTraitConst, v: &impl core::GpuMatTraitConst, vertex: &mut impl core::GpuMatTrait, colors: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createOpticalFlowNeedleMap_const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR(u.as_raw_GpuMat(), v.as_raw_GpuMat(), vertex.as_raw_mut_GpuMat(), colors.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -371,7 +371,7 @@ pub mod cudalegacy {
 	pub fn graphcut_def(terminals: &mut impl core::GpuMatTrait, left_transp: &mut impl core::GpuMatTrait, right_transp: &mut impl core::GpuMatTrait, top: &mut impl core::GpuMatTrait, bottom: &mut impl core::GpuMatTrait, labels: &mut impl core::GpuMatTrait, buf: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_graphcut_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR(terminals.as_raw_mut_GpuMat(), left_transp.as_raw_mut_GpuMat(), right_transp.as_raw_mut_GpuMat(), top.as_raw_mut_GpuMat(), bottom.as_raw_mut_GpuMat(), labels.as_raw_mut_GpuMat(), buf.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -385,7 +385,7 @@ pub mod cudalegacy {
 	pub fn graphcut_1_def(terminals: &mut impl core::GpuMatTrait, left_transp: &mut impl core::GpuMatTrait, right_transp: &mut impl core::GpuMatTrait, top: &mut impl core::GpuMatTrait, top_left: &mut impl core::GpuMatTrait, top_right: &mut impl core::GpuMatTrait, bottom: &mut impl core::GpuMatTrait, bottom_left: &mut impl core::GpuMatTrait, bottom_right: &mut impl core::GpuMatTrait, labels: &mut impl core::GpuMatTrait, buf: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_graphcut_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR(terminals.as_raw_mut_GpuMat(), left_transp.as_raw_mut_GpuMat(), right_transp.as_raw_mut_GpuMat(), top.as_raw_mut_GpuMat(), top_left.as_raw_mut_GpuMat(), top_right.as_raw_mut_GpuMat(), bottom.as_raw_mut_GpuMat(), bottom_left.as_raw_mut_GpuMat(), bottom_right.as_raw_mut_GpuMat(), labels.as_raw_mut_GpuMat(), buf.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -398,7 +398,7 @@ pub mod cudalegacy {
 	pub fn graphcut_1(terminals: &mut impl core::GpuMatTrait, left_transp: &mut impl core::GpuMatTrait, right_transp: &mut impl core::GpuMatTrait, top: &mut impl core::GpuMatTrait, top_left: &mut impl core::GpuMatTrait, top_right: &mut impl core::GpuMatTrait, bottom: &mut impl core::GpuMatTrait, bottom_left: &mut impl core::GpuMatTrait, bottom_right: &mut impl core::GpuMatTrait, labels: &mut impl core::GpuMatTrait, buf: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_graphcut_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_StreamR(terminals.as_raw_mut_GpuMat(), left_transp.as_raw_mut_GpuMat(), right_transp.as_raw_mut_GpuMat(), top.as_raw_mut_GpuMat(), top_left.as_raw_mut_GpuMat(), top_right.as_raw_mut_GpuMat(), bottom.as_raw_mut_GpuMat(), bottom_left.as_raw_mut_GpuMat(), bottom_right.as_raw_mut_GpuMat(), labels.as_raw_mut_GpuMat(), buf.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -411,7 +411,7 @@ pub mod cudalegacy {
 	pub fn graphcut(terminals: &mut impl core::GpuMatTrait, left_transp: &mut impl core::GpuMatTrait, right_transp: &mut impl core::GpuMatTrait, top: &mut impl core::GpuMatTrait, bottom: &mut impl core::GpuMatTrait, labels: &mut impl core::GpuMatTrait, buf: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_graphcut_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_GpuMatR_StreamR(terminals.as_raw_mut_GpuMat(), left_transp.as_raw_mut_GpuMat(), right_transp.as_raw_mut_GpuMat(), top.as_raw_mut_GpuMat(), bottom.as_raw_mut_GpuMat(), labels.as_raw_mut_GpuMat(), buf.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -440,7 +440,7 @@ pub mod cudalegacy {
 	pub fn interpolate_frames_def(frame0: &impl core::GpuMatTraitConst, frame1: &impl core::GpuMatTraitConst, fu: &impl core::GpuMatTraitConst, fv: &impl core::GpuMatTraitConst, bu: &impl core::GpuMatTraitConst, bv: &impl core::GpuMatTraitConst, pos: f32, new_frame: &mut impl core::GpuMatTrait, buf: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_interpolateFrames_const_GpuMatR_const_GpuMatR_const_GpuMatR_const_GpuMatR_const_GpuMatR_const_GpuMatR_float_GpuMatR_GpuMatR(frame0.as_raw_GpuMat(), frame1.as_raw_GpuMat(), fu.as_raw_GpuMat(), fv.as_raw_GpuMat(), bu.as_raw_GpuMat(), bv.as_raw_GpuMat(), pos, new_frame.as_raw_mut_GpuMat(), buf.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -468,7 +468,7 @@ pub mod cudalegacy {
 	pub fn interpolate_frames(frame0: &impl core::GpuMatTraitConst, frame1: &impl core::GpuMatTraitConst, fu: &impl core::GpuMatTraitConst, fv: &impl core::GpuMatTraitConst, bu: &impl core::GpuMatTraitConst, bv: &impl core::GpuMatTraitConst, pos: f32, new_frame: &mut impl core::GpuMatTrait, buf: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_interpolateFrames_const_GpuMatR_const_GpuMatR_const_GpuMatR_const_GpuMatR_const_GpuMatR_const_GpuMatR_float_GpuMatR_GpuMatR_StreamR(frame0.as_raw_GpuMat(), frame1.as_raw_GpuMat(), fu.as_raw_GpuMat(), fv.as_raw_GpuMat(), bu.as_raw_GpuMat(), bv.as_raw_GpuMat(), pos, new_frame.as_raw_mut_GpuMat(), buf.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -483,7 +483,7 @@ pub mod cudalegacy {
 	pub fn label_components_def(mask: &impl core::GpuMatTraitConst, components: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_labelComponents_const_GpuMatR_GpuMatR(mask.as_raw_GpuMat(), components.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -497,7 +497,7 @@ pub mod cudalegacy {
 	pub fn label_components(mask: &impl core::GpuMatTraitConst, components: &mut impl core::GpuMatTrait, flags: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_labelComponents_const_GpuMatR_GpuMatR_int_StreamR(mask.as_raw_GpuMat(), components.as_raw_mut_GpuMat(), flags, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -509,7 +509,7 @@ pub mod cudalegacy {
 	pub fn project_points_def(src: &impl core::GpuMatTraitConst, rvec: &impl core::MatTraitConst, tvec: &impl core::MatTraitConst, camera_mat: &impl core::MatTraitConst, dist_coef: &impl core::MatTraitConst, dst: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_projectPoints_const_GpuMatR_const_MatR_const_MatR_const_MatR_const_MatR_GpuMatR(src.as_raw_GpuMat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), camera_mat.as_raw_Mat(), dist_coef.as_raw_Mat(), dst.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -520,7 +520,7 @@ pub mod cudalegacy {
 	pub fn project_points(src: &impl core::GpuMatTraitConst, rvec: &impl core::MatTraitConst, tvec: &impl core::MatTraitConst, camera_mat: &impl core::MatTraitConst, dist_coef: &impl core::MatTraitConst, dst: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_projectPoints_const_GpuMatR_const_MatR_const_MatR_const_MatR_const_MatR_GpuMatR_StreamR(src.as_raw_GpuMat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), camera_mat.as_raw_Mat(), dist_coef.as_raw_Mat(), dst.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -553,7 +553,7 @@ pub mod cudalegacy {
 	pub fn solve_pnp_ransac_def(object: &impl core::MatTraitConst, image: &impl core::MatTraitConst, camera_mat: &impl core::MatTraitConst, dist_coef: &impl core::MatTraitConst, rvec: &mut impl core::MatTrait, tvec: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_solvePnPRansac_const_MatR_const_MatR_const_MatR_const_MatR_MatR_MatR(object.as_raw_Mat(), image.as_raw_Mat(), camera_mat.as_raw_Mat(), dist_coef.as_raw_Mat(), rvec.as_raw_mut_Mat(), tvec.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -585,7 +585,7 @@ pub mod cudalegacy {
 	pub fn solve_pnp_ransac(object: &impl core::MatTraitConst, image: &impl core::MatTraitConst, camera_mat: &impl core::MatTraitConst, dist_coef: &impl core::MatTraitConst, rvec: &mut impl core::MatTrait, tvec: &mut impl core::MatTrait, use_extrinsic_guess: bool, num_iters: i32, max_dist: f32, min_inlier_count: i32, inliers: &mut core::Vector<i32>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_solvePnPRansac_const_MatR_const_MatR_const_MatR_const_MatR_MatR_MatR_bool_int_float_int_vectorLintGX(object.as_raw_Mat(), image.as_raw_Mat(), camera_mat.as_raw_Mat(), dist_coef.as_raw_Mat(), rvec.as_raw_mut_Mat(), tvec.as_raw_mut_Mat(), use_extrinsic_guess, num_iters, max_dist, min_inlier_count, inliers.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -597,7 +597,7 @@ pub mod cudalegacy {
 	pub fn transform_points_def(src: &impl core::GpuMatTraitConst, rvec: &impl core::MatTraitConst, tvec: &impl core::MatTraitConst, dst: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_transformPoints_const_GpuMatR_const_MatR_const_MatR_GpuMatR(src.as_raw_GpuMat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), dst.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -608,7 +608,7 @@ pub mod cudalegacy {
 	pub fn transform_points(src: &impl core::GpuMatTraitConst, rvec: &impl core::MatTraitConst, tvec: &impl core::MatTraitConst, dst: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_transformPoints_const_GpuMatR_const_MatR_const_MatR_GpuMatR_StreamR(src.as_raw_GpuMat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), dst.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -654,7 +654,7 @@ pub mod cudalegacy {
 			output_array_arg!(foreground_regions);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorFGD_getForegroundRegions_const__OutputArrayR(self.as_raw_mut_CUDA_BackgroundSubtractorFGD(), foreground_regions.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -731,7 +731,7 @@ pub mod cudalegacy {
 		fn get_max_features(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_getMaxFeatures_const(self.as_raw_CUDA_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -740,7 +740,7 @@ pub mod cudalegacy {
 		fn get_default_learning_rate(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_getDefaultLearningRate_const(self.as_raw_CUDA_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -749,7 +749,7 @@ pub mod cudalegacy {
 		fn get_num_frames(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_getNumFrames_const(self.as_raw_CUDA_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -758,7 +758,7 @@ pub mod cudalegacy {
 		fn get_quantization_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_getQuantizationLevels_const(self.as_raw_CUDA_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -767,7 +767,7 @@ pub mod cudalegacy {
 		fn get_background_prior(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_getBackgroundPrior_const(self.as_raw_CUDA_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -776,7 +776,7 @@ pub mod cudalegacy {
 		fn get_smoothing_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_getSmoothingRadius_const(self.as_raw_CUDA_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -785,7 +785,7 @@ pub mod cudalegacy {
 		fn get_decision_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_getDecisionThreshold_const(self.as_raw_CUDA_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -794,7 +794,7 @@ pub mod cudalegacy {
 		fn get_update_background_model(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_getUpdateBackgroundModel_const(self.as_raw_CUDA_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -803,7 +803,7 @@ pub mod cudalegacy {
 		fn get_min_val(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_getMinVal_const(self.as_raw_CUDA_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -812,7 +812,7 @@ pub mod cudalegacy {
 		fn get_max_val(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_getMaxVal_const(self.as_raw_CUDA_BackgroundSubtractorGMG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -829,7 +829,7 @@ pub mod cudalegacy {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_apply_const__InputArrayR_const__OutputArrayR_double_StreamR(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -838,7 +838,7 @@ pub mod cudalegacy {
 		fn set_max_features(&mut self, max_features: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_setMaxFeatures_int(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), max_features, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -847,7 +847,7 @@ pub mod cudalegacy {
 		fn set_default_learning_rate(&mut self, lr: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_setDefaultLearningRate_double(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), lr, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -856,7 +856,7 @@ pub mod cudalegacy {
 		fn set_num_frames(&mut self, nframes: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_setNumFrames_int(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), nframes, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -865,7 +865,7 @@ pub mod cudalegacy {
 		fn set_quantization_levels(&mut self, nlevels: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_setQuantizationLevels_int(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), nlevels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -874,7 +874,7 @@ pub mod cudalegacy {
 		fn set_background_prior(&mut self, bgprior: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_setBackgroundPrior_double(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), bgprior, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -883,7 +883,7 @@ pub mod cudalegacy {
 		fn set_smoothing_radius(&mut self, radius: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_setSmoothingRadius_int(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -892,7 +892,7 @@ pub mod cudalegacy {
 		fn set_decision_threshold(&mut self, thresh: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_setDecisionThreshold_double(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), thresh, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -901,7 +901,7 @@ pub mod cudalegacy {
 		fn set_update_background_model(&mut self, update: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_setUpdateBackgroundModel_bool(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), update, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -910,7 +910,7 @@ pub mod cudalegacy {
 		fn set_min_val(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_setMinVal_double(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -919,7 +919,7 @@ pub mod cudalegacy {
 		fn set_max_val(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_setMaxVal_double(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -989,7 +989,7 @@ pub mod cudalegacy {
 		pub fn default() -> Result<crate::cudalegacy::CUDA_FGDParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FGDParams_FGDParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::cudalegacy::CUDA_FGDParams::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1287,7 +1287,7 @@ pub mod cudalegacy {
 		fn apply(&mut self, i0: &impl core::GpuMatTraitConst, i1: &impl core::GpuMatTraitConst, flowx: &mut impl core::GpuMatTrait, flowy: &mut impl core::GpuMatTrait, search_window: i32, block_window: i32, s: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FastOpticalFlowBM_operator___const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR_int_int_StreamR(self.as_raw_mut_CUDA_FastOpticalFlowBM(), i0.as_raw_GpuMat(), i1.as_raw_GpuMat(), flowx.as_raw_mut_GpuMat(), flowy.as_raw_mut_GpuMat(), search_window, block_window, s.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1301,7 +1301,7 @@ pub mod cudalegacy {
 		fn apply_def(&mut self, i0: &impl core::GpuMatTraitConst, i1: &impl core::GpuMatTraitConst, flowx: &mut impl core::GpuMatTrait, flowy: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FastOpticalFlowBM_operator___const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR(self.as_raw_mut_CUDA_FastOpticalFlowBM(), i0.as_raw_GpuMat(), i1.as_raw_GpuMat(), flowx.as_raw_mut_GpuMat(), flowy.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1360,7 +1360,7 @@ pub mod cudalegacy {
 			output_array_arg!(out_img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_ImagePyramid_getLayer_const_const__OutputArrayR_Size_StreamR(self.as_raw_CUDA_ImagePyramid(), out_img.as_raw__OutputArray(), &out_roi, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1373,7 +1373,7 @@ pub mod cudalegacy {
 			output_array_arg!(out_img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_ImagePyramid_getLayer_const_const__OutputArrayR_Size(self.as_raw_CUDA_ImagePyramid(), out_img.as_raw__OutputArray(), &out_roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

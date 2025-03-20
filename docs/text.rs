@@ -267,7 +267,7 @@ pub mod text {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_MSERsToERStats_const__InputArrayR_vectorLvectorLPointGGR_vectorLvectorLERStatGGR(image.as_raw__InputArray(), contours.as_raw_mut_VectorOfVectorOfPoint(), regions.as_raw_mut_VectorOfVectorOfERStat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -296,7 +296,7 @@ pub mod text {
 		output_array_arg!(_channels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_computeNMChannels_const__InputArrayR_const__OutputArrayR(_src.as_raw__InputArray(), _channels.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -324,7 +324,7 @@ pub mod text {
 		output_array_arg!(_channels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_computeNMChannels_const__InputArrayR_const__OutputArrayR_int(_src.as_raw__InputArray(), _channels.as_raw__OutputArray(), _mode, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -362,7 +362,7 @@ pub mod text {
 	pub fn create_er_filter_nm1_def(cb: &core::Ptr<crate::text::ERFilter_Callback>) -> Result<core::Ptr<crate::text::ERFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM1_const_PtrLCallbackGR(cb.as_raw_PtrOfERFilter_Callback(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -400,7 +400,7 @@ pub mod text {
 	pub fn create_er_filter_nm1(cb: &core::Ptr<crate::text::ERFilter_Callback>, threshold_delta: i32, min_area: f32, max_area: f32, min_probability: f32, non_max_suppression: bool, min_probability_diff: f32) -> Result<core::Ptr<crate::text::ERFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM1_const_PtrLCallbackGR_int_float_float_float_bool_float(cb.as_raw_PtrOfERFilter_Callback(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -424,7 +424,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM1_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -468,7 +468,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM1_const_StringR_int_float_float_float_bool_float(filename.opencv_as_extern(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -493,7 +493,7 @@ pub mod text {
 	pub fn create_er_filter_nm2_def(cb: &core::Ptr<crate::text::ERFilter_Callback>) -> Result<core::Ptr<crate::text::ERFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM2_const_PtrLCallbackGR(cb.as_raw_PtrOfERFilter_Callback(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -517,7 +517,7 @@ pub mod text {
 	pub fn create_er_filter_nm2(cb: &core::Ptr<crate::text::ERFilter_Callback>, min_probability: f32) -> Result<core::Ptr<crate::text::ERFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM2_const_PtrLCallbackGR_float(cb.as_raw_PtrOfERFilter_Callback(), min_probability, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -536,7 +536,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM2_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -566,7 +566,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM2_const_StringR_float(filename.opencv_as_extern(), min_probability, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -577,7 +577,7 @@ pub mod text {
 		extern_container_arg!(vocabulary);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createOCRHMMTransitionsTable_const_StringR_vectorLStringGR(vocabulary.opencv_as_extern(), lexicon.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
@@ -603,7 +603,7 @@ pub mod text {
 		output_array_arg!(transition_probabilities_table);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createOCRHMMTransitionsTable_stringR_vectorLstringGR_const__OutputArrayR(&mut vocabulary_via, lexicon.as_raw_mut_VectorOfString(), transition_probabilities_table.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(vocabulary_via => vocabulary);
 		Ok(ret)
@@ -630,7 +630,7 @@ pub mod text {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLRectGR(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), groups_rects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -656,7 +656,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLRectGR_int_const_StringR_float(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probability, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -666,7 +666,7 @@ pub mod text {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLvectorLPointGGR(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), regions.as_raw_mut_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -688,7 +688,7 @@ pub mod text {
 		input_array_arg!(input);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_detectTextSWT_const__InputArrayR_vectorLRectGR_bool(input.as_raw__InputArray(), result.as_raw_mut_VectorOfRect(), dark_on_light, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -711,7 +711,7 @@ pub mod text {
 		output_array_arg!(chain_b_bs);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_detectTextSWT_const__InputArrayR_vectorLRectGR_bool_const__OutputArrayR_const__OutputArrayR(input.as_raw__InputArray(), result.as_raw_mut_VectorOfRect(), dark_on_light, draw.as_raw__OutputArray(), chain_b_bs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -751,7 +751,7 @@ pub mod text {
 		input_array_arg!(channels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vectorLvectorLERStatGGR_vectorLvectorLVec2iGGR_vectorLRectGR(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfERStat(), groups.as_raw_mut_VectorOfVectorOfVec2i(), groups_rects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -791,7 +791,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vectorLvectorLERStatGGR_vectorLvectorLVec2iGGR_vectorLRectGR_int_const_stringR_float(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfERStat(), groups.as_raw_mut_VectorOfVectorOfVec2i(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probablity, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -807,7 +807,7 @@ pub mod text {
 		input_array_arg!(channel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vectorLvectorLPointGG_vectorLRectGR(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfPoint(), groups_rects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -823,7 +823,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vectorLvectorLPointGG_vectorLRectGR_int_const_StringR_float(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfPoint(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probablity, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -839,7 +839,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_loadClassifierNM1_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::ERFilter_Callback>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -856,7 +856,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_loadClassifierNM2_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::ERFilter_Callback>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -876,7 +876,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_loadOCRBeamSearchClassifierCNN_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -900,7 +900,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_loadOCRHMMClassifierCNN_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -926,7 +926,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_loadOCRHMMClassifierNM_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -943,7 +943,7 @@ pub mod text {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_loadOCRHMMClassifier_const_StringR_int(filename.opencv_as_extern(), classifier, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -984,7 +984,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_BaseOCR_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -1001,7 +1001,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_BaseOCR_run_MatR_stringR(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -1017,7 +1017,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_BaseOCR_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -1034,7 +1034,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_BaseOCR_run_MatR_MatR_stringR(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -1094,7 +1094,7 @@ pub mod text {
 		fn get_num_rejected(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_getNumRejected_const(self.as_raw_ERFilter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1123,7 +1123,7 @@ pub mod text {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_run_const__InputArrayR_vectorLERStatGR(self.as_raw_mut_ERFilter(), image.as_raw__InputArray(), regions.as_raw_mut_VectorOfERStat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1133,7 +1133,7 @@ pub mod text {
 		fn set_callback(&mut self, cb: &core::Ptr<crate::text::ERFilter_Callback>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_setCallback_const_PtrLCallbackGR(self.as_raw_mut_ERFilter(), cb.as_raw_PtrOfERFilter_Callback(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1142,7 +1142,7 @@ pub mod text {
 		fn set_threshold_delta(&mut self, threshold_delta: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_setThresholdDelta_int(self.as_raw_mut_ERFilter(), threshold_delta, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1151,7 +1151,7 @@ pub mod text {
 		fn set_min_area(&mut self, min_area: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_setMinArea_float(self.as_raw_mut_ERFilter(), min_area, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1160,7 +1160,7 @@ pub mod text {
 		fn set_max_area(&mut self, max_area: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_setMaxArea_float(self.as_raw_mut_ERFilter(), max_area, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1169,7 +1169,7 @@ pub mod text {
 		fn set_min_probability(&mut self, min_probability: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_setMinProbability_float(self.as_raw_mut_ERFilter(), min_probability, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1178,7 +1178,7 @@ pub mod text {
 		fn set_min_probability_diff(&mut self, min_probability_diff: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_setMinProbabilityDiff_float(self.as_raw_mut_ERFilter(), min_probability_diff, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1187,7 +1187,7 @@ pub mod text {
 		fn set_non_max_suppression(&mut self, non_max_suppression: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_setNonMaxSuppression_bool(self.as_raw_mut_ERFilter(), non_max_suppression, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1261,7 +1261,7 @@ pub mod text {
 		fn eval(&mut self, stat: &impl crate::text::ERStatTraitConst) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_Callback_eval_const_ERStatR(self.as_raw_mut_ERFilter_Callback(), stat.as_raw_ERStat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1318,7 +1318,7 @@ pub mod text {
 		pub fn new(level: i32, pixel: i32, x: i32, y: i32) -> Result<crate::text::ERStat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERStat_ERStat_int_int_int_int(level, pixel, x, y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1336,7 +1336,7 @@ pub mod text {
 		pub fn new_def() -> Result<crate::text::ERStat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERStat_ERStat(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1385,7 +1385,7 @@ pub mod text {
 		fn rect(&self) -> core::Rect {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERStat_propRect_const(self.as_raw_ERStat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -1720,7 +1720,7 @@ pub mod text {
 			input_array_arg!(emission_probabilities_table);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1760,7 +1760,7 @@ pub mod text {
 			input_array_arg!(emission_probabilities_table);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1782,7 +1782,7 @@ pub mod text {
 			input_array_arg!(emission_probabilities_table);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1832,7 +1832,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -1871,7 +1871,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_stringR(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -1887,7 +1887,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -1904,7 +1904,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -1917,7 +1917,7 @@ pub mod text {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1931,7 +1931,7 @@ pub mod text {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1945,7 +1945,7 @@ pub mod text {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1960,7 +1960,7 @@ pub mod text {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_const__InputArrayR_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2063,7 +2063,7 @@ pub mod text {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_eval_const__InputArrayR_vectorLvectorLdoubleGGR_vectorLintGR(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(), image.as_raw__InputArray(), recognition_probabilities.as_raw_mut_VectorOfVectorOff64(), oversegmentation.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2072,7 +2072,7 @@ pub mod text {
 		fn get_window_size(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_getWindowSize(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2081,7 +2081,7 @@ pub mod text {
 		fn get_step_size(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_getStepSize(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2171,7 +2171,7 @@ pub mod text {
 			input_array_arg!(emission_probabilities_table);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2204,7 +2204,7 @@ pub mod text {
 			input_array_arg!(emission_probabilities_table);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2242,7 +2242,7 @@ pub mod text {
 			input_array_arg!(emission_probabilities_table);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, classifier, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2264,7 +2264,7 @@ pub mod text {
 			input_array_arg!(emission_probabilities_table);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2314,7 +2314,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -2353,7 +2353,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_stringR(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -2393,7 +2393,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -2434,7 +2434,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_MatR_stringR(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -2447,7 +2447,7 @@ pub mod text {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2461,7 +2461,7 @@ pub mod text {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2475,7 +2475,7 @@ pub mod text {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2490,7 +2490,7 @@ pub mod text {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_const__InputArrayR_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2593,7 +2593,7 @@ pub mod text {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_eval_const__InputArrayR_vectorLintGR_vectorLdoubleGR(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback(), image.as_raw__InputArray(), out_class.as_raw_mut_VectorOfi32(), out_confidence.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2657,7 +2657,7 @@ pub mod text {
 			extern_container_arg!(words_filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHolisticWordRecognizer_create_const_stringR_const_stringR_const_stringR(arch_filename.opencv_as_extern(), weights_filename.opencv_as_extern(), words_filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRHolisticWordRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2685,7 +2685,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -2702,7 +2702,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_stringR(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -2742,7 +2742,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -2783,7 +2783,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -2880,7 +2880,7 @@ pub mod text {
 			extern_container_arg!(char_whitelist);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_create_const_charX_const_charX_const_charX_int_int(datapath.opencv_as_extern(), language.opencv_as_extern(), char_whitelist.opencv_as_extern(), oem, psmode, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRTesseract>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2915,7 +2915,7 @@ pub mod text {
 		pub fn create_def() -> Result<core::Ptr<crate::text::OCRTesseract>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRTesseract>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2960,7 +2960,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -2994,7 +2994,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_MatR_stringR(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -3010,7 +3010,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -3027,7 +3027,7 @@ pub mod text {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_MatR_MatR_stringR(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
 			Ok(ret)
@@ -3040,7 +3040,7 @@ pub mod text {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3054,7 +3054,7 @@ pub mod text {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3068,7 +3068,7 @@ pub mod text {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3083,7 +3083,7 @@ pub mod text {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_const__InputArrayR_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3094,7 +3094,7 @@ pub mod text {
 			extern_container_arg!(char_whitelist);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_setWhiteList_const_StringR(self.as_raw_mut_OCRTesseract(), char_whitelist.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3168,7 +3168,7 @@ pub mod text {
 			input_array_arg!(input_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_TextDetector_detect_const__InputArrayR_vectorLRectGR_vectorLfloatGR(self.as_raw_mut_TextDetector(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3230,7 +3230,7 @@ pub mod text {
 			extern_container_arg!(model_weights_filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vectorLSizeG(model_arch_filename.opencv_as_extern(), model_weights_filename.opencv_as_extern(), detection_sizes.as_raw_mut_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::TextDetectorCNN>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3251,7 +3251,7 @@ pub mod text {
 			extern_container_arg!(model_weights_filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR(model_arch_filename.opencv_as_extern(), model_weights_filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::TextDetectorCNN>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3280,7 +3280,7 @@ pub mod text {
 			input_array_arg!(input_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_TextDetectorCNN_detect_const__InputArrayR_vectorLRectGR_vectorLfloatGR(self.as_raw_mut_TextDetectorCNN(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

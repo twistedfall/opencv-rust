@@ -42,7 +42,7 @@ pub mod dnn_superres {
 		pub fn create() -> Result<core::Ptr<crate::dnn_superres::DnnSuperResImpl>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::dnn_superres::DnnSuperResImpl>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -52,7 +52,7 @@ pub mod dnn_superres {
 		pub fn default() -> Result<crate::dnn_superres::DnnSuperResImpl> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(ret) };
 			Ok(ret)
@@ -71,7 +71,7 @@ pub mod dnn_superres {
 			extern_container_arg!(algo);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_StringR_int(algo.opencv_as_extern(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(ret) };
 			Ok(ret)
@@ -97,7 +97,7 @@ pub mod dnn_superres {
 			extern_container_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_readModel_const_StringR(self.as_raw_mut_DnnSuperResImpl(), path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -112,7 +112,7 @@ pub mod dnn_superres {
 			extern_container_arg!(definition);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_readModel_const_StringR_const_StringR(self.as_raw_mut_DnnSuperResImpl(), weights.opencv_as_extern(), definition.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -130,7 +130,7 @@ pub mod dnn_superres {
 			extern_container_arg!(algo);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setModel_const_StringR_int(self.as_raw_mut_DnnSuperResImpl(), algo.opencv_as_extern(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -140,7 +140,7 @@ pub mod dnn_superres {
 		fn set_preferable_backend(&mut self, backend_id: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setPreferableBackend_int(self.as_raw_mut_DnnSuperResImpl(), backend_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -150,7 +150,7 @@ pub mod dnn_superres {
 		fn set_preferable_target(&mut self, target_id: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setPreferableTarget_int(self.as_raw_mut_DnnSuperResImpl(), target_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -165,7 +165,7 @@ pub mod dnn_superres {
 			output_array_arg!(result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsample_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -181,7 +181,7 @@ pub mod dnn_superres {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput_const__InputArrayR_vectorLMatGR_const_vectorLintGR_const_vectorLStringGR(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), imgs_new.as_raw_mut_VectorOfMat(), scale_factors.as_raw_VectorOfi32(), node_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -193,7 +193,7 @@ pub mod dnn_superres {
 		fn get_scale(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_getScale(self.as_raw_mut_DnnSuperResImpl(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -205,7 +205,7 @@ pub mod dnn_superres {
 		fn get_algorithm(&mut self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_getAlgorithm(self.as_raw_mut_DnnSuperResImpl(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)

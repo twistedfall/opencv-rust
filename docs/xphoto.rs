@@ -150,7 +150,7 @@ pub mod xphoto {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_applyChannelGains_const__InputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), gain_b, gain_g, gain_r, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -212,7 +212,7 @@ pub mod xphoto {
 		output_array_arg!(dst_step2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst_step1.as_raw__InputOutputArray(), dst_step2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -273,7 +273,7 @@ pub mod xphoto {
 		output_array_arg!(dst_step2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_float_int_int_int_int_int_int_float_int_int_int(src.as_raw__InputArray(), dst_step1.as_raw__InputOutputArray(), dst_step2.as_raw__OutputArray(), h, template_window_size, search_window_size, block_matching_step1, block_matching_step2, group_size, sliding_step, beta, norm_type, step, transform_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -334,7 +334,7 @@ pub mod xphoto {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -394,7 +394,7 @@ pub mod xphoto {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_int_int_int_int_float_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, template_window_size, search_window_size, block_matching_step1, block_matching_step2, group_size, sliding_step, beta, norm_type, step, transform_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -404,7 +404,7 @@ pub mod xphoto {
 	pub fn create_grayworld_wb() -> Result<core::Ptr<crate::xphoto::GrayworldWB>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_createGrayworldWB(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::xphoto::GrayworldWB>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -422,7 +422,7 @@ pub mod xphoto {
 	pub fn create_learning_based_wb_def() -> Result<core::Ptr<crate::xphoto::LearningBasedWB>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_createLearningBasedWB(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::xphoto::LearningBasedWB>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -440,7 +440,7 @@ pub mod xphoto {
 		extern_container_arg!(path_to_model);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_createLearningBasedWB_const_StringR(path_to_model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::xphoto::LearningBasedWB>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -451,7 +451,7 @@ pub mod xphoto {
 	pub fn create_simple_wb() -> Result<core::Ptr<crate::xphoto::SimpleWB>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_createSimpleWB(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::xphoto::SimpleWB>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -480,7 +480,7 @@ pub mod xphoto {
 	pub fn create_tonemap_durand_def() -> Result<core::Ptr<crate::xphoto::TonemapDurand>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_createTonemapDurand(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::xphoto::TonemapDurand>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -508,7 +508,7 @@ pub mod xphoto {
 	pub fn create_tonemap_durand(gamma: f32, contrast: f32, saturation: f32, sigma_color: f32, sigma_space: f32) -> Result<core::Ptr<crate::xphoto::TonemapDurand>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_createTonemapDurand_float_float_float_float_float(gamma, contrast, saturation, sigma_color, sigma_space, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::xphoto::TonemapDurand>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -532,7 +532,7 @@ pub mod xphoto {
 	pub fn dct_denoising_def(src: &impl core::MatTraitConst, dst: &mut impl core::MatTrait, sigma: f64) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_dctDenoising_const_MatR_MatR_const_double(src.as_raw_Mat(), dst.as_raw_mut_Mat(), sigma, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -554,7 +554,7 @@ pub mod xphoto {
 	pub fn dct_denoising(src: &impl core::MatTraitConst, dst: &mut impl core::MatTrait, sigma: f64, psize: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_dctDenoising_const_MatR_MatR_const_double_const_int(src.as_raw_Mat(), dst.as_raw_mut_Mat(), sigma, psize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -578,7 +578,7 @@ pub mod xphoto {
 	pub fn inpaint(src: &impl core::MatTraitConst, mask: &impl core::MatTraitConst, dst: &mut impl core::MatTrait, algorithm_type: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_inpaint_const_MatR_const_MatR_MatR_const_int(src.as_raw_Mat(), mask.as_raw_Mat(), dst.as_raw_mut_Mat(), algorithm_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -596,7 +596,7 @@ pub mod xphoto {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_oilPainting_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), size, dyn_ratio, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -615,7 +615,7 @@ pub mod xphoto {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_oilPainting_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), size, dyn_ratio, code, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -667,7 +667,7 @@ pub mod xphoto {
 		fn get_saturation_threshold(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_GrayworldWB_getSaturationThreshold_const(self.as_raw_GrayworldWB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -686,7 +686,7 @@ pub mod xphoto {
 		fn set_saturation_threshold(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_GrayworldWB_setSaturationThreshold_float(self.as_raw_mut_GrayworldWB(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -775,7 +775,7 @@ pub mod xphoto {
 		fn get_range_max_val(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_LearningBasedWB_getRangeMaxVal_const(self.as_raw_LearningBasedWB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -788,7 +788,7 @@ pub mod xphoto {
 		fn get_saturation_threshold(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_LearningBasedWB_getSaturationThreshold_const(self.as_raw_LearningBasedWB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -802,7 +802,7 @@ pub mod xphoto {
 		fn get_hist_bin_num(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_LearningBasedWB_getHistBinNum_const(self.as_raw_LearningBasedWB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -833,7 +833,7 @@ pub mod xphoto {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_LearningBasedWB_extractSimpleFeatures_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_LearningBasedWB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -846,7 +846,7 @@ pub mod xphoto {
 		fn set_range_max_val(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_LearningBasedWB_setRangeMaxVal_int(self.as_raw_mut_LearningBasedWB(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -859,7 +859,7 @@ pub mod xphoto {
 		fn set_saturation_threshold(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_LearningBasedWB_setSaturationThreshold_float(self.as_raw_mut_LearningBasedWB(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -873,7 +873,7 @@ pub mod xphoto {
 		fn set_hist_bin_num(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_LearningBasedWB_setHistBinNum_int(self.as_raw_mut_LearningBasedWB(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -951,7 +951,7 @@ pub mod xphoto {
 		fn get_input_min(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_SimpleWB_getInputMin_const(self.as_raw_SimpleWB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -963,7 +963,7 @@ pub mod xphoto {
 		fn get_input_max(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_SimpleWB_getInputMax_const(self.as_raw_SimpleWB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -975,7 +975,7 @@ pub mod xphoto {
 		fn get_output_min(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_SimpleWB_getOutputMin_const(self.as_raw_SimpleWB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -987,7 +987,7 @@ pub mod xphoto {
 		fn get_output_max(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_SimpleWB_getOutputMax_const(self.as_raw_SimpleWB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -999,7 +999,7 @@ pub mod xphoto {
 		fn get_p(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_SimpleWB_getP_const(self.as_raw_SimpleWB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1017,7 +1017,7 @@ pub mod xphoto {
 		fn set_input_min(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_SimpleWB_setInputMin_float(self.as_raw_mut_SimpleWB(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1029,7 +1029,7 @@ pub mod xphoto {
 		fn set_input_max(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_SimpleWB_setInputMax_float(self.as_raw_mut_SimpleWB(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1041,7 +1041,7 @@ pub mod xphoto {
 		fn set_output_min(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_SimpleWB_setOutputMin_float(self.as_raw_mut_SimpleWB(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1053,7 +1053,7 @@ pub mod xphoto {
 		fn set_output_max(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_SimpleWB_setOutputMax_float(self.as_raw_mut_SimpleWB(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1065,7 +1065,7 @@ pub mod xphoto {
 		fn set_p(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_SimpleWB_setP_float(self.as_raw_mut_SimpleWB(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1145,7 +1145,7 @@ pub mod xphoto {
 		fn get_saturation(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_TonemapDurand_getSaturation_const(self.as_raw_TonemapDurand(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1154,7 +1154,7 @@ pub mod xphoto {
 		fn get_contrast(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_TonemapDurand_getContrast_const(self.as_raw_TonemapDurand(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1163,7 +1163,7 @@ pub mod xphoto {
 		fn get_sigma_space(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_TonemapDurand_getSigmaSpace_const(self.as_raw_TonemapDurand(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1172,7 +1172,7 @@ pub mod xphoto {
 		fn get_sigma_color(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_TonemapDurand_getSigmaColor_const(self.as_raw_TonemapDurand(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1187,7 +1187,7 @@ pub mod xphoto {
 		fn set_saturation(&mut self, saturation: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_TonemapDurand_setSaturation_float(self.as_raw_mut_TonemapDurand(), saturation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1196,7 +1196,7 @@ pub mod xphoto {
 		fn set_contrast(&mut self, contrast: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_TonemapDurand_setContrast_float(self.as_raw_mut_TonemapDurand(), contrast, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1205,7 +1205,7 @@ pub mod xphoto {
 		fn set_sigma_space(&mut self, sigma_space: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_TonemapDurand_setSigmaSpace_float(self.as_raw_mut_TonemapDurand(), sigma_space, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1214,7 +1214,7 @@ pub mod xphoto {
 		fn set_sigma_color(&mut self, sigma_color: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_TonemapDurand_setSigmaColor_float(self.as_raw_mut_TonemapDurand(), sigma_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1302,7 +1302,7 @@ pub mod xphoto {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_WhiteBalancer(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

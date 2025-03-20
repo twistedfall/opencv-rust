@@ -12,7 +12,7 @@ pub mod cudawarping {
 	pub fn build_warp_affine_maps_2_def(mut m: impl core::MatTrait, inverse: bool, dsize: core::Size, xmap: &mut impl core::GpuMatTrait, ymap: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpAffineMaps_Mat_bool_Size_GpuMatR_GpuMatR(m.as_raw_mut_Mat(), inverse, &dsize, xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -23,7 +23,7 @@ pub mod cudawarping {
 	pub fn build_warp_affine_maps_2(mut m: impl core::MatTrait, inverse: bool, dsize: core::Size, xmap: &mut impl core::GpuMatTrait, ymap: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpAffineMaps_Mat_bool_Size_GpuMatR_GpuMatR_StreamR(m.as_raw_mut_Mat(), inverse, &dsize, xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -35,7 +35,7 @@ pub mod cudawarping {
 	pub fn build_warp_affine_maps_1_def(mut m: impl core::UMatTrait, inverse: bool, dsize: core::Size, xmap: &mut impl core::GpuMatTrait, ymap: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpAffineMaps_UMat_bool_Size_GpuMatR_GpuMatR(m.as_raw_mut_UMat(), inverse, &dsize, xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -46,7 +46,7 @@ pub mod cudawarping {
 	pub fn build_warp_affine_maps_1(mut m: impl core::UMatTrait, inverse: bool, dsize: core::Size, xmap: &mut impl core::GpuMatTrait, ymap: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpAffineMaps_UMat_bool_Size_GpuMatR_GpuMatR_StreamR(m.as_raw_mut_UMat(), inverse, &dsize, xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -73,7 +73,7 @@ pub mod cudawarping {
 		output_array_arg!(ymap);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpAffineMaps_const__InputArrayR_bool_Size_const__OutputArrayR_const__OutputArrayR(m.as_raw__InputArray(), inverse, &dsize, xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -99,7 +99,7 @@ pub mod cudawarping {
 		output_array_arg!(ymap);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpAffineMaps_const__InputArrayR_bool_Size_const__OutputArrayR_const__OutputArrayR_StreamR(m.as_raw__InputArray(), inverse, &dsize, xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -111,7 +111,7 @@ pub mod cudawarping {
 	pub fn build_warp_perspective_maps_2_def(mut m: impl core::MatTrait, inverse: bool, dsize: core::Size, xmap: &mut impl core::GpuMatTrait, ymap: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpPerspectiveMaps_Mat_bool_Size_GpuMatR_GpuMatR(m.as_raw_mut_Mat(), inverse, &dsize, xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -122,7 +122,7 @@ pub mod cudawarping {
 	pub fn build_warp_perspective_maps_2(mut m: impl core::MatTrait, inverse: bool, dsize: core::Size, xmap: &mut impl core::GpuMatTrait, ymap: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpPerspectiveMaps_Mat_bool_Size_GpuMatR_GpuMatR_StreamR(m.as_raw_mut_Mat(), inverse, &dsize, xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -134,7 +134,7 @@ pub mod cudawarping {
 	pub fn build_warp_perspective_maps_1_def(mut m: impl core::UMatTrait, inverse: bool, dsize: core::Size, xmap: &mut impl core::GpuMatTrait, ymap: &mut impl core::GpuMatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpPerspectiveMaps_UMat_bool_Size_GpuMatR_GpuMatR(m.as_raw_mut_UMat(), inverse, &dsize, xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -145,7 +145,7 @@ pub mod cudawarping {
 	pub fn build_warp_perspective_maps_1(mut m: impl core::UMatTrait, inverse: bool, dsize: core::Size, xmap: &mut impl core::GpuMatTrait, ymap: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpPerspectiveMaps_UMat_bool_Size_GpuMatR_GpuMatR_StreamR(m.as_raw_mut_UMat(), inverse, &dsize, xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -172,7 +172,7 @@ pub mod cudawarping {
 		output_array_arg!(ymap);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpPerspectiveMaps_const__InputArrayR_bool_Size_const__OutputArrayR_const__OutputArrayR(m.as_raw__InputArray(), inverse, &dsize, xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -198,7 +198,7 @@ pub mod cudawarping {
 		output_array_arg!(ymap);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_buildWarpPerspectiveMaps_const__InputArrayR_bool_Size_const__OutputArrayR_const__OutputArrayR_StreamR(m.as_raw__InputArray(), inverse, &dsize, xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -222,7 +222,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_pyrDown_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -245,7 +245,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_pyrDown_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -267,7 +267,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_pyrUp_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -288,7 +288,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_pyrUp_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -334,7 +334,7 @@ pub mod cudawarping {
 		input_array_arg!(ymap);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_remap_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), xmap.as_raw__InputArray(), ymap.as_raw__InputArray(), interpolation, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -379,7 +379,7 @@ pub mod cudawarping {
 		input_array_arg!(ymap);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_remap_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), xmap.as_raw__InputArray(), ymap.as_raw__InputArray(), interpolation, border_mode, &border_value, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -415,7 +415,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_resize_const__InputArrayR_const__OutputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dsize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -450,7 +450,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_resize_const__InputArrayR_const__OutputArrayR_Size_double_double_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dsize, fx, fy, interpolation, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -483,7 +483,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_rotate_const__InputArrayR_const__OutputArrayR_Size_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dsize, angle, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -515,7 +515,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_rotate_const__InputArrayR_const__OutputArrayR_Size_double_double_double_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dsize, angle, x_shift, y_shift, interpolation, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -532,7 +532,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpAffine_const__InputArrayR_const__OutputArrayR_Mat_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw_mut_Mat(), &dsize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -548,7 +548,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpAffine_const__InputArrayR_const__OutputArrayR_Mat_Size_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw_mut_Mat(), &dsize, flags, border_mode, &border_value, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -565,7 +565,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpAffine_const__InputArrayR_const__OutputArrayR_UMat_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw_mut_UMat(), &dsize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -581,7 +581,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpAffine_const__InputArrayR_const__OutputArrayR_UMat_Size_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw_mut_UMat(), &dsize, flags, border_mode, &border_value, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -616,7 +616,7 @@ pub mod cudawarping {
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -650,7 +650,7 @@ pub mod cudawarping {
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, flags, border_mode, &border_value, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -667,7 +667,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpPerspective_const__InputArrayR_const__OutputArrayR_Mat_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw_mut_Mat(), &dsize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -683,7 +683,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpPerspective_const__InputArrayR_const__OutputArrayR_Mat_Size_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw_mut_Mat(), &dsize, flags, border_mode, &border_value, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -700,7 +700,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpPerspective_const__InputArrayR_const__OutputArrayR_UMat_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw_mut_UMat(), &dsize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -716,7 +716,7 @@ pub mod cudawarping {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpPerspective_const__InputArrayR_const__OutputArrayR_UMat_Size_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw_mut_UMat(), &dsize, flags, border_mode, &border_value, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -751,7 +751,7 @@ pub mod cudawarping {
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -785,7 +785,7 @@ pub mod cudawarping {
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, flags, border_mode, &border_value, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}

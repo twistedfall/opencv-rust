@@ -624,7 +624,7 @@ pub mod mcc {
 		pub fn new(src: &impl core::MatTraitConst, constcolor: crate::mcc::CONST_COLOR) -> Result<crate::mcc::ColorCorrectionModel> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_CONST_COLOR(src.as_raw_Mat(), constcolor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
 			Ok(ret)
@@ -644,7 +644,7 @@ pub mod mcc {
 		pub fn new_1(src: &impl core::MatTraitConst, mut colors: impl core::MatTrait, ref_cs: crate::mcc::COLOR_SPACE) -> Result<crate::mcc::ColorCorrectionModel> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_Mat_COLOR_SPACE(src.as_raw_Mat(), colors.as_raw_mut_Mat(), ref_cs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
 			Ok(ret)
@@ -663,7 +663,7 @@ pub mod mcc {
 		pub fn new_2(src: &impl core::MatTraitConst, mut colors: impl core::MatTrait, ref_cs: crate::mcc::COLOR_SPACE, mut colored: impl core::MatTrait) -> Result<crate::mcc::ColorCorrectionModel> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_Mat_COLOR_SPACE_Mat(src.as_raw_Mat(), colors.as_raw_mut_Mat(), ref_cs, colored.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
 			Ok(ret)
@@ -679,7 +679,7 @@ pub mod mcc {
 		fn get_ccm(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_getCCM_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -689,7 +689,7 @@ pub mod mcc {
 		fn get_loss(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_getLoss_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -698,7 +698,7 @@ pub mod mcc {
 		fn get_src_rgbl(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_get_src_rgbl_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -708,7 +708,7 @@ pub mod mcc {
 		fn get_dst_rgbl(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_get_dst_rgbl_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -718,7 +718,7 @@ pub mod mcc {
 		fn get_mask(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_getMask_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -728,7 +728,7 @@ pub mod mcc {
 		fn get_weights(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_getWeights_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -760,7 +760,7 @@ pub mod mcc {
 		fn set_color_space(&mut self, cs: crate::mcc::COLOR_SPACE) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setColorSpace_COLOR_SPACE(self.as_raw_mut_ColorCorrectionModel(), cs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -774,7 +774,7 @@ pub mod mcc {
 		fn set_ccm_type(&mut self, ccm_type: crate::mcc::CCM_TYPE) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setCCM_TYPE_CCM_TYPE(self.as_raw_mut_ColorCorrectionModel(), ccm_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -788,7 +788,7 @@ pub mod mcc {
 		fn set_distance(&mut self, distance: crate::mcc::DISTANCE_TYPE) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setDistance_DISTANCE_TYPE(self.as_raw_mut_ColorCorrectionModel(), distance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -802,7 +802,7 @@ pub mod mcc {
 		fn set_linear(&mut self, linear_type: crate::mcc::LINEAR_TYPE) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setLinear_LINEAR_TYPE(self.as_raw_mut_ColorCorrectionModel(), linear_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -821,7 +821,7 @@ pub mod mcc {
 		fn set_linear_gamma(&mut self, gamma: &f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setLinearGamma_const_doubleR(self.as_raw_mut_ColorCorrectionModel(), gamma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -842,7 +842,7 @@ pub mod mcc {
 		fn set_linear_degree(&mut self, deg: &i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setLinearDegree_const_intR(self.as_raw_mut_ColorCorrectionModel(), deg, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -861,7 +861,7 @@ pub mod mcc {
 		fn set_saturated_threshold(&mut self, lower: &f64, upper: &f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setSaturatedThreshold_const_doubleR_const_doubleR(self.as_raw_mut_ColorCorrectionModel(), lower, upper, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -875,7 +875,7 @@ pub mod mcc {
 		fn set_weights_list(&mut self, weights_list: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setWeightsList_const_MatR(self.as_raw_mut_ColorCorrectionModel(), weights_list.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -889,7 +889,7 @@ pub mod mcc {
 		fn set_weight_coeff(&mut self, weights_coeff: &f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setWeightCoeff_const_doubleR(self.as_raw_mut_ColorCorrectionModel(), weights_coeff, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -903,7 +903,7 @@ pub mod mcc {
 		fn set_initial_method(&mut self, initial_method_type: crate::mcc::INITIAL_METHOD_TYPE) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setInitialMethod_INITIAL_METHOD_TYPE(self.as_raw_mut_ColorCorrectionModel(), initial_method_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -919,7 +919,7 @@ pub mod mcc {
 		fn set_max_count(&mut self, max_count: &i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setMaxCount_const_intR(self.as_raw_mut_ColorCorrectionModel(), max_count, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -935,7 +935,7 @@ pub mod mcc {
 		fn set_epsilon(&mut self, epsilon: &f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setEpsilon_const_doubleR(self.as_raw_mut_ColorCorrectionModel(), epsilon, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -945,7 +945,7 @@ pub mod mcc {
 		fn run(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_run(self.as_raw_mut_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -963,7 +963,7 @@ pub mod mcc {
 		fn infer(&mut self, img: &impl core::MatTraitConst, islinear: bool) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_infer_const_MatR_bool(self.as_raw_mut_ColorCorrectionModel(), img.as_raw_Mat(), islinear, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -983,7 +983,7 @@ pub mod mcc {
 		fn infer_def(&mut self, img: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_infer_const_MatR(self.as_raw_mut_ColorCorrectionModel(), img.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1038,7 +1038,7 @@ pub mod mcc {
 		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_CChecker>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CChecker>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1060,7 +1060,7 @@ pub mod mcc {
 		fn set_target(&mut self, _target: crate::mcc::MCC_TYPECHART) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_setTarget_TYPECHART(self.as_raw_mut_MCC_CChecker(), _target, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1069,7 +1069,7 @@ pub mod mcc {
 		fn set_box(&mut self, mut _box: core::Vector<core::Point2f>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_setBox_vectorLPoint2fG(self.as_raw_mut_MCC_CChecker(), _box.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1078,7 +1078,7 @@ pub mod mcc {
 		fn set_charts_rgb(&mut self, mut _charts_rgb: impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_setChartsRGB_Mat(self.as_raw_mut_MCC_CChecker(), _charts_rgb.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1087,7 +1087,7 @@ pub mod mcc {
 		fn set_charts_y_cb_cr(&mut self, mut _charts_y_cb_cr: impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_setChartsYCbCr_Mat(self.as_raw_mut_MCC_CChecker(), _charts_y_cb_cr.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1096,7 +1096,7 @@ pub mod mcc {
 		fn set_cost(&mut self, _cost: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_setCost_float(self.as_raw_mut_MCC_CChecker(), _cost, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1105,7 +1105,7 @@ pub mod mcc {
 		fn set_center(&mut self, _center: core::Point2f) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_setCenter_Point2f(self.as_raw_mut_MCC_CChecker(), &_center, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1114,7 +1114,7 @@ pub mod mcc {
 		fn get_target(&mut self) -> Result<crate::mcc::MCC_TYPECHART> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_getTarget(self.as_raw_mut_MCC_CChecker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1123,7 +1123,7 @@ pub mod mcc {
 		fn get_box(&mut self) -> Result<core::Vector<core::Point2f>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_getBox(self.as_raw_mut_MCC_CChecker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1138,7 +1138,7 @@ pub mod mcc {
 		fn get_color_charts(&mut self) -> Result<core::Vector<core::Point2f>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_getColorCharts(self.as_raw_mut_MCC_CChecker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1148,7 +1148,7 @@ pub mod mcc {
 		fn get_charts_rgb(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_getChartsRGB(self.as_raw_mut_MCC_CChecker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1158,7 +1158,7 @@ pub mod mcc {
 		fn get_charts_y_cb_cr(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_getChartsYCbCr(self.as_raw_mut_MCC_CChecker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1168,7 +1168,7 @@ pub mod mcc {
 		fn get_cost(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_getCost(self.as_raw_mut_MCC_CChecker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1177,7 +1177,7 @@ pub mod mcc {
 		fn get_center(&mut self) -> Result<core::Point2f> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_getCenter(self.as_raw_mut_MCC_CChecker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1224,7 +1224,7 @@ pub mod mcc {
 		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_CCheckerDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1256,7 +1256,7 @@ pub mod mcc {
 		fn set_net(&mut self, mut net: impl crate::dnn::NetTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_setNet_Net(self.as_raw_mut_MCC_CCheckerDetector(), net.as_raw_mut_Net(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1289,7 +1289,7 @@ pub mod mcc {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_vectorLRectGR_const_int_bool_const_PtrLDetectorParametersGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, regions_of_interest.as_raw_VectorOfRect(), nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1323,7 +1323,7 @@ pub mod mcc {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_vectorLRectGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, regions_of_interest.as_raw_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1357,7 +1357,7 @@ pub mod mcc {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_int_bool_const_PtrLDetectorParametersGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1392,7 +1392,7 @@ pub mod mcc {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1405,7 +1405,7 @@ pub mod mcc {
 		fn get_best_color_checker(&mut self) -> Result<core::Ptr<crate::mcc::MCC_CChecker>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_getBestColorChecker(self.as_raw_mut_MCC_CCheckerDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CChecker>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1417,7 +1417,7 @@ pub mod mcc {
 		fn get_list_color_checker(&mut self) -> Result<core::Vector<core::Ptr<crate::mcc::MCC_CChecker>>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_getListColorChecker(self.as_raw_mut_MCC_CCheckerDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Ptr<crate::mcc::MCC_CChecker>>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1499,7 +1499,7 @@ pub mod mcc {
 		pub fn create(mut p_checker: core::Ptr<crate::mcc::MCC_CChecker>, color: core::Scalar, thickness: i32) -> Result<core::Ptr<crate::mcc::MCC_CCheckerDraw>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDraw_create_PtrLCCheckerG_Scalar_int(p_checker.as_raw_mut_PtrOfMCC_CChecker(), &color, thickness, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDraw>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1521,7 +1521,7 @@ pub mod mcc {
 		pub fn create_def(mut p_checker: core::Ptr<crate::mcc::MCC_CChecker>) -> Result<core::Ptr<crate::mcc::MCC_CCheckerDraw>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDraw_create_PtrLCCheckerG(p_checker.as_raw_mut_PtrOfMCC_CChecker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDraw>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1546,7 +1546,7 @@ pub mod mcc {
 			input_output_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDraw_draw_const__InputOutputArrayR(self.as_raw_mut_MCC_CCheckerDraw(), img.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1638,7 +1638,7 @@ pub mod mcc {
 		pub fn default() -> Result<crate::mcc::MCC_DetectorParameters> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_DetectorParameters_DetectorParameters(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::mcc::MCC_DetectorParameters::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1648,7 +1648,7 @@ pub mod mcc {
 		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_DetectorParameters>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_DetectorParameters_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_DetectorParameters>::opencv_from_extern(ret) };
 			Ok(ret)

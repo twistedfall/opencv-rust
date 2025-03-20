@@ -273,7 +273,7 @@ pub mod features2d {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -305,7 +305,7 @@ pub mod features2d {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -332,7 +332,7 @@ pub mod features2d {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -347,7 +347,7 @@ pub mod features2d {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_FAST_const__InputArrayR_vectorLKeyPointGR_int(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -381,7 +381,7 @@ pub mod features2d {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -410,7 +410,7 @@ pub mod features2d {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -419,7 +419,7 @@ pub mod features2d {
 	pub fn compute_recall_precision_curve(matches1to2: &core::Vector<core::Vector<core::DMatch>>, correct_matches1to2_mask: &core::Vector<core::Vector<u8>>, recall_precision_curve: &mut core::Vector<core::Point2f>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_computeRecallPrecisionCurve_const_vectorLvectorLDMatchGGR_const_vectorLvectorLunsigned_charGGR_vectorLPoint2fGR(matches1to2.as_raw_VectorOfVectorOfDMatch(), correct_matches1to2_mask.as_raw_VectorOfVectorOfu8(), recall_precision_curve.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -451,7 +451,7 @@ pub mod features2d {
 		input_output_array_arg!(out_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawKeypoints_const__InputArrayR_const_vectorLKeyPointGR_const__InputOutputArrayR(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), out_image.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -482,7 +482,7 @@ pub mod features2d {
 		input_output_array_arg!(out_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawKeypoints_const__InputArrayR_const_vectorLKeyPointGR_const__InputOutputArrayR_const_ScalarR_DrawMatchesFlags(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), out_image.as_raw__InputOutputArray(), &color, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -523,7 +523,7 @@ pub mod features2d {
 		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -563,7 +563,7 @@ pub mod features2d {
 		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfc_char(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -583,7 +583,7 @@ pub mod features2d {
 		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), matches_thickness, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -625,7 +625,7 @@ pub mod features2d {
 		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), matches_thickness, &match_color, &single_point_color, matches_mask.as_raw_VectorOfc_char(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -643,7 +643,7 @@ pub mod features2d {
 		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLvectorLDMatchGGR_const__InputOutputArrayR(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -660,7 +660,7 @@ pub mod features2d {
 		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLvectorLDMatchGGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLvectorLcharGGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfVectorOfc_char(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -672,7 +672,7 @@ pub mod features2d {
 	pub fn evaluate_feature_detector_def(img1: &impl core::MatTraitConst, img2: &impl core::MatTraitConst, h1to2: &impl core::MatTraitConst, keypoints1: &mut core::Vector<core::KeyPoint>, keypoints2: &mut core::Vector<core::KeyPoint>, repeatability: &mut f32, corresp_count: &mut i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_evaluateFeatureDetector_const_MatR_const_MatR_const_MatR_vectorLKeyPointGX_vectorLKeyPointGX_floatR_intR(img1.as_raw_Mat(), img2.as_raw_Mat(), h1to2.as_raw_Mat(), keypoints1.as_raw_mut_VectorOfKeyPoint(), keypoints2.as_raw_mut_VectorOfKeyPoint(), repeatability, corresp_count, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -683,7 +683,7 @@ pub mod features2d {
 	pub fn evaluate_feature_detector(img1: &impl core::MatTraitConst, img2: &impl core::MatTraitConst, h1to2: &impl core::MatTraitConst, keypoints1: &mut core::Vector<core::KeyPoint>, keypoints2: &mut core::Vector<core::KeyPoint>, repeatability: &mut f32, corresp_count: &mut i32, fdetector: &core::Ptr<crate::features2d::Feature2D>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_evaluateFeatureDetector_const_MatR_const_MatR_const_MatR_vectorLKeyPointGX_vectorLKeyPointGX_floatR_intR_const_PtrLFeature2DGR(img1.as_raw_Mat(), img2.as_raw_Mat(), h1to2.as_raw_Mat(), keypoints1.as_raw_mut_VectorOfKeyPoint(), keypoints2.as_raw_mut_VectorOfKeyPoint(), repeatability, corresp_count, fdetector.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -692,7 +692,7 @@ pub mod features2d {
 	pub fn get_nearest_point(recall_precision_curve: &core::Vector<core::Point2f>, l_precision: f32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getNearestPoint_const_vectorLPoint2fGR_float(recall_precision_curve.as_raw_VectorOfPoint2f(), l_precision, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -701,7 +701,7 @@ pub mod features2d {
 	pub fn get_recall(recall_precision_curve: &core::Vector<core::Point2f>, l_precision: f32) -> Result<f32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getRecall_const_vectorLPoint2fGR_float(recall_precision_curve.as_raw_VectorOfPoint2f(), l_precision, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -768,7 +768,7 @@ pub mod features2d {
 		pub fn create(descriptor_type: crate::features2d::AKAZE_DescriptorType, descriptor_size: i32, descriptor_channels: i32, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: crate::features2d::KAZE_DiffusivityType, max_points: i32) -> Result<core::Ptr<crate::features2d::AKAZE>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_create_DescriptorType_int_int_float_int_int_DiffusivityType_int(descriptor_type, descriptor_size, descriptor_channels, threshold, n_octaves, n_octave_layers, diffusivity, max_points, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::AKAZE>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -804,7 +804,7 @@ pub mod features2d {
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::AKAZE>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::AKAZE>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -820,7 +820,7 @@ pub mod features2d {
 		fn get_descriptor_type(&self) -> Result<crate::features2d::AKAZE_DescriptorType> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_getDescriptorType_const(self.as_raw_AKAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -829,7 +829,7 @@ pub mod features2d {
 		fn get_descriptor_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_getDescriptorSize_const(self.as_raw_AKAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -838,7 +838,7 @@ pub mod features2d {
 		fn get_descriptor_channels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_getDescriptorChannels_const(self.as_raw_AKAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -847,7 +847,7 @@ pub mod features2d {
 		fn get_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_getThreshold_const(self.as_raw_AKAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -856,7 +856,7 @@ pub mod features2d {
 		fn get_n_octaves(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_getNOctaves_const(self.as_raw_AKAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -865,7 +865,7 @@ pub mod features2d {
 		fn get_n_octave_layers(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_getNOctaveLayers_const(self.as_raw_AKAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -874,7 +874,7 @@ pub mod features2d {
 		fn get_diffusivity(&self) -> Result<crate::features2d::KAZE_DiffusivityType> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_getDiffusivity_const(self.as_raw_AKAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -883,7 +883,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_getDefaultName_const(self.as_raw_AKAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -893,7 +893,7 @@ pub mod features2d {
 		fn get_max_points(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_getMaxPoints_const(self.as_raw_AKAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -908,7 +908,7 @@ pub mod features2d {
 		fn set_descriptor_type(&mut self, dtype: crate::features2d::AKAZE_DescriptorType) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_setDescriptorType_DescriptorType(self.as_raw_mut_AKAZE(), dtype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -917,7 +917,7 @@ pub mod features2d {
 		fn set_descriptor_size(&mut self, dsize: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_setDescriptorSize_int(self.as_raw_mut_AKAZE(), dsize, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -926,7 +926,7 @@ pub mod features2d {
 		fn set_descriptor_channels(&mut self, dch: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_setDescriptorChannels_int(self.as_raw_mut_AKAZE(), dch, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -935,7 +935,7 @@ pub mod features2d {
 		fn set_threshold(&mut self, threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_setThreshold_double(self.as_raw_mut_AKAZE(), threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -944,7 +944,7 @@ pub mod features2d {
 		fn set_n_octaves(&mut self, octaves: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_setNOctaves_int(self.as_raw_mut_AKAZE(), octaves, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -953,7 +953,7 @@ pub mod features2d {
 		fn set_n_octave_layers(&mut self, octave_layers: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_setNOctaveLayers_int(self.as_raw_mut_AKAZE(), octave_layers, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -962,7 +962,7 @@ pub mod features2d {
 		fn set_diffusivity(&mut self, diff: crate::features2d::KAZE_DiffusivityType) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_setDiffusivity_DiffusivityType(self.as_raw_mut_AKAZE(), diff, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -971,7 +971,7 @@ pub mod features2d {
 		fn set_max_points(&mut self, max_points: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AKAZE_setMaxPoints_int(self.as_raw_mut_AKAZE(), max_points, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1054,7 +1054,7 @@ pub mod features2d {
 		pub fn create(backend: &core::Ptr<crate::features2d::Feature2D>, max_tilt: i32, min_tilt: i32, tilt_step: f32, rotate_step_base: f32) -> Result<core::Ptr<crate::features2d::AffineFeature>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AffineFeature_create_const_PtrLFeature2DGR_int_int_float_float(backend.as_raw_PtrOfFeature2D(), max_tilt, min_tilt, tilt_step, rotate_step_base, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::AffineFeature>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1077,7 +1077,7 @@ pub mod features2d {
 		pub fn create_def(backend: &core::Ptr<crate::features2d::Feature2D>) -> Result<core::Ptr<crate::features2d::AffineFeature>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AffineFeature_create_const_PtrLFeature2DGR(backend.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::AffineFeature>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1093,7 +1093,7 @@ pub mod features2d {
 		fn get_view_params(&self, tilts: &mut core::Vector<f32>, rolls: &mut core::Vector<f32>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AffineFeature_getViewParams_const_vectorLfloatGR_vectorLfloatGR(self.as_raw_AffineFeature(), tilts.as_raw_mut_VectorOff32(), rolls.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1102,7 +1102,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AffineFeature_getDefaultName_const(self.as_raw_AffineFeature(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1118,7 +1118,7 @@ pub mod features2d {
 		fn set_view_params(&mut self, tilts: &core::Vector<f32>, rolls: &core::Vector<f32>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AffineFeature_setViewParams_const_vectorLfloatGR_const_vectorLfloatGR(self.as_raw_mut_AffineFeature(), tilts.as_raw_VectorOff32(), rolls.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1192,7 +1192,7 @@ pub mod features2d {
 		pub fn create(threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<core::Ptr<crate::features2d::AgastFeatureDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AgastFeatureDetector_create_int_bool_DetectorType(threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::AgastFeatureDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1207,7 +1207,7 @@ pub mod features2d {
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::AgastFeatureDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AgastFeatureDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::AgastFeatureDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1223,7 +1223,7 @@ pub mod features2d {
 		fn get_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AgastFeatureDetector_getThreshold_const(self.as_raw_AgastFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1232,7 +1232,7 @@ pub mod features2d {
 		fn get_nonmax_suppression(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AgastFeatureDetector_getNonmaxSuppression_const(self.as_raw_AgastFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1241,7 +1241,7 @@ pub mod features2d {
 		fn get_type(&self) -> Result<crate::features2d::AgastFeatureDetector_DetectorType> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AgastFeatureDetector_getType_const(self.as_raw_AgastFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1250,7 +1250,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AgastFeatureDetector_getDefaultName_const(self.as_raw_AgastFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1266,7 +1266,7 @@ pub mod features2d {
 		fn set_threshold(&mut self, threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AgastFeatureDetector_setThreshold_int(self.as_raw_mut_AgastFeatureDetector(), threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1275,7 +1275,7 @@ pub mod features2d {
 		fn set_nonmax_suppression(&mut self, f: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AgastFeatureDetector_setNonmaxSuppression_bool(self.as_raw_mut_AgastFeatureDetector(), f, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1284,7 +1284,7 @@ pub mod features2d {
 		fn set_type(&mut self, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AgastFeatureDetector_setType_DetectorType(self.as_raw_mut_AgastFeatureDetector(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1363,7 +1363,7 @@ pub mod features2d {
 		pub fn new(norm_type: i32, cross_check: bool) -> Result<crate::features2d::BFMatcher> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BFMatcher_BFMatcher_int_bool(norm_type, cross_check, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::features2d::BFMatcher::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1379,7 +1379,7 @@ pub mod features2d {
 		pub fn new_def() -> Result<crate::features2d::BFMatcher> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BFMatcher_BFMatcher(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::features2d::BFMatcher::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1405,7 +1405,7 @@ pub mod features2d {
 		pub fn create(norm_type: i32, cross_check: bool) -> Result<core::Ptr<crate::features2d::BFMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BFMatcher_create_int_bool(norm_type, cross_check, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::BFMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1432,7 +1432,7 @@ pub mod features2d {
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::BFMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BFMatcher_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::BFMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1448,7 +1448,7 @@ pub mod features2d {
 		fn is_mask_supported(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BFMatcher_isMaskSupported_const(self.as_raw_BFMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1460,7 +1460,7 @@ pub mod features2d {
 		fn clone(&self, empty_train_data: bool) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BFMatcher_clone_const_bool(self.as_raw_BFMatcher(), empty_train_data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1473,7 +1473,7 @@ pub mod features2d {
 		fn clone_def(&self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BFMatcher_clone_const(self.as_raw_BFMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1565,7 +1565,7 @@ pub mod features2d {
 		pub fn new_with_extractor(dextractor: &core::Ptr<crate::features2d::Feature2D>, dmatcher: &core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_PtrLFeature2DGR_const_PtrLDescriptorMatcherGR(dextractor.as_raw_PtrOfFeature2D(), dmatcher.as_raw_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::features2d::BOWImgDescriptorExtractor::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1584,7 +1584,7 @@ pub mod features2d {
 		pub fn new(dmatcher: &core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_PtrLDescriptorMatcherGR(dmatcher.as_raw_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::features2d::BOWImgDescriptorExtractor::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1601,7 +1601,7 @@ pub mod features2d {
 		fn get_vocabulary(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_getVocabulary_const(self.as_raw_BOWImgDescriptorExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1612,7 +1612,7 @@ pub mod features2d {
 		fn descriptor_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_descriptorSize_const(self.as_raw_BOWImgDescriptorExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1622,7 +1622,7 @@ pub mod features2d {
 		fn descriptor_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_descriptorType_const(self.as_raw_BOWImgDescriptorExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1642,7 +1642,7 @@ pub mod features2d {
 		fn set_vocabulary(&mut self, vocabulary: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_setVocabulary_const_MatR(self.as_raw_mut_BOWImgDescriptorExtractor(), vocabulary.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1667,7 +1667,7 @@ pub mod features2d {
 			output_array_arg!(img_descriptor);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_vectorLvectorLintGGX_MatX(self.as_raw_mut_BOWImgDescriptorExtractor(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), img_descriptor.as_raw__OutputArray(), point_idxs_of_clusters.as_raw_mut_VectorOfVectorOfi32(), descriptors.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1693,7 +1693,7 @@ pub mod features2d {
 			output_array_arg!(img_descriptor);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR(self.as_raw_mut_BOWImgDescriptorExtractor(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), img_descriptor.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1725,7 +1725,7 @@ pub mod features2d {
 			output_array_arg!(img_descriptor);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_const__OutputArrayR_vectorLvectorLintGGX(self.as_raw_mut_BOWImgDescriptorExtractor(), keypoint_descriptors.as_raw__InputArray(), img_descriptor.as_raw__OutputArray(), point_idxs_of_clusters.as_raw_mut_VectorOfVectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1747,7 +1747,7 @@ pub mod features2d {
 			output_array_arg!(img_descriptor);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BOWImgDescriptorExtractor(), keypoint_descriptors.as_raw__InputArray(), img_descriptor.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1756,7 +1756,7 @@ pub mod features2d {
 		fn compute2(&mut self, image: &impl core::MatTraitConst, keypoints: &mut core::Vector<core::KeyPoint>, img_descriptor: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_compute2_const_MatR_vectorLKeyPointGR_MatR(self.as_raw_mut_BOWImgDescriptorExtractor(), image.as_raw_Mat(), keypoints.as_raw_mut_VectorOfKeyPoint(), img_descriptor.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1810,7 +1810,7 @@ pub mod features2d {
 		pub fn new(cluster_count: i32, termcrit: core::TermCriteria, attempts: i32, flags: i32) -> Result<crate::features2d::BOWKMeansTrainer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWKMeansTrainer_BOWKMeansTrainer_int_const_TermCriteriaR_int_int(cluster_count, &termcrit, attempts, flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::features2d::BOWKMeansTrainer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1829,7 +1829,7 @@ pub mod features2d {
 		pub fn new_def(cluster_count: i32) -> Result<crate::features2d::BOWKMeansTrainer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWKMeansTrainer_BOWKMeansTrainer_int(cluster_count, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::features2d::BOWKMeansTrainer::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1845,7 +1845,7 @@ pub mod features2d {
 		fn cluster(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWKMeansTrainer_cluster_const(self.as_raw_BOWKMeansTrainer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1855,7 +1855,7 @@ pub mod features2d {
 		fn cluster_with_descriptor(&self, descriptors: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWKMeansTrainer_cluster_const_const_MatR(self.as_raw_BOWKMeansTrainer(), descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1927,7 +1927,7 @@ pub mod features2d {
 		fn get_descriptors(&self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWTrainer_getDescriptors_const(self.as_raw_BOWTrainer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1938,7 +1938,7 @@ pub mod features2d {
 		fn descriptors_count(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWTrainer_descriptorsCount_const(self.as_raw_BOWTrainer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1958,7 +1958,7 @@ pub mod features2d {
 		fn cluster(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWTrainer_cluster_const(self.as_raw_BOWTrainer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1977,7 +1977,7 @@ pub mod features2d {
 		fn cluster_with_descriptors(&self, descriptors: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWTrainer_cluster_const_const_MatR(self.as_raw_BOWTrainer(), descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2000,7 +2000,7 @@ pub mod features2d {
 		fn add(&mut self, descriptors: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWTrainer_add_const_MatR(self.as_raw_mut_BOWTrainer(), descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2009,7 +2009,7 @@ pub mod features2d {
 		fn clear(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWTrainer_clear(self.as_raw_mut_BOWTrainer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2069,7 +2069,7 @@ pub mod features2d {
 		pub fn create(thresh: i32, octaves: i32, pattern_scale: f32) -> Result<core::Ptr<crate::features2d::BRISK>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_create_int_int_float(thresh, octaves, pattern_scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::BRISK>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2092,7 +2092,7 @@ pub mod features2d {
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::BRISK>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::BRISK>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2119,7 +2119,7 @@ pub mod features2d {
 		pub fn create_with_pattern(radius_list: &core::Vector<f32>, number_list: &core::Vector<i32>, d_max: f32, d_min: f32, index_change: &core::Vector<i32>) -> Result<core::Ptr<crate::features2d::BRISK>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_create_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR(radius_list.as_raw_VectorOff32(), number_list.as_raw_VectorOfi32(), d_max, d_min, index_change.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::BRISK>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2147,7 +2147,7 @@ pub mod features2d {
 		pub fn create_with_pattern_def(radius_list: &core::Vector<f32>, number_list: &core::Vector<i32>) -> Result<core::Ptr<crate::features2d::BRISK>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_create_const_vectorLfloatGR_const_vectorLintGR(radius_list.as_raw_VectorOff32(), number_list.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::BRISK>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2176,7 +2176,7 @@ pub mod features2d {
 		pub fn create_with_pattern_threshold_octaves(thresh: i32, octaves: i32, radius_list: &core::Vector<f32>, number_list: &core::Vector<i32>, d_max: f32, d_min: f32, index_change: &core::Vector<i32>) -> Result<core::Ptr<crate::features2d::BRISK>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_create_int_int_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR(thresh, octaves, radius_list.as_raw_VectorOff32(), number_list.as_raw_VectorOfi32(), d_max, d_min, index_change.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::BRISK>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2206,7 +2206,7 @@ pub mod features2d {
 		pub fn create_with_pattern_threshold_octaves_def(thresh: i32, octaves: i32, radius_list: &core::Vector<f32>, number_list: &core::Vector<i32>) -> Result<core::Ptr<crate::features2d::BRISK>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_create_int_int_const_vectorLfloatGR_const_vectorLintGR(thresh, octaves, radius_list.as_raw_VectorOff32(), number_list.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::BRISK>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2222,7 +2222,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_getDefaultName_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2232,7 +2232,7 @@ pub mod features2d {
 		fn get_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_getThreshold_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2241,7 +2241,7 @@ pub mod features2d {
 		fn get_octaves(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_getOctaves_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2250,7 +2250,7 @@ pub mod features2d {
 		fn get_pattern_scale(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_getPatternScale_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2268,7 +2268,7 @@ pub mod features2d {
 		fn set_threshold(&mut self, threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_setThreshold_int(self.as_raw_mut_BRISK(), threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2280,7 +2280,7 @@ pub mod features2d {
 		fn set_octaves(&mut self, octaves: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_setOctaves_int(self.as_raw_mut_BRISK(), octaves, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2293,7 +2293,7 @@ pub mod features2d {
 		fn set_pattern_scale(&mut self, pattern_scale: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_setPatternScale_float(self.as_raw_mut_BRISK(), pattern_scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2378,7 +2378,7 @@ pub mod features2d {
 			extern_container_arg!(descriptor_matcher_type);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_create_const_StringR(descriptor_matcher_type.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2388,7 +2388,7 @@ pub mod features2d {
 		pub fn create_with_matcher_type(matcher_type: crate::features2d::DescriptorMatcher_MatcherType) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_create_const_MatcherTypeR(matcher_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2405,7 +2405,7 @@ pub mod features2d {
 		fn get_train_descriptors(&self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_getTrainDescriptors_const(self.as_raw_DescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2416,7 +2416,7 @@ pub mod features2d {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_empty_const(self.as_raw_DescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2426,7 +2426,7 @@ pub mod features2d {
 		fn is_mask_supported(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_isMaskSupported_const(self.as_raw_DescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2457,7 +2457,7 @@ pub mod features2d {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_match_const_const__InputArrayR_const__InputArrayR_vectorLDMatchGR_const__InputArrayR(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2488,7 +2488,7 @@ pub mod features2d {
 			input_array_arg!(train_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_match_const_const__InputArrayR_const__InputArrayR_vectorLDMatchGR(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2522,7 +2522,7 @@ pub mod features2d {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, mask.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2556,7 +2556,7 @@ pub mod features2d {
 			input_array_arg!(train_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2591,7 +2591,7 @@ pub mod features2d {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_radiusMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, mask.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2626,7 +2626,7 @@ pub mod features2d {
 			input_array_arg!(train_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_radiusMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_float(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2636,7 +2636,7 @@ pub mod features2d {
 			extern_container_arg!(file_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_write_const_const_StringR(self.as_raw_DescriptorMatcher(), file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2645,7 +2645,7 @@ pub mod features2d {
 		fn write_to_storage(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_write_const_FileStorageR(self.as_raw_DescriptorMatcher(), unnamed.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2664,7 +2664,7 @@ pub mod features2d {
 		fn clone(&self, empty_train_data: bool) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_clone_const_bool(self.as_raw_DescriptorMatcher(), empty_train_data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2684,7 +2684,7 @@ pub mod features2d {
 		fn clone_def(&self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_clone_const(self.as_raw_DescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2695,7 +2695,7 @@ pub mod features2d {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_write_const_FileStorageR_const_StringR(self.as_raw_DescriptorMatcher(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2705,7 +2705,7 @@ pub mod features2d {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_write_const_const_PtrLFileStorageGR_const_StringR(self.as_raw_DescriptorMatcher(), fs.as_raw_PtrOfFileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2729,7 +2729,7 @@ pub mod features2d {
 			input_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_add_const__InputArrayR(self.as_raw_mut_DescriptorMatcher(), descriptors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2739,7 +2739,7 @@ pub mod features2d {
 		fn clear(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_clear(self.as_raw_mut_DescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2754,7 +2754,7 @@ pub mod features2d {
 		fn train(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_train(self.as_raw_mut_DescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2792,7 +2792,7 @@ pub mod features2d {
 			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_match_const__InputArrayR_vectorLDMatchGR_const__InputArrayR(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), masks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2813,7 +2813,7 @@ pub mod features2d {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_match_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2858,7 +2858,7 @@ pub mod features2d {
 			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, masks.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2884,7 +2884,7 @@ pub mod features2d {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2931,7 +2931,7 @@ pub mod features2d {
 			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, masks.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2958,7 +2958,7 @@ pub mod features2d {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2968,7 +2968,7 @@ pub mod features2d {
 			extern_container_arg!(file_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_read_const_StringR(self.as_raw_mut_DescriptorMatcher(), file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2977,7 +2977,7 @@ pub mod features2d {
 		fn read_from_node(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_read_const_FileNodeR(self.as_raw_mut_DescriptorMatcher(), unnamed.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3043,7 +3043,7 @@ pub mod features2d {
 		pub fn create(threshold: i32, nonmax_suppression: bool, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<core::Ptr<crate::features2d::FastFeatureDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FastFeatureDetector_create_int_bool_DetectorType(threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::FastFeatureDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3058,7 +3058,7 @@ pub mod features2d {
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::FastFeatureDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FastFeatureDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::FastFeatureDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3074,7 +3074,7 @@ pub mod features2d {
 		fn get_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FastFeatureDetector_getThreshold_const(self.as_raw_FastFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3083,7 +3083,7 @@ pub mod features2d {
 		fn get_nonmax_suppression(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FastFeatureDetector_getNonmaxSuppression_const(self.as_raw_FastFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3092,7 +3092,7 @@ pub mod features2d {
 		fn get_type(&self) -> Result<crate::features2d::FastFeatureDetector_DetectorType> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FastFeatureDetector_getType_const(self.as_raw_FastFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3101,7 +3101,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FastFeatureDetector_getDefaultName_const(self.as_raw_FastFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3117,7 +3117,7 @@ pub mod features2d {
 		fn set_threshold(&mut self, threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FastFeatureDetector_setThreshold_int(self.as_raw_mut_FastFeatureDetector(), threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3126,7 +3126,7 @@ pub mod features2d {
 		fn set_nonmax_suppression(&mut self, f: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FastFeatureDetector_setNonmaxSuppression_bool(self.as_raw_mut_FastFeatureDetector(), f, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3135,7 +3135,7 @@ pub mod features2d {
 		fn set_type(&mut self, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FastFeatureDetector_setType_DetectorType(self.as_raw_mut_FastFeatureDetector(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3218,7 +3218,7 @@ pub mod features2d {
 		fn descriptor_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_descriptorSize_const(self.as_raw_Feature2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3227,7 +3227,7 @@ pub mod features2d {
 		fn descriptor_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_descriptorType_const(self.as_raw_Feature2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3236,7 +3236,7 @@ pub mod features2d {
 		fn default_norm(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_defaultNorm_const(self.as_raw_Feature2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3246,7 +3246,7 @@ pub mod features2d {
 			extern_container_arg!(file_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_write_const_const_StringR(self.as_raw_Feature2D(), file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3255,7 +3255,7 @@ pub mod features2d {
 		fn write_to_storage(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_write_const_FileStorageR(self.as_raw_Feature2D(), unnamed.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3265,7 +3265,7 @@ pub mod features2d {
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_empty_const(self.as_raw_Feature2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3274,7 +3274,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_getDefaultName_const(self.as_raw_Feature2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3285,7 +3285,7 @@ pub mod features2d {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_write_const_FileStorageR_const_StringR(self.as_raw_Feature2D(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3295,7 +3295,7 @@ pub mod features2d {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_write_const_const_PtrLFileStorageGR_const_StringR(self.as_raw_Feature2D(), fs.as_raw_PtrOfFileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3323,7 +3323,7 @@ pub mod features2d {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLKeyPointGR_const__InputArrayR(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3345,7 +3345,7 @@ pub mod features2d {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLKeyPointGR(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3375,7 +3375,7 @@ pub mod features2d {
 			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR_const__InputArrayR(self.as_raw_mut_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), masks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3396,7 +3396,7 @@ pub mod features2d {
 			input_array_arg!(images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR(self.as_raw_mut_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3418,7 +3418,7 @@ pub mod features2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3451,7 +3451,7 @@ pub mod features2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_compute_const__InputArrayR_vectorLvectorLKeyPointGGR_const__OutputArrayR(self.as_raw_mut_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3467,7 +3467,7 @@ pub mod features2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_bool(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3484,7 +3484,7 @@ pub mod features2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3494,7 +3494,7 @@ pub mod features2d {
 			extern_container_arg!(file_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_read_const_StringR(self.as_raw_mut_Feature2D(), file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3503,7 +3503,7 @@ pub mod features2d {
 		fn read_from_node(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_read_const_FileNodeR(self.as_raw_mut_Feature2D(), unnamed.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3599,7 +3599,7 @@ pub mod features2d {
 		pub fn new(index_params: &core::Ptr<crate::flann::IndexParams>, search_params: &core::Ptr<crate::flann::SearchParams>) -> Result<crate::features2d::FlannBasedMatcher> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_FlannBasedMatcher_const_PtrLIndexParamsGR_const_PtrLSearchParamsGR(index_params.as_raw_PtrOfIndexParams(), search_params.as_raw_PtrOfSearchParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::features2d::FlannBasedMatcher::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3613,7 +3613,7 @@ pub mod features2d {
 		pub fn new_def() -> Result<crate::features2d::FlannBasedMatcher> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_FlannBasedMatcher(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::features2d::FlannBasedMatcher::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3623,7 +3623,7 @@ pub mod features2d {
 		pub fn create() -> Result<core::Ptr<crate::features2d::FlannBasedMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::FlannBasedMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3639,7 +3639,7 @@ pub mod features2d {
 		fn write(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_write_const_FileStorageR(self.as_raw_FlannBasedMatcher(), unnamed.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3648,7 +3648,7 @@ pub mod features2d {
 		fn is_mask_supported(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_isMaskSupported_const(self.as_raw_FlannBasedMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3660,7 +3660,7 @@ pub mod features2d {
 		fn clone(&self, empty_train_data: bool) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_clone_const_bool(self.as_raw_FlannBasedMatcher(), empty_train_data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3673,7 +3673,7 @@ pub mod features2d {
 		fn clone_def(&self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_clone_const(self.as_raw_FlannBasedMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3690,7 +3690,7 @@ pub mod features2d {
 			input_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_add_const__InputArrayR(self.as_raw_mut_FlannBasedMatcher(), descriptors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3699,7 +3699,7 @@ pub mod features2d {
 		fn clear(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_clear(self.as_raw_mut_FlannBasedMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3708,7 +3708,7 @@ pub mod features2d {
 		fn read(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_read_const_FileNodeR(self.as_raw_mut_FlannBasedMatcher(), unnamed.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3717,7 +3717,7 @@ pub mod features2d {
 		fn train(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_train(self.as_raw_mut_FlannBasedMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3794,7 +3794,7 @@ pub mod features2d {
 		pub fn create(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, use_harris_detector: bool, k: f64) -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_create_int_double_double_int_bool_double(max_corners, quality_level, min_distance, block_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3812,7 +3812,7 @@ pub mod features2d {
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3825,7 +3825,7 @@ pub mod features2d {
 		pub fn create_with_gradient(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, gradiant_size: i32, use_harris_detector: bool, k: f64) -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_create_int_double_double_int_int_bool_double(max_corners, quality_level, min_distance, block_size, gradiant_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3839,7 +3839,7 @@ pub mod features2d {
 		pub fn create_with_gradient_def(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, gradiant_size: i32) -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_create_int_double_double_int_int(max_corners, quality_level, min_distance, block_size, gradiant_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3855,7 +3855,7 @@ pub mod features2d {
 		fn get_max_features(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_getMaxFeatures_const(self.as_raw_GFTTDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3864,7 +3864,7 @@ pub mod features2d {
 		fn get_quality_level(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_getQualityLevel_const(self.as_raw_GFTTDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3873,7 +3873,7 @@ pub mod features2d {
 		fn get_min_distance(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_getMinDistance_const(self.as_raw_GFTTDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3882,7 +3882,7 @@ pub mod features2d {
 		fn get_block_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_getBlockSize_const(self.as_raw_GFTTDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3891,7 +3891,7 @@ pub mod features2d {
 		fn get_harris_detector(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_getHarrisDetector_const(self.as_raw_GFTTDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3900,7 +3900,7 @@ pub mod features2d {
 		fn get_k(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_getK_const(self.as_raw_GFTTDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3909,7 +3909,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_getDefaultName_const(self.as_raw_GFTTDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3925,7 +3925,7 @@ pub mod features2d {
 		fn set_max_features(&mut self, max_features: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_setMaxFeatures_int(self.as_raw_mut_GFTTDetector(), max_features, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3934,7 +3934,7 @@ pub mod features2d {
 		fn set_quality_level(&mut self, qlevel: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_setQualityLevel_double(self.as_raw_mut_GFTTDetector(), qlevel, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3943,7 +3943,7 @@ pub mod features2d {
 		fn set_min_distance(&mut self, min_distance: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_setMinDistance_double(self.as_raw_mut_GFTTDetector(), min_distance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3952,7 +3952,7 @@ pub mod features2d {
 		fn set_block_size(&mut self, block_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_setBlockSize_int(self.as_raw_mut_GFTTDetector(), block_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3961,7 +3961,7 @@ pub mod features2d {
 		fn set_gradient_size(&mut self, gradient_size_: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_setGradientSize_int(self.as_raw_mut_GFTTDetector(), gradient_size_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3970,7 +3970,7 @@ pub mod features2d {
 		fn get_gradient_size(&mut self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_getGradientSize(self.as_raw_mut_GFTTDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3979,7 +3979,7 @@ pub mod features2d {
 		fn set_harris_detector(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_setHarrisDetector_bool(self.as_raw_mut_GFTTDetector(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3988,7 +3988,7 @@ pub mod features2d {
 		fn set_k(&mut self, k: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_setK_double(self.as_raw_mut_GFTTDetector(), k, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4081,7 +4081,7 @@ pub mod features2d {
 		pub fn create(extended: bool, upright: bool, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: crate::features2d::KAZE_DiffusivityType) -> Result<core::Ptr<crate::features2d::KAZE>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_create_bool_bool_float_int_int_DiffusivityType(extended, upright, threshold, n_octaves, n_octave_layers, diffusivity, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::KAZE>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4110,7 +4110,7 @@ pub mod features2d {
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::KAZE>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::KAZE>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4126,7 +4126,7 @@ pub mod features2d {
 		fn get_extended(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_getExtended_const(self.as_raw_KAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4135,7 +4135,7 @@ pub mod features2d {
 		fn get_upright(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_getUpright_const(self.as_raw_KAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4144,7 +4144,7 @@ pub mod features2d {
 		fn get_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_getThreshold_const(self.as_raw_KAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4153,7 +4153,7 @@ pub mod features2d {
 		fn get_n_octaves(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_getNOctaves_const(self.as_raw_KAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4162,7 +4162,7 @@ pub mod features2d {
 		fn get_n_octave_layers(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_getNOctaveLayers_const(self.as_raw_KAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4171,7 +4171,7 @@ pub mod features2d {
 		fn get_diffusivity(&self) -> Result<crate::features2d::KAZE_DiffusivityType> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_getDiffusivity_const(self.as_raw_KAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4180,7 +4180,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_getDefaultName_const(self.as_raw_KAZE(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4196,7 +4196,7 @@ pub mod features2d {
 		fn set_extended(&mut self, extended: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_setExtended_bool(self.as_raw_mut_KAZE(), extended, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4205,7 +4205,7 @@ pub mod features2d {
 		fn set_upright(&mut self, upright: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_setUpright_bool(self.as_raw_mut_KAZE(), upright, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4214,7 +4214,7 @@ pub mod features2d {
 		fn set_threshold(&mut self, threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_setThreshold_double(self.as_raw_mut_KAZE(), threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4223,7 +4223,7 @@ pub mod features2d {
 		fn set_n_octaves(&mut self, octaves: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_setNOctaves_int(self.as_raw_mut_KAZE(), octaves, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4232,7 +4232,7 @@ pub mod features2d {
 		fn set_n_octave_layers(&mut self, octave_layers: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_setNOctaveLayers_int(self.as_raw_mut_KAZE(), octave_layers, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4241,7 +4241,7 @@ pub mod features2d {
 		fn set_diffusivity(&mut self, diff: crate::features2d::KAZE_DiffusivityType) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_setDiffusivity_DiffusivityType(self.as_raw_mut_KAZE(), diff, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4314,7 +4314,7 @@ pub mod features2d {
 		pub fn default() -> Result<crate::features2d::KeyPointsFilter> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_KeyPointsFilter(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::features2d::KeyPointsFilter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4324,7 +4324,7 @@ pub mod features2d {
 		pub fn run_by_image_border(keypoints: &mut core::Vector<core::KeyPoint>, image_size: core::Size, border_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_runByImageBorder_vectorLKeyPointGR_Size_int(keypoints.as_raw_mut_VectorOfKeyPoint(), &image_size, border_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4335,7 +4335,7 @@ pub mod features2d {
 		pub fn run_by_keypoint_size(keypoints: &mut core::Vector<core::KeyPoint>, min_size: f32, max_size: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_runByKeypointSize_vectorLKeyPointGR_float_float(keypoints.as_raw_mut_VectorOfKeyPoint(), min_size, max_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4347,7 +4347,7 @@ pub mod features2d {
 		pub fn run_by_keypoint_size_def(keypoints: &mut core::Vector<core::KeyPoint>, min_size: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_runByKeypointSize_vectorLKeyPointGR_float(keypoints.as_raw_mut_VectorOfKeyPoint(), min_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4356,7 +4356,7 @@ pub mod features2d {
 		pub fn run_by_pixels_mask(keypoints: &mut core::Vector<core::KeyPoint>, mask: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_runByPixelsMask_vectorLKeyPointGR_const_MatR(keypoints.as_raw_mut_VectorOfKeyPoint(), mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4365,7 +4365,7 @@ pub mod features2d {
 		pub fn run_by_pixels_mask2_vector_point(keypoints: &mut core::Vector<core::KeyPoint>, remove_from: &mut core::Vector<core::Vector<core::Point>>, mask: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_runByPixelsMask2VectorPoint_vectorLKeyPointGR_vectorLvectorLPointGGR_const_MatR(keypoints.as_raw_mut_VectorOfKeyPoint(), remove_from.as_raw_mut_VectorOfVectorOfPoint(), mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4374,7 +4374,7 @@ pub mod features2d {
 		pub fn remove_duplicated(keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_removeDuplicated_vectorLKeyPointGR(keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4383,7 +4383,7 @@ pub mod features2d {
 		pub fn remove_duplicated_sorted(keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_removeDuplicatedSorted_vectorLKeyPointGR(keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4392,7 +4392,7 @@ pub mod features2d {
 		pub fn retain_best(keypoints: &mut core::Vector<core::KeyPoint>, npoints: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_retainBest_vectorLKeyPointGR_int(keypoints.as_raw_mut_VectorOfKeyPoint(), npoints, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4486,7 +4486,7 @@ pub mod features2d {
 		pub fn create(delta: i32, min_area: i32, max_area: i32, max_variation: f64, min_diversity: f64, max_evolution: i32, area_threshold: f64, min_margin: f64, edge_blur_size: i32) -> Result<core::Ptr<crate::features2d::MSER>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_create_int_int_int_double_double_int_double_double_int(delta, min_area, max_area, max_variation, min_diversity, max_evolution, area_threshold, min_margin, edge_blur_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::MSER>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4520,7 +4520,7 @@ pub mod features2d {
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::MSER>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::MSER>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4536,7 +4536,7 @@ pub mod features2d {
 		fn get_delta(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_getDelta_const(self.as_raw_MSER(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4545,7 +4545,7 @@ pub mod features2d {
 		fn get_min_area(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_getMinArea_const(self.as_raw_MSER(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4554,7 +4554,7 @@ pub mod features2d {
 		fn get_max_area(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_getMaxArea_const(self.as_raw_MSER(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4563,7 +4563,7 @@ pub mod features2d {
 		fn get_max_variation(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_getMaxVariation_const(self.as_raw_MSER(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4572,7 +4572,7 @@ pub mod features2d {
 		fn get_min_diversity(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_getMinDiversity_const(self.as_raw_MSER(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4581,7 +4581,7 @@ pub mod features2d {
 		fn get_max_evolution(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_getMaxEvolution_const(self.as_raw_MSER(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4590,7 +4590,7 @@ pub mod features2d {
 		fn get_area_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_getAreaThreshold_const(self.as_raw_MSER(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4599,7 +4599,7 @@ pub mod features2d {
 		fn get_min_margin(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_getMinMargin_const(self.as_raw_MSER(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4608,7 +4608,7 @@ pub mod features2d {
 		fn get_edge_blur_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_getEdgeBlurSize_const(self.as_raw_MSER(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4617,7 +4617,7 @@ pub mod features2d {
 		fn get_pass2_only(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_getPass2Only_const(self.as_raw_MSER(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4626,7 +4626,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_getDefaultName_const(self.as_raw_MSER(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4649,7 +4649,7 @@ pub mod features2d {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_detectRegions_const__InputArrayR_vectorLvectorLPointGGR_vectorLRectGR(self.as_raw_mut_MSER(), image.as_raw__InputArray(), msers.as_raw_mut_VectorOfVectorOfPoint(), bboxes.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4658,7 +4658,7 @@ pub mod features2d {
 		fn set_delta(&mut self, delta: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_setDelta_int(self.as_raw_mut_MSER(), delta, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4667,7 +4667,7 @@ pub mod features2d {
 		fn set_min_area(&mut self, min_area: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_setMinArea_int(self.as_raw_mut_MSER(), min_area, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4676,7 +4676,7 @@ pub mod features2d {
 		fn set_max_area(&mut self, max_area: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_setMaxArea_int(self.as_raw_mut_MSER(), max_area, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4685,7 +4685,7 @@ pub mod features2d {
 		fn set_max_variation(&mut self, max_variation: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_setMaxVariation_double(self.as_raw_mut_MSER(), max_variation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4694,7 +4694,7 @@ pub mod features2d {
 		fn set_min_diversity(&mut self, min_diversity: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_setMinDiversity_double(self.as_raw_mut_MSER(), min_diversity, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4703,7 +4703,7 @@ pub mod features2d {
 		fn set_max_evolution(&mut self, max_evolution: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_setMaxEvolution_int(self.as_raw_mut_MSER(), max_evolution, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4712,7 +4712,7 @@ pub mod features2d {
 		fn set_area_threshold(&mut self, area_threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_setAreaThreshold_double(self.as_raw_mut_MSER(), area_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4721,7 +4721,7 @@ pub mod features2d {
 		fn set_min_margin(&mut self, min_margin: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_setMinMargin_double(self.as_raw_mut_MSER(), min_margin, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4730,7 +4730,7 @@ pub mod features2d {
 		fn set_edge_blur_size(&mut self, edge_blur_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_setEdgeBlurSize_int(self.as_raw_mut_MSER(), edge_blur_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4739,7 +4739,7 @@ pub mod features2d {
 		fn set_pass2_only(&mut self, f: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_setPass2Only_bool(self.as_raw_mut_MSER(), f, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4857,7 +4857,7 @@ pub mod features2d {
 		pub fn create(nfeatures: i32, scale_factor: f32, nlevels: i32, edge_threshold: i32, first_level: i32, wta_k: i32, score_type: crate::features2d::ORB_ScoreType, patch_size: i32, fast_threshold: i32) -> Result<core::Ptr<crate::features2d::ORB>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_create_int_float_int_int_int_int_ScoreType_int_int(nfeatures, scale_factor, nlevels, edge_threshold, first_level, wta_k, score_type, patch_size, fast_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::ORB>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4910,7 +4910,7 @@ pub mod features2d {
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::ORB>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::ORB>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4926,7 +4926,7 @@ pub mod features2d {
 		fn get_max_features(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_getMaxFeatures_const(self.as_raw_ORB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4935,7 +4935,7 @@ pub mod features2d {
 		fn get_scale_factor(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_getScaleFactor_const(self.as_raw_ORB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4944,7 +4944,7 @@ pub mod features2d {
 		fn get_n_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_getNLevels_const(self.as_raw_ORB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4953,7 +4953,7 @@ pub mod features2d {
 		fn get_edge_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_getEdgeThreshold_const(self.as_raw_ORB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4962,7 +4962,7 @@ pub mod features2d {
 		fn get_first_level(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_getFirstLevel_const(self.as_raw_ORB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4971,7 +4971,7 @@ pub mod features2d {
 		fn get_wta_k(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_getWTA_K_const(self.as_raw_ORB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4980,7 +4980,7 @@ pub mod features2d {
 		fn get_score_type(&self) -> Result<crate::features2d::ORB_ScoreType> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_getScoreType_const(self.as_raw_ORB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4989,7 +4989,7 @@ pub mod features2d {
 		fn get_patch_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_getPatchSize_const(self.as_raw_ORB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4998,7 +4998,7 @@ pub mod features2d {
 		fn get_fast_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_getFastThreshold_const(self.as_raw_ORB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5007,7 +5007,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_getDefaultName_const(self.as_raw_ORB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5023,7 +5023,7 @@ pub mod features2d {
 		fn set_max_features(&mut self, max_features: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_setMaxFeatures_int(self.as_raw_mut_ORB(), max_features, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5032,7 +5032,7 @@ pub mod features2d {
 		fn set_scale_factor(&mut self, scale_factor: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_setScaleFactor_double(self.as_raw_mut_ORB(), scale_factor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5041,7 +5041,7 @@ pub mod features2d {
 		fn set_n_levels(&mut self, nlevels: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_setNLevels_int(self.as_raw_mut_ORB(), nlevels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5050,7 +5050,7 @@ pub mod features2d {
 		fn set_edge_threshold(&mut self, edge_threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_setEdgeThreshold_int(self.as_raw_mut_ORB(), edge_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5059,7 +5059,7 @@ pub mod features2d {
 		fn set_first_level(&mut self, first_level: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_setFirstLevel_int(self.as_raw_mut_ORB(), first_level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5068,7 +5068,7 @@ pub mod features2d {
 		fn set_wta_k(&mut self, wta_k: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_setWTA_K_int(self.as_raw_mut_ORB(), wta_k, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5077,7 +5077,7 @@ pub mod features2d {
 		fn set_score_type(&mut self, score_type: crate::features2d::ORB_ScoreType) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_setScoreType_ScoreType(self.as_raw_mut_ORB(), score_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5086,7 +5086,7 @@ pub mod features2d {
 		fn set_patch_size(&mut self, patch_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_setPatchSize_int(self.as_raw_mut_ORB(), patch_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5095,7 +5095,7 @@ pub mod features2d {
 		fn set_fast_threshold(&mut self, fast_threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_setFastThreshold_int(self.as_raw_mut_ORB(), fast_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5199,7 +5199,7 @@ pub mod features2d {
 		pub fn create(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, enable_precise_upscale: bool) -> Result<core::Ptr<crate::features2d::SIFT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_create_int_int_double_double_double_bool(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, enable_precise_upscale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5243,7 +5243,7 @@ pub mod features2d {
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::SIFT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5284,7 +5284,7 @@ pub mod features2d {
 		pub fn create_with_descriptor_type(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32, enable_precise_upscale: bool) -> Result<core::Ptr<crate::features2d::SIFT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_create_int_int_double_double_double_int_bool(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, descriptor_type, enable_precise_upscale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5326,7 +5326,7 @@ pub mod features2d {
 		pub fn create_with_descriptor_type_def(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32) -> Result<core::Ptr<crate::features2d::SIFT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_create_int_int_double_double_double_int(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, descriptor_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5342,7 +5342,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_getDefaultName_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5352,7 +5352,7 @@ pub mod features2d {
 		fn get_n_features(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_getNFeatures_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5361,7 +5361,7 @@ pub mod features2d {
 		fn get_n_octave_layers(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_getNOctaveLayers_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5370,7 +5370,7 @@ pub mod features2d {
 		fn get_contrast_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_getContrastThreshold_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5379,7 +5379,7 @@ pub mod features2d {
 		fn get_edge_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_getEdgeThreshold_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5388,7 +5388,7 @@ pub mod features2d {
 		fn get_sigma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_getSigma_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5403,7 +5403,7 @@ pub mod features2d {
 		fn set_n_features(&mut self, max_features: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_setNFeatures_int(self.as_raw_mut_SIFT(), max_features, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5412,7 +5412,7 @@ pub mod features2d {
 		fn set_n_octave_layers(&mut self, n_octave_layers: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_setNOctaveLayers_int(self.as_raw_mut_SIFT(), n_octave_layers, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5421,7 +5421,7 @@ pub mod features2d {
 		fn set_contrast_threshold(&mut self, contrast_threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_setContrastThreshold_double(self.as_raw_mut_SIFT(), contrast_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5430,7 +5430,7 @@ pub mod features2d {
 		fn set_edge_threshold(&mut self, edge_threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_setEdgeThreshold_double(self.as_raw_mut_SIFT(), edge_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5439,7 +5439,7 @@ pub mod features2d {
 		fn set_sigma(&mut self, sigma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_setSigma_double(self.as_raw_mut_SIFT(), sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5540,7 +5540,7 @@ pub mod features2d {
 		pub fn create(parameters: crate::features2d::SimpleBlobDetector_Params) -> Result<core::Ptr<crate::features2d::SimpleBlobDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SimpleBlobDetector_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::SimpleBlobDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5553,7 +5553,7 @@ pub mod features2d {
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::SimpleBlobDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SimpleBlobDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::SimpleBlobDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5569,7 +5569,7 @@ pub mod features2d {
 		fn get_params(&self) -> Result<crate::features2d::SimpleBlobDetector_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SimpleBlobDetector_getParams_const(self.as_raw_SimpleBlobDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5578,7 +5578,7 @@ pub mod features2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SimpleBlobDetector_getDefaultName_const(self.as_raw_SimpleBlobDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5588,7 +5588,7 @@ pub mod features2d {
 		fn get_blob_contours(&self) -> Result<core::Vector<core::Vector<core::Point>>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SimpleBlobDetector_getBlobContours_const(self.as_raw_SimpleBlobDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Vector<core::Point>>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5604,7 +5604,7 @@ pub mod features2d {
 		fn set_params(&mut self, params: crate::features2d::SimpleBlobDetector_Params) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SimpleBlobDetector_setParams_const_ParamsR(self.as_raw_mut_SimpleBlobDetector(), &params, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5685,7 +5685,7 @@ pub mod features2d {
 		pub fn write(self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SimpleBlobDetector_Params_write_const_FileStorageR(&self, fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5694,7 +5694,7 @@ pub mod features2d {
 		pub fn default() -> Result<crate::features2d::SimpleBlobDetector_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SimpleBlobDetector_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5703,7 +5703,7 @@ pub mod features2d {
 		pub fn read(self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SimpleBlobDetector_Params_read_const_FileNodeR(&self, fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

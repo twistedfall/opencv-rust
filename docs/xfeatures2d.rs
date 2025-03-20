@@ -291,7 +291,7 @@ pub mod xfeatures2d {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_FASTForPointSet_const__InputArrayR_vectorLKeyPointGR_int(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -320,7 +320,7 @@ pub mod xfeatures2d {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_FASTForPointSet_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -351,7 +351,7 @@ pub mod xfeatures2d {
 	pub fn match_gms_def(size1: core::Size, size2: core::Size, keypoints1: &core::Vector<core::KeyPoint>, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, matches_gms: &mut core::Vector<core::DMatch>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_matchGMS_const_SizeR_const_SizeR_const_vectorLKeyPointGR_const_vectorLKeyPointGR_const_vectorLDMatchGR_vectorLDMatchGR(&size1, &size2, keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), matches_gms.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -381,7 +381,7 @@ pub mod xfeatures2d {
 	pub fn match_gms(size1: core::Size, size2: core::Size, keypoints1: &core::Vector<core::KeyPoint>, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, matches_gms: &mut core::Vector<core::DMatch>, with_rotation: bool, with_scale: bool, threshold_factor: f64) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_matchGMS_const_SizeR_const_SizeR_const_vectorLKeyPointGR_const_vectorLKeyPointGR_const_vectorLDMatchGR_vectorLDMatchGR_const_bool_const_bool_const_double(&size1, &size2, keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), matches_gms.as_raw_mut_VectorOfDMatch(), with_rotation, with_scale, threshold_factor, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -402,7 +402,7 @@ pub mod xfeatures2d {
 	pub fn match_logos(keypoints1: &core::Vector<core::KeyPoint>, keypoints2: &core::Vector<core::KeyPoint>, nn1: &core::Vector<i32>, nn2: &core::Vector<i32>, matches1to2: &mut core::Vector<core::DMatch>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_matchLOGOS_const_vectorLKeyPointGR_const_vectorLKeyPointGR_const_vectorLintGR_const_vectorLintGR_vectorLDMatchGR(keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), nn1.as_raw_VectorOfi32(), nn2.as_raw_VectorOfi32(), matches1to2.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -460,7 +460,7 @@ pub mod xfeatures2d {
 		pub fn default() -> Result<crate::xfeatures2d::SURF_CUDA> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_SURF_CUDA(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::xfeatures2d::SURF_CUDA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -478,7 +478,7 @@ pub mod xfeatures2d {
 		pub fn new(_hessian_threshold: f64, _n_octaves: i32, _n_octave_layers: i32, _extended: bool, _keypoints_ratio: f32, _upright: bool) -> Result<crate::xfeatures2d::SURF_CUDA> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_SURF_CUDA_double_int_int_bool_float_bool(_hessian_threshold, _n_octaves, _n_octave_layers, _extended, _keypoints_ratio, _upright, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::xfeatures2d::SURF_CUDA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -497,7 +497,7 @@ pub mod xfeatures2d {
 		pub fn new_def(_hessian_threshold: f64) -> Result<crate::xfeatures2d::SURF_CUDA> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_SURF_CUDA_double(_hessian_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::xfeatures2d::SURF_CUDA::opencv_from_extern(ret) };
 			Ok(ret)
@@ -523,7 +523,7 @@ pub mod xfeatures2d {
 		pub fn create(_hessian_threshold: f64, _n_octaves: i32, _n_octave_layers: i32, _extended: bool, _keypoints_ratio: f32, _upright: bool) -> Result<core::Ptr<crate::xfeatures2d::SURF_CUDA>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_create_double_int_int_bool_float_bool(_hessian_threshold, _n_octaves, _n_octave_layers, _extended, _keypoints_ratio, _upright, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::SURF_CUDA>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -550,7 +550,7 @@ pub mod xfeatures2d {
 		pub fn create_def(_hessian_threshold: f64) -> Result<core::Ptr<crate::xfeatures2d::SURF_CUDA>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_create_double(_hessian_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::SURF_CUDA>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -646,7 +646,7 @@ pub mod xfeatures2d {
 		fn descriptor_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_descriptorSize_const(self.as_raw_SURF_CUDA(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -656,7 +656,7 @@ pub mod xfeatures2d {
 		fn default_norm(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_defaultNorm_const(self.as_raw_SURF_CUDA(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -745,7 +745,7 @@ pub mod xfeatures2d {
 		fn upload_keypoints(&mut self, keypoints: &core::Vector<core::KeyPoint>, keypoints_gpu: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_uploadKeypoints_const_vectorLKeyPointGR_GpuMatR(self.as_raw_mut_SURF_CUDA(), keypoints.as_raw_VectorOfKeyPoint(), keypoints_gpu.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -755,7 +755,7 @@ pub mod xfeatures2d {
 		fn download_keypoints(&mut self, keypoints_gpu: &impl core::GpuMatTraitConst, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_downloadKeypoints_const_GpuMatR_vectorLKeyPointGR(self.as_raw_mut_SURF_CUDA(), keypoints_gpu.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -765,7 +765,7 @@ pub mod xfeatures2d {
 		fn download_descriptors(&mut self, descriptors_gpu: &impl core::GpuMatTraitConst, descriptors: &mut core::Vector<f32>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_downloadDescriptors_const_GpuMatR_vectorLfloatGR(self.as_raw_mut_SURF_CUDA(), descriptors_gpu.as_raw_GpuMat(), descriptors.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -784,7 +784,7 @@ pub mod xfeatures2d {
 		fn apply(&mut self, img: &impl core::GpuMatTraitConst, mask: &impl core::GpuMatTraitConst, keypoints: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_GpuMatR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -798,7 +798,7 @@ pub mod xfeatures2d {
 		fn apply_1(&mut self, img: &impl core::GpuMatTraitConst, mask: &impl core::GpuMatTraitConst, keypoints: &mut impl core::GpuMatTrait, descriptors: &mut impl core::GpuMatTrait, use_provided_keypoints: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR_bool(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), descriptors.as_raw_mut_GpuMat(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -813,7 +813,7 @@ pub mod xfeatures2d {
 		fn apply_def(&mut self, img: &impl core::GpuMatTraitConst, mask: &impl core::GpuMatTraitConst, keypoints: &mut impl core::GpuMatTrait, descriptors: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), descriptors.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -828,7 +828,7 @@ pub mod xfeatures2d {
 		fn detect(&mut self, img: &impl core::GpuMatTraitConst, mask: &impl core::GpuMatTraitConst, keypoints: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_detect_const_GpuMatR_const_GpuMatR_GpuMatR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -837,7 +837,7 @@ pub mod xfeatures2d {
 		fn apply_2(&mut self, img: &impl core::GpuMatTraitConst, mask: &impl core::GpuMatTraitConst, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_vectorLKeyPointGR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -848,7 +848,7 @@ pub mod xfeatures2d {
 		fn apply_3(&mut self, img: &impl core::GpuMatTraitConst, mask: &impl core::GpuMatTraitConst, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl core::GpuMatTrait, use_provided_keypoints: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_vectorLKeyPointGR_GpuMatR_bool(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw_mut_GpuMat(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -860,7 +860,7 @@ pub mod xfeatures2d {
 		fn apply_def_1(&mut self, img: &impl core::GpuMatTraitConst, mask: &impl core::GpuMatTraitConst, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_vectorLKeyPointGR_GpuMatR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -880,7 +880,7 @@ pub mod xfeatures2d {
 		fn detect_with_descriptors(&mut self, img: &impl core::GpuMatTraitConst, mask: &impl core::GpuMatTraitConst, keypoints: &mut impl core::GpuMatTrait, descriptors: &mut impl core::GpuMatTrait, use_provided_keypoints: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_detectWithDescriptors_const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR_bool(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), descriptors.as_raw_mut_GpuMat(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -901,7 +901,7 @@ pub mod xfeatures2d {
 		fn detect_with_descriptors_def(&mut self, img: &impl core::GpuMatTraitConst, mask: &impl core::GpuMatTraitConst, keypoints: &mut impl core::GpuMatTrait, descriptors: &mut impl core::GpuMatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_detectWithDescriptors_const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), descriptors.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -912,7 +912,7 @@ pub mod xfeatures2d {
 		fn apply_4(&mut self, img: &impl core::GpuMatTraitConst, mask: &impl core::GpuMatTraitConst, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut core::Vector<f32>, use_provided_keypoints: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_vectorLKeyPointGR_vectorLfloatGR_bool(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw_mut_VectorOff32(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -924,7 +924,7 @@ pub mod xfeatures2d {
 		fn apply_def_2(&mut self, img: &impl core::GpuMatTraitConst, mask: &impl core::GpuMatTraitConst, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut core::Vector<f32>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_vectorLKeyPointGR_vectorLfloatGR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -933,7 +933,7 @@ pub mod xfeatures2d {
 		fn release_memory(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SURF_CUDA_releaseMemory(self.as_raw_mut_SURF_CUDA(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1000,7 +1000,7 @@ pub mod xfeatures2d {
 		pub fn create(mut keypoint_detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor_extractor: core::Ptr<crate::features2d::Feature2D>) -> Result<core::Ptr<crate::xfeatures2d::AffineFeature2D>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_AffineFeature2D_create_PtrLFeature2DG_PtrLFeature2DG(keypoint_detector.as_raw_mut_PtrOfFeature2D(), descriptor_extractor.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::AffineFeature2D>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1012,7 +1012,7 @@ pub mod xfeatures2d {
 		pub fn create_1(mut keypoint_detector: core::Ptr<crate::features2d::Feature2D>) -> Result<core::Ptr<crate::xfeatures2d::AffineFeature2D>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_AffineFeature2D_create_PtrLFeature2DG(keypoint_detector.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::AffineFeature2D>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1041,7 +1041,7 @@ pub mod xfeatures2d {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_AffineFeature2D_detect_const__InputArrayR_vectorLElliptic_KeyPointGR_const__InputArrayR(self.as_raw_mut_AffineFeature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfElliptic_KeyPoint(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1057,7 +1057,7 @@ pub mod xfeatures2d {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_AffineFeature2D_detect_const__InputArrayR_vectorLElliptic_KeyPointGR(self.as_raw_mut_AffineFeature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfElliptic_KeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1074,7 +1074,7 @@ pub mod xfeatures2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_AffineFeature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vectorLElliptic_KeyPointGR_const__OutputArrayR_bool(self.as_raw_mut_AffineFeature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfElliptic_KeyPoint(), descriptors.as_raw__OutputArray(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1092,7 +1092,7 @@ pub mod xfeatures2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_AffineFeature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vectorLElliptic_KeyPointGR_const__OutputArrayR(self.as_raw_mut_AffineFeature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfElliptic_KeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1196,7 +1196,7 @@ pub mod xfeatures2d {
 		pub fn create(scale_factor: f32, n_bits: i32) -> Result<core::Ptr<crate::xfeatures2d::BEBLID>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BEBLID_create_float_int(scale_factor, n_bits, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::BEBLID>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1219,7 +1219,7 @@ pub mod xfeatures2d {
 		pub fn create_def(scale_factor: f32) -> Result<core::Ptr<crate::xfeatures2d::BEBLID>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BEBLID_create_float(scale_factor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::BEBLID>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1235,7 +1235,7 @@ pub mod xfeatures2d {
 		fn get_scale_factor(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BEBLID_getScaleFactor_const(self.as_raw_BEBLID(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1244,7 +1244,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BEBLID_getDefaultName_const(self.as_raw_BEBLID(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1260,7 +1260,7 @@ pub mod xfeatures2d {
 		fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BEBLID_setScaleFactor_float(self.as_raw_mut_BEBLID(), scale_factor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1359,7 +1359,7 @@ pub mod xfeatures2d {
 		pub fn create(desc: i32, use_scale_orientation: bool, scale_factor: f32) -> Result<core::Ptr<crate::xfeatures2d::BoostDesc>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BoostDesc_create_int_bool_float(desc, use_scale_orientation, scale_factor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::BoostDesc>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1374,7 +1374,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::BoostDesc>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BoostDesc_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::BoostDesc>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1390,7 +1390,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BoostDesc_getDefaultName_const(self.as_raw_BoostDesc(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1400,7 +1400,7 @@ pub mod xfeatures2d {
 		fn get_use_scale_orientation(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BoostDesc_getUseScaleOrientation_const(self.as_raw_BoostDesc(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1409,7 +1409,7 @@ pub mod xfeatures2d {
 		fn get_scale_factor(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BoostDesc_getScaleFactor_const(self.as_raw_BoostDesc(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1424,7 +1424,7 @@ pub mod xfeatures2d {
 		fn set_use_scale_orientation(&mut self, use_scale_orientation: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BoostDesc_setUseScaleOrientation_const_bool(self.as_raw_mut_BoostDesc(), use_scale_orientation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1433,7 +1433,7 @@ pub mod xfeatures2d {
 		fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BoostDesc_setScaleFactor_const_float(self.as_raw_mut_BoostDesc(), scale_factor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1510,7 +1510,7 @@ pub mod xfeatures2d {
 		pub fn create(bytes: i32, use_orientation: bool) -> Result<core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_create_int_bool(bytes, use_orientation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::BriefDescriptorExtractor>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1524,7 +1524,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::BriefDescriptorExtractor>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1540,7 +1540,7 @@ pub mod xfeatures2d {
 		fn get_descriptor_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_getDescriptorSize_const(self.as_raw_BriefDescriptorExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1549,7 +1549,7 @@ pub mod xfeatures2d {
 		fn get_use_orientation(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_getUseOrientation_const(self.as_raw_BriefDescriptorExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1558,7 +1558,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_getDefaultName_const(self.as_raw_BriefDescriptorExtractor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1574,7 +1574,7 @@ pub mod xfeatures2d {
 		fn set_descriptor_size(&mut self, bytes: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_setDescriptorSize_int(self.as_raw_mut_BriefDescriptorExtractor(), bytes, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1583,7 +1583,7 @@ pub mod xfeatures2d {
 		fn set_use_orientation(&mut self, use_orientation: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_setUseOrientation_bool(self.as_raw_mut_BriefDescriptorExtractor(), use_orientation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1677,7 +1677,7 @@ pub mod xfeatures2d {
 			input_array_arg!(h);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_create_float_int_int_int_NormalizationType_const__InputArrayR_bool_bool(radius, q_radius, q_theta, q_hist, norm, h.as_raw__InputArray(), interpolation, use_orientation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::DAISY>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1697,7 +1697,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::DAISY>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::DAISY>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1713,7 +1713,7 @@ pub mod xfeatures2d {
 		fn get_radius(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_getRadius_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1722,7 +1722,7 @@ pub mod xfeatures2d {
 		fn get_q_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_getQRadius_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1731,7 +1731,7 @@ pub mod xfeatures2d {
 		fn get_q_theta(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_getQTheta_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1740,7 +1740,7 @@ pub mod xfeatures2d {
 		fn get_q_hist(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_getQHist_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1749,7 +1749,7 @@ pub mod xfeatures2d {
 		fn get_norm(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_getNorm_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1758,7 +1758,7 @@ pub mod xfeatures2d {
 		fn get_h(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_getH_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1768,7 +1768,7 @@ pub mod xfeatures2d {
 		fn get_interpolation(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_getInterpolation_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1777,7 +1777,7 @@ pub mod xfeatures2d {
 		fn get_use_orientation(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_getUseOrientation_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1786,7 +1786,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_getDefaultName_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1801,7 +1801,7 @@ pub mod xfeatures2d {
 		fn get_descriptor(&self, y: f64, x: f64, orientation: i32, descriptor: &mut f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_GetDescriptor_const_double_double_int_floatX(self.as_raw_DAISY(), y, x, orientation, descriptor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1816,7 +1816,7 @@ pub mod xfeatures2d {
 		fn get_descriptor_1(&self, y: f64, x: f64, orientation: i32, descriptor: &mut f32, h: &mut f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_GetDescriptor_const_double_double_int_floatX_doubleX(self.as_raw_DAISY(), y, x, orientation, descriptor, h, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1830,7 +1830,7 @@ pub mod xfeatures2d {
 		fn get_unnormalized_descriptor(&self, y: f64, x: f64, orientation: i32, descriptor: &mut f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_GetUnnormalizedDescriptor_const_double_double_int_floatX(self.as_raw_DAISY(), y, x, orientation, descriptor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1845,7 +1845,7 @@ pub mod xfeatures2d {
 		fn get_unnormalized_descriptor_1(&self, y: f64, x: f64, orientation: i32, descriptor: &mut f32, h: &mut f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_GetUnnormalizedDescriptor_const_double_double_int_floatX_doubleX(self.as_raw_DAISY(), y, x, orientation, descriptor, h, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1860,7 +1860,7 @@ pub mod xfeatures2d {
 		fn set_radius(&mut self, radius: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_setRadius_float(self.as_raw_mut_DAISY(), radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1869,7 +1869,7 @@ pub mod xfeatures2d {
 		fn set_q_radius(&mut self, q_radius: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_setQRadius_int(self.as_raw_mut_DAISY(), q_radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1878,7 +1878,7 @@ pub mod xfeatures2d {
 		fn set_q_theta(&mut self, q_theta: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_setQTheta_int(self.as_raw_mut_DAISY(), q_theta, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1887,7 +1887,7 @@ pub mod xfeatures2d {
 		fn set_q_hist(&mut self, q_hist: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_setQHist_int(self.as_raw_mut_DAISY(), q_hist, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1896,7 +1896,7 @@ pub mod xfeatures2d {
 		fn set_norm(&mut self, norm: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_setNorm_int(self.as_raw_mut_DAISY(), norm, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1906,7 +1906,7 @@ pub mod xfeatures2d {
 			input_array_arg!(h);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_setH_const__InputArrayR(self.as_raw_mut_DAISY(), h.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1915,7 +1915,7 @@ pub mod xfeatures2d {
 		fn set_interpolation(&mut self, interpolation: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_setInterpolation_bool(self.as_raw_mut_DAISY(), interpolation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1924,7 +1924,7 @@ pub mod xfeatures2d {
 		fn set_use_orientation(&mut self, use_orientation: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_setUseOrientation_bool(self.as_raw_mut_DAISY(), use_orientation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1940,7 +1940,7 @@ pub mod xfeatures2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1951,7 +1951,7 @@ pub mod xfeatures2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_vectorLvectorLKeyPointGGR_const__OutputArrayR(self.as_raw_mut_DAISY(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1967,7 +1967,7 @@ pub mod xfeatures2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_Rect_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), &roi, descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1982,7 +1982,7 @@ pub mod xfeatures2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2052,7 +2052,7 @@ pub mod xfeatures2d {
 		pub fn default() -> Result<crate::xfeatures2d::Elliptic_KeyPoint> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::xfeatures2d::Elliptic_KeyPoint::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2062,7 +2062,7 @@ pub mod xfeatures2d {
 		pub fn new(pt: core::Point2f, angle: f32, axes: core::Size, size: f32, si: f32) -> Result<crate::xfeatures2d::Elliptic_KeyPoint> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint_Point2f_float_Size_float_float(&pt, angle, &axes, size, si, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::xfeatures2d::Elliptic_KeyPoint::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2079,7 +2079,7 @@ pub mod xfeatures2d {
 		fn axes(&self) -> core::Size_<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propAxes_const(self.as_raw_Elliptic_KeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2095,7 +2095,7 @@ pub mod xfeatures2d {
 		fn transf(&self) -> core::Matx23f {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propTransf_const(self.as_raw_Elliptic_KeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2215,7 +2215,7 @@ pub mod xfeatures2d {
 		pub fn create(orientation_normalized: bool, scale_normalized: bool, pattern_scale: f32, n_octaves: i32, selected_pairs: &core::Vector<i32>) -> Result<core::Ptr<crate::xfeatures2d::FREAK>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_FREAK_create_bool_bool_float_int_const_vectorLintGR(orientation_normalized, scale_normalized, pattern_scale, n_octaves, selected_pairs.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::FREAK>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2239,7 +2239,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::FREAK>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_FREAK_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::FREAK>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2255,7 +2255,7 @@ pub mod xfeatures2d {
 		fn get_orientation_normalized(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_FREAK_getOrientationNormalized_const(self.as_raw_FREAK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2264,7 +2264,7 @@ pub mod xfeatures2d {
 		fn get_scale_normalized(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_FREAK_getScaleNormalized_const(self.as_raw_FREAK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2273,7 +2273,7 @@ pub mod xfeatures2d {
 		fn get_pattern_scale(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_FREAK_getPatternScale_const(self.as_raw_FREAK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2282,7 +2282,7 @@ pub mod xfeatures2d {
 		fn get_n_octaves(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_FREAK_getNOctaves_const(self.as_raw_FREAK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2291,7 +2291,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_FREAK_getDefaultName_const(self.as_raw_FREAK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2307,7 +2307,7 @@ pub mod xfeatures2d {
 		fn set_orientation_normalized(&mut self, orientation_normalized: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_FREAK_setOrientationNormalized_bool(self.as_raw_mut_FREAK(), orientation_normalized, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2316,7 +2316,7 @@ pub mod xfeatures2d {
 		fn set_scale_normalized(&mut self, scale_normalized: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_FREAK_setScaleNormalized_bool(self.as_raw_mut_FREAK(), scale_normalized, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2325,7 +2325,7 @@ pub mod xfeatures2d {
 		fn set_pattern_scale(&mut self, pattern_scale: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_FREAK_setPatternScale_double(self.as_raw_mut_FREAK(), pattern_scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2334,7 +2334,7 @@ pub mod xfeatures2d {
 		fn set_n_octaves(&mut self, n_octaves: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_FREAK_setNOctaves_int(self.as_raw_mut_FREAK(), n_octaves, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2419,7 +2419,7 @@ pub mod xfeatures2d {
 		pub fn create(num_octaves: i32, corn_thresh: f32, dog_thresh: f32, max_corners: i32, num_layers: i32) -> Result<core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_create_int_float_float_int_int(num_octaves, corn_thresh, dog_thresh, max_corners, num_layers, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::HarrisLaplaceFeatureDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2445,7 +2445,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::HarrisLaplaceFeatureDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2461,7 +2461,7 @@ pub mod xfeatures2d {
 		fn get_num_octaves(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getNumOctaves_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2470,7 +2470,7 @@ pub mod xfeatures2d {
 		fn get_corn_thresh(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getCornThresh_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2479,7 +2479,7 @@ pub mod xfeatures2d {
 		fn get_dog_thresh(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getDOGThresh_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2488,7 +2488,7 @@ pub mod xfeatures2d {
 		fn get_max_corners(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getMaxCorners_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2497,7 +2497,7 @@ pub mod xfeatures2d {
 		fn get_num_layers(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getNumLayers_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2506,7 +2506,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getDefaultName_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2522,7 +2522,7 @@ pub mod xfeatures2d {
 		fn set_num_octaves(&mut self, num_octaves_: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_setNumOctaves_int(self.as_raw_mut_HarrisLaplaceFeatureDetector(), num_octaves_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2531,7 +2531,7 @@ pub mod xfeatures2d {
 		fn set_corn_thresh(&mut self, corn_thresh_: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_setCornThresh_float(self.as_raw_mut_HarrisLaplaceFeatureDetector(), corn_thresh_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2540,7 +2540,7 @@ pub mod xfeatures2d {
 		fn set_dog_thresh(&mut self, dog_thresh_: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_setDOGThresh_float(self.as_raw_mut_HarrisLaplaceFeatureDetector(), dog_thresh_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2549,7 +2549,7 @@ pub mod xfeatures2d {
 		fn set_max_corners(&mut self, max_corners_: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_setMaxCorners_int(self.as_raw_mut_HarrisLaplaceFeatureDetector(), max_corners_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2558,7 +2558,7 @@ pub mod xfeatures2d {
 		fn set_num_layers(&mut self, num_layers_: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_setNumLayers_int(self.as_raw_mut_HarrisLaplaceFeatureDetector(), num_layers_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2648,7 +2648,7 @@ pub mod xfeatures2d {
 		pub fn create(bytes: i32, rotation_invariance: bool, half_ssd_size: i32, sigma: f64) -> Result<core::Ptr<crate::xfeatures2d::LATCH>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LATCH_create_int_bool_int_double(bytes, rotation_invariance, half_ssd_size, sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::LATCH>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2664,7 +2664,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::LATCH>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LATCH_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::LATCH>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2680,7 +2680,7 @@ pub mod xfeatures2d {
 		fn get_bytes(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LATCH_getBytes_const(self.as_raw_LATCH(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2689,7 +2689,7 @@ pub mod xfeatures2d {
 		fn get_rotation_invariance(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LATCH_getRotationInvariance_const(self.as_raw_LATCH(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2698,7 +2698,7 @@ pub mod xfeatures2d {
 		fn get_half_ss_dsize(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LATCH_getHalfSSDsize_const(self.as_raw_LATCH(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2707,7 +2707,7 @@ pub mod xfeatures2d {
 		fn get_sigma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LATCH_getSigma_const(self.as_raw_LATCH(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2716,7 +2716,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LATCH_getDefaultName_const(self.as_raw_LATCH(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2732,7 +2732,7 @@ pub mod xfeatures2d {
 		fn set_bytes(&mut self, bytes: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LATCH_setBytes_int(self.as_raw_mut_LATCH(), bytes, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2741,7 +2741,7 @@ pub mod xfeatures2d {
 		fn set_rotation_invariance(&mut self, rotation_invariance: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LATCH_setRotationInvariance_bool(self.as_raw_mut_LATCH(), rotation_invariance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2750,7 +2750,7 @@ pub mod xfeatures2d {
 		fn set_half_ss_dsize(&mut self, half_ssd_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LATCH_setHalfSSDsize_int(self.as_raw_mut_LATCH(), half_ssd_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2759,7 +2759,7 @@ pub mod xfeatures2d {
 		fn set_sigma(&mut self, sigma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LATCH_setSigma_double(self.as_raw_mut_LATCH(), sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2842,7 +2842,7 @@ pub mod xfeatures2d {
 		pub fn create(lucid_kernel: i32, blur_kernel: i32) -> Result<core::Ptr<crate::xfeatures2d::LUCID>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LUCID_create_const_int_const_int(lucid_kernel, blur_kernel, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::LUCID>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2860,7 +2860,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::LUCID>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LUCID_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::LUCID>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2876,7 +2876,7 @@ pub mod xfeatures2d {
 		fn get_lucid_kernel(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LUCID_getLucidKernel_const(self.as_raw_LUCID(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2885,7 +2885,7 @@ pub mod xfeatures2d {
 		fn get_blur_kernel(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LUCID_getBlurKernel_const(self.as_raw_LUCID(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2894,7 +2894,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LUCID_getDefaultName_const(self.as_raw_LUCID(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2910,7 +2910,7 @@ pub mod xfeatures2d {
 		fn set_lucid_kernel(&mut self, lucid_kernel: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LUCID_setLucidKernel_int(self.as_raw_mut_LUCID(), lucid_kernel, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2919,7 +2919,7 @@ pub mod xfeatures2d {
 		fn set_blur_kernel(&mut self, blur_kernel: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_LUCID_setBlurKernel_int(self.as_raw_mut_LUCID(), blur_kernel, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3008,7 +3008,7 @@ pub mod xfeatures2d {
 		pub fn create(m_patch_radius: i32, m_search_area_radius: i32, m_nms_radius: i32, m_nms_scale_radius: i32, m_th_saliency: f32, m_k_nn: i32, m_scale_factor: f32, m_n_scales: i32, m_compute_orientation: bool) -> Result<core::Ptr<crate::xfeatures2d::MSDDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_create_int_int_int_int_float_int_float_int_bool(m_patch_radius, m_search_area_radius, m_nms_radius, m_nms_scale_radius, m_th_saliency, m_k_nn, m_scale_factor, m_n_scales, m_compute_orientation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::MSDDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3029,7 +3029,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::MSDDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::MSDDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3045,7 +3045,7 @@ pub mod xfeatures2d {
 		fn get_patch_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_getPatchRadius_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3054,7 +3054,7 @@ pub mod xfeatures2d {
 		fn get_search_area_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_getSearchAreaRadius_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3063,7 +3063,7 @@ pub mod xfeatures2d {
 		fn get_nms_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_getNmsRadius_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3072,7 +3072,7 @@ pub mod xfeatures2d {
 		fn get_nms_scale_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_getNmsScaleRadius_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3081,7 +3081,7 @@ pub mod xfeatures2d {
 		fn get_th_saliency(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_getThSaliency_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3090,7 +3090,7 @@ pub mod xfeatures2d {
 		fn get_knn(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_getKNN_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3099,7 +3099,7 @@ pub mod xfeatures2d {
 		fn get_scale_factor(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_getScaleFactor_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3108,7 +3108,7 @@ pub mod xfeatures2d {
 		fn get_n_scales(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_getNScales_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3117,7 +3117,7 @@ pub mod xfeatures2d {
 		fn get_compute_orientation(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_getComputeOrientation_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3126,7 +3126,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_getDefaultName_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3142,7 +3142,7 @@ pub mod xfeatures2d {
 		fn set_patch_radius(&mut self, patch_radius: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_setPatchRadius_int(self.as_raw_mut_MSDDetector(), patch_radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3151,7 +3151,7 @@ pub mod xfeatures2d {
 		fn set_search_area_radius(&mut self, use_orientation: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_setSearchAreaRadius_int(self.as_raw_mut_MSDDetector(), use_orientation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3160,7 +3160,7 @@ pub mod xfeatures2d {
 		fn set_nms_radius(&mut self, nms_radius: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_setNmsRadius_int(self.as_raw_mut_MSDDetector(), nms_radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3169,7 +3169,7 @@ pub mod xfeatures2d {
 		fn set_nms_scale_radius(&mut self, nms_scale_radius: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_setNmsScaleRadius_int(self.as_raw_mut_MSDDetector(), nms_scale_radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3178,7 +3178,7 @@ pub mod xfeatures2d {
 		fn set_th_saliency(&mut self, th_saliency: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_setThSaliency_float(self.as_raw_mut_MSDDetector(), th_saliency, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3187,7 +3187,7 @@ pub mod xfeatures2d {
 		fn set_knn(&mut self, k_nn: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_setKNN_int(self.as_raw_mut_MSDDetector(), k_nn, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3196,7 +3196,7 @@ pub mod xfeatures2d {
 		fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_setScaleFactor_float(self.as_raw_mut_MSDDetector(), scale_factor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3205,7 +3205,7 @@ pub mod xfeatures2d {
 		fn set_n_scales(&mut self, use_orientation: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_setNScales_int(self.as_raw_mut_MSDDetector(), use_orientation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3214,7 +3214,7 @@ pub mod xfeatures2d {
 		fn set_compute_orientation(&mut self, compute_orientation: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_MSDDetector_setComputeOrientation_bool(self.as_raw_mut_MSDDetector(), compute_orientation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3310,7 +3310,7 @@ pub mod xfeatures2d {
 		pub fn create(init_sample_count: i32, init_seed_count: i32, point_distribution: i32) -> Result<core::Ptr<crate::xfeatures2d::PCTSignatures>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_int_const_int_const_int(init_sample_count, init_seed_count, point_distribution, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::PCTSignatures>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3336,7 +3336,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::PCTSignatures>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::PCTSignatures>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3355,7 +3355,7 @@ pub mod xfeatures2d {
 		pub fn create_1(init_sampling_points: &core::Vector<core::Point2f>, init_seed_count: i32) -> Result<core::Ptr<crate::xfeatures2d::PCTSignatures>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vectorLPoint2fGR_const_int(init_sampling_points.as_raw_VectorOfPoint2f(), init_seed_count, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::PCTSignatures>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3373,7 +3373,7 @@ pub mod xfeatures2d {
 		pub fn create_2(init_sampling_points: &core::Vector<core::Point2f>, init_cluster_seed_indexes: &core::Vector<i32>) -> Result<core::Ptr<crate::xfeatures2d::PCTSignatures>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vectorLPoint2fGR_const_vectorLintGR(init_sampling_points.as_raw_VectorOfPoint2f(), init_cluster_seed_indexes.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::PCTSignatures>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3401,7 +3401,7 @@ pub mod xfeatures2d {
 			output_array_arg!(result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_drawSignature_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_int(source.as_raw__InputArray(), signature.as_raw__InputArray(), result.as_raw__OutputArray(), radius_to_shorter_side_ratio, border_thickness, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3429,7 +3429,7 @@ pub mod xfeatures2d {
 			output_array_arg!(result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_drawSignature_const__InputArrayR_const__InputArrayR_const__OutputArrayR(source.as_raw__InputArray(), signature.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3446,7 +3446,7 @@ pub mod xfeatures2d {
 		pub fn generate_init_points(init_points: &mut core::Vector<core::Point2f>, count: i32, point_distribution: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_generateInitPoints_vectorLPoint2fGR_const_int_int(init_points.as_raw_mut_VectorOfPoint2f(), count, point_distribution, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3467,7 +3467,7 @@ pub mod xfeatures2d {
 			output_array_arg!(signature);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_computeSignature_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCTSignatures(), image.as_raw__InputArray(), signature.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3480,7 +3480,7 @@ pub mod xfeatures2d {
 		fn compute_signatures(&self, images: &core::Vector<core::Mat>, signatures: &mut core::Vector<core::Mat>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_computeSignatures_const_const_vectorLMatGR_vectorLMatGR(self.as_raw_PCTSignatures(), images.as_raw_VectorOfMat(), signatures.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3490,7 +3490,7 @@ pub mod xfeatures2d {
 		fn get_sample_count(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getSampleCount_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3502,7 +3502,7 @@ pub mod xfeatures2d {
 		fn get_grayscale_bits(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getGrayscaleBits_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3514,7 +3514,7 @@ pub mod xfeatures2d {
 		fn get_window_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getWindowRadius_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3525,7 +3525,7 @@ pub mod xfeatures2d {
 		fn get_weight_x(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightX_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3536,7 +3536,7 @@ pub mod xfeatures2d {
 		fn get_weight_y(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightY_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3547,7 +3547,7 @@ pub mod xfeatures2d {
 		fn get_weight_l(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightL_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3558,7 +3558,7 @@ pub mod xfeatures2d {
 		fn get_weight_a(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightA_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3569,7 +3569,7 @@ pub mod xfeatures2d {
 		fn get_weight_b(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightB_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3580,7 +3580,7 @@ pub mod xfeatures2d {
 		fn get_weight_contrast(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightContrast_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3591,7 +3591,7 @@ pub mod xfeatures2d {
 		fn get_weight_entropy(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getWeightEntropy_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3602,7 +3602,7 @@ pub mod xfeatures2d {
 		fn get_sampling_points(&self) -> Result<core::Vector<core::Point2f>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getSamplingPoints_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3615,7 +3615,7 @@ pub mod xfeatures2d {
 		fn get_init_seed_indexes(&self) -> Result<core::Vector<i32>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getInitSeedIndexes_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3626,7 +3626,7 @@ pub mod xfeatures2d {
 		fn get_init_seed_count(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getInitSeedCount_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3638,7 +3638,7 @@ pub mod xfeatures2d {
 		fn get_iteration_count(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getIterationCount_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3649,7 +3649,7 @@ pub mod xfeatures2d {
 		fn get_max_clusters_count(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getMaxClustersCount_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3661,7 +3661,7 @@ pub mod xfeatures2d {
 		fn get_cluster_min_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getClusterMinSize_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3673,7 +3673,7 @@ pub mod xfeatures2d {
 		fn get_joining_distance(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getJoiningDistance_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3683,7 +3683,7 @@ pub mod xfeatures2d {
 		fn get_drop_threshold(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getDropThreshold_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3693,7 +3693,7 @@ pub mod xfeatures2d {
 		fn get_distance_function(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_getDistanceFunction_const(self.as_raw_PCTSignatures(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3711,7 +3711,7 @@ pub mod xfeatures2d {
 		fn set_grayscale_bits(&mut self, grayscale_bits: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setGrayscaleBits_int(self.as_raw_mut_PCTSignatures(), grayscale_bits, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3723,7 +3723,7 @@ pub mod xfeatures2d {
 		fn set_window_radius(&mut self, radius: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setWindowRadius_int(self.as_raw_mut_PCTSignatures(), radius, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3734,7 +3734,7 @@ pub mod xfeatures2d {
 		fn set_weight_x(&mut self, weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightX_float(self.as_raw_mut_PCTSignatures(), weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3745,7 +3745,7 @@ pub mod xfeatures2d {
 		fn set_weight_y(&mut self, weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightY_float(self.as_raw_mut_PCTSignatures(), weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3756,7 +3756,7 @@ pub mod xfeatures2d {
 		fn set_weight_l(&mut self, weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightL_float(self.as_raw_mut_PCTSignatures(), weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3767,7 +3767,7 @@ pub mod xfeatures2d {
 		fn set_weight_a(&mut self, weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightA_float(self.as_raw_mut_PCTSignatures(), weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3778,7 +3778,7 @@ pub mod xfeatures2d {
 		fn set_weight_b(&mut self, weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightB_float(self.as_raw_mut_PCTSignatures(), weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3789,7 +3789,7 @@ pub mod xfeatures2d {
 		fn set_weight_contrast(&mut self, weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightContrast_float(self.as_raw_mut_PCTSignatures(), weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3800,7 +3800,7 @@ pub mod xfeatures2d {
 		fn set_weight_entropy(&mut self, weight: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightEntropy_float(self.as_raw_mut_PCTSignatures(), weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3823,7 +3823,7 @@ pub mod xfeatures2d {
 		fn set_weight(&mut self, idx: i32, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeight_int_float(self.as_raw_mut_PCTSignatures(), idx, value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3845,7 +3845,7 @@ pub mod xfeatures2d {
 		fn set_weights(&mut self, weights: &core::Vector<f32>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeights_const_vectorLfloatGR(self.as_raw_mut_PCTSignatures(), weights.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3868,7 +3868,7 @@ pub mod xfeatures2d {
 		fn set_translation(&mut self, idx: i32, value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setTranslation_int_float(self.as_raw_mut_PCTSignatures(), idx, value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3890,7 +3890,7 @@ pub mod xfeatures2d {
 		fn set_translations(&mut self, translations: &core::Vector<f32>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setTranslations_const_vectorLfloatGR(self.as_raw_mut_PCTSignatures(), translations.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3904,7 +3904,7 @@ pub mod xfeatures2d {
 		fn set_sampling_points(&mut self, mut sampling_points: core::Vector<core::Point2f>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setSamplingPoints_vectorLPoint2fG(self.as_raw_mut_PCTSignatures(), sampling_points.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3914,7 +3914,7 @@ pub mod xfeatures2d {
 		fn set_init_seed_indexes(&mut self, mut init_seed_indexes: core::Vector<i32>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setInitSeedIndexes_vectorLintG(self.as_raw_mut_PCTSignatures(), init_seed_indexes.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3926,7 +3926,7 @@ pub mod xfeatures2d {
 		fn set_iteration_count(&mut self, iteration_count: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setIterationCount_int(self.as_raw_mut_PCTSignatures(), iteration_count, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3937,7 +3937,7 @@ pub mod xfeatures2d {
 		fn set_max_clusters_count(&mut self, max_clusters_count: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setMaxClustersCount_int(self.as_raw_mut_PCTSignatures(), max_clusters_count, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3949,7 +3949,7 @@ pub mod xfeatures2d {
 		fn set_cluster_min_size(&mut self, cluster_min_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setClusterMinSize_int(self.as_raw_mut_PCTSignatures(), cluster_min_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3961,7 +3961,7 @@ pub mod xfeatures2d {
 		fn set_joining_distance(&mut self, joining_distance: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setJoiningDistance_float(self.as_raw_mut_PCTSignatures(), joining_distance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3971,7 +3971,7 @@ pub mod xfeatures2d {
 		fn set_drop_threshold(&mut self, drop_threshold: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setDropThreshold_float(self.as_raw_mut_PCTSignatures(), drop_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3982,7 +3982,7 @@ pub mod xfeatures2d {
 		fn set_distance_function(&mut self, distance_function: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_setDistanceFunction_int(self.as_raw_mut_PCTSignatures(), distance_function, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4059,7 +4059,7 @@ pub mod xfeatures2d {
 		pub fn create(distance_function: i32, similarity_function: i32, similarity_parameter: f32) -> Result<core::Ptr<crate::xfeatures2d::PCTSignaturesSQFD>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_create_const_int_const_int_const_float(distance_function, similarity_function, similarity_parameter, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::PCTSignaturesSQFD>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4083,7 +4083,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::PCTSignaturesSQFD>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::PCTSignaturesSQFD>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4105,7 +4105,7 @@ pub mod xfeatures2d {
 			input_array_arg!(_signature1);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistance_const_const__InputArrayR_const__InputArrayR(self.as_raw_PCTSignaturesSQFD(), _signature0.as_raw__InputArray(), _signature1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4120,7 +4120,7 @@ pub mod xfeatures2d {
 		fn compute_quadratic_form_distances(&self, source_signature: &impl core::MatTraitConst, image_signatures: &core::Vector<core::Mat>, distances: &mut core::Vector<f32>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistances_const_const_MatR_const_vectorLMatGR_vectorLfloatGR(self.as_raw_PCTSignaturesSQFD(), source_signature.as_raw_Mat(), image_signatures.as_raw_VectorOfMat(), distances.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4227,7 +4227,7 @@ pub mod xfeatures2d {
 		pub fn create(hessian_threshold: f64, n_octaves: i32, n_octave_layers: i32, extended: bool, upright: bool) -> Result<core::Ptr<crate::xfeatures2d::SURF>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_create_double_int_int_bool_bool(hessian_threshold, n_octaves, n_octave_layers, extended, upright, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::SURF>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4253,7 +4253,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::SURF>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::SURF>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4269,7 +4269,7 @@ pub mod xfeatures2d {
 		fn get_hessian_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_getHessianThreshold_const(self.as_raw_SURF(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4278,7 +4278,7 @@ pub mod xfeatures2d {
 		fn get_n_octaves(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_getNOctaves_const(self.as_raw_SURF(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4287,7 +4287,7 @@ pub mod xfeatures2d {
 		fn get_n_octave_layers(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_getNOctaveLayers_const(self.as_raw_SURF(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4296,7 +4296,7 @@ pub mod xfeatures2d {
 		fn get_extended(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_getExtended_const(self.as_raw_SURF(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4305,7 +4305,7 @@ pub mod xfeatures2d {
 		fn get_upright(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_getUpright_const(self.as_raw_SURF(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4314,7 +4314,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_getDefaultName_const(self.as_raw_SURF(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4330,7 +4330,7 @@ pub mod xfeatures2d {
 		fn set_hessian_threshold(&mut self, hessian_threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_setHessianThreshold_double(self.as_raw_mut_SURF(), hessian_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4339,7 +4339,7 @@ pub mod xfeatures2d {
 		fn set_n_octaves(&mut self, n_octaves: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_setNOctaves_int(self.as_raw_mut_SURF(), n_octaves, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4348,7 +4348,7 @@ pub mod xfeatures2d {
 		fn set_n_octave_layers(&mut self, n_octave_layers: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_setNOctaveLayers_int(self.as_raw_mut_SURF(), n_octave_layers, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4357,7 +4357,7 @@ pub mod xfeatures2d {
 		fn set_extended(&mut self, extended: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_setExtended_bool(self.as_raw_mut_SURF(), extended, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4366,7 +4366,7 @@ pub mod xfeatures2d {
 		fn set_upright(&mut self, upright: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_SURF_setUpright_bool(self.as_raw_mut_SURF(), upright, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4444,7 +4444,7 @@ pub mod xfeatures2d {
 		pub fn create(max_size: i32, response_threshold: i32, line_threshold_projected: i32, line_threshold_binarized: i32, suppress_nonmax_size: i32) -> Result<core::Ptr<crate::xfeatures2d::StarDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_create_int_int_int_int_int(max_size, response_threshold, line_threshold_projected, line_threshold_binarized, suppress_nonmax_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::StarDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4463,7 +4463,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::StarDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::StarDetector>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4479,7 +4479,7 @@ pub mod xfeatures2d {
 		fn get_max_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_getMaxSize_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4488,7 +4488,7 @@ pub mod xfeatures2d {
 		fn get_response_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_getResponseThreshold_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4497,7 +4497,7 @@ pub mod xfeatures2d {
 		fn get_line_threshold_projected(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_getLineThresholdProjected_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4506,7 +4506,7 @@ pub mod xfeatures2d {
 		fn get_line_threshold_binarized(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_getLineThresholdBinarized_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4515,7 +4515,7 @@ pub mod xfeatures2d {
 		fn get_suppress_nonmax_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_getSuppressNonmaxSize_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4524,7 +4524,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_getDefaultName_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4540,7 +4540,7 @@ pub mod xfeatures2d {
 		fn set_max_size(&mut self, _max_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_setMaxSize_int(self.as_raw_mut_StarDetector(), _max_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4549,7 +4549,7 @@ pub mod xfeatures2d {
 		fn set_response_threshold(&mut self, _response_threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_setResponseThreshold_int(self.as_raw_mut_StarDetector(), _response_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4558,7 +4558,7 @@ pub mod xfeatures2d {
 		fn set_line_threshold_projected(&mut self, _line_threshold_projected: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_setLineThresholdProjected_int(self.as_raw_mut_StarDetector(), _line_threshold_projected, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4567,7 +4567,7 @@ pub mod xfeatures2d {
 		fn set_line_threshold_binarized(&mut self, _line_threshold_binarized: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_setLineThresholdBinarized_int(self.as_raw_mut_StarDetector(), _line_threshold_binarized, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4576,7 +4576,7 @@ pub mod xfeatures2d {
 		fn set_suppress_nonmax_size(&mut self, _suppress_nonmax_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_StarDetector_setSuppressNonmaxSize_int(self.as_raw_mut_StarDetector(), _suppress_nonmax_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4666,7 +4666,7 @@ pub mod xfeatures2d {
 		pub fn create(min_area: i32, max_area_relative: f32, scale_factor: f32, n_scales: i32) -> Result<core::Ptr<crate::xfeatures2d::TBMR>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TBMR_create_int_float_float_int(min_area, max_area_relative, scale_factor, n_scales, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::TBMR>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4682,7 +4682,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::TBMR>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TBMR_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::TBMR>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4698,7 +4698,7 @@ pub mod xfeatures2d {
 		fn get_min_area(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TBMR_getMinArea_const(self.as_raw_TBMR(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4707,7 +4707,7 @@ pub mod xfeatures2d {
 		fn get_max_area_relative(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TBMR_getMaxAreaRelative_const(self.as_raw_TBMR(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4716,7 +4716,7 @@ pub mod xfeatures2d {
 		fn get_scale_factor(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TBMR_getScaleFactor_const(self.as_raw_TBMR(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4725,7 +4725,7 @@ pub mod xfeatures2d {
 		fn get_n_scales(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TBMR_getNScales_const(self.as_raw_TBMR(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4734,7 +4734,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TBMR_getDefaultName_const(self.as_raw_TBMR(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4750,7 +4750,7 @@ pub mod xfeatures2d {
 		fn set_min_area(&mut self, min_area: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TBMR_setMinArea_int(self.as_raw_mut_TBMR(), min_area, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4759,7 +4759,7 @@ pub mod xfeatures2d {
 		fn set_max_area_relative(&mut self, max_area: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TBMR_setMaxAreaRelative_float(self.as_raw_mut_TBMR(), max_area, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4768,7 +4768,7 @@ pub mod xfeatures2d {
 		fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TBMR_setScaleFactor_float(self.as_raw_mut_TBMR(), scale_factor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4777,7 +4777,7 @@ pub mod xfeatures2d {
 		fn set_n_scales(&mut self, n_scales: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TBMR_setNScales_int(self.as_raw_mut_TBMR(), n_scales, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -4897,7 +4897,7 @@ pub mod xfeatures2d {
 		pub fn create(scale_factor: f32, n_bits: i32) -> Result<core::Ptr<crate::xfeatures2d::TEBLID>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TEBLID_create_float_int(scale_factor, n_bits, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::TEBLID>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4920,7 +4920,7 @@ pub mod xfeatures2d {
 		pub fn create_def(scale_factor: f32) -> Result<core::Ptr<crate::xfeatures2d::TEBLID>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TEBLID_create_float(scale_factor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::TEBLID>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -4936,7 +4936,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_TEBLID_getDefaultName_const(self.as_raw_TEBLID(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5043,7 +5043,7 @@ pub mod xfeatures2d {
 		pub fn create(desc: i32, isigma: f32, img_normalize: bool, use_scale_orientation: bool, scale_factor: f32, dsc_normalize: bool) -> Result<core::Ptr<crate::xfeatures2d::VGG>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_create_int_float_bool_bool_float_bool(desc, isigma, img_normalize, use_scale_orientation, scale_factor, dsc_normalize, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::VGG>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5061,7 +5061,7 @@ pub mod xfeatures2d {
 		pub fn create_def() -> Result<core::Ptr<crate::xfeatures2d::VGG>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::xfeatures2d::VGG>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5077,7 +5077,7 @@ pub mod xfeatures2d {
 		fn get_default_name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_getDefaultName_const(self.as_raw_VGG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
@@ -5087,7 +5087,7 @@ pub mod xfeatures2d {
 		fn get_sigma(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_getSigma_const(self.as_raw_VGG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5096,7 +5096,7 @@ pub mod xfeatures2d {
 		fn get_use_normalize_image(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_getUseNormalizeImage_const(self.as_raw_VGG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5105,7 +5105,7 @@ pub mod xfeatures2d {
 		fn get_use_scale_orientation(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_getUseScaleOrientation_const(self.as_raw_VGG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5114,7 +5114,7 @@ pub mod xfeatures2d {
 		fn get_scale_factor(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_getScaleFactor_const(self.as_raw_VGG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5123,7 +5123,7 @@ pub mod xfeatures2d {
 		fn get_use_normalize_descriptor(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_getUseNormalizeDescriptor_const(self.as_raw_VGG(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5138,7 +5138,7 @@ pub mod xfeatures2d {
 		fn set_sigma(&mut self, isigma: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_setSigma_const_float(self.as_raw_mut_VGG(), isigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5147,7 +5147,7 @@ pub mod xfeatures2d {
 		fn set_use_normalize_image(&mut self, img_normalize: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_setUseNormalizeImage_const_bool(self.as_raw_mut_VGG(), img_normalize, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5156,7 +5156,7 @@ pub mod xfeatures2d {
 		fn set_use_scale_orientation(&mut self, use_scale_orientation: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_setUseScaleOrientation_const_bool(self.as_raw_mut_VGG(), use_scale_orientation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5165,7 +5165,7 @@ pub mod xfeatures2d {
 		fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_setScaleFactor_const_float(self.as_raw_mut_VGG(), scale_factor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -5174,7 +5174,7 @@ pub mod xfeatures2d {
 		fn set_use_normalize_descriptor(&mut self, dsc_normalize: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_VGG_setUseNormalizeDescriptor_const_bool(self.as_raw_mut_VGG(), dsc_normalize, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

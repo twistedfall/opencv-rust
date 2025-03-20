@@ -32,7 +32,7 @@ pub mod plot {
 			input_array_arg!(data);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR(data.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::plot::Plot2d>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -49,7 +49,7 @@ pub mod plot {
 			input_array_arg!(data_y);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR_const__InputArrayR(data_x.as_raw__InputArray(), data_y.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::plot::Plot2d>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -71,7 +71,7 @@ pub mod plot {
 		fn set_min_x(&mut self, _plot_min_x: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setMinX_double(self.as_raw_mut_Plot2d(), _plot_min_x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -80,7 +80,7 @@ pub mod plot {
 		fn set_min_y(&mut self, _plot_min_y: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setMinY_double(self.as_raw_mut_Plot2d(), _plot_min_y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -89,7 +89,7 @@ pub mod plot {
 		fn set_max_x(&mut self, _plot_max_x: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setMaxX_double(self.as_raw_mut_Plot2d(), _plot_max_x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -98,7 +98,7 @@ pub mod plot {
 		fn set_max_y(&mut self, _plot_max_y: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setMaxY_double(self.as_raw_mut_Plot2d(), _plot_max_y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -107,7 +107,7 @@ pub mod plot {
 		fn set_plot_line_width(&mut self, _plot_line_width: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setPlotLineWidth_int(self.as_raw_mut_Plot2d(), _plot_line_width, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -121,7 +121,7 @@ pub mod plot {
 		fn set_need_plot_line(&mut self, _need_plot_line: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setNeedPlotLine_bool(self.as_raw_mut_Plot2d(), _need_plot_line, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -130,7 +130,7 @@ pub mod plot {
 		fn set_plot_line_color(&mut self, _plot_line_color: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setPlotLineColor_Scalar(self.as_raw_mut_Plot2d(), &_plot_line_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -139,7 +139,7 @@ pub mod plot {
 		fn set_plot_background_color(&mut self, _plot_background_color: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setPlotBackgroundColor_Scalar(self.as_raw_mut_Plot2d(), &_plot_background_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -148,7 +148,7 @@ pub mod plot {
 		fn set_plot_axis_color(&mut self, _plot_axis_color: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setPlotAxisColor_Scalar(self.as_raw_mut_Plot2d(), &_plot_axis_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -157,7 +157,7 @@ pub mod plot {
 		fn set_plot_grid_color(&mut self, _plot_grid_color: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setPlotGridColor_Scalar(self.as_raw_mut_Plot2d(), &_plot_grid_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -166,7 +166,7 @@ pub mod plot {
 		fn set_plot_text_color(&mut self, _plot_text_color: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setPlotTextColor_Scalar(self.as_raw_mut_Plot2d(), &_plot_text_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -175,7 +175,7 @@ pub mod plot {
 		fn set_plot_size(&mut self, _plot_size_width: i32, _plot_size_height: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setPlotSize_int_int(self.as_raw_mut_Plot2d(), _plot_size_width, _plot_size_height, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -184,7 +184,7 @@ pub mod plot {
 		fn set_show_grid(&mut self, need_show_grid: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setShowGrid_bool(self.as_raw_mut_Plot2d(), need_show_grid, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -193,7 +193,7 @@ pub mod plot {
 		fn set_show_text(&mut self, need_show_text: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setShowText_bool(self.as_raw_mut_Plot2d(), need_show_text, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -202,7 +202,7 @@ pub mod plot {
 		fn set_grid_lines_number(&mut self, grid_lines_number: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setGridLinesNumber_int(self.as_raw_mut_Plot2d(), grid_lines_number, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -211,7 +211,7 @@ pub mod plot {
 		fn set_invert_orientation(&mut self, _invert_orientation: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setInvertOrientation_bool(self.as_raw_mut_Plot2d(), _invert_orientation, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -224,7 +224,7 @@ pub mod plot {
 		fn set_point_idx_to_print(&mut self, point_idx: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_setPointIdxToPrint_int(self.as_raw_mut_Plot2d(), point_idx, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -234,7 +234,7 @@ pub mod plot {
 			output_array_arg!(_plot_result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_render_const__OutputArrayR(self.as_raw_mut_Plot2d(), _plot_result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

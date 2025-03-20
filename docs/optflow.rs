@@ -164,7 +164,7 @@ pub mod optflow {
 		input_array_arg!(mhi);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_motempl_calcGlobalOrientation_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_double(orientation.as_raw__InputArray(), mask.as_raw__InputArray(), mhi.as_raw__InputArray(), timestamp, duration, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -209,7 +209,7 @@ pub mod optflow {
 		output_array_arg!(orientation);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_motempl_calcMotionGradient_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(mhi.as_raw__InputArray(), mask.as_raw__OutputArray(), orientation.as_raw__OutputArray(), delta1, delta2, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -253,7 +253,7 @@ pub mod optflow {
 		output_array_arg!(orientation);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_motempl_calcMotionGradient_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double_int(mhi.as_raw__InputArray(), mask.as_raw__OutputArray(), orientation.as_raw__OutputArray(), delta1, delta2, aperture_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -279,7 +279,7 @@ pub mod optflow {
 		output_array_arg!(segmask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_motempl_segmentMotion_const__InputArrayR_const__OutputArrayR_vectorLRectGR_double_double(mhi.as_raw__InputArray(), segmask.as_raw__OutputArray(), bounding_rects.as_raw_mut_VectorOfRect(), timestamp, seg_thresh, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -308,7 +308,7 @@ pub mod optflow {
 		input_output_array_arg!(mhi);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_motempl_updateMotionHistory_const__InputArrayR_const__InputOutputArrayR_double_double(silhouette.as_raw__InputArray(), mhi.as_raw__InputOutputArray(), timestamp, duration, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -393,7 +393,7 @@ pub mod optflow {
 		input_output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowDenseRLOF_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -477,7 +477,7 @@ pub mod optflow {
 		input_output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowDenseRLOF_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_PtrLRLOFOpticalFlowParameterG_float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, &grid_step, interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -518,7 +518,7 @@ pub mod optflow {
 		output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowSF_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), layers, averaging_block_size, max_flow, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -557,7 +557,7 @@ pub mod optflow {
 		output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowSF_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int_double_double_int_double_double_double_int_double_double_double(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), layers, averaging_block_size, max_flow, sigma_dist, sigma_color, postprocess_window, sigma_dist_fix, sigma_color_fix, occ_thr, upscale_averaging_radius, upscale_sigma_dist, upscale_sigma_color, speed_up_thr, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -606,7 +606,7 @@ pub mod optflow {
 		output_array_arg!(err);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowSparseRLOF_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -654,7 +654,7 @@ pub mod optflow {
 		output_array_arg!(err);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowSparseRLOF_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_PtrLRLOFOpticalFlowParameterG_float(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -693,7 +693,7 @@ pub mod optflow {
 		output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowSparseToDense_const__InputArrayR_const__InputArrayR_const__OutputArrayR(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -731,7 +731,7 @@ pub mod optflow {
 		output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowSparseToDense_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_float_bool_float_float(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), grid_step, k, sigma, use_post_proc, fgs_lambda, fgs_sigma, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -764,7 +764,7 @@ pub mod optflow {
 	pub fn create_opt_flow_deep_flow() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_DeepFlow(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -775,7 +775,7 @@ pub mod optflow {
 	pub fn create_opt_flow_dense_rlof() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_DenseRLOF(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -786,7 +786,7 @@ pub mod optflow {
 	pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr<crate::optflow::DualTVL1OpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_DualTVL1(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -797,7 +797,7 @@ pub mod optflow {
 	pub fn create_opt_flow_farneback() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_Farneback(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -808,7 +808,7 @@ pub mod optflow {
 	pub fn create_opt_flow_pca_flow() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_PCAFlow(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -819,7 +819,7 @@ pub mod optflow {
 	pub fn create_opt_flow_simple_flow() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_SimpleFlow(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -830,7 +830,7 @@ pub mod optflow {
 	pub fn create_opt_flow_sparse_rlof() -> Result<core::Ptr<crate::video::SparseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_SparseRLOF(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::SparseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -841,7 +841,7 @@ pub mod optflow {
 	pub fn create_opt_flow_sparse_to_dense() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_SparseToDense(ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
@@ -851,7 +851,7 @@ pub mod optflow {
 	pub fn read(fn_: &impl core::FileNodeTraitConst, node: &mut crate::optflow::GPCTree_Node, unnamed: crate::optflow::GPCTree_Node) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_NodeR_Node(fn_.as_raw_FileNode(), node, &unnamed, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -861,7 +861,7 @@ pub mod optflow {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_const_NodeR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), &node, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
@@ -944,7 +944,7 @@ pub mod optflow {
 		pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32, grid_step: core::Size, interp_type: crate::optflow::InterpolationType, epic_k: i32, epic_sigma: f32, epic_lambda: f32, ric_sp_size: i32, ric_slic_type: i32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32, use_variational_refinement: bool) -> Result<core::Ptr<crate::optflow::DenseRLOFOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_create_PtrLRLOFOpticalFlowParameterG_float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, &grid_step, interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::DenseRLOFOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -986,7 +986,7 @@ pub mod optflow {
 		pub fn create_def() -> Result<core::Ptr<crate::optflow::DenseRLOFOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::DenseRLOFOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1006,7 +1006,7 @@ pub mod optflow {
 		fn get_rlof_optical_flow_parameter(&self) -> Result<core::Ptr<crate::optflow::RLOFOpticalFlowParameter>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getRLOFOpticalFlowParameter_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::RLOFOpticalFlowParameter>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1025,7 +1025,7 @@ pub mod optflow {
 		fn get_forward_backward(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getForwardBackward_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1038,7 +1038,7 @@ pub mod optflow {
 		fn get_grid_step(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getGridStep_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1054,7 +1054,7 @@ pub mod optflow {
 		fn get_interpolation(&self) -> Result<crate::optflow::InterpolationType> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getInterpolation_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1067,7 +1067,7 @@ pub mod optflow {
 		fn get_epick(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getEPICK_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1081,7 +1081,7 @@ pub mod optflow {
 		fn get_epic_sigma(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getEPICSigma_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1094,7 +1094,7 @@ pub mod optflow {
 		fn get_epic_lambda(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getEPICLambda_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1106,7 +1106,7 @@ pub mod optflow {
 		fn get_fgs_lambda(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getFgsLambda_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1118,7 +1118,7 @@ pub mod optflow {
 		fn get_fgs_sigma(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getFgsSigma_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1132,7 +1132,7 @@ pub mod optflow {
 		fn get_use_post_proc(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getUsePostProc_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1146,7 +1146,7 @@ pub mod optflow {
 		fn get_use_variational_refinement(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getUseVariationalRefinement_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1160,7 +1160,7 @@ pub mod optflow {
 		fn get_ricsp_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getRICSPSize_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1176,7 +1176,7 @@ pub mod optflow {
 		fn get_ricslic_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_getRICSLICType_const(self.as_raw_DenseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1194,7 +1194,7 @@ pub mod optflow {
 		fn set_rlof_optical_flow_parameter(&mut self, mut val: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setRLOFOpticalFlowParameter_PtrLRLOFOpticalFlowParameterG(self.as_raw_mut_DenseRLOFOpticalFlow(), val.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1210,7 +1210,7 @@ pub mod optflow {
 		fn set_forward_backward(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setForwardBackward_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1225,7 +1225,7 @@ pub mod optflow {
 		fn set_grid_step(&mut self, val: core::Size) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setGridStep_Size(self.as_raw_mut_DenseRLOFOpticalFlow(), &val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1239,7 +1239,7 @@ pub mod optflow {
 		fn set_interpolation(&mut self, val: crate::optflow::InterpolationType) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setInterpolation_InterpolationType(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1254,7 +1254,7 @@ pub mod optflow {
 		fn set_epick(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setEPICK_int(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1270,7 +1270,7 @@ pub mod optflow {
 		fn set_epic_sigma(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setEPICSigma_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1285,7 +1285,7 @@ pub mod optflow {
 		fn set_epic_lambda(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setEPICLambda_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1299,7 +1299,7 @@ pub mod optflow {
 		fn set_fgs_lambda(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setFgsLambda_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1313,7 +1313,7 @@ pub mod optflow {
 		fn set_fgs_sigma(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setFgsSigma_float(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1325,7 +1325,7 @@ pub mod optflow {
 		fn set_use_post_proc(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setUsePostProc_bool(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1337,7 +1337,7 @@ pub mod optflow {
 		fn set_use_variational_refinement(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setUseVariationalRefinement_bool(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1349,7 +1349,7 @@ pub mod optflow {
 		fn set_ricsp_size(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setRICSPSize_int(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1364,7 +1364,7 @@ pub mod optflow {
 		fn set_ricslic_type(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setRICSLICType_int(self.as_raw_mut_DenseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1489,7 +1489,7 @@ pub mod optflow {
 		pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, innner_iterations: i32, outer_iterations: i32, scale_step: f64, gamma: f64, median_filtering: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::optflow::DualTVL1OpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_create_double_double_double_int_int_double_int_int_double_double_int_bool(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1515,7 +1515,7 @@ pub mod optflow {
 		pub fn create_def() -> Result<core::Ptr<crate::optflow::DualTVL1OpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -1534,7 +1534,7 @@ pub mod optflow {
 		fn get_tau(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getTau_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1546,7 +1546,7 @@ pub mod optflow {
 		fn get_lambda(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getLambda_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1558,7 +1558,7 @@ pub mod optflow {
 		fn get_theta(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getTheta_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1570,7 +1570,7 @@ pub mod optflow {
 		fn get_gamma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getGamma_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1582,7 +1582,7 @@ pub mod optflow {
 		fn get_scales_number(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getScalesNumber_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1594,7 +1594,7 @@ pub mod optflow {
 		fn get_warpings_number(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getWarpingsNumber_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1606,7 +1606,7 @@ pub mod optflow {
 		fn get_epsilon(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getEpsilon_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1618,7 +1618,7 @@ pub mod optflow {
 		fn get_inner_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getInnerIterations_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1630,7 +1630,7 @@ pub mod optflow {
 		fn get_outer_iterations(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getOuterIterations_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1642,7 +1642,7 @@ pub mod optflow {
 		fn get_use_initial_flow(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getUseInitialFlow_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1654,7 +1654,7 @@ pub mod optflow {
 		fn get_scale_step(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getScaleStep_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1666,7 +1666,7 @@ pub mod optflow {
 		fn get_median_filtering(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_getMedianFiltering_const(self.as_raw_DualTVL1OpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1684,7 +1684,7 @@ pub mod optflow {
 		fn set_tau(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setTau_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1696,7 +1696,7 @@ pub mod optflow {
 		fn set_lambda(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setLambda_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1708,7 +1708,7 @@ pub mod optflow {
 		fn set_theta(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setTheta_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1720,7 +1720,7 @@ pub mod optflow {
 		fn set_gamma(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setGamma_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1732,7 +1732,7 @@ pub mod optflow {
 		fn set_scales_number(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setScalesNumber_int(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1744,7 +1744,7 @@ pub mod optflow {
 		fn set_warpings_number(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setWarpingsNumber_int(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1756,7 +1756,7 @@ pub mod optflow {
 		fn set_epsilon(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setEpsilon_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1768,7 +1768,7 @@ pub mod optflow {
 		fn set_inner_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setInnerIterations_int(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1780,7 +1780,7 @@ pub mod optflow {
 		fn set_outer_iterations(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setOuterIterations_int(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1792,7 +1792,7 @@ pub mod optflow {
 		fn set_use_initial_flow(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setUseInitialFlow_bool(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1804,7 +1804,7 @@ pub mod optflow {
 		fn set_scale_step(&mut self, val: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setScaleStep_double(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1816,7 +1816,7 @@ pub mod optflow {
 		fn set_median_filtering(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_setMedianFiltering_int(self.as_raw_mut_DualTVL1OpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1893,7 +1893,7 @@ pub mod optflow {
 		pub fn drop_outliers(corr: &mut core::Vector<core::Tuple<(core::Point2i, core::Point2i)>>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCDetails_dropOutliers_vectorLpairLcv_Point2i__cv_Point2iGGR(corr.as_raw_mut_VectorOfTupleOfPoint2i_Point2i(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1902,7 +1902,7 @@ pub mod optflow {
 		pub fn get_all_descriptors_for_image(img_ch: &impl core::MatTraitConst, descr: &mut core::Vector<crate::optflow::GPCPatchDescriptor>, mp: crate::optflow::GPCMatchingParams, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCDetails_getAllDescriptorsForImage_const_MatX_vectorLGPCPatchDescriptorGR_const_GPCMatchingParamsR_int(img_ch.as_raw_Mat(), descr.as_raw_mut_VectorOfGPCPatchDescriptor(), &mp, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1911,7 +1911,7 @@ pub mod optflow {
 		pub fn get_coordinates_from_index(index: size_t, sz: core::Size, x: &mut i32, y: &mut i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(index, &sz, x, y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1973,7 +1973,7 @@ pub mod optflow {
 		pub fn new(_use_opencl: bool) -> Result<crate::optflow::GPCMatchingParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCMatchingParams_GPCMatchingParams_bool(_use_opencl, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1985,7 +1985,7 @@ pub mod optflow {
 		pub fn new_def() -> Result<crate::optflow::GPCMatchingParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCMatchingParams_GPCMatchingParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -1994,7 +1994,7 @@ pub mod optflow {
 		pub fn copy(params: crate::optflow::GPCMatchingParams) -> Result<crate::optflow::GPCMatchingParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCMatchingParams_GPCMatchingParams_const_GPCMatchingParamsR(&params, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2037,7 +2037,7 @@ pub mod optflow {
 		fn feature(&self) -> core::VecN<f64, 18> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCPatchDescriptor_propFeature_const(self.as_raw_GPCPatchDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2045,7 +2045,7 @@ pub mod optflow {
 		fn dot(&self, coef: core::VecN<f64, 18>) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCPatchDescriptor_dot_const_const_VecLdouble__18GR(self.as_raw_GPCPatchDescriptor(), &coef, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2054,7 +2054,7 @@ pub mod optflow {
 		fn is_separated(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCPatchDescriptor_isSeparated_const(self.as_raw_GPCPatchDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2075,7 +2075,7 @@ pub mod optflow {
 		fn mark_as_separated(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCPatchDescriptor_markAsSeparated(self.as_raw_mut_GPCPatchDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2164,7 +2164,7 @@ pub mod optflow {
 		fn get_directions(&self, refdir: &mut bool, posdir: &mut bool, negdir: &mut bool, coef: core::VecN<f64, 18>, rhs: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCPatchSample_getDirections_const_boolR_boolR_boolR_const_VecLdouble__18GR_double(self.as_raw_GPCPatchSample(), refdir, posdir, negdir, &coef, rhs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2245,7 +2245,7 @@ pub mod optflow {
 		pub fn check(self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTrainingParams_check_const(&self, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2259,7 +2259,7 @@ pub mod optflow {
 		pub fn new(_max_tree_depth: u32, _min_number_of_samples: i32, _descriptor_type: crate::optflow::GPCDescType, _print_progress: bool) -> Result<crate::optflow::GPCTrainingParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTrainingParams_GPCTrainingParams_unsigned_int_int_GPCDescType_bool(_max_tree_depth, _min_number_of_samples, _descriptor_type, _print_progress, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2274,7 +2274,7 @@ pub mod optflow {
 		pub fn new_def() -> Result<crate::optflow::GPCTrainingParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTrainingParams_GPCTrainingParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2312,7 +2312,7 @@ pub mod optflow {
 		pub fn create(images_from: &core::Vector<String>, images_to: &core::Vector<String>, gt: &core::Vector<String>, descriptor_type: i32) -> Result<core::Ptr<crate::optflow::GPCTrainingSamples>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTrainingSamples_create_const_vectorLStringGR_const_vectorLStringGR_const_vectorLStringGR_int(images_from.as_raw_VectorOfString(), images_to.as_raw_VectorOfString(), gt.as_raw_VectorOfString(), descriptor_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::GPCTrainingSamples>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2325,7 +2325,7 @@ pub mod optflow {
 			input_array_arg!(gt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTrainingSamples_create_const__InputArrayR_const__InputArrayR_const__InputArrayR_int(images_from.as_raw__InputArray(), images_to.as_raw__InputArray(), gt.as_raw__InputArray(), descriptor_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::GPCTrainingSamples>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2341,7 +2341,7 @@ pub mod optflow {
 		fn size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTrainingSamples_size_const(self.as_raw_GPCTrainingSamples(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2350,7 +2350,7 @@ pub mod optflow {
 		fn typ(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTrainingSamples_type_const(self.as_raw_GPCTrainingSamples(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2418,7 +2418,7 @@ pub mod optflow {
 		pub fn create() -> Result<core::Ptr<crate::optflow::GPCTree>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::GPCTree>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2434,7 +2434,7 @@ pub mod optflow {
 		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_write_const_FileStorageR(self.as_raw_GPCTree(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2443,7 +2443,7 @@ pub mod optflow {
 		fn find_leaf_for_patch(&self, descr: &impl crate::optflow::GPCPatchDescriptorTraitConst) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_findLeafForPatch_const_const_GPCPatchDescriptorR(self.as_raw_GPCTree(), descr.as_raw_GPCPatchDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2452,7 +2452,7 @@ pub mod optflow {
 		fn equals(&self, t: &impl crate::optflow::GPCTreeTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_operatorEQ_const_const_GPCTreeR(self.as_raw_GPCTree(), t.as_raw_GPCTree(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2461,7 +2461,7 @@ pub mod optflow {
 		fn get_descriptor_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_getDescriptorType_const(self.as_raw_GPCTree(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2478,7 +2478,7 @@ pub mod optflow {
 		fn train(&mut self, samples: &mut impl crate::optflow::GPCTrainingSamplesTrait, params: crate::optflow::GPCTrainingParams) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_train_GPCTrainingSamplesR_const_GPCTrainingParams(self.as_raw_mut_GPCTree(), samples.as_raw_mut_GPCTrainingSamples(), &params, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2490,7 +2490,7 @@ pub mod optflow {
 		fn train_def(&mut self, samples: &mut impl crate::optflow::GPCTrainingSamplesTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_train_GPCTrainingSamplesR(self.as_raw_mut_GPCTree(), samples.as_raw_mut_GPCTrainingSamples(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2499,7 +2499,7 @@ pub mod optflow {
 		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_read_const_FileNodeR(self.as_raw_mut_GPCTree(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2562,7 +2562,7 @@ pub mod optflow {
 		pub fn equals(self, n: crate::optflow::GPCTree_Node) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_Node_operatorEQ_const_const_NodeR(&self, &n, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2608,7 +2608,7 @@ pub mod optflow {
 		pub fn new(_prior: core::Ptr<crate::optflow::PCAPrior>, _basis_size: core::Size, _sparse_rate: f32, _retained_corners_fraction: f32, _occlusions_threshold: f32, _damping_factor: f32, _clahe_clip: f32) -> Result<crate::optflow::OpticalFlowPCAFlow> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_PtrLconst_PCAPriorG_const_Size_float_float_float_float_float(_prior.as_raw_PtrOfPCAPrior(), &_basis_size, _sparse_rate, _retained_corners_fraction, _occlusions_threshold, _damping_factor, _clahe_clip, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::optflow::OpticalFlowPCAFlow::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2637,7 +2637,7 @@ pub mod optflow {
 		pub fn new_def() -> Result<crate::optflow::OpticalFlowPCAFlow> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::optflow::OpticalFlowPCAFlow::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2662,7 +2662,7 @@ pub mod optflow {
 			input_output_array_arg!(flow);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_OpticalFlowPCAFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2671,7 +2671,7 @@ pub mod optflow {
 		fn collect_garbage(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_collectGarbage(self.as_raw_mut_OpticalFlowPCAFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2745,7 +2745,7 @@ pub mod optflow {
 			extern_container_arg!(path_to_prior);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_PCAPrior_PCAPrior_const_charX(path_to_prior.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::optflow::PCAPrior::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2761,7 +2761,7 @@ pub mod optflow {
 		fn get_padding(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_PCAPrior_getPadding_const(self.as_raw_PCAPrior(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2770,7 +2770,7 @@ pub mod optflow {
 		fn get_basis_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_PCAPrior_getBasisSize_const(self.as_raw_PCAPrior(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2779,7 +2779,7 @@ pub mod optflow {
 		fn fill_constraints(&self, a1: &mut f32, a2: &mut f32, b1: &mut f32, b2: &mut f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_PCAPrior_fillConstraints_const_floatX_floatX_floatX_floatX(self.as_raw_PCAPrior(), a1, a2, b1, b2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2856,7 +2856,7 @@ pub mod optflow {
 		pub fn default() -> Result<crate::optflow::RLOFOpticalFlowParameter> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_RLOFOpticalFlowParameter(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::optflow::RLOFOpticalFlowParameter::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2867,7 +2867,7 @@ pub mod optflow {
 		pub fn create() -> Result<core::Ptr<crate::optflow::RLOFOpticalFlowParameter>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::RLOFOpticalFlowParameter>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -2883,7 +2883,7 @@ pub mod optflow {
 		fn solver_type(&self) -> crate::optflow::SolverType {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propSolverType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2891,7 +2891,7 @@ pub mod optflow {
 		fn support_region_type(&self) -> crate::optflow::SupportRegionType {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propSupportRegionType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			ret
 		}
 
@@ -2971,7 +2971,7 @@ pub mod optflow {
 		fn get_solver_type(&self) -> Result<crate::optflow::SolverType> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getSolverType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2980,7 +2980,7 @@ pub mod optflow {
 		fn get_support_region_type(&self) -> Result<crate::optflow::SupportRegionType> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getSupportRegionType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2989,7 +2989,7 @@ pub mod optflow {
 		fn get_norm_sigma0(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getNormSigma0_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -2998,7 +2998,7 @@ pub mod optflow {
 		fn get_norm_sigma1(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getNormSigma1_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3007,7 +3007,7 @@ pub mod optflow {
 		fn get_small_win_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getSmallWinSize_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3016,7 +3016,7 @@ pub mod optflow {
 		fn get_large_win_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getLargeWinSize_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3025,7 +3025,7 @@ pub mod optflow {
 		fn get_cross_segmentation_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getCrossSegmentationThreshold_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3034,7 +3034,7 @@ pub mod optflow {
 		fn get_max_level(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getMaxLevel_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3043,7 +3043,7 @@ pub mod optflow {
 		fn get_use_initial_flow(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getUseInitialFlow_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3052,7 +3052,7 @@ pub mod optflow {
 		fn get_use_illumination_model(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getUseIlluminationModel_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3061,7 +3061,7 @@ pub mod optflow {
 		fn get_use_global_motion_prior(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getUseGlobalMotionPrior_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3070,7 +3070,7 @@ pub mod optflow {
 		fn get_max_iteration(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getMaxIteration_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3079,7 +3079,7 @@ pub mod optflow {
 		fn get_min_eigen_value(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getMinEigenValue_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3088,7 +3088,7 @@ pub mod optflow {
 		fn get_global_motion_ransac_threshold(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getGlobalMotionRansacThreshold_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3193,7 +3193,7 @@ pub mod optflow {
 		fn set_use_m_estimator(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseMEstimator_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3202,7 +3202,7 @@ pub mod optflow {
 		fn set_solver_type_1(&mut self, val: crate::optflow::SolverType) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setSolverType_SolverType(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3211,7 +3211,7 @@ pub mod optflow {
 		fn set_support_region_type_1(&mut self, val: crate::optflow::SupportRegionType) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setSupportRegionType_SupportRegionType(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3220,7 +3220,7 @@ pub mod optflow {
 		fn set_norm_sigma0_1(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setNormSigma0_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3229,7 +3229,7 @@ pub mod optflow {
 		fn set_norm_sigma1_1(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setNormSigma1_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3238,7 +3238,7 @@ pub mod optflow {
 		fn set_small_win_size_1(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setSmallWinSize_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3247,7 +3247,7 @@ pub mod optflow {
 		fn set_large_win_size_1(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setLargeWinSize_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3256,7 +3256,7 @@ pub mod optflow {
 		fn set_cross_segmentation_threshold_1(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setCrossSegmentationThreshold_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3265,7 +3265,7 @@ pub mod optflow {
 		fn set_max_level_1(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setMaxLevel_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3274,7 +3274,7 @@ pub mod optflow {
 		fn set_use_initial_flow_1(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseInitialFlow_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3283,7 +3283,7 @@ pub mod optflow {
 		fn set_use_illumination_model_1(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseIlluminationModel_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3292,7 +3292,7 @@ pub mod optflow {
 		fn set_use_global_motion_prior_1(&mut self, val: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setUseGlobalMotionPrior_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3301,7 +3301,7 @@ pub mod optflow {
 		fn set_max_iteration_1(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setMaxIteration_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3310,7 +3310,7 @@ pub mod optflow {
 		fn set_min_eigen_value_1(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setMinEigenValue_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3319,7 +3319,7 @@ pub mod optflow {
 		fn set_global_motion_ransac_threshold_1(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setGlobalMotionRansacThreshold_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3401,7 +3401,7 @@ pub mod optflow {
 		pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32) -> Result<core::Ptr<crate::optflow::SparseRLOFOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_create_PtrLRLOFOpticalFlowParameterG_float(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::SparseRLOFOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3421,7 +3421,7 @@ pub mod optflow {
 		pub fn create_def() -> Result<core::Ptr<crate::optflow::SparseRLOFOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::SparseRLOFOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3440,7 +3440,7 @@ pub mod optflow {
 		fn get_rlof_optical_flow_parameter(&self) -> Result<core::Ptr<crate::optflow::RLOFOpticalFlowParameter>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_getRLOFOpticalFlowParameter_const(self.as_raw_SparseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::RLOFOpticalFlowParameter>::opencv_from_extern(ret) };
 			Ok(ret)
@@ -3459,7 +3459,7 @@ pub mod optflow {
 		fn get_forward_backward(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_getForwardBackward_const(self.as_raw_SparseRLOFOpticalFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3475,7 +3475,7 @@ pub mod optflow {
 		fn set_rlof_optical_flow_parameter(&mut self, mut val: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_setRLOFOpticalFlowParameter_PtrLRLOFOpticalFlowParameterG(self.as_raw_mut_SparseRLOFOpticalFlow(), val.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -3491,7 +3491,7 @@ pub mod optflow {
 		fn set_forward_backward(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_setForwardBackward_float(self.as_raw_mut_SparseRLOFOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
