@@ -12,7 +12,7 @@ use Cow::{Borrowed, Owned};
 use super::comment::{render_ref, RenderComment};
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::{Lifetime, TypeRefExt};
-use super::{comment, rust_disambiguate_names, RustNativeGeneratedElement};
+use super::{comment, rust_disambiguate_names, rust_disambiguate_names_ref, RustNativeGeneratedElement};
 use crate::field::Field;
 use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritConfig, OperatorKind, ReturnKind};
 use crate::name_pool::NamePool;
@@ -389,7 +389,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 					.rust_extern_arg_func_decl("instance"),
 			);
 		}
-		for (name, arg) in rust_disambiguate_names(self.arguments().into_owned()) {
+		for (name, arg) in rust_disambiguate_names_ref(self.arguments().as_ref()) {
 			args.push(arg.type_ref().render_lane().to_dyn().rust_extern_arg_func_decl(&name))
 		}
 

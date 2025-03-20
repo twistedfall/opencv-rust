@@ -302,6 +302,19 @@ where
 	NamePool::with_capacity(size_hint.1.unwrap_or(size_hint.0)).into_disambiguator(args, |f| f.rust_leafname(FishStyle::No))
 }
 
+fn rust_disambiguate_names_ref<'f, 'tu, 'ge>(
+	args: impl IntoIterator<Item = &'f Field<'tu, 'ge>>,
+) -> impl Iterator<Item = (String, &'f Field<'tu, 'ge>)>
+where
+	'tu: 'ge,
+	'tu: 'f,
+	'ge: 'f,
+{
+	let args = args.into_iter();
+	let size_hint = args.size_hint();
+	NamePool::with_capacity(size_hint.1.unwrap_or(size_hint.0)).into_disambiguator(args, |f| f.rust_leafname(FishStyle::No))
+}
+
 pub fn disambiguate_single_name(name: &str) -> impl Iterator<Item = String> + '_ {
 	let mut i = 0;
 	iter::from_fn(move || {

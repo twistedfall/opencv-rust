@@ -27,8 +27,8 @@ impl Lifetime {
 
 	pub fn is_explicit(&self) -> bool {
 		match self {
-			Lifetime::Elided => false,
-			Lifetime::Custom(_) | Lifetime::Automatic(_) => true,
+			Self::Elided => false,
+			Self::Custom(_) | Self::Automatic(_) => true,
 		}
 	}
 
@@ -44,7 +44,7 @@ impl Lifetime {
 }
 
 impl IntoIterator for Lifetime {
-	type Item = Lifetime;
+	type Item = Self;
 	type IntoIter = LifetimeIterator;
 
 	fn into_iter(self) -> LifetimeIterator {
