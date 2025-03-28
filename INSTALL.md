@@ -47,7 +47,7 @@ Installing OpenCV is easy through the following sources:
   ```shell script
   choco install llvm opencv
   ```
-  also set `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` environment variables (see below
+  also set `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` environment variables (see [the Environment Variables section of README.md](https://github.com/twistedfall/opencv-rust/tree/v0.94.3?tab=readme-ov-file#environment-variables)
   for details).
 
   Also, check the user guides [here](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278)
@@ -102,7 +102,7 @@ You can of course always compile OpenCV of the version you prefer manually. This
 requires some additional configuration.
 
 You need to set up the following environment variables to point to the installed files of your OpenCV build:
-`OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` (see below for details).
+`OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` (see [the Environment Variables section of README.md](https://github.com/twistedfall/opencv-rust/tree/v0.94.3?tab=readme-ov-file#environment-variables) for details).
 
 ### Static build
 
