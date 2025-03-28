@@ -43,7 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - uses: mozilla-actions/sccache-action@v0.0.8
+      - uses: mozilla-actions/sccache-action@v0.0.9
 
       - uses: actions/cache@v4
         with:
@@ -86,7 +86,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - uses: mozilla-actions/sccache-action@v0.0.8
+      - uses: mozilla-actions/sccache-action@v0.0.9
       - uses: actions/cache@v4
         with:
           path: ~/build
@@ -131,7 +131,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - uses: mozilla-actions/sccache-action@v0.0.8
+      - uses: mozilla-actions/sccache-action@v0.0.9
 
       - name: Install dependencies
         run: ci/install.sh
@@ -159,7 +159,7 @@ jobs:
       RUSTC_WRAPPER: "sccache"
     steps:
       - uses: actions/checkout@v4
-      - uses: mozilla-actions/sccache-action@v0.0.8
+      - uses: mozilla-actions/sccache-action@v0.0.9
 
       - uses: actions/cache@v4
         with:
