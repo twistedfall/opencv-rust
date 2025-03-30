@@ -65,18 +65,21 @@ jobs:
         os-image:
           - ubuntu-24.04
           - windows-2022
-          - macos-14
         vcpkg-version:
-          - 2025.01.13 # https://github.com/microsoft/vcpkg/releases
+          - 2025.06.13 # https://github.com/microsoft/vcpkg/releases
         vcpkg-features-cache-key:
           - full
         vcpkg-features:
           - contrib,nonfree,ade,opencl
         include:
           - os-image: windows-2022
-            vcpkg-version: 2025.01.13
+            vcpkg-version: 2025.06.13
             vcpkg-features-cache-key: min
             vcpkg-features: contrib
+          - os-image: macos-14
+            vcpkg-version: 2025.06.13
+            vcpkg-features-cache-key: full-no-opencl
+            vcpkg-features: contrib,nonfree,ade
     runs-on: ${{ matrix.os-image }}
     env:
       VCPKG_VERSION: ${{ matrix.vcpkg-version }}
