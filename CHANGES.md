@@ -1,3 +1,6 @@
+* 0.94.4
+  * Downgrade the `windows` dependency for now to fix the build issue in https://github.com/twistedfall/opencv-rust/issues/660.
+
 * 0.94.3
   * Add another workaround for building on Windows with `clang-runtime` feature enabled and clang-20 this time (fixes https://github.com/twistedfall/opencv-rust/issues/628 again).
 
