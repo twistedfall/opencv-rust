@@ -33,7 +33,7 @@ rgb = { version = "0.8.20", default-features = false, features = ["argb"], optio
 
 [target.'cfg(target_os = "windows")'.dependencies]
 # windows-0.60+ breaks the build in some cases: https://github.com/twistedfall/opencv-rust/issues/660
-windows = { version = "0.59", features = ["Win32_Graphics_Direct3D9", "Win32_Graphics_Direct3D10", "Win32_Graphics_Direct3D11"] }
+windows = { version = "0.61", features = ["Win32_Graphics_Direct3D9", "Win32_Graphics_Direct3D10", "Win32_Graphics_Direct3D11"] }
 
 [build-dependencies]
 opencv-binding-generator = { version = "0.96.1", path = "binding-generator" }
