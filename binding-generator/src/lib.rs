@@ -80,11 +80,11 @@ pub mod writer;
 fn get_definition_text(entity: Entity) -> String {
 	if let Some(range) = entity.get_range() {
 		let loc = range.get_start().get_spelling_location();
-		let mut source = File::open(loc.file.expect("Can't get file").get_path()).expect("Can't open source file");
 		let start = loc.offset;
 		let end = range.get_end().get_spelling_location().offset;
 		let len = usize::try_from(end - start).expect("Definition span is too large");
 		let mut def_bytes = vec![0; len];
+		let mut source = File::open(loc.file.expect("Can't get file").get_path()).expect("Can't open source file");
 		source.seek(SeekFrom::Start(u64::from(start))).expect("Cannot seek");
 		source.read_exact(&mut def_bytes).expect("Can't read definition");
 		String::from_utf8(def_bytes).expect("Can't parse definition")

@@ -37,13 +37,6 @@ static TARGET_ENV_MSVC: Lazy<bool> = Lazy::new(|| env::var("CARGO_CFG_TARGET_ENV
 static TARGET_VENDOR_APPLE: Lazy<bool> =
 	Lazy::new(|| env::var("CARGO_CFG_TARGET_VENDOR").is_ok_and(|target_vendor| target_vendor == "apple"));
 
-static OPENCV_BRANCH_34: Lazy<VersionReq> =
-	Lazy::new(|| VersionReq::parse("~3.4").expect("Can't parse OpenCV 3.4 version requirement"));
-static OPENCV_BRANCH_4: Lazy<VersionReq> =
-	Lazy::new(|| VersionReq::parse("~4").expect("Can't parse OpenCV 4 version requirement"));
-static OPENCV_BRANCH_5: Lazy<VersionReq> =
-	Lazy::new(|| VersionReq::parse("~5").expect("Can't parse OpenCV 5 version requirement"));
-
 /// Environment vars that affect the build, the source will be rebuilt if those change, the contents of those vars will also
 /// be present in the debug log
 static AFFECTING_ENV_VARS: [&str; 18] = [
@@ -66,6 +59,8 @@ static AFFECTING_ENV_VARS: [&str; 18] = [
 	"OCVRS_DOCS_GENERATE_DIR",
 	"DOCS_RS",
 ];
+
+static SUPPORTED_OPENCV_BRANCHES: [(&str, &str); 3] = [("~3.4", "34"), ("~4", "4"), ("~5", "5")];
 
 static SUPPORTED_MODULES: [&str; 73] = [
 	"3d",
@@ -195,18 +190,39 @@ fn make_modules_and_alises(
 		})
 		.collect::<Vec<_>>();
 
-	let aliases = if OPENCV_BRANCH_5.matches(opencv_version)
-		&& modules.iter().any(|x| x == "features2d")
-		&& modules.iter().any(|x| x == "features")
-	{
-		// In OpenCV 5 `features2d` is a compatibility header that just includes `features.hpp`, and they don't work together
-		HashMap::from([("features2d", "features")])
-	} else {
-		HashMap::new()
-	};
+	let aliases =
+		if opencv_version.major == 5 && modules.iter().any(|x| x == "features2d") && modules.iter().any(|x| x == "features") {
+			// In OpenCV 5 `features2d` is a compatibility header that just includes `features.hpp`, and they don't work together
+			HashMap::from([("features2d", "features")])
+		} else {
+			HashMap::new()
+		};
 
 	modules.sort_unstable();
 	Ok((modules, aliases))
+}
+
+fn emit_opencv_branch(opencv: &Library) {
+	let mut version_matched = false;
+	for (version_req, branch) in SUPPORTED_OPENCV_BRANCHES {
+		let version_matcher = VersionReq::parse(version_req).expect("Invalid version");
+		if version_matcher.matches(&opencv.version) {
+			println!("cargo::rustc-cfg=ocvrs_opencv_branch_{branch}");
+			version_matched = true;
+			break;
+		}
+	}
+	if !version_matched {
+		panic!(
+			"Unsupported OpenCV version: {}, must match one of the following: {}",
+			opencv.version,
+			SUPPORTED_OPENCV_BRANCHES
+				.iter()
+				.map(|(v, _)| *v)
+				.collect::<Vec<_>>()
+				.join(", ")
+		);
+	}
 }
 
 fn emit_inherent_features(opencv: &Library) {
@@ -214,13 +230,37 @@ fn emit_inherent_features(opencv: &Library) {
 		.expect("Static version requirement")
 		.matches(&opencv.version)
 	{
+		// hfloat is not an actual OpenCV feature specified in the cvconfig.h, but something that's supported starting with 4.10
 		println!("cargo::rustc-cfg=ocvrs_has_inherent_feature_hfloat");
 	}
-	for feature in &opencv.enabled_features {
-		if SUPPORTED_INHERENT_FEATURES.contains(&feature.as_str()) {
-			println!("cargo::rustc-cfg=ocvrs_has_inherent_feature_{feature}");
+	for inherent_feature in &opencv.inherent_features {
+		if SUPPORTED_INHERENT_FEATURES.contains(&inherent_feature.as_str()) {
+			println!("cargo::rustc-cfg=ocvrs_has_inherent_feature_{inherent_feature}");
 		}
 	}
+}
+
+fn emit_modules(modules: &[String]) {
+	for module in modules {
+		println!("cargo::rustc-cfg=ocvrs_has_module_{module}");
+	}
+}
+
+fn setup_rerun() -> Result<()> {
+	for &v in AFFECTING_ENV_VARS.iter() {
+		println!("cargo::rerun-if-env-changed={v}");
+	}
+
+	let include_exts = &[OsStr::new("cpp"), OsStr::new("hpp")];
+	let files_with_include_exts =
+		files_with_predicate(&SRC_CPP_DIR, |p| p.extension().is_some_and(|e| include_exts.contains(&e)))?;
+	for path in files_with_include_exts {
+		if let Some(path) = path.to_str() {
+			println!("cargo::rerun-if-changed={path}");
+		}
+	}
+	println!("cargo::rerun-if-changed=Cargo.toml");
+	Ok(())
 }
 
 fn make_compiler(opencv: &Library, ffi_export_suffix: &str) -> cc::Build {
@@ -290,23 +330,6 @@ fn target_os_windows() -> &'static str {
 	}
 }
 
-fn setup_rerun() -> Result<()> {
-	for &v in AFFECTING_ENV_VARS.iter() {
-		println!("cargo::rerun-if-env-changed={v}");
-	}
-
-	let include_exts = &[OsStr::new("cpp"), OsStr::new("hpp")];
-	let files_with_include_exts =
-		files_with_predicate(&SRC_CPP_DIR, |p| p.extension().is_some_and(|e| include_exts.contains(&e)))?;
-	for path in files_with_include_exts {
-		if let Some(path) = path.to_str() {
-			println!("cargo::rerun-if-changed={path}");
-		}
-	}
-	println!("cargo::rerun-if-changed=Cargo.toml");
-	Ok(())
-}
-
 fn build_wrapper(mut cc: cc::Build, modules: &[String], module_aliases: &HashMap<&str, &str>) {
 	eprintln!("=== Compiler information: {:#?}", cc.get_compiler());
 	for module in modules.iter().filter(|m| !module_aliases.contains_key(m.as_str())) {
@@ -327,7 +350,8 @@ fn main() -> Result<()> {
 		return Ok(());
 	}
 
-	for branch in ["34", "4", "5"] {
+	// these need to be emitted before handle_running_in_docsrs() call
+	for (_, branch) in SUPPORTED_OPENCV_BRANCHES {
 		println!("cargo::rustc-check-cfg=cfg(ocvrs_opencv_branch_{branch})");
 	}
 	for module in SUPPORTED_MODULES {
@@ -360,18 +384,7 @@ fn main() -> Result<()> {
 
 	let opencv = Library::probe()?;
 	eprintln!("=== OpenCV library configuration: {opencv:#?}");
-	if OPENCV_BRANCH_5.matches(&opencv.version) {
-		println!("cargo::rustc-cfg=ocvrs_opencv_branch_5");
-	} else if OPENCV_BRANCH_4.matches(&opencv.version) {
-		println!("cargo::rustc-cfg=ocvrs_opencv_branch_4");
-	} else if OPENCV_BRANCH_34.matches(&opencv.version) {
-		println!("cargo::rustc-cfg=ocvrs_opencv_branch_34");
-	} else {
-		panic!(
-			"Unsupported OpenCV version: {}, must be from 3.4, 4.x or 5.x branch",
-			opencv.version
-		);
-	}
+	emit_opencv_branch(&opencv);
 
 	let opencv_header_dir = opencv
 		.include_paths
@@ -399,6 +412,8 @@ fn main() -> Result<()> {
 		)
 	}
 
+	emit_inherent_features(&opencv);
+
 	let opencv_module_header_dir = opencv_header_dir
 		.get_module_header_dir()
 		.expect("Can't find OpenCV module header dir");
@@ -407,11 +422,7 @@ fn main() -> Result<()> {
 		opencv_module_header_dir.display()
 	);
 	let (modules, module_aliases) = make_modules_and_alises(&opencv_module_header_dir, &opencv.version)?;
-	for module in &modules {
-		println!("cargo::rustc-cfg=ocvrs_has_module_{module}");
-	}
-
-	emit_inherent_features(&opencv);
+	emit_modules(&modules);
 
 	setup_rerun()?;
 

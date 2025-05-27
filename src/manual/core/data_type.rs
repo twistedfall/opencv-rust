@@ -1,5 +1,5 @@
 use crate::core;
-use crate::core::{Point3_, Point_, Rect_, Size_, VecN};
+use crate::core::{Point3_, Point_, Rect_, Size_, VecN, CV_16S, CV_16U, CV_32F, CV_32S, CV_64F, CV_8S, CV_8U};
 
 #[inline]
 pub const fn CV_MAT_DEPTH(flags: i32) -> i32 {
@@ -29,23 +29,23 @@ pub const fn CV_IS_FLOAT_TYPE(flags: i32) -> bool {
 	((1 << CV_MAT_DEPTH(flags)) & 0x1e0) != 0
 }
 
-/// Implement this trait types that are valid to use as Mat elements.
+/// Implement this trait for types that are valid to use as Mat elements.
 ///
 /// # Safety
 /// Types implementing this trait must adhere to the memory layout declared by the values returned
-/// by `opencv_depth()` and `opencv_channels()` functions. In most cases that means that the type
+/// by [Self::opencv_depth()] and [Self::opencv_channels()] functions. In most cases that means that the type
 /// must also be `#[repr(C)]`.
 pub unsafe trait DataType: Copy {
-	/// The shape of bytes occupied by the single layer/channel of the element. E.g. for an 8-bit BGR
-	/// image it's `CV_8U` because a single channel for a pixel is unsigned 8 bits. You should use one
-	/// of the depth constants for this like `CV_8U`, `CV_8S`, `CV_32F`, etc.
+	/// The shape of bytes occupied by the single layer/channel of the element. E.g., for an 8-bit BGR
+	/// image it's [CV_8U] because a single channel for a pixel is unsigned 8 bits. You should use one
+	/// of the depth constants for this like [CV_8U], [CV_8S], [CV_32F], etc.
 	fn opencv_depth() -> i32;
 
-	/// Amount of layers/channels per element. E.g. for an 8-bit BGR image it's 3 because one pixel
+	/// Number of layers/channels per element. E.g., for an 8-bit BGR image it's 3 because one pixel
 	/// consists of 3 channels: B, G and R.
 	fn opencv_channels() -> i32;
 
-	/// OpenCV value for this type as produced by `CV_MAKETYPE()` function
+	/// OpenCV value for this type as produced by [CV_MAKETYPE()] function
 	#[inline]
 	fn opencv_type() -> i32 {
 		CV_MAKETYPE(Self::opencv_depth(), Self::opencv_channels())
@@ -79,17 +79,17 @@ macro_rules! mchan_fun {
 }
 
 // int
-data_type!(u8, core::CV_8U, 1);
-data_type!(i8, core::CV_8S, 1);
-data_type!(u16, core::CV_16U, 1);
-data_type!(i16, core::CV_16S, 1);
-data_type!(i32, core::CV_32S, 1);
+data_type!(u8, CV_8U, 1);
+data_type!(i8, CV_8S, 1);
+data_type!(u16, CV_16U, 1);
+data_type!(i16, CV_16S, 1);
+data_type!(i32, CV_32S, 1);
 
-mchan_fun!(CV_8UC, core::CV_8U);
-mchan_fun!(CV_8SC, core::CV_8S);
-mchan_fun!(CV_16UC, core::CV_16U);
-mchan_fun!(CV_16SC, core::CV_16S);
-mchan_fun!(CV_32SC, core::CV_32S);
+mchan_fun!(CV_8UC, CV_8U);
+mchan_fun!(CV_8SC, CV_8S);
+mchan_fun!(CV_16UC, CV_16U);
+mchan_fun!(CV_16SC, CV_16S);
+mchan_fun!(CV_32SC, CV_32S);
 
 #[cfg(ocvrs_opencv_branch_5)]
 mod opencv5 {
@@ -111,11 +111,11 @@ mod opencv5 {
 pub use opencv5::*;
 
 // float
-data_type!(f32, core::CV_32F, 1);
-data_type!(f64, core::CV_64F, 1);
+data_type!(f32, CV_32F, 1);
+data_type!(f64, CV_64F, 1);
 
-mchan_fun!(CV_32FC, core::CV_32F);
-mchan_fun!(CV_64FC, core::CV_64F);
+mchan_fun!(CV_32FC, CV_32F);
+mchan_fun!(CV_64FC, CV_64F);
 
 #[cfg(not(ocvrs_opencv_branch_34))]
 mod half_builtin {

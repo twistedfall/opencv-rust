@@ -149,7 +149,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
-	/// True if class has virtual methods
+	/// True if a class has virtual methods
 	pub fn is_polymorphic(&self) -> bool {
 		match self {
 			Self::Clang { entity, .. } => entity
@@ -159,7 +159,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
-	/// Special case of an empty class with only an anonymous enum inside (e.g. DrawLinesMatchesFlags)
+	/// Special case of an empty class with only an anonymous enum inside (e.g., DrawLinesMatchesFlags)
 	pub fn as_enum(&self) -> Option<Enum<'tu>> {
 		match self {
 			&Self::Clang { entity, .. } => {
@@ -241,7 +241,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			&Self::Clang { entity, gen_env, .. } => {
 				let mut out = vec![];
 				let entity = entity.get_template().unwrap_or(entity);
-				entity.walk_bases_while(|child| {
+				let _ = entity.walk_bases_while(|child| {
 					out.push(Self::new(Self::definition_entity(child), gen_env));
 					ControlFlow::Continue(())
 				});
@@ -333,7 +333,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		match self {
 			Class::Clang { entity, gen_env, .. } => {
 				let mut out = Vec::with_capacity(32);
-				entity.walk_methods_while(|func_entity| {
+				let _ = entity.walk_methods_while(|func_entity| {
 					let func = Func::new(func_entity, gen_env);
 					let func: Func = if let Some(func_fact) = gen_env.settings.func_replace.get(&mut func.matcher()) {
 						func_fact(&func)
@@ -384,7 +384,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn fields(&self, filter: impl Fn(&Field) -> bool) -> Vec<Field<'tu, 'ge>> {
 		let mut out = Vec::with_capacity(32);
-		self.for_each_field(|f| {
+		let _ = self.for_each_field(|f| {
 			if filter(&f) {
 				out.push(f);
 			}
@@ -403,7 +403,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn consts(&self) -> Vec<Const<'tu>> {
 		let mut out = Vec::with_capacity(8);
-		self.for_each_const(|c| {
+		let _ = self.for_each_const(|c| {
 			out.push(c);
 			ControlFlow::Continue(())
 		});

@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::Write;
+use std::io::{BufWriter, Write};
 use std::path::Path;
 
 use clang::diagnostic::Severity;
@@ -15,13 +15,13 @@ fn clang_parse(code: &str, op: impl FnOnce(Entity)) {
 	let temp_dir = TempDir::new().expect("Can't create temp dir");
 	let temp_file_path = temp_dir.path().join("temp.cpp");
 	if let Some(start) = CODE_TPL.find(CODE_PAT) {
-		let mut temp_cpp = File::create(&temp_file_path).expect("Can't create temp file");
+		let mut temp_cpp = BufWriter::new(File::create(&temp_file_path).expect("Can't create temp file"));
 		temp_cpp
-			.write_all(CODE_TPL[..start].as_bytes())
+			.write_all(&CODE_TPL.as_bytes()[..start])
 			.expect("Can't write to temp file");
 		temp_cpp.write_all(code.as_bytes()).expect("Can't write to temp file");
 		temp_cpp
-			.write_all(CODE_TPL[start + CODE_PAT.len()..].as_bytes())
+			.write_all(&CODE_TPL.as_bytes()[start + CODE_PAT.len()..])
 			.expect("Can't write to temp file");
 	}
 	let clang = Clang::new().expect("Can't init clang");

@@ -1,6 +1,7 @@
 // MSRV: switch to #[expect] when MSRV is 1.81
 #[allow(
 	clippy::doc_lazy_continuation,
+	clippy::doc_overindented_list_items,
 	clippy::double_must_use,
 	clippy::excessive_precision,
 	clippy::let_and_return,

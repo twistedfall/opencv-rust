@@ -46,14 +46,14 @@ impl<'tu> EntityWalkerVisitor<'tu> for &mut FunctionFinder<'tu> {
 					c.methods(|_| true).into_iter().for_each(|f| self.update_used_func(&f));
 					c.field_methods(&c.fields(|_| true), None)
 						.for_each(|f| self.update_used_func(&f));
-					entity.walk_methods_while(|child| {
+					let _ = entity.walk_methods_while(|child| {
 						let func = Func::new(child, &self.gen_env);
 						if func.is_generic() {
 							self.update_used_func(&func);
 						}
 						ControlFlow::Continue(())
 					});
-					entity.walk_classes_while(|child| self.visit_entity(child));
+					let _ = entity.walk_classes_while(|child| self.visit_entity(child));
 				}
 			}
 			EntityKind::FunctionDecl => {

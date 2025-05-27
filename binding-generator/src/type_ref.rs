@@ -113,14 +113,14 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		} else if let Some(primitive_typeref) = TypeRefDesc::try_primitive(cpp_refname) {
 			primitive_typeref
 		} else {
-			let simplicity = (settings::DATA_TYPES.contains(cpp_refname) || settings::DATA_TYPES_5_0.contains(cpp_refname))
-				.then_some(ClassKindOverride::Simple)
-				.unwrap_or_else(|| {
-					settings::ELEMENT_EXPORT_TWEAK
-						.get(cpp_refname)
-						.and_then(|export_tweak| export_tweak(ExportConfig::default()))
-						.map_or(ClassKindOverride::Boxed, |e| e.class_kind_override)
-				});
+			let simplicity = if settings::DATA_TYPES.contains(cpp_refname) || settings::DATA_TYPES_5_0.contains(cpp_refname) {
+				ClassKindOverride::Simple
+			} else {
+				settings::ELEMENT_EXPORT_TWEAK
+					.get(cpp_refname)
+					.and_then(|export_tweak| export_tweak(ExportConfig::default()))
+					.map_or(ClassKindOverride::Boxed, |e| e.class_kind_override)
+			};
 			let cls = if simplicity.is_boxed() {
 				ClassDesc::boxed(cpp_refname, rust_module)
 			} else {

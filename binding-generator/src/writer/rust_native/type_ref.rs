@@ -1,6 +1,7 @@
 use std::borrow::Cow;
 use std::borrow::Cow::{Borrowed, Owned};
 
+pub use kind::{BorrowKind, TypeRefKindExt};
 pub use lifetime::{Lifetime, LifetimeIterator};
 pub use nullability::NullabilityExt;
 
@@ -21,6 +22,7 @@ use crate::writer::rust_native::type_ref::render_lane::{
 };
 use crate::{CowMapBorrowedExt, StringExt};
 
+mod kind;
 mod lifetime;
 mod nullability;
 pub mod render_lane;

@@ -10,7 +10,7 @@ pub trait IncludePath {
 	fn get_version_header(&self) -> Option<PathBuf>;
 	fn get_config_header(&self) -> Option<PathBuf>;
 	fn find_version(&self) -> Option<Version>;
-	fn find_enabled_features(&self) -> Option<Vec<String>>;
+	fn find_inherent_features(&self) -> Option<Vec<String>>;
 }
 
 impl IncludePath for Path {
@@ -80,7 +80,7 @@ impl IncludePath for Path {
 		}
 	}
 
-	fn find_enabled_features(&self) -> Option<Vec<String>> {
+	fn find_inherent_features(&self) -> Option<Vec<String>> {
 		let config_h = self.get_config_header()?;
 		let mut out = Vec::with_capacity(64);
 		let mut line = String::with_capacity(256);

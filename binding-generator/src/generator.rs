@@ -167,10 +167,9 @@ impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'t
 		let mut comment = String::with_capacity(2048);
 		let mut found_module_comment = false;
 		let module_path = self.opencv_module_header_dir.join(format!("{}.hpp", self.module));
-		if let Ok(module_file) = File::open(module_path) {
-			let f = BufReader::new(module_file);
+		if let Ok(module_file) = File::open(module_path).map(BufReader::new) {
 			let mut defgroup_found = false;
-			line_reader(f, |line| {
+			line_reader(module_file, |line| {
 				if !found_module_comment && line.trim_start().starts_with("/**") {
 					found_module_comment = true;
 					defgroup_found = false;
@@ -235,11 +234,11 @@ impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
 				cls.generated_types().into_iter().for_each(|dep| {
 					visitor.visit_generated_type(dep);
 				});
-				class_decl.walk_enums_while(|enm| {
+				let _ = class_decl.walk_enums_while(|enm| {
 					Self::process_enum(visitor, enm);
 					ControlFlow::Continue(())
 				});
-				class_decl.walk_classes_while(|sub_cls| {
+				let _ = class_decl.walk_classes_while(|sub_cls| {
 					if !gen_env.get_export_config(sub_cls).is_some() {
 						gen_env.make_export_config(sub_cls).class_kind_override = if Class::new(sub_cls, gen_env).can_be_simple() {
 							ClassKindOverride::Simple
@@ -250,7 +249,7 @@ impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
 					Self::process_class(visitor, gen_env, sub_cls);
 					ControlFlow::Continue(())
 				});
-				class_decl.walk_typedefs_while(|tdef| {
+				let _ = class_decl.walk_typedefs_while(|tdef| {
 					Self::process_typedef(visitor, gen_env, tdef);
 					ControlFlow::Continue(())
 				});
@@ -368,7 +367,7 @@ impl Drop for Generator {
 				.iter()
 				.any(|bad_version| clang::get_version().contains(bad_version)))
 		{
-			// `clang` has an issue on Windows when running with `runtime` feature and clang-19+:
+			// `clang` has an issue on Windows when running with the `runtime` feature and clang-19+:
 			// https://github.com/KyleMayes/clang-rs/issues/63
 			// So we avoid dropping clang in that case as a workaround.
 			// `clang::get_version()` is string like "Apple clang version 15.0.0 (clang-1500.1.0.2.5)"

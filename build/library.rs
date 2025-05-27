@@ -150,7 +150,7 @@ impl Linkage {
 pub struct Library {
 	pub include_paths: Vec<PathBuf>,
 	pub version: Version,
-	pub enabled_features: Vec<String>,
+	pub inherent_features: Vec<String>,
 	pub cargo_metadata: Vec<String>,
 }
 
@@ -167,8 +167,8 @@ impl Library {
 		include_paths.into_iter().find_map(|x| x.as_ref().find_version())
 	}
 
-	fn enabled_features_from_include_paths(include_paths: impl IntoIterator<Item = impl AsRef<Path>>) -> Option<Vec<String>> {
-		include_paths.into_iter().find_map(|x| x.as_ref().find_enabled_features())
+	fn inherent_features_from_include_paths(include_paths: impl IntoIterator<Item = impl AsRef<Path>>) -> Option<Vec<String>> {
+		include_paths.into_iter().find_map(|x| x.as_ref().find_inherent_features())
 	}
 
 	fn process_env_var_list<'a, T: From<&'a str>>(env_list: Option<EnvList<'a>>, sys_list: Vec<T>) -> Vec<T> {
@@ -244,8 +244,8 @@ impl Library {
 
 			let version =
 				Self::version_from_include_paths(&include_paths).ok_or("Could not get OpenCV version from include_paths")?;
-			let enabled_features =
-				Self::enabled_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
+			let inherent_features =
+				Self::inherent_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
 
 			cargo_metadata.extend(Self::process_link_paths(Some(link_paths), vec![]));
 			cargo_metadata.extend(Self::process_link_libs(Some(link_libs), vec![]));
@@ -253,7 +253,7 @@ impl Library {
 			Ok(Self {
 				include_paths,
 				version,
-				enabled_features,
+				inherent_features,
 				cargo_metadata,
 			})
 		} else {
@@ -322,13 +322,13 @@ impl Library {
 
 		let mut include_paths = Self::process_env_var_list(include_paths, opencv.include_paths);
 		Self::add_multiarch_dir_if_needed(&mut include_paths);
-		let enabled_features =
-			Self::enabled_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
+		let inherent_features =
+			Self::inherent_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
 
 		Ok(Self {
 			include_paths,
 			version: Version::parse(&opencv.version)?,
-			enabled_features,
+			inherent_features,
 			cargo_metadata,
 		})
 	}
@@ -379,13 +379,13 @@ impl Library {
 
 		let mut include_paths = Self::process_env_var_list(include_paths, probe_result.include_paths);
 		Self::add_multiarch_dir_if_needed(&mut include_paths);
-		let enabled_features =
-			Self::enabled_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
+		let inherent_features =
+			Self::inherent_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
 
 		Ok(Self {
 			include_paths,
 			version: probe_result.version.unwrap_or_else(|| Version::new(0, 0, 0)),
-			enabled_features,
+			inherent_features,
 			cargo_metadata,
 		})
 	}
@@ -439,13 +439,13 @@ impl Library {
 
 		let mut include_paths = Self::process_env_var_list(include_paths, opencv_include_paths);
 		Self::add_multiarch_dir_if_needed(&mut include_paths);
-		let enabled_features =
-			Self::enabled_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
+		let inherent_features =
+			Self::inherent_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
 
 		Ok(Self {
 			include_paths,
 			version: version.unwrap_or_else(|| Version::new(0, 0, 0)),
-			enabled_features,
+			inherent_features,
 			cargo_metadata,
 		})
 	}
@@ -481,12 +481,6 @@ impl Library {
 	}
 
 	pub fn probe_system(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
-		let probe_paths = || Self::probe_from_paths(include_paths, link_paths, link_libs);
-		let probe_pkg_config = || Self::probe_pkg_config(include_paths, link_paths, link_libs);
-		let probe_cmake = || Self::probe_cmake(include_paths, link_paths, link_libs, None, None, None);
-		let probe_vcpkg_cmake = || Self::probe_vcpkg_cmake(include_paths, link_paths, link_libs);
-		let probe_vcpkg = || Self::probe_vcpkg(include_paths, link_paths, link_libs);
-
 		let explicit_pkg_config = env::var_os("PKG_CONFIG_PATH").is_some() || env::var_os("OPENCV_PKGCONFIG_NAME").is_some();
 		let explicit_cmake = env::var_os("OpenCV_DIR").is_some()
 			|| env::var_os("OPENCV_CMAKE_NAME").is_some()
@@ -497,28 +491,37 @@ impl Library {
 			"=== Detected probe priority boost based on environment vars: pkg_config: {explicit_pkg_config}, cmake: {explicit_cmake}, vcpkg: {explicit_vcpkg}"
 		);
 
-		let disabled_probes = env::var("OPENCV_DISABLE_PROBES");
-		let disabled_probes = disabled_probes
-			.as_ref()
-			.map(|s| EnvList::from(s.as_str()).iter().collect())
-			.unwrap_or_else(|_| HashSet::new());
-
 		let mut probes = [
-			("environment", &probe_paths as &dyn Fn() -> Result<Self>),
-			("pkg_config", &probe_pkg_config),
-			("cmake", &probe_cmake),
-			("vcpkg_cmake", &probe_vcpkg_cmake),
-			("vcpkg", &probe_vcpkg),
+			Probe::Environment,
+			Probe::PkgConfig,
+			Probe::CMake,
+			Probe::VcpkgCMake,
+			Probe::Vcpkg,
 		];
 
-		let mut prioritize = |probe: &str, over: &str| {
+		let disabled_probes = env::var("OPENCV_DISABLE_PROBES");
+		let disabled_probes = disabled_probes.as_ref().ok().map_or_else(HashSet::new, |s| {
+			EnvList::from(s.as_str())
+				.iter()
+				.map(|s| {
+					Probe::try_from_str(s).unwrap_or_else(|| {
+						panic!(
+							"Invalid value in OPENCV_DISABLE_PROBES: {s}, valid values are: {}",
+							probe_list(&probes)
+						)
+					})
+				})
+				.collect()
+		});
+
+		let mut prioritize = |higher_prio: Probe, lower_prio: Probe| {
 			let (probe_idx, over_idx) = probes
 				.iter()
-				.position(|(name, _)| name == &probe)
+				.position(|probe| probe == &higher_prio)
 				.and_then(|probe_idx| {
 					probes
 						.iter()
-						.position(|(name, _)| name == &over)
+						.position(|probe| probe == &lower_prio)
 						.map(|over_idx| (probe_idx, over_idx))
 				})
 				.expect("Can't find probe to swap");
@@ -531,48 +534,55 @@ impl Library {
 
 		if explicit_pkg_config {
 			if explicit_vcpkg && !explicit_cmake {
-				prioritize("vcpkg_cmake", "cmake");
-				prioritize("vcpkg", "cmake");
+				prioritize(Probe::VcpkgCMake, Probe::CMake);
+				prioritize(Probe::Vcpkg, Probe::CMake);
 			}
 		} else if explicit_cmake {
-			prioritize("cmake", "pkg_config");
+			prioritize(Probe::CMake, Probe::PkgConfig);
 			if explicit_vcpkg {
-				prioritize("vcpkg_cmake", "pkg_config");
-				prioritize("vcpkg", "pkg_config");
+				prioritize(Probe::VcpkgCMake, Probe::PkgConfig);
+				prioritize(Probe::Vcpkg, Probe::PkgConfig);
 			}
 		} else if explicit_vcpkg {
-			prioritize("vcpkg_cmake", "pkg_config");
-			prioritize("vcpkg", "pkg_config");
+			prioritize(Probe::VcpkgCMake, Probe::PkgConfig);
+			prioritize(Probe::Vcpkg, Probe::PkgConfig);
 		}
 
-		let probe_list = probes.iter().map(|(name, _)| *name).collect::<Vec<_>>().join(", ");
-		eprintln!("=== Probing the OpenCV library in the following order: {probe_list}");
+		eprintln!(
+			"=== Probing the OpenCV library in the following order: {}",
+			probe_list(&probes)
+		);
 
 		let mut out = None;
-		for &(name, probe) in &probes {
-			if !disabled_probes.contains(name) {
-				match probe() {
+		for probe in &probes {
+			if !disabled_probes.contains(probe) {
+				match probe.run_probe(include_paths, link_paths, link_libs) {
 					Ok(lib) => {
 						out = Some(lib);
-						eprintln!("=== Successfully probed using: {name}");
+						eprintln!("=== Successfully probed using: {}", probe.as_str());
 						break;
 					}
 					Err(e) => {
-						eprintln!("=== Can't probe using: {name}, continuing with other methods because: {e}");
+						eprintln!(
+							"=== Can't probe using: {}, continuing with other methods because: {e}",
+							probe.as_str()
+						);
 					}
 				}
 			} else {
-				eprintln!("=== Skipping probe: {name} because it's disabled using OPENCV_DISABLE_PROBES");
+				eprintln!(
+					"=== Skipping probe: {} because it's disabled using OPENCV_DISABLE_PROBES",
+					probe.as_str()
+				);
 			}
 		}
 		out.ok_or_else(|| {
-			let methods = probes
-				.iter()
-				.map(|&(name, _)| name)
-				.filter(|&name| !disabled_probes.contains(name))
-				.collect::<Vec<_>>()
-				.join(", ");
-			format!("Failed to find installed OpenCV package using probes: {methods}, refer to https://github.com/twistedfall/opencv-rust#getting-opencv for help").into()
+			let probes = probes
+				.into_iter()
+				.filter(|name| !disabled_probes.contains(name))
+				.collect::<Vec<_>>();
+			format!("Failed to find installed OpenCV package using probes: {}, refer to https://github.com/twistedfall/opencv-rust#getting-opencv for help", probe_list(&probes)).into()
+
 		})
 	}
 
@@ -591,4 +601,55 @@ impl Library {
 			println!("{meta}");
 		});
 	}
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+enum Probe {
+	Environment,
+	PkgConfig,
+	CMake,
+	VcpkgCMake,
+	Vcpkg,
+}
+
+impl Probe {
+	fn run_probe(
+		&self,
+		include_paths: Option<EnvList>,
+		link_paths: Option<EnvList>,
+		link_libs: Option<EnvList>,
+	) -> Result<Library> {
+		match self {
+			Probe::Environment => Library::probe_from_paths(include_paths, link_paths, link_libs),
+			Probe::PkgConfig => Library::probe_pkg_config(include_paths, link_paths, link_libs),
+			Probe::CMake => Library::probe_cmake(include_paths, link_paths, link_libs, None, None, None),
+			Probe::VcpkgCMake => Library::probe_vcpkg_cmake(include_paths, link_paths, link_libs),
+			Probe::Vcpkg => Library::probe_vcpkg(include_paths, link_paths, link_libs),
+		}
+	}
+
+	fn try_from_str(s: &str) -> Option<Self> {
+		match s {
+			"environment" => Some(Probe::Environment),
+			"pkg_config" => Some(Probe::PkgConfig),
+			"cmake" => Some(Probe::CMake),
+			"vcpkg_cmake" => Some(Probe::VcpkgCMake),
+			"vcpkg" => Some(Probe::Vcpkg),
+			_ => None,
+		}
+	}
+
+	fn as_str(&self) -> &'static str {
+		match self {
+			Probe::Environment => "environment",
+			Probe::PkgConfig => "pkg_config",
+			Probe::CMake => "cmake",
+			Probe::VcpkgCMake => "vcpkg_cmake",
+			Probe::Vcpkg => "vcpkg",
+		}
+	}
+}
+
+fn probe_list(probes: &[Probe]) -> String {
+	probes.iter().map(|probe| probe.as_str()).collect::<Vec<_>>().join(", ")
 }

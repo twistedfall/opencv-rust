@@ -84,7 +84,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		}
 	}
 
-	/// TypeRefKind with all of the typedef's traversed
+	/// TypeRefKind with all the typedef's traversed
 	#[inline]
 	pub fn canonical(&self) -> Cow<Self> {
 		match self {
@@ -395,7 +395,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		}
 	}
 
-	/// True for types that get passed in Rust by pointer as opposed to a reference or an owned value
+	/// True for types that get passed in Rust by the pointer as opposed to a reference or an owned value
 	pub fn is_rust_by_ptr(&self, type_hint: &TypeRefTypeHint) -> bool {
 		self.as_pointer().is_some_and(|inner| {
 			let inner_kind = inner.kind();
@@ -409,7 +409,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		})
 	}
 
-	/// True for types that can be returned as direct reference to the underlying data that's allocated on C++ side
+	/// True for types that can be returned as direct reference to the underlying data that's allocated on the C++ side
 	pub fn can_return_as_direct_reference(&self) -> bool {
 		match self.canonical().as_ref() {
 			TypeRefKind::Array(elem, _) => elem.kind().is_copy(elem.type_hint()),
@@ -446,7 +446,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 
 	/// True for types that can be returned via C++ `return`, otherwise they are returned through an argument
 	///
-	/// Some types especially larger `struct`s are not safe to just `return` over the FFI boundary because compilers don't always
+	/// Some types, especially larger `struct`s are not safe to just `return` over the FFI boundary because compilers don't always
 	/// agree on how exactly those should be returned. So only designated simpler and shorter types are returned this way. For
 	/// all other cases the return is passed through an additional argument.
 	pub fn return_as_naked(&self, type_hint: &TypeRefTypeHint) -> bool {
@@ -456,35 +456,13 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 			kind => kind.extern_pass_kind().is_by_void_ptr() || kind.as_string(type_hint).is_some(),
 		}
 	}
-
-	/// True if it's possible to borrow from this type in Rust
-	///
-	/// Used mainly to decide whether the return type of function should have explicit or elided lifetime.
-	pub fn rust_can_borrow(&self, type_hint: &TypeRefTypeHint) -> bool {
-		match self {
-			TypeRefKind::Array(elem, _) => elem.kind().rust_can_borrow(type_hint),
-			TypeRefKind::StdVector(vec) => vec.element_type().kind().rust_can_borrow(type_hint),
-			TypeRefKind::StdTuple(tup) => tup.elements().iter().any(|e| e.kind().rust_can_borrow(type_hint)),
-			TypeRefKind::RValueReference(inner) => inner.kind().rust_can_borrow(type_hint),
-			TypeRefKind::SmartPtr(ptr) => ptr.pointee().kind().rust_can_borrow(type_hint),
-			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().kind().rust_can_borrow(type_hint),
-			TypeRefKind::Pointer(_) if self.is_rust_by_ptr(type_hint) => false,
-			TypeRefKind::Pointer(_) | TypeRefKind::Reference(_) => true,
-			TypeRefKind::Primitive(_, _)
-			| TypeRefKind::Class(_)
-			| TypeRefKind::Enum(_)
-			| TypeRefKind::Function(_)
-			| TypeRefKind::Generic(_)
-			| TypeRefKind::Ignored => false,
-		}
-	}
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum ExternPassKind {
 	AsIs,
 	ByPtr,
-	/// Value of the type needs to be passed by pointer to a heap-allocated object to and from the C++ side
+	/// Value of the type needs to be passed by the pointer to a heap-allocated object to and from the C++ side
 	ByVoidPtr,
 }
 

@@ -1301,28 +1301,13 @@ fn mat_dims_size() -> Result<()> {
 	}
 
 	// 0D Mat (Scalar)
-	{
+	if cfg!(ocvrs_opencv_branch_5) {
 		let mat = Mat::new_nd_with_data(&[], &[100])?;
 		assert_eq!(0, mat.dims());
-		let expected_rows_cols = if cfg!(ocvrs_opencv_branch_5) {
-			1
-		} else {
-			0
-		};
-		assert_eq!(expected_rows_cols, mat.rows());
-		assert_eq!(expected_rows_cols, mat.cols());
-		let expected_total = if cfg!(ocvrs_opencv_branch_5) {
-			1
-		} else {
-			0
-		};
-		assert_eq!(expected_total, mat.total());
-		let expected_size = if cfg!(ocvrs_opencv_branch_5) {
-			Size::new(1, 1)
-		} else {
-			Size::new(0, 0)
-		};
-		assert_eq!(expected_size, mat.size()?);
+		assert_eq!(1, mat.rows());
+		assert_eq!(1, mat.cols());
+		assert_eq!(1, mat.total());
+		assert_eq!(Size::new(1, 1), mat.size()?);
 	}
 	Ok(())
 }

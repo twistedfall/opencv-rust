@@ -182,7 +182,7 @@ impl<'r> Collector<'r> {
 		Ok(())
 	}
 
-	/// The #no_mangle function in the bindings cause duplicate export names when 2 different version of the crate are used
+	/// The #no_mangle function in the bindings causes duplicate export names when 2 different version of the crate are used
 	/// (https://github.com/twistedfall/opencv-rust/issues/597). This function injects the version of the exported functions with
 	/// a crate version suffix to avoid this conflict. On the C++ side it works with the help of the `OCVRS_FFI_EXPORT_SUFFIX`
 	/// macro which is passed in `build_compiler()`.

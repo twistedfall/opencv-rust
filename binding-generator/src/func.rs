@@ -503,7 +503,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		match self.kind().as_ref() {
 			FuncKind::GenericFunction | FuncKind::GenericInstanceMethod(..) => {
 				let mut out = Vec::with_capacity(8);
-				entity.walk_children_while(|child| {
+				let _ = entity.walk_children_while(|child| {
 					if child.get_kind() == EntityKind::ParmDecl {
 						out.push(child);
 					}

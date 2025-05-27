@@ -11,8 +11,8 @@ use Cow::{Borrowed, Owned};
 
 use super::comment::{render_ref, RenderComment};
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::type_ref::{Lifetime, TypeRefExt};
-use super::{comment, rust_disambiguate_names, rust_disambiguate_names_ref, RustNativeGeneratedElement};
+use super::type_ref::{BorrowKind, Lifetime, TypeRefExt, TypeRefKindExt};
+use super::{comment, rust_disambiguate_names_ref, RustNativeGeneratedElement};
 use crate::field::Field;
 use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritConfig, OperatorKind, ReturnKind};
 use crate::name_pool::NamePool;
@@ -225,61 +225,55 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let safety = self.safety();
 		let identifier = self.identifier();
 
-		let args: Vec<(String, Field)> = rust_disambiguate_names(self.arguments().into_owned()).collect::<Vec<_>>();
+		let args = self.arguments();
 		let as_instance_method = kind.as_instance_method();
 		let mut decl_args = Vec::with_capacity(args.len());
 		let mut pre_call_args = Vec::with_capacity(args.len());
 		let mut call_args = Vec::with_capacity(args.len() + 1);
 		let mut forward_args = Vec::with_capacity(args.len());
 		let mut post_success_call_args = Vec::with_capacity(args.len());
-		let boxed_ref_arg = return_type_ref.type_hint().as_boxed_as_ref();
-		let mut any_arg_can_borrow = false;
+		let (return_lifetime, return_lt_from_args) = return_lifetime(&kind, &args, &return_type_ref);
 		if let Some(cls) = as_instance_method {
 			let constness = self.constness();
 			let cls_type_ref = cls.type_ref().with_inherent_constness(constness);
 			let render_lane = cls_type_ref.render_lane();
 			let render_lane = render_lane.to_dyn();
-			let lt = boxed_ref_arg
-				.filter(|(_, boxed_arg_names, _)| boxed_arg_names.contains(&ARG_OVERRIDE_SELF))
-				.map_or(Lifetime::Elided, |(_, _, lt)| lt);
+			let lt = return_lt_from_args
+				.filter(|from_args| from_args.contains(&ARG_OVERRIDE_SELF))
+				.map_or(Lifetime::Elided, |_| return_lifetime);
 			decl_args.push(render_lane.rust_self_func_decl(lt));
 			call_args.push(render_lane.rust_arg_func_call("self"));
-			any_arg_can_borrow |= !cls_type_ref.kind().is_copy(cls_type_ref.type_hint());
 		}
-		let mut callback_arg_name: Option<&str> = None;
+		let mut callback_arg_name: Option<String> = None;
 		let function_props = FunctionProps {
 			is_infallible: return_kind.is_infallible(),
 		};
-		for (name, arg) in &args {
+		for (name, arg) in rust_disambiguate_names_ref(args.as_ref()) {
 			let arg_type_ref = arg.type_ref();
 			let arg_type_hint = arg_type_ref.type_hint();
 			let arg_as_slice_len = arg_type_hint.as_slice_len();
 			let arg_kind = arg_type_ref.kind();
 			let render_lane = arg_type_ref.render_lane();
 			let render_lane = render_lane.to_dyn();
-			any_arg_can_borrow |= arg_kind.rust_can_borrow(arg_type_hint);
 			if arg.is_user_data() {
-				pre_post_arg_handle(
-					format!(
-						"userdata_arg!({decl} => {callback_name})",
-						decl = arg_type_ref.render_lane().to_dyn().rust_extern_arg_func_decl(name),
-						callback_name = callback_arg_name.expect("Can't get name of the callback arg")
-					),
-					&mut pre_call_args,
-				);
+				pre_call_args.push_code_line_if_not_empty(format!(
+					"userdata_arg!({decl} => {callback_name})",
+					decl = arg_type_ref.render_lane().to_dyn().rust_extern_arg_func_decl(&name),
+					callback_name = callback_arg_name.as_ref().expect("Can't get name of the callback arg")
+				));
 			} else {
-				if arg_kind.is_function() {
-					callback_arg_name = Some(name);
-				}
 				if !arg_as_slice_len.is_some() {
-					let lt = boxed_ref_arg
-						.filter(|(_, boxed_arg_names, _)| boxed_arg_names.contains(&name.as_str()))
-						.map(|(_, _, lt)| lt)
+					let lt = return_lt_from_args
+						.filter(|from_args| from_args.contains(&name.as_str()))
+						.map(|_| return_lifetime)
 						.or_else(|| arg_type_hint.as_explicit_lifetime())
 						.unwrap_or(Lifetime::Elided);
-					decl_args.push(render_lane.rust_arg_func_decl(name, lt).into());
+					decl_args.push(render_lane.rust_arg_func_decl(&name, lt).into());
 				}
-				pre_post_arg_handle(render_lane.rust_arg_pre_call(name, &function_props), &mut pre_call_args);
+				pre_call_args.push_code_line_if_not_empty(render_lane.rust_arg_pre_call(&name, &function_props));
+				if arg_kind.is_function() {
+					callback_arg_name = Some(name.clone());
+				}
 			}
 			if let Some((slice_args, len_div)) = arg_as_slice_len {
 				let arg_is_size_t = arg_kind.is_size_t();
@@ -305,10 +299,10 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 				}
 				call_args.push(slice_len_call);
 			} else {
-				call_args.push(render_lane.rust_arg_func_call(name));
+				call_args.push(render_lane.rust_arg_func_call(&name));
 			}
-			forward_args.push(name.as_str());
-			pre_post_arg_handle(render_lane.rust_arg_post_success_call(name), &mut post_success_call_args);
+			post_success_call_args.push_code_line_if_not_empty(render_lane.rust_arg_post_success_call(&name));
+			forward_args.push(name);
 		}
 		if !return_kind.is_naked() {
 			call_args.push("ocvrs_return.as_mut_ptr()".to_string());
@@ -323,23 +317,6 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			}
 		} else {
 			"pub "
-		};
-		let return_lifetime = match boxed_ref_arg {
-			Some((_, _, lifetime)) => lifetime,
-			None => {
-				if matches!(kind.as_ref(), FuncKind::Function | FuncKind::StaticMethod(_)) {
-					Lifetime::statik()
-				} else if let Some(lt) = return_type_ref
-					.kind()
-					.as_class()
-					.and_then(|cls| cls.rust_lifetime())
-					.filter(|_| !any_arg_can_borrow)
-				{
-					lt
-				} else {
-					Lifetime::Elided
-				}
-			}
 		};
 		let mut return_type_func_decl = return_type_ref.rust_return(FishStyle::No, return_lifetime);
 		if !return_kind.is_infallible() {
@@ -479,9 +456,9 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			let render_lane = arg_type_ref.render_lane();
 			let render_lane = render_lane.to_dyn();
 			decl_args.push(render_lane.cpp_arg_func_decl(name).into_owned());
-			pre_post_arg_handle(render_lane.cpp_arg_pre_call(name), &mut pre_call_args);
+			pre_call_args.push_code_line_if_not_empty(render_lane.cpp_arg_pre_call(name));
 			call_args.push(render_lane.cpp_arg_func_call(name));
-			pre_post_arg_handle(render_lane.cpp_arg_post_call(name), &mut post_call_args);
+			post_call_args.push_code_line_if_not_empty(render_lane.cpp_arg_post_call(name));
 		}
 
 		// return
@@ -540,19 +517,12 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 	}
 }
 
-fn pre_post_arg_handle(mut arg: String, args: &mut Vec<String>) {
-	if !arg.is_empty() {
-		arg.push(';');
-		args.push(arg);
-	}
-}
-
 fn rust_call(
 	f: &Func,
 	identifier: &str,
 	func_name: &str,
 	call_args: &[String],
-	forward_args: &[&str],
+	forward_args: &[String],
 	return_kind: ReturnKind,
 ) -> String {
 	#![allow(clippy::too_many_arguments)]
@@ -575,6 +545,41 @@ fn rust_call(
 		("call_args", &call_args.join(", ")),
 		("forward_args", &forward_args.join(", ")),
 	]))
+}
+
+fn return_lifetime(
+	func_kind: &FuncKind,
+	args: &[Field],
+	return_type_ref: &TypeRef,
+) -> (Lifetime, Option<&'static [&'static str]>) {
+	if let Some((_, args, lifetime)) = return_type_ref.type_hint().as_boxed_as_ref() {
+		(lifetime, Some(args))
+	} else {
+		let lt = match return_type_ref.rust_lifetime_count() {
+			0 => Lifetime::Elided,
+			1 => {
+				let borrow_kind_from_any_arg = func_kind
+					.as_instance_method()
+					.into_iter()
+					.map(|cls| Owned(cls.type_ref()))
+					.chain(args.iter().map(|arg| arg.type_ref()))
+					.fold(BorrowKind::Impossible, |a, arg_type_ref| {
+						a.more_complicated(arg_type_ref.kind().rust_borrow_kind(arg_type_ref.type_hint()))
+					});
+				match borrow_kind_from_any_arg {
+					BorrowKind::FromPointer => return_type_ref
+						.kind()
+						.as_class()
+						.and_then(|cls| cls.rust_lifetime())
+						.unwrap_or(Lifetime::automatic()),
+					BorrowKind::FromLifetime => Lifetime::Elided,
+					BorrowKind::Impossible => Lifetime::statik(),
+				}
+			}
+			2.. => panic!("Rendering of more than 1 lifetime in the function return type is not yet supported"),
+		};
+		(lt, None)
+	}
 }
 
 fn rust_return(
@@ -697,7 +702,7 @@ fn cpp_call(f: &Func, kind: &FuncKind, call_args: &[String], return_type_ref: &T
 	]);
 
 	let (call_tpl, full_tpl) = match f.cpp_body() {
-		FuncCppBody::Auto { .. } => {
+		FuncCppBody::Auto => {
 			if let Some(cls) = kind.as_constructor() {
 				if cls.kind().is_boxed() {
 					(None, Some(Borrowed(&*BOXED_CONSTRUCTOR_TPL)))
@@ -974,5 +979,18 @@ fn companion_func_boxref_mut<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu, '
 		}
 	} else {
 		None
+	}
+}
+
+trait PrePostArgs {
+	fn push_code_line_if_not_empty(&mut self, arg: String);
+}
+
+impl PrePostArgs for Vec<String> {
+	fn push_code_line_if_not_empty(&mut self, mut arg: String) {
+		if !arg.is_empty() {
+			arg.push(';');
+			self.push(arg);
+		}
 	}
 }

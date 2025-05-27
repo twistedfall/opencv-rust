@@ -14,7 +14,7 @@ use crate::{settings, CowMapBorrowedExt, Element, IteratorExt};
 fn render_rust_tpl<'a>(
 	renderer: impl TypeRefRenderer<'a>,
 	type_ref: &TypeRef,
-	lifetime: Lifetime,
+	lifetime: Option<Lifetime>,
 	fish_style: FishStyle,
 ) -> String {
 	let generic_types = type_ref.template_specialization_args();
@@ -37,11 +37,11 @@ fn render_rust_tpl<'a>(
 			TemplateArg::Unknown => None,
 		});
 		let mut generics = generic_types.join(", ");
-		if lifetime.is_explicit() {
+		if let Some(lifetime) = lifetime.filter(|lt| lt.is_explicit()) {
 			generics.insert_str(0, &format!("{lifetime}, "));
 		}
 		format!("{constant_suffix}{fish}<{generics}>", fish = fish_style.rust_qual())
-	} else if lifetime.is_explicit() {
+	} else if let Some(lifetime) = lifetime.filter(|lt| lt.is_explicit()) {
 		format!("{fish}<{lifetime}>", fish = fish_style.rust_qual())
 	} else {
 		"".to_string()
@@ -120,7 +120,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				}
 				TypeRefKind::Class(cls) => {
 					let fish_style = self.name_style.turbo_fish_style();
-					let lifetime = cls.rust_lifetime().map_or(Lifetime::Elided, |_| self.lifetime);
+					let lifetime = cls.rust_lifetime().map(|_| self.lifetime);
 					format!(
 						"{name}{generic}",
 						name = cls.rust_name(self.name_style),

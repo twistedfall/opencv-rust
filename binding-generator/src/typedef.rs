@@ -39,7 +39,7 @@ impl<'tu, 'ge> Typedef<'tu, 'ge> {
 	/// ```
 	pub fn try_new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> NewTypedefResult<'tu, 'ge> {
 		let mut out = NewTypedefResult::Typedef(Self::Clang { entity, gen_env });
-		entity.walk_children_while(|child| {
+		let _ = entity.walk_children_while(|child| {
 			let child_unnamed_or_same_name = child
 				.get_name()
 				.map_or(true, |child_name| Some(child_name) == entity.get_name());

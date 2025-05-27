@@ -139,7 +139,7 @@ impl<'r> BindingGenerator<'r> {
 								if !res.success() {
 									panic!("Failed to run the bindings generator for module: {module}");
 								}
-								eprintln!("=== Generated: {module} in {:?}", module_start.elapsed());
+								eprintln!("=== Generated module bindings: {module} in: {:?}", module_start.elapsed());
 								drop(token); // needed to move the token to the thread
 							}
 						})
