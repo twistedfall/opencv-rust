@@ -1,15 +1,17 @@
 use std::collections::HashMap;
+use std::fs::File;
+use std::io::{BufWriter, Write};
 use std::ops::Deref;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::Instant;
-use std::{env, fs, thread};
+use std::{env, fs, io, thread};
 
 use collector::Collector;
 use opencv_binding_generator::{Generator, IteratorExt};
 
 use super::docs::transfer_bindings_to_docs;
-use super::{files_with_predicate, Library, Result, OUT_DIR, SRC_CPP_DIR, SRC_DIR};
+use super::{files_with_predicate, Library, Result, OUT_DIR, SRC_CPP_DIR, SRC_DIR, SUPPORTED_OPENCV_BRANCHES};
 
 #[path = "generator/collector.rs"]
 mod collector;
@@ -63,6 +65,7 @@ impl<'r> BindingGenerator<'r> {
 			&OUT_DIR,
 		)
 		.collect_bindings()?;
+		self.generate_opencv_branch_cond_macros()?;
 
 		if let Some(target_docs_dir) = target_docs_dir {
 			if !target_docs_dir.exists() {
@@ -71,6 +74,16 @@ impl<'r> BindingGenerator<'r> {
 			transfer_bindings_to_docs(&OUT_DIR, &target_docs_dir);
 		}
 
+		Ok(())
+	}
+
+	fn generate_opencv_branch_cond_macros(&self) -> Result<()> {
+		static COND_MACRO_TPL: &str = include_str!("cond_macros/opencv_branch.rs");
+
+		let mut cond_macros_file = BufWriter::new(File::create(OUT_DIR.join("opencv/cond_macros.rs"))?);
+		for (_, branch) in SUPPORTED_OPENCV_BRANCHES {
+			write_replace(COND_MACRO_TPL, "OPENCV_BRANCH", branch, &mut cond_macros_file)?;
+		}
 		Ok(())
 	}
 
@@ -200,4 +213,15 @@ impl Deref for Jobserver {
 	fn deref(&self) -> &Self::Target {
 		&self.client
 	}
+}
+
+fn write_replace(mut content: &str, search: &str, replace: &str, mut to: impl Write) -> io::Result<()> {
+	while let Some(search_idx) = content.find(search) {
+		let (unchanged_content, new_content) = content.split_at(search_idx);
+		to.write_all(unchanged_content.as_bytes())?;
+		to.write_all(replace.as_bytes())?;
+		content = &new_content[search.len()..];
+	}
+	to.write_all(content.as_bytes())?;
+	Ok(())
 }

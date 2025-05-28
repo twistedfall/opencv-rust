@@ -23,3 +23,6 @@
 pub mod hub {
 	include!(concat!(env!("OUT_DIR"), "/opencv/hub.rs"));
 }
+mod cond_macros {
+	include!(concat!(env!("OUT_DIR"), "/opencv/cond_macros.rs"));
+}
