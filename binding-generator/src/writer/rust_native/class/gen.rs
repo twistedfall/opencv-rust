@@ -502,7 +502,7 @@ mod method {
 	use crate::writer::rust_native::element::RustElement;
 	use crate::writer::rust_native::func::cpp_return_map;
 	use crate::Constness::{Const, Mut};
-	use crate::{Class, Func, NameStyle};
+	use crate::{Class, Func, NameStyle, SupportedModule};
 
 	pub fn default_new<'tu, 'ge>(class: Class<'tu, 'ge>, type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 		Func::new_desc(
@@ -511,7 +511,7 @@ mod method {
 				Const,
 				ReturnKind::InfallibleNaked,
 				"defaultNew",
-				"<unused>",
+				SupportedModule::Core,
 				[],
 				type_ref,
 			)
@@ -527,7 +527,7 @@ mod method {
 				Const,
 				ReturnKind::InfallibleNaked,
 				"implicitClone",
-				"<unused>",
+				SupportedModule::Core,
 				[],
 				type_ref,
 			)
@@ -543,7 +543,7 @@ mod method {
 				Mut,
 				ReturnKind::InfallibleNaked,
 				format!("to_{base_rust_local}"),
-				"<unused>",
+				SupportedModule::Core,
 				[],
 				TypeRef::new_class(base_class),
 			)
@@ -561,7 +561,7 @@ mod method {
 				Mut,
 				ReturnKind::InfallibleNaked,
 				format!("to_{descendant_rust_local}"),
-				"<unused>",
+				SupportedModule::Core,
 				[],
 				TypeRef::new_class(descendant_class),
 			)

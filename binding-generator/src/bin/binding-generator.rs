@@ -5,7 +5,7 @@ use std::ops::ControlFlow;
 use std::path::{Path, PathBuf};
 
 use opencv_binding_generator::writer::RustNativeBindingWriter;
-use opencv_binding_generator::{line_reader, Generator};
+use opencv_binding_generator::{line_reader, Generator, SupportedModule};
 
 fn get_version_header(header_dir: &Path) -> Option<PathBuf> {
 	let out = header_dir.join("opencv2/core/version.hpp");
@@ -69,7 +69,10 @@ fn main() {
 	let src_cpp_dir = PathBuf::from(args.next().expect("2nd argument must be dir with custom cpp"));
 	let out_dir = PathBuf::from(args.next().expect("3rd argument must be output dir"));
 	let module = args.next().expect("4th argument must be module name");
-	let module = module.to_str().expect("Not a valid module name");
+	let module = module
+		.to_str()
+		.and_then(SupportedModule::try_from_opencv_name)
+		.expect("Not a valid module name");
 	let version = get_version_from_headers(&opencv_header_dir).expect("Can't find the version in the headers");
 	let arg_additional_include_dirs = args.next();
 	let additional_include_dirs = arg_additional_include_dirs

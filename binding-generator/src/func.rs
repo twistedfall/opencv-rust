@@ -182,7 +182,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					return_kind: self.return_kind(),
 					cpp_name,
 					rust_custom_leafname: self.rust_custom_leafname().map(Rc::from),
-					rust_module: self.rust_module().into(),
+					rust_module: self.rust_module(),
 					doc_comment,
 					def_loc,
 					rust_generic_decls: Rc::new([]),

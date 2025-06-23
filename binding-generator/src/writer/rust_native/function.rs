@@ -4,11 +4,11 @@ use super::element::RustElement;
 use super::type_ref::{NullabilityExt, TypeRefExt};
 use crate::function::Function;
 use crate::type_ref::{ExternDir, Nullability};
-use crate::{NameStyle, StringExt};
+use crate::{NameStyle, StringExt, SupportedModule};
 
 impl RustElement for Function<'_, '_> {
-	fn rust_module(&self) -> Cow<str> {
-		"<unset>".into()
+	fn rust_module(&self) -> SupportedModule {
+		SupportedModule::Core
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {

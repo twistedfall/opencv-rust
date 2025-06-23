@@ -1,29 +1,31 @@
 use std::collections::HashMap;
 
+use crate::SupportedModule;
+
 pub type FuncRename = HashMap<&'static str, &'static str>;
 
 /// map of functions to rename, key is Func.identifier(), value is new name ("+" will be replaced by the old name)
-pub fn func_rename_factory(module: &str) -> FuncRename {
+pub fn func_rename_factory(module: SupportedModule) -> FuncRename {
 	match module {
-		"aruco" => aruco_factory(),
-		"bioinspired" => bioinspired_factory(),
-		"calib3d" | "calib" | "3d" => calib3d_factory(),
-		"core" => core_factory(),
-		"dnn" => dnn_factory(),
-		"features2d" | "features" => features2d_factory(),
-		"hdf" => hdf_factory(),
-		"highgui" => highgui_factory(),
-		"imgcodecs" => imgcodecs_factory(),
-		"imgproc" => imgproc_factory(),
-		"line_descriptor" => line_descriptor_factory(),
-		"ml" => ml_factory(),
-		"objdetect" => objdetect_factory(),
-		"photo" => photo_factory(),
-		"stitching" => stitching_factory(),
-		"surface_matching" => surface_matching_factory(),
-		"text" => text_factory(),
-		"videoio" => videoio_factory(),
-		"videostab" => videostab_factory(),
+		SupportedModule::Aruco => aruco_factory(),
+		SupportedModule::Bioinspired => bioinspired_factory(),
+		SupportedModule::Calib3d | SupportedModule::Calib | SupportedModule::ThreeD => calib3d_factory(),
+		SupportedModule::Core => core_factory(),
+		SupportedModule::Dnn => dnn_factory(),
+		SupportedModule::Features2d | SupportedModule::Features => features2d_factory(),
+		SupportedModule::Hdf => hdf_factory(),
+		SupportedModule::HighGui => highgui_factory(),
+		SupportedModule::ImgCodecs => imgcodecs_factory(),
+		SupportedModule::ImgProc => imgproc_factory(),
+		SupportedModule::LineDescriptor => line_descriptor_factory(),
+		SupportedModule::Ml => ml_factory(),
+		SupportedModule::ObjDetect => objdetect_factory(),
+		SupportedModule::Photo => photo_factory(),
+		SupportedModule::Stitching => stitching_factory(),
+		SupportedModule::SurfaceMatching => surface_matching_factory(),
+		SupportedModule::Text => text_factory(),
+		SupportedModule::VideoIo => videoio_factory(),
+		SupportedModule::VideoStab => videostab_factory(),
 		_ => FuncRename::default(),
 	}
 }

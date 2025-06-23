@@ -19,7 +19,7 @@ use crate::name_pool::NamePool;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
 use crate::{
 	opencv_module_from_path, settings, Class, CompiledInterpolation, Const, Element, Enum, Func, GeneratedType, GeneratorVisitor,
-	IteratorExt, StrExt, Typedef,
+	IteratorExt, StrExt, SupportedModule, Typedef,
 };
 
 mod abstract_ref_wrapper;
@@ -47,7 +47,7 @@ type UniqueEntries = HashMap<String, String>;
 pub struct RustNativeBindingWriter<'s> {
 	debug: bool,
 	src_cpp_dir: PathBuf,
-	module: &'s str,
+	module: SupportedModule,
 	opencv_version: &'s str,
 	debug_path: PathBuf,
 	out_dir: PathBuf,
@@ -65,9 +65,15 @@ pub struct RustNativeBindingWriter<'s> {
 }
 
 impl<'s> RustNativeBindingWriter<'s> {
-	pub fn new(src_cpp_dir: &Path, out_dir: impl Into<PathBuf>, module: &'s str, opencv_version: &'s str, debug: bool) -> Self {
+	pub fn new(
+		src_cpp_dir: &Path,
+		out_dir: impl Into<PathBuf>,
+		module: SupportedModule,
+		opencv_version: &'s str,
+		debug: bool,
+	) -> Self {
 		let out_dir = out_dir.into();
-		let debug_path = out_dir.join(format!("{module}.log"));
+		let debug_path = out_dir.join(format!("{}.log", module.opencv_name()));
 		#[allow(clippy::collapsible_if)]
 		if false {
 			if debug {
@@ -224,14 +230,15 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 		let prelude = RUST_PRELUDE.interpolate(&HashMap::from([("pub_use_traits", pub_use_traits)]));
 		let comment = RenderComment::new(&self.comment, self.opencv_version);
 		let comment = comment.render_with_comment_marker("//!");
-		let rust_path = self.out_dir.join(format!("{}.rs", self.module));
+		let module_opencv_name = self.module.opencv_name();
+		let rust_path = self.out_dir.join(format!("{module_opencv_name}.rs"));
 		{
 			let mut rust = BufWriter::new(File::create(rust_path).expect("Can't create rust file"));
 			rust
 				.write_all(
 					RUST_HDR
 						.interpolate(&HashMap::from([
-							("static_modules", settings::STATIC_MODULES.iter().join(", ").as_str()),
+							("static_modules", settings::STATIC_RUST_MODULES.iter().join(", ").as_str()),
 							("comment", comment.as_ref()),
 							("prelude", &prelude),
 						]))
@@ -245,17 +252,17 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 			write_lines(&mut rust, self.rust_classes).expect("Can't write classes to rust file");
 		}
 
-		let includes = if self.src_cpp_dir.join(format!("{}.hpp", self.module)).exists() {
-			format!("#include \"{}.hpp\"", self.module)
+		let includes = if self.src_cpp_dir.join(format!("{module_opencv_name}.hpp")).exists() {
+			format!("#include \"{module_opencv_name}.hpp\"")
 		} else {
-			format!("#include \"ocvrs_common.hpp\"\n#include <opencv2/{}.hpp>", self.module)
+			format!("#include \"ocvrs_common.hpp\"\n#include <opencv2/{module_opencv_name}.hpp>")
 		};
 		{
-			let cpp_path = self.out_dir.join(format!("{}.cpp", self.module));
+			let cpp_path = self.out_dir.join(format!("{module_opencv_name}.cpp"));
 			let mut cpp = BufWriter::new(File::create(cpp_path).expect("Can't create cpp file"));
 			cpp.write_all(
 				CPP_HDR
-					.interpolate(&HashMap::from([("module", self.module), ("includes", &includes)]))
+					.interpolate(&HashMap::from([("module", module_opencv_name), ("includes", &includes)]))
 					.as_bytes(),
 			)
 			.expect("Can't write cpp file");
@@ -266,7 +273,7 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 			cpp.write_all(b"}\n").expect("Can't write code wrapper end to cpp file");
 		}
 
-		let externs_path = self.out_dir.join(format!("{}.externs.rs", self.module));
+		let externs_path = self.out_dir.join(format!("{module_opencv_name}.externs.rs"));
 		let mut externs_rs = BufWriter::new(File::create(externs_path).expect("Can't create rust exports file"));
 		write_lines(&mut externs_rs, self.extern_funcs).expect("Can't write extern funcs to file");
 		write_lines(&mut externs_rs, self.extern_classes).expect("Can't write extern classes to file");

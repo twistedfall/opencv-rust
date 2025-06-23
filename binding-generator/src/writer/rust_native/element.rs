@@ -7,27 +7,29 @@ use super::comment::RenderComment;
 use crate::type_ref::FishStyle;
 use crate::{
 	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, GeneratedType, IteratorExt, NameStyle, StringExt,
+	SupportedModule,
 };
 
 pub struct DefaultRustNativeElement;
 
 impl DefaultRustNativeElement {
-	pub fn rust_module(entity: Entity) -> Cow<'static, str> {
+	pub fn rust_module(entity: Entity) -> SupportedModule {
 		entity
 			.get_location()
 			.expect("Can't get location")
 			.get_spelling_location()
 			.file
-			.and_then(|file| opencv_module_from_path(&file.get_path()).map(|m| m.to_string()))
-			.map_or_else(|| Cow::Borrowed("core"), Cow::Owned)
+			.and_then(|file| opencv_module_from_path(&file.get_path()))
+			.unwrap_or(SupportedModule::Core)
 	}
 
 	pub fn rust_module_reference(this: &(impl RustElement + ?Sized)) -> Cow<str> {
 		let module = this.rust_module();
-		if settings::STATIC_MODULES.contains(module.as_ref()) {
-			module
+		let module_rust_safe_name = module.rust_safe_name();
+		if settings::STATIC_RUST_MODULES.contains(module_rust_safe_name) {
+			module_rust_safe_name.into()
 		} else {
-			format!("crate::{}", module_safe_name(module)).into()
+			format!("crate::{}", module_rust_safe_name).into()
 		}
 	}
 
@@ -59,11 +61,11 @@ impl DefaultRustNativeElement {
 				EntityKind::Namespace => {
 					let parent_namespace = parent.get_name().expect("Can't get parent name");
 					let no_skip_prefix = settings::NO_SKIP_NAMESPACE_IN_LOCALNAME
-						.get(module.as_ref())
+						.get(&Some(module))
 						.and_then(|module_specific| module_specific.get(parent_namespace.as_str()))
 						.or_else(|| {
 							settings::NO_SKIP_NAMESPACE_IN_LOCALNAME
-								.get("*")
+								.get(&None)
 								.and_then(|generic| generic.get(parent_namespace.as_str()))
 						});
 					if let Some(&prefix) = no_skip_prefix {
@@ -119,7 +121,7 @@ pub trait RustNativeGeneratedElement {
 }
 
 pub trait RustElement: Element {
-	fn rust_module(&self) -> Cow<str>;
+	fn rust_module(&self) -> SupportedModule;
 
 	fn rust_module_reference(&self) -> Cow<str> {
 		DefaultRustNativeElement::rust_module_reference(self)
@@ -152,13 +154,5 @@ impl<'ne, 'tu: 'ne, 'ge: 'ne> AsRef<dyn RustNativeGeneratedElement + 'ne> for Ge
 			GeneratedType::Tuple(tuple) => tuple,
 			GeneratedType::AbstractRefWrapper(aref) => aref,
 		}
-	}
-}
-
-// There is a mirror function with the same name in the `opencv` crate
-fn module_safe_name(module: Cow<str>) -> Cow<str> {
-	match module.as_ref() {
-		"3d" => Cow::Borrowed("mod_3d"),
-		_ => module,
 	}
 }

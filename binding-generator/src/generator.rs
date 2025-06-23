@@ -17,7 +17,7 @@ use crate::typedef::NewTypedefResult;
 use crate::writer::rust_native::element::RustElement;
 use crate::{
 	get_definition_text, line_reader, settings, AbstractRefWrapper, Class, ClassKindOverride, Const, Element, EntityExt,
-	EntityWalkerExt, EntityWalkerVisitor, Enum, Func, GeneratorEnv, SmartPtr, Tuple, Typedef, Vector,
+	EntityWalkerExt, EntityWalkerVisitor, Enum, Func, GeneratorEnv, SmartPtr, SupportedModule, Tuple, Typedef, Vector,
 };
 
 #[derive(Debug)]
@@ -80,7 +80,7 @@ pub trait GeneratorVisitor<'tu>: Sized {
 /// all or is internal) and calls the corresponding method in [GeneratorVisitor] based on their type. This is the 2nd pass of the
 /// binding generation.
 pub struct OpenCvWalker<'tu, 'r, V> {
-	module: &'r str,
+	module: SupportedModule,
 	opencv_module_header_dir: &'r Path,
 	visitor: V,
 	func_names: NamePool,
@@ -166,7 +166,9 @@ impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'t
 		// method of extracting comments
 		let mut comment = String::with_capacity(2048);
 		let mut found_module_comment = false;
-		let module_path = self.opencv_module_header_dir.join(format!("{}.hpp", self.module));
+		let module_path = self
+			.opencv_module_header_dir
+			.join(format!("{}.hpp", self.module.opencv_name()));
 		if let Ok(module_file) = File::open(module_path).map(BufReader::new) {
 			let mut defgroup_found = false;
 			line_reader(module_file, |line| {
@@ -210,7 +212,7 @@ impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'t
 }
 
 impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
-	pub fn new(module: &'r str, opencv_module_header_dir: &'r Path, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
+	pub fn new(module: SupportedModule, opencv_module_header_dir: &'r Path, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
 		Self {
 			module,
 			opencv_module_header_dir,
@@ -462,7 +464,8 @@ impl Generator {
 	}
 
 	/// Runs the clang header parsing, check for the compilation errors and hands off to `entity_processor`
-	pub fn pre_process(&self, module: &str, panic_on_error: bool, entity_processor: impl FnOnce(Entity)) {
+	pub fn pre_process(&self, module: SupportedModule, panic_on_error: bool, entity_processor: impl FnOnce(Entity)) {
+		let module = module.opencv_name();
 		let index = Index::new(&self.clang, true, false);
 		let mut module_file = self.src_cpp_dir.join(format!("{module}.hpp"));
 		if !module_file.exists() {
@@ -480,7 +483,7 @@ impl Generator {
 	}
 
 	/// Runs the full binding generation process using the supplied `visitor`
-	pub fn generate(&self, module: &str, panic_on_error: bool, visitor: impl for<'tu> GeneratorVisitor<'tu>) {
+	pub fn generate(&self, module: SupportedModule, panic_on_error: bool, visitor: impl for<'tu> GeneratorVisitor<'tu>) {
 		self.pre_process(module, panic_on_error, |root_entity| {
 			let gen_env = GeneratorEnv::global(module, root_entity);
 			let opencv_walker = OpenCvWalker::new(module, &self.opencv_module_header_dir, visitor, gen_env);

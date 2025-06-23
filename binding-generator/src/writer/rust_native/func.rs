@@ -20,7 +20,7 @@ use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
 use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::type_ref::render_lane::FunctionProps;
-use crate::{reserved_rename, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
+use crate::{reserved_rename, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt, SupportedModule};
 
 pub trait FuncExt<'tu, 'ge> {
 	fn companion_functions(&self) -> Vec<Func<'tu, 'ge>>;
@@ -47,10 +47,10 @@ impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
 }
 
 impl RustElement for Func<'_, '_> {
-	fn rust_module(&self) -> Cow<str> {
+	fn rust_module(&self) -> SupportedModule {
 		match self {
 			&Self::Clang { entity, .. } => DefaultRustNativeElement::rust_module(entity),
-			Self::Desc(desc) => desc.rust_module.as_ref().into(),
+			Self::Desc(desc) => desc.rust_module,
 		}
 	}
 
@@ -212,7 +212,7 @@ impl RustElement for Func<'_, '_> {
 
 impl RustNativeGeneratedElement for Func<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
+		format!("{}-{}", self.rust_module().opencv_name(), self.rust_name(NameStyle::decl()))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {

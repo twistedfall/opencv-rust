@@ -11,11 +11,11 @@ use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 use crate::settings::{ARG_OVERRIDE_SELF, CFG_ATTR_ONLY_OPENCV_5};
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
-use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, StringExt, TypeRef, Vector};
+use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, StringExt, SupportedModule, TypeRef, Vector};
 
 impl RustElement for Vector<'_, '_> {
-	fn rust_module(&self) -> Cow<str> {
-		"core".into()
+	fn rust_module(&self) -> SupportedModule {
+		SupportedModule::Core
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
@@ -51,7 +51,7 @@ impl RustElement for Vector<'_, '_> {
 
 impl RustNativeGeneratedElement for Vector<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_element_module(), self.rust_localalias())
+		format!("{}-{}", self.rust_element_module().opencv_name(), self.rust_localalias())
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
@@ -307,13 +307,13 @@ fn is_data_type_or_vec_of_data_type(type_ref: &TypeRef, for_opencv_5: bool) -> b
 }
 
 pub trait VectorExt {
-	fn rust_element_module(&self) -> Cow<str>;
+	fn rust_element_module(&self) -> SupportedModule;
 	fn rust_localalias(&self) -> Cow<str>;
 }
 
 impl VectorExt for Vector<'_, '_> {
-	fn rust_element_module(&self) -> Cow<str> {
-		self.element_type().rust_module().into_owned().into()
+	fn rust_element_module(&self) -> SupportedModule {
+		self.element_type().rust_module()
 	}
 
 	fn rust_localalias(&self) -> Cow<str> {
@@ -322,7 +322,10 @@ impl VectorExt for Vector<'_, '_> {
 }
 
 fn vector_class<'tu, 'ge>(vec_type_ref: &TypeRef) -> Class<'tu, 'ge> {
-	Class::new_desc(ClassDesc::boxed(vec_type_ref.cpp_name(CppNameStyle::Reference), "core"))
+	Class::new_desc(ClassDesc::boxed(
+		vec_type_ref.cpp_name(CppNameStyle::Reference),
+		SupportedModule::Core,
+	))
 }
 
 fn method_new<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
@@ -331,7 +334,7 @@ fn method_new<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'tu
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
 		"cv::new",
-		"core",
+		SupportedModule::Core,
 		[],
 		vec_type_ref,
 	))
@@ -344,7 +347,7 @@ fn method_len<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 			Constness::Const,
 			ReturnKind::InfallibleNaked,
 			"cv::len",
-			"core",
+			SupportedModule::Core,
 			[],
 			TypeRefDesc::size_t(),
 		)
@@ -359,7 +362,7 @@ fn method_is_empty<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 			Constness::Const,
 			ReturnKind::InfallibleNaked,
 			"cv::isEmpty",
-			"core",
+			SupportedModule::Core,
 			[],
 			TypeRefDesc::bool(),
 		)
@@ -374,7 +377,7 @@ fn method_capacity<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 			Constness::Const,
 			ReturnKind::InfallibleNaked,
 			"cv::capacity",
-			"core",
+			SupportedModule::Core,
 			[],
 			TypeRefDesc::size_t(),
 		)
@@ -389,7 +392,7 @@ fn method_shrink_to_fit<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'g
 			Constness::Mut,
 			ReturnKind::InfallibleNaked,
 			"cv::shrinkToFit",
-			"core",
+			SupportedModule::Core,
 			[],
 			TypeRefDesc::void(),
 		)
@@ -404,7 +407,7 @@ fn method_reserve<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 			Constness::Mut,
 			ReturnKind::InfallibleNaked,
 			"cv::reserve",
-			"core",
+			SupportedModule::Core,
 			[Field::new_desc(FieldDesc::new("additional", TypeRefDesc::size_t()))],
 			TypeRefDesc::void(),
 		)
@@ -421,7 +424,7 @@ fn method_remove<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 			Constness::Mut,
 			ReturnKind::InfallibleNaked,
 			"cv::remove",
-			"core",
+			SupportedModule::Core,
 			[Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
 			TypeRefDesc::void(),
 		)
@@ -444,7 +447,7 @@ fn method_swap<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_is_bool: bool) -
 			Constness::Mut,
 			ReturnKind::InfallibleNaked,
 			"cv::swap",
-			"core",
+			SupportedModule::Core,
 			[
 				Field::new_desc(FieldDesc::new("index1", TypeRefDesc::size_t())),
 				Field::new_desc(FieldDesc::new("index2", TypeRefDesc::size_t())),
@@ -463,7 +466,7 @@ fn method_clear<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
 		"cv::clear",
-		"core",
+		SupportedModule::Core,
 		[],
 		TypeRefDesc::void(),
 	))
@@ -476,7 +479,7 @@ fn method_push<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'t
 			Constness::Mut,
 			ReturnKind::InfallibleNaked,
 			"cv::push",
-			"core",
+			SupportedModule::Core,
 			[Field::new_desc(FieldDesc::new(
 				"val",
 				element_type.with_inherent_constness(Constness::Const),
@@ -494,7 +497,7 @@ fn method_insert<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<
 			Constness::Mut,
 			ReturnKind::InfallibleNaked,
 			"cv::insert",
-			"core",
+			SupportedModule::Core,
 			[
 				Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
 				Field::new_desc(FieldDesc::new("val", element_type.with_inherent_constness(Constness::Const))),
@@ -514,7 +517,7 @@ fn method_get<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu
 			Constness::Const,
 			ReturnKind::InfallibleViaArg,
 			"cv::get",
-			"core",
+			SupportedModule::Core,
 			[Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
 			element_type,
 		)
@@ -529,7 +532,7 @@ fn method_set<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu
 			Constness::Mut,
 			ReturnKind::InfallibleNaked,
 			"cv::set",
-			"core",
+			SupportedModule::Core,
 			[
 				Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
 				Field::new_desc(FieldDesc::new(
@@ -556,7 +559,7 @@ fn method_clone<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'
 			Constness::Const,
 			ReturnKind::InfallibleNaked,
 			"cv::clone",
-			"core",
+			SupportedModule::Core,
 			[],
 			vec_type_ref,
 		)
@@ -570,7 +573,7 @@ fn method_data<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'t
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
 		"cv::data",
-		"core",
+		SupportedModule::Core,
 		[],
 		TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Const))
 			.with_type_hint(TypeRefTypeHint::CharPtrSingleChar),
@@ -584,7 +587,7 @@ fn method_data_mut<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRe
 			Constness::Mut,
 			ReturnKind::InfallibleNaked,
 			"cv::dataMut",
-			"core",
+			SupportedModule::Core,
 			[],
 			TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Mut))
 				.with_type_hint(TypeRefTypeHint::CharPtrSingleChar),
@@ -600,7 +603,7 @@ fn method_from_slice<'tu, 'ge>(vec_type_ref: TypeRef<'tu, 'ge>, element_type: Ty
 			Constness::Const,
 			ReturnKind::InfallibleNaked,
 			"cv::fromSlice",
-			"core",
+			SupportedModule::Core,
 			[
 				Field::new_desc(FieldDesc::new(
 					"data",
@@ -623,7 +626,7 @@ fn method_input_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>, cfg_attr: Option<
 			Constness::Const,
 			ReturnKind::Fallible,
 			"cv::inputArray",
-			"core",
+			SupportedModule::Core,
 			[],
 			TypeRefDesc::cv_input_array()
 				.with_inherent_constness(Constness::Const)
@@ -645,7 +648,7 @@ fn method_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>, cfg_attr: Option
 			Constness::Mut,
 			ReturnKind::Fallible,
 			"cv::outputArray",
-			"core",
+			SupportedModule::Core,
 			[],
 			TypeRefDesc::cv_output_array()
 				.with_inherent_constness(Constness::Mut)
@@ -667,7 +670,7 @@ fn method_input_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>, cfg_attr: 
 			Constness::Mut,
 			ReturnKind::Fallible,
 			"cv::inputOutputArray",
-			"core",
+			SupportedModule::Core,
 			[],
 			TypeRefDesc::cv_input_output_array()
 				.with_inherent_constness(Constness::Mut)

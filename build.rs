@@ -10,6 +10,7 @@ use generator::BindingGenerator;
 use header::IncludePath;
 use library::Library;
 use once_cell::sync::Lazy;
+use opencv_binding_generator::SupportedModule;
 use semver::{Version, VersionReq};
 
 #[path = "build/binding-generator.rs"]
@@ -62,82 +63,80 @@ static AFFECTING_ENV_VARS: [&str; 18] = [
 
 static SUPPORTED_OPENCV_BRANCHES: [(&str, &str); 3] = [("~3.4", "34"), ("~4", "4"), ("~5", "5")];
 
-static SUPPORTED_MODULES: [&str; 73] = [
-	"3d",
-	"alphamat",
-	"aruco",
-	"aruco_detector",
-	"barcode",
-	"bgsegm",
-	"bioinspired",
-	"calib",
-	"calib3d",
-	// "cannops",
-	"ccalib",
-	"core",
-	"cudaarithm",
-	"cudabgsegm",
-	"cudacodec",
-	"cudafeatures2d",
-	"cudafilters",
-	"cudaimgproc",
-	"cudalegacy",
-	"cudaobjdetect",
-	"cudaoptflow",
-	"cudastereo",
-	"cudawarping",
-	// "cudev",
-	"cvv",
-	"dnn",
-	"dnn_superres",
-	"dpm",
-	"face",
-	"features",
-	"features2d",
-	"flann",
-	"freetype",
-	"fuzzy",
-	"gapi",
-	"hdf",
-	"hfs",
-	"highgui",
-	"img_hash",
-	"imgcodecs",
-	"imgproc",
-	"intensity_transform",
-	"line_descriptor",
-	"mcc",
-	"ml",
-	"objdetect",
-	"optflow",
-	"ovis",
-	"phase_unwrapping",
-	"photo",
-	"plot",
-	"quality",
-	"rapid",
-	"rgbd",
-	"saliency",
-	"sfm",
-	"shape",
-	"signal",
-	"stereo",
-	"stitching",
-	"structured_light",
-	"superres",
-	"surface_matching",
-	"text",
-	"tracking",
-	"video",
-	"videoio",
-	"videostab",
-	"viz",
-	"wechat_qrcode",
-	"xfeatures2d",
-	"ximgproc",
-	"xobjdetect",
-	"xphoto",
-	"xstereo",
+static SUPPORTED_MODULES: [SupportedModule; 73] = [
+	SupportedModule::ThreeD,
+	SupportedModule::AlphaMat,
+	SupportedModule::Aruco,
+	SupportedModule::ArucoDetector,
+	SupportedModule::Barcode,
+	SupportedModule::BgSegm,
+	SupportedModule::Bioinspired,
+	SupportedModule::Calib,
+	SupportedModule::Calib3d,
+	SupportedModule::CCalib,
+	SupportedModule::Core,
+	SupportedModule::CudaArithm,
+	SupportedModule::CudaBgSegm,
+	SupportedModule::CudaCodec,
+	SupportedModule::CudaFeatures2d,
+	SupportedModule::CudaFilters,
+	SupportedModule::CudaImgProc,
+	SupportedModule::CudaLegacy,
+	SupportedModule::CudaObjDetect,
+	SupportedModule::CudaOptFlow,
+	SupportedModule::CudaStereo,
+	SupportedModule::CudaWarping,
+	SupportedModule::Cvv,
+	SupportedModule::Dnn,
+	SupportedModule::DnnSuperRes,
+	SupportedModule::Dpm,
+	SupportedModule::Face,
+	SupportedModule::Features,
+	SupportedModule::Features2d,
+	SupportedModule::Flann,
+	SupportedModule::Freetype,
+	SupportedModule::Fuzzy,
+	SupportedModule::Gapi,
+	SupportedModule::Hdf,
+	SupportedModule::Hfs,
+	SupportedModule::HighGui,
+	SupportedModule::ImgHash,
+	SupportedModule::ImgCodecs,
+	SupportedModule::ImgProc,
+	SupportedModule::IntensityTransform,
+	SupportedModule::LineDescriptor,
+	SupportedModule::Mcc,
+	SupportedModule::Ml,
+	SupportedModule::ObjDetect,
+	SupportedModule::OptFlow,
+	SupportedModule::Ovis,
+	SupportedModule::PhaseUnwrapping,
+	SupportedModule::Photo,
+	SupportedModule::Plot,
+	SupportedModule::Quality,
+	SupportedModule::Rapid,
+	SupportedModule::Rgbd,
+	SupportedModule::Saliency,
+	SupportedModule::Sfm,
+	SupportedModule::Shape,
+	SupportedModule::Signal,
+	SupportedModule::Stereo,
+	SupportedModule::Stitching,
+	SupportedModule::StructuredLight,
+	SupportedModule::SuperRes,
+	SupportedModule::SurfaceMatching,
+	SupportedModule::Text,
+	SupportedModule::Tracking,
+	SupportedModule::Video,
+	SupportedModule::VideoIo,
+	SupportedModule::VideoStab,
+	SupportedModule::Viz,
+	SupportedModule::WechatQrCode,
+	SupportedModule::XFeatures2d,
+	SupportedModule::XImgProc,
+	SupportedModule::XObjDetect,
+	SupportedModule::XPhoto,
+	SupportedModule::XStereo,
 ];
 
 static SUPPORTED_INHERENT_FEATURES: [&str; 2] = ["hfloat", "opencl"];
@@ -170,13 +169,13 @@ fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Re
 fn make_modules_and_alises(
 	opencv_dir: &Path,
 	opencv_version: &Version,
-) -> Result<(Vec<String>, HashMap<&'static str, &'static str>)> {
-	let enable_modules = ["core".to_string()]
+) -> Result<(Vec<SupportedModule>, HashMap<SupportedModule, SupportedModule>)> {
+	let enable_modules = [SupportedModule::Core]
 		.into_iter()
 		.chain(env::vars_os().filter_map(|(k, _)| {
 			k.to_str()
 				.and_then(|s| s.strip_prefix("CARGO_FEATURE_"))
-				.map(str::to_lowercase)
+				.and_then(|s| SupportedModule::try_from_opencv_name(&s.to_lowercase()))
 		}))
 		.collect::<HashSet<_>>();
 
@@ -185,18 +184,20 @@ fn make_modules_and_alises(
 			entry
 				.file_stem()
 				.and_then(OsStr::to_str)
-				.filter(|&m| enable_modules.contains(m))
-				.map(str::to_string)
+				.and_then(SupportedModule::try_from_opencv_name)
+				.filter(|m| enable_modules.contains(m))
 		})
 		.collect::<Vec<_>>();
 
-	let aliases =
-		if opencv_version.major == 5 && modules.iter().any(|x| x == "features2d") && modules.iter().any(|x| x == "features") {
-			// In OpenCV 5 `features2d` is a compatibility header that just includes `features.hpp`, and they don't work together
-			HashMap::from([("features2d", "features")])
-		} else {
-			HashMap::new()
-		};
+	let aliases = if opencv_version.major == 5
+		&& modules.iter().any(|x| matches!(x, SupportedModule::Features2d))
+		&& modules.iter().any(|x| matches!(x, SupportedModule::Features))
+	{
+		// In OpenCV 5 `features2d` is a compatibility header that just includes `features.hpp`, and they don't work together
+		HashMap::from([(SupportedModule::Features2d, SupportedModule::Features)])
+	} else {
+		HashMap::new()
+	};
 
 	modules.sort_unstable();
 	Ok((modules, aliases))
@@ -240,9 +241,9 @@ fn emit_inherent_features(opencv: &Library) {
 	}
 }
 
-fn emit_modules(modules: &[String]) {
+fn emit_modules(modules: &[SupportedModule]) {
 	for module in modules {
-		println!("cargo::rustc-cfg=ocvrs_has_module_{module}");
+		println!("cargo::rustc-cfg=ocvrs_has_module_{}", module.opencv_name());
 	}
 }
 
@@ -330,11 +331,12 @@ fn target_os_windows() -> &'static str {
 	}
 }
 
-fn build_wrapper(mut cc: cc::Build, modules: &[String], module_aliases: &HashMap<&str, &str>) {
+fn build_wrapper(mut cc: cc::Build, modules: &[SupportedModule], module_aliases: &HashMap<SupportedModule, SupportedModule>) {
 	eprintln!("=== Compiler information: {:#?}", cc.get_compiler());
-	for module in modules.iter().filter(|m| !module_aliases.contains_key(m.as_str())) {
-		cc.file(OUT_DIR.join(format!("{module}.cpp")));
-		let manual_cpp = SRC_CPP_DIR.join(format!("manual-{module}.cpp"));
+	for module in modules.iter().filter(|m| !module_aliases.contains_key(m)) {
+		let module_opencv_name = module.opencv_name();
+		cc.file(OUT_DIR.join(format!("{module_opencv_name}.cpp")));
+		let manual_cpp = SRC_CPP_DIR.join(format!("manual-{module_opencv_name}.cpp"));
 		if manual_cpp.exists() {
 			cc.file(manual_cpp);
 		}
@@ -355,7 +357,7 @@ fn main() -> Result<()> {
 		println!("cargo::rustc-check-cfg=cfg(ocvrs_opencv_branch_{branch})");
 	}
 	for module in SUPPORTED_MODULES {
-		println!("cargo::rustc-check-cfg=cfg(ocvrs_has_module_{module})");
+		println!("cargo::rustc-check-cfg=cfg(ocvrs_has_module_{})", module.opencv_name());
 	}
 	for inherent_feature in SUPPORTED_INHERENT_FEATURES {
 		println!("cargo::rustc-check-cfg=cfg(ocvrs_has_inherent_feature_{inherent_feature})");

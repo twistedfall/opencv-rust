@@ -69,6 +69,7 @@ pub use property_tweaks::{property_tweaks_factory, PropertyReadWrite, PropertyTw
 
 use crate::func::{FuncMatcher, UsageTracker};
 use crate::type_ref::TypeRef;
+use crate::SupportedModule;
 
 mod argument_names;
 mod argument_override;
@@ -132,7 +133,7 @@ impl Settings {
 		}
 	}
 
-	pub fn for_module(module: &str) -> Self {
+	pub fn for_module(module: SupportedModule) -> Self {
 		Self {
 			arg_override: arg_override_factory(module),
 			return_override: return_override_factory(module),
@@ -215,7 +216,7 @@ pub static PRIMITIVE_TYPEDEFS: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| 
 	])
 });
 
-pub static STATIC_MODULES: Lazy<BTreeSet<&str>> = Lazy::new(|| BTreeSet::from(["core", "sys", "types"]));
+pub static STATIC_RUST_MODULES: Lazy<BTreeSet<&str>> = Lazy::new(|| BTreeSet::from(["core", "sys", "types"]));
 
 /// Types that can be used as `Mat` element
 /// cpp_name(Reference)
@@ -251,23 +252,23 @@ pub static DATA_TYPES: Lazy<HashSet<&str>> = Lazy::new(|| {
 pub static DATA_TYPES_5_0: Lazy<HashSet<&str>> =
 	Lazy::new(|| HashSet::from(["uint32_t", "bfloat", "bfloat16_t", "uint64_t", "int64_t", "bool"]));
 
-pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str>>> = Lazy::new(|| {
+pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<Option<SupportedModule>, HashMap<&str, &str>>> = Lazy::new(|| {
 	HashMap::from([
-		("*", HashMap::from([("detail", "Detail")])),
-		("calib3d", HashMap::from([("fisheye", "Fisheye")])),
-		("cudabgsegm", HashMap::from([("cuda", "CUDA")])),
-		("cudacodec", HashMap::from([("cudacodec", "CUDA")])),
-		("cudafeatures2d", HashMap::from([("cuda", "CUDA")])),
-		("cudaimgproc", HashMap::from([("cuda", "CUDA")])),
-		("cudalegacy", HashMap::from([("cuda", "CUDA")])),
-		("cudaobjdetect", HashMap::from([("cuda", "CUDA")])),
-		("cudaoptflow", HashMap::from([("cuda", "CUDA")])),
-		("cudastereo", HashMap::from([("cuda", "CUDA")])),
-		("gapi", HashMap::from([("imgproc", "ImgProc")])),
-		("mcc", HashMap::from([("mcc", "MCC")])),
-		("rapid", HashMap::from([("rapid", "Rapid")])),
+		(None, HashMap::from([("detail", "Detail")])),
+		(Some(SupportedModule::Calib3d), HashMap::from([("fisheye", "Fisheye")])),
+		(Some(SupportedModule::CudaBgSegm), HashMap::from([("cuda", "CUDA")])),
+		(Some(SupportedModule::CudaCodec), HashMap::from([("cudacodec", "CUDA")])),
+		(Some(SupportedModule::CudaFeatures2d), HashMap::from([("cuda", "CUDA")])),
+		(Some(SupportedModule::CudaImgProc), HashMap::from([("cuda", "CUDA")])),
+		(Some(SupportedModule::CudaLegacy), HashMap::from([("cuda", "CUDA")])),
+		(Some(SupportedModule::CudaObjDetect), HashMap::from([("cuda", "CUDA")])),
+		(Some(SupportedModule::CudaOptFlow), HashMap::from([("cuda", "CUDA")])),
+		(Some(SupportedModule::CudaStereo), HashMap::from([("cuda", "CUDA")])),
+		(Some(SupportedModule::Gapi), HashMap::from([("imgproc", "ImgProc")])),
+		(Some(SupportedModule::Mcc), HashMap::from([("mcc", "MCC")])),
+		(Some(SupportedModule::Rapid), HashMap::from([("rapid", "Rapid")])),
 		(
-			"rgbd",
+			Some(SupportedModule::Rgbd),
 			HashMap::from([
 				("dynafu", "Dynafu"),
 				("kinfu", "Kinfu"),
@@ -275,8 +276,8 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str
 				("linemod", "LineMod"),
 			]),
 		),
-		("stitching", HashMap::from([("fisheye", "Fisheye")])),
-		("superres", HashMap::from([("superres", "SuperRes")])),
+		(Some(SupportedModule::Stitching), HashMap::from([("fisheye", "Fisheye")])),
+		(Some(SupportedModule::SuperRes), HashMap::from([("superres", "SuperRes")])),
 	])
 });
 

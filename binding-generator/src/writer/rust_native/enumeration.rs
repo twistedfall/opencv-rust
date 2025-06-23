@@ -7,10 +7,10 @@ use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
-use crate::{CompiledInterpolation, EntityElement, Enum, StrExt};
+use crate::{CompiledInterpolation, EntityElement, Enum, StrExt, SupportedModule};
 
 impl RustElement for Enum<'_> {
-	fn rust_module(&self) -> Cow<str> {
+	fn rust_module(&self) -> SupportedModule {
 		DefaultRustNativeElement::rust_module(self.entity())
 	}
 
@@ -25,7 +25,7 @@ impl RustElement for Enum<'_> {
 
 impl RustNativeGeneratedElement for Enum<'_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
+		format!("{}-{}", self.rust_module().opencv_name(), self.rust_name(NameStyle::decl()))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {

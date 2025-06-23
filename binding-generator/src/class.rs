@@ -111,7 +111,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => TypeRef::new(entity.get_type().expect("Can't get class type"), gen_env),
-			Self::Desc(desc) => TypeRef::guess(desc.cpp_fullname.as_ref(), Rc::clone(&desc.rust_module)),
+			Self::Desc(desc) => TypeRef::guess(desc.cpp_fullname.as_ref(), desc.rust_module),
 		}
 	}
 
@@ -421,7 +421,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				let accessor_generator = move |fld: &Field<'tu, 'ge>| {
 					let doc_comment = Rc::from(fld.doc_comment());
 					let def_loc = fld.file_line_name().location;
-					let rust_module = Rc::from(fld.rust_module());
+					let rust_module = fld.rust_module();
 					let mut fld_type_ref = fld.type_ref();
 					let fld_refname = fld.cpp_name(CppNameStyle::Reference);
 					if let Some(type_hint) = gen_env.settings.property_override.get(fld_refname.as_ref()) {
@@ -457,7 +457,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 										Constness::Const,
 										return_kind,
 										fld_declname,
-										Rc::clone(&rust_module),
+										rust_module,
 										[],
 										fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
 									)
@@ -476,7 +476,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 										Constness::Mut,
 										return_kind,
 										format!("{fld_declname}Mut"),
-										Rc::clone(&rust_module),
+										rust_module,
 										[],
 										fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Mut),
 									)
@@ -497,7 +497,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 										fld_const,
 										return_kind,
 										fld_declname,
-										Rc::clone(&rust_module),
+										rust_module,
 										[],
 										fld_type_ref.as_ref().clone(),
 									)
@@ -526,7 +526,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								Constness::Mut,
 								ReturnKind::InfallibleNaked,
 								format!("set{first_letter}{rest}"),
-								Rc::clone(&rust_module),
+								rust_module,
 								[Field::new_desc(FieldDesc {
 									cpp_fullname: "val".into(),
 									type_ref: fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),

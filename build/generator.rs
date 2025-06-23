@@ -8,22 +8,26 @@ use std::time::Instant;
 use std::{env, fs, io, thread};
 
 use collector::Collector;
-use opencv_binding_generator::{Generator, IteratorExt};
+use opencv_binding_generator::{Generator, IteratorExt, SupportedModule};
 
 use super::docs::transfer_bindings_to_docs;
-use super::{files_with_predicate, Library, Result, OUT_DIR, SRC_CPP_DIR, SRC_DIR, SUPPORTED_OPENCV_BRANCHES};
+use super::{files_with_predicate, Library, Result, OUT_DIR, SRC_CPP_DIR, SRC_DIR, SUPPORTED_MODULES, SUPPORTED_OPENCV_BRANCHES};
 
 #[path = "generator/collector.rs"]
 mod collector;
 
 pub struct BindingGenerator<'r> {
 	build_script_path: &'r Path,
-	modules: &'r [String],
-	module_aliases: &'r HashMap<&'r str, &'r str>,
+	modules: &'r [SupportedModule],
+	module_aliases: &'r HashMap<SupportedModule, SupportedModule>,
 }
 
 impl<'r> BindingGenerator<'r> {
-	pub fn new(build_script_path: &'r Path, modules: &'r [String], module_aliases: &'r HashMap<&'r str, &'r str>) -> Self {
+	pub fn new(
+		build_script_path: &'r Path,
+		modules: &'r [SupportedModule],
+		module_aliases: &'r HashMap<SupportedModule, SupportedModule>,
+	) -> Self {
 		Self {
 			build_script_path,
 			modules,
@@ -66,6 +70,7 @@ impl<'r> BindingGenerator<'r> {
 		)
 		.collect_bindings()?;
 		self.generate_opencv_branch_cond_macros()?;
+		self.generate_opencv_module_cond_macros()?;
 
 		if let Some(target_docs_dir) = target_docs_dir {
 			if !target_docs_dir.exists() {
@@ -83,6 +88,16 @@ impl<'r> BindingGenerator<'r> {
 		let mut cond_macros_file = BufWriter::new(File::create(OUT_DIR.join("opencv/cond_macros.rs"))?);
 		for (_, branch) in SUPPORTED_OPENCV_BRANCHES {
 			write_replace(COND_MACRO_TPL, "OPENCV_BRANCH", branch, &mut cond_macros_file)?;
+		}
+		Ok(())
+	}
+
+	fn generate_opencv_module_cond_macros(&self) -> Result<()> {
+		static COND_MACRO_TPL: &str = include_str!("cond_macros/opencv_module.rs");
+
+		let mut cond_macros_file = BufWriter::new(File::options().append(true).open(OUT_DIR.join("opencv/cond_macros.rs"))?);
+		for module in SUPPORTED_MODULES {
+			write_replace(COND_MACRO_TPL, "OPENCV_MODULE", module.opencv_name(), &mut cond_macros_file)?;
 		}
 		Ok(())
 	}
@@ -119,8 +134,9 @@ impl<'r> BindingGenerator<'r> {
 				.iter()
 				.map(|module| {
 					let token = job_server.acquire().expect("Can't acquire token from job server");
+					let module_opencv_name = module.opencv_name();
 					thread::Builder::new()
-						.name(format!("gen-{module}"))
+						.name(format!("gen-{module_opencv_name}"))
 						.spawn_scoped(scope, {
 							let additional_include_dirs = additional_include_dirs.as_str();
 							move || {
@@ -130,16 +146,19 @@ impl<'r> BindingGenerator<'r> {
 									.arg(opencv_header_dir)
 									.arg(&*SRC_CPP_DIR)
 									.arg(&*OUT_DIR)
-									.arg(module)
+									.arg(module_opencv_name)
 									.arg(additional_include_dirs);
 								eprintln!("=== Running: {bin_generator:?}");
-								let res = bin_generator
-									.status()
-									.unwrap_or_else(|e| panic!("Can't run bindings generator for module: {module}, error: {e}"));
+								let res = bin_generator.status().unwrap_or_else(|e| {
+									panic!("Can't run bindings generator for module: {module_opencv_name}, error: {e}")
+								});
 								if !res.success() {
-									panic!("Failed to run the bindings generator for module: {module}");
+									panic!("Failed to run the bindings generator for module: {module_opencv_name}");
 								}
-								eprintln!("=== Generated module bindings: {module} in: {:?}", module_start.elapsed());
+								eprintln!(
+									"=== Generated module bindings: {module_opencv_name} in: {:?}",
+									module_start.elapsed()
+								);
 								drop(token); // needed to move the token to the thread
 							}
 						})

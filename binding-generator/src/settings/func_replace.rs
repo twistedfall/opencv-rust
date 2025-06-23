@@ -4,15 +4,15 @@ use std::collections::HashMap;
 use crate::class::ClassDesc;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncMatcher, FuncRustBody, FuncRustExtern, InheritConfig, ReturnKind};
 use crate::type_ref::{Constness, TypeRef};
-use crate::Func;
+use crate::{Func, SupportedModule};
 
 pub type FuncReplace = FuncMatcher<'static, FuncInheritFactory>;
 
 pub type FuncInheritFactory = for<'tu, 'ge> fn(&Func<'tu, 'ge>) -> Func<'tu, 'ge>;
 
-pub fn func_replace_factory(module: &str) -> FuncReplace {
+pub fn func_replace_factory(module: SupportedModule) -> FuncReplace {
 	match module {
-		"core" => core_factory(),
+		SupportedModule::Core => core_factory(),
 		_ => FuncReplace::empty(),
 	}
 }
@@ -33,7 +33,7 @@ fn core_factory() -> FuncReplace {
 			constness,
 			ReturnKind::Fallible,
 			"at",
-			"core",
+			SupportedModule::Core,
 			[],
 			TypeRef::new_pointer(TypeRef::new_generic("T").with_inherent_constness(constness)),
 		)

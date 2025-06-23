@@ -5,7 +5,7 @@ use std::path::Path;
 use clang::diagnostic::Severity;
 use clang::{Clang, Entity, Index};
 use opencv_binding_generator::writer::rust_native::element::RustNativeGeneratedElement;
-use opencv_binding_generator::{EntityWalkerExt, Func, GeneratorEnv, GeneratorVisitor, OpenCvWalker};
+use opencv_binding_generator::{EntityWalkerExt, Func, GeneratorEnv, GeneratorVisitor, OpenCvWalker, SupportedModule};
 use tempfile::TempDir;
 
 fn clang_parse(code: &str, op: impl FnOnce(Entity)) {
@@ -63,7 +63,7 @@ fn extract_functions(code: &str, cb: impl FnMut(Func)) {
 	clang_parse(code, |root_tu| {
 		let gen_env = GeneratorEnv::empty();
 		let visitor = FunctionExtractor { cb };
-		let opencv_walker = OpenCvWalker::new("core", Path::new(""), visitor, gen_env);
+		let opencv_walker = OpenCvWalker::new(SupportedModule::Core, Path::new(""), visitor, gen_env);
 
 		root_tu.walk_opencv_entities(opencv_walker);
 	});

@@ -6,11 +6,13 @@ use std::path::Path;
 use std::time::Instant;
 use std::{fs, io};
 
+use opencv_binding_generator::SupportedModule;
+
 use super::super::{files_with_extension, Result};
 
 pub struct Collector<'r> {
-	modules: &'r [String],
-	module_aliases: &'r HashMap<&'r str, &'r str>,
+	modules: &'r [SupportedModule],
+	module_aliases: &'r HashMap<SupportedModule, SupportedModule>,
 	ffi_export_suffix: &'r str,
 	target_module_dir: &'r Path,
 	manual_dir: &'r Path,
@@ -19,8 +21,8 @@ pub struct Collector<'r> {
 
 impl<'r> Collector<'r> {
 	pub fn new(
-		modules: &'r [String],
-		module_aliases: &'r HashMap<&'r str, &'r str>,
+		modules: &'r [SupportedModule],
+		module_aliases: &'r HashMap<SupportedModule, SupportedModule>,
 		ffi_export_suffix: &'r str,
 		target_module_dir: &'r Path,
 		manual_dir: &'r Path,
@@ -44,13 +46,13 @@ impl<'r> Collector<'r> {
 			let _ = fs::remove_file(path);
 		}
 
-		fn write_module_include(write: &mut BufWriter<File>, module: &str) -> Result<()> {
+		fn write_module_include(write: &mut BufWriter<File>, rust_module: &str) -> Result<()> {
 			// Use include instead of #[path] attribute because rust-analyzer doesn't handle #[path] inside other include! too well:
 			// https://github.com/twistedfall/opencv-rust/issues/418
 			// https://github.com/rust-lang/rust-analyzer/issues/11682
 			Ok(writeln!(
 				write,
-				r#"include!(concat!(env!("OUT_DIR"), "/opencv/{module}.rs"));"#
+				r#"include!(concat!(env!("OUT_DIR"), "/opencv/{rust_module}.rs"));"#
 			)?)
 		}
 
@@ -66,11 +68,16 @@ impl<'r> Collector<'r> {
 
 		for module in self.modules {
 			// add module entry to hub.rs
-			if let Some(alias) = self.module_aliases.get(module.as_str()) {
-				writeln!(&mut hub_rs, "pub use {alias} as {module};",)?
+			if let Some(alias) = self.module_aliases.get(module) {
+				writeln!(
+					&mut hub_rs,
+					"pub use {} as {};",
+					alias.rust_safe_name(),
+					module.rust_safe_name()
+				)?
 			} else {
-				write_module_include(&mut hub_rs, module)?;
-				self.collect_module(module, &mut sys_rs, &mut types_rs)?
+				write_module_include(&mut hub_rs, module.opencv_name())?;
+				self.collect_module(*module, &mut sys_rs, &mut types_rs)?
 			}
 		}
 		writeln!(hub_rs, "pub mod types {{")?;
@@ -90,7 +97,7 @@ impl<'r> Collector<'r> {
 		// write hub_prelude that imports all module-specific preludes
 		writeln!(hub_rs, "pub mod hub_prelude {{")?;
 		for module in self.modules {
-			writeln!(hub_rs, "\tpub use super::{}::prelude::*;", module_safe_name(module))?;
+			writeln!(hub_rs, "\tpub use super::{}::prelude::*;", module.rust_safe_name())?;
 		}
 		writeln!(hub_rs, "}}")?;
 		self.inject_ffi_exports(&mut hub_rs)?;
@@ -98,11 +105,13 @@ impl<'r> Collector<'r> {
 		Ok(())
 	}
 
-	fn collect_module(&self, module: &str, sys_rs: &mut impl Write, types_rs: &mut impl Write) -> Result<()> {
+	fn collect_module(&self, module: SupportedModule, sys_rs: &mut impl Write, types_rs: &mut impl Write) -> Result<()> {
+		let module_opencv_name = module.opencv_name();
+		let module_rust_safe_name = module.rust_safe_name();
 		// merge multiple *-type.cpp files into a single module_types.hpp
-		let module_cpp = self.out_dir.join(format!("{module}.cpp"));
+		let module_cpp = self.out_dir.join(format!("{module_opencv_name}.cpp"));
 		if module_cpp.is_file() {
-			let module_types_cpp = self.out_dir.join(format!("{module}_types.hpp"));
+			let module_types_cpp = self.out_dir.join(format!("{module_opencv_name}_types.hpp"));
 			let mut module_types_file = BufWriter::new(
 				OpenOptions::new()
 					.create(true)
@@ -121,15 +130,15 @@ impl<'r> Collector<'r> {
 		}
 
 		// move the module file into opencv/
-		let module_filename = format!("{module}.rs");
+		let module_filename = format!("{module_opencv_name}.rs");
 		let module_src_file = self.out_dir.join(&module_filename);
 		let mut module_rs = BufWriter::new(File::create(self.target_module_dir.join(&module_filename))?);
 		// Need to wrap modules inside `mod { }` because they have top-level comments (//!) and those don't play well when
 		// module file is include!d (as opposed to connecting the module with `mod` from the parent module).
 		// The same doesn't apply to `sys` and `types` below because they don't contain top-level comments.
-		writeln!(module_rs, "pub mod {} {{", module_safe_name(module))?;
+		writeln!(module_rs, "pub mod {module_rust_safe_name} {{")?;
 		copy_indent(BufReader::new(File::open(&module_src_file)?), &mut module_rs, "\t")?;
-		self.write_use_manual(&mut module_rs, module)?;
+		self.write_use_manual(&mut module_rs, module_opencv_name)?;
 		writeln!(module_rs, "}}")?;
 		let _ = fs::remove_file(module_src_file);
 
@@ -142,7 +151,7 @@ impl<'r> Collector<'r> {
 		for entry in type_files {
 			if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
 				if !header_written {
-					writeln!(types_rs, "mod {}_types {{", module_safe_name(module))?;
+					writeln!(types_rs, "mod {module_rust_safe_name}_types {{")?;
 					writeln!(types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
 					writeln!(types_rs)?;
 					header_written = true;
@@ -153,13 +162,13 @@ impl<'r> Collector<'r> {
 		}
 		if header_written {
 			writeln!(types_rs, "}}")?;
-			writeln!(types_rs, "pub use {}_types::*;", module_safe_name(module))?;
+			writeln!(types_rs, "pub use {module_rust_safe_name}_types::*;")?;
 			writeln!(types_rs)?;
 		}
 
 		// merge module-specific *.externs.rs and generated type-specific *.type.externs.rs into a single sys.rs
-		let externs_rs = self.out_dir.join(format!("{module}.externs.rs"));
-		writeln!(sys_rs, "mod {}_sys {{", module_safe_name(module))?;
+		let externs_rs = self.out_dir.join(format!("{module_opencv_name}.externs.rs"));
+		writeln!(sys_rs, "mod {module_rust_safe_name}_sys {{")?;
 		writeln!(sys_rs, "\tuse super::*;")?;
 		writeln!(sys_rs)?;
 		writeln!(sys_rs, "\textern \"C\" {{")?;
@@ -177,7 +186,7 @@ impl<'r> Collector<'r> {
 		}
 		writeln!(sys_rs, "\t}}")?;
 		writeln!(sys_rs, "}}")?;
-		writeln!(sys_rs, "pub use {}_sys::*;", module_safe_name(module))?;
+		writeln!(sys_rs, "pub use {module_rust_safe_name}_sys::*;")?;
 		writeln!(sys_rs)?;
 		Ok(())
 	}
@@ -207,9 +216,9 @@ impl<'r> Collector<'r> {
 		Ok(())
 	}
 
-	fn write_use_manual(&self, file: &mut BufWriter<File>, module: &str) -> Result<bool> {
-		if self.manual_dir.join(format!("{module}.rs")).exists() {
-			writeln!(file, "pub use crate::manual::{module}::*;")?;
+	fn write_use_manual(&self, file: &mut BufWriter<File>, rust_module: &str) -> Result<bool> {
+		if self.manual_dir.join(format!("{rust_module}.rs")).exists() {
+			writeln!(file, "pub use crate::manual::{rust_module}::*;")?;
 			Ok(true)
 		} else {
 			Ok(false)
@@ -217,23 +226,23 @@ impl<'r> Collector<'r> {
 	}
 }
 
-fn is_type_file(path: &Path, module: &str) -> bool {
+fn is_type_file(path: &Path, module: SupportedModule) -> bool {
 	path.file_stem().and_then(OsStr::to_str).is_some_and(|stem| {
 		let mut stem_chars = stem.chars();
 		(&mut stem_chars).take(3).all(|c| c.is_ascii_digit()) && // first 3 chars are digits
 			matches!(stem_chars.next(), Some('-')) && // dash
-			module.chars().zip(&mut stem_chars).all(|(m, s)| m == s) && // module name
+			module.opencv_name().chars().zip(&mut stem_chars).all(|(m, s)| m == s) && // module name
 			matches!(stem_chars.next(), Some('-')) && // dash
 			stem.ends_with(".type") // ends with ".type"
 	})
 }
 
-fn is_type_externs_file(path: &Path, module: &str) -> bool {
+fn is_type_externs_file(path: &Path, module: SupportedModule) -> bool {
 	path.file_stem().and_then(OsStr::to_str).is_some_and(|stem| {
 		let mut stem_chars = stem.chars();
 		(&mut stem_chars).take(3).all(|c| c.is_ascii_digit()) && // first 3 chars are digits
 			matches!(stem_chars.next(), Some('-')) && // dash
-			module.chars().zip(&mut stem_chars).all(|(m, s)| m == s) && // module name
+			module.opencv_name().chars().zip(&mut stem_chars).all(|(m, s)| m == s) && // module name
 			matches!(stem_chars.next(), Some('-')) && // dash
 			stem.ends_with(".type.externs") // ends with ".type"
 	})
@@ -250,12 +259,4 @@ fn copy_indent(mut read: impl BufRead, write: &mut impl Write, indent: &str) -> 
 		line.clear();
 	}
 	Ok(())
-}
-
-// There is a mirror function with the same name in the `binding-generator` crate
-fn module_safe_name(module: &str) -> &str {
-	match module {
-		"3d" => "mod_3d",
-		_ => module,
-	}
 }

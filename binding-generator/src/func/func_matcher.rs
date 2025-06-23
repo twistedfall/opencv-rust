@@ -213,7 +213,7 @@ mod test {
 	use crate::func::{FuncDesc, FuncKind, ReturnKind};
 	use crate::type_ref::{Constness, TypeRef, TypeRefDesc, TypeRefTypeHint};
 	use crate::writer::rust_native::type_ref::Lifetime;
-	use crate::Func;
+	use crate::{Func, SupportedModule};
 
 	#[test]
 	fn test_func_matcher() {
@@ -223,7 +223,7 @@ mod test {
 				Constness::Mut,
 				ReturnKind::Fallible,
 				"_InputArray",
-				"core",
+				SupportedModule::Core,
 				[
 					Field::new_desc(FieldDesc::new(
 						"vec",
@@ -301,7 +301,7 @@ mod test {
 				Constness::Mut,
 				ReturnKind::Fallible,
 				"_InputArray",
-				"core",
+				SupportedModule::Core,
 				[
 					Field::new_desc(FieldDesc::new(
 						"vec",

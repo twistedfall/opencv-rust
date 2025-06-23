@@ -1,20 +1,22 @@
 use std::collections::HashSet;
 
+use crate::SupportedModule;
+
 pub type FuncExclude = HashSet<&'static str>;
 
-pub fn func_exclude_factory(module: &str) -> FuncExclude {
+pub fn func_exclude_factory(module: SupportedModule) -> FuncExclude {
 	match module {
-		"core" => core_factory(),
-		"cudaimgproc" => cudaimgproc_factory(),
-		"dnn" => dnn_factory(),
-		"gapi" => gapi_factory(),
-		"hdf" => hdf_factory(),
-		"imgproc" => imgproc_factory(),
-		"objdetect" => objdetect_factory(),
-		"optflow" => optflow_factory(),
-		"stitching" => stitching_factory(),
-		"surface_matching" => surface_matching_factory(),
-		"tracking" => tracking_factory(),
+		SupportedModule::Core => core_factory(),
+		SupportedModule::CudaImgProc => cudaimgproc_factory(),
+		SupportedModule::Dnn => dnn_factory(),
+		SupportedModule::Gapi => gapi_factory(),
+		SupportedModule::Hdf => hdf_factory(),
+		SupportedModule::ImgProc => imgproc_factory(),
+		SupportedModule::ObjDetect => objdetect_factory(),
+		SupportedModule::OptFlow => optflow_factory(),
+		SupportedModule::Stitching => stitching_factory(),
+		SupportedModule::SurfaceMatching => surface_matching_factory(),
+		SupportedModule::Tracking => tracking_factory(),
 		_ => FuncExclude::default(),
 	}
 }

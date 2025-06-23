@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use crate::func::FuncMatcher;
+use crate::SupportedModule;
 
 pub type FuncCompanionTweak = FuncMatcher<'static, CompanionTweak>;
 
@@ -10,10 +11,10 @@ pub enum CompanionTweak {
 	SkipDefault,
 }
 
-pub fn func_companion_tweak_factory(module: &str) -> FuncCompanionTweak {
+pub fn func_companion_tweak_factory(module: SupportedModule) -> FuncCompanionTweak {
 	match module {
-		"dnn" => dnn_factory(),
-		"text" => text_factory(),
+		SupportedModule::Dnn => dnn_factory(),
+		SupportedModule::Text => text_factory(),
 		_ => FuncCompanionTweak::empty(),
 	}
 }

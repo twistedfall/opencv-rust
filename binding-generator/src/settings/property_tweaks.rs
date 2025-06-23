@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use crate::SupportedModule;
+
 pub type PropertyTweaks = HashMap<&'static str, PropertyTweak<'static>>;
 
 #[derive(Debug)]
@@ -9,9 +11,9 @@ pub struct PropertyTweak<'l> {
 }
 
 /// Rename property, format: (cpp_refname -> rust_custom_leafname)
-pub fn property_tweaks_factory(module: &str) -> PropertyTweaks {
+pub fn property_tweaks_factory(module: SupportedModule) -> PropertyTweaks {
 	match module {
-		"core" => HashMap::from([
+		SupportedModule::Core => HashMap::from([
 			(
 				"cv::Mat::size",
 				PropertyTweak {

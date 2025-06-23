@@ -1,12 +1,13 @@
 use std::collections::HashMap;
 
 use crate::func::FuncMatcher;
+use crate::SupportedModule;
 
 pub type ForceInfallible = FuncMatcher<'static, ()>;
 
-pub fn force_infallible_factory(module: &str) -> ForceInfallible {
+pub fn force_infallible_factory(module: SupportedModule) -> ForceInfallible {
 	match module {
-		"core" => core_factory(),
+		SupportedModule::Core => core_factory(),
 		_ => ForceInfallible::empty(),
 	}
 }

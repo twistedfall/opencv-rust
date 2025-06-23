@@ -3,15 +3,16 @@ use std::collections::HashMap;
 use super::TypeRefFactory;
 use crate::func::FuncMatcher;
 use crate::type_ref::TypeRefDesc;
+use crate::SupportedModule;
 
 pub type FuncSpecialize = FuncMatcher<'static, Vec<FuncSpec>>;
 
 pub type FuncSpec = (&'static str, HashMap<&'static str, TypeRefFactory>);
 
 // todo: get rid of func_specialize in favor of just injecting manual functions
-pub fn func_specialize_factory(module: &str) -> FuncSpecialize {
+pub fn func_specialize_factory(module: SupportedModule) -> FuncSpecialize {
 	match module {
-		"core" => FuncMatcher::create(HashMap::from([(
+		SupportedModule::Core => FuncMatcher::create(HashMap::from([(
 			"cv::CommandLineParser::get",
 			vec![
 				(
@@ -36,7 +37,7 @@ pub fn func_specialize_factory(module: &str) -> FuncSpecialize {
 				),
 			],
 		)])),
-		"dnn" => FuncMatcher::create(HashMap::from([
+		SupportedModule::Dnn => FuncMatcher::create(HashMap::from([
 			(
 				"cv::dnn::Dict::set",
 				vec![(

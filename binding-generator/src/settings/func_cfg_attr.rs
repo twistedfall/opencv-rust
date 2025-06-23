@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use crate::func::FuncMatcher;
+use crate::SupportedModule;
 
 pub const CFG_ATTR_NOT_ON_WINDOWS: (&str, &str) = (r#"not(target_os = "windows")"#, r#"(!OCVRS_TARGET_OS_WINDOWS)"#);
 pub const CFG_ATTR_ONLY_OPENCV_5: (&str, &str) = ("ocvrs_opencv_branch_5", "(CV_VERSION_MAJOR == 5)");
@@ -8,10 +9,10 @@ pub const CFG_ATTR_ONLY_OPENCV_5: (&str, &str) = ("ocvrs_opencv_branch_5", "(CV_
 pub type FuncCfgAttr = FuncMatcher<'static, (&'static str, &'static str)>;
 
 /// identifier => (rust_attr, cpp_attr)
-pub fn func_cfg_attr_factory(module: &str) -> FuncCfgAttr {
+pub fn func_cfg_attr_factory(module: SupportedModule) -> FuncCfgAttr {
 	match module {
-		"imgproc" => imgproc_factory(),
-		"tracking" => tracking_factory(),
+		SupportedModule::ImgProc => imgproc_factory(),
+		SupportedModule::Tracking => tracking_factory(),
 		_ => FuncCfgAttr::empty(),
 	}
 }

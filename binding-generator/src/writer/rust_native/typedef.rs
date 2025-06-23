@@ -9,13 +9,13 @@ use super::RustNativeGeneratedElement;
 use crate::debug::NameDebug;
 use crate::type_ref::NameStyle;
 use crate::writer::rust_native::type_ref::Lifetime;
-use crate::{CompiledInterpolation, IteratorExt, StrExt, StringExt, Typedef};
+use crate::{CompiledInterpolation, IteratorExt, StrExt, StringExt, SupportedModule, Typedef};
 
 impl RustElement for Typedef<'_, '_> {
-	fn rust_module(&self) -> Cow<str> {
+	fn rust_module(&self) -> SupportedModule {
 		match self {
 			Typedef::Clang { entity, .. } => DefaultRustNativeElement::rust_module(*entity),
-			Typedef::Desc(desc) => desc.rust_module.as_ref().into(),
+			Typedef::Desc(desc) => desc.rust_module,
 		}
 	}
 
@@ -46,7 +46,7 @@ impl RustElement for Typedef<'_, '_> {
 
 impl RustNativeGeneratedElement for Typedef<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
+		format!("{}-{}", self.rust_module().opencv_name(), self.rust_name(NameStyle::decl()))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {

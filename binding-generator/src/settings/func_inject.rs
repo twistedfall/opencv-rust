@@ -6,15 +6,15 @@ use crate::func::{FuncCppBody, FuncDesc};
 use crate::type_ref::Constness::{Const, Mut};
 use crate::type_ref::{TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::Lifetime;
-use crate::Func;
+use crate::{Func, SupportedModule};
 
 pub type FuncInject = Vec<FuncFactory>;
 
 pub type FuncFactory = fn() -> Func<'static, 'static>;
 
-pub fn func_inject_factory(module: &str) -> FuncInject {
+pub fn func_inject_factory(module: SupportedModule) -> FuncInject {
 	match module {
-		"core" => vec![
+		SupportedModule::Core => vec![
 			(|| {
 				Func::new_desc(
 					FuncDesc::new(
@@ -22,7 +22,7 @@ pub fn func_inject_factory(module: &str) -> FuncInject {
 						Const,
 						InfallibleNaked,
 						"type",
-						"core",
+						SupportedModule::Core,
 						[],
 						TypeRefDesc::int(),
 					)
@@ -35,7 +35,7 @@ pub fn func_inject_factory(module: &str) -> FuncInject {
 					Const,
 					Fallible,
 					"size",
-					"core",
+					SupportedModule::Core,
 					[],
 					TypeRefDesc::cv_size(),
 				))
@@ -47,7 +47,7 @@ pub fn func_inject_factory(module: &str) -> FuncInject {
 						Const,
 						Fallible,
 						"getDataDump",
-						"core",
+						SupportedModule::Core,
 						[],
 						TypeRefDesc::std_string(),
 					)
@@ -63,7 +63,7 @@ pub fn func_inject_factory(module: &str) -> FuncInject {
 					Const,
 					Fallible,
 					"size",
-					"core",
+					SupportedModule::Core,
 					[],
 					TypeRefDesc::cv_size(),
 				))
@@ -75,7 +75,7 @@ pub fn func_inject_factory(module: &str) -> FuncInject {
 						Mut,
 						Fallible,
 						"_InputArray",
-						"core",
+						SupportedModule::Core,
 						[
 							Field::new_desc(FieldDesc::new(
 								"vec",

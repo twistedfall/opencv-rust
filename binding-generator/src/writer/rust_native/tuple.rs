@@ -10,10 +10,13 @@ use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 use crate::type_ref::{Constness, FishStyle};
-use crate::{Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
+use crate::{
+	Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, IteratorExt, NameStyle, StrExt, SupportedModule, Tuple,
+	TypeRef,
+};
 
 impl RustElement for Tuple<'_, '_> {
-	fn rust_module(&self) -> Cow<str> {
+	fn rust_module(&self) -> SupportedModule {
 		DefaultRustNativeElement::rust_module(self.entity())
 	}
 
@@ -37,7 +40,7 @@ impl RustElement for Tuple<'_, '_> {
 
 impl RustNativeGeneratedElement for Tuple<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_element_module(), self.rust_localalias())
+		format!("{}-{}", self.rust_element_module().opencv_name(), self.rust_localalias())
 	}
 
 	fn gen_rust(&self, _opencv_version: &str) -> String {
@@ -108,7 +111,7 @@ fn extern_functions<'tu, 'ge>(tuple: &Tuple<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 pub trait TupleExt {
 	fn rust_localalias(&self) -> Cow<str>;
 	fn rust_inner(&self) -> String;
-	fn rust_element_module(&self) -> Cow<str>;
+	fn rust_element_module(&self) -> SupportedModule;
 }
 
 impl TupleExt for Tuple<'_, '_> {
@@ -141,12 +144,12 @@ impl TupleExt for Tuple<'_, '_> {
 		out
 	}
 
-	fn rust_element_module(&self) -> Cow<str> {
+	fn rust_element_module(&self) -> SupportedModule {
 		self
 			.elements()
 			.iter()
 			.map(|elem_type| elem_type.rust_module())
-			.filter(|m| m != "core")
+			.filter(|m| !matches!(m, SupportedModule::Core))
 			.reduce(|single_module, elem_module| {
 				if single_module != elem_module {
 					panic!("Too many element modules: {single_module:?} and at least {elem_module:?}")
@@ -154,12 +157,15 @@ impl TupleExt for Tuple<'_, '_> {
 					single_module
 				}
 			})
-			.map_or_else(|| self.rust_module(), |single_module| single_module.into_owned().into())
+			.unwrap_or_else(|| self.rust_module())
 	}
 }
 
 fn tuple_class<'tu, 'ge>(typle_type_ref: &TypeRef<'tu, 'ge>) -> Class<'tu, 'ge> {
-	Class::new_desc(ClassDesc::boxed(typle_type_ref.cpp_name(CppNameStyle::Reference), "<unused>"))
+	Class::new_desc(ClassDesc::boxed(
+		typle_type_ref.cpp_name(CppNameStyle::Reference),
+		SupportedModule::Core,
+	))
 }
 
 fn method_new<'tu, 'ge>(tuple_typeref: TypeRef<'tu, 'ge>, elements: &[TypeRef<'tu, 'ge>]) -> Func<'tu, 'ge> {
@@ -172,7 +178,7 @@ fn method_new<'tu, 'ge>(tuple_typeref: TypeRef<'tu, 'ge>, elements: &[TypeRef<'t
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
 		"new",
-		"<unused>",
+		SupportedModule::Core,
 		arguments,
 		tuple_typeref,
 	))
@@ -185,7 +191,7 @@ fn method_get<'tu, 'ge>(tuple_class: Class<'tu, 'ge>, element_type: TypeRef<'tu,
 			Constness::Const,
 			ReturnKind::InfallibleViaArg,
 			format!("get_{num}"),
-			"<unused>",
+			SupportedModule::Core,
 			[],
 			element_type.clone(),
 		)

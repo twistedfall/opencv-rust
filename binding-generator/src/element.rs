@@ -6,7 +6,7 @@ use std::path::{Component, Path};
 use clang::{Accessibility, Entity, EntityKind};
 
 use crate::type_ref::CppNameStyle;
-use crate::{settings, IteratorExt, StrExt, StringExt};
+use crate::{settings, IteratorExt, StrExt, StringExt, SupportedModule};
 
 pub const UNNAMED: &str = "unnamed";
 
@@ -265,8 +265,9 @@ fn opencv_module_component(path: &Path) -> Option<&OsStr> {
 }
 
 /// Return OpenCV module from the given path
-pub fn opencv_module_from_path(path: &Path) -> Option<&str> {
+pub fn opencv_module_from_path(path: &Path) -> Option<SupportedModule> {
 	opencv_module_component(path)
 		.and_then(|m| m.to_str())
 		.and_then(|m| m.strip_suffix(".hpp").or(Some(m)))
+		.and_then(SupportedModule::try_from_opencv_name)
 }

@@ -18,8 +18,8 @@ use crate::renderer::{CppExternReturnRenderer, CppRenderer, TypeRefRenderer};
 use crate::vector::VectorDesc;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
-	settings, AbstractRefWrapper, Class, ClassKindOverride, Element, ExportConfig, GeneratedType, GeneratorEnv, SmartPtr, Typedef,
-	Vector,
+	settings, AbstractRefWrapper, Class, ClassKindOverride, Element, ExportConfig, GeneratedType, GeneratorEnv, SmartPtr,
+	SupportedModule, Typedef, Vector,
 };
 
 mod desc;
@@ -101,7 +101,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	/// Create a [TypeRef] from a textual C++ representation
 	///
 	/// Correctness may vary, very few [TypeRefKind]s are supported.
-	pub fn guess(cpp_refname: &str, rust_module: impl Into<Rc<str>>) -> Self {
+	pub fn guess(cpp_refname: &str, rust_module: SupportedModule) -> Self {
 		if let Some(element_cpprefname) = cpp_refname.strip_prefix("std::vector<").and_then(|s| s.strip_suffix('>')) {
 			TypeRef::new_desc(TypeRefDesc::new(
 				TypeRefKind::StdVector(Vector::new_desc(VectorDesc::new(Self::guess(

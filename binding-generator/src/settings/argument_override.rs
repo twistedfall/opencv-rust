@@ -4,6 +4,7 @@ use crate::func::FuncMatcher;
 use crate::type_ref::Constness::{Const, Mut};
 use crate::type_ref::TypeRefTypeHint;
 use crate::writer::rust_native::type_ref::Lifetime;
+use crate::SupportedModule;
 
 pub const ARG_OVERRIDE_SELF: &str = "this";
 
@@ -11,31 +12,31 @@ pub type ArgOverride = FuncMatcher<'static, HashMap<&'static str, TypeRefTypeHin
 pub type ReturnOverride = FuncMatcher<'static, TypeRefTypeHint>;
 pub type PropertyOverride = HashMap<&'static str, TypeRefTypeHint>;
 
-pub fn arg_override_factory(module: &str) -> ArgOverride {
+pub fn arg_override_factory(module: SupportedModule) -> ArgOverride {
 	match module {
-		"calib3d" | "calib" | "3d" => calib3d_arg_override_factory(),
-		"core" => core_arg_override_factory(),
-		"freetype" => freetype_arg_override_factory(),
-		"highgui" => highgui_arg_override_factory(),
-		"imgproc" => imgproc_arg_override_factory(),
-		"objdetect" => objdetect_arg_override_factory(),
-		"videoio" => videoio_arg_override_factory(),
-		"ximgproc" => ximgproc_arg_override_factory(),
+		SupportedModule::Calib3d | SupportedModule::Calib | SupportedModule::ThreeD => calib3d_arg_override_factory(),
+		SupportedModule::Core => core_arg_override_factory(),
+		SupportedModule::Freetype => freetype_arg_override_factory(),
+		SupportedModule::HighGui => highgui_arg_override_factory(),
+		SupportedModule::ImgProc => imgproc_arg_override_factory(),
+		SupportedModule::ObjDetect => objdetect_arg_override_factory(),
+		SupportedModule::VideoIo => videoio_arg_override_factory(),
+		SupportedModule::XImgProc => ximgproc_arg_override_factory(),
 		_ => ArgOverride::empty(),
 	}
 }
 
-pub fn return_override_factory(module: &str) -> ReturnOverride {
+pub fn return_override_factory(module: SupportedModule) -> ReturnOverride {
 	match module {
-		"core" => core_return_override_factory(),
-		"objdetect" => objdetect_return_override_factory(),
+		SupportedModule::Core => core_return_override_factory(),
+		SupportedModule::ObjDetect => objdetect_return_override_factory(),
 		_ => ReturnOverride::empty(),
 	}
 }
 
-pub fn property_override_factory(module: &str) -> PropertyOverride {
+pub fn property_override_factory(module: SupportedModule) -> PropertyOverride {
 	match module {
-		"core" => core_property_override_factory(),
+		SupportedModule::Core => core_property_override_factory(),
 		_ => PropertyOverride::default(),
 	}
 }

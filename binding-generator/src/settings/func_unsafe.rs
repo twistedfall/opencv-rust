@@ -1,14 +1,15 @@
 use std::collections::HashMap;
 
 use crate::func::FuncMatcher;
+use crate::SupportedModule;
 
 pub type FuncUnsafe = FuncMatcher<'static, ()>;
 
 /// set of functions that should have unsafe in their declaration, element is Func.identifier()
-pub fn func_unsafe_factory(module: &str) -> FuncUnsafe {
+pub fn func_unsafe_factory(module: SupportedModule) -> FuncUnsafe {
 	match module {
-		"core" => core_factory(),
-		"dnn" => dnn_factory(),
+		SupportedModule::Core => core_factory(),
+		SupportedModule::Dnn => dnn_factory(),
 		_ => FuncUnsafe::empty(),
 	}
 }

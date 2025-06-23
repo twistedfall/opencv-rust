@@ -13,11 +13,11 @@ use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 use crate::smart_ptr::SmartPtrDesc;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefKind};
 use crate::writer::rust_native::class::rust_generate_debug_fields;
-use crate::{Class, CompiledInterpolation, CowMapBorrowedExt, Element, Func, IteratorExt, SmartPtr, StrExt, StringExt};
+use crate::{Class, CompiledInterpolation, Element, Func, IteratorExt, SmartPtr, StrExt, StringExt, SupportedModule};
 
 impl RustElement for SmartPtr<'_, '_> {
-	fn rust_module(&self) -> Cow<str> {
-		self.pointee().map_borrowed(TypeRef::rust_module)
+	fn rust_module(&self) -> SupportedModule {
+		self.pointee().rust_module()
 	}
 
 	// fixme, we shouldn't override the rust_module_reference and rely on rust_module to provide the correct module
@@ -56,7 +56,7 @@ impl RustElement for SmartPtr<'_, '_> {
 
 impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localalias())
+		format!("{}-{}", self.rust_module().opencv_name(), self.rust_localalias())
 	}
 
 	fn gen_rust(&self, _opencv_version: &str) -> String {
@@ -272,7 +272,7 @@ impl SmartPtrExt for SmartPtr<'_, '_> {
 fn smartptr_class<'tu, 'ge>(smart_ptr_type_ref: &TypeRef<'tu, 'ge>) -> Class<'tu, 'ge> {
 	Class::new_desc(ClassDesc::boxed(
 		smart_ptr_type_ref.cpp_name(CppNameStyle::Reference),
-		"<unused>",
+		SupportedModule::Core,
 	))
 }
 
@@ -297,7 +297,7 @@ fn method_new<'tu, 'ge>(
 			Constness::Const,
 			ReturnKind::InfallibleNaked,
 			"new",
-			"<unused>",
+			SupportedModule::Core,
 			[Field::new_desc(FieldDesc::new("val", pointee_type))],
 			smartptr_type_ref,
 		)
@@ -314,7 +314,7 @@ fn method_new_null<'tu, 'ge>(smartptr_class: Class<'tu, 'ge>, smartptr_type_ref:
 			Constness::Const,
 			ReturnKind::InfallibleNaked,
 			"new_null",
-			"<unused>",
+			SupportedModule::Core,
 			[],
 			smartptr_type_ref,
 		)
@@ -340,7 +340,7 @@ fn method_cast_to_base<'tu, 'ge>(
 			Constness::Mut,
 			ReturnKind::InfallibleNaked,
 			format!("to_PtrOf{base_rust_local}"),
-			"<unused>",
+			SupportedModule::Core,
 			[],
 			TypeRef::new_smartptr(SmartPtr::new_desc(SmartPtrDesc::new(base_type_ref))),
 		)
@@ -363,7 +363,7 @@ fn method_get_inner_ptr<'tu, 'ge>(smartptr_class: Class<'tu, 'ge>, pointee_type:
 			constness,
 			ReturnKind::InfallibleNaked,
 			format!("getInnerPtr{}", constness.rust_name_qual()),
-			"<unused>",
+			SupportedModule::Core,
 			[],
 			return_type_ref,
 		)

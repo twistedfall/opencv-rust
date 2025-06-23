@@ -8,13 +8,13 @@ use crate::class::ClassKind;
 use crate::settings::ClassTweak;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
 use crate::writer::rust_native::type_ref::Lifetime;
-use crate::{Class, Element, Func, IteratorExt};
+use crate::{Class, Element, Func, IteratorExt, SupportedModule};
 
 impl RustElement for Class<'_, '_> {
-	fn rust_module(&self) -> Cow<str> {
+	fn rust_module(&self) -> SupportedModule {
 		match self {
 			&Self::Clang { entity, .. } => DefaultRustNativeElement::rust_module(entity),
-			Self::Desc(desc) => desc.rust_module.as_ref().into(),
+			Self::Desc(desc) => desc.rust_module,
 		}
 	}
 
@@ -56,7 +56,7 @@ impl RustElement for Class<'_, '_> {
 
 impl RustNativeGeneratedElement for Class<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
+		format!("{}-{}", self.rust_module().opencv_name(), self.rust_name(NameStyle::decl()))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {

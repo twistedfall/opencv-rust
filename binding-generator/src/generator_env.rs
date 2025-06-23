@@ -15,7 +15,7 @@ use crate::settings::Settings;
 use crate::type_ref::CppNameStyle;
 use crate::{
 	is_opencv_path, opencv_module_from_path, settings, Class, Element, EntityWalkerExt, EntityWalkerVisitor, MemoizeMap,
-	MemoizeMapExt,
+	MemoizeMapExt, SupportedModule,
 };
 
 #[derive(Copy, Clone, Debug)]
@@ -105,7 +105,7 @@ struct ExportIdx {
 ///
 /// This is 1st pass of the analysis. It performs the collection of the necessary auxiliary data like which descendants a class has.
 struct GeneratorEnvPopulator<'tu, 'ge> {
-	module: &'tu str,
+	module: SupportedModule,
 	gen_env: &'ge mut GeneratorEnv<'tu>,
 }
 
@@ -194,7 +194,7 @@ impl<'tu> GeneratorEnv<'tu> {
 	}
 
 	/// [GeneratorEnv] with the global settings for the regular working mode
-	pub fn global(module: &'tu str, root_entity: Entity<'tu>) -> Self {
+	pub fn global(module: SupportedModule, root_entity: Entity<'tu>) -> Self {
 		let mut out = Self {
 			export_map: HashMap::with_capacity(1024),
 			rename_map: HashMap::with_capacity(64),

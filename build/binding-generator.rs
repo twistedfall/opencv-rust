@@ -3,7 +3,7 @@ use std::iter::Peekable;
 use std::path::{Path, PathBuf};
 
 use opencv_binding_generator::writer::RustNativeBindingWriter;
-use opencv_binding_generator::Generator;
+use opencv_binding_generator::{Generator, SupportedModule};
 
 use super::header::IncludePath;
 use super::{GenerateFullBindings, Result};
@@ -27,7 +27,10 @@ pub fn run(mut args: impl Iterator<Item = OsString>) -> Result<()> {
 	let src_cpp_dir = PathBuf::from(args.next().ok_or("2nd argument must be dir with custom cpp")?);
 	let out_dir = PathBuf::from(args.next().ok_or("3rd argument must be output dir")?);
 	let module = args.next().ok_or("4th argument must be module name")?;
-	let module = module.to_str().ok_or("Not a valid module name")?;
+	let module = module
+		.to_str()
+		.and_then(SupportedModule::try_from_opencv_name)
+		.ok_or("Not a valid module name")?;
 	let version = opencv_header_dir
 		.find_version()
 		.ok_or("Can't find the version in the headers")?

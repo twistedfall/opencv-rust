@@ -36,6 +36,7 @@ pub use map_borrowed::CowMapBorrowedExt;
 use memoize::{MemoizeMap, MemoizeMapExt};
 use smart_ptr::SmartPtr;
 pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
+pub use supported_module::SupportedModule;
 use tuple::Tuple;
 #[allow(unused)]
 use type_ref::dbg_clang_type;
@@ -68,6 +69,7 @@ mod renderer;
 pub mod settings;
 mod smart_ptr;
 mod string_ext;
+mod supported_module;
 #[cfg(test)]
 mod test;
 mod tuple;

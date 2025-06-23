@@ -4,11 +4,11 @@ use super::element::{DefaultRustNativeElement, RustElement};
 use crate::field::Field;
 use crate::type_ref::FishStyle;
 use crate::writer::rust_native::element::DebugRust;
-use crate::{reserved_rename, CowMapBorrowedExt, NameStyle, StrExt};
+use crate::{reserved_rename, CowMapBorrowedExt, NameStyle, StrExt, SupportedModule};
 
 impl RustElement for Field<'_, '_> {
-	fn rust_module(&self) -> Cow<str> {
-		"".into()
+	fn rust_module(&self) -> SupportedModule {
+		SupportedModule::Core
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {

@@ -6,7 +6,7 @@ use crate::debug::DefinitionLocation;
 use crate::field::Field;
 use crate::func::ReturnKind;
 use crate::type_ref::{Constness, TypeRef, TypeRefDesc};
-use crate::{Class, Func, FuncTypeHint};
+use crate::{Class, Func, FuncTypeHint, SupportedModule};
 
 #[derive(Clone, Debug)]
 pub struct FuncDesc<'tu, 'ge> {
@@ -17,7 +17,7 @@ pub struct FuncDesc<'tu, 'ge> {
 	pub return_kind: ReturnKind,
 	pub cpp_name: Rc<str>,
 	pub rust_custom_leafname: Option<Rc<str>>,
-	pub rust_module: Rc<str>,
+	pub rust_module: SupportedModule,
 	pub doc_comment: Rc<str>,
 	pub def_loc: DefinitionLocation,
 	pub rust_generic_decls: Rc<[(String, String)]>,
@@ -35,7 +35,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 		constness: Constness,
 		return_kind: ReturnKind,
 		cpp_name: impl Into<Rc<str>>,
-		rust_module: impl Into<Rc<str>>,
+		rust_module: SupportedModule,
 		arguments: impl Into<Rc<[Field<'tu, 'ge>]>>,
 		return_type_ref: TypeRef<'tu, 'ge>,
 	) -> Self {
@@ -46,7 +46,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 			return_kind,
 			cpp_name: cpp_name.into(),
 			rust_custom_leafname: None,
-			rust_module: rust_module.into(),
+			rust_module,
 			doc_comment: "".into(),
 			def_loc: DefinitionLocation::Generated,
 			rust_generic_decls: Rc::new([]),
@@ -120,7 +120,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 				Constness::Mut,
 				ReturnKind::InfallibleNaked,
 				"delete",
-				"<unused>",
+				SupportedModule::Core,
 				[],
 				TypeRefDesc::void(),
 			)

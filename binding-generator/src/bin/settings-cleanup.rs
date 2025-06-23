@@ -8,11 +8,11 @@ use std::rc::Rc;
 use clang::{Entity, EntityKind};
 use opencv_binding_generator::{
 	opencv_module_from_path, Class, Constness, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func, Generator, GeneratorEnv,
-	Pred,
+	Pred, SupportedModule,
 };
 
 struct FunctionFinder<'tu> {
-	pub module: &'tu str,
+	pub module: SupportedModule,
 	pub gen_env: GeneratorEnv<'tu>,
 }
 
@@ -72,7 +72,7 @@ fn main() {
 	let opencv_header_dirs = args.map(PathBuf::from);
 	// module -> usage_section -> (name, preds)
 	let global_usage_tracking = Rc::new(RefCell::new(HashMap::<
-		String,
+		SupportedModule,
 		HashMap<&'static str, HashSet<UsageTrackerOwned>>,
 	>::new()));
 	for opencv_header_dir in opencv_header_dirs {
@@ -85,26 +85,25 @@ fn main() {
 			.filter(|p| p.is_file() && p.extension().is_some_and(|e| e == "hpp"))
 			.filter_map(|mut p| {
 				p.set_extension("");
-				p.file_name().and_then(|f| f.to_str()).map(|f| f.to_string())
+				p.file_name()
+					.and_then(|f| f.to_str())
+					.and_then(SupportedModule::try_from_opencv_name)
 			});
 		let gen = Generator::new(&opencv_header_dir, &[], &src_cpp_dir);
 		for module in modules {
-			println!("  {module}");
-			gen.pre_process(&module, false, {
+			println!("  {}", module.opencv_name());
+			gen.pre_process(module, false, {
 				let global_usage_tracking = Rc::clone(&global_usage_tracking);
 				|root_entity| {
 					let global_usage_tracking = global_usage_tracking; // force move
-					let mut gen_env = GeneratorEnv::global(&module, root_entity);
+					let mut gen_env = GeneratorEnv::global(module, root_entity);
 					gen_env.settings.start_usage_tracking();
-					let mut function_finder = FunctionFinder {
-						module: &module,
-						gen_env,
-					};
+					let mut function_finder = FunctionFinder { module, gen_env };
 					root_entity.walk_opencv_entities(&mut function_finder);
 
 					let usage_tracking = function_finder.gen_env.settings.finish_usage_tracking();
 					let mut global_usage_tracking = global_usage_tracking.borrow_mut();
-					let module_usage_tracking = global_usage_tracking.entry(module.to_string()).or_default();
+					let module_usage_tracking = global_usage_tracking.entry(module).or_default();
 					for (usage_section, new_usage_tracking) in usage_tracking {
 						let new_usage_tracking: HashSet<UsageTrackerOwned> = new_usage_tracking
 							.into_iter()
