@@ -119,9 +119,6 @@ jobs:
           - os-image: ubuntu-22.04
             version:
               opencv: 4.5.4
-          - os-image: ubuntu-20.04
-            version:
-              opencv: 4.2.0
           - os-image: macos-14
             version:
               brew: "@4"
