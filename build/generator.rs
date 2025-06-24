@@ -5,16 +5,14 @@ use std::ops::Deref;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::Instant;
-use std::{env, fs, io, thread};
+use std::{env, fs, thread};
 
 use collector::Collector;
-use opencv_binding_generator::{Generator, IteratorExt, SupportedModule};
+use opencv_binding_generator::{CompiledInterpolation, Generator, IteratorExt, StrExt, SupportedModule};
 
 use super::docs::transfer_bindings_to_docs;
-use super::{
-	files_with_predicate, Library, Result, OUT_DIR, SRC_CPP_DIR, SRC_DIR, SUPPORTED_INHERENT_FEATURES, SUPPORTED_MODULES,
-	SUPPORTED_OPENCV_BRANCHES,
-};
+use super::enums::{SUPPORTED_INHERENT_FEATURES, SUPPORTED_MODULES};
+use super::{files_with_predicate, Library, Result, OUT_DIR, SRC_CPP_DIR, SRC_DIR, SUPPORTED_OPENCV_BRANCHES};
 
 #[path = "generator/collector.rs"]
 mod collector;
@@ -87,36 +85,90 @@ impl<'r> BindingGenerator<'r> {
 	}
 
 	fn generate_opencv_branch_cond_macros(&self) -> Result<()> {
-		static COND_MACRO_TPL: &str = include_str!("cond_macros/opencv_branch.rs");
-
-		let mut cond_macros_file = BufWriter::new(File::create(OUT_DIR.join("opencv/cond_macros.rs"))?);
-		for (_, branch) in SUPPORTED_OPENCV_BRANCHES {
-			write_replace(COND_MACRO_TPL, "OPENCV_BRANCH", branch, &mut cond_macros_file)?;
-		}
-		Ok(())
+		Self::generate_opencv_cond_macros(
+			&include_str!("cond_macros/opencv_branch.tpl.rs").compile_interpolation(),
+			SUPPORTED_OPENCV_BRANCHES.iter().map(|(_, b)| *b),
+			false,
+		)
 	}
 
 	fn generate_opencv_module_cond_macros(&self) -> Result<()> {
-		static COND_MACRO_TPL: &str = include_str!("cond_macros/opencv_module.rs");
-
-		let mut cond_macros_file = BufWriter::new(File::options().append(true).open(OUT_DIR.join("opencv/cond_macros.rs"))?);
-		for module in SUPPORTED_MODULES {
-			write_replace(COND_MACRO_TPL, "OPENCV_MODULE", module.opencv_name(), &mut cond_macros_file)?;
-		}
-		Ok(())
+		Self::generate_opencv_cond_macros(
+			&include_str!("cond_macros/opencv_module.tpl.rs").compile_interpolation(),
+			SUPPORTED_MODULES.iter().map(|m| m.opencv_name()),
+			true,
+		)
 	}
 
 	fn generate_opencv_inherent_feature_cond_macros(&self) -> Result<()> {
-		static COND_MACRO_TPL: &str = include_str!("cond_macros/opencv_inherent_feature.rs");
+		Self::generate_opencv_cond_macros(
+			&include_str!("cond_macros/opencv_inherent_feature.tpl.rs").compile_interpolation(),
+			SUPPORTED_INHERENT_FEATURES.iter().map(|f| f.as_str()),
+			true,
+		)
+	}
 
-		let mut cond_macros_file = BufWriter::new(File::options().append(true).open(OUT_DIR.join("opencv/cond_macros.rs"))?);
-		for inherent_feature in SUPPORTED_INHERENT_FEATURES {
-			write_replace(
-				COND_MACRO_TPL,
-				"OPENCV_INHERENT_FEATURE",
-				inherent_feature,
-				&mut cond_macros_file,
-			)?;
+	fn generate_opencv_cond_macros(
+		cond_macro_tpl: &CompiledInterpolation,
+		features: impl Iterator<Item = &'static str>,
+		append: bool,
+	) -> Result<()> {
+		let mut cond_macros_file = BufWriter::new(
+			File::options()
+				.write(true)
+				.append(append)
+				.create(!append)
+				.open(OUT_DIR.join("opencv/cond_macros.rs"))?,
+		);
+		let mut tpl_params = HashMap::with_capacity(6);
+		let mut int_tpl = String::with_capacity(256);
+		for feature in features {
+			tpl_params.insert("feature", feature);
+			for cfg_cond_val in [true, false] {
+				tpl_params.insert(
+					"cfg_condition_prefix",
+					if cfg_cond_val {
+						""
+					} else {
+						"not("
+					},
+				);
+				tpl_params.insert(
+					"cfg_condition_suffix",
+					if cfg_cond_val {
+						""
+					} else {
+						")"
+					},
+				);
+				tpl_params.insert(
+					"macro_body_block",
+					if cfg_cond_val {
+						"$bl_pos"
+					} else {
+						"$bl_neg"
+					},
+				);
+				tpl_params.insert(
+					"macro_body_tt",
+					if cfg_cond_val {
+						"$($tt)*"
+					} else {
+						""
+					},
+				);
+				tpl_params.insert(
+					"macro_body_not_tt",
+					if cfg_cond_val {
+						""
+					} else {
+						"$($tt)*"
+					},
+				);
+				cond_macro_tpl.interpolate_into(&mut int_tpl, &tpl_params);
+				cond_macros_file.write_all(int_tpl.as_bytes())?;
+				int_tpl.clear();
+			}
 		}
 		Ok(())
 	}
@@ -251,15 +303,4 @@ impl Deref for Jobserver {
 	fn deref(&self) -> &Self::Target {
 		&self.client
 	}
-}
-
-fn write_replace(mut content: &str, search: &str, replace: &str, mut to: impl Write) -> io::Result<()> {
-	while let Some(search_idx) = content.find(search) {
-		let (unchanged_content, new_content) = content.split_at(search_idx);
-		to.write_all(unchanged_content.as_bytes())?;
-		to.write_all(replace.as_bytes())?;
-		content = &new_content[search.len()..];
-	}
-	to.write_all(content.as_bytes())?;
-	Ok(())
 }

@@ -1,12 +1,23 @@
-use opencv::cond_functions::opencv_has_module;
 use opencv::{
 	not_opencv_branch_34, not_opencv_branch_4, not_opencv_branch_5, opencv_branch_34, opencv_branch_4, opencv_branch_5,
-	opencv_has_module_core, opencv_has_module_cudalegacy, opencv_has_module_imgproc,
+	opencv_has_inherent_feature_cuda, opencv_has_module_core, opencv_has_module_cudalegacy, opencv_has_module_imgproc,
 };
-use opencv_binding_generator::SupportedModule;
+
+not_opencv_branch_34! {
+	use opencv::imgproc::LINE_8;
+}
+opencv_branch_34! {
+	use opencv::core::LINE_8;
+}
+opencv_has_module_imgproc! {
+	use opencv::imgproc::line_def;
+}
+opencv_has_inherent_feature_cuda! {
+	use opencv::core::GpuMat;
+}
 
 #[test]
-fn test_opencv_branch_cond_macros() {
+fn test_opencv_branch_cond_macros_code() {
 	opencv_branch_5! { let cond_macro_branch_5 =  true; }
 	not_opencv_branch_5! { let cond_macro_branch_5 =  false; }
 	let cfg_branch_5 = cfg!(ocvrs_opencv_branch_5);
@@ -24,36 +35,63 @@ fn test_opencv_branch_cond_macros() {
 }
 
 #[test]
-fn test_opencv_module_cond_macros() {
-	#![allow(unused_assignments, unused_mut)]
+fn test_opencv_branch_cond_macros_use() {
+	assert_eq!(8, LINE_8);
+}
+
+#[test]
+fn test_opencv_module_cond_macros_code() {
 	{
 		let always_has_core = opencv_has_module_core! { true };
 		assert!(always_has_core);
 	}
 
 	{
-		let mut has_imgproc = false;
-		opencv_has_module_imgproc! { has_imgproc = true; }
-
-		assert_eq!(has_imgproc, opencv_has_module(SupportedModule::ImgProc));
+		let likely_has_imgproc = opencv_has_module_imgproc! { { true } else { false } };
 
 		#[cfg(ocvrs_has_module_imgproc)]
-		assert!(has_imgproc);
-
+		assert!(likely_has_imgproc);
 		#[cfg(not(ocvrs_has_module_imgproc))]
-		assert!(!has_imgproc);
+		assert!(!likely_has_imgproc);
 	}
 
 	{
-		let mut has_cudalegacy = false;
-		opencv_has_module_cudalegacy! { has_cudalegacy = true; }
+		let unlikely_has_cudalegacy = opencv_has_module_cudalegacy! { { true } else { false } };
 
 		#[cfg(ocvrs_has_module_cudalegacy)]
-		assert!(has_cudalegacy);
-
+		assert!(unlikely_has_cudalegacy);
 		#[cfg(not(ocvrs_has_module_cudalegacy))]
-		assert!(!has_cudalegacy);
+		assert!(!unlikely_has_cudalegacy);
+	}
+}
 
-		assert_eq!(has_cudalegacy, opencv_has_module(SupportedModule::CudaLegacy));
+#[test]
+fn test_opencv_module_cond_macros_use() {
+	opencv_has_module_imgproc! {
+		use opencv::prelude::*;
+		use opencv::core::Point;
+
+		let mut m = Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), 0.into()).unwrap();
+		line_def(&mut m, Point::new(0, 0), Point::new(2,0), 255.into()).unwrap();
+		assert_eq!([255, 255, 255], m.data_typed::<u8>().unwrap());
+	}
+}
+
+#[test]
+fn test_opencv_inherent_feature_cond_macros_code() {
+	let cuda_available = opencv_has_inherent_feature_cuda! { { true } else { false } };
+	#[cfg(ocvrs_has_inherent_feature_cuda)]
+	assert!(cuda_available);
+	#[cfg(not(ocvrs_has_inherent_feature_cuda))]
+	assert!(!cuda_available);
+}
+
+#[test]
+fn test_opencv_inherent_feature_cond_macros_use() {
+	opencv_has_inherent_feature_cuda! {
+		use opencv::prelude::*;
+
+		let mut m = GpuMat::new_def().unwrap();
+		m.upload(&[1, 2, 3]).unwrap()
 	}
 }

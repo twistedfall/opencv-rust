@@ -6,6 +6,7 @@ use std::time::Instant;
 
 use binding_generator::handle_running_binding_generator;
 use docs::handle_running_in_docsrs;
+use enums::{InherentFeature, SUPPORTED_INHERENT_FEATURES, SUPPORTED_MODULES};
 use generator::BindingGenerator;
 use header::IncludePath;
 use library::Library;
@@ -19,6 +20,8 @@ mod binding_generator;
 pub mod cmake_probe;
 #[path = "build/docs.rs"]
 mod docs;
+#[path = "build/enums.rs"]
+mod enums;
 #[path = "build/generator.rs"]
 mod generator;
 #[path = "build/header.rs"]
@@ -62,84 +65,6 @@ static AFFECTING_ENV_VARS: [&str; 18] = [
 ];
 
 static SUPPORTED_OPENCV_BRANCHES: [(&str, &str); 3] = [("~3.4", "34"), ("~4", "4"), ("~5", "5")];
-
-static SUPPORTED_MODULES: [SupportedModule; 73] = [
-	SupportedModule::ThreeD,
-	SupportedModule::AlphaMat,
-	SupportedModule::Aruco,
-	SupportedModule::ArucoDetector,
-	SupportedModule::Barcode,
-	SupportedModule::BgSegm,
-	SupportedModule::Bioinspired,
-	SupportedModule::Calib,
-	SupportedModule::Calib3d,
-	SupportedModule::CCalib,
-	SupportedModule::Core,
-	SupportedModule::CudaArithm,
-	SupportedModule::CudaBgSegm,
-	SupportedModule::CudaCodec,
-	SupportedModule::CudaFeatures2d,
-	SupportedModule::CudaFilters,
-	SupportedModule::CudaImgProc,
-	SupportedModule::CudaLegacy,
-	SupportedModule::CudaObjDetect,
-	SupportedModule::CudaOptFlow,
-	SupportedModule::CudaStereo,
-	SupportedModule::CudaWarping,
-	SupportedModule::Cvv,
-	SupportedModule::Dnn,
-	SupportedModule::DnnSuperRes,
-	SupportedModule::Dpm,
-	SupportedModule::Face,
-	SupportedModule::Features,
-	SupportedModule::Features2d,
-	SupportedModule::Flann,
-	SupportedModule::Freetype,
-	SupportedModule::Fuzzy,
-	SupportedModule::Gapi,
-	SupportedModule::Hdf,
-	SupportedModule::Hfs,
-	SupportedModule::HighGui,
-	SupportedModule::ImgHash,
-	SupportedModule::ImgCodecs,
-	SupportedModule::ImgProc,
-	SupportedModule::IntensityTransform,
-	SupportedModule::LineDescriptor,
-	SupportedModule::Mcc,
-	SupportedModule::Ml,
-	SupportedModule::ObjDetect,
-	SupportedModule::OptFlow,
-	SupportedModule::Ovis,
-	SupportedModule::PhaseUnwrapping,
-	SupportedModule::Photo,
-	SupportedModule::Plot,
-	SupportedModule::Quality,
-	SupportedModule::Rapid,
-	SupportedModule::Rgbd,
-	SupportedModule::Saliency,
-	SupportedModule::Sfm,
-	SupportedModule::Shape,
-	SupportedModule::Signal,
-	SupportedModule::Stereo,
-	SupportedModule::Stitching,
-	SupportedModule::StructuredLight,
-	SupportedModule::SuperRes,
-	SupportedModule::SurfaceMatching,
-	SupportedModule::Text,
-	SupportedModule::Tracking,
-	SupportedModule::Video,
-	SupportedModule::VideoIo,
-	SupportedModule::VideoStab,
-	SupportedModule::Viz,
-	SupportedModule::WechatQrCode,
-	SupportedModule::XFeatures2d,
-	SupportedModule::XImgProc,
-	SupportedModule::XObjDetect,
-	SupportedModule::XPhoto,
-	SupportedModule::XStereo,
-];
-
-static SUPPORTED_INHERENT_FEATURES: [&str; 3] = ["hfloat", "opencl", "cuda"];
 
 /// The contents of these vars will be present in the debug log, but will not cause the source rebuild
 static DEBUG_ENV_VARS: [&str; 1] = ["PATH"];
@@ -227,17 +152,22 @@ fn emit_opencv_branch(opencv: &Library) {
 }
 
 fn emit_inherent_features(opencv: &Library) {
+	let mut fake_features = Vec::with_capacity(2);
 	if VersionReq::parse(">=4.10")
 		.expect("Static version requirement")
 		.matches(&opencv.version)
 	{
-		// hfloat is not an actual OpenCV feature specified in the cvconfig.h, but something that's supported starting with 4.10
-		println!("cargo::rustc-cfg=ocvrs_has_inherent_feature_hfloat");
-	}
-	for inherent_feature in &opencv.inherent_features {
-		if SUPPORTED_INHERENT_FEATURES.contains(&inherent_feature.as_str()) {
-			println!("cargo::rustc-cfg=ocvrs_has_inherent_feature_{inherent_feature}");
+		fake_features.push(InherentFeature::Hfloat);
+		if VersionReq::parse(">=4.11")
+			.expect("Static version requirement")
+			.matches(&opencv.version)
+		{
+			fake_features.push(InherentFeature::AlgorithmHint);
 		}
+	}
+	let detected_supported_inherent_features = opencv.inherent_features.iter().flat_map(|f| InherentFeature::try_from_str(f));
+	for inherent_feature in detected_supported_inherent_features.chain(fake_features) {
+		println!("cargo::rustc-cfg=ocvrs_has_inherent_feature_{}", inherent_feature.as_str());
 	}
 }
 
@@ -360,7 +290,10 @@ fn main() -> Result<()> {
 		println!("cargo::rustc-check-cfg=cfg(ocvrs_has_module_{})", module.opencv_name());
 	}
 	for inherent_feature in SUPPORTED_INHERENT_FEATURES {
-		println!("cargo::rustc-check-cfg=cfg(ocvrs_has_inherent_feature_{inherent_feature})");
+		println!(
+			"cargo::rustc-check-cfg=cfg(ocvrs_has_inherent_feature_{})",
+			inherent_feature.as_str()
+		);
 	}
 
 	if matches!(handle_running_in_docsrs(), GenerateFullBindings::Stop) {
