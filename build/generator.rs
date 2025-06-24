@@ -11,7 +11,10 @@ use collector::Collector;
 use opencv_binding_generator::{Generator, IteratorExt, SupportedModule};
 
 use super::docs::transfer_bindings_to_docs;
-use super::{files_with_predicate, Library, Result, OUT_DIR, SRC_CPP_DIR, SRC_DIR, SUPPORTED_MODULES, SUPPORTED_OPENCV_BRANCHES};
+use super::{
+	files_with_predicate, Library, Result, OUT_DIR, SRC_CPP_DIR, SRC_DIR, SUPPORTED_INHERENT_FEATURES, SUPPORTED_MODULES,
+	SUPPORTED_OPENCV_BRANCHES,
+};
 
 #[path = "generator/collector.rs"]
 mod collector;
@@ -71,6 +74,7 @@ impl<'r> BindingGenerator<'r> {
 		.collect_bindings()?;
 		self.generate_opencv_branch_cond_macros()?;
 		self.generate_opencv_module_cond_macros()?;
+		self.generate_opencv_inherent_feature_cond_macros()?;
 
 		if let Some(target_docs_dir) = target_docs_dir {
 			if !target_docs_dir.exists() {
@@ -98,6 +102,21 @@ impl<'r> BindingGenerator<'r> {
 		let mut cond_macros_file = BufWriter::new(File::options().append(true).open(OUT_DIR.join("opencv/cond_macros.rs"))?);
 		for module in SUPPORTED_MODULES {
 			write_replace(COND_MACRO_TPL, "OPENCV_MODULE", module.opencv_name(), &mut cond_macros_file)?;
+		}
+		Ok(())
+	}
+
+	fn generate_opencv_inherent_feature_cond_macros(&self) -> Result<()> {
+		static COND_MACRO_TPL: &str = include_str!("cond_macros/opencv_inherent_feature.rs");
+
+		let mut cond_macros_file = BufWriter::new(File::options().append(true).open(OUT_DIR.join("opencv/cond_macros.rs"))?);
+		for inherent_feature in SUPPORTED_INHERENT_FEATURES {
+			write_replace(
+				COND_MACRO_TPL,
+				"OPENCV_INHERENT_FEATURE",
+				inherent_feature,
+				&mut cond_macros_file,
+			)?;
 		}
 		Ok(())
 	}
