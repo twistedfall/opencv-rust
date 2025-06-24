@@ -3,17 +3,24 @@
 use std::error::Error;
 use std::fs;
 
-use opencv::core::{no_array, Point2f, Point3f, Size, TermCriteria, TermCriteria_EPS, TermCriteria_MAX_ITER, Vector};
+use opencv::core::{
+	no_array, Point2f, Point3f, Size, TermCriteria, TermCriteria_EPS, TermCriteria_MAX_ITER, TermCriteria_Type, Vector,
+};
 use opencv::prelude::*;
-use opencv::{highgui, imgcodecs, imgproc, not_opencv_branch_5, opencv_branch_5};
+use opencv::{highgui, imgcodecs, imgproc, opencv_branch_34, opencv_branch_4, opencv_branch_5};
 
 opencv_branch_5! {
-	use opencv::calib::{find_chessboard_corners_def, draw_chessboard_corners, calibrate_camera_def};
-	use opencv::mod_3d::{undistort_def, init_undistort_rectify_map};
+	use opencv::calib::{find_chessboard_corners_def, draw_chessboard_corners, calibrate_camera};
+	use opencv::mod_3d::{undistort, init_undistort_rectify_map};
 }
 
-not_opencv_branch_5! {
-	use opencv::calib3d::{find_chessboard_corners_def, draw_chessboard_corners, calibrate_camera_def, undistort_def, init_undistort_rectify_map};
+opencv_branch_4! {
+	use opencv::calib3d::{find_chessboard_corners_def, draw_chessboard_corners, calibrate_camera, undistort, init_undistort_rectify_map};
+}
+
+opencv_branch_34! {
+	use opencv::calib3d::{find_chessboard_corners_def, draw_chessboard_corners, calibrate_camera};
+	use opencv::imgproc::{undistort, init_undistort_rectify_map};
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -59,7 +66,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 			let mut dist = Mat::default();
 			let mut rvecs = Vector::<Mat>::new();
 			let mut tvecs = Vector::<Mat>::new();
-			calibrate_camera_def(
+			calibrate_camera(
 				&objpoints,
 				&imgpoints,
 				gray.size()?,
@@ -67,11 +74,17 @@ fn main() -> Result<(), Box<dyn Error>> {
 				&mut dist,
 				&mut rvecs,
 				&mut tvecs,
+				0,
+				TermCriteria::new(
+					i32::from(TermCriteria_Type::COUNT) + i32::from(TermCriteria_Type::EPS),
+					30,
+					f64::EPSILON,
+				)?,
 			)?;
 
 			// Using cv.undistort()
 			let mut dst_undistort = Mat::default();
-			undistort_def(&img, &mut dst_undistort, &mtx, &dist)?;
+			undistort(&img, &mut dst_undistort, &mtx, &dist, &no_array())?;
 			highgui::imshow("Result using undistort", &dst_undistort)?;
 
 			// Using remapping

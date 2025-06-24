@@ -4,7 +4,7 @@ use std::env;
 
 use opencv::prelude::*;
 use opencv::videoio::{VideoCapture, CAP_ANY};
-use opencv::Result;
+use opencv::{opencv_has_module_gapi, Result};
 
 fn main() -> Result<()> {
 	let mut cap = VideoCapture::default()?;
@@ -15,8 +15,7 @@ fn main() -> Result<()> {
 		cap.open(0, CAP_ANY)?;
 	}
 	assert!(cap.is_opened()?);
-	#[cfg(ocvrs_has_module_gapi)]
-	{
+	opencv_has_module_gapi! {
 		use opencv::core::{Point, Scalar, Size, Vector, BORDER_DEFAULT};
 		use opencv::gapi::GMat;
 		use opencv::imgproc::INTER_LINEAR;

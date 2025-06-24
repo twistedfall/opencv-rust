@@ -73,7 +73,7 @@ fi
 # remove tests and examples that require the latest OpenCV version so that they don't fail due to missing modules
 if [[ "${OPENCV_VERSION:-}" != "4.11.0" || "${OPENCV_VERSION:-}" != "5.0.0-alpha" ]]; then
 	rm -vf tests/*_only_latest_opencv.rs
-	rm -vf examples/dnn_face_detect.rs examples/text_detection.rs examples/camera_calibration.rs examples/hough_circle.rs
+	rm -vf examples/dnn_face_detect.rs examples/text_detection.rs
 fi
 
 echo "=== Current directory: $(pwd)"

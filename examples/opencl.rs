@@ -1,12 +1,11 @@
-use opencv::Result;
+use opencv::{opencv_has_inherent_feature_opencl, Result};
 
-#[cfg(ocvrs_has_inherent_feature_opencl)]
 fn main() -> Result<()> {
 	use std::{env, time};
 
-	use opencv::core::{Device, Size, UMat, Vector};
+	use opencv::core::{Size, UMat};
 	use opencv::prelude::*;
-	use opencv::{core, imgcodecs, imgproc};
+	use opencv::{imgcodecs, imgproc};
 
 	opencv::not_opencv_branch_34! {
 		use opencv::core::AccessFlag::ACCESS_READ;
@@ -17,23 +16,37 @@ fn main() -> Result<()> {
 
 	const ITERATIONS: usize = 100;
 	let img_file = env::args().nth(1).expect("Please supply image file name");
-	let opencl_have = core::have_opencl()?;
-	if opencl_have {
-		core::set_use_opencl(true)?;
-		let mut platforms = Vector::new();
-		core::get_platfoms_info(&mut platforms)?;
-		for (platf_num, platform) in platforms.into_iter().enumerate() {
-			println!("Platform #{}: {}", platf_num, platform.name()?);
-			for dev_num in 0..platform.device_number()? {
-				let mut dev = Device::default();
-				platform.get_device(&mut dev, dev_num)?;
-				println!("  OpenCL device #{}: {}", dev_num, dev.name()?);
-				println!("    vendor:  {}", dev.vendor_name()?);
-				println!("    version: {}", dev.version()?);
+	let opencl_have = opencv_has_inherent_feature_opencl! {
+		{
+			opencv::core::have_opencl()?
+		} else {
+			false
+		}
+	};
+	opencv_has_inherent_feature_opencl! {
+		if opencl_have {
+			opencv::core::set_use_opencl(true)?;
+			let mut platforms = opencv::core::Vector::new();
+			opencv::core::get_platfoms_info(&mut platforms)?;
+			for (platf_num, platform) in platforms.into_iter().enumerate() {
+				println!("Platform #{}: {}", platf_num, platform.name()?);
+				for dev_num in 0..platform.device_number()? {
+					let mut dev = opencv::core::Device::default();
+					platform.get_device(&mut dev, dev_num)?;
+					println!("  OpenCL device #{dev_num}: {}", dev.name()?);
+					println!("    vendor:  {}", dev.vendor_name()?);
+					println!("    version: {}", dev.version()?);
+				}
 			}
 		}
 	}
-	let opencl_use = core::use_opencl()?;
+	let opencl_use = opencv_has_inherent_feature_opencl! {
+		{
+			opencv::core::use_opencl()?
+		} else {
+			false
+		}
+	};
 	println!(
 		"OpenCL is {} and {}",
 		if opencl_have {
@@ -74,12 +87,5 @@ fn main() -> Result<()> {
 		}
 		println!("{:#?}", start.elapsed());
 	}
-	Ok(())
-}
-
-#[cfg(not(ocvrs_has_inherent_feature_opencl))]
-fn main() -> Result<()> {
-	eprintln!("This example requires that OpenCV is build with OpenCL support:");
-	eprintln!("{}", opencv::core::get_build_information()?);
 	Ok(())
 }
