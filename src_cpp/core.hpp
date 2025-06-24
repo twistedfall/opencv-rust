@@ -9,7 +9,9 @@
 	#include <opencv2/core/va_intel.hpp>
 	#include <opencv2/core/directx.hpp>
 #endif
-#include <opencv2/core/cuda.hpp>
+#ifdef HAVE_CUDA
+	#include <opencv2/core/cuda.hpp>
+#endif
 #if (CV_VERSION_MAJOR == 3 && CV_VERSION_MINOR == 4 && CV_VERSION_REVISION >= 4) /* 3.4.4+ */ \
 	|| (CV_VERSION_MAJOR == 4) /* 4.0+ */ \
 	|| (CV_VERSION_MAJOR == 5) /* 5.0+ */

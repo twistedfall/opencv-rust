@@ -20,6 +20,7 @@ pub use vector::*;
 mod affine3;
 mod data_type;
 mod directx;
+#[cfg(ocvrs_has_inherent_feature_cuda)]
 mod gpumat;
 mod inplace;
 mod input_output_array;

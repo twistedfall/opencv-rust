@@ -139,7 +139,7 @@ static SUPPORTED_MODULES: [SupportedModule; 73] = [
 	SupportedModule::XStereo,
 ];
 
-static SUPPORTED_INHERENT_FEATURES: [&str; 2] = ["hfloat", "opencl"];
+static SUPPORTED_INHERENT_FEATURES: [&str; 3] = ["hfloat", "opencl", "cuda"];
 
 /// The contents of these vars will be present in the debug log, but will not cause the source rebuild
 static DEBUG_ENV_VARS: [&str; 1] = ["PATH"];
