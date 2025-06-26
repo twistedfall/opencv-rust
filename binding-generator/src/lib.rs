@@ -3,6 +3,9 @@
 // todo allow ergonomically combining of enum variants with |
 // todo almost everything from the manual module must be connected to the binding generator, not the main crate
 // todo check that FN_FaceDetector works at all (receiving InputArray, passing as callback)
+// todo public static properties like opencv2/core/base.hpp:384 Hamming::normType
+// todo test returning reference to array like cv_MatStep_buf
+// todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
 // fixme vector<Mat*> get's interpreted as Vector<Mat> which should be wrong (e.g. Layer::forward and Layer::apply_halide_scheduler)
 // fixme MatConstIterator::m return Mat**, is it handled correctly?
 // fixme VectorOfMat::get allows mutation

@@ -151,7 +151,7 @@ fn col_count_i32(col_count: usize) -> Result<i32> {
 }
 
 impl Mat {
-	/// Create new `Mat` from the iterator of known size
+	/// Create a new [Mat] from the iterator of known size
 	pub fn from_exact_iter<T: DataType>(s: impl ExactSizeIterator<Item = T>) -> Result<Self> {
 		let mut out = unsafe { Self::new_rows_cols(row_count_i32(s.len())?, 1, T::opencv_type()) }?;
 		for (i, x) in s.enumerate() {
@@ -162,13 +162,13 @@ impl Mat {
 		Ok(out)
 	}
 
-	/// Create a new `Mat` from a single-dimensional slice
+	/// Create a new [Mat] from a single-dimensional slice
 	#[inline]
 	pub fn from_slice<T: DataType>(s: &[T]) -> Result<BoxedRef<Self>> {
 		Self::new_rows_cols_with_data(1, i32::try_from(s.len())?, s)
 	}
 
-	/// Create a new `Mat` from a single-dimensional byte slice
+	/// Create a new [Mat] from a single-dimensional byte slice
 	#[inline]
 	pub fn from_bytes<T: DataType>(s: &[u8]) -> Result<BoxedRef<Self>> {
 		let rem = s.len() % mem::size_of::<T>();
@@ -176,9 +176,9 @@ impl Mat {
 			return Err(Error::new(
 				core::StsBadArg,
 				format!(
-					"Unexpected number of bytes: {} the indicated type, expected multiple of {}",
+					"Unexpected number of bytes: {}, expected multiple of: {} based on the indicated type",
 					s.len(),
-					T::opencv_channels()
+					mem::size_of::<T>()
 				),
 			));
 		}
@@ -186,7 +186,7 @@ impl Mat {
 		Self::new_rows_cols_with_bytes::<T>(1, i32::try_from(len)?, s)
 	}
 
-	/// Create a new `Mat` from a mutable single-dimensional byte slice
+	/// Create a new [Mat] from a mutable single-dimensional byte slice
 	#[inline]
 	pub fn from_bytes_mut<T: DataType>(s: &mut [u8]) -> Result<BoxedRefMut<Self>> {
 		let rem = s.len() % mem::size_of::<T>();
@@ -194,9 +194,9 @@ impl Mat {
 			return Err(Error::new(
 				core::StsBadArg,
 				format!(
-					"Unexpected number of bytes: {} the indicated type, expected multiple of {}",
+					"Unexpected number of bytes: {}, expected multiple of: {} based on the indicated type",
 					s.len(),
-					T::opencv_channels()
+					mem::size_of::<T>()
 				),
 			));
 		}
@@ -204,13 +204,13 @@ impl Mat {
 		Self::new_rows_cols_with_bytes_mut::<T>(1, i32::try_from(len)?, s)
 	}
 
-	/// Create a new `Mat` from a mutable single-dimensional slice
+	/// Create a new [Mat] from a mutable single-dimensional slice
 	#[inline]
 	pub fn from_slice_mut<T: DataType>(s: &mut [T]) -> Result<BoxedRefMut<Self>> {
 		Self::new_rows_cols_with_data_mut(1, i32::try_from(s.len())?, s)
 	}
 
-	/// Create a new `Mat` by copying the data from a slice of slices
+	/// Create a new 2D [Mat] by copying the data from a slice of slices
 	///
 	/// Every subslice must have the same length, otherwise an error is returned.
 	pub fn from_slice_2d<T: DataType>(s: &[impl AsRef<[T]>]) -> Result<Self> {
@@ -247,7 +247,7 @@ impl Mat {
 		Ok(out)
 	}
 
-	/// Create a new `Mat` that references a single-dimensional slice with custom shape
+	/// Create a new [Mat] that references a single-dimensional slice with a custom shape
 	#[inline]
 	pub fn new_rows_cols_with_data<T: DataType>(rows: i32, cols: i32, data: &[T]) -> Result<BoxedRef<Self>> {
 		match_length(&[rows, cols], data.len(), 1)?;
@@ -257,7 +257,7 @@ impl Mat {
 		Ok(<BoxedRef<Mat>>::from(m))
 	}
 
-	/// Create a new `Mat` that references a single-dimensional byte slice with custom shape
+	/// Create a new [Mat] that references a single-dimensional byte slice with a custom shape
 	#[inline]
 	pub fn new_rows_cols_with_bytes<T: DataType>(rows: i32, cols: i32, data: &[u8]) -> Result<BoxedRef<Self>> {
 		match_length(&[rows, cols], data.len(), mem::size_of::<T>())?;
@@ -267,7 +267,7 @@ impl Mat {
 		Ok(<BoxedRef<Mat>>::from(m))
 	}
 
-	/// Create a new mutable `Mat` that references a single-dimensional slice with custom shape
+	/// Create a new mutable [Mat] that references a single-dimensional slice with a custom shape
 	#[inline]
 	pub fn new_rows_cols_with_data_mut<T: DataType>(rows: i32, cols: i32, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
 		match_length(&[rows, cols], data.len(), 1)?;
@@ -276,7 +276,7 @@ impl Mat {
 		Ok(<BoxedRefMut<Mat>>::from(m))
 	}
 
-	/// Create a new mutable `Mat` that references a single-dimensional byte slice with custom shape
+	/// Create a new mutable [Mat] that references a single-dimensional byte slice with a custom shape
 	#[inline]
 	pub fn new_rows_cols_with_bytes_mut<T: DataType>(rows: i32, cols: i32, data: &mut [u8]) -> Result<BoxedRefMut<Self>> {
 		match_length(&[rows, cols], data.len(), mem::size_of::<T>())?;
@@ -285,7 +285,7 @@ impl Mat {
 		Ok(<BoxedRefMut<Mat>>::from(m))
 	}
 
-	/// Create a new `Mat` that references a single-dimensional slice with custom shape
+	/// Create a new [Mat] that references a single-dimensional slice with a custom shape
 	#[inline]
 	pub fn new_size_with_data<T: DataType>(size: Size, data: &[T]) -> Result<BoxedRef<Self>> {
 		match_length(&[size.width, size.height], data.len(), 1)?;
@@ -293,7 +293,7 @@ impl Mat {
 		Ok(<BoxedRef<Mat>>::from(m))
 	}
 
-	/// Create a new mutable `Mat` that references a single-dimensional slice with custom shape
+	/// Create a new mutable [Mat] that references a single-dimensional slice with a custom shape
 	#[inline]
 	pub fn new_size_with_data_mut<T: DataType>(size: Size, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
 		match_length(&[size.width, size.height], data.len(), 1)?;
@@ -301,7 +301,7 @@ impl Mat {
 		Ok(<BoxedRefMut<Mat>>::from(m))
 	}
 
-	/// Create a new `Mat` that references a single-dimensional slice with custom shape
+	/// Create a new [Mat] that references a single-dimensional slice with a custom shape
 	#[inline]
 	pub fn new_nd_with_data<'data, T: DataType>(sizes: &[i32], data: &'data [T]) -> Result<BoxedRef<'data, Self>> {
 		match_length(sizes, data.len(), 1)?;
@@ -309,7 +309,7 @@ impl Mat {
 		Ok(<BoxedRef<Mat>>::from(m))
 	}
 
-	/// Create a new `Mat` that references a single-dimensional slice with custom shape
+	/// Create a new [Mat] that references a single-dimensional slice with a custom shape
 	#[inline]
 	pub fn new_nd_with_data_mut<'data, T: DataType>(sizes: &[i32], data: &'data mut [T]) -> Result<BoxedRefMut<'data, Self>> {
 		match_length(sizes, data.len(), 1)?;
@@ -317,7 +317,7 @@ impl Mat {
 		Ok(<BoxedRefMut<Mat>>::from(m))
 	}
 
-	/// Returns 2 mutable ROIs into a single `Mat` as long as they do not intersect
+	/// Returns 2 mutable ROIs into a single [Mat] as long as they do not intersect
 	pub fn roi_2_mut<MAT: MatTrait>(m: &mut MAT, roi1: Rect, roi2: Rect) -> Result<(BoxedRefMut<Mat>, BoxedRefMut<Mat>)> {
 		if (roi1 & roi2).empty() {
 			// safe because we made sure that the interest areas do not intersect
@@ -474,7 +474,7 @@ pub(crate) mod mat_forward {
 }
 
 pub trait MatTraitConstManual: MatTraitConst {
-	/// Like `Mat::at()` but performs no bounds or type checks
+	/// Like [Mat::at()] but performs no bounds or type checks
 	///
 	/// # Safety
 	/// Caller must ensure that index is within Mat bounds
@@ -483,7 +483,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 		Ok(unsafe { &*data_at_idx::<T>(self, i0 as usize) })
 	}
 
-	/// Like `Mat::at_2d()` but performs no bounds or type checks
+	/// Like [Mat::at_2d()] but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
@@ -491,7 +491,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 		self.ptr_2d(row, col).map(|ptr| unsafe { convert_ptr(ptr) })
 	}
 
-	/// Like `Mat::at_pt()` but performs no bounds or type checks
+	/// Like [Mat::at_pt()] but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that point is within Mat bounds
 	#[inline]
@@ -499,7 +499,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 		unsafe { self.at_2d_unchecked(pt.y, pt.x) }
 	}
 
-	/// Like `Mat::at_3d()` but performs no bounds or type checks
+	/// Like [Mat::at_3d()] but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
@@ -507,7 +507,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 		self.ptr_3d(i0, i1, i2).map(|ptr| unsafe { convert_ptr(ptr) })
 	}
 
-	/// Like `Mat::at_nd()` but performs no bounds or type checks
+	/// Like [Mat::at_nd()] but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
@@ -523,7 +523,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 			.and_then(|_| unsafe { self.at_row_unchecked(row) })
 	}
 
-	/// Like `Mat::at_row()` but performs no bounds or type checks
+	/// Like [Mat::at_row()] but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that index is within Mat bounds
 	#[inline]
@@ -544,7 +544,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 		!self.data().is_null()
 	}
 
-	/// Returns underlying data array as byte slice, `Mat` must be continuous
+	/// Returns the underlying data array as a byte slice, [Mat] must be continuous
 	#[inline]
 	fn data_bytes(&self) -> Result<&[u8]> {
 		match_is_continuous(self).and_then(|_| {
@@ -565,7 +565,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	}
 
 	/// # Safety
-	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat` and `Mat` is continuous
+	/// Caller must ensure that the `T` type argument corresponds to the data stored in the [Mat], and [Mat] is continuous
 	#[inline]
 	unsafe fn data_typed_unchecked<T: DataType>(&self) -> Result<&[T]> {
 		let data = self.data();
@@ -617,7 +617,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 		})
 	}
 
-	/// Returns an iterator over `Mat` elements and their positions
+	/// Returns an iterator over [Mat] elements and their positions
 	#[inline]
 	fn iter<T: DataType>(&self) -> Result<MatIter<T>>
 	where
@@ -643,7 +643,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 }
 
 pub trait MatTraitManual: MatTraitConstManual + MatTrait {
-	/// Like `Mat::at_mut()` but performs no bounds or type checks
+	/// Like [Mat::at_mut()] but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that index is within Mat bounds
 	#[inline]
@@ -651,7 +651,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 		Ok(unsafe { &mut *data_at_idx::<T>(self, i0 as usize).cast_mut() })
 	}
 
-	/// Like `Mat::at_2d_mut()` but performs no bounds or type checks
+	/// Like [Mat::at_2d_mut()] but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
@@ -659,7 +659,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 		self.ptr_2d_mut(row, col).map(|ptr| unsafe { convert_ptr_mut(ptr) })
 	}
 
-	/// Like `Mat::at_pt_mut()` but performs no bounds or type checks
+	/// Like [Mat::at_pt_mut()] but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that point is within Mat bounds
 	#[inline]
@@ -667,7 +667,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 		unsafe { self.at_2d_unchecked_mut(pt.y, pt.x) }
 	}
 
-	/// Like `Mat::at_3d_mut()` but performs no bounds or type checks
+	/// Like [Mat::at_3d_mut()] but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
@@ -675,7 +675,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 		self.ptr_3d_mut(i0, i1, i2).map(|ptr| unsafe { convert_ptr_mut(ptr) })
 	}
 
-	/// Like `Mat::at_nd_mut()` but performs no bounds or type checks
+	/// Like [Mat::at_nd_mut()] but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
@@ -690,7 +690,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 		unsafe { self.at_row_unchecked_mut(row) }
 	}
 
-	/// Like `Mat::at_row_mut()` but performs no bounds or type checks
+	/// Like [Mat::at_row_mut()] but performs no bounds or type checks
 	/// # Safety
 	/// Caller must ensure that index is within Mat bounds
 	#[inline]
@@ -706,7 +706,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 		})
 	}
 
-	/// Returns underlying data array as mutable byte slice, Mat must be continuous.
+	/// Returns the underlying data array as a mutable byte slice, Mat must be continuous.
 	#[inline]
 	fn data_bytes_mut(&mut self) -> Result<&mut [u8]> {
 		match_is_continuous(self).and_then(|_| {
@@ -726,7 +726,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	}
 
 	/// # Safety
-	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat` and `Mat` is continuous
+	/// Caller must ensure that the `T` type argument corresponds to the data stored in the [Mat], and [Mat] is continuous
 	#[inline]
 	unsafe fn data_typed_unchecked_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		let total = self.total();
@@ -738,7 +738,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 		})
 	}
 
-	/// Returns a mutable iterator over `Mat` elements and their positions
+	/// Returns a mutable iterator over [Mat] elements and their positions
 	#[inline]
 	fn iter_mut<T: DataType>(&mut self) -> Result<MatIterMut<T>>
 	where

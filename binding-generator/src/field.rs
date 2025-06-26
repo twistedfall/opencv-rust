@@ -1,6 +1,3 @@
-// todo public static properties like opencv2/core/base.hpp:384 Hamming::normType
-// todo test returning reference to array like cv_MatStep_buf
-
 use std::borrow::Cow;
 use std::fmt;
 use std::rc::Rc;

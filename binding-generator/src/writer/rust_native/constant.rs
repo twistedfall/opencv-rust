@@ -6,7 +6,7 @@ use once_cell::sync::Lazy;
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
-use crate::constant::ValueKind;
+use crate::constant::{Value, ValueKind};
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
 use crate::{settings, CompiledInterpolation, Const, EntityElement, StrExt, SupportedModule};
@@ -62,10 +62,30 @@ impl RustNativeGeneratedElement for Const<'_> {
 				("debug", self.get_debug().into()),
 				("name", name),
 				("type", typ.into()),
-				("value", value.to_string().into()),
+				("value", value.rust_render().into()),
 			]))
 		} else {
 			"".to_string()
+		}
+	}
+}
+
+pub trait ValueExt {
+	fn rust_render(self) -> String;
+}
+
+impl ValueExt for Value {
+	fn rust_render(self) -> String {
+		match self.kind {
+			ValueKind::Float | ValueKind::Double if !self.value.contains('.') => {
+				format!("{}.", self.value)
+			}
+			ValueKind::Integer
+			| ValueKind::UnsignedInteger
+			| ValueKind::Usize
+			| ValueKind::Float
+			| ValueKind::Double
+			| ValueKind::String => self.value,
 		}
 	}
 }

@@ -29,7 +29,7 @@ impl DefaultRustNativeElement {
 		if settings::STATIC_RUST_MODULES.contains(module_rust_safe_name) {
 			module_rust_safe_name.into()
 		} else {
-			format!("crate::{}", module_rust_safe_name).into()
+			format!("crate::{module_rust_safe_name}").into()
 		}
 	}
 
@@ -93,7 +93,7 @@ impl DefaultRustNativeElement {
 	}
 
 	pub fn rendered_doc_comment(entity: Entity, comment_marker: &str, opencv_version: &str) -> String {
-		RenderComment::new(&entity.doc_comment(), opencv_version)
+		RenderComment::new(entity.doc_comment().into_owned(), opencv_version)
 			.render_with_comment_marker(comment_marker)
 			.into_owned()
 	}

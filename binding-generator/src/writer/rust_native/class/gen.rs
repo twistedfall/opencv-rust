@@ -15,7 +15,6 @@ use crate::writer::rust_native::func::FuncExt;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{settings, Class, CompiledInterpolation, Constness, CppNameStyle, Element, Func, IteratorExt, NameStyle, StrExt};
 
-// todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
 pub fn gen_simple_class(c: &Class, opencv_version: &str) -> String {
 	static SIMPLE_TPL: Lazy<CompiledInterpolation> =
 		Lazy::new(|| include_str!("../tpl/class/simple.tpl.rs").compile_interpolation());

@@ -31,27 +31,21 @@ impl PackageName {
 	}
 
 	pub fn pkg_config() -> Vec<Cow<'static, str>> {
-		if let Some(env_name) = Self::env().or_else(Self::env_pkg_config) {
-			vec![env_name.into()]
-		} else {
-			vec!["opencv4".into(), "opencv".into()]
-		}
+		Self::env()
+			.or_else(Self::env_pkg_config)
+			.map_or_else(|| vec!["opencv4".into(), "opencv".into()], |env_name| vec![env_name.into()])
 	}
 
 	pub fn cmake() -> Cow<'static, str> {
-		if let Some(env_name) = Self::env().or_else(Self::env_cmake) {
-			env_name.into()
-		} else {
-			"OpenCV".into()
-		}
+		Self::env()
+			.or_else(Self::env_cmake)
+			.map_or_else(|| "OpenCV".into(), |env_name| env_name.into())
 	}
 
 	pub fn vcpkg() -> Vec<Cow<'static, str>> {
-		if let Some(env_name) = Self::env().or_else(Self::env_vcpkg) {
-			vec![env_name.into()]
-		} else {
-			vec!["opencv4".into(), "opencv3".into()]
-		}
+		Self::env()
+			.or_else(Self::env_vcpkg)
+			.map_or_else(|| vec!["opencv4".into(), "opencv3".into()], |env_name| vec![env_name.into()])
 	}
 }
 
@@ -342,7 +336,7 @@ impl Library {
 		ninja_bin: Option<&Path>,
 	) -> Result<Self> {
 		let toolchain_var = env::var_os("OPENCV_CMAKE_TOOLCHAIN_FILE").map(PathBuf::from);
-		let toolchain = toolchain.or_else(|| toolchain_var.as_ref().map(PathBuf::as_path));
+		let toolchain = toolchain.or(toolchain_var.as_deref());
 		eprintln!(
 			"=== Probing OpenCV library using cmake{}",
 			toolchain.map_or_else(|| "".to_string(), |tc| format!(" with toolchain: {}", tc.display()))

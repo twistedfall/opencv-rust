@@ -7,6 +7,7 @@ use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
+use crate::writer::rust_native::constant::ValueExt;
 use crate::{CompiledInterpolation, EntityElement, Enum, StrExt, SupportedModule};
 
 impl RustElement for Enum<'_> {
@@ -53,7 +54,7 @@ impl RustNativeGeneratedElement for Enum<'_> {
 		let mut generated_values = HashMap::<String, Cow<str>>::with_capacity(consts.len());
 		for c in &consts {
 			let name = c.rust_leafname(FishStyle::No);
-			let value = c.value().expect("Can't get value of enum variant").to_string();
+			let value = c.value().expect("Can't get value of enum variant").rust_render();
 			let duplicate_name = generated_values.get(&value).map(|s| s.as_ref());
 			let (enum_const_tpl, from_const_tpl) = if duplicate_name.is_some() {
 				(&CONST_IGNORED_TPL, &FROM_CONST_IGNORED_TPL)

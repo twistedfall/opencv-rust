@@ -1,5 +1,4 @@
 use std::borrow::Cow;
-use std::fmt;
 use std::fmt::Write;
 
 use clang::token::{Token, TokenKind};
@@ -10,67 +9,6 @@ use crate::debug::LocationName;
 use crate::element::ExcludeKind;
 use crate::type_ref::CppNameStyle;
 use crate::{settings, DefaultElement, Element, EntityElement, NameDebug};
-
-pub fn render_constant_rust(tokens: &[Token]) -> Option<Value> {
-	let mut out = Value {
-		kind: ValueKind::Integer,
-		value: String::with_capacity(tokens.len() * 8),
-	};
-	for t in tokens {
-		match t.get_kind() {
-			TokenKind::Comment => {
-				write!(out.value, "/* {} */", t.get_spelling()).expect("write! to String shouldn't fail");
-			}
-			TokenKind::Identifier => {
-				let spelling = t.get_spelling();
-				if let Some(entity) = t.get_location().get_entity() {
-					if let EntityKind::MacroExpansion = entity.get_kind() {
-						let cnst = Const::new(entity);
-						if cnst.exclude_kind().is_excluded() {
-							return None;
-						}
-					}
-				}
-				if spelling.starts_with("CV_") {
-					out.value += &spelling;
-				} else {
-					return None;
-				}
-			}
-			TokenKind::Keyword => {
-				return None;
-			}
-			TokenKind::Literal => {
-				let spelling = t.get_spelling();
-				if spelling.contains(['"', '\'']) {
-					out.kind = ValueKind::String;
-					out.value += &spelling;
-				} else if spelling.contains('.') {
-					if let Some(float) = spelling.strip_suffix(['F', 'f']) {
-						out.kind = ValueKind::Float;
-						out.value += float;
-					} else {
-						out.kind = ValueKind::Double;
-						out.value += &spelling;
-					}
-				} else if let Some(unsigned_value) = spelling.strip_suffix(['U', 'u']) {
-					out.kind = ValueKind::UnsignedInteger;
-					out.value += unsigned_value;
-				} else {
-					out.value += &spelling;
-				}
-			}
-			TokenKind::Punctuation => {
-				let spelling = t.get_spelling();
-				if spelling == "{" || spelling == "}" {
-					return None;
-				}
-				out.value += &t.get_spelling();
-			}
-		}
-	}
-	Some(out)
-}
 
 pub fn render_constant_cpp(tokens: &[Token]) -> String {
 	tokens
@@ -120,7 +58,7 @@ impl<'tu> Const<'tu> {
 				if tokens.len() <= 1 {
 					None
 				} else {
-					render_constant_rust(&tokens[1..])
+					Value::try_from_tokens(&tokens[1..])
 				}
 			}
 			EntityKind::EnumConstantDecl => Some(Value {
@@ -195,12 +133,65 @@ pub struct Value {
 	pub value: String,
 }
 
-impl fmt::Display for Value {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		if self.kind == ValueKind::Double && !self.value.contains('.') {
-			write!(f, "{}.", self.value)
-		} else {
-			write!(f, "{}", self.value)
+impl Value {
+	pub fn try_from_tokens(tokens: &[Token]) -> Option<Self> {
+		let mut out = Value {
+			kind: ValueKind::Integer,
+			value: String::with_capacity(tokens.len() * 8),
+		};
+		for t in tokens {
+			match t.get_kind() {
+				TokenKind::Comment => {
+					write!(out.value, "/* {} */", t.get_spelling()).expect("write! to String shouldn't fail");
+				}
+				TokenKind::Identifier => {
+					let spelling = t.get_spelling();
+					if let Some(entity) = t.get_location().get_entity() {
+						if let EntityKind::MacroExpansion = entity.get_kind() {
+							let cnst = Const::new(entity);
+							if cnst.exclude_kind().is_excluded() {
+								return None;
+							}
+						}
+					}
+					if spelling.starts_with("CV_") {
+						out.value += &spelling;
+					} else {
+						return None;
+					}
+				}
+				TokenKind::Keyword => {
+					return None;
+				}
+				TokenKind::Literal => {
+					let spelling = t.get_spelling();
+					if spelling.contains(['"', '\'']) {
+						out.kind = ValueKind::String;
+						out.value += &spelling;
+					} else if spelling.contains('.') {
+						if let Some(float) = spelling.strip_suffix(['F', 'f']) {
+							out.kind = ValueKind::Float;
+							out.value += float;
+						} else {
+							out.kind = ValueKind::Double;
+							out.value += &spelling;
+						}
+					} else if let Some(unsigned_value) = spelling.strip_suffix(['U', 'u']) {
+						out.kind = ValueKind::UnsignedInteger;
+						out.value += unsigned_value;
+					} else {
+						out.value += &spelling;
+					}
+				}
+				TokenKind::Punctuation => {
+					let spelling = t.get_spelling();
+					if spelling == "{" || spelling == "}" {
+						return None;
+					}
+					out.value += &t.get_spelling();
+				}
+			}
 		}
+		Some(out)
 	}
 }

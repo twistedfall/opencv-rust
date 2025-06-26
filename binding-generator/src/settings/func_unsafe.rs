@@ -79,9 +79,6 @@ fn core_factory() -> FuncUnsafe {
 fn dnn_factory() -> FuncUnsafe {
 	FuncMatcher::create(HashMap::from([
 		// pointer to internal data
-		(
-			"cv::dnn::Dict::ptr",
-			vec![(pred!(const, ["key"]), ()), (pred!(mut, ["key"]), ())],
-		),
+		("cv::dnn::Dict::ptr", vec![(pred!(["key"]), ())]),
 	]))
 }

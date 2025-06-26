@@ -1,9 +1,9 @@
 ## Troubleshooting
 
-1. One of the common problems is link errors in the end of the build.
+1. One of the common problems is link errors at the end of the build.
 
    Be sure to set up the relevant environment variables that will allow the linker to find the libraries it
-   needs (see below).
+   needs (see [Environment variables](https://github.com/twistedfall/opencv-rust/blob/master/README.md#environment-variables)).
 
 2. You're getting runtime errors like:
    ```
@@ -47,7 +47,7 @@
    Be sure to add `opencv_img_hash460` to your `OPENCV_LINK_LIBS` environment variable because it's being built as a separate
    file.
 
-7. On macOS you're getting the `dyld: Library not loaded: @rpath/libclang.dylib` error during the build process.
+7. On macOS, you're getting the `dyld: Library not loaded: @rpath/libclang.dylib` error during the build process.
 
    OS can't find `libclang.dylib` dynamic library because it resides in a non-standard path, set up
    the `DYLD_FALLBACK_LIBRARY_PATH` environment variable to point to the path where libclang.dylib can be
@@ -89,15 +89,5 @@
 
 ## Reporting issues
 
-If you still have trouble using the crate after going through the Troubleshooting steps please fill free to
+If you still have trouble using the crate after going through the Troubleshooting steps, please fill free to
 report it to the [bugtracker](https://github.com/twistedfall/opencv-rust/issues).
-
-When reporting an issue please state:
-
-1. Operating system
-2. The way you installed OpenCV: package, official binary distribution, manual compilation, etc.
-3. OpenCV version
-4. Attach the full output of the following command from your project directory:
-   ```shell script
-   RUST_BACKTRACE=full cargo build -vv
-   ```

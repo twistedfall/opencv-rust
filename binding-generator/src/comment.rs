@@ -20,8 +20,8 @@ pub fn strip_doxygen_comment_markers(comment: &str) -> String {
 	let mut comment_type = CommentType::SingleLineDelimited;
 	let mut lines = Vec::with_capacity(128);
 	// first pass:
-	// 1. checks whether the comment is single-line or multi-line delimited
-	// 2. checks whether multiline comment is asterisk prefixed
+	// 1. checks whether a comment is single-line or multi-line delimited
+	// 2. checks whether a multiline comment is asterisk prefixed
 	// 3. strips comment delimiters for multiline and single line comments
 	// 4. collects resulting stripped lines into `lines` Vec
 	for (i, mut line) in comment.lines_with_nl().enumerate() {
@@ -144,16 +144,169 @@ mod test {
 		assert_eq!("test", &strip_doxygen_comment_markers("//   test"));
 		assert_eq!("test", &strip_doxygen_comment_markers("/*test */"));
 
+		// multiline with prefix
 		{
-			let comment = "/** @overload
- * @brief It's the same function as #calibrateCameraAruco but without calibration error estimation.
- */";
-
-			let expected = "@overload
-@brief It's the same function as #calibrateCameraAruco but without calibration error estimation.";
+			let comment = "\
+/**
+ * line1
+ * line2
+ */
+";
+			let expected = "\
+line1
+line2";
 			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
 		}
 
+		// multiline without prefix
+		{
+			let comment = "\
+/*
+line1
+ line2
+*/
+";
+			let expected = "\
+line1
+ line2";
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
+		}
+
+		// multiline with indent and no end marker
+		{
+			let comment = "\
+/** line1
+ *     line2
+ *     line3
+";
+			let expected = "\
+line1
+line2
+line3";
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
+		}
+
+		// multiline with MD unordered list
+		{
+			let comment = "\
+/* line1
+      * line2
+        line3
+      * line4
+*/
+";
+			let expected = "\
+line1
+* line2
+  line3
+* line4";
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
+		}
+
+		// multiline with indent on a single line
+		{
+			let comment = "\
+/**
+ * line1
+ * line2
+                          line3
+ */
+";
+			let expected = "\
+line1
+line2
+                       line3";
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
+		}
+
+		// multiline, end marker on the same line
+		{
+			let comment = "\
+/** line1
+    line2
+    line3*/
+";
+			let expected = "\
+line1
+line2
+line3";
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
+		}
+
+		// two multiline glued
+		{
+			let comment = "\
+/** line1
+  line2*/
+/** line3 */
+";
+			let expected = "\
+line1
+  line2
+line3";
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
+		}
+
+		// multiline with empty lines inside and at the end
+		{
+			let comment = "\
+/** line1
+
+line2
+
+*/
+";
+			let expected = "\
+line1
+
+line2";
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
+		}
+
+		// multiline with empty lines and indent
+		{
+			let comment = "\
+/**
+ line1
+
+ line2
+*/
+";
+			let expected = "\
+line1
+
+line2";
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
+		}
+
+		// multiline with indent when the first line is on the same line as the start marker
+		{
+			let comment = "\
+/** line1
+
+ line2
+ */
+";
+			let expected = "\
+line1
+
+line2";
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
+		}
+
+		// single-line with exclamation mark
+		{
+			let comment = "\
+//!< line1
+      //!< line2
+";
+			let expected = "\
+line1
+line2";
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
+		}
+
+		// single-line
 		{
 			let comment = "// @overload
 // @brief It's the same function as #calibrateCameraAruco but without calibration error estimation.

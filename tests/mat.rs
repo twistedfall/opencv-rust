@@ -188,6 +188,43 @@ fn mat_at_1d() -> Result<()> {
 
 	{
 		let mut mat = Mat::from_slice_2d(&s)?;
+		assert_matches!(
+			mat.at::<f32>(-1),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at::<f32>(10),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_mut::<f32>(-1),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_mut::<f32>(10),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_eq!(*mat.at::<f32>(0)?, 1.);
+		assert_eq!(*mat.at::<f32>(6)?, 7.);
+		assert_eq!(*mat.at::<f32>(8)?, 9.);
+		*mat.at_mut::<f32>(4)? = 2.;
+		assert_eq!(*mat.at::<f32>(4)?, 2.);
+	}
+
+	{
+		let mut mat = Mat::from_slice_2d(&s)?;
 		let mut mat = mat.reshape_mut(1, 1)?;
 		assert_eq!(1, mat.rows());
 		assert_eq!(9, mat.cols());
@@ -261,43 +298,6 @@ fn mat_at_1d() -> Result<()> {
 		);
 		assert_eq!(*mat.at::<f32>(0)?, 1.);
 		assert_eq!(*mat.at::<f32>(4)?, 5.);
-		assert_eq!(*mat.at::<f32>(8)?, 9.);
-		*mat.at_mut::<f32>(4)? = 2.;
-		assert_eq!(*mat.at::<f32>(4)?, 2.);
-	}
-
-	{
-		let mut mat = Mat::from_slice_2d(&s)?;
-		assert_matches!(
-			mat.at::<f32>(-1),
-			Err(Error {
-				code: core::StsOutOfRange,
-				..
-			})
-		);
-		assert_matches!(
-			mat.at::<f32>(10),
-			Err(Error {
-				code: core::StsOutOfRange,
-				..
-			})
-		);
-		assert_matches!(
-			mat.at_mut::<f32>(-1),
-			Err(Error {
-				code: core::StsOutOfRange,
-				..
-			})
-		);
-		assert_matches!(
-			mat.at_mut::<f32>(10),
-			Err(Error {
-				code: core::StsOutOfRange,
-				..
-			})
-		);
-		assert_eq!(*mat.at::<f32>(0)?, 1.);
-		assert_eq!(*mat.at::<f32>(6)?, 7.);
 		assert_eq!(*mat.at::<f32>(8)?, 9.);
 		*mat.at_mut::<f32>(4)? = 2.;
 		assert_eq!(*mat.at::<f32>(4)?, 2.);

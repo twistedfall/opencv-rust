@@ -14,81 +14,81 @@ use crate::{CowMapBorrowedExt, CppNameStyle, Element, Func, NameStyle, StrExt, S
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct RenderComment {
-	pub comment: String,
+	pub doc_comment: String,
 	pub attributes: Vec<String>,
 }
 
 impl RenderComment {
-	pub fn new(doc_comment: &str, opencv_version: &str) -> Self {
-		let mut comment = doc_comment.to_string();
-		comment.replace_in_place("\r\n", "\n");
+	pub fn new(mut doc_comment: String, opencv_version: &str) -> Self {
+		// todo, simplify/optimize this function, spec is here https://www.doxygen.nl/manual/docblocks.html
+		doc_comment.replace_in_place("\r\n", "\n");
 		// module titles
 		static MODULE_TITLE_1: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)\s*@[}{].*$").unwrap());
 		static MODULE_TITLE_2: Lazy<Regex> = Lazy::new(|| Regex::new(r"@defgroup [^ ]+ (.*)").unwrap());
 		static MODULE_TITLE_3: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^.*?@addtogroup\s+.+").unwrap());
-		comment.replace_in_place_regex(&MODULE_TITLE_1, "");
-		comment.replace_in_place_regex(&MODULE_TITLE_2, r#"# $1"#);
-		comment.replace_in_place_regex(&MODULE_TITLE_3, "");
-		let trimmed = comment.trim();
-		if trimmed.len() != comment.len() {
-			comment = trimmed.to_string()
+		doc_comment.replace_in_place_regex(&MODULE_TITLE_1, "");
+		doc_comment.replace_in_place_regex(&MODULE_TITLE_2, r#"# $1"#);
+		doc_comment.replace_in_place_regex(&MODULE_TITLE_3, "");
+		let trimmed = doc_comment.trim();
+		if trimmed.len() != doc_comment.len() {
+			doc_comment = trimmed.to_string()
 		}
 
 		// comment body markers
 		static BRIEF: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@brief[ :]*"#).unwrap());
-		comment.replace_in_place_regex(&BRIEF, "");
-		comment.replace_in_place("@note", "\nNote:");
+		doc_comment.replace_in_place_regex(&BRIEF, "");
+		doc_comment.replace_in_place("@note", "\nNote:");
 
 		// code blocks, don't run them during tests
 		static CODE: Lazy<Regex> = Lazy::new(|| Regex::new(r"@code(?: ?\{.+?})?").unwrap());
-		comment.replace_in_place_regex(&CODE, "```C++");
-		comment.replace_in_place("@endcode", "```\n");
+		doc_comment.replace_in_place_regex(&CODE, "```C++");
+		doc_comment.replace_in_place("@endcode", "```\n");
 
 		// name block
-		comment.replace_in_place("@name ", "");
+		doc_comment.replace_in_place("@name ", "");
 
 		// snippets
 		static SNIPPET: Lazy<Regex> = Lazy::new(|| Regex::new(r"@snippet\s+([\w/.]+)\s+([\w-]+)").unwrap());
-		comment.replace_in_place_regex_cb(&SNIPPET, |comment, caps| {
+		doc_comment.replace_in_place_regex_cb(&SNIPPET, |comment, caps| {
 			let path = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
 			let name = caps.get(2).map(|(s, e)| &comment[s..e]).expect("Impossible");
-			if path.starts_with("samples/") {
-				// fixme: hack to detect hdf snippets
-				Some(format!("[{name}](https://github.com/opencv/opencv_contrib/blob/{opencv_version}/modules/hdf/{path}#L1)").into())
-			} else {
-				Some(
+			Some(
+				if path.starts_with("samples/") {
+					// fixme: hack to detect hdf snippets
+					format!("[{name}](https://github.com/opencv/opencv_contrib/blob/{opencv_version}/modules/hdf/{path}#L1)")
+				} else {
 					format!("[{name}](https://github.com/opencv/opencv/blob/{opencv_version}/samples/cpp/tutorial_code/{path}#L1)")
-						.into(),
-				)
-			}
+				}
+				.into(),
+			)
 		});
 
 		// some special casing for docs.rs build failures
-		comment.replace_in_place("'fps'", r#""fps""#);
-		comment.replace_in_place("'cv::Exception'", r#""cv::Exception""#);
+		doc_comment.replace_in_place("'fps'", r#""fps""#);
+		doc_comment.replace_in_place("'cv::Exception'", r#""cv::Exception""#);
 
 		// see also block
 		static SEE_ALSO_BLOCK: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^\s*@(sa|see)\s+").unwrap());
 		static SEE_ALSO_INLINE: Lazy<Regex> = Lazy::new(|| Regex::new(r"@(sa|see)\s+").unwrap());
-		if comment.replacen_in_place_regex(&SEE_ALSO_BLOCK, 1, "## See also\n") {
-			comment.replace_in_place_regex(&SEE_ALSO_INLINE, "");
+		if doc_comment.replacen_in_place_regex(&SEE_ALSO_BLOCK, 1, "## See also\n") {
+			doc_comment.replace_in_place_regex(&SEE_ALSO_INLINE, "");
 		} else {
-			comment.replace_in_place_regex(&SEE_ALSO_INLINE, "see also: ");
+			doc_comment.replace_in_place_regex(&SEE_ALSO_INLINE, "see also: ");
 		}
 
 		// citation links
 		static CITE: Lazy<Regex> = Lazy::new(|| Regex::new(r"@cite\s+([\w:]+)").unwrap());
-		comment.replace_in_place_regex(
+		doc_comment.replace_in_place_regex(
 			&CITE,
 			&format!("[$1](https://docs.opencv.org/{opencv_version}/d0/de3/citelist.html#CITEREF_$1)"),
 		);
 
 		// references
 		static REF: Lazy<Regex> = Lazy::new(|| Regex::new(r"@ref\s+([\w:]+)").unwrap());
-		comment.replace_in_place_regex(&REF, "[$1]");
+		doc_comment.replace_in_place_regex(&REF, "[$1]");
 
 		static REF_2: Lazy<Regex> = Lazy::new(|| Regex::new(r"#(\w+)(\s+)").unwrap());
-		comment.replace_in_place_regex_cb(&REF_2, |comment, caps| {
+		doc_comment.replace_in_place_regex_cb(&REF_2, |comment, caps| {
 			let name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
 			let space = caps.get(2).map(|(s, e)| &comment[s..e]).expect("Impossible");
 			let name = if name.contains(char::is_lowercase) {
@@ -101,22 +101,22 @@ impl RenderComment {
 
 		// images
 		static IMAGE: Lazy<Regex> = Lazy::new(|| Regex::new(r"!\[(.*?)]\((?:.*/)?(.+)?\)").unwrap());
-		comment.replace_in_place_regex(&IMAGE, &format!("![$1](https://docs.opencv.org/{opencv_version}/$2)"));
+		doc_comment.replace_in_place_regex(&IMAGE, &format!("![$1](https://docs.opencv.org/{opencv_version}/$2)"));
 
 		// returns
 		static RETURNS: Lazy<Regex> = Lazy::new(|| Regex::new(r".*?@returns?\s*").unwrap());
-		comment.replace_in_place_regex(&RETURNS, "## Returns\n");
+		doc_comment.replace_in_place_regex(&RETURNS, "## Returns\n");
 
 		// parameter list
 		static PARAM_HEADER: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)^(.*?@param)"#).unwrap());
 		static PARAM: Lazy<Regex> = Lazy::new(|| Regex::new(r".*?@param\s*(?:\[in]|(\[out]))?\s+(\w+) *(.*)").unwrap());
-		comment.replacen_in_place_regex(&PARAM_HEADER, 1, "## Parameters\n$1");
-		comment.replace_in_place_regex(&PARAM, "* $2:$1 $3");
+		doc_comment.replacen_in_place_regex(&PARAM_HEADER, 1, "## Parameters\n$1");
+		doc_comment.replace_in_place_regex(&PARAM, "* $2:$1 $3");
 
 		// deprecated
 		static DEPRECATED: Lazy<Regex> = Lazy::new(|| Regex::new(r".*?@deprecated\s+(.+)").unwrap());
 		let mut deprecated = None;
-		comment.replace_in_place_regex_cb(&DEPRECATED, |comment, caps| {
+		doc_comment.replace_in_place_regex_cb(&DEPRECATED, |comment, caps| {
 			let deprecated_msg = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible").to_string();
 			let out = format!("\n**Deprecated**: {deprecated_msg}");
 			deprecated = Some(deprecated_msg);
@@ -125,17 +125,17 @@ impl RenderComment {
 
 		// leading dashes
 		static LEADING_DASH: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^(\s*)-(\s{2,})").unwrap());
-		comment.replace_in_place_regex(&LEADING_DASH, "$1*$2");
+		doc_comment.replace_in_place_regex(&LEADING_DASH, "$1*$2");
 
 		// math expressions
 		static BLOCK_FORMULA: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?s)\\f\[(.*?)\\f]").unwrap());
 		static INLINE_FORMULA: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?s)\\f\$(.*?)\\f\$").unwrap());
-		comment.replace_in_place_regex_cb(&BLOCK_FORMULA, |out, caps| {
+		doc_comment.replace_in_place_regex_cb(&BLOCK_FORMULA, |out, caps| {
 			let formula = preprocess_formula(caps.get(1).map(|(s, e)| &out[s..e]).expect("Impossible"));
 			let encoded = utf8_percent_encode(&formula, NON_ALPHANUMERIC);
 			Some(format!("![block formula](https://latex.codecogs.com/png.latex?{encoded})").into())
 		});
-		comment.replace_in_place_regex_cb(&INLINE_FORMULA, |out, caps| {
+		doc_comment.replace_in_place_regex_cb(&INLINE_FORMULA, |out, caps| {
 			let formula = preprocess_formula(caps.get(1).map(|(s, e)| &out[s..e]).expect("Impossible"));
 			let encoded = utf8_percent_encode(&formula, NON_ALPHANUMERIC);
 			Some(format!("![inline formula](https://latex.codecogs.com/png.latex?{encoded})").into())
@@ -145,25 +145,25 @@ impl RenderComment {
 		static URL: Lazy<Regex> = Lazy::new(|| {
 			Regex::new(r#"([^<"/(]|[^]]\(|^)(https?://[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*[-a-zA-Z0-9@:%_+~#?&/=])?)"#).unwrap()
 		});
-		comment.replace_in_place_regex(&URL, "$1<$2>");
+		doc_comment.replace_in_place_regex(&URL, "$1<$2>");
 
 		// escapes
 		static ESCAPE: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)\\n$").unwrap());
-		comment.replace_in_place_regex(&ESCAPE, "\n");
+		doc_comment.replace_in_place_regex(&ESCAPE, "\n");
 
 		// catch sequences of 4 indents and reduce them to avoid cargo test running them as code
 		static INDENTS: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^(\s{3}|\s{7}|\s{11}|\s{15}|\s{19})\s(\S)").unwrap());
-		comment.replace_in_place_regex(&INDENTS, "$1$2");
+		doc_comment.replace_in_place_regex(&INDENTS, "$1$2");
 
 		let mut attributes = vec![];
 		if let Some(deprecated) = deprecated {
 			attributes.push(format!("#[deprecated = \"{deprecated}\"]"));
 		}
-		RenderComment { comment, attributes }
+		Self { doc_comment, attributes }
 	}
 
 	pub fn render_with_comment_marker(&self, comment_marker: &str) -> Cow<str> {
-		let mut out = add_comment_markers(&self.comment, comment_marker);
+		let mut out = add_comment_markers(&self.doc_comment, comment_marker);
 		if !out.is_empty() && !self.attributes.is_empty() {
 			out.to_mut().push('\n');
 		}
@@ -295,209 +295,25 @@ mod test {
 	#[test]
 	fn test_render_doc_comment() {
 		{
-			let comment = "\
-/**
- * line1
- * line2
- */
-";
-			let res = "\
-line1
-line2";
-			assert_eq!(
-				res,
-				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
-			);
-		}
-
-		{
-			let comment = "\
-/*
-line1
- line2
-*/
-";
-			let res = "\
-line1
- line2";
-			assert_eq!(
-				res,
-				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
-			);
-		}
-
-		{
-			let comment = "\
-/** line1
- *     line2
- *     line3
-";
-			let res = "\
-line1
-line2
-line3";
-			assert_eq!(
-				res,
-				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
-			);
-		}
-
-		{
-			let comment = "\
-/* line1
-      * line2
-        line3
-      * line4
-*/
-";
-			let res = "\
-line1
-* line2
-  line3
-* line4";
-			assert_eq!(
-				res,
-				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
-			);
-		}
-
-		{
-			let comment = "\
-/**
- * line1
- * line2
-                          line3
- */
-";
-			let res = "\
-line1
-line2
-                       line3";
-			assert_eq!(
-				res,
-				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
-			);
-		}
-
-		{
-			let comment = "\
-/** line1
-    line2
-    line3*/
-";
-			let res = "\
-line1
-line2
-line3";
-			assert_eq!(
-				res,
-				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
-			);
-		}
-
-		{
-			let comment = "\
-//!< line1
-      //!< line2
-";
-			let res = "\
-line1
-line2";
-			assert_eq!(
-				res,
-				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
-			);
-		}
-
-		{
-			let comment = "\
-/** line1
-  line2*/
-/** line3 */
-";
-			let res = "\
-line1
-  line2
-line3";
-			assert_eq!(
-				res,
-				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
-			);
-		}
-
-		{
-			let comment = "\
-/** line1
-
-line2
-
-*/
-";
-			let res = "\
-line1
-
-line2";
-			assert_eq!(
-				res,
-				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
-			);
-		}
-
-		{
-			let comment = "\
-/**
- line1
-
- line2
-*/
-";
-			let res = "\
-line1
-
-line2";
-			assert_eq!(
-				res,
-				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
-			);
-		}
-
-		{
-			let comment = "\
-/** line1
-
- line2
- */
-";
-			let res = "\
-line1
-
-line2";
-			assert_eq!(
-				res,
-				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
-			);
-		}
-
-		{
 			let comment = "@deprecated test\r\ntest\r\n";
 			assert!(comment.contains('\r'));
 			let res = RenderComment {
-				comment: "\
+				doc_comment: "\
 \n**Deprecated**: test
 test"
 					.to_string(),
 				attributes: vec!["#[deprecated = \"test\"]".to_string()],
 			};
-			assert_eq!(res, RenderComment::new(&strip_doxygen_comment_markers(comment), "master"));
+			assert_eq!(res, RenderComment::new(strip_doxygen_comment_markers(comment), "master"));
 		}
 
 		{
 			let comment = "";
 			let res = RenderComment {
-				comment: "".to_string(),
+				doc_comment: "".to_string(),
 				attributes: vec![],
 			};
-			assert_eq!(res, RenderComment::new(comment, "master"))
+			assert_eq!(res, RenderComment::new(comment.to_string(), "master"))
 		}
 	}
 
@@ -507,7 +323,7 @@ test"
 			assert_eq!(
 				"",
 				RenderComment {
-					comment: "".to_string(),
+					doc_comment: "".to_string(),
 					attributes: vec![]
 				}
 				.render_with_comment_marker("")
@@ -518,7 +334,7 @@ test"
 			assert_eq!(
 				"/// test1\n/// test2",
 				RenderComment {
-					comment: "test1\ntest2".to_string(),
+					doc_comment: "test1\ntest2".to_string(),
 					attributes: vec![]
 				}
 				.render_with_comment_marker("///")
@@ -529,7 +345,7 @@ test"
 			assert_eq!(
 				"/// test1\n/// test2\n#[deprecated]",
 				RenderComment {
-					comment: "test1\ntest2".to_string(),
+					doc_comment: "test1\ntest2".to_string(),
 					attributes: vec!["#[deprecated]".to_string()]
 				}
 				.render_with_comment_marker("///")

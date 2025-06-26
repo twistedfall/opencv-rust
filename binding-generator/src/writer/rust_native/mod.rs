@@ -228,7 +228,7 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 			format!("pub use super::{{{}}};", self.prelude_traits.join(", "))
 		};
 		let prelude = RUST_PRELUDE.interpolate(&HashMap::from([("pub_use_traits", pub_use_traits)]));
-		let comment = RenderComment::new(&self.comment, self.opencv_version);
+		let comment = RenderComment::new(self.comment, self.opencv_version);
 		let comment = comment.render_with_comment_marker("//!");
 		let module_opencv_name = self.module.opencv_name();
 		let rust_path = self.out_dir.join(format!("{module_opencv_name}.rs"));

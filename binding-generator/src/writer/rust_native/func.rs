@@ -195,16 +195,16 @@ impl RustElement for Func<'_, '_> {
 	}
 
 	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
-		let mut comment = RenderComment::new(&self.doc_comment_overloaded(), opencv_version);
+		let mut comment = RenderComment::new(self.doc_comment_overloaded().into_owned(), opencv_version);
 		let args = self.arguments();
 		let (_, default_args) = split_default_args(&args);
 		let default_args_comment = comment::render_cpp_default_args(default_args);
 		if !default_args_comment.is_empty() {
-			if !comment.comment.is_empty() {
-				comment.comment.push_str("\n\n");
+			if !comment.doc_comment.is_empty() {
+				comment.doc_comment.push_str("\n\n");
 			}
-			comment.comment.push_str("## C++ default parameters\n");
-			comment.comment.push_str(default_args_comment.trim_end());
+			comment.doc_comment.push_str("## C++ default parameters\n");
+			comment.doc_comment.push_str(default_args_comment.trim_end());
 		}
 		comment.render_with_comment_marker(comment_marker).into_owned()
 	}
@@ -903,7 +903,7 @@ fn companion_func_default_args<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu,
 	}
 	let original_rust_leafname = f.rust_leafname(FishStyle::No);
 	let mut doc_comment = f.doc_comment().into_owned();
-	let rust_leafname = format!("{}_def", original_rust_leafname);
+	let rust_leafname = format!("{original_rust_leafname}_def");
 	let default_args = comment::render_cpp_default_args(args_with_def);
 	if !doc_comment.is_empty() {
 		doc_comment.push_str("\n\n");

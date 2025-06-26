@@ -4,14 +4,15 @@ description = "Rust bindings for OpenCV"
 documentation = "https://docs.rs/opencv"
 repository = "https://github.com/twistedfall/opencv-rust"
 readme = "README.md"
-keywords = ["opencv", "vision"]
+keywords = ["opencv", "vision", "cv"]
+categories = ["api-bindings", "computer-vision", "external-ffi-bindings", "multimedia"]
 license = "MIT"
 version = "0.95.1"
 # bump edition to 2024 when MSRV is 1.85
 edition = "2021"
 rust-version = "1.77.0"
 authors = ["Pro <twisted.fall@gmail.com>", "Mathieu Poumeyrol <kali@zoy.org>"]
-exclude = ["/.github", "/ci", "/tools", ".editorconfig", ".gitattributes", ".gitignore", "release.toml", "rustfmt.toml"]
+exclude = ["/.github", "/ci", "/tools", "/.editorconfig", "/.gitattributes", "/release.toml", "/rustfmt.toml", ".gitignore"]
 
 [lib]
 doctest = false

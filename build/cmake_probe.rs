@@ -198,7 +198,7 @@ impl<'r> CmakeProbe<'r> {
 		} else {
 			Err(
 				format!(
-					"cmake returned an error\n    stdout: {:?}\n    stderr: {:?}",
+					"cmake returned an error\n    stdout: {}\n    stderr: {}",
 					String::from_utf8_lossy(&output.stdout),
 					String::from_utf8_lossy(&output.stderr)
 				)
@@ -393,7 +393,7 @@ impl<'r> CmakeProbe<'r> {
 			} else {
 				Err(
 					format!(
-						"cmake returned an error\n    stdout: {:?}\n    stderr: {:?}",
+						"cmake returned an error\n    stdout: {}\n    stderr: {}",
 						String::from_utf8_lossy(&output.stdout),
 						String::from_utf8_lossy(&output.stderr)
 					)
@@ -415,7 +415,7 @@ impl<'r> CmakeProbe<'r> {
 			} else {
 				Err(
 					format!(
-						"cmake returned an error\n    stdout: {:?}\n    stderr: {:?}",
+						"cmake returned an error\n    stdout: {}\n    stderr: {}",
 						String::from_utf8_lossy(&output.stdout),
 						String::from_utf8_lossy(&output.stderr)
 					)

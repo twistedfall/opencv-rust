@@ -191,7 +191,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 					);
 					EXTERN_TPL.interpolate_into(&mut impls, &inter_vars);
 					if is_data_type_or_vec_of_data_type_opencv_4 || is_data_type_or_vec_of_data_type_opencv_5 {
-						inter_vars.insert("rust_full", format!("BoxedRef<'_, {}>", rust_localalias).into());
+						inter_vars.insert("rust_full", format!("BoxedRef<'_, {rust_localalias}>").into());
 						INPUT_ARRAY_TPL.interpolate_into(&mut impls, &inter_vars);
 					}
 				}
