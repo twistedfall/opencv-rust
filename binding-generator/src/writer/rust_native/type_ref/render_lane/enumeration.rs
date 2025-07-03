@@ -9,14 +9,14 @@ use crate::{CowMapBorrowedExt, CppNameStyle, Enum, NameStyle};
 
 pub struct EnumRenderLane<'tu, 'ge> {
 	non_canonical: TypeRef<'tu, 'ge>,
-	enm: Enum<'tu>,
+	enm: Enum<'tu, 'ge>,
 	indirection: Indirection,
 }
 
 impl<'tu, 'ge> EnumRenderLane<'tu, 'ge> {
 	pub fn from_non_canonical_enum_indirection(
 		non_canonical: TypeRef<'tu, 'ge>,
-		enm: Enum<'tu>,
+		enm: Enum<'tu, 'ge>,
 		indirection: Indirection,
 	) -> Self {
 		Self {

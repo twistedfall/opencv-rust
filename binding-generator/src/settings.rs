@@ -51,6 +51,7 @@ pub use class_tweaks::{class_tweaks_factory, ClassTweak, ClassTweaks};
 pub use const_tweak::CONST_TYPE_OVERRIDE;
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
+pub use enum_bitfield_override::{enum_bitfield_override_factory, EnumBitfieldOverride};
 pub use force_infallible::{force_infallible_factory, ForceInfallible};
 pub use func_cfg_attr::{func_cfg_attr_factory, FuncCfgAttr, CFG_ATTR_NOT_ON_WINDOWS, CFG_ATTR_ONLY_OPENCV_5};
 pub use func_companion_tweak::{func_companion_tweak_factory, CompanionTweak, FuncCompanionTweak};
@@ -77,6 +78,7 @@ mod class_tweaks;
 mod const_tweak;
 mod element_exclude_kind;
 mod element_export_tweak;
+mod enum_bitfield_override;
 mod force_infallible;
 mod func_cfg_attr;
 mod func_companion_tweak;
@@ -97,6 +99,7 @@ pub type TypeRefFactory = fn() -> TypeRef<'static, 'static>;
 pub struct Settings {
 	pub arg_override: ArgOverride,
 	pub return_override: ReturnOverride,
+	pub enum_bitfield_override: EnumBitfieldOverride,
 	pub force_infallible: ForceInfallible,
 	pub func_cfg_attr: FuncCfgAttr,
 	pub func_companion_tweak: FuncCompanionTweak,
@@ -117,6 +120,7 @@ impl Settings {
 		Self {
 			arg_override: ArgOverride::empty(),
 			return_override: ReturnOverride::empty(),
+			enum_bitfield_override: EnumBitfieldOverride::default(),
 			force_infallible: ForceInfallible::empty(),
 			func_cfg_attr: FuncCfgAttr::empty(),
 			func_companion_tweak: FuncCompanionTweak::empty(),
@@ -137,6 +141,7 @@ impl Settings {
 		Self {
 			arg_override: arg_override_factory(module),
 			return_override: return_override_factory(module),
+			enum_bitfield_override: enum_bitfield_override_factory(module),
 			force_infallible: force_infallible_factory(module),
 			func_cfg_attr: func_cfg_attr_factory(module),
 			func_companion_tweak: func_companion_tweak_factory(module),

@@ -48,7 +48,7 @@ impl<'tu, 'ge> Typedef<'tu, 'ge> {
 						out = NewTypedefResult::Class(Class::new_ext(child, entity.cpp_name(CppNameStyle::Reference), gen_env));
 					}
 					EntityKind::EnumDecl => {
-						out = NewTypedefResult::Enum(Enum::new_ext(child, entity.cpp_name(CppNameStyle::Reference)));
+						out = NewTypedefResult::Enum(Enum::new_ext(child, entity.cpp_name(CppNameStyle::Reference), gen_env));
 					}
 					_ => {}
 				}
@@ -144,7 +144,7 @@ impl Element for Typedef<'_, '_> {
 pub enum NewTypedefResult<'tu, 'ge> {
 	Typedef(Typedef<'tu, 'ge>),
 	Class(Class<'tu, 'ge>),
-	Enum(Enum<'tu>),
+	Enum(Enum<'tu, 'ge>),
 }
 
 impl NewTypedefResult<'_, '_> {

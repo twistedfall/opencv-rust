@@ -511,7 +511,10 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					}
 				}
 
-				TypeKind::Enum => TypeRefKind::Enum(Enum::new(self.get_declaration().expect("Can't get enum declaration"))),
+				TypeKind::Enum => TypeRefKind::Enum(Enum::new(
+					self.get_declaration().expect("Can't get enum declaration"),
+					gen_env,
+				)),
 
 				TypeKind::FunctionPrototype => {
 					if let Some(parent) = parent_entity {

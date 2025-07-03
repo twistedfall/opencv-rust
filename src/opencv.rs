@@ -10,6 +10,7 @@
 	clippy::tabs_in_doc_comments,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::approx_constant,
 	dead_code,
 	non_camel_case_types,
 	non_snake_case,

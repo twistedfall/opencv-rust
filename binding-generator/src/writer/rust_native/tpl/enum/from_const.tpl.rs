@@ -1,2 +1,0 @@
-{{value}} => Ok(Self::{{name}}),
-

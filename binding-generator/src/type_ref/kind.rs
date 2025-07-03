@@ -23,7 +23,7 @@ pub enum TypeRefKind<'tu, 'ge> {
 	RValueReference(TypeRef<'tu, 'ge>),
 	SmartPtr(SmartPtr<'tu, 'ge>),
 	Class(Class<'tu, 'ge>),
-	Enum(Enum<'tu>),
+	Enum(Enum<'tu, 'ge>),
 	Function(Function<'tu, 'ge>),
 	Typedef(Typedef<'tu, 'ge>),
 	Generic(String),
@@ -161,7 +161,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_enum(&self) -> Option<&Enum<'tu>> {
+	pub fn as_enum(&self) -> Option<&Enum<'tu, 'ge>> {
 		if let TypeRefKind::Enum(out) = self {
 			Some(out)
 		} else {

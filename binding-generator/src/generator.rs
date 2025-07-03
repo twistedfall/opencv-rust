@@ -56,7 +56,7 @@ pub trait GeneratorVisitor<'tu>: Sized {
 	fn visit_const(&mut self, cnst: Const<'tu>) {}
 
 	/// Top-level enum
-	fn visit_enum(&mut self, enm: Enum<'tu>) {}
+	fn visit_enum(&mut self, enm: Enum<'tu, '_>) {}
 
 	/// Top-level function
 	fn visit_func(&mut self, func: Func<'tu, '_>) {}
@@ -142,7 +142,7 @@ impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'t
 			| EntityKind::ClassTemplate
 			| EntityKind::ClassTemplatePartialSpecialization
 			| EntityKind::StructDecl => Self::process_class(&mut self.visitor, &mut self.gen_env, entity),
-			EntityKind::EnumDecl => Self::process_enum(&mut self.visitor, entity),
+			EntityKind::EnumDecl => Self::process_enum(&mut self.visitor, &self.gen_env, entity),
 			EntityKind::FunctionDecl => Self::process_func(&mut self.visitor, &mut self.func_names, &self.gen_env, entity),
 			EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => Self::process_typedef(&mut self.visitor, &self.gen_env, entity),
 			EntityKind::VarDecl => {
@@ -237,7 +237,7 @@ impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
 					visitor.visit_generated_type(dep);
 				});
 				let _ = class_decl.walk_enums_while(|enm| {
-					Self::process_enum(visitor, enm);
+					Self::process_enum(visitor, gen_env, enm);
 					ControlFlow::Continue(())
 				});
 				let _ = class_decl.walk_classes_while(|sub_cls| {
@@ -265,8 +265,8 @@ impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
 		}
 	}
 
-	fn process_enum(visitor: &mut V, enum_decl: Entity<'tu>) {
-		let enm = Enum::new(enum_decl);
+	fn process_enum(visitor: &mut V, gen_env: &GeneratorEnv<'tu>, enum_decl: Entity<'tu>) {
+		let enm = Enum::new(enum_decl, gen_env);
 		if enm.exclude_kind().is_included() {
 			for cnst in enm.consts() {
 				if cnst.exclude_kind().is_included() {

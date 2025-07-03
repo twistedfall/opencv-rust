@@ -159,14 +159,18 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	/// Special case of an empty class with only an anonymous enum inside (e.g., DrawLinesMatchesFlags)
-	pub fn as_enum(&self) -> Option<Enum<'tu>> {
+	pub fn as_enum(&self) -> Option<Enum<'tu, 'ge>> {
 		match self {
-			&Self::Clang { entity, .. } => {
+			&Self::Clang { entity, gen_env, .. } => {
 				if !self.has_methods() && !self.has_fields() && !self.has_descendants() && !self.has_bases() {
 					let children = entity.get_children();
 					if let [single] = children.as_slice() {
 						if matches!(single.get_kind(), EntityKind::EnumDecl) {
-							Some(Enum::new_ext(*single, self.cpp_name(CppNameStyle::Declaration).as_ref()))
+							Some(Enum::new_ext(
+								*single,
+								self.cpp_name(CppNameStyle::Declaration).as_ref(),
+								gen_env,
+							))
 						} else {
 							None
 						}

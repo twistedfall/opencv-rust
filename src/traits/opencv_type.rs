@@ -1,7 +1,10 @@
 use std::ffi::c_void;
 
+pub use enumeration::OpenCVBitfieldEnum;
+
 use crate::Result;
 
+mod enumeration;
 mod string;
 
 /// Common trait of all OpenCV related types, helps with generic handling of FFI marshalling
@@ -154,21 +157,6 @@ macro_rules! opencv_type_copy {
 				#[inline] fn opencv_into_extern(self) -> Self { self }
 			}
 		)+
-	};
-}
-
-#[doc(hidden)]
-#[macro_export]
-macro_rules! opencv_type_enum {
-	($type: ty) => {
-		$crate::opencv_type_copy! { $type }
-
-		impl From<$type> for i32 {
-			#[inline]
-			fn from(v: $type) -> Self {
-				v as Self
-			}
-		}
 	};
 }
 
