@@ -163,7 +163,7 @@ pub mod objdetect {
 	pub const QRCodeEncoder_MODE_KANJI: i32 = 8;
 	pub const QRCodeEncoder_MODE_NUMERIC: i32 = 1;
 	pub const QRCodeEncoder_MODE_STRUCTURED_APPEND: i32 = 3;
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CornerRefineMethod {
 		/// Tag and corners detection based on the ArUco approach
@@ -176,23 +176,9 @@ pub mod objdetect {
 		CORNER_REFINE_APRILTAG = 3,
 	}
 
-	impl TryFrom<i32> for CornerRefineMethod {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::objdetect::CornerRefineMethod { CORNER_REFINE_NONE, CORNER_REFINE_SUBPIX, CORNER_REFINE_CONTOUR, CORNER_REFINE_APRILTAG } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::CORNER_REFINE_NONE),
-				1 => Ok(Self::CORNER_REFINE_SUBPIX),
-				2 => Ok(Self::CORNER_REFINE_CONTOUR),
-				3 => Ok(Self::CORNER_REFINE_APRILTAG),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::CornerRefineMethod"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::objdetect::CornerRefineMethod }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum DetectionBasedTracker_ObjectStatus {
 		DETECTED_NOT_SHOWN_YET = 0,
@@ -201,91 +187,42 @@ pub mod objdetect {
 		WRONG_OBJECT = 3,
 	}
 
-	impl TryFrom<i32> for DetectionBasedTracker_ObjectStatus {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DETECTED_NOT_SHOWN_YET),
-				1 => Ok(Self::DETECTED),
-				2 => Ok(Self::DETECTED_TEMPORARY_LOST),
-				3 => Ok(Self::WRONG_OBJECT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::DetectionBasedTracker_ObjectStatus"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::objdetect::DetectionBasedTracker_ObjectStatus }
+	opencv_type_enum! { crate::objdetect::DetectionBasedTracker_ObjectStatus { DETECTED_NOT_SHOWN_YET, DETECTED, DETECTED_TEMPORARY_LOST, WRONG_OBJECT } }
 
 	/// Definition of distance used for calculating the distance between two face features
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum FaceRecognizerSF_DisType {
 		FR_COSINE = 0,
 		FR_NORM_L2 = 1,
 	}
 
-	impl TryFrom<i32> for FaceRecognizerSF_DisType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::objdetect::FaceRecognizerSF_DisType { FR_COSINE, FR_NORM_L2 } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::FR_COSINE),
-				1 => Ok(Self::FR_NORM_L2),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::FaceRecognizerSF_DisType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::objdetect::FaceRecognizerSF_DisType }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum HOGDescriptor_DescriptorStorageFormat {
 		DESCR_FORMAT_COL_BY_COL = 0,
 		DESCR_FORMAT_ROW_BY_ROW = 1,
 	}
 
-	impl TryFrom<i32> for HOGDescriptor_DescriptorStorageFormat {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::objdetect::HOGDescriptor_DescriptorStorageFormat { DESCR_FORMAT_COL_BY_COL, DESCR_FORMAT_ROW_BY_ROW } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DESCR_FORMAT_COL_BY_COL),
-				1 => Ok(Self::DESCR_FORMAT_ROW_BY_ROW),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::HOGDescriptor_DescriptorStorageFormat"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::objdetect::HOGDescriptor_DescriptorStorageFormat }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum HOGDescriptor_HistogramNormType {
 		/// Default histogramNormType
 		L2Hys = 0,
 	}
 
-	impl TryFrom<i32> for HOGDescriptor_HistogramNormType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::L2Hys),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::HOGDescriptor_HistogramNormType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::objdetect::HOGDescriptor_HistogramNormType }
+	opencv_type_enum! { crate::objdetect::HOGDescriptor_HistogramNormType { L2Hys } }
 
 	/// Predefined markers dictionaries/sets
 	///
 	/// Each dictionary indicates the number of bits and the number of markers contained
 	/// - DICT_ARUCO_ORIGINAL: standard ArUco Library Markers. 1024 markers, 5x5 bits, 0 minimum
 	///                        distance
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum PredefinedDictionaryType {
 		/// 4x4 bits, minimum hamming distance between any two codes = 4, 50 codes
@@ -334,41 +271,9 @@ pub mod objdetect {
 		DICT_ARUCO_MIP_36h12 = 21,
 	}
 
-	impl TryFrom<i32> for PredefinedDictionaryType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::objdetect::PredefinedDictionaryType { DICT_4X4_50, DICT_4X4_100, DICT_4X4_250, DICT_4X4_1000, DICT_5X5_50, DICT_5X5_100, DICT_5X5_250, DICT_5X5_1000, DICT_6X6_50, DICT_6X6_100, DICT_6X6_250, DICT_6X6_1000, DICT_7X7_50, DICT_7X7_100, DICT_7X7_250, DICT_7X7_1000, DICT_ARUCO_ORIGINAL, DICT_APRILTAG_16h5, DICT_APRILTAG_25h9, DICT_APRILTAG_36h10, DICT_APRILTAG_36h11, DICT_ARUCO_MIP_36h12 } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DICT_4X4_50),
-				1 => Ok(Self::DICT_4X4_100),
-				2 => Ok(Self::DICT_4X4_250),
-				3 => Ok(Self::DICT_4X4_1000),
-				4 => Ok(Self::DICT_5X5_50),
-				5 => Ok(Self::DICT_5X5_100),
-				6 => Ok(Self::DICT_5X5_250),
-				7 => Ok(Self::DICT_5X5_1000),
-				8 => Ok(Self::DICT_6X6_50),
-				9 => Ok(Self::DICT_6X6_100),
-				10 => Ok(Self::DICT_6X6_250),
-				11 => Ok(Self::DICT_6X6_1000),
-				12 => Ok(Self::DICT_7X7_50),
-				13 => Ok(Self::DICT_7X7_100),
-				14 => Ok(Self::DICT_7X7_250),
-				15 => Ok(Self::DICT_7X7_1000),
-				16 => Ok(Self::DICT_ARUCO_ORIGINAL),
-				17 => Ok(Self::DICT_APRILTAG_16h5),
-				18 => Ok(Self::DICT_APRILTAG_25h9),
-				19 => Ok(Self::DICT_APRILTAG_36h10),
-				20 => Ok(Self::DICT_APRILTAG_36h11),
-				21 => Ok(Self::DICT_ARUCO_MIP_36h12),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::PredefinedDictionaryType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::objdetect::PredefinedDictionaryType }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum QRCodeEncoder_CorrectionLevel {
 		CORRECT_LEVEL_L = 0,
@@ -377,44 +282,18 @@ pub mod objdetect {
 		CORRECT_LEVEL_H = 3,
 	}
 
-	impl TryFrom<i32> for QRCodeEncoder_CorrectionLevel {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::objdetect::QRCodeEncoder_CorrectionLevel { CORRECT_LEVEL_L, CORRECT_LEVEL_M, CORRECT_LEVEL_Q, CORRECT_LEVEL_H } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::CORRECT_LEVEL_L),
-				1 => Ok(Self::CORRECT_LEVEL_M),
-				2 => Ok(Self::CORRECT_LEVEL_Q),
-				3 => Ok(Self::CORRECT_LEVEL_H),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::QRCodeEncoder_CorrectionLevel"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::objdetect::QRCodeEncoder_CorrectionLevel }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum QRCodeEncoder_ECIEncodings {
 		ECI_SHIFT_JIS = 20,
 		ECI_UTF8 = 26,
 	}
 
-	impl TryFrom<i32> for QRCodeEncoder_ECIEncodings {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::objdetect::QRCodeEncoder_ECIEncodings { ECI_SHIFT_JIS, ECI_UTF8 } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				20 => Ok(Self::ECI_SHIFT_JIS),
-				26 => Ok(Self::ECI_UTF8),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::QRCodeEncoder_ECIEncodings"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::objdetect::QRCodeEncoder_ECIEncodings }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum QRCodeEncoder_EncodeMode {
 		MODE_AUTO = -1,
@@ -426,24 +305,7 @@ pub mod objdetect {
 		MODE_STRUCTURED_APPEND = 3,
 	}
 
-	impl TryFrom<i32> for QRCodeEncoder_EncodeMode {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				-1 => Ok(Self::MODE_AUTO),
-				1 => Ok(Self::MODE_NUMERIC),
-				2 => Ok(Self::MODE_ALPHANUMERIC),
-				4 => Ok(Self::MODE_BYTE),
-				7 => Ok(Self::MODE_ECI),
-				8 => Ok(Self::MODE_KANJI),
-				3 => Ok(Self::MODE_STRUCTURED_APPEND),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::QRCodeEncoder_EncodeMode"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::objdetect::QRCodeEncoder_EncodeMode }
+	opencv_type_enum! { crate::objdetect::QRCodeEncoder_EncodeMode { MODE_AUTO, MODE_NUMERIC, MODE_ALPHANUMERIC, MODE_BYTE, MODE_ECI, MODE_KANJI, MODE_STRUCTURED_APPEND } }
 
 	pub type DetectionBasedTracker_Object = core::Tuple<(core::Rect, i32)>;
 	/// Draws a set of Charuco corners
@@ -758,7 +620,7 @@ pub mod objdetect {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	///
 	/// ## Note
 	/// This alternative version of [group_rectangles_meanshift] function uses the following default values for its arguments:
@@ -868,7 +730,24 @@ pub mod objdetect {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Groups the object candidate rectangles.
+	///
+	/// ## Parameters
+	/// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
+	/// rectangles. (The Python list is not modified in place.)
+	/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
+	/// group of rectangles to retain it.
+	/// * eps: Relative difference between sides of the rectangles to merge them into a group.
+	///
+	/// The function is a wrapper for the generic function partition . It clusters all the input rectangles
+	/// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
+	/// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
+	/// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
+	/// cluster, the average rectangle is computed and put into the output rectangle list.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [group_rectangles_weights] function uses the following default values for its arguments:
@@ -911,7 +790,24 @@ pub mod objdetect {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Groups the object candidate rectangles.
+	///
+	/// ## Parameters
+	/// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
+	/// rectangles. (The Python list is not modified in place.)
+	/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
+	/// group of rectangles to retain it.
+	/// * eps: Relative difference between sides of the rectangles to merge them into a group.
+	///
+	/// The function is a wrapper for the generic function partition . It clusters all the input rectangles
+	/// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
+	/// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
+	/// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
+	/// cluster, the average rectangle is computed and put into the output rectangle list.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [group_rectangles_levels] function uses the following default values for its arguments:
@@ -1437,8 +1333,23 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
+		/// of rectangles.
+		///
 		/// ## Parameters
+		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
+		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
+		/// rectangles may be partially outside the original image.
+		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
+		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
+		/// to retain it.
+		/// * flags: Parameter with the same meaning for an old cascade as in the function
+		/// cvHaarDetectObjects. It is not used for a new cascade.
+		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
+		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
+		///
+		/// ## Overloaded parameters
+		///
 		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
 		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
 		/// rectangles may be partially outside the original image.
@@ -1521,7 +1432,23 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
+		/// of rectangles.
+		///
+		/// ## Parameters
+		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
+		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
+		/// rectangles may be partially outside the original image.
+		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
+		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
+		/// to retain it.
+		/// * flags: Parameter with the same meaning for an old cascade as in the function
+		/// cvHaarDetectObjects. It is not used for a new cascade.
+		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
+		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
+		///
+		/// ## Overloaded parameters
+		///
 		/// This function allows you to retrieve the final stage decision certainty of classification.
 		/// For this, one needs to set `outputRejectLevels` on true and provide the `rejectLevels` and `levelWeights` parameter.
 		/// For each resulting detection, `levelWeights` will then contain the certainty of classification at the final stage.
@@ -2306,9 +2233,21 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Creates an instance of face detector class with given parameters
 		///
 		/// ## Parameters
+		/// * model: the path to the requested model
+		/// * config: the path to the config file for compability, which is not requested for ONNX models
+		/// * input_size: the size of the input image
+		/// * score_threshold: the threshold to filter out bounding boxes of score smaller than the given value
+		/// * nms_threshold: the threshold to suppress bounding boxes of IoU bigger than the given value
+		/// * top_k: keep top K bboxes before NMS
+		/// * backend_id: the id of backend
+		/// * target_id: the id of target device
+		///
+		/// ## Overloaded parameters
+		///
+		///
 		/// * framework: Name of origin framework
 		/// * bufferModel: A buffer with a content of binary file with weights
 		/// * bufferConfig: A buffer with a content of text file contains network configuration
@@ -3088,7 +3027,12 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Creates the HOG descriptor and detector with default parameters.
+		///
+		/// aqual to HOGDescriptor(Size(64,128), Size(16,16), Size(8,8), Size(8,8), 9 )
+		///
+		/// ## Overloaded parameters
+		///
 		/// ## Parameters
 		/// * _winSize: sets winSize with given value.
 		/// * _blockSize: sets blockSize with given value.

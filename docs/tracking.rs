@@ -15,7 +15,7 @@ pub mod tracking {
 	/// The modes available now:
 	///  *   "GRAY" -- Use grayscale values as the feature
 	///  *   "CN" -- Color-names feature
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum TrackerKCF_MODE {
 		GRAY = 1,
@@ -23,20 +23,7 @@ pub mod tracking {
 		CUSTOM = 4,
 	}
 
-	impl TryFrom<i32> for TrackerKCF_MODE {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::GRAY),
-				2 => Ok(Self::CN),
-				4 => Ok(Self::CUSTOM),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::tracking::TrackerKCF_MODE"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::tracking::TrackerKCF_MODE }
+	opencv_type_enum! { crate::tracking::TrackerKCF_MODE { GRAY, CN, CUSTOM } }
 
 	pub type TrackerKCF_FeatureExtractorCallbackFN = Option<unsafe extern "C" fn(*const c_void, core::Rect, *mut c_void) -> ()>;
 	/// the CSRT tracker

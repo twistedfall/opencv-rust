@@ -98,6 +98,14 @@ The following variables are rarely used, but you might need them under some circ
   Allows selecting the CRT library when building with MSVC for Windows. Allowed values are `"static"` for `/MT`
   and `"dynamic"` for `/MD`.
 
+* `OPENCV_CMAKE_TOOLCHAIN_FILE`
+  Path to a cmake toolchain file to be used during OpenCV discovery. Useful when cross-compiling. This will
+  pass `-DCMAKE_TOOLCHAIN_FILE=<value>` to cmake command line.
+
+* `OPENCV_CMAKE_ARGS`
+  Additional arguments to be passed to cmake during OpenCV discovery. This will be parsed according to the POSIX
+  command line rules (e.g. quotes are supported) and passed as is to `cmake`.
+
 The following variables affect the building the of the `opencv` crate, but belong to external components:
 
 * `PKG_CONFIG_PATH`

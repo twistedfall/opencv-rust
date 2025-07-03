@@ -51,7 +51,7 @@ pub mod gapi {
 	pub const MediaFrame_Access_W: i32 = 1;
 	pub const RMat_Access_R: i32 = 0;
 	pub const RMat_Access_W: i32 = 1;
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum Detail_ArgKind {
 		OPAQUE_VAL = 0,
@@ -66,29 +66,9 @@ pub mod gapi {
 		GOPAQUE = 7,
 	}
 
-	impl TryFrom<i32> for Detail_ArgKind {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::gapi::Detail_ArgKind { OPAQUE_VAL, GOBJREF, GMAT, GMATP, GFRAME, GSCALAR, GARRAY, GOPAQUE } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::OPAQUE_VAL),
-				// Duplicate of OPAQUE_VAL
-				// 0 => Ok(Self::OPAQUE),
-				1 => Ok(Self::GOBJREF),
-				2 => Ok(Self::GMAT),
-				3 => Ok(Self::GMATP),
-				4 => Ok(Self::GFRAME),
-				5 => Ok(Self::GSCALAR),
-				6 => Ok(Self::GARRAY),
-				7 => Ok(Self::GOPAQUE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::Detail_ArgKind"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::gapi::Detail_ArgKind }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum Detail_OpaqueKind {
 		CV_UNKNOWN = 0,
@@ -109,35 +89,9 @@ pub mod gapi {
 		CV_DRAW_PRIM = 15,
 	}
 
-	impl TryFrom<i32> for Detail_OpaqueKind {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::gapi::Detail_OpaqueKind { CV_UNKNOWN, CV_BOOL, CV_INT, CV_INT64, CV_DOUBLE, CV_FLOAT, CV_UINT64, CV_STRING, CV_POINT, CV_POINT2F, CV_POINT3F, CV_SIZE, CV_RECT, CV_SCALAR, CV_MAT, CV_DRAW_PRIM } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::CV_UNKNOWN),
-				1 => Ok(Self::CV_BOOL),
-				2 => Ok(Self::CV_INT),
-				3 => Ok(Self::CV_INT64),
-				4 => Ok(Self::CV_DOUBLE),
-				5 => Ok(Self::CV_FLOAT),
-				6 => Ok(Self::CV_UINT64),
-				7 => Ok(Self::CV_STRING),
-				8 => Ok(Self::CV_POINT),
-				9 => Ok(Self::CV_POINT2F),
-				10 => Ok(Self::CV_POINT3F),
-				11 => Ok(Self::CV_SIZE),
-				12 => Ok(Self::CV_RECT),
-				13 => Ok(Self::CV_SCALAR),
-				14 => Ok(Self::CV_MAT),
-				15 => Ok(Self::CV_DRAW_PRIM),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::Detail_OpaqueKind"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::gapi::Detail_OpaqueKind }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum GShape {
 		GMAT = 0,
@@ -147,24 +101,9 @@ pub mod gapi {
 		GFRAME = 4,
 	}
 
-	impl TryFrom<i32> for GShape {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::gapi::GShape { GMAT, GSCALAR, GARRAY, GOPAQUE, GFRAME } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::GMAT),
-				1 => Ok(Self::GSCALAR),
-				2 => Ok(Self::GARRAY),
-				3 => Ok(Self::GOPAQUE),
-				4 => Ok(Self::GFRAME),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::GShape"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::gapi::GShape }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum MediaFormat {
 		BGR = 0,
@@ -172,25 +111,12 @@ pub mod gapi {
 		GRAY = 2,
 	}
 
-	impl TryFrom<i32> for MediaFormat {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::BGR),
-				1 => Ok(Self::NV12),
-				2 => Ok(Self::GRAY),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::MediaFormat"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::gapi::MediaFormat }
+	opencv_type_enum! { crate::gapi::MediaFormat { BGR, NV12, GRAY } }
 
 	/// This enum defines different types of cv::MediaFrame provided
 	/// access to the underlying data. Note that different flags can't
 	/// be combined in this version.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum MediaFrame_Access {
 		/// Access data for reading
@@ -199,40 +125,16 @@ pub mod gapi {
 		W = 1,
 	}
 
-	impl TryFrom<i32> for MediaFrame_Access {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::gapi::MediaFrame_Access { R, W } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::R),
-				1 => Ok(Self::W),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::MediaFrame_Access"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::gapi::MediaFrame_Access }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum RMat_Access {
 		R = 0,
 		W = 1,
 	}
 
-	impl TryFrom<i32> for RMat_Access {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::R),
-				1 => Ok(Self::W),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::RMat_Access"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::gapi::RMat_Access }
+	opencv_type_enum! { crate::gapi::RMat_Access { R, W } }
 
 	pub type GArgs = core::Vector<crate::gapi::GArg>;
 	pub type GCompileArgs = core::Vector<crate::gapi::GCompileArg>;
@@ -1474,7 +1376,30 @@ pub mod gapi {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Calculates the per-element sum of matrix and given scalar.
+	///
+	/// The function addC adds a given scalar value to each element of given matrix.
+	/// The function can be replaced with matrix expressions:
+	///
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%2B%20%5Ctexttt%7Bc%7D)
+	///
+	/// Depth of the output matrix is determined by the ddepth parameter.
+	/// If ddepth is set to default -1, the depth of output matrix will be the same as the depth of input matrix.
+	/// The matrices can be single or multi channel. Output matrix must have the same size and number of channels as the input matrix.
+	///
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	///
+	///
+	/// Note: Function textual ID is "org.opencv.core.math.addC"
+	/// ## Parameters
+	/// * src1: first input matrix.
+	/// * c: scalar value to be added.
+	/// * ddepth: optional depth of the output matrix.
+	/// ## See also
+	/// sub, addWeighted
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [add_c_1] function uses the following default values for its arguments:
@@ -4105,7 +4030,27 @@ pub mod gapi {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Multiplies matrix by scalar.
+	///
+	/// The function mulC multiplies each element of matrix src by given scalar value:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Ccdot%20%5Ctexttt%7Bmultiplier%7D%20%29)
+	///
+	/// The matrices can be single or multi channel. Output matrix must have the same size as src.
+	///
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	///
+	///
+	/// Note: Function textual ID is "org.opencv.core.math.mulC"
+	/// ## Parameters
+	/// * src: input matrix.
+	/// * multiplier: factor to be multiplied.
+	/// * ddepth: optional depth of the output matrix. If -1, the depth of output matrix will be the same as input matrix depth.
+	/// ## See also
+	/// add, sub, div, addWeighted
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [mul_c_1] function uses the following default values for its arguments:
@@ -4216,7 +4161,27 @@ pub mod gapi {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Multiplies matrix by scalar.
+	///
+	/// The function mulC multiplies each element of matrix src by given scalar value:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Ccdot%20%5Ctexttt%7Bmultiplier%7D%20%29)
+	///
+	/// The matrices can be single or multi channel. Output matrix must have the same size as src.
+	///
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	///
+	///
+	/// Note: Function textual ID is "org.opencv.core.math.mulC"
+	/// ## Parameters
+	/// * src: input matrix.
+	/// * multiplier: factor to be multiplied.
+	/// * ddepth: optional depth of the output matrix. If -1, the depth of output matrix will be the same as input matrix depth.
+	/// ## See also
+	/// add, sub, div, addWeighted
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [mul_c_2] function uses the following default values for its arguments:
@@ -7219,7 +7184,10 @@ pub mod gapi {
 
 		/// Execute an unary computation (with compilation on the fly)
 		///
-		/// @overload
+		/// @private -- Exclude this function from OpenCV documentation
+		///
+		/// ## Overloaded parameters
+		///
 		/// ## Parameters
 		/// * in: input cv::Mat for unary computation
 		/// * out: output cv::Mat for unary computation
@@ -7263,7 +7231,10 @@ pub mod gapi {
 
 		/// Execute an unary computation (with compilation on the fly)
 		///
-		/// @overload
+		/// @private -- Exclude this function from OpenCV documentation
+		///
+		/// ## Overloaded parameters
+		///
 		/// ## Parameters
 		/// * in: input cv::Mat for unary computation
 		/// * out: output cv::Scalar for unary computation
@@ -7308,7 +7279,10 @@ pub mod gapi {
 
 		/// Execute a binary computation (with compilation on the fly)
 		///
-		/// @overload
+		/// @private -- Exclude this function from OpenCV documentation
+		///
+		/// ## Overloaded parameters
+		///
 		/// ## Parameters
 		/// * in1: first input cv::Mat for binary computation
 		/// * in2: second input cv::Mat for binary computation
@@ -7354,7 +7328,10 @@ pub mod gapi {
 
 		/// Execute an binary computation (with compilation on the fly)
 		///
-		/// @overload
+		/// @private -- Exclude this function from OpenCV documentation
+		///
+		/// ## Overloaded parameters
+		///
 		/// ## Parameters
 		/// * in1: first input cv::Mat for binary computation
 		/// * in2: second input cv::Mat for binary computation
@@ -7406,7 +7383,10 @@ pub mod gapi {
 		/// Execute a computation with arbitrary number of
 		/// inputs/outputs (with compilation on-the-fly).
 		///
-		/// @overload
+		/// @private -- Exclude this function from OpenCV documentation
+		///
+		/// ## Overloaded parameters
+		///
 		/// ## Parameters
 		/// * ins: vector of input cv::Mat objects to process by the
 		/// computation.

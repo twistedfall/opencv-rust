@@ -984,7 +984,7 @@ pub mod imgproc {
 	/// adaptive threshold algorithm
 	/// ## See also
 	/// adaptiveThreshold
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum AdaptiveThresholdTypes {
 		/// the threshold value ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2Cy%29) is a mean of the ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BblockSize%7D%20%5Ctimes%0A%5Ctexttt%7BblockSize%7D) neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) minus C
@@ -996,25 +996,13 @@ pub mod imgproc {
 		ADAPTIVE_THRESH_GAUSSIAN_C = 1,
 	}
 
-	impl TryFrom<i32> for AdaptiveThresholdTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::ADAPTIVE_THRESH_MEAN_C),
-				1 => Ok(Self::ADAPTIVE_THRESH_GAUSSIAN_C),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::AdaptiveThresholdTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::AdaptiveThresholdTypes }
+	opencv_type_enum! { crate::imgproc::AdaptiveThresholdTypes { ADAPTIVE_THRESH_MEAN_C, ADAPTIVE_THRESH_GAUSSIAN_C } }
 
 	/// the color conversion codes
 	/// ## See also
 	/// [imgproc_color_conversions]
 	/// @ingroup imgproc_color_conversions
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ColorConversionCodes {
 		/// add alpha channel to RGB or BGR image
@@ -1579,410 +1567,10 @@ pub mod imgproc {
 		COLOR_COLORCVT_MAX = 155,
 	}
 
-	impl TryFrom<i32> for ColorConversionCodes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::COLOR_BGR2BGRA),
-				// Duplicate of COLOR_BGR2BGRA
-				// 0 => Ok(Self::COLOR_RGB2RGBA),
-				1 => Ok(Self::COLOR_BGRA2BGR),
-				// Duplicate of COLOR_BGRA2BGR
-				// 1 => Ok(Self::COLOR_RGBA2RGB),
-				2 => Ok(Self::COLOR_BGR2RGBA),
-				// Duplicate of COLOR_BGR2RGBA
-				// 2 => Ok(Self::COLOR_RGB2BGRA),
-				3 => Ok(Self::COLOR_RGBA2BGR),
-				// Duplicate of COLOR_RGBA2BGR
-				// 3 => Ok(Self::COLOR_BGRA2RGB),
-				4 => Ok(Self::COLOR_BGR2RGB),
-				// Duplicate of COLOR_BGR2RGB
-				// 4 => Ok(Self::COLOR_RGB2BGR),
-				5 => Ok(Self::COLOR_BGRA2RGBA),
-				// Duplicate of COLOR_BGRA2RGBA
-				// 5 => Ok(Self::COLOR_RGBA2BGRA),
-				6 => Ok(Self::COLOR_BGR2GRAY),
-				7 => Ok(Self::COLOR_RGB2GRAY),
-				8 => Ok(Self::COLOR_GRAY2BGR),
-				// Duplicate of COLOR_GRAY2BGR
-				// 8 => Ok(Self::COLOR_GRAY2RGB),
-				9 => Ok(Self::COLOR_GRAY2BGRA),
-				// Duplicate of COLOR_GRAY2BGRA
-				// 9 => Ok(Self::COLOR_GRAY2RGBA),
-				10 => Ok(Self::COLOR_BGRA2GRAY),
-				11 => Ok(Self::COLOR_RGBA2GRAY),
-				12 => Ok(Self::COLOR_BGR2BGR565),
-				13 => Ok(Self::COLOR_RGB2BGR565),
-				14 => Ok(Self::COLOR_BGR5652BGR),
-				15 => Ok(Self::COLOR_BGR5652RGB),
-				16 => Ok(Self::COLOR_BGRA2BGR565),
-				17 => Ok(Self::COLOR_RGBA2BGR565),
-				18 => Ok(Self::COLOR_BGR5652BGRA),
-				19 => Ok(Self::COLOR_BGR5652RGBA),
-				20 => Ok(Self::COLOR_GRAY2BGR565),
-				21 => Ok(Self::COLOR_BGR5652GRAY),
-				22 => Ok(Self::COLOR_BGR2BGR555),
-				23 => Ok(Self::COLOR_RGB2BGR555),
-				24 => Ok(Self::COLOR_BGR5552BGR),
-				25 => Ok(Self::COLOR_BGR5552RGB),
-				26 => Ok(Self::COLOR_BGRA2BGR555),
-				27 => Ok(Self::COLOR_RGBA2BGR555),
-				28 => Ok(Self::COLOR_BGR5552BGRA),
-				29 => Ok(Self::COLOR_BGR5552RGBA),
-				30 => Ok(Self::COLOR_GRAY2BGR555),
-				31 => Ok(Self::COLOR_BGR5552GRAY),
-				32 => Ok(Self::COLOR_BGR2XYZ),
-				33 => Ok(Self::COLOR_RGB2XYZ),
-				34 => Ok(Self::COLOR_XYZ2BGR),
-				35 => Ok(Self::COLOR_XYZ2RGB),
-				36 => Ok(Self::COLOR_BGR2YCrCb),
-				37 => Ok(Self::COLOR_RGB2YCrCb),
-				38 => Ok(Self::COLOR_YCrCb2BGR),
-				39 => Ok(Self::COLOR_YCrCb2RGB),
-				40 => Ok(Self::COLOR_BGR2HSV),
-				41 => Ok(Self::COLOR_RGB2HSV),
-				44 => Ok(Self::COLOR_BGR2Lab),
-				45 => Ok(Self::COLOR_RGB2Lab),
-				50 => Ok(Self::COLOR_BGR2Luv),
-				51 => Ok(Self::COLOR_RGB2Luv),
-				52 => Ok(Self::COLOR_BGR2HLS),
-				53 => Ok(Self::COLOR_RGB2HLS),
-				54 => Ok(Self::COLOR_HSV2BGR),
-				55 => Ok(Self::COLOR_HSV2RGB),
-				56 => Ok(Self::COLOR_Lab2BGR),
-				57 => Ok(Self::COLOR_Lab2RGB),
-				58 => Ok(Self::COLOR_Luv2BGR),
-				59 => Ok(Self::COLOR_Luv2RGB),
-				60 => Ok(Self::COLOR_HLS2BGR),
-				61 => Ok(Self::COLOR_HLS2RGB),
-				66 => Ok(Self::COLOR_BGR2HSV_FULL),
-				67 => Ok(Self::COLOR_RGB2HSV_FULL),
-				68 => Ok(Self::COLOR_BGR2HLS_FULL),
-				69 => Ok(Self::COLOR_RGB2HLS_FULL),
-				70 => Ok(Self::COLOR_HSV2BGR_FULL),
-				71 => Ok(Self::COLOR_HSV2RGB_FULL),
-				72 => Ok(Self::COLOR_HLS2BGR_FULL),
-				73 => Ok(Self::COLOR_HLS2RGB_FULL),
-				74 => Ok(Self::COLOR_LBGR2Lab),
-				75 => Ok(Self::COLOR_LRGB2Lab),
-				76 => Ok(Self::COLOR_LBGR2Luv),
-				77 => Ok(Self::COLOR_LRGB2Luv),
-				78 => Ok(Self::COLOR_Lab2LBGR),
-				79 => Ok(Self::COLOR_Lab2LRGB),
-				80 => Ok(Self::COLOR_Luv2LBGR),
-				81 => Ok(Self::COLOR_Luv2LRGB),
-				82 => Ok(Self::COLOR_BGR2YUV),
-				83 => Ok(Self::COLOR_RGB2YUV),
-				84 => Ok(Self::COLOR_YUV2BGR),
-				85 => Ok(Self::COLOR_YUV2RGB),
-				90 => Ok(Self::COLOR_YUV2RGB_NV12),
-				91 => Ok(Self::COLOR_YUV2BGR_NV12),
-				92 => Ok(Self::COLOR_YUV2RGB_NV21),
-				93 => Ok(Self::COLOR_YUV2BGR_NV21),
-				// Duplicate of COLOR_YUV2RGB_NV21
-				// 92 => Ok(Self::COLOR_YUV420sp2RGB),
-				// Duplicate of COLOR_YUV2BGR_NV21
-				// 93 => Ok(Self::COLOR_YUV420sp2BGR),
-				94 => Ok(Self::COLOR_YUV2RGBA_NV12),
-				95 => Ok(Self::COLOR_YUV2BGRA_NV12),
-				96 => Ok(Self::COLOR_YUV2RGBA_NV21),
-				97 => Ok(Self::COLOR_YUV2BGRA_NV21),
-				// Duplicate of COLOR_YUV2RGBA_NV21
-				// 96 => Ok(Self::COLOR_YUV420sp2RGBA),
-				// Duplicate of COLOR_YUV2BGRA_NV21
-				// 97 => Ok(Self::COLOR_YUV420sp2BGRA),
-				98 => Ok(Self::COLOR_YUV2RGB_YV12),
-				99 => Ok(Self::COLOR_YUV2BGR_YV12),
-				100 => Ok(Self::COLOR_YUV2RGB_IYUV),
-				101 => Ok(Self::COLOR_YUV2BGR_IYUV),
-				// Duplicate of COLOR_YUV2RGB_IYUV
-				// 100 => Ok(Self::COLOR_YUV2RGB_I420),
-				// Duplicate of COLOR_YUV2BGR_IYUV
-				// 101 => Ok(Self::COLOR_YUV2BGR_I420),
-				// Duplicate of COLOR_YUV2RGB_YV12
-				// 98 => Ok(Self::COLOR_YUV420p2RGB),
-				// Duplicate of COLOR_YUV2BGR_YV12
-				// 99 => Ok(Self::COLOR_YUV420p2BGR),
-				102 => Ok(Self::COLOR_YUV2RGBA_YV12),
-				103 => Ok(Self::COLOR_YUV2BGRA_YV12),
-				104 => Ok(Self::COLOR_YUV2RGBA_IYUV),
-				105 => Ok(Self::COLOR_YUV2BGRA_IYUV),
-				// Duplicate of COLOR_YUV2RGBA_IYUV
-				// 104 => Ok(Self::COLOR_YUV2RGBA_I420),
-				// Duplicate of COLOR_YUV2BGRA_IYUV
-				// 105 => Ok(Self::COLOR_YUV2BGRA_I420),
-				// Duplicate of COLOR_YUV2RGBA_YV12
-				// 102 => Ok(Self::COLOR_YUV420p2RGBA),
-				// Duplicate of COLOR_YUV2BGRA_YV12
-				// 103 => Ok(Self::COLOR_YUV420p2BGRA),
-				106 => Ok(Self::COLOR_YUV2GRAY_420),
-				// Duplicate of COLOR_YUV2GRAY_420
-				// 106 => Ok(Self::COLOR_YUV2GRAY_NV21),
-				// Duplicate of COLOR_YUV2GRAY_NV21
-				// 106 => Ok(Self::COLOR_YUV2GRAY_NV12),
-				// Duplicate of COLOR_YUV2GRAY_NV12
-				// 106 => Ok(Self::COLOR_YUV2GRAY_YV12),
-				// Duplicate of COLOR_YUV2GRAY_YV12
-				// 106 => Ok(Self::COLOR_YUV2GRAY_IYUV),
-				// Duplicate of COLOR_YUV2GRAY_IYUV
-				// 106 => Ok(Self::COLOR_YUV2GRAY_I420),
-				// Duplicate of COLOR_YUV2GRAY_I420
-				// 106 => Ok(Self::COLOR_YUV420sp2GRAY),
-				// Duplicate of COLOR_YUV420sp2GRAY
-				// 106 => Ok(Self::COLOR_YUV420p2GRAY),
-				107 => Ok(Self::COLOR_YUV2RGB_UYVY),
-				108 => Ok(Self::COLOR_YUV2BGR_UYVY),
-				// Duplicate of COLOR_YUV2RGB_UYVY
-				// 107 => Ok(Self::COLOR_YUV2RGB_Y422),
-				// Duplicate of COLOR_YUV2BGR_UYVY
-				// 108 => Ok(Self::COLOR_YUV2BGR_Y422),
-				// Duplicate of COLOR_YUV2RGB_Y422
-				// 107 => Ok(Self::COLOR_YUV2RGB_UYNV),
-				// Duplicate of COLOR_YUV2BGR_Y422
-				// 108 => Ok(Self::COLOR_YUV2BGR_UYNV),
-				111 => Ok(Self::COLOR_YUV2RGBA_UYVY),
-				112 => Ok(Self::COLOR_YUV2BGRA_UYVY),
-				// Duplicate of COLOR_YUV2RGBA_UYVY
-				// 111 => Ok(Self::COLOR_YUV2RGBA_Y422),
-				// Duplicate of COLOR_YUV2BGRA_UYVY
-				// 112 => Ok(Self::COLOR_YUV2BGRA_Y422),
-				// Duplicate of COLOR_YUV2RGBA_Y422
-				// 111 => Ok(Self::COLOR_YUV2RGBA_UYNV),
-				// Duplicate of COLOR_YUV2BGRA_Y422
-				// 112 => Ok(Self::COLOR_YUV2BGRA_UYNV),
-				115 => Ok(Self::COLOR_YUV2RGB_YUY2),
-				116 => Ok(Self::COLOR_YUV2BGR_YUY2),
-				117 => Ok(Self::COLOR_YUV2RGB_YVYU),
-				118 => Ok(Self::COLOR_YUV2BGR_YVYU),
-				// Duplicate of COLOR_YUV2RGB_YUY2
-				// 115 => Ok(Self::COLOR_YUV2RGB_YUYV),
-				// Duplicate of COLOR_YUV2BGR_YUY2
-				// 116 => Ok(Self::COLOR_YUV2BGR_YUYV),
-				// Duplicate of COLOR_YUV2RGB_YUYV
-				// 115 => Ok(Self::COLOR_YUV2RGB_YUNV),
-				// Duplicate of COLOR_YUV2BGR_YUYV
-				// 116 => Ok(Self::COLOR_YUV2BGR_YUNV),
-				119 => Ok(Self::COLOR_YUV2RGBA_YUY2),
-				120 => Ok(Self::COLOR_YUV2BGRA_YUY2),
-				121 => Ok(Self::COLOR_YUV2RGBA_YVYU),
-				122 => Ok(Self::COLOR_YUV2BGRA_YVYU),
-				// Duplicate of COLOR_YUV2RGBA_YUY2
-				// 119 => Ok(Self::COLOR_YUV2RGBA_YUYV),
-				// Duplicate of COLOR_YUV2BGRA_YUY2
-				// 120 => Ok(Self::COLOR_YUV2BGRA_YUYV),
-				// Duplicate of COLOR_YUV2RGBA_YUYV
-				// 119 => Ok(Self::COLOR_YUV2RGBA_YUNV),
-				// Duplicate of COLOR_YUV2BGRA_YUYV
-				// 120 => Ok(Self::COLOR_YUV2BGRA_YUNV),
-				123 => Ok(Self::COLOR_YUV2GRAY_UYVY),
-				124 => Ok(Self::COLOR_YUV2GRAY_YUY2),
-				// Duplicate of COLOR_YUV2GRAY_UYVY
-				// 123 => Ok(Self::COLOR_YUV2GRAY_Y422),
-				// Duplicate of COLOR_YUV2GRAY_Y422
-				// 123 => Ok(Self::COLOR_YUV2GRAY_UYNV),
-				// Duplicate of COLOR_YUV2GRAY_YUY2
-				// 124 => Ok(Self::COLOR_YUV2GRAY_YVYU),
-				// Duplicate of COLOR_YUV2GRAY_YVYU
-				// 124 => Ok(Self::COLOR_YUV2GRAY_YUYV),
-				// Duplicate of COLOR_YUV2GRAY_YUYV
-				// 124 => Ok(Self::COLOR_YUV2GRAY_YUNV),
-				125 => Ok(Self::COLOR_RGBA2mRGBA),
-				126 => Ok(Self::COLOR_mRGBA2RGBA),
-				127 => Ok(Self::COLOR_RGB2YUV_I420),
-				128 => Ok(Self::COLOR_BGR2YUV_I420),
-				// Duplicate of COLOR_RGB2YUV_I420
-				// 127 => Ok(Self::COLOR_RGB2YUV_IYUV),
-				// Duplicate of COLOR_BGR2YUV_I420
-				// 128 => Ok(Self::COLOR_BGR2YUV_IYUV),
-				129 => Ok(Self::COLOR_RGBA2YUV_I420),
-				130 => Ok(Self::COLOR_BGRA2YUV_I420),
-				// Duplicate of COLOR_RGBA2YUV_I420
-				// 129 => Ok(Self::COLOR_RGBA2YUV_IYUV),
-				// Duplicate of COLOR_BGRA2YUV_I420
-				// 130 => Ok(Self::COLOR_BGRA2YUV_IYUV),
-				131 => Ok(Self::COLOR_RGB2YUV_YV12),
-				132 => Ok(Self::COLOR_BGR2YUV_YV12),
-				133 => Ok(Self::COLOR_RGBA2YUV_YV12),
-				134 => Ok(Self::COLOR_BGRA2YUV_YV12),
-				46 => Ok(Self::COLOR_BayerBG2BGR),
-				47 => Ok(Self::COLOR_BayerGB2BGR),
-				48 => Ok(Self::COLOR_BayerRG2BGR),
-				49 => Ok(Self::COLOR_BayerGR2BGR),
-				// Duplicate of COLOR_BayerBG2BGR
-				// 46 => Ok(Self::COLOR_BayerRGGB2BGR),
-				// Duplicate of COLOR_BayerGB2BGR
-				// 47 => Ok(Self::COLOR_BayerGRBG2BGR),
-				// Duplicate of COLOR_BayerRG2BGR
-				// 48 => Ok(Self::COLOR_BayerBGGR2BGR),
-				// Duplicate of COLOR_BayerGR2BGR
-				// 49 => Ok(Self::COLOR_BayerGBRG2BGR),
-				// Duplicate of COLOR_BayerBGGR2BGR
-				// 48 => Ok(Self::COLOR_BayerRGGB2RGB),
-				// Duplicate of COLOR_BayerGBRG2BGR
-				// 49 => Ok(Self::COLOR_BayerGRBG2RGB),
-				// Duplicate of COLOR_BayerRGGB2BGR
-				// 46 => Ok(Self::COLOR_BayerBGGR2RGB),
-				// Duplicate of COLOR_BayerGRBG2BGR
-				// 47 => Ok(Self::COLOR_BayerGBRG2RGB),
-				// Duplicate of COLOR_BayerRGGB2RGB
-				// 48 => Ok(Self::COLOR_BayerBG2RGB),
-				// Duplicate of COLOR_BayerGRBG2RGB
-				// 49 => Ok(Self::COLOR_BayerGB2RGB),
-				// Duplicate of COLOR_BayerBGGR2RGB
-				// 46 => Ok(Self::COLOR_BayerRG2RGB),
-				// Duplicate of COLOR_BayerGBRG2RGB
-				// 47 => Ok(Self::COLOR_BayerGR2RGB),
-				86 => Ok(Self::COLOR_BayerBG2GRAY),
-				87 => Ok(Self::COLOR_BayerGB2GRAY),
-				88 => Ok(Self::COLOR_BayerRG2GRAY),
-				89 => Ok(Self::COLOR_BayerGR2GRAY),
-				// Duplicate of COLOR_BayerBG2GRAY
-				// 86 => Ok(Self::COLOR_BayerRGGB2GRAY),
-				// Duplicate of COLOR_BayerGB2GRAY
-				// 87 => Ok(Self::COLOR_BayerGRBG2GRAY),
-				// Duplicate of COLOR_BayerRG2GRAY
-				// 88 => Ok(Self::COLOR_BayerBGGR2GRAY),
-				// Duplicate of COLOR_BayerGR2GRAY
-				// 89 => Ok(Self::COLOR_BayerGBRG2GRAY),
-				62 => Ok(Self::COLOR_BayerBG2BGR_VNG),
-				63 => Ok(Self::COLOR_BayerGB2BGR_VNG),
-				64 => Ok(Self::COLOR_BayerRG2BGR_VNG),
-				65 => Ok(Self::COLOR_BayerGR2BGR_VNG),
-				// Duplicate of COLOR_BayerBG2BGR_VNG
-				// 62 => Ok(Self::COLOR_BayerRGGB2BGR_VNG),
-				// Duplicate of COLOR_BayerGB2BGR_VNG
-				// 63 => Ok(Self::COLOR_BayerGRBG2BGR_VNG),
-				// Duplicate of COLOR_BayerRG2BGR_VNG
-				// 64 => Ok(Self::COLOR_BayerBGGR2BGR_VNG),
-				// Duplicate of COLOR_BayerGR2BGR_VNG
-				// 65 => Ok(Self::COLOR_BayerGBRG2BGR_VNG),
-				// Duplicate of COLOR_BayerBGGR2BGR_VNG
-				// 64 => Ok(Self::COLOR_BayerRGGB2RGB_VNG),
-				// Duplicate of COLOR_BayerGBRG2BGR_VNG
-				// 65 => Ok(Self::COLOR_BayerGRBG2RGB_VNG),
-				// Duplicate of COLOR_BayerRGGB2BGR_VNG
-				// 62 => Ok(Self::COLOR_BayerBGGR2RGB_VNG),
-				// Duplicate of COLOR_BayerGRBG2BGR_VNG
-				// 63 => Ok(Self::COLOR_BayerGBRG2RGB_VNG),
-				// Duplicate of COLOR_BayerRGGB2RGB_VNG
-				// 64 => Ok(Self::COLOR_BayerBG2RGB_VNG),
-				// Duplicate of COLOR_BayerGRBG2RGB_VNG
-				// 65 => Ok(Self::COLOR_BayerGB2RGB_VNG),
-				// Duplicate of COLOR_BayerBGGR2RGB_VNG
-				// 62 => Ok(Self::COLOR_BayerRG2RGB_VNG),
-				// Duplicate of COLOR_BayerGBRG2RGB_VNG
-				// 63 => Ok(Self::COLOR_BayerGR2RGB_VNG),
-				135 => Ok(Self::COLOR_BayerBG2BGR_EA),
-				136 => Ok(Self::COLOR_BayerGB2BGR_EA),
-				137 => Ok(Self::COLOR_BayerRG2BGR_EA),
-				138 => Ok(Self::COLOR_BayerGR2BGR_EA),
-				// Duplicate of COLOR_BayerBG2BGR_EA
-				// 135 => Ok(Self::COLOR_BayerRGGB2BGR_EA),
-				// Duplicate of COLOR_BayerGB2BGR_EA
-				// 136 => Ok(Self::COLOR_BayerGRBG2BGR_EA),
-				// Duplicate of COLOR_BayerRG2BGR_EA
-				// 137 => Ok(Self::COLOR_BayerBGGR2BGR_EA),
-				// Duplicate of COLOR_BayerGR2BGR_EA
-				// 138 => Ok(Self::COLOR_BayerGBRG2BGR_EA),
-				// Duplicate of COLOR_BayerBGGR2BGR_EA
-				// 137 => Ok(Self::COLOR_BayerRGGB2RGB_EA),
-				// Duplicate of COLOR_BayerGBRG2BGR_EA
-				// 138 => Ok(Self::COLOR_BayerGRBG2RGB_EA),
-				// Duplicate of COLOR_BayerRGGB2BGR_EA
-				// 135 => Ok(Self::COLOR_BayerBGGR2RGB_EA),
-				// Duplicate of COLOR_BayerGRBG2BGR_EA
-				// 136 => Ok(Self::COLOR_BayerGBRG2RGB_EA),
-				// Duplicate of COLOR_BayerRGGB2RGB_EA
-				// 137 => Ok(Self::COLOR_BayerBG2RGB_EA),
-				// Duplicate of COLOR_BayerGRBG2RGB_EA
-				// 138 => Ok(Self::COLOR_BayerGB2RGB_EA),
-				// Duplicate of COLOR_BayerBGGR2RGB_EA
-				// 135 => Ok(Self::COLOR_BayerRG2RGB_EA),
-				// Duplicate of COLOR_BayerGBRG2RGB_EA
-				// 136 => Ok(Self::COLOR_BayerGR2RGB_EA),
-				139 => Ok(Self::COLOR_BayerBG2BGRA),
-				140 => Ok(Self::COLOR_BayerGB2BGRA),
-				141 => Ok(Self::COLOR_BayerRG2BGRA),
-				142 => Ok(Self::COLOR_BayerGR2BGRA),
-				// Duplicate of COLOR_BayerBG2BGRA
-				// 139 => Ok(Self::COLOR_BayerRGGB2BGRA),
-				// Duplicate of COLOR_BayerGB2BGRA
-				// 140 => Ok(Self::COLOR_BayerGRBG2BGRA),
-				// Duplicate of COLOR_BayerRG2BGRA
-				// 141 => Ok(Self::COLOR_BayerBGGR2BGRA),
-				// Duplicate of COLOR_BayerGR2BGRA
-				// 142 => Ok(Self::COLOR_BayerGBRG2BGRA),
-				// Duplicate of COLOR_BayerBGGR2BGRA
-				// 141 => Ok(Self::COLOR_BayerRGGB2RGBA),
-				// Duplicate of COLOR_BayerGBRG2BGRA
-				// 142 => Ok(Self::COLOR_BayerGRBG2RGBA),
-				// Duplicate of COLOR_BayerRGGB2BGRA
-				// 139 => Ok(Self::COLOR_BayerBGGR2RGBA),
-				// Duplicate of COLOR_BayerGRBG2BGRA
-				// 140 => Ok(Self::COLOR_BayerGBRG2RGBA),
-				// Duplicate of COLOR_BayerRGGB2RGBA
-				// 141 => Ok(Self::COLOR_BayerBG2RGBA),
-				// Duplicate of COLOR_BayerGRBG2RGBA
-				// 142 => Ok(Self::COLOR_BayerGB2RGBA),
-				// Duplicate of COLOR_BayerBGGR2RGBA
-				// 139 => Ok(Self::COLOR_BayerRG2RGBA),
-				// Duplicate of COLOR_BayerGBRG2RGBA
-				// 140 => Ok(Self::COLOR_BayerGR2RGBA),
-				143 => Ok(Self::COLOR_RGB2YUV_UYVY),
-				144 => Ok(Self::COLOR_BGR2YUV_UYVY),
-				// Duplicate of COLOR_RGB2YUV_UYVY
-				// 143 => Ok(Self::COLOR_RGB2YUV_Y422),
-				// Duplicate of COLOR_BGR2YUV_UYVY
-				// 144 => Ok(Self::COLOR_BGR2YUV_Y422),
-				// Duplicate of COLOR_RGB2YUV_Y422
-				// 143 => Ok(Self::COLOR_RGB2YUV_UYNV),
-				// Duplicate of COLOR_BGR2YUV_Y422
-				// 144 => Ok(Self::COLOR_BGR2YUV_UYNV),
-				145 => Ok(Self::COLOR_RGBA2YUV_UYVY),
-				146 => Ok(Self::COLOR_BGRA2YUV_UYVY),
-				// Duplicate of COLOR_RGBA2YUV_UYVY
-				// 145 => Ok(Self::COLOR_RGBA2YUV_Y422),
-				// Duplicate of COLOR_BGRA2YUV_UYVY
-				// 146 => Ok(Self::COLOR_BGRA2YUV_Y422),
-				// Duplicate of COLOR_RGBA2YUV_Y422
-				// 145 => Ok(Self::COLOR_RGBA2YUV_UYNV),
-				// Duplicate of COLOR_BGRA2YUV_Y422
-				// 146 => Ok(Self::COLOR_BGRA2YUV_UYNV),
-				147 => Ok(Self::COLOR_RGB2YUV_YUY2),
-				148 => Ok(Self::COLOR_BGR2YUV_YUY2),
-				149 => Ok(Self::COLOR_RGB2YUV_YVYU),
-				150 => Ok(Self::COLOR_BGR2YUV_YVYU),
-				// Duplicate of COLOR_RGB2YUV_YUY2
-				// 147 => Ok(Self::COLOR_RGB2YUV_YUYV),
-				// Duplicate of COLOR_BGR2YUV_YUY2
-				// 148 => Ok(Self::COLOR_BGR2YUV_YUYV),
-				// Duplicate of COLOR_RGB2YUV_YUYV
-				// 147 => Ok(Self::COLOR_RGB2YUV_YUNV),
-				// Duplicate of COLOR_BGR2YUV_YUYV
-				// 148 => Ok(Self::COLOR_BGR2YUV_YUNV),
-				151 => Ok(Self::COLOR_RGBA2YUV_YUY2),
-				152 => Ok(Self::COLOR_BGRA2YUV_YUY2),
-				153 => Ok(Self::COLOR_RGBA2YUV_YVYU),
-				154 => Ok(Self::COLOR_BGRA2YUV_YVYU),
-				// Duplicate of COLOR_RGBA2YUV_YUY2
-				// 151 => Ok(Self::COLOR_RGBA2YUV_YUYV),
-				// Duplicate of COLOR_BGRA2YUV_YUY2
-				// 152 => Ok(Self::COLOR_BGRA2YUV_YUYV),
-				// Duplicate of COLOR_RGBA2YUV_YUYV
-				// 151 => Ok(Self::COLOR_RGBA2YUV_YUNV),
-				// Duplicate of COLOR_BGRA2YUV_YUYV
-				// 152 => Ok(Self::COLOR_BGRA2YUV_YUNV),
-				155 => Ok(Self::COLOR_COLORCVT_MAX),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ColorConversionCodes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::ColorConversionCodes }
+	opencv_type_enum! { crate::imgproc::ColorConversionCodes { COLOR_BGR2BGRA, COLOR_BGRA2BGR, COLOR_BGR2RGBA, COLOR_RGBA2BGR, COLOR_BGR2RGB, COLOR_BGRA2RGBA, COLOR_BGR2GRAY, COLOR_RGB2GRAY, COLOR_GRAY2BGR, COLOR_GRAY2BGRA, COLOR_BGRA2GRAY, COLOR_RGBA2GRAY, COLOR_BGR2BGR565, COLOR_RGB2BGR565, COLOR_BGR5652BGR, COLOR_BGR5652RGB, COLOR_BGRA2BGR565, COLOR_RGBA2BGR565, COLOR_BGR5652BGRA, COLOR_BGR5652RGBA, COLOR_GRAY2BGR565, COLOR_BGR5652GRAY, COLOR_BGR2BGR555, COLOR_RGB2BGR555, COLOR_BGR5552BGR, COLOR_BGR5552RGB, COLOR_BGRA2BGR555, COLOR_RGBA2BGR555, COLOR_BGR5552BGRA, COLOR_BGR5552RGBA, COLOR_GRAY2BGR555, COLOR_BGR5552GRAY, COLOR_BGR2XYZ, COLOR_RGB2XYZ, COLOR_XYZ2BGR, COLOR_XYZ2RGB, COLOR_BGR2YCrCb, COLOR_RGB2YCrCb, COLOR_YCrCb2BGR, COLOR_YCrCb2RGB, COLOR_BGR2HSV, COLOR_RGB2HSV, COLOR_BGR2Lab, COLOR_RGB2Lab, COLOR_BGR2Luv, COLOR_RGB2Luv, COLOR_BGR2HLS, COLOR_RGB2HLS, COLOR_HSV2BGR, COLOR_HSV2RGB, COLOR_Lab2BGR, COLOR_Lab2RGB, COLOR_Luv2BGR, COLOR_Luv2RGB, COLOR_HLS2BGR, COLOR_HLS2RGB, COLOR_BGR2HSV_FULL, COLOR_RGB2HSV_FULL, COLOR_BGR2HLS_FULL, COLOR_RGB2HLS_FULL, COLOR_HSV2BGR_FULL, COLOR_HSV2RGB_FULL, COLOR_HLS2BGR_FULL, COLOR_HLS2RGB_FULL, COLOR_LBGR2Lab, COLOR_LRGB2Lab, COLOR_LBGR2Luv, COLOR_LRGB2Luv, COLOR_Lab2LBGR, COLOR_Lab2LRGB, COLOR_Luv2LBGR, COLOR_Luv2LRGB, COLOR_BGR2YUV, COLOR_RGB2YUV, COLOR_YUV2BGR, COLOR_YUV2RGB, COLOR_YUV2RGB_NV12, COLOR_YUV2BGR_NV12, COLOR_YUV2RGB_NV21, COLOR_YUV2BGR_NV21, COLOR_YUV2RGBA_NV12, COLOR_YUV2BGRA_NV12, COLOR_YUV2RGBA_NV21, COLOR_YUV2BGRA_NV21, COLOR_YUV2RGB_YV12, COLOR_YUV2BGR_YV12, COLOR_YUV2RGB_IYUV, COLOR_YUV2BGR_IYUV, COLOR_YUV2RGBA_YV12, COLOR_YUV2BGRA_YV12, COLOR_YUV2RGBA_IYUV, COLOR_YUV2BGRA_IYUV, COLOR_YUV2GRAY_420, COLOR_YUV2RGB_UYVY, COLOR_YUV2BGR_UYVY, COLOR_YUV2RGBA_UYVY, COLOR_YUV2BGRA_UYVY, COLOR_YUV2RGB_YUY2, COLOR_YUV2BGR_YUY2, COLOR_YUV2RGB_YVYU, COLOR_YUV2BGR_YVYU, COLOR_YUV2RGBA_YUY2, COLOR_YUV2BGRA_YUY2, COLOR_YUV2RGBA_YVYU, COLOR_YUV2BGRA_YVYU, COLOR_YUV2GRAY_UYVY, COLOR_YUV2GRAY_YUY2, COLOR_RGBA2mRGBA, COLOR_mRGBA2RGBA, COLOR_RGB2YUV_I420, COLOR_BGR2YUV_I420, COLOR_RGBA2YUV_I420, COLOR_BGRA2YUV_I420, COLOR_RGB2YUV_YV12, COLOR_BGR2YUV_YV12, COLOR_RGBA2YUV_YV12, COLOR_BGRA2YUV_YV12, COLOR_BayerBG2BGR, COLOR_BayerGB2BGR, COLOR_BayerRG2BGR, COLOR_BayerGR2BGR, COLOR_BayerBG2GRAY, COLOR_BayerGB2GRAY, COLOR_BayerRG2GRAY, COLOR_BayerGR2GRAY, COLOR_BayerBG2BGR_VNG, COLOR_BayerGB2BGR_VNG, COLOR_BayerRG2BGR_VNG, COLOR_BayerGR2BGR_VNG, COLOR_BayerBG2BGR_EA, COLOR_BayerGB2BGR_EA, COLOR_BayerRG2BGR_EA, COLOR_BayerGR2BGR_EA, COLOR_BayerBG2BGRA, COLOR_BayerGB2BGRA, COLOR_BayerRG2BGRA, COLOR_BayerGR2BGRA, COLOR_RGB2YUV_UYVY, COLOR_BGR2YUV_UYVY, COLOR_RGBA2YUV_UYVY, COLOR_BGRA2YUV_UYVY, COLOR_RGB2YUV_YUY2, COLOR_BGR2YUV_YUY2, COLOR_RGB2YUV_YVYU, COLOR_BGR2YUV_YVYU, COLOR_RGBA2YUV_YUY2, COLOR_BGRA2YUV_YUY2, COLOR_RGBA2YUV_YVYU, COLOR_BGRA2YUV_YVYU, COLOR_COLORCVT_MAX } }
 
 	/// GNU Octave/MATLAB equivalent colormaps
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ColormapTypes {
 		/// ![autumn](https://docs.opencv.org/4.12.0/colorscale_autumn.jpg)
@@ -2031,42 +1619,10 @@ pub mod imgproc {
 		COLORMAP_DEEPGREEN = 21,
 	}
 
-	impl TryFrom<i32> for ColormapTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::COLORMAP_AUTUMN),
-				1 => Ok(Self::COLORMAP_BONE),
-				2 => Ok(Self::COLORMAP_JET),
-				3 => Ok(Self::COLORMAP_WINTER),
-				4 => Ok(Self::COLORMAP_RAINBOW),
-				5 => Ok(Self::COLORMAP_OCEAN),
-				6 => Ok(Self::COLORMAP_SUMMER),
-				7 => Ok(Self::COLORMAP_SPRING),
-				8 => Ok(Self::COLORMAP_COOL),
-				9 => Ok(Self::COLORMAP_HSV),
-				10 => Ok(Self::COLORMAP_PINK),
-				11 => Ok(Self::COLORMAP_HOT),
-				12 => Ok(Self::COLORMAP_PARULA),
-				13 => Ok(Self::COLORMAP_MAGMA),
-				14 => Ok(Self::COLORMAP_INFERNO),
-				15 => Ok(Self::COLORMAP_PLASMA),
-				16 => Ok(Self::COLORMAP_VIRIDIS),
-				17 => Ok(Self::COLORMAP_CIVIDIS),
-				18 => Ok(Self::COLORMAP_TWILIGHT),
-				19 => Ok(Self::COLORMAP_TWILIGHT_SHIFTED),
-				20 => Ok(Self::COLORMAP_TURBO),
-				21 => Ok(Self::COLORMAP_DEEPGREEN),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ColormapTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::ColormapTypes }
+	opencv_type_enum! { crate::imgproc::ColormapTypes { COLORMAP_AUTUMN, COLORMAP_BONE, COLORMAP_JET, COLORMAP_WINTER, COLORMAP_RAINBOW, COLORMAP_OCEAN, COLORMAP_SUMMER, COLORMAP_SPRING, COLORMAP_COOL, COLORMAP_HSV, COLORMAP_PINK, COLORMAP_HOT, COLORMAP_PARULA, COLORMAP_MAGMA, COLORMAP_INFERNO, COLORMAP_PLASMA, COLORMAP_VIRIDIS, COLORMAP_CIVIDIS, COLORMAP_TWILIGHT, COLORMAP_TWILIGHT_SHIFTED, COLORMAP_TURBO, COLORMAP_DEEPGREEN } }
 
 	/// connected components algorithm
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ConnectedComponentsAlgorithmsTypes {
 		/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
@@ -2085,27 +1641,10 @@ pub mod imgproc {
 		CCL_SPAGHETTI = 5,
 	}
 
-	impl TryFrom<i32> for ConnectedComponentsAlgorithmsTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				-1 => Ok(Self::CCL_DEFAULT),
-				0 => Ok(Self::CCL_WU),
-				1 => Ok(Self::CCL_GRANA),
-				2 => Ok(Self::CCL_BOLELLI),
-				3 => Ok(Self::CCL_SAUF),
-				4 => Ok(Self::CCL_BBDT),
-				5 => Ok(Self::CCL_SPAGHETTI),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ConnectedComponentsAlgorithmsTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::ConnectedComponentsAlgorithmsTypes }
+	opencv_type_enum! { crate::imgproc::ConnectedComponentsAlgorithmsTypes { CCL_DEFAULT, CCL_WU, CCL_GRANA, CCL_BOLELLI, CCL_SAUF, CCL_BBDT, CCL_SPAGHETTI } }
 
 	/// connected components statistics
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ConnectedComponentsTypes {
 		/// The leftmost (x) coordinate which is the inclusive start of the bounding
@@ -2124,26 +1663,10 @@ pub mod imgproc {
 		CC_STAT_MAX = 5,
 	}
 
-	impl TryFrom<i32> for ConnectedComponentsTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::CC_STAT_LEFT),
-				1 => Ok(Self::CC_STAT_TOP),
-				2 => Ok(Self::CC_STAT_WIDTH),
-				3 => Ok(Self::CC_STAT_HEIGHT),
-				4 => Ok(Self::CC_STAT_AREA),
-				5 => Ok(Self::CC_STAT_MAX),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ConnectedComponentsTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::ConnectedComponentsTypes }
+	opencv_type_enum! { crate::imgproc::ConnectedComponentsTypes { CC_STAT_LEFT, CC_STAT_TOP, CC_STAT_WIDTH, CC_STAT_HEIGHT, CC_STAT_AREA, CC_STAT_MAX } }
 
 	/// the contour approximation algorithm
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ContourApproximationModes {
 		/// stores absolutely all the contour points. That is, any 2 subsequent points (x1,y1) and
@@ -2159,24 +1682,10 @@ pub mod imgproc {
 		CHAIN_APPROX_TC89_KCOS = 4,
 	}
 
-	impl TryFrom<i32> for ContourApproximationModes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::CHAIN_APPROX_NONE),
-				2 => Ok(Self::CHAIN_APPROX_SIMPLE),
-				3 => Ok(Self::CHAIN_APPROX_TC89_L1),
-				4 => Ok(Self::CHAIN_APPROX_TC89_KCOS),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ContourApproximationModes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::ContourApproximationModes }
+	opencv_type_enum! { crate::imgproc::ContourApproximationModes { CHAIN_APPROX_NONE, CHAIN_APPROX_SIMPLE, CHAIN_APPROX_TC89_L1, CHAIN_APPROX_TC89_KCOS } }
 
 	/// distanceTransform algorithm flags
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum DistanceTransformLabelTypes {
 		/// each connected component of zeros in src (as well as all the non-zero pixels closest to the
@@ -2186,22 +1695,10 @@ pub mod imgproc {
 		DIST_LABEL_PIXEL = 1,
 	}
 
-	impl TryFrom<i32> for DistanceTransformLabelTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DIST_LABEL_CCOMP),
-				1 => Ok(Self::DIST_LABEL_PIXEL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::DistanceTransformLabelTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::DistanceTransformLabelTypes }
+	opencv_type_enum! { crate::imgproc::DistanceTransformLabelTypes { DIST_LABEL_CCOMP, DIST_LABEL_PIXEL } }
 
 	/// Mask size for distance transform
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum DistanceTransformMasks {
 		/// mask=3
@@ -2211,25 +1708,12 @@ pub mod imgproc {
 		DIST_MASK_PRECISE = 0,
 	}
 
-	impl TryFrom<i32> for DistanceTransformMasks {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				3 => Ok(Self::DIST_MASK_3),
-				5 => Ok(Self::DIST_MASK_5),
-				0 => Ok(Self::DIST_MASK_PRECISE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::DistanceTransformMasks"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::DistanceTransformMasks }
+	opencv_type_enum! { crate::imgproc::DistanceTransformMasks { DIST_MASK_3, DIST_MASK_5, DIST_MASK_PRECISE } }
 
 	/// Distance types for Distance Transform and M-estimators
 	/// ## See also
 	/// distanceTransform, fitLine
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum DistanceTypes {
 		/// User defined distance
@@ -2250,55 +1734,29 @@ pub mod imgproc {
 		DIST_HUBER = 7,
 	}
 
-	impl TryFrom<i32> for DistanceTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				-1 => Ok(Self::DIST_USER),
-				1 => Ok(Self::DIST_L1),
-				2 => Ok(Self::DIST_L2),
-				3 => Ok(Self::DIST_C),
-				4 => Ok(Self::DIST_L12),
-				5 => Ok(Self::DIST_FAIR),
-				6 => Ok(Self::DIST_WELSCH),
-				7 => Ok(Self::DIST_HUBER),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::DistanceTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::DistanceTypes }
+	opencv_type_enum! { crate::imgproc::DistanceTypes { DIST_USER, DIST_L1, DIST_L2, DIST_C, DIST_L12, DIST_FAIR, DIST_WELSCH, DIST_HUBER } }
 
 	/// floodfill algorithm flags
-	#[repr(C)]
+	#[repr(transparent)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum FloodFillFlags {
+	pub struct FloodFillFlags(i32);
+
+	impl FloodFillFlags {
+		/// No flags are set, might not make sense for all enums
+		pub const NONE: Self = Self(0);
 		/// If set, the difference between the current pixel and seed pixel is considered. Otherwise,
 		/// the difference between neighbor pixels is considered (that is, the range is floating).
-		FLOODFILL_FIXED_RANGE = 65536,
+		pub const FLOODFILL_FIXED_RANGE: Self = Self(65536);
 		/// If set, the function does not change the image ( newVal is ignored), and only fills the
 		/// mask with the value specified in bits 8-16 of flags as described above. This option only make
 		/// sense in function variants that have the mask parameter.
-		FLOODFILL_MASK_ONLY = 131072,
+		pub const FLOODFILL_MASK_ONLY: Self = Self(131072);
 	}
 
-	impl TryFrom<i32> for FloodFillFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				65536 => Ok(Self::FLOODFILL_FIXED_RANGE),
-				131072 => Ok(Self::FLOODFILL_MASK_ONLY),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::FloodFillFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::FloodFillFlags }
+	opencv_type_bitfield_enum! { crate::imgproc::FloodFillFlags { NONE, FLOODFILL_FIXED_RANGE, FLOODFILL_MASK_ONLY } }
 
 	/// class of the pixel in GrabCut algorithm
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum GrabCutClasses {
 		/// an obvious background pixels
@@ -2311,24 +1769,10 @@ pub mod imgproc {
 		GC_PR_FGD = 3,
 	}
 
-	impl TryFrom<i32> for GrabCutClasses {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::GC_BGD),
-				1 => Ok(Self::GC_FGD),
-				2 => Ok(Self::GC_PR_BGD),
-				3 => Ok(Self::GC_PR_FGD),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::GrabCutClasses"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::GrabCutClasses }
+	opencv_type_enum! { crate::imgproc::GrabCutClasses { GC_BGD, GC_FGD, GC_PR_BGD, GC_PR_FGD } }
 
 	/// GrabCut algorithm flags
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum GrabCutModes {
 		/// The function initializes the state and the mask using the provided rectangle. After that it
@@ -2344,25 +1788,11 @@ pub mod imgproc {
 		GC_EVAL_FREEZE_MODEL = 3,
 	}
 
-	impl TryFrom<i32> for GrabCutModes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::GC_INIT_WITH_RECT),
-				1 => Ok(Self::GC_INIT_WITH_MASK),
-				2 => Ok(Self::GC_EVAL),
-				3 => Ok(Self::GC_EVAL_FREEZE_MODEL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::GrabCutModes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::GrabCutModes }
+	opencv_type_enum! { crate::imgproc::GrabCutModes { GC_INIT_WITH_RECT, GC_INIT_WITH_MASK, GC_EVAL, GC_EVAL_FREEZE_MODEL } }
 
 	/// Only a subset of Hershey fonts <https://en.wikipedia.org/wiki/Hershey_fonts> are supported
 	/// @ingroup imgproc_draw
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum HersheyFonts {
 		/// normal size sans-serif font
@@ -2385,30 +1815,11 @@ pub mod imgproc {
 		FONT_ITALIC = 16,
 	}
 
-	impl TryFrom<i32> for HersheyFonts {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::FONT_HERSHEY_SIMPLEX),
-				1 => Ok(Self::FONT_HERSHEY_PLAIN),
-				2 => Ok(Self::FONT_HERSHEY_DUPLEX),
-				3 => Ok(Self::FONT_HERSHEY_COMPLEX),
-				4 => Ok(Self::FONT_HERSHEY_TRIPLEX),
-				5 => Ok(Self::FONT_HERSHEY_COMPLEX_SMALL),
-				6 => Ok(Self::FONT_HERSHEY_SCRIPT_SIMPLEX),
-				7 => Ok(Self::FONT_HERSHEY_SCRIPT_COMPLEX),
-				16 => Ok(Self::FONT_ITALIC),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::HersheyFonts"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::HersheyFonts }
+	opencv_type_enum! { crate::imgproc::HersheyFonts { FONT_HERSHEY_SIMPLEX, FONT_HERSHEY_PLAIN, FONT_HERSHEY_DUPLEX, FONT_HERSHEY_COMPLEX, FONT_HERSHEY_TRIPLEX, FONT_HERSHEY_COMPLEX_SMALL, FONT_HERSHEY_SCRIPT_SIMPLEX, FONT_HERSHEY_SCRIPT_COMPLEX, FONT_ITALIC } }
 
 	/// Histogram comparison methods
 	/// @ingroup imgproc_hist
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum HistCompMethods {
 		/// Correlation
@@ -2439,28 +1850,10 @@ pub mod imgproc {
 		HISTCMP_KL_DIV = 5,
 	}
 
-	impl TryFrom<i32> for HistCompMethods {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::HISTCMP_CORREL),
-				1 => Ok(Self::HISTCMP_CHISQR),
-				2 => Ok(Self::HISTCMP_INTERSECT),
-				3 => Ok(Self::HISTCMP_BHATTACHARYYA),
-				// Duplicate of HISTCMP_BHATTACHARYYA
-				// 3 => Ok(Self::HISTCMP_HELLINGER),
-				4 => Ok(Self::HISTCMP_CHISQR_ALT),
-				5 => Ok(Self::HISTCMP_KL_DIV),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::HistCompMethods"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::HistCompMethods }
+	opencv_type_enum! { crate::imgproc::HistCompMethods { HISTCMP_CORREL, HISTCMP_CHISQR, HISTCMP_INTERSECT, HISTCMP_BHATTACHARYYA, HISTCMP_CHISQR_ALT, HISTCMP_KL_DIV } }
 
 	/// Variants of a Hough transform
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum HoughModes {
 		/// classical or standard Hough transform. Every line is represented by two floating-point
@@ -2482,25 +1875,10 @@ pub mod imgproc {
 		HOUGH_GRADIENT_ALT = 4,
 	}
 
-	impl TryFrom<i32> for HoughModes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::HOUGH_STANDARD),
-				1 => Ok(Self::HOUGH_PROBABILISTIC),
-				2 => Ok(Self::HOUGH_MULTI_SCALE),
-				3 => Ok(Self::HOUGH_GRADIENT),
-				4 => Ok(Self::HOUGH_GRADIENT_ALT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::HoughModes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::HoughModes }
+	opencv_type_enum! { crate::imgproc::HoughModes { HOUGH_STANDARD, HOUGH_PROBABILISTIC, HOUGH_MULTI_SCALE, HOUGH_GRADIENT, HOUGH_GRADIENT_ALT } }
 
 	/// interpolation algorithm
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum InterpolationFlags {
 		/// nearest neighbor interpolation
@@ -2539,30 +1917,9 @@ pub mod imgproc {
 		WARP_RELATIVE_MAP = 32,
 	}
 
-	impl TryFrom<i32> for InterpolationFlags {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::imgproc::InterpolationFlags { INTER_NEAREST, INTER_LINEAR, INTER_CUBIC, INTER_AREA, INTER_LANCZOS4, INTER_LINEAR_EXACT, INTER_NEAREST_EXACT, INTER_MAX, WARP_FILL_OUTLIERS, WARP_INVERSE_MAP, WARP_RELATIVE_MAP } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::INTER_NEAREST),
-				1 => Ok(Self::INTER_LINEAR),
-				2 => Ok(Self::INTER_CUBIC),
-				3 => Ok(Self::INTER_AREA),
-				4 => Ok(Self::INTER_LANCZOS4),
-				5 => Ok(Self::INTER_LINEAR_EXACT),
-				6 => Ok(Self::INTER_NEAREST_EXACT),
-				7 => Ok(Self::INTER_MAX),
-				8 => Ok(Self::WARP_FILL_OUTLIERS),
-				16 => Ok(Self::WARP_INVERSE_MAP),
-				32 => Ok(Self::WARP_RELATIVE_MAP),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::InterpolationFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::InterpolationFlags }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum InterpolationMasks {
 		INTER_BITS = 5,
@@ -2571,24 +1928,10 @@ pub mod imgproc {
 		INTER_TAB_SIZE2 = 1024,
 	}
 
-	impl TryFrom<i32> for InterpolationMasks {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				5 => Ok(Self::INTER_BITS),
-				10 => Ok(Self::INTER_BITS2),
-				32 => Ok(Self::INTER_TAB_SIZE),
-				1024 => Ok(Self::INTER_TAB_SIZE2),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::InterpolationMasks"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::InterpolationMasks }
+	opencv_type_enum! { crate::imgproc::InterpolationMasks { INTER_BITS, INTER_BITS2, INTER_TAB_SIZE, INTER_TAB_SIZE2 } }
 
 	/// Variants of Line Segment %Detector
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum LineSegmentDetectorModes {
 		/// No refinement applied
@@ -2600,24 +1943,11 @@ pub mod imgproc {
 		LSD_REFINE_ADV = 2,
 	}
 
-	impl TryFrom<i32> for LineSegmentDetectorModes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::LSD_REFINE_NONE),
-				1 => Ok(Self::LSD_REFINE_STD),
-				2 => Ok(Self::LSD_REFINE_ADV),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::LineSegmentDetectorModes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::LineSegmentDetectorModes }
+	opencv_type_enum! { crate::imgproc::LineSegmentDetectorModes { LSD_REFINE_NONE, LSD_REFINE_STD, LSD_REFINE_ADV } }
 
 	/// types of line
 	/// @ingroup imgproc_draw
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum LineTypes {
 		FILLED = -1,
@@ -2629,25 +1959,11 @@ pub mod imgproc {
 		LINE_AA = 16,
 	}
 
-	impl TryFrom<i32> for LineTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				-1 => Ok(Self::FILLED),
-				4 => Ok(Self::LINE_4),
-				8 => Ok(Self::LINE_8),
-				16 => Ok(Self::LINE_AA),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::LineTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::LineTypes }
+	opencv_type_enum! { crate::imgproc::LineTypes { FILLED, LINE_4, LINE_8, LINE_AA } }
 
 	/// Possible set of marker types used for the cv::drawMarker function
 	/// @ingroup imgproc_draw
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum MarkerTypes {
 		/// A crosshair marker shape
@@ -2666,27 +1982,10 @@ pub mod imgproc {
 		MARKER_TRIANGLE_DOWN = 6,
 	}
 
-	impl TryFrom<i32> for MarkerTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::MARKER_CROSS),
-				1 => Ok(Self::MARKER_TILTED_CROSS),
-				2 => Ok(Self::MARKER_STAR),
-				3 => Ok(Self::MARKER_DIAMOND),
-				4 => Ok(Self::MARKER_SQUARE),
-				5 => Ok(Self::MARKER_TRIANGLE_UP),
-				6 => Ok(Self::MARKER_TRIANGLE_DOWN),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::MarkerTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::MarkerTypes }
+	opencv_type_enum! { crate::imgproc::MarkerTypes { MARKER_CROSS, MARKER_TILTED_CROSS, MARKER_STAR, MARKER_DIAMOND, MARKER_SQUARE, MARKER_TRIANGLE_UP, MARKER_TRIANGLE_DOWN } }
 
 	/// shape of the structuring element
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum MorphShapes {
 		/// a rectangular structuring element:  ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%3D1)
@@ -2701,24 +2000,10 @@ pub mod imgproc {
 		MORPH_DIAMOND = 3,
 	}
 
-	impl TryFrom<i32> for MorphShapes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::MORPH_RECT),
-				1 => Ok(Self::MORPH_CROSS),
-				2 => Ok(Self::MORPH_ELLIPSE),
-				3 => Ok(Self::MORPH_DIAMOND),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::MorphShapes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::MorphShapes }
+	opencv_type_enum! { crate::imgproc::MorphShapes { MORPH_RECT, MORPH_CROSS, MORPH_ELLIPSE, MORPH_DIAMOND } }
 
 	/// type of morphological operation
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum MorphTypes {
 		/// see #erode
@@ -2745,28 +2030,10 @@ pub mod imgproc {
 		MORPH_HITMISS = 7,
 	}
 
-	impl TryFrom<i32> for MorphTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::MORPH_ERODE),
-				1 => Ok(Self::MORPH_DILATE),
-				2 => Ok(Self::MORPH_OPEN),
-				3 => Ok(Self::MORPH_CLOSE),
-				4 => Ok(Self::MORPH_GRADIENT),
-				5 => Ok(Self::MORPH_TOPHAT),
-				6 => Ok(Self::MORPH_BLACKHAT),
-				7 => Ok(Self::MORPH_HITMISS),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::MorphTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::MorphTypes }
+	opencv_type_enum! { crate::imgproc::MorphTypes { MORPH_ERODE, MORPH_DILATE, MORPH_OPEN, MORPH_CLOSE, MORPH_GRADIENT, MORPH_TOPHAT, MORPH_BLACKHAT, MORPH_HITMISS } }
 
 	/// types of intersection between rectangles
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum RectanglesIntersectTypes {
 		/// No intersection
@@ -2777,23 +2044,10 @@ pub mod imgproc {
 		INTERSECT_FULL = 2,
 	}
 
-	impl TryFrom<i32> for RectanglesIntersectTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::INTERSECT_NONE),
-				1 => Ok(Self::INTERSECT_PARTIAL),
-				2 => Ok(Self::INTERSECT_FULL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::RectanglesIntersectTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::RectanglesIntersectTypes }
+	opencv_type_enum! { crate::imgproc::RectanglesIntersectTypes { INTERSECT_NONE, INTERSECT_PARTIAL, INTERSECT_FULL } }
 
 	/// mode of the contour retrieval algorithm
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum RetrievalModes {
 		/// retrieves only the extreme outer contours. It sets `hierarchy[i][2]=hierarchy[i][3]=-1` for
@@ -2811,22 +2065,7 @@ pub mod imgproc {
 		RETR_FLOODFILL = 4,
 	}
 
-	impl TryFrom<i32> for RetrievalModes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::RETR_EXTERNAL),
-				1 => Ok(Self::RETR_LIST),
-				2 => Ok(Self::RETR_CCOMP),
-				3 => Ok(Self::RETR_TREE),
-				4 => Ok(Self::RETR_FLOODFILL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::RetrievalModes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::RetrievalModes }
+	opencv_type_enum! { crate::imgproc::RetrievalModes { RETR_EXTERNAL, RETR_LIST, RETR_CCOMP, RETR_TREE, RETR_FLOODFILL } }
 
 	/// Shape matching methods
 	///
@@ -2835,7 +2074,7 @@ pub mod imgproc {
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20m%5EA%5Fi%20%3D%20%20%5Cmathrm%7Bsign%7D%20%28h%5EA%5Fi%29%20%20%5Ccdot%20%5Clog%7Bh%5EA%5Fi%7D%20%5C%5C%20m%5EB%5Fi%20%3D%20%20%5Cmathrm%7Bsign%7D%20%28h%5EB%5Fi%29%20%20%5Ccdot%20%5Clog%7Bh%5EB%5Fi%7D%20%5Cend%7Barray%7D)
 	///
 	/// and ![inline formula](https://latex.codecogs.com/png.latex?h%5EA%5Fi%2C%20h%5EB%5Fi) are the Hu moments of ![inline formula](https://latex.codecogs.com/png.latex?A) and ![inline formula](https://latex.codecogs.com/png.latex?B) , respectively.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ShapeMatchModes {
 		/// ![block formula](https://latex.codecogs.com/png.latex?I%5F1%28A%2CB%29%20%3D%20%20%5Csum%20%5F%7Bi%3D1%2E%2E%2E7%7D%20%20%5Cleft%20%7C%20%20%5Cfrac%7B1%7D%7Bm%5EA%5Fi%7D%20%2D%20%20%5Cfrac%7B1%7D%7Bm%5EB%5Fi%7D%20%5Cright%20%7C)
@@ -2846,42 +2085,18 @@ pub mod imgproc {
 		CONTOURS_MATCH_I3 = 3,
 	}
 
-	impl TryFrom<i32> for ShapeMatchModes {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::imgproc::ShapeMatchModes { CONTOURS_MATCH_I1, CONTOURS_MATCH_I2, CONTOURS_MATCH_I3 } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::CONTOURS_MATCH_I1),
-				2 => Ok(Self::CONTOURS_MATCH_I2),
-				3 => Ok(Self::CONTOURS_MATCH_I3),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ShapeMatchModes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::ShapeMatchModes }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SpecialFilter {
 		FILTER_SCHARR = -1,
 	}
 
-	impl TryFrom<i32> for SpecialFilter {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				-1 => Ok(Self::FILTER_SCHARR),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::SpecialFilter"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::SpecialFilter }
+	opencv_type_enum! { crate::imgproc::SpecialFilter { FILTER_SCHARR } }
 
 	/// type of the template matching operation
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum TemplateMatchModes {
 		/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2)
@@ -2910,27 +2125,11 @@ pub mod imgproc {
 		TM_CCOEFF_NORMED = 5,
 	}
 
-	impl TryFrom<i32> for TemplateMatchModes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::TM_SQDIFF),
-				1 => Ok(Self::TM_SQDIFF_NORMED),
-				2 => Ok(Self::TM_CCORR),
-				3 => Ok(Self::TM_CCORR_NORMED),
-				4 => Ok(Self::TM_CCOEFF),
-				5 => Ok(Self::TM_CCOEFF_NORMED),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::TemplateMatchModes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::TemplateMatchModes }
+	opencv_type_enum! { crate::imgproc::TemplateMatchModes { TM_SQDIFF, TM_SQDIFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_CCOEFF, TM_CCOEFF_NORMED } }
 
 	/// type of the threshold operation
 	/// ![threshold types](https://docs.opencv.org/4.12.0/threshold.png)
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ThresholdTypes {
 		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bmaxval%7D%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B0%7D%7Botherwise%7D)
@@ -2952,31 +2151,12 @@ pub mod imgproc {
 		THRESH_DRYRUN = 128,
 	}
 
-	impl TryFrom<i32> for ThresholdTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::THRESH_BINARY),
-				1 => Ok(Self::THRESH_BINARY_INV),
-				2 => Ok(Self::THRESH_TRUNC),
-				3 => Ok(Self::THRESH_TOZERO),
-				4 => Ok(Self::THRESH_TOZERO_INV),
-				7 => Ok(Self::THRESH_MASK),
-				8 => Ok(Self::THRESH_OTSU),
-				16 => Ok(Self::THRESH_TRIANGLE),
-				128 => Ok(Self::THRESH_DRYRUN),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ThresholdTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::ThresholdTypes }
+	opencv_type_enum! { crate::imgproc::ThresholdTypes { THRESH_BINARY, THRESH_BINARY_INV, THRESH_TRUNC, THRESH_TOZERO, THRESH_TOZERO_INV, THRESH_MASK, THRESH_OTSU, THRESH_TRIANGLE, THRESH_DRYRUN } }
 
 	/// \brief Specify the polar mapping mode
 	/// ## See also
 	/// warpPolar
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum WarpPolarMode {
 		/// Remaps an image to/from polar space.
@@ -2985,19 +2165,7 @@ pub mod imgproc {
 		WARP_POLAR_LOG = 256,
 	}
 
-	impl TryFrom<i32> for WarpPolarMode {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::WARP_POLAR_LINEAR),
-				256 => Ok(Self::WARP_POLAR_LOG),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::WarpPolarMode"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgproc::WarpPolarMode }
+	opencv_type_enum! { crate::imgproc::WarpPolarMode { WARP_POLAR_LINEAR, WARP_POLAR_LOG } }
 
 	/// \overload
 	///
@@ -4870,7 +4038,42 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Calculates a histogram of a set of arrays.
+	///
+	/// The function cv::calcHist calculates the histogram of one or more arrays. The elements of a tuple used
+	/// to increment a histogram bin are taken from the corresponding input arrays at the same location. The
+	/// sample below shows how to compute a 2D Hue-Saturation histogram for a color image. :
+	/// @include snippets/imgproc_calcHist.cpp
+	///
+	/// ## Parameters
+	/// * images: Source arrays. They all should have the same depth, CV_8U, CV_16U or CV_32F , and the same
+	/// size. Each of them can have an arbitrary number of channels.
+	/// * nimages: Number of source images.
+	/// * channels: List of the dims channels used to compute the histogram. The first array channels
+	/// are numerated from 0 to images[0].channels()-1 , the second array channels are counted from
+	/// images[0].channels() to images[0].channels() + images[1].channels()-1, and so on.
+	/// * mask: Optional mask. If the matrix is not empty, it must be an 8-bit array of the same size
+	/// as images[i] . The non-zero mask elements mark the array elements counted in the histogram.
+	/// * hist: Output histogram, which is a dense or sparse dims -dimensional array.
+	/// * dims: Histogram dimensionality that must be positive and not greater than CV_MAX_DIMS
+	/// (equal to 32 in the current OpenCV version).
+	/// * histSize: Array of histogram sizes in each dimension.
+	/// * ranges: Array of the dims arrays of the histogram bin boundaries in each dimension. When the
+	/// histogram is uniform ( uniform =true), then for each dimension i it is enough to specify the lower
+	/// (inclusive) boundary ![inline formula](https://latex.codecogs.com/png.latex?L%5F0) of the 0-th histogram bin and the upper (exclusive) boundary
+	/// ![inline formula](https://latex.codecogs.com/png.latex?U%5F%7B%5Ctexttt%7BhistSize%7D%5Bi%5D%2D1%7D) for the last histogram bin histSize[i]-1 . That is, in case of a
+	/// uniform histogram each of ranges[i] is an array of 2 elements. When the histogram is not uniform (
+	/// uniform=false ), then each of ranges[i] contains histSize[i]+1 elements:
+	/// ![inline formula](https://latex.codecogs.com/png.latex?L%5F0%2C%20U%5F0%3DL%5F1%2C%20U%5F1%3DL%5F2%2C%20%2E%2E%2E%2C%20U%5F%7B%5Ctexttt%7BhistSize%5Bi%5D%7D%2D2%7D%3DL%5F%7B%5Ctexttt%7BhistSize%5Bi%5D%7D%2D1%7D%2C%20U%5F%7B%5Ctexttt%7BhistSize%5Bi%5D%7D%2D1%7D)
+	/// . The array elements, that are not between ![inline formula](https://latex.codecogs.com/png.latex?L%5F0) and ![inline formula](https://latex.codecogs.com/png.latex?U%5F%7B%5Ctexttt%7BhistSize%5Bi%5D%7D%2D1%7D) , are not
+	/// counted in the histogram.
+	/// * uniform: Flag indicating whether the histogram is uniform or not (see above).
+	/// * accumulate: Accumulation flag. If it is set, the histogram is not cleared in the beginning
+	/// when it is allocated. This feature enables you to compute a single histogram from several sets of
+	/// arrays, or to update the histogram in time.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// this variant supports only uniform histograms.
 	///
@@ -5123,8 +4326,32 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// computes the connected components labeled image of boolean image and also produces a statistics output for each label
+	///
+	/// image with 4 or 8 way connectivity - returns N, the total number of labels [0, N-1] where 0
+	/// represents the background label. ltype specifies the output label image type, an important
+	/// consideration based on the total number of labels or alternatively the total number of pixels in
+	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
+	/// a row major ordering of labels while Spaghetti and BBDT do not.
+	/// This function uses parallel version of the algorithms (statistics included) if at least one allowed
+	/// parallel framework is enabled and if the rows of the image are at least twice the number returned by #getNumberOfCPUs.
+	///
 	/// ## Parameters
+	/// * image: the 8-bit single-channel image to be labeled
+	/// * labels: destination labeled image
+	/// * stats: statistics output for each label, including the background label.
+	/// Statistics are accessed via stats(label, COLUMN) where COLUMN is one of
+	/// #ConnectedComponentsTypes, selecting the statistic. The data type is CV_32S.
+	/// * centroids: centroid output for each label, including the background label. Centroids are
+	/// accessed via centroids(label, 0) for x and centroids(label, 1) for y. The data type CV_64F.
+	/// * connectivity: 8 or 4 for 8-way or 4-way connectivity respectively
+	/// * ltype: output image label type. Currently CV_32S and CV_16U are supported.
+	/// * ccltype: connected components algorithm type (see #ConnectedComponentsAlgorithmsTypes).
+	///
+	/// ## Overloaded parameters
+	///
 	/// * image: the 8-bit single-channel image to be labeled
 	/// * labels: destination labeled image
 	/// * stats: statistics output for each label, including the background label.
@@ -5240,9 +4467,28 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// computes the connected components labeled image of boolean image
+	///
+	/// image with 4 or 8 way connectivity - returns N, the total number of labels [0, N-1] where 0
+	/// represents the background label. ltype specifies the output label image type, an important
+	/// consideration based on the total number of labels or alternatively the total number of pixels in
+	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
+	/// a row major ordering of labels while Spaghetti and BBDT do not.
+	/// This function uses parallel version of the algorithms if at least one allowed
+	/// parallel framework is enabled and if the rows of the image are at least twice the number returned by #getNumberOfCPUs.
 	///
 	/// ## Parameters
+	/// * image: the 8-bit single-channel image to be labeled
+	/// * labels: destination labeled image
+	/// * connectivity: 8 or 4 for 8-way or 4-way connectivity respectively
+	/// * ltype: output image label type. Currently CV_32S and CV_16U are supported.
+	/// * ccltype: connected components algorithm type (see the #ConnectedComponentsAlgorithmsTypes).
+	///
+	/// ## Overloaded parameters
+	///
+	///
 	/// * image: the 8-bit single-channel image to be labeled
 	/// * labels: destination labeled image
 	/// * connectivity: 8 or 4 for 8-way or 4-way connectivity respectively
@@ -6536,8 +5782,61 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Calculates the distance to the closest zero pixel for each pixel of the source image.
+	///
+	/// The function cv::distanceTransform calculates the approximate or precise distance from every binary
+	/// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
+	///
+	/// When maskSize == [DIST_MASK_PRECISE] and distanceType == [DIST_L2] , the function runs the
+	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+	///
+	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+	/// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
+	/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
+	/// distance is calculated as a sum of these basic distances. Since the distance function should be
+	/// symmetric, all of the horizontal and vertical shifts must have the same cost (denoted as a ), all
+	/// the diagonal shifts must have the same cost (denoted as `b`), and all knight's moves must have the
+	/// same cost (denoted as `c`). For the [DIST_C] and [DIST_L1] types, the distance is calculated
+	/// precisely, whereas for [DIST_L2] (Euclidean distance) the distance can be calculated only with a
+	/// relative error (a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask gives more accurate results). For `a`,`b`, and `c`, OpenCV
+	/// uses the values suggested in the original paper:
+	/// - DIST_L1: `a = 1, b = 2`
+	/// - DIST_L2:
+	///    - `3 x 3`: `a=0.955, b=1.3693`
+	///    - `5 x 5`: `a=1, b=1.4, c=2.1969`
+	/// - DIST_C: `a = 1, b = 1`
+	///
+	/// Typically, for a fast, coarse distance estimation #DIST_L2, a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mask is used. For a
+	/// more accurate distance estimation #DIST_L2, a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask or the precise algorithm is used.
+	/// Note that both the precise and the approximate algorithms are linear on the number of pixels.
+	///
+	/// This variant of the function does not only compute the minimum distance for each pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29)
+	/// but also identifies the nearest connected component consisting of zero pixels
+	/// (labelType==#DIST_LABEL_CCOMP) or the nearest zero pixel (labelType==#DIST_LABEL_PIXEL). Index of the
+	/// component/pixel is stored in `labels(x, y)`. When labelType==#DIST_LABEL_CCOMP, the function
+	/// automatically finds connected components of zero pixels in the input image and marks them with
+	/// distinct labels. When labelType==#DIST_LABEL_PIXEL, the function scans through the input image and
+	/// marks all the zero pixels with distinct labels.
+	///
+	/// In this mode, the complexity is still linear. That is, the function provides a very fast way to
+	/// compute the Voronoi diagram for a binary image. Currently, the second variant can use only the
+	/// approximate distance transform algorithm, i.e. maskSize=[DIST_MASK_PRECISE] is not supported
+	/// yet.
+	///
 	/// ## Parameters
+	/// * src: 8-bit, single-channel (binary) source image.
+	/// * dst: Output image with calculated distances. It is a 8-bit or 32-bit floating-point,
+	/// single-channel image of the same size as src.
+	/// * labels: Output 2D array of labels (the discrete Voronoi diagram). It has the type
+	/// CV_32SC1 and the same size as src.
+	/// * distanceType: Type of distance, see [distance_types]
+	/// * maskSize: Size of the distance transform mask, see #DistanceTransformMasks.
+	/// [DIST_MASK_PRECISE] is not supported by this variant. In case of the [DIST_L1] or [DIST_C] distance type,
+	/// the parameter is forced to 3 because a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mask gives the same result as ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%0A5) or any larger aperture.
+	/// * labelType: Type of the label array to build, see #DistanceTransformLabelTypes.
+	///
+	/// ## Overloaded parameters
+	///
 	/// * src: 8-bit, single-channel (binary) source image.
 	/// * dst: Output image with calculated distances. It is a 8-bit or 32-bit floating-point,
 	/// single-channel image of the same size as src .
@@ -6989,8 +6288,34 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Draws a simple or thick elliptic arc or fills an ellipse sector.
+	///
+	/// The function cv::ellipse with more parameters draws an ellipse outline, a filled ellipse, an elliptic
+	/// arc, or a filled ellipse sector. The drawing code uses general parametric form.
+	/// A piecewise-linear curve is used to approximate the elliptic arc
+	/// boundary. If you need more control of the ellipse rendering, you can retrieve the curve using
+	/// [ellipse2_poly] and then render it with [polylines] or fill it with #fillPoly. If you use the first
+	/// variant of the function and want to draw the whole ellipse, not an arc, pass `startAngle=0` and
+	/// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
+	/// the meaning of the parameters to draw the blue arc.
+	///
+	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.12.0/ellipse.svg)
+	///
 	/// ## Parameters
+	/// * img: Image.
+	/// * center: Center of the ellipse.
+	/// * axes: Half of the size of the ellipse main axes.
+	/// * angle: Ellipse rotation angle in degrees.
+	/// * startAngle: Starting angle of the elliptic arc in degrees.
+	/// * endAngle: Ending angle of the elliptic arc in degrees.
+	/// * color: Ellipse color.
+	/// * thickness: Thickness of the ellipse arc outline, if positive. Otherwise, this indicates that
+	/// a filled ellipse sector is to be drawn.
+	/// * lineType: Type of the ellipse boundary. See [line_types]
+	/// * shift: Number of fractional bits in the coordinates of the center and values of axes.
+	///
+	/// ## Overloaded parameters
+	///
 	/// * img: Image.
 	/// * box: Alternative ellipse representation via RotatedRect. This means that the function draws
 	/// an ellipse inscribed in the rotated rectangle.
@@ -7512,7 +6837,37 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Finds contours in a binary image.
+	///
+	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+	/// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
+	/// OpenCV sample directory.
+	///
+	/// Note: Since opencv 3.2 source image is not modified by this function.
+	///
+	/// ## Parameters
+	/// * image: Source, an 8-bit single-channel image. Non-zero pixels are treated as 1's. Zero
+	/// pixels remain 0's, so the image is treated as binary . You can use #compare, #inRange, [threshold] ,
+	/// #adaptiveThreshold, #Canny, and others to create a binary image out of a grayscale or color one.
+	/// If mode equals to [RETR_CCOMP] or #RETR_FLOODFILL, the input can also be a 32-bit integer image of labels (CV_32SC1).
+	/// * contours: Detected contours. Each contour is stored as a vector of points (e.g.
+	/// std::vector<std::vector<cv::Point> >).
+	/// * hierarchy: Optional output vector (e.g. std::vector<cv::Vec4i>), containing information about the image topology. It has
+	/// as many elements as the number of contours. For each i-th contour contours[i], the elements
+	/// hierarchy[i][0] , hierarchy[i][1] , hierarchy[i][2] , and hierarchy[i][3] are set to 0-based indices
+	/// in contours of the next and previous contours at the same hierarchical level, the first child
+	/// contour and the parent contour, respectively. If for the contour i there are no next, previous,
+	/// parent, or nested contours, the corresponding elements of hierarchy[i] will be negative.
+	///
+	/// Note: In Python, hierarchy is nested inside a top level array. Use hierarchy[0][i] to access hierarchical elements of i-th contour.
+	/// * mode: Contour retrieval mode, see [retrieval_modes]
+	/// * method: Contour approximation method, see [contour_approximation_modes]
+	/// * offset: Optional offset by which every contour point is shifted. This is useful if the
+	/// contours are extracted from the image ROI and then they should be analyzed in the whole image
+	/// context.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [find_contours] function uses the following default values for its arguments:
@@ -7749,7 +7104,82 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Fills a connected component with the given color.
+	///
+	/// The function cv::floodFill fills a connected component starting from the seed point with the specified
+	/// color. The connectivity is determined by the color/brightness closeness of the neighbor pixels. The
+	/// pixel at ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29) is considered to belong to the repainted domain if:
+	///
+	/// - in case of a grayscale image and floating range
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29%2D%20%5Ctexttt%7BloDiff%7D%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29%2B%20%5Ctexttt%7BupDiff%7D)
+	///
+	///
+	/// - in case of a grayscale image and fixed range
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20%2Ex%2C%20%5Ctexttt%7BseedPoint%7D%20%2Ey%29%2D%20%5Ctexttt%7BloDiff%7D%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20%2Ex%2C%20%5Ctexttt%7BseedPoint%7D%20%2Ey%29%2B%20%5Ctexttt%7BupDiff%7D)
+	///
+	///
+	/// - in case of a color image and floating range
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29%5Fr%2D%20%5Ctexttt%7BloDiff%7D%20%5Fr%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%5Fr%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29%5Fr%2B%20%5Ctexttt%7BupDiff%7D%20%5Fr%2C)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29%5Fg%2D%20%5Ctexttt%7BloDiff%7D%20%5Fg%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%5Fg%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29%5Fg%2B%20%5Ctexttt%7BupDiff%7D%20%5Fg)
+	/// and
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29%5Fb%2D%20%5Ctexttt%7BloDiff%7D%20%5Fb%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%5Fb%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29%5Fb%2B%20%5Ctexttt%7BupDiff%7D%20%5Fb)
+	///
+	///
+	/// - in case of a color image and fixed range
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20%2Ex%2C%20%5Ctexttt%7BseedPoint%7D%20%2Ey%29%5Fr%2D%20%5Ctexttt%7BloDiff%7D%20%5Fr%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%5Fr%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20%2Ex%2C%20%5Ctexttt%7BseedPoint%7D%20%2Ey%29%5Fr%2B%20%5Ctexttt%7BupDiff%7D%20%5Fr%2C)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20%2Ex%2C%20%5Ctexttt%7BseedPoint%7D%20%2Ey%29%5Fg%2D%20%5Ctexttt%7BloDiff%7D%20%5Fg%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%5Fg%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20%2Ex%2C%20%5Ctexttt%7BseedPoint%7D%20%2Ey%29%5Fg%2B%20%5Ctexttt%7BupDiff%7D%20%5Fg)
+	/// and
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20%2Ex%2C%20%5Ctexttt%7BseedPoint%7D%20%2Ey%29%5Fb%2D%20%5Ctexttt%7BloDiff%7D%20%5Fb%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%5Fb%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20%2Ex%2C%20%5Ctexttt%7BseedPoint%7D%20%2Ey%29%5Fb%2B%20%5Ctexttt%7BupDiff%7D%20%5Fb)
+	///
+	///
+	/// where ![inline formula](https://latex.codecogs.com/png.latex?src%28x%27%2Cy%27%29) is the value of one of pixel neighbors that is already known to belong to the
+	/// component. That is, to be added to the connected component, a color/brightness of the pixel should
+	/// be close enough to:
+	/// - Color/brightness of one of its neighbors that already belong to the connected component in case
+	/// of a floating range.
+	/// - Color/brightness of the seed point in case of a fixed range.
+	///
+	/// Use these functions to either mark a connected component with the specified color in-place, or build
+	/// a mask and then extract the contour, or copy the region to another image, and so on.
+	///
+	/// ## Parameters
+	/// * image: Input/output 1- or 3-channel, 8-bit, or floating-point image. It is modified by the
+	/// function unless the [FLOODFILL_MASK_ONLY] flag is set in the second variant of the function. See
+	/// the details below.
+	/// * mask: Operation mask that should be a single-channel 8-bit image, 2 pixels wider and 2 pixels
+	/// taller than image. If an empty Mat is passed it will be created automatically. Since this is both an
+	/// input and output parameter, you must take responsibility of initializing it.
+	/// Flood-filling cannot go across non-zero pixels in the input mask. For example,
+	/// an edge detector output can be used as a mask to stop filling at edges. On output, pixels in the
+	/// mask corresponding to filled pixels in the image are set to 1 or to the specified value in flags
+	/// as described below. Additionally, the function fills the border of the mask with ones to simplify
+	/// internal processing. It is therefore possible to use the same mask in multiple calls to the function
+	/// to make sure the filled areas do not overlap.
+	/// * seedPoint: Starting point.
+	/// * newVal: New value of the repainted domain pixels.
+	/// * loDiff: Maximal lower brightness/color difference between the currently observed pixel and
+	/// one of its neighbors belonging to the component, or a seed pixel being added to the component.
+	/// * upDiff: Maximal upper brightness/color difference between the currently observed pixel and
+	/// one of its neighbors belonging to the component, or a seed pixel being added to the component.
+	/// * rect: Optional output parameter set by the function to the minimum bounding rectangle of the
+	/// repainted domain.
+	/// * flags: Operation flags. The first 8 bits contain a connectivity value. The default value of
+	/// 4 means that only the four nearest neighbor pixels (those that share an edge) are considered. A
+	/// connectivity value of 8 means that the eight nearest neighbor pixels (those that share a corner)
+	/// will be considered. The next 8 bits (8-16) contain a value between 1 and 255 with which to fill
+	/// the mask (the default value is 1). For example, 4 | ( 255 \<\< 8 ) will consider 4 nearest
+	/// neighbours and fill the mask with a value of 255. The following additional options occupy higher
+	/// bits and therefore may be further combined with the connectivity and mask fill values using
+	/// bit-wise or (|), see #FloodFillFlags.
+	///
+	///
+	/// Note: Since the mask is larger than the filled image, a pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) in image corresponds to the
+	/// pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2B1%2C%20y%2B1%29) in the mask .
+	/// ## See also
+	/// findContours
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// variant without `mask` parameter
 	///
@@ -8338,7 +7768,25 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Calculates a perspective transform from four pairs of the corresponding points.
+	///
+	/// The function calculates the ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) matrix of a perspective transform so that:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20t%5Fi%20x%27%5Fi%20%5C%5C%20t%5Fi%20y%27%5Fi%20%5C%5C%20t%5Fi%20%5Cend%7Bbmatrix%7D%20%3D%20%5Ctexttt%7Bmap%5Fmatrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%5Fi%20%5C%5C%20y%5Fi%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
+	///
+	/// where
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?dst%28i%29%3D%28x%27%5Fi%2Cy%27%5Fi%29%2C%20src%28i%29%3D%28x%5Fi%2C%20y%5Fi%29%2C%20i%3D0%2C1%2C2%2C3)
+	///
+	/// ## Parameters
+	/// * src: Coordinates of quadrangle vertices in the source image.
+	/// * dst: Coordinates of the corresponding quadrangle vertices in the destination image.
+	/// * solveMethod: method passed to cv::solve (#DecompTypes)
+	/// ## See also
+	/// findHomography, warpPerspective, perspectiveTransform
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [get_perspective_transform_slice] function uses the following default values for its arguments:
@@ -8980,7 +8428,43 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Calculates the integral of an image.
+	///
+	/// The function calculates one or more integral images for the source image as follows:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20%5F%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29)
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsqsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20%5F%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29%5E2)
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Btilted%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20%5F%7By%3CY%2Cabs%28x%2DX%2B1%29%20%5Cleq%20Y%2Dy%2D1%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29)
+	///
+	/// Using these integral images, you can calculate sum, mean, and standard deviation over a specific
+	/// up-right or rotated rectangular region of the image in a constant time, for example:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%20%5F%7Bx%5F1%20%5Cleq%20x%20%3C%20x%5F2%2C%20%20%5C%2C%20y%5F1%20%20%5Cleq%20y%20%3C%20y%5F2%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsum%7D%20%28x%5F2%2Cy%5F2%29%2D%20%5Ctexttt%7Bsum%7D%20%28x%5F1%2Cy%5F2%29%2D%20%5Ctexttt%7Bsum%7D%20%28x%5F2%2Cy%5F1%29%2B%20%5Ctexttt%7Bsum%7D%20%28x%5F1%2Cy%5F1%29)
+	///
+	/// It makes possible to do a fast blurring or fast block correlation with a variable window size, for
+	/// example. In case of multi-channel images, sums for each channel are accumulated independently.
+	///
+	/// As a practical example, the next figure shows the calculation of the integral of a straight
+	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
+	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
+	///
+	/// ![integral calculation example](https://docs.opencv.org/4.12.0/integral.png)
+	///
+	/// ## Parameters
+	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
+	/// * sum: integral image as ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29) , 32-bit integer or floating-point (32f or 64f).
+	/// * sqsum: integral image for squared pixel values; it is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29), double-precision
+	/// floating-point (64f) array.
+	/// * tilted: integral for the image rotated by 45 degrees; it is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29) array with
+	/// the same data type as sum.
+	/// * sdepth: desired depth of the integral and the tilted integral images, CV_32S, CV_32F, or
+	/// CV_64F.
+	/// * sqdepth: desired depth of the integral image of squared pixel values, CV_32F or CV_64F.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [integral] function uses the following default values for its arguments:
@@ -8996,7 +8480,43 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Calculates the integral of an image.
+	///
+	/// The function calculates one or more integral images for the source image as follows:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20%5F%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29)
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsqsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20%5F%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29%5E2)
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Btilted%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20%5F%7By%3CY%2Cabs%28x%2DX%2B1%29%20%5Cleq%20Y%2Dy%2D1%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29)
+	///
+	/// Using these integral images, you can calculate sum, mean, and standard deviation over a specific
+	/// up-right or rotated rectangular region of the image in a constant time, for example:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%20%5F%7Bx%5F1%20%5Cleq%20x%20%3C%20x%5F2%2C%20%20%5C%2C%20y%5F1%20%20%5Cleq%20y%20%3C%20y%5F2%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsum%7D%20%28x%5F2%2Cy%5F2%29%2D%20%5Ctexttt%7Bsum%7D%20%28x%5F1%2Cy%5F2%29%2D%20%5Ctexttt%7Bsum%7D%20%28x%5F2%2Cy%5F1%29%2B%20%5Ctexttt%7Bsum%7D%20%28x%5F1%2Cy%5F1%29)
+	///
+	/// It makes possible to do a fast blurring or fast block correlation with a variable window size, for
+	/// example. In case of multi-channel images, sums for each channel are accumulated independently.
+	///
+	/// As a practical example, the next figure shows the calculation of the integral of a straight
+	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
+	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
+	///
+	/// ![integral calculation example](https://docs.opencv.org/4.12.0/integral.png)
+	///
+	/// ## Parameters
+	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
+	/// * sum: integral image as ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29) , 32-bit integer or floating-point (32f or 64f).
+	/// * sqsum: integral image for squared pixel values; it is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29), double-precision
+	/// floating-point (64f) array.
+	/// * tilted: integral for the image rotated by 45 degrees; it is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29) array with
+	/// the same data type as sum.
+	/// * sdepth: desired depth of the integral and the tilted integral images, CV_32S, CV_32F, or
+	/// CV_64F.
+	/// * sqdepth: desired depth of the integral image of squared pixel values, CV_32F or CV_64F.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [integral2] function uses the following default values for its arguments:
@@ -10470,7 +9990,23 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Draws a simple, thick, or filled up-right rectangle.
+	///
+	/// The function cv::rectangle draws a rectangle outline or a filled rectangle whose two opposite corners
+	/// are pt1 and pt2.
+	///
+	/// ## Parameters
+	/// * img: Image.
+	/// * pt1: Vertex of the rectangle.
+	/// * pt2: Vertex of the rectangle opposite to pt1 .
+	/// * color: Rectangle color or brightness (grayscale image).
+	/// * thickness: Thickness of lines that make up the rectangle. Negative values, like #FILLED,
+	/// mean that the function has to draw a filled rectangle.
+	/// * lineType: Type of the line. See [line_types]
+	/// * shift: Number of fractional bits in the point coordinates.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// use `rec` parameter as alternative specification of the drawn rectangle: `r.tl() and
 	/// r.br()-Point(1,1)` are opposite corners

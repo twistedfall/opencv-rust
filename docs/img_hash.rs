@@ -68,7 +68,7 @@ pub mod img_hash {
 	pub const BLOCK_MEAN_HASH_MODE_0: i32 = 0;
 	/// use block blocks(step sizes/2), generate 31*31/8 + 1 uchar hash value
 	pub const BLOCK_MEAN_HASH_MODE_1: i32 = 1;
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum BlockMeanHashMode {
 		/// use fewer block and generate 16*16/8 uchar hash value
@@ -77,19 +77,7 @@ pub mod img_hash {
 		BLOCK_MEAN_HASH_MODE_1 = 1,
 	}
 
-	impl TryFrom<i32> for BlockMeanHashMode {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::BLOCK_MEAN_HASH_MODE_0),
-				1 => Ok(Self::BLOCK_MEAN_HASH_MODE_1),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::img_hash::BlockMeanHashMode"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::img_hash::BlockMeanHashMode }
+	opencv_type_enum! { crate::img_hash::BlockMeanHashMode { BLOCK_MEAN_HASH_MODE_0, BLOCK_MEAN_HASH_MODE_1 } }
 
 	/// Calculates img_hash::AverageHash in one call
 	/// ## Parameters

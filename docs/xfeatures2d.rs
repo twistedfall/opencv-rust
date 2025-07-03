@@ -68,28 +68,16 @@ pub mod xfeatures2d {
 	pub const VGG_VGG_80: i32 = 101;
 	/// Descriptor number of bits, each bit is a boosting weak-learner.
 	/// The user can choose between 512 or 256 bits.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum BEBLID_BeblidSize {
 		SIZE_512_BITS = 100,
 		SIZE_256_BITS = 101,
 	}
 
-	impl TryFrom<i32> for BEBLID_BeblidSize {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::xfeatures2d::BEBLID_BeblidSize { SIZE_512_BITS, SIZE_256_BITS } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				100 => Ok(Self::SIZE_512_BITS),
-				101 => Ok(Self::SIZE_256_BITS),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::xfeatures2d::BEBLID_BeblidSize"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::xfeatures2d::BEBLID_BeblidSize }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum DAISY_NormalizationType {
 		NRM_NONE = 100,
@@ -98,24 +86,10 @@ pub mod xfeatures2d {
 		NRM_SIFT = 103,
 	}
 
-	impl TryFrom<i32> for DAISY_NormalizationType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				100 => Ok(Self::NRM_NONE),
-				101 => Ok(Self::NRM_PARTIAL),
-				102 => Ok(Self::NRM_FULL),
-				103 => Ok(Self::NRM_SIFT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::xfeatures2d::DAISY_NormalizationType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::xfeatures2d::DAISY_NormalizationType }
+	opencv_type_enum! { crate::xfeatures2d::DAISY_NormalizationType { NRM_NONE, NRM_PARTIAL, NRM_FULL, NRM_SIFT } }
 
 	/// Lp distance function selector.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum PCTSignatures_DistanceFunction {
 		L0_25 = 0,
@@ -127,27 +101,10 @@ pub mod xfeatures2d {
 		L_INFINITY = 6,
 	}
 
-	impl TryFrom<i32> for PCTSignatures_DistanceFunction {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::L0_25),
-				1 => Ok(Self::L0_5),
-				2 => Ok(Self::L1),
-				3 => Ok(Self::L2),
-				4 => Ok(Self::L2SQUARED),
-				5 => Ok(Self::L5),
-				6 => Ok(Self::L_INFINITY),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::xfeatures2d::PCTSignatures_DistanceFunction"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::xfeatures2d::PCTSignatures_DistanceFunction }
+	opencv_type_enum! { crate::xfeatures2d::PCTSignatures_DistanceFunction { L0_25, L0_5, L1, L2, L2SQUARED, L5, L_INFINITY } }
 
 	/// Point distributions supported by random point generator.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum PCTSignatures_PointDistribution {
 		/// Generate numbers uniformly.
@@ -158,20 +115,7 @@ pub mod xfeatures2d {
 		NORMAL = 2,
 	}
 
-	impl TryFrom<i32> for PCTSignatures_PointDistribution {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::UNIFORM),
-				1 => Ok(Self::REGULAR),
-				2 => Ok(Self::NORMAL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::xfeatures2d::PCTSignatures_PointDistribution"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::xfeatures2d::PCTSignatures_PointDistribution }
+	opencv_type_enum! { crate::xfeatures2d::PCTSignatures_PointDistribution { UNIFORM, REGULAR, NORMAL } }
 
 	/// Similarity function selector.
 	/// ## See also
@@ -182,7 +126,7 @@ pub mod xfeatures2d {
 	/// [BeecksUS10](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
 	///
 	/// Note: For selected distance function: ![block formula](https://latex.codecogs.com/png.latex?%20d%28c%5Fi%2C%20c%5Fj%29%20)  and parameter: ![block formula](https://latex.codecogs.com/png.latex?%20%5Calpha%20)
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum PCTSignatures_SimilarityFunction {
 		/// ![block formula](https://latex.codecogs.com/png.latex?%20%2Dd%28c%5Fi%2C%20c%5Fj%29%20)
@@ -193,22 +137,9 @@ pub mod xfeatures2d {
 		HEURISTIC = 2,
 	}
 
-	impl TryFrom<i32> for PCTSignatures_SimilarityFunction {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::xfeatures2d::PCTSignatures_SimilarityFunction { MINUS, GAUSSIAN, HEURISTIC } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::MINUS),
-				1 => Ok(Self::GAUSSIAN),
-				2 => Ok(Self::HEURISTIC),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::xfeatures2d::PCTSignatures_SimilarityFunction"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::xfeatures2d::PCTSignatures_SimilarityFunction }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SURF_CUDA_KeypointLayout {
 		X_ROW = 0,
@@ -221,48 +152,18 @@ pub mod xfeatures2d {
 		ROWS_COUNT = 7,
 	}
 
-	impl TryFrom<i32> for SURF_CUDA_KeypointLayout {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::X_ROW),
-				1 => Ok(Self::Y_ROW),
-				2 => Ok(Self::LAPLACIAN_ROW),
-				3 => Ok(Self::OCTAVE_ROW),
-				4 => Ok(Self::SIZE_ROW),
-				5 => Ok(Self::ANGLE_ROW),
-				6 => Ok(Self::HESSIAN_ROW),
-				7 => Ok(Self::ROWS_COUNT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::xfeatures2d::SURF_CUDA_KeypointLayout"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::xfeatures2d::SURF_CUDA_KeypointLayout }
+	opencv_type_enum! { crate::xfeatures2d::SURF_CUDA_KeypointLayout { X_ROW, Y_ROW, LAPLACIAN_ROW, OCTAVE_ROW, SIZE_ROW, ANGLE_ROW, HESSIAN_ROW, ROWS_COUNT } }
 
 	/// Descriptor number of bits, each bit is a box average difference.
 	/// The user can choose between 256 or 512 bits.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum TEBLID_TeblidSize {
 		SIZE_256_BITS = 102,
 		SIZE_512_BITS = 103,
 	}
 
-	impl TryFrom<i32> for TEBLID_TeblidSize {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				102 => Ok(Self::SIZE_256_BITS),
-				103 => Ok(Self::SIZE_512_BITS),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::xfeatures2d::TEBLID_TeblidSize"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::xfeatures2d::TEBLID_TeblidSize }
+	opencv_type_enum! { crate::xfeatures2d::TEBLID_TeblidSize { SIZE_256_BITS, SIZE_512_BITS } }
 
 	pub type SurfDescriptorExtractor = crate::xfeatures2d::SURF;
 	pub type SurfFeatureDetector = crate::xfeatures2d::SURF;

@@ -55,7 +55,7 @@ pub mod cudaimgproc {
 	pub const CUDA_FIRST_ORDER_MOMENTS: i32 = 1;
 	pub const CUDA_SECOND_ORDER_MOMENTS: i32 = 2;
 	pub const CUDA_THIRD_ORDER_MOMENTS: i32 = 3;
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_AlphaCompTypes {
 		ALPHA_OVER = 0,
@@ -73,33 +73,10 @@ pub mod cudaimgproc {
 		ALPHA_PREMUL = 12,
 	}
 
-	impl TryFrom<i32> for CUDA_AlphaCompTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::ALPHA_OVER),
-				1 => Ok(Self::ALPHA_IN),
-				2 => Ok(Self::ALPHA_OUT),
-				3 => Ok(Self::ALPHA_ATOP),
-				4 => Ok(Self::ALPHA_XOR),
-				5 => Ok(Self::ALPHA_PLUS),
-				6 => Ok(Self::ALPHA_OVER_PREMUL),
-				7 => Ok(Self::ALPHA_IN_PREMUL),
-				8 => Ok(Self::ALPHA_OUT_PREMUL),
-				9 => Ok(Self::ALPHA_ATOP_PREMUL),
-				10 => Ok(Self::ALPHA_XOR_PREMUL),
-				11 => Ok(Self::ALPHA_PLUS_PREMUL),
-				12 => Ok(Self::ALPHA_PREMUL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaimgproc::CUDA_AlphaCompTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudaimgproc::CUDA_AlphaCompTypes }
+	opencv_type_enum! { crate::cudaimgproc::CUDA_AlphaCompTypes { ALPHA_OVER, ALPHA_IN, ALPHA_OUT, ALPHA_ATOP, ALPHA_XOR, ALPHA_PLUS, ALPHA_OVER_PREMUL, ALPHA_IN_PREMUL, ALPHA_OUT_PREMUL, ALPHA_ATOP_PREMUL, ALPHA_XOR_PREMUL, ALPHA_PLUS_PREMUL, ALPHA_PREMUL } }
 
 	/// Connected Components Algorithm
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_ConnectedComponentsAlgorithmsTypes {
 		/// BKE [Allegretti2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
@@ -108,21 +85,9 @@ pub mod cudaimgproc {
 		CCL_BKE = 0,
 	}
 
-	impl TryFrom<i32> for CUDA_ConnectedComponentsAlgorithmsTypes {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::cudaimgproc::CUDA_ConnectedComponentsAlgorithmsTypes { CCL_DEFAULT, CCL_BKE } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				-1 => Ok(Self::CCL_DEFAULT),
-				0 => Ok(Self::CCL_BKE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaimgproc::CUDA_ConnectedComponentsAlgorithmsTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudaimgproc::CUDA_ConnectedComponentsAlgorithmsTypes }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_DemosaicTypes {
 		/// Bayer Demosaicing (Malvar, He, and Cutler)
@@ -155,40 +120,14 @@ pub mod cudaimgproc {
 		COLOR_BayerGR2GRAY_MHT = 263,
 	}
 
-	impl TryFrom<i32> for CUDA_DemosaicTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				256 => Ok(Self::COLOR_BayerBG2BGR_MHT),
-				257 => Ok(Self::COLOR_BayerGB2BGR_MHT),
-				258 => Ok(Self::COLOR_BayerRG2BGR_MHT),
-				259 => Ok(Self::COLOR_BayerGR2BGR_MHT),
-				// Duplicate of COLOR_BayerRG2BGR_MHT
-				// 258 => Ok(Self::COLOR_BayerBG2RGB_MHT),
-				// Duplicate of COLOR_BayerGR2BGR_MHT
-				// 259 => Ok(Self::COLOR_BayerGB2RGB_MHT),
-				// Duplicate of COLOR_BayerBG2BGR_MHT
-				// 256 => Ok(Self::COLOR_BayerRG2RGB_MHT),
-				// Duplicate of COLOR_BayerGB2BGR_MHT
-				// 257 => Ok(Self::COLOR_BayerGR2RGB_MHT),
-				260 => Ok(Self::COLOR_BayerBG2GRAY_MHT),
-				261 => Ok(Self::COLOR_BayerGB2GRAY_MHT),
-				262 => Ok(Self::COLOR_BayerRG2GRAY_MHT),
-				263 => Ok(Self::COLOR_BayerGR2GRAY_MHT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaimgproc::CUDA_DemosaicTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudaimgproc::CUDA_DemosaicTypes }
+	opencv_type_enum! { crate::cudaimgproc::CUDA_DemosaicTypes { COLOR_BayerBG2BGR_MHT, COLOR_BayerGB2BGR_MHT, COLOR_BayerRG2BGR_MHT, COLOR_BayerGR2BGR_MHT, COLOR_BayerBG2GRAY_MHT, COLOR_BayerGB2GRAY_MHT, COLOR_BayerRG2GRAY_MHT, COLOR_BayerGR2GRAY_MHT } }
 
 	/// Order of image moments.
 	/// ## Parameters
 	/// * FIRST_ORDER_MOMENTS: First order moments
 	/// * SECOND_ORDER_MOMENTS: Second order moments.
 	/// * THIRD_ORDER_MOMENTS: Third order moments.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_MomentsOrder {
 		FIRST_ORDER_MOMENTS = 1,
@@ -196,20 +135,7 @@ pub mod cudaimgproc {
 		THIRD_ORDER_MOMENTS = 3,
 	}
 
-	impl TryFrom<i32> for CUDA_MomentsOrder {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::FIRST_ORDER_MOMENTS),
-				2 => Ok(Self::SECOND_ORDER_MOMENTS),
-				3 => Ok(Self::THIRD_ORDER_MOMENTS),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaimgproc::CUDA_MomentsOrder"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudaimgproc::CUDA_MomentsOrder }
+	opencv_type_enum! { crate::cudaimgproc::CUDA_MomentsOrder { FIRST_ORDER_MOMENTS, SECOND_ORDER_MOMENTS, THIRD_ORDER_MOMENTS } }
 
 	/// Composites two images using alpha opacity values contained in each image.
 	///
@@ -496,9 +422,31 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Computes the Connected Components Labeled image of a binary image.
+	///
+	/// The function takes as input a binary image and performs Connected Components Labeling. The output
+	/// is an image where each Connected Component is assigned a unique label (integer value).
+	/// ltype specifies the output label image type, an important consideration based on the total
+	/// number of labels or alternatively the total number of pixels in the source image.
+	/// ccltype specifies the connected components labeling algorithm to use, currently
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
+	/// for details. Note that labels in the output are not required to be sequential.
 	///
 	/// ## Parameters
+	/// * image: The 8-bit single-channel image to be labeled.
+	/// * labels: Destination labeled image.
+	/// * connectivity: Connectivity to use for the labeling procedure. 8 for 8-way connectivity is supported.
+	/// * ltype: Output image label type. Currently CV_32S is supported.
+	/// * ccltype: Connected components algorithm type (see the #ConnectedComponentsAlgorithmsTypes).
+	///
+	///
+	/// Note: A sample program demonstrating Connected Components Labeling in CUDA can be found at
+	///
+	/// opencv_contrib_source_code/modules/cudaimgproc/samples/connected_components.cpp
+	///
+	/// ## Overloaded parameters
+	///
+	///
 	/// * image: The 8-bit single-channel image to be labeled.
 	/// * labels: Destination labeled image.
 	/// * connectivity: Connectivity to use for the labeling procedure. 8 for 8-way connectivity is supported.
@@ -2124,8 +2072,15 @@ pub mod cudaimgproc {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		///
 		/// ## Parameters
+		/// * image: Single-channel 8-bit input image.
+		/// * edges: Output edge map. It has the same size and type as image.
+		/// * stream: Stream for the asynchronous version.
+		///
+		/// ## Overloaded parameters
+		///
 		/// * dx: First derivative of image in the vertical direction. Support only CV_32S type.
 		/// * dy: First derivative of image in the horizontal direction. Support only CV_32S type.
 		/// * edges: Output edge map. It has the same size and type as image.

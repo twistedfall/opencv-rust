@@ -169,7 +169,7 @@ pub mod ml {
 	/// ordered variables
 	pub const VAR_ORDERED: i32 = 0;
 	/// possible activation functions
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ANN_MLP_ActivationFunctions {
 		/// Identity function: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3Dx)
@@ -189,59 +189,35 @@ pub mod ml {
 		LEAKYRELU = 4,
 	}
 
-	impl TryFrom<i32> for ANN_MLP_ActivationFunctions {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::IDENTITY),
-				1 => Ok(Self::SIGMOID_SYM),
-				2 => Ok(Self::GAUSSIAN),
-				3 => Ok(Self::RELU),
-				4 => Ok(Self::LEAKYRELU),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::ANN_MLP_ActivationFunctions"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::ANN_MLP_ActivationFunctions }
+	opencv_type_enum! { crate::ml::ANN_MLP_ActivationFunctions { IDENTITY, SIGMOID_SYM, GAUSSIAN, RELU, LEAKYRELU } }
 
 	/// Train options
-	#[repr(C)]
+	#[repr(transparent)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum ANN_MLP_TrainFlags {
+	pub struct ANN_MLP_TrainFlags(i32);
+
+	impl ANN_MLP_TrainFlags {
+		/// No flags are set, might not make sense for all enums
+		pub const NONE: Self = Self(0);
 		/// Update the network weights, rather than compute them from scratch. In the latter case
 		/// the weights are initialized using the Nguyen-Widrow algorithm.
-		UPDATE_WEIGHTS = 1,
+		pub const UPDATE_WEIGHTS: Self = Self(1);
 		/// Do not normalize the input vectors. If this flag is not set, the training algorithm
 		/// normalizes each input feature independently, shifting its mean value to 0 and making the
 		/// standard deviation equal to 1. If the network is assumed to be updated frequently, the new
 		/// training data could be much different from original one. In this case, you should take care
 		/// of proper normalization.
-		NO_INPUT_SCALE = 2,
+		pub const NO_INPUT_SCALE: Self = Self(2);
 		/// Do not normalize the output vectors. If the flag is not set, the training algorithm
 		/// normalizes each output feature independently, by transforming it to the certain range
 		/// depending on the used activation function.
-		NO_OUTPUT_SCALE = 4,
+		pub const NO_OUTPUT_SCALE: Self = Self(4);
 	}
 
-	impl TryFrom<i32> for ANN_MLP_TrainFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::UPDATE_WEIGHTS),
-				2 => Ok(Self::NO_INPUT_SCALE),
-				4 => Ok(Self::NO_OUTPUT_SCALE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::ANN_MLP_TrainFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::ANN_MLP_TrainFlags }
+	opencv_type_bitfield_enum! { crate::ml::ANN_MLP_TrainFlags { NONE, UPDATE_WEIGHTS, NO_INPUT_SCALE, NO_OUTPUT_SCALE } }
 
 	/// Available training methods
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ANN_MLP_TrainingMethods {
 		/// The back-propagation algorithm.
@@ -252,24 +228,11 @@ pub mod ml {
 		ANNEAL = 2,
 	}
 
-	impl TryFrom<i32> for ANN_MLP_TrainingMethods {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::BACKPROP),
-				1 => Ok(Self::RPROP),
-				2 => Ok(Self::ANNEAL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::ANN_MLP_TrainingMethods"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::ANN_MLP_TrainingMethods }
+	opencv_type_enum! { crate::ml::ANN_MLP_TrainingMethods { BACKPROP, RPROP, ANNEAL } }
 
 	/// Boosting type.
 	/// Gentle AdaBoost and Real AdaBoost are often the preferable choices.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum Boost_Types {
 		/// Discrete AdaBoost.
@@ -284,24 +247,10 @@ pub mod ml {
 		GENTLE = 3,
 	}
 
-	impl TryFrom<i32> for Boost_Types {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DISCRETE),
-				1 => Ok(Self::REAL),
-				2 => Ok(Self::LOGIT),
-				3 => Ok(Self::GENTLE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::Boost_Types"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::Boost_Types }
+	opencv_type_enum! { crate::ml::Boost_Types { DISCRETE, REAL, LOGIT, GENTLE } }
 
 	/// Predict options
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum DTrees_Flags {
 		PREDICT_AUTO = 0,
@@ -310,24 +259,10 @@ pub mod ml {
 		PREDICT_MASK = 768,
 	}
 
-	impl TryFrom<i32> for DTrees_Flags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::PREDICT_AUTO),
-				256 => Ok(Self::PREDICT_SUM),
-				512 => Ok(Self::PREDICT_MAX_VOTE),
-				768 => Ok(Self::PREDICT_MASK),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::DTrees_Flags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::DTrees_Flags }
+	opencv_type_enum! { crate::ml::DTrees_Flags { PREDICT_AUTO, PREDICT_SUM, PREDICT_MAX_VOTE, PREDICT_MASK } }
 
 	/// Type of covariation matrices
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum EM_Types {
 		/// A scaled identity matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Cmu%5Fk%20%2A%20I). There is the only
@@ -354,69 +289,30 @@ pub mod ml {
 		// COV_MAT_DEFAULT = 1,
 	}
 
-	impl TryFrom<i32> for EM_Types {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::COV_MAT_SPHERICAL),
-				1 => Ok(Self::COV_MAT_DIAGONAL),
-				2 => Ok(Self::COV_MAT_GENERIC),
-				// Duplicate of COV_MAT_DIAGONAL
-				// 1 => Ok(Self::COV_MAT_DEFAULT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::EM_Types"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::EM_Types }
+	opencv_type_enum! { crate::ml::EM_Types { COV_MAT_SPHERICAL, COV_MAT_DIAGONAL, COV_MAT_GENERIC } }
 
 	/// %Error types
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ErrorTypes {
 		TEST_ERROR = 0,
 		TRAIN_ERROR = 1,
 	}
 
-	impl TryFrom<i32> for ErrorTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::TEST_ERROR),
-				1 => Ok(Self::TRAIN_ERROR),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::ErrorTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::ErrorTypes }
+	opencv_type_enum! { crate::ml::ErrorTypes { TEST_ERROR, TRAIN_ERROR } }
 
 	/// Implementations of KNearest algorithm
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum KNearest_Types {
 		BRUTE_FORCE = 1,
 		KDTREE = 2,
 	}
 
-	impl TryFrom<i32> for KNearest_Types {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::BRUTE_FORCE),
-				2 => Ok(Self::KDTREE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::KNearest_Types"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::KNearest_Types }
+	opencv_type_enum! { crate::ml::KNearest_Types { BRUTE_FORCE, KDTREE } }
 
 	/// Training methods
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum LogisticRegression_Methods {
 		BATCH = 0,
@@ -424,22 +320,10 @@ pub mod ml {
 		MINI_BATCH = 1,
 	}
 
-	impl TryFrom<i32> for LogisticRegression_Methods {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::BATCH),
-				1 => Ok(Self::MINI_BATCH),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::LogisticRegression_Methods"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::LogisticRegression_Methods }
+	opencv_type_enum! { crate::ml::LogisticRegression_Methods { BATCH, MINI_BATCH } }
 
 	/// Regularization kinds
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum LogisticRegression_RegKinds {
 		/// Regularization disabled
@@ -450,23 +334,10 @@ pub mod ml {
 		REG_L2 = 1,
 	}
 
-	impl TryFrom<i32> for LogisticRegression_RegKinds {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				-1 => Ok(Self::REG_DISABLE),
-				0 => Ok(Self::REG_L1),
-				1 => Ok(Self::REG_L2),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::LogisticRegression_RegKinds"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::LogisticRegression_RegKinds }
+	opencv_type_enum! { crate::ml::LogisticRegression_RegKinds { REG_DISABLE, REG_L1, REG_L2 } }
 
 	/// Margin type.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SVMSGD_MarginType {
 		/// General case, suits to the case of non-linearly separable sets, allows outliers.
@@ -475,23 +346,11 @@ pub mod ml {
 		HARD_MARGIN = 1,
 	}
 
-	impl TryFrom<i32> for SVMSGD_MarginType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::SOFT_MARGIN),
-				1 => Ok(Self::HARD_MARGIN),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::SVMSGD_MarginType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::SVMSGD_MarginType }
+	opencv_type_enum! { crate::ml::SVMSGD_MarginType { SOFT_MARGIN, HARD_MARGIN } }
 
 	/// SVMSGD type.
 	/// ASGD is often the preferable choice.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SVMSGD_SvmsgdType {
 		/// Stochastic Gradient Descent
@@ -500,19 +359,7 @@ pub mod ml {
 		ASGD = 1,
 	}
 
-	impl TryFrom<i32> for SVMSGD_SvmsgdType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::SGD),
-				1 => Ok(Self::ASGD),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::SVMSGD_SvmsgdType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::SVMSGD_SvmsgdType }
+	opencv_type_enum! { crate::ml::SVMSGD_SvmsgdType { SGD, ASGD } }
 
 	/// %SVM kernel type
 	///
@@ -521,7 +368,7 @@ pub mod ml {
 	/// different kernels (SVM::CHI2, SVM::INTER, SVM::RBF). The color depicts the class with max score.
 	/// Bright means max-score \> 0, dark means max-score \< 0.
 	/// ![image](https://docs.opencv.org/4.12.0/SVM_Comparison.png)
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SVM_KernelTypes {
 		/// Returned by SVM::getKernelType in case when custom kernel has been set
@@ -544,27 +391,10 @@ pub mod ml {
 		INTER = 5,
 	}
 
-	impl TryFrom<i32> for SVM_KernelTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				-1 => Ok(Self::CUSTOM),
-				0 => Ok(Self::LINEAR),
-				1 => Ok(Self::POLY),
-				2 => Ok(Self::RBF),
-				3 => Ok(Self::SIGMOID),
-				4 => Ok(Self::CHI2),
-				5 => Ok(Self::INTER),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::SVM_KernelTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::SVM_KernelTypes }
+	opencv_type_enum! { crate::ml::SVM_KernelTypes { CUSTOM, LINEAR, POLY, RBF, SIGMOID, CHI2, INTER } }
 
 	/// %SVM params type
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SVM_ParamTypes {
 		C = 0,
@@ -575,26 +405,10 @@ pub mod ml {
 		DEGREE = 5,
 	}
 
-	impl TryFrom<i32> for SVM_ParamTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::C),
-				1 => Ok(Self::GAMMA),
-				2 => Ok(Self::P),
-				3 => Ok(Self::NU),
-				4 => Ok(Self::COEF),
-				5 => Ok(Self::DEGREE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::SVM_ParamTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::SVM_ParamTypes }
+	opencv_type_enum! { crate::ml::SVM_ParamTypes { C, GAMMA, P, NU, COEF, DEGREE } }
 
 	/// %SVM type
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SVM_Types {
 		/// C-Support Vector Classification. n-class classification (n ![inline formula](https://latex.codecogs.com/png.latex?%5Cgeq) 2), allows
@@ -617,25 +431,10 @@ pub mod ml {
 		NU_SVR = 104,
 	}
 
-	impl TryFrom<i32> for SVM_Types {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				100 => Ok(Self::C_SVC),
-				101 => Ok(Self::NU_SVC),
-				102 => Ok(Self::ONE_CLASS),
-				103 => Ok(Self::EPS_SVR),
-				104 => Ok(Self::NU_SVR),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::SVM_Types"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::SVM_Types }
+	opencv_type_enum! { crate::ml::SVM_Types { C_SVC, NU_SVC, ONE_CLASS, EPS_SVR, NU_SVR } }
 
 	/// Sample types
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SampleTypes {
 		/// each training sample is a row of samples
@@ -644,51 +443,27 @@ pub mod ml {
 		COL_SAMPLE = 1,
 	}
 
-	impl TryFrom<i32> for SampleTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::ROW_SAMPLE),
-				1 => Ok(Self::COL_SAMPLE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::SampleTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::SampleTypes }
+	opencv_type_enum! { crate::ml::SampleTypes { ROW_SAMPLE, COL_SAMPLE } }
 
 	/// Predict options
-	#[repr(C)]
+	#[repr(transparent)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum StatModel_Flags {
-		UPDATE_MODEL = 1,
-		// makes the method return the raw results (the sum), not the class label
-		// Duplicate, use UPDATE_MODEL instead
-		// RAW_OUTPUT = 1,
-		COMPRESSED_INPUT = 2,
-		PREPROCESSED_INPUT = 4,
+	pub struct StatModel_Flags(i32);
+
+	impl StatModel_Flags {
+		/// No flags are set, might not make sense for all enums
+		pub const NONE: Self = Self(0);
+		pub const UPDATE_MODEL: Self = Self(1);
+		/// makes the method return the raw results (the sum), not the class label
+		pub const RAW_OUTPUT: Self = Self(1);
+		pub const COMPRESSED_INPUT: Self = Self(2);
+		pub const PREPROCESSED_INPUT: Self = Self(4);
 	}
 
-	impl TryFrom<i32> for StatModel_Flags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::UPDATE_MODEL),
-				// Duplicate of UPDATE_MODEL
-				// 1 => Ok(Self::RAW_OUTPUT),
-				2 => Ok(Self::COMPRESSED_INPUT),
-				4 => Ok(Self::PREPROCESSED_INPUT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::StatModel_Flags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::StatModel_Flags }
+	opencv_type_bitfield_enum! { crate::ml::StatModel_Flags { NONE, UPDATE_MODEL, COMPRESSED_INPUT, PREPROCESSED_INPUT } }
 
 	/// Variable types
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum VariableTypes {
 		/// same as VAR_ORDERED
@@ -700,21 +475,7 @@ pub mod ml {
 		VAR_CATEGORICAL = 1,
 	}
 
-	impl TryFrom<i32> for VariableTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::VAR_NUMERICAL),
-				// Duplicate of VAR_NUMERICAL
-				// 0 => Ok(Self::VAR_ORDERED),
-				1 => Ok(Self::VAR_CATEGORICAL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ml::VariableTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ml::VariableTypes }
+	opencv_type_enum! { crate::ml::VariableTypes { VAR_NUMERICAL, VAR_CATEGORICAL } }
 
 	pub type ANN_MLP_ANNEAL = crate::ml::ANN_MLP;
 	/// Creates test set

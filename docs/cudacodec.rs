@@ -169,7 +169,7 @@ pub mod cudacodec {
 	pub const CUDA_YUV422: i32 = 2;
 	pub const CUDA_YUV444: i32 = 3;
 	/// Bit depth of the frame returned by VideoReader::nextFrame() and VideoReader::retrieve()
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_BitDepth {
 		/// 8 bit depth.
@@ -180,23 +180,10 @@ pub mod cudacodec {
 		UNCHANGED = 2,
 	}
 
-	impl TryFrom<i32> for CUDA_BitDepth {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::EIGHT),
-				1 => Ok(Self::SIXTEEN),
-				2 => Ok(Self::UNCHANGED),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_BitDepth"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_BitDepth }
+	opencv_type_enum! { crate::cudacodec::CUDA_BitDepth { EIGHT, SIXTEEN, UNCHANGED } }
 
 	/// Chroma formats supported by cudacodec::VideoReader.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_ChromaFormat {
 		Monochrome = 0,
@@ -206,28 +193,13 @@ pub mod cudacodec {
 		NumFormats = 4,
 	}
 
-	impl TryFrom<i32> for CUDA_ChromaFormat {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::Monochrome),
-				1 => Ok(Self::YUV420),
-				2 => Ok(Self::YUV422),
-				3 => Ok(Self::YUV444),
-				4 => Ok(Self::NumFormats),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_ChromaFormat"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_ChromaFormat }
+	opencv_type_enum! { crate::cudacodec::CUDA_ChromaFormat { Monochrome, YUV420, YUV422, YUV444, NumFormats } }
 
 	/// Video codecs supported by cudacodec::VideoReader and cudacodec::VideoWriter.
 	///
 	/// Note:
 	///    *   Support will depend on your hardware, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_Codec {
 		MPEG1 = 0,
@@ -255,38 +227,10 @@ pub mod cudacodec {
 		Uncompressed_UYVY = 1431918169,
 	}
 
-	impl TryFrom<i32> for CUDA_Codec {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::MPEG1),
-				1 => Ok(Self::MPEG2),
-				2 => Ok(Self::MPEG4),
-				3 => Ok(Self::VC1),
-				4 => Ok(Self::H264),
-				5 => Ok(Self::JPEG),
-				6 => Ok(Self::H264_SVC),
-				7 => Ok(Self::H264_MVC),
-				8 => Ok(Self::HEVC),
-				9 => Ok(Self::VP8),
-				10 => Ok(Self::VP9),
-				11 => Ok(Self::AV1),
-				12 => Ok(Self::NumCodecs),
-				1230591318 => Ok(Self::Uncompressed_YUV420),
-				1498820914 => Ok(Self::Uncompressed_YV12),
-				1314271538 => Ok(Self::Uncompressed_NV12),
-				1498765654 => Ok(Self::Uncompressed_YUYV),
-				1431918169 => Ok(Self::Uncompressed_UYVY),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_Codec"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_Codec }
+	opencv_type_enum! { crate::cudacodec::CUDA_Codec { MPEG1, MPEG2, MPEG4, VC1, H264, JPEG, H264_SVC, H264_MVC, HEVC, VP8, VP9, AV1, NumCodecs, Uncompressed_YUV420, Uncompressed_YV12, Uncompressed_NV12, Uncompressed_YUYV, Uncompressed_UYVY } }
 
 	/// ColorFormat for the frame returned by VideoReader::nextFrame() and VideoReader::retrieve() or used to initialize a VideoWriter.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_ColorFormat {
 		UNDEFINED = 0,
@@ -321,35 +265,10 @@ pub mod cudacodec {
 		PROP_NOT_SUPPORTED = 14,
 	}
 
-	impl TryFrom<i32> for CUDA_ColorFormat {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::UNDEFINED),
-				1 => Ok(Self::BGRA),
-				2 => Ok(Self::BGR),
-				3 => Ok(Self::GRAY),
-				5 => Ok(Self::RGB),
-				6 => Ok(Self::RGBA),
-				7 => Ok(Self::NV_YUV_SURFACE_FORMAT),
-				4 => Ok(Self::NV_NV12),
-				8 => Ok(Self::NV_YV12),
-				9 => Ok(Self::NV_IYUV),
-				10 => Ok(Self::NV_YUV444),
-				11 => Ok(Self::NV_AYUV),
-				12 => Ok(Self::NV_YUV420_10BIT),
-				13 => Ok(Self::NV_YUV444_10BIT),
-				14 => Ok(Self::PROP_NOT_SUPPORTED),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_ColorFormat"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_ColorFormat }
+	opencv_type_enum! { crate::cudacodec::CUDA_ColorFormat { UNDEFINED, BGRA, BGR, GRAY, RGB, RGBA, NV_YUV_SURFACE_FORMAT, NV_NV12, NV_YV12, NV_IYUV, NV_YUV444, NV_AYUV, NV_YUV420_10BIT, NV_YUV444_10BIT, PROP_NOT_SUPPORTED } }
 
 	/// Video Signal Description Color Primaries of the VideoReader source (section E.2.1 VUI parameters semantics of H265 spec file)
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_ColorSpaceStandard {
 		/// ITU-R BT.709 standard for high-definition television.
@@ -374,30 +293,10 @@ pub mod cudacodec {
 		BT2020C = 10,
 	}
 
-	impl TryFrom<i32> for CUDA_ColorSpaceStandard {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::BT709),
-				2 => Ok(Self::Unspecified),
-				3 => Ok(Self::Reserved),
-				4 => Ok(Self::FCC),
-				5 => Ok(Self::BT470),
-				6 => Ok(Self::BT601),
-				7 => Ok(Self::SMPTE240M),
-				8 => Ok(Self::YCgCo),
-				9 => Ok(Self::BT2020),
-				10 => Ok(Self::BT2020C),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_ColorSpaceStandard"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_ColorSpaceStandard }
+	opencv_type_enum! { crate::cudacodec::CUDA_ColorSpaceStandard { BT709, Unspecified, Reserved, FCC, BT470, BT601, SMPTE240M, YCgCo, BT2020, BT2020C } }
 
 	/// Deinterlacing mode used by decoder.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_DeinterlaceMode {
 		/// Weave both fields(no deinterlacing).For progressive content and for content that doesn't need deinterlacing.
@@ -408,23 +307,10 @@ pub mod cudacodec {
 		Adaptive = 2,
 	}
 
-	impl TryFrom<i32> for CUDA_DeinterlaceMode {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::Weave),
-				1 => Ok(Self::Bob),
-				2 => Ok(Self::Adaptive),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_DeinterlaceMode"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_DeinterlaceMode }
+	opencv_type_enum! { crate::cudacodec::CUDA_DeinterlaceMode { Weave, Bob, Adaptive } }
 
 	/// Multi Pass Encoding.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_EncodeMultiPass {
 		/// Single Pass.
@@ -435,23 +321,10 @@ pub mod cudacodec {
 		ENC_TWO_PASS_FULL_RESOLUTION = 2,
 	}
 
-	impl TryFrom<i32> for CUDA_EncodeMultiPass {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::ENC_MULTI_PASS_DISABLED),
-				1 => Ok(Self::ENC_TWO_PASS_QUARTER_RESOLUTION),
-				2 => Ok(Self::ENC_TWO_PASS_FULL_RESOLUTION),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_EncodeMultiPass"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_EncodeMultiPass }
+	opencv_type_enum! { crate::cudacodec::CUDA_EncodeMultiPass { ENC_MULTI_PASS_DISABLED, ENC_TWO_PASS_QUARTER_RESOLUTION, ENC_TWO_PASS_FULL_RESOLUTION } }
 
 	/// Rate Control Modes.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_EncodeParamsRcMode {
 		/// Constant QP mode.
@@ -462,23 +335,10 @@ pub mod cudacodec {
 		ENC_PARAMS_RC_CBR = 2,
 	}
 
-	impl TryFrom<i32> for CUDA_EncodeParamsRcMode {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::ENC_PARAMS_RC_CONSTQP),
-				1 => Ok(Self::ENC_PARAMS_RC_VBR),
-				2 => Ok(Self::ENC_PARAMS_RC_CBR),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_EncodeParamsRcMode"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_EncodeParamsRcMode }
+	opencv_type_enum! { crate::cudacodec::CUDA_EncodeParamsRcMode { ENC_PARAMS_RC_CONSTQP, ENC_PARAMS_RC_VBR, ENC_PARAMS_RC_CBR } }
 
 	/// Nvidia Encoding Presets. Performance degrades and quality improves as we move from P1 to P7.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_EncodePreset {
 		ENC_PRESET_P1 = 1,
@@ -490,27 +350,10 @@ pub mod cudacodec {
 		ENC_PRESET_P7 = 7,
 	}
 
-	impl TryFrom<i32> for CUDA_EncodePreset {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::ENC_PRESET_P1),
-				2 => Ok(Self::ENC_PRESET_P2),
-				3 => Ok(Self::ENC_PRESET_P3),
-				4 => Ok(Self::ENC_PRESET_P4),
-				5 => Ok(Self::ENC_PRESET_P5),
-				6 => Ok(Self::ENC_PRESET_P6),
-				7 => Ok(Self::ENC_PRESET_P7),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_EncodePreset"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_EncodePreset }
+	opencv_type_enum! { crate::cudacodec::CUDA_EncodePreset { ENC_PRESET_P1, ENC_PRESET_P2, ENC_PRESET_P3, ENC_PRESET_P4, ENC_PRESET_P5, ENC_PRESET_P6, ENC_PRESET_P7 } }
 
 	/// Supported Encoder Profiles.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_EncodeProfile {
 		ENC_CODEC_PROFILE_AUTOSELECT = 0,
@@ -526,31 +369,10 @@ pub mod cudacodec {
 		ENC_HEVC_PROFILE_FREXT = 10,
 	}
 
-	impl TryFrom<i32> for CUDA_EncodeProfile {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::ENC_CODEC_PROFILE_AUTOSELECT),
-				1 => Ok(Self::ENC_H264_PROFILE_BASELINE),
-				2 => Ok(Self::ENC_H264_PROFILE_MAIN),
-				3 => Ok(Self::ENC_H264_PROFILE_HIGH),
-				4 => Ok(Self::ENC_H264_PROFILE_HIGH_444),
-				5 => Ok(Self::ENC_H264_PROFILE_STEREO),
-				6 => Ok(Self::ENC_H264_PROFILE_PROGRESSIVE_HIGH),
-				7 => Ok(Self::ENC_H264_PROFILE_CONSTRAINED_HIGH),
-				8 => Ok(Self::ENC_HEVC_PROFILE_MAIN),
-				9 => Ok(Self::ENC_HEVC_PROFILE_MAIN10),
-				10 => Ok(Self::ENC_HEVC_PROFILE_FREXT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_EncodeProfile"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_EncodeProfile }
+	opencv_type_enum! { crate::cudacodec::CUDA_EncodeProfile { ENC_CODEC_PROFILE_AUTOSELECT, ENC_H264_PROFILE_BASELINE, ENC_H264_PROFILE_MAIN, ENC_H264_PROFILE_HIGH, ENC_H264_PROFILE_HIGH_444, ENC_H264_PROFILE_STEREO, ENC_H264_PROFILE_PROGRESSIVE_HIGH, ENC_H264_PROFILE_CONSTRAINED_HIGH, ENC_HEVC_PROFILE_MAIN, ENC_HEVC_PROFILE_MAIN10, ENC_HEVC_PROFILE_FREXT } }
 
 	/// Tuning information.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_EncodeTuningInfo {
 		/// Undefined tuningInfo. Invalid value for encoding.
@@ -566,26 +388,10 @@ pub mod cudacodec {
 		ENC_TUNING_INFO_COUNT = 5,
 	}
 
-	impl TryFrom<i32> for CUDA_EncodeTuningInfo {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::ENC_TUNING_INFO_UNDEFINED),
-				1 => Ok(Self::ENC_TUNING_INFO_HIGH_QUALITY),
-				2 => Ok(Self::ENC_TUNING_INFO_LOW_LATENCY),
-				3 => Ok(Self::ENC_TUNING_INFO_ULTRA_LOW_LATENCY),
-				4 => Ok(Self::ENC_TUNING_INFO_LOSSLESS),
-				5 => Ok(Self::ENC_TUNING_INFO_COUNT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_EncodeTuningInfo"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_EncodeTuningInfo }
+	opencv_type_enum! { crate::cudacodec::CUDA_EncodeTuningInfo { ENC_TUNING_INFO_UNDEFINED, ENC_TUNING_INFO_HIGH_QUALITY, ENC_TUNING_INFO_LOW_LATENCY, ENC_TUNING_INFO_ULTRA_LOW_LATENCY, ENC_TUNING_INFO_LOSSLESS, ENC_TUNING_INFO_COUNT } }
 
 	/// Video surface formats output by the decoder
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_SurfaceFormat {
 		/// Semi-Planar YUV [Y plane followed by interleaved UV plane]
@@ -598,24 +404,10 @@ pub mod cudacodec {
 		SF_YUV444_16Bit = 3,
 	}
 
-	impl TryFrom<i32> for CUDA_SurfaceFormat {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::SF_NV12),
-				1 => Ok(Self::SF_P016),
-				2 => Ok(Self::SF_YUV444),
-				3 => Ok(Self::SF_YUV444_16Bit),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_SurfaceFormat"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_SurfaceFormat }
+	opencv_type_enum! { crate::cudacodec::CUDA_SurfaceFormat { SF_NV12, SF_P016, SF_YUV444, SF_YUV444_16Bit } }
 
 	/// cv::cudacodec::VideoReader generic properties identifier.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_VideoReaderProps {
 		/// Index for retrieving the decoded frame using retrieve().
@@ -643,29 +435,7 @@ pub mod cudacodec {
 		PROP_NOT_SUPPORTED = 11,
 	}
 
-	impl TryFrom<i32> for CUDA_VideoReaderProps {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::PROP_DECODED_FRAME_IDX),
-				1 => Ok(Self::PROP_EXTRA_DATA_INDEX),
-				2 => Ok(Self::PROP_RAW_PACKAGES_BASE_INDEX),
-				3 => Ok(Self::PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB),
-				4 => Ok(Self::PROP_RAW_MODE),
-				5 => Ok(Self::PROP_LRF_HAS_KEY_FRAME),
-				6 => Ok(Self::PROP_COLOR_FORMAT),
-				7 => Ok(Self::PROP_UDP_SOURCE),
-				8 => Ok(Self::PROP_ALLOW_FRAME_DROP),
-				9 => Ok(Self::PROP_BIT_DEPTH),
-				10 => Ok(Self::PROP_PLANAR),
-				11 => Ok(Self::PROP_NOT_SUPPORTED),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_VideoReaderProps"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudacodec::CUDA_VideoReaderProps }
+	opencv_type_enum! { crate::cudacodec::CUDA_VideoReaderProps { PROP_DECODED_FRAME_IDX, PROP_EXTRA_DATA_INDEX, PROP_RAW_PACKAGES_BASE_INDEX, PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB, PROP_RAW_MODE, PROP_LRF_HAS_KEY_FRAME, PROP_COLOR_FORMAT, PROP_UDP_SOURCE, PROP_ALLOW_FRAME_DROP, PROP_BIT_DEPTH, PROP_PLANAR, PROP_NOT_SUPPORTED } }
 
 	/// Utility function demonstrating how to map the luma histogram when FormatInfo::videoFullRangeFlag == false
 	/// ## Parameters
@@ -720,8 +490,20 @@ pub mod cudacodec {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Creates video reader.
+	///
 	/// ## Parameters
+	/// * filename: Name of the input video file.
+	/// * sourceParams: Pass through parameters for VideoCapure.  VideoCapture with the FFMpeg back end (CAP_FFMPEG) is used to parse the video input.
+	/// The `sourceParams` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+	///    See cv::VideoCaptureProperties
+	/// e.g. when streaming from an RTSP source CAP_PROP_OPEN_TIMEOUT_MSEC may need to be set.
+	/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
+	///
+	/// FFMPEG is used to read videos. User can implement own demultiplexing with cudacodec::RawVideoSource
+	///
+	/// ## Overloaded parameters
+	///
 	/// * source: RAW video source implemented by user.
 	/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
 	///

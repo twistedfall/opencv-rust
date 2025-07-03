@@ -168,43 +168,31 @@ pub mod highgui {
 	/// enable or disable VSYNC (in OpenGL mode)
 	pub const WND_PROP_VSYNC: i32 = 6;
 	/// Mouse Event Flags see cv::MouseCallback
-	#[repr(C)]
+	#[repr(transparent)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum MouseEventFlags {
+	pub struct MouseEventFlags(i32);
+
+	impl MouseEventFlags {
+		/// No flags are set, might not make sense for all enums
+		pub const NONE: Self = Self(0);
 		/// indicates that the left mouse button is down.
-		EVENT_FLAG_LBUTTON = 1,
+		pub const EVENT_FLAG_LBUTTON: Self = Self(1);
 		/// indicates that the right mouse button is down.
-		EVENT_FLAG_RBUTTON = 2,
+		pub const EVENT_FLAG_RBUTTON: Self = Self(2);
 		/// indicates that the middle mouse button is down.
-		EVENT_FLAG_MBUTTON = 4,
+		pub const EVENT_FLAG_MBUTTON: Self = Self(4);
 		/// indicates that CTRL Key is pressed.
-		EVENT_FLAG_CTRLKEY = 8,
+		pub const EVENT_FLAG_CTRLKEY: Self = Self(8);
 		/// indicates that SHIFT Key is pressed.
-		EVENT_FLAG_SHIFTKEY = 16,
+		pub const EVENT_FLAG_SHIFTKEY: Self = Self(16);
 		/// indicates that ALT Key is pressed.
-		EVENT_FLAG_ALTKEY = 32,
+		pub const EVENT_FLAG_ALTKEY: Self = Self(32);
 	}
 
-	impl TryFrom<i32> for MouseEventFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::EVENT_FLAG_LBUTTON),
-				2 => Ok(Self::EVENT_FLAG_RBUTTON),
-				4 => Ok(Self::EVENT_FLAG_MBUTTON),
-				8 => Ok(Self::EVENT_FLAG_CTRLKEY),
-				16 => Ok(Self::EVENT_FLAG_SHIFTKEY),
-				32 => Ok(Self::EVENT_FLAG_ALTKEY),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::MouseEventFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::highgui::MouseEventFlags }
+	opencv_type_bitfield_enum! { crate::highgui::MouseEventFlags { NONE, EVENT_FLAG_LBUTTON, EVENT_FLAG_RBUTTON, EVENT_FLAG_MBUTTON, EVENT_FLAG_CTRLKEY, EVENT_FLAG_SHIFTKEY, EVENT_FLAG_ALTKEY } }
 
 	/// Mouse Events see cv::MouseCallback
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum MouseEventTypes {
 		/// indicates that the mouse pointer has moved over the window.
@@ -233,32 +221,10 @@ pub mod highgui {
 		EVENT_MOUSEHWHEEL = 11,
 	}
 
-	impl TryFrom<i32> for MouseEventTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::EVENT_MOUSEMOVE),
-				1 => Ok(Self::EVENT_LBUTTONDOWN),
-				2 => Ok(Self::EVENT_RBUTTONDOWN),
-				3 => Ok(Self::EVENT_MBUTTONDOWN),
-				4 => Ok(Self::EVENT_LBUTTONUP),
-				5 => Ok(Self::EVENT_RBUTTONUP),
-				6 => Ok(Self::EVENT_MBUTTONUP),
-				7 => Ok(Self::EVENT_LBUTTONDBLCLK),
-				8 => Ok(Self::EVENT_RBUTTONDBLCLK),
-				9 => Ok(Self::EVENT_MBUTTONDBLCLK),
-				10 => Ok(Self::EVENT_MOUSEWHEEL),
-				11 => Ok(Self::EVENT_MOUSEHWHEEL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::MouseEventTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::highgui::MouseEventTypes }
+	opencv_type_enum! { crate::highgui::MouseEventTypes { EVENT_MOUSEMOVE, EVENT_LBUTTONDOWN, EVENT_RBUTTONDOWN, EVENT_MBUTTONDOWN, EVENT_LBUTTONUP, EVENT_RBUTTONUP, EVENT_MBUTTONUP, EVENT_LBUTTONDBLCLK, EVENT_RBUTTONDBLCLK, EVENT_MBUTTONDBLCLK, EVENT_MOUSEWHEEL, EVENT_MOUSEHWHEEL } }
 
 	/// Qt "button" type
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum QtButtonTypes {
 		/// Push button.
@@ -271,24 +237,10 @@ pub mod highgui {
 		QT_NEW_BUTTONBAR = 1024,
 	}
 
-	impl TryFrom<i32> for QtButtonTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::QT_PUSH_BUTTON),
-				1 => Ok(Self::QT_CHECKBOX),
-				2 => Ok(Self::QT_RADIOBOX),
-				1024 => Ok(Self::QT_NEW_BUTTONBAR),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::QtButtonTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::highgui::QtButtonTypes }
+	opencv_type_enum! { crate::highgui::QtButtonTypes { QT_PUSH_BUTTON, QT_CHECKBOX, QT_RADIOBOX, QT_NEW_BUTTONBAR } }
 
 	/// Qt font style
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum QtFontStyles {
 		/// Normal font.
@@ -299,23 +251,10 @@ pub mod highgui {
 		QT_STYLE_OBLIQUE = 2,
 	}
 
-	impl TryFrom<i32> for QtFontStyles {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::QT_STYLE_NORMAL),
-				1 => Ok(Self::QT_STYLE_ITALIC),
-				2 => Ok(Self::QT_STYLE_OBLIQUE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::QtFontStyles"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::highgui::QtFontStyles }
+	opencv_type_enum! { crate::highgui::QtFontStyles { QT_STYLE_NORMAL, QT_STYLE_ITALIC, QT_STYLE_OBLIQUE } }
 
 	/// Qt font weight
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum QtFontWeights {
 		/// Weight of 25
@@ -330,73 +269,36 @@ pub mod highgui {
 		QT_FONT_BLACK = 87,
 	}
 
-	impl TryFrom<i32> for QtFontWeights {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				25 => Ok(Self::QT_FONT_LIGHT),
-				50 => Ok(Self::QT_FONT_NORMAL),
-				63 => Ok(Self::QT_FONT_DEMIBOLD),
-				75 => Ok(Self::QT_FONT_BOLD),
-				87 => Ok(Self::QT_FONT_BLACK),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::QtFontWeights"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::highgui::QtFontWeights }
+	opencv_type_enum! { crate::highgui::QtFontWeights { QT_FONT_LIGHT, QT_FONT_NORMAL, QT_FONT_DEMIBOLD, QT_FONT_BOLD, QT_FONT_BLACK } }
 
 	/// Flags for cv::namedWindow
-	#[repr(C)]
+	#[repr(transparent)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum WindowFlags {
+	pub struct WindowFlags(i32);
+
+	impl WindowFlags {
 		/// the user can resize the window (no constraint) / also use to switch a fullscreen window to a normal size.
-		WINDOW_NORMAL = 0,
+		pub const WINDOW_NORMAL: Self = Self(0);
 		/// the user cannot resize the window, the size is constrainted by the image displayed.
-		WINDOW_AUTOSIZE = 1,
+		pub const WINDOW_AUTOSIZE: Self = Self(1);
 		/// window with opengl support.
-		WINDOW_OPENGL = 4096,
-		// change the window to fullscreen.
-		// Duplicate, use WINDOW_AUTOSIZE instead
-		// WINDOW_FULLSCREEN = 1,
+		pub const WINDOW_OPENGL: Self = Self(4096);
+		/// change the window to fullscreen.
+		pub const WINDOW_FULLSCREEN: Self = Self(1);
 		/// the image expends as much as it can (no ratio constraint).
-		WINDOW_FREERATIO = 256,
-		// the ratio of the image is respected.
-		// Duplicate, use WINDOW_NORMAL instead
-		// WINDOW_KEEPRATIO = 0,
-		// status bar and tool bar
-		// Duplicate, use WINDOW_KEEPRATIO instead
-		// WINDOW_GUI_EXPANDED = 0,
+		pub const WINDOW_FREERATIO: Self = Self(256);
+		/// the ratio of the image is respected.
+		pub const WINDOW_KEEPRATIO: Self = Self(0);
+		/// status bar and tool bar
+		pub const WINDOW_GUI_EXPANDED: Self = Self(0);
 		/// old fashious way
-		WINDOW_GUI_NORMAL = 16,
+		pub const WINDOW_GUI_NORMAL: Self = Self(16);
 	}
 
-	impl TryFrom<i32> for WindowFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::WINDOW_NORMAL),
-				1 => Ok(Self::WINDOW_AUTOSIZE),
-				4096 => Ok(Self::WINDOW_OPENGL),
-				// Duplicate of WINDOW_AUTOSIZE
-				// 1 => Ok(Self::WINDOW_FULLSCREEN),
-				256 => Ok(Self::WINDOW_FREERATIO),
-				// Duplicate of WINDOW_NORMAL
-				// 0 => Ok(Self::WINDOW_KEEPRATIO),
-				// Duplicate of WINDOW_KEEPRATIO
-				// 0 => Ok(Self::WINDOW_GUI_EXPANDED),
-				16 => Ok(Self::WINDOW_GUI_NORMAL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::WindowFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::highgui::WindowFlags }
+	opencv_type_bitfield_enum! { crate::highgui::WindowFlags { WINDOW_NORMAL, WINDOW_AUTOSIZE, WINDOW_OPENGL, WINDOW_FREERATIO, WINDOW_GUI_NORMAL } }
 
 	/// Flags for cv::setWindowProperty / cv::getWindowProperty
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum WindowPropertyFlags {
 		/// fullscreen property    (can be WINDOW_NORMAL or WINDOW_FULLSCREEN).
@@ -415,24 +317,7 @@ pub mod highgui {
 		WND_PROP_VSYNC = 6,
 	}
 
-	impl TryFrom<i32> for WindowPropertyFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::WND_PROP_FULLSCREEN),
-				1 => Ok(Self::WND_PROP_AUTOSIZE),
-				2 => Ok(Self::WND_PROP_ASPECT_RATIO),
-				3 => Ok(Self::WND_PROP_OPENGL),
-				4 => Ok(Self::WND_PROP_VISIBLE),
-				5 => Ok(Self::WND_PROP_TOPMOST),
-				6 => Ok(Self::WND_PROP_VSYNC),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::WindowPropertyFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::highgui::WindowPropertyFlags }
+	opencv_type_enum! { crate::highgui::WindowPropertyFlags { WND_PROP_FULLSCREEN, WND_PROP_AUTOSIZE, WND_PROP_ASPECT_RATIO, WND_PROP_OPENGL, WND_PROP_VISIBLE, WND_PROP_TOPMOST, WND_PROP_VSYNC } }
 
 	/// Callback function for a button created by cv::createButton
 	/// ## Parameters
@@ -1308,7 +1193,27 @@ pub mod highgui {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Allows users to select a ROI on the given image.
+	///
+	/// The function creates a window and allows users to select a ROI using the mouse.
+	/// Controls: use `space` or `enter` to finish selection, use key `c` to cancel selection (function will return the zero cv::Rect).
+	///
+	/// ## Parameters
+	/// * windowName: name of the window where selection process will be shown.
+	/// * img: image to select a ROI.
+	/// * showCrosshair: if true crosshair of selection rectangle will be shown.
+	/// * fromCenter: if true center of selection will match initial mouse position. In opposite case a corner of
+	/// selection rectangle will correspont to the initial mouse position.
+	/// * printNotice: if true a notice to select ROI or cancel selection will be printed in console.
+	/// ## Returns
+	/// selected ROI or empty rect if selection canceled.
+	///
+	///
+	/// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
+	/// After finish of work an empty callback will be set for the used window.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [select_roi_1] function uses the following default values for its arguments:

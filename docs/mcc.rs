@@ -148,7 +148,7 @@ pub mod mcc {
 	/// DKK color chart with 12 squares and 6 rectangle
 	pub const MCC_VINYL18: i32 = 2;
 	/// Enum of the possible types of ccm.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CCM_TYPE {
 		/// The CCM with the shape ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) performs linear transformation on color values.
@@ -157,21 +157,9 @@ pub mod mcc {
 		CCM_4x3 = 1,
 	}
 
-	impl TryFrom<i32> for CCM_TYPE {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::mcc::CCM_TYPE { CCM_3x3, CCM_4x3 } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::CCM_3x3),
-				1 => Ok(Self::CCM_4x3),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::mcc::CCM_TYPE"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::mcc::CCM_TYPE }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum COLOR_SPACE {
 		/// <https://en.wikipedia.org/wiki/SRGB> , RGB color space
@@ -256,60 +244,10 @@ pub mod mcc {
 		COLOR_SPACE_Lab_E_10 = 39,
 	}
 
-	impl TryFrom<i32> for COLOR_SPACE {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::COLOR_SPACE_sRGB),
-				1 => Ok(Self::COLOR_SPACE_sRGBL),
-				2 => Ok(Self::COLOR_SPACE_AdobeRGB),
-				3 => Ok(Self::COLOR_SPACE_AdobeRGBL),
-				4 => Ok(Self::COLOR_SPACE_WideGamutRGB),
-				5 => Ok(Self::COLOR_SPACE_WideGamutRGBL),
-				6 => Ok(Self::COLOR_SPACE_ProPhotoRGB),
-				7 => Ok(Self::COLOR_SPACE_ProPhotoRGBL),
-				8 => Ok(Self::COLOR_SPACE_DCI_P3_RGB),
-				9 => Ok(Self::COLOR_SPACE_DCI_P3_RGBL),
-				10 => Ok(Self::COLOR_SPACE_AppleRGB),
-				11 => Ok(Self::COLOR_SPACE_AppleRGBL),
-				12 => Ok(Self::COLOR_SPACE_REC_709_RGB),
-				13 => Ok(Self::COLOR_SPACE_REC_709_RGBL),
-				14 => Ok(Self::COLOR_SPACE_REC_2020_RGB),
-				15 => Ok(Self::COLOR_SPACE_REC_2020_RGBL),
-				16 => Ok(Self::COLOR_SPACE_XYZ_D65_2),
-				17 => Ok(Self::COLOR_SPACE_XYZ_D65_10),
-				18 => Ok(Self::COLOR_SPACE_XYZ_D50_2),
-				19 => Ok(Self::COLOR_SPACE_XYZ_D50_10),
-				20 => Ok(Self::COLOR_SPACE_XYZ_A_2),
-				21 => Ok(Self::COLOR_SPACE_XYZ_A_10),
-				22 => Ok(Self::COLOR_SPACE_XYZ_D55_2),
-				23 => Ok(Self::COLOR_SPACE_XYZ_D55_10),
-				24 => Ok(Self::COLOR_SPACE_XYZ_D75_2),
-				25 => Ok(Self::COLOR_SPACE_XYZ_D75_10),
-				26 => Ok(Self::COLOR_SPACE_XYZ_E_2),
-				27 => Ok(Self::COLOR_SPACE_XYZ_E_10),
-				28 => Ok(Self::COLOR_SPACE_Lab_D65_2),
-				29 => Ok(Self::COLOR_SPACE_Lab_D65_10),
-				30 => Ok(Self::COLOR_SPACE_Lab_D50_2),
-				31 => Ok(Self::COLOR_SPACE_Lab_D50_10),
-				32 => Ok(Self::COLOR_SPACE_Lab_A_2),
-				33 => Ok(Self::COLOR_SPACE_Lab_A_10),
-				34 => Ok(Self::COLOR_SPACE_Lab_D55_2),
-				35 => Ok(Self::COLOR_SPACE_Lab_D55_10),
-				36 => Ok(Self::COLOR_SPACE_Lab_D75_2),
-				37 => Ok(Self::COLOR_SPACE_Lab_D75_10),
-				38 => Ok(Self::COLOR_SPACE_Lab_E_2),
-				39 => Ok(Self::COLOR_SPACE_Lab_E_10),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::mcc::COLOR_SPACE"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::mcc::COLOR_SPACE }
+	opencv_type_enum! { crate::mcc::COLOR_SPACE { COLOR_SPACE_sRGB, COLOR_SPACE_sRGBL, COLOR_SPACE_AdobeRGB, COLOR_SPACE_AdobeRGBL, COLOR_SPACE_WideGamutRGB, COLOR_SPACE_WideGamutRGBL, COLOR_SPACE_ProPhotoRGB, COLOR_SPACE_ProPhotoRGBL, COLOR_SPACE_DCI_P3_RGB, COLOR_SPACE_DCI_P3_RGBL, COLOR_SPACE_AppleRGB, COLOR_SPACE_AppleRGBL, COLOR_SPACE_REC_709_RGB, COLOR_SPACE_REC_709_RGBL, COLOR_SPACE_REC_2020_RGB, COLOR_SPACE_REC_2020_RGBL, COLOR_SPACE_XYZ_D65_2, COLOR_SPACE_XYZ_D65_10, COLOR_SPACE_XYZ_D50_2, COLOR_SPACE_XYZ_D50_10, COLOR_SPACE_XYZ_A_2, COLOR_SPACE_XYZ_A_10, COLOR_SPACE_XYZ_D55_2, COLOR_SPACE_XYZ_D55_10, COLOR_SPACE_XYZ_D75_2, COLOR_SPACE_XYZ_D75_10, COLOR_SPACE_XYZ_E_2, COLOR_SPACE_XYZ_E_10, COLOR_SPACE_Lab_D65_2, COLOR_SPACE_Lab_D65_10, COLOR_SPACE_Lab_D50_2, COLOR_SPACE_Lab_D50_10, COLOR_SPACE_Lab_A_2, COLOR_SPACE_Lab_A_10, COLOR_SPACE_Lab_D55_2, COLOR_SPACE_Lab_D55_10, COLOR_SPACE_Lab_D75_2, COLOR_SPACE_Lab_D75_10, COLOR_SPACE_Lab_E_2, COLOR_SPACE_Lab_E_10 } }
 
 	/// Macbeth and Vinyl ColorChecker with 2deg D50
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CONST_COLOR {
 		/// Macbeth ColorChecker
@@ -320,25 +258,12 @@ pub mod mcc {
 		COLORCHECKER_DigitalSG = 2,
 	}
 
-	impl TryFrom<i32> for CONST_COLOR {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::COLORCHECKER_Macbeth),
-				1 => Ok(Self::COLORCHECKER_Vinyl),
-				2 => Ok(Self::COLORCHECKER_DigitalSG),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::mcc::CONST_COLOR"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::mcc::CONST_COLOR }
+	opencv_type_enum! { crate::mcc::CONST_COLOR { COLORCHECKER_Macbeth, COLORCHECKER_Vinyl, COLORCHECKER_DigitalSG } }
 
 	/// Enum of possible functions to calculate the distance between colors.
 	///
 	/// See <https://en.wikipedia.org/wiki/Color_difference> for details
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum DISTANCE_TYPE {
 		/// The 1976 formula is the first formula that related a measured color difference to a known set of CIELAB coordinates.
@@ -356,28 +281,10 @@ pub mod mcc {
 		DISTANCE_RGBL = 7,
 	}
 
-	impl TryFrom<i32> for DISTANCE_TYPE {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DISTANCE_CIE76),
-				1 => Ok(Self::DISTANCE_CIE94_GRAPHIC_ARTS),
-				2 => Ok(Self::DISTANCE_CIE94_TEXTILES),
-				3 => Ok(Self::DISTANCE_CIE2000),
-				4 => Ok(Self::DISTANCE_CMC_1TO1),
-				5 => Ok(Self::DISTANCE_CMC_2TO1),
-				6 => Ok(Self::DISTANCE_RGB),
-				7 => Ok(Self::DISTANCE_RGBL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::mcc::DISTANCE_TYPE"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::mcc::DISTANCE_TYPE }
+	opencv_type_enum! { crate::mcc::DISTANCE_TYPE { DISTANCE_CIE76, DISTANCE_CIE94_GRAPHIC_ARTS, DISTANCE_CIE94_TEXTILES, DISTANCE_CIE2000, DISTANCE_CMC_1TO1, DISTANCE_CMC_2TO1, DISTANCE_RGB, DISTANCE_RGBL } }
 
 	/// Enum of the possible types of initial method.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum INITIAL_METHOD_TYPE {
 		/// The white balance method. The initial value is:
@@ -387,19 +294,7 @@ pub mod mcc {
 		INITIAL_METHOD_LEAST_SQUARE = 1,
 	}
 
-	impl TryFrom<i32> for INITIAL_METHOD_TYPE {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::INITIAL_METHOD_WHITE_BALANCE),
-				1 => Ok(Self::INITIAL_METHOD_LEAST_SQUARE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::mcc::INITIAL_METHOD_TYPE"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::mcc::INITIAL_METHOD_TYPE }
+	opencv_type_enum! { crate::mcc::INITIAL_METHOD_TYPE { INITIAL_METHOD_WHITE_BALANCE, INITIAL_METHOD_LEAST_SQUARE } }
 
 	/// Linearization transformation type
 	///
@@ -525,7 +420,7 @@ pub mod mcc {
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Af%3Dpolyfit%28ln%28G%5F%7Bsl%7D%29%2Cln%28G%5F%7Bdl%7D%29%29%0A)
 	/// and:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Aln%28C%5F%7Bsl%7D%29%3Df%28ln%28C%5Fs%29%29%2C%20%5Cqquad%20C%5Fs%3E0%5C%5C%0AC%5Fsl%3D0%2C%20%5Cqquad%20C%5Fs%3D0%0A)
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum LINEAR_TYPE {
 		/// no change is made
@@ -542,28 +437,12 @@ pub mod mcc {
 		LINEARIZATION_GRAYLOGPOLYFIT = 5,
 	}
 
-	impl TryFrom<i32> for LINEAR_TYPE {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::LINEARIZATION_IDENTITY),
-				1 => Ok(Self::LINEARIZATION_GAMMA),
-				2 => Ok(Self::LINEARIZATION_COLORPOLYFIT),
-				3 => Ok(Self::LINEARIZATION_COLORLOGPOLYFIT),
-				4 => Ok(Self::LINEARIZATION_GRAYPOLYFIT),
-				5 => Ok(Self::LINEARIZATION_GRAYLOGPOLYFIT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::mcc::LINEAR_TYPE"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::mcc::LINEAR_TYPE }
+	opencv_type_enum! { crate::mcc::LINEAR_TYPE { LINEARIZATION_IDENTITY, LINEARIZATION_GAMMA, LINEARIZATION_COLORPOLYFIT, LINEARIZATION_COLORLOGPOLYFIT, LINEARIZATION_GRAYPOLYFIT, LINEARIZATION_GRAYLOGPOLYFIT } }
 
 	/// TYPECHART
 	///
 	/// \brief enum to hold the type of the checker
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum MCC_TYPECHART {
 		/// Standard Macbeth Chart with 24 squares
@@ -574,20 +453,7 @@ pub mod mcc {
 		VINYL18 = 2,
 	}
 
-	impl TryFrom<i32> for MCC_TYPECHART {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::MCC24),
-				1 => Ok(Self::SG140),
-				2 => Ok(Self::VINYL18),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::mcc::MCC_TYPECHART"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::mcc::MCC_TYPECHART }
+	opencv_type_enum! { crate::mcc::MCC_TYPECHART { MCC24, SG140, VINYL18 } }
 
 	/// Core class of ccm model
 	///

@@ -784,7 +784,7 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	///
 	/// ## Note
 	/// This alternative version of [calc_abs_sum] function uses the following default values for its arguments:
@@ -818,7 +818,7 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	///
 	/// ## Note
 	/// This alternative version of [calc_norm_diff] function uses the following default values for its arguments:
@@ -853,7 +853,7 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	///
 	/// ## Note
 	/// This alternative version of [calc_norm] function uses the following default values for its arguments:
@@ -887,7 +887,7 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	///
 	/// ## Note
 	/// This alternative version of [calc_sqr_sum] function uses the following default values for its arguments:
@@ -921,7 +921,7 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	///
 	/// ## Note
 	/// This alternative version of [calc_sum] function uses the following default values for its arguments:
@@ -1321,7 +1321,17 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Counts non-zero matrix elements.
+	///
+	/// ## Parameters
+	/// * src: Single-channel source image.
+	///
+	/// The function does not work with CV_64F images on GPUs with the compute capability \< 1.3.
+	/// ## See also
+	/// countNonZero
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [count_non_zero_1] function uses the following default values for its arguments:
@@ -1712,7 +1722,7 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	///
 	/// ## Note
 	/// This alternative version of [find_min_max_loc] function uses the following default values for its arguments:
@@ -1748,7 +1758,7 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	///
 	/// ## Note
 	/// This alternative version of [find_min_max] function uses the following default values for its arguments:
@@ -2161,10 +2171,17 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Computes squared magnitudes of complex matrix elements.
+	///
+	/// ## Parameters
+	/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
+	/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// ## Overloaded parameters
+	///
 	///  computes squared magnitude of each (x(i), y(i)) vector
 	///  supports only floating-point source
-	/// ## Parameters
 	/// * x: Source matrix containing real components ( CV_32FC1 ).
 	/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
 	/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
@@ -2256,10 +2273,19 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Computes magnitudes of complex matrix elements.
+	///
+	/// ## Parameters
+	/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
+	/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// magnitude
+	///
+	/// ## Overloaded parameters
+	///
 	///  computes magnitude of each (x(i), y(i)) vector
 	///  supports only floating-point source
-	/// ## Parameters
 	/// * x: Source matrix containing real components ( CV_32FC1 ).
 	/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
 	/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
@@ -2509,8 +2535,18 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Computes a mean value and a standard deviation of matrix elements.
+	///
 	/// ## Parameters
+	/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+	/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+	/// * mask: Operation mask.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// meanStdDev
+	///
+	/// ## Overloaded parameters
+	///
 	/// * mtx: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
 	/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
 	/// * stream: Stream for the asynchronous version.
@@ -2652,7 +2688,18 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Makes a multi-channel matrix out of several single-channel matrices.
+	///
+	/// ## Parameters
+	/// * src: Array/vector of source matrices.
+	/// * n: Number of source matrices.
+	/// * dst: Destination matrix.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// merge
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [merge_1] function uses the following default values for its arguments:
@@ -3839,7 +3886,17 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Copies each plane of a multi-channel matrix into an array.
+	///
+	/// ## Parameters
+	/// * src: Source matrix.
+	/// * dst: Destination array/vector of single-channel matrices.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// split
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [split_1] function uses the following default values for its arguments:

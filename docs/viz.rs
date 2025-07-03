@@ -67,28 +67,16 @@ pub mod viz {
 	pub const WTrajectory_BOTH: i32 = 3;
 	pub const WTrajectory_FRAMES: i32 = 1;
 	pub const WTrajectory_PATH: i32 = 2;
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum KeyboardEvent_Action {
 		KEY_UP = 0,
 		KEY_DOWN = 1,
 	}
 
-	impl TryFrom<i32> for KeyboardEvent_Action {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::viz::KeyboardEvent_Action { KEY_UP, KEY_DOWN } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::KEY_UP),
-				1 => Ok(Self::KEY_DOWN),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::KeyboardEvent_Action"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::viz::KeyboardEvent_Action }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum MouseEvent_MouseButton {
 		NoButton = 0,
@@ -98,24 +86,9 @@ pub mod viz {
 		VScroll = 4,
 	}
 
-	impl TryFrom<i32> for MouseEvent_MouseButton {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::viz::MouseEvent_MouseButton { NoButton, LeftButton, MiddleButton, RightButton, VScroll } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::NoButton),
-				1 => Ok(Self::LeftButton),
-				2 => Ok(Self::MiddleButton),
-				3 => Ok(Self::RightButton),
-				4 => Ok(Self::VScroll),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::MouseEvent_MouseButton"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::viz::MouseEvent_MouseButton }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum MouseEvent_Type {
 		MouseMove = 1,
@@ -126,27 +99,11 @@ pub mod viz {
 		MouseDblClick = 6,
 	}
 
-	impl TryFrom<i32> for MouseEvent_Type {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::MouseMove),
-				2 => Ok(Self::MouseButtonPress),
-				3 => Ok(Self::MouseButtonRelease),
-				4 => Ok(Self::MouseScrollDown),
-				5 => Ok(Self::MouseScrollUp),
-				6 => Ok(Self::MouseDblClick),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::MouseEvent_Type"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::viz::MouseEvent_Type }
+	opencv_type_enum! { crate::viz::MouseEvent_Type { MouseMove, MouseButtonPress, MouseButtonRelease, MouseScrollDown, MouseScrollUp, MouseDblClick } }
 
 	/// //////////////////////////////////////////////////////////////////////////
 	/// Widget rendering properties
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum RenderingProperties {
 		POINT_SIZE = 0,
@@ -160,28 +117,9 @@ pub mod viz {
 		LIGHTING = 8,
 	}
 
-	impl TryFrom<i32> for RenderingProperties {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::viz::RenderingProperties { POINT_SIZE, OPACITY, LINE_WIDTH, FONT_SIZE, REPRESENTATION, IMMEDIATE_RENDERING, SHADING, AMBIENT, LIGHTING } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::POINT_SIZE),
-				1 => Ok(Self::OPACITY),
-				2 => Ok(Self::LINE_WIDTH),
-				3 => Ok(Self::FONT_SIZE),
-				4 => Ok(Self::REPRESENTATION),
-				5 => Ok(Self::IMMEDIATE_RENDERING),
-				6 => Ok(Self::SHADING),
-				7 => Ok(Self::AMBIENT),
-				8 => Ok(Self::LIGHTING),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::RenderingProperties"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::viz::RenderingProperties }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum RepresentationValues {
 		REPRESENTATION_POINTS = 0,
@@ -189,22 +127,9 @@ pub mod viz {
 		REPRESENTATION_SURFACE = 2,
 	}
 
-	impl TryFrom<i32> for RepresentationValues {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::viz::RepresentationValues { REPRESENTATION_POINTS, REPRESENTATION_WIREFRAME, REPRESENTATION_SURFACE } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::REPRESENTATION_POINTS),
-				1 => Ok(Self::REPRESENTATION_WIREFRAME),
-				2 => Ok(Self::REPRESENTATION_SURFACE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::RepresentationValues"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::viz::RepresentationValues }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ShadingValues {
 		SHADING_FLAT = 0,
@@ -212,20 +137,7 @@ pub mod viz {
 		SHADING_PHONG = 2,
 	}
 
-	impl TryFrom<i32> for ShadingValues {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::SHADING_FLAT),
-				1 => Ok(Self::SHADING_GOURAUD),
-				2 => Ok(Self::SHADING_PHONG),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::ShadingValues"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::viz::ShadingValues }
+	opencv_type_enum! { crate::viz::ShadingValues { SHADING_FLAT, SHADING_GOURAUD, SHADING_PHONG } }
 
 	pub type Viz3d_Color = crate::viz::Color;
 	pub type Viz3d_KeyboardCallback = Option<Box<dyn FnMut(*const c_void) -> () + Send + Sync + 'static>>;

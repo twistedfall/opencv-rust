@@ -493,7 +493,59 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08) .
+	///
+	/// ## Parameters
+	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
+	/// * inputImage: single-channel input image which should be warped with the final warpMatrix in
+	/// order to provide an image similar to templateImage, same type as templateImage.
+	/// * warpMatrix: floating-point ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) or ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mapping matrix (warp).
+	/// * motionType: parameter, specifying the type of motion:
+	///  *   **MOTION_TRANSLATION** sets a translational motion model; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) with
+	///      the first ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%202) part being the unity matrix and the rest two parameters being
+	///      estimated.
+	///  *   **MOTION_EUCLIDEAN** sets a Euclidean (rigid) transformation as motion model; three
+	///      parameters are estimated; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
+	///  *   **MOTION_AFFINE** sets an affine motion model (DEFAULT); six parameters are estimated;
+	///      warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
+	///  *   **MOTION_HOMOGRAPHY** sets a homography as a motion model; eight parameters are
+	///      estimated;\`warpMatrix\` is ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203).
+	/// * criteria: parameter, specifying the termination criteria of the ECC algorithm;
+	/// criteria.epsilon defines the threshold of the increment in the correlation coefficient between two
+	/// iterations (a negative criteria.epsilon makes criteria.maxcount the only termination criterion).
+	/// Default values are shown in the declaration above.
+	/// * inputMask: An optional mask to indicate valid values of inputImage.
+	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
+	///
+	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
+	/// ([EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
+	///
+	/// where
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20x%27%20%5C%5C%20y%27%20%5Cend%7Bbmatrix%7D%20%3D%20W%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%20%5C%5C%20y%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
+	///
+	/// (the equation holds with homogeneous coordinates for homography). It returns the final enhanced
+	/// correlation coefficient, that is the correlation coefficient between the template image and the
+	/// final warped input image. When a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) matrix is given with motionType =0, 1 or 2, the third
+	/// row is ignored.
+	///
+	/// Unlike findHomography and estimateRigidTransform, the function findTransformECC implements an
+	/// area-based alignment that builds on intensity similarities. In essence, the function updates the
+	/// initial transformation that roughly aligns the images. If this information is missing, the identity
+	/// warp (unity matrix) is used as an initialization. Note that if images undergo strong
+	/// displacements/rotations, an initial transformation that roughly aligns the images is necessary
+	/// (e.g., a simple euclidean/similarity transform that allows for the images showing the same image
+	/// content approximately). Use inverse warping in the second image to take an image close to the first
+	/// one, i.e. use the flag WARP_INVERSE_MAP with warpAffine or warpPerspective. See also the OpenCV
+	/// sample image_alignment.cpp that demonstrates the use of the function. Note that the function throws
+	/// an exception if algorithm does not converges.
+	/// ## See also
+	/// computeECC, estimateAffine2D, estimateAffinePartial2D, findHomography
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [find_transform_ecc_1] function uses the following default values for its arguments:
@@ -2267,7 +2319,7 @@ pub mod video {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 		/// ## Parameters
 		/// * dynamParams: Dimensionality of the state.
 		/// * measureParams: Dimensionality of the measurement.

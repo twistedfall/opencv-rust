@@ -140,7 +140,7 @@ pub mod ximgproc {
 	/// Angles are started from vertical line and go clockwise.
 	/// Separate quarters and halves are written in orientation they should be in
 	/// full Hough space.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum AngleRangeOption {
 		ARO_0_45 = 0,
@@ -154,28 +154,9 @@ pub mod ximgproc {
 		ARO_CTR_VER = 8,
 	}
 
-	impl TryFrom<i32> for AngleRangeOption {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::ximgproc::AngleRangeOption { ARO_0_45, ARO_45_90, ARO_90_135, ARO_315_0, ARO_315_45, ARO_45_135, ARO_315_135, ARO_CTR_HOR, ARO_CTR_VER } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::ARO_0_45),
-				1 => Ok(Self::ARO_45_90),
-				2 => Ok(Self::ARO_90_135),
-				3 => Ok(Self::ARO_315_0),
-				4 => Ok(Self::ARO_315_45),
-				5 => Ok(Self::ARO_45_135),
-				6 => Ok(Self::ARO_315_135),
-				7 => Ok(Self::ARO_CTR_HOR),
-				8 => Ok(Self::ARO_CTR_VER),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ximgproc::AngleRangeOption"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ximgproc::AngleRangeOption }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum EdgeAwareFiltersList {
 		DTF_NC = 0,
@@ -185,24 +166,9 @@ pub mod ximgproc {
 		AM_FILTER = 4,
 	}
 
-	impl TryFrom<i32> for EdgeAwareFiltersList {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::ximgproc::EdgeAwareFiltersList { DTF_NC, DTF_IC, DTF_RF, GUIDED_FILTER, AM_FILTER } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DTF_NC),
-				1 => Ok(Self::DTF_IC),
-				2 => Ok(Self::DTF_RF),
-				3 => Ok(Self::GUIDED_FILTER),
-				4 => Ok(Self::AM_FILTER),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ximgproc::EdgeAwareFiltersList"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ximgproc::EdgeAwareFiltersList }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum EdgeDrawing_GradientOperator {
 		PREWITT = 0,
@@ -211,45 +177,19 @@ pub mod ximgproc {
 		LSD = 3,
 	}
 
-	impl TryFrom<i32> for EdgeDrawing_GradientOperator {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::PREWITT),
-				1 => Ok(Self::SOBEL),
-				2 => Ok(Self::SCHARR),
-				3 => Ok(Self::LSD),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ximgproc::EdgeDrawing_GradientOperator"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ximgproc::EdgeDrawing_GradientOperator }
+	opencv_type_enum! { crate::ximgproc::EdgeDrawing_GradientOperator { PREWITT, SOBEL, SCHARR, LSD } }
 
 	/// Specifies to do or not to do skewing of Hough transform image
 	/// @details The enum specifies to do or not to do skewing of Hough transform image
 	/// so it would be no cycling in Hough transform image through borders of image.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum HoughDeskewOption {
 		HDO_RAW = 0,
 		HDO_DESKEW = 1,
 	}
 
-	impl TryFrom<i32> for HoughDeskewOption {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::HDO_RAW),
-				1 => Ok(Self::HDO_DESKEW),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ximgproc::HoughDeskewOption"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ximgproc::HoughDeskewOption }
+	opencv_type_enum! { crate::ximgproc::HoughDeskewOption { HDO_RAW, HDO_DESKEW } }
 
 	/// Specifies binary operations.
 	/// @details The enum specifies binary operations, that is such ones which involve
@@ -257,7 +197,7 @@ pub mod ximgproc {
 	///          is a binary relation that maps elements of the Cartesian product
 	///          @f$ S \times S @f$ to @f$ S @f$:
 	///          @f[ f: S \times S \to S @f]
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum HoughOp {
 		FHT_MIN = 0,
@@ -266,24 +206,10 @@ pub mod ximgproc {
 		FHT_AVE = 3,
 	}
 
-	impl TryFrom<i32> for HoughOp {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::FHT_MIN),
-				1 => Ok(Self::FHT_MAX),
-				2 => Ok(Self::FHT_ADD),
-				3 => Ok(Self::FHT_AVE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ximgproc::HoughOp"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ximgproc::HoughOp }
+	opencv_type_enum! { crate::ximgproc::HoughOp { FHT_MIN, FHT_MAX, FHT_ADD, FHT_AVE } }
 
 	/// Specifies the binarization method to use in cv::ximgproc::niBlackThreshold
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum LocalBinarizationMethods {
 		/// Classic Niblack binarization. See [Niblack1985](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Niblack1985) .
@@ -296,26 +222,12 @@ pub mod ximgproc {
 		BINARIZATION_NICK = 3,
 	}
 
-	impl TryFrom<i32> for LocalBinarizationMethods {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::BINARIZATION_NIBLACK),
-				1 => Ok(Self::BINARIZATION_SAUVOLA),
-				2 => Ok(Self::BINARIZATION_WOLF),
-				3 => Ok(Self::BINARIZATION_NICK),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ximgproc::LocalBinarizationMethods"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ximgproc::LocalBinarizationMethods }
+	opencv_type_enum! { crate::ximgproc::LocalBinarizationMethods { BINARIZATION_NIBLACK, BINARIZATION_SAUVOLA, BINARIZATION_WOLF, BINARIZATION_NICK } }
 
 	/// Specifies the degree of rules validation.
 	/// @details The enum specifies the degree of rules validation. This can be used,
 	///          for example, to choose a proper way of input arguments validation.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum RulesOption {
 		/// Validate each rule in a proper way.
@@ -324,21 +236,9 @@ pub mod ximgproc {
 		RO_IGNORE_BORDERS = 1,
 	}
 
-	impl TryFrom<i32> for RulesOption {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::ximgproc::RulesOption { RO_STRICT, RO_IGNORE_BORDERS } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::RO_STRICT),
-				1 => Ok(Self::RO_IGNORE_BORDERS),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ximgproc::RulesOption"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ximgproc::RulesOption }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SLICType {
 		SLIC = 100,
@@ -346,44 +246,19 @@ pub mod ximgproc {
 		MSLIC = 102,
 	}
 
-	impl TryFrom<i32> for SLICType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::ximgproc::SLICType { SLIC, SLICO, MSLIC } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				100 => Ok(Self::SLIC),
-				101 => Ok(Self::SLICO),
-				102 => Ok(Self::MSLIC),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ximgproc::SLICType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ximgproc::SLICType }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ThinningTypes {
 		THINNING_ZHANGSUEN = 0,
 		THINNING_GUOHALL = 1,
 	}
 
-	impl TryFrom<i32> for ThinningTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::THINNING_ZHANGSUEN),
-				1 => Ok(Self::THINNING_GUOHALL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ximgproc::ThinningTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ximgproc::ThinningTypes }
+	opencv_type_enum! { crate::ximgproc::ThinningTypes { THINNING_ZHANGSUEN, THINNING_GUOHALL } }
 
 	/// Specifies weight types of weighted median filter.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum WMFWeightType {
 		/// ![inline formula](https://latex.codecogs.com/png.latex?exp%28%2D%7CI1%2DI2%7C%5E2%2F%282%2Asigma%5E2%29%29)
@@ -400,23 +275,7 @@ pub mod ximgproc {
 		WMF_OFF = 32,
 	}
 
-	impl TryFrom<i32> for WMFWeightType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::WMF_EXP),
-				2 => Ok(Self::WMF_IV1),
-				4 => Ok(Self::WMF_IV2),
-				8 => Ok(Self::WMF_COS),
-				16 => Ok(Self::WMF_JAC),
-				32 => Ok(Self::WMF_OFF),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ximgproc::WMFWeightType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::ximgproc::WMFWeightType }
+	opencv_type_enum! { crate::ximgproc::WMFWeightType { WMF_EXP, WMF_IV1, WMF_IV2, WMF_COS, WMF_JAC, WMF_OFF } }
 
 	pub type Boxes = core::Vector<crate::ximgproc::Box>;
 	/// ## Note

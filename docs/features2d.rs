@@ -65,7 +65,7 @@ pub mod features2d {
 	pub const KAZE_DIFF_WEICKERT: i32 = 2;
 	pub const ORB_FAST_SCORE: i32 = 1;
 	pub const ORB_HARRIS_SCORE: i32 = 0;
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum AKAZE_DescriptorType {
 		/// Upright descriptors, not invariant to rotation
@@ -76,23 +76,9 @@ pub mod features2d {
 		DESCRIPTOR_MLDB = 5,
 	}
 
-	impl TryFrom<i32> for AKAZE_DescriptorType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::features2d::AKAZE_DescriptorType { DESCRIPTOR_KAZE_UPRIGHT, DESCRIPTOR_KAZE, DESCRIPTOR_MLDB_UPRIGHT, DESCRIPTOR_MLDB } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				2 => Ok(Self::DESCRIPTOR_KAZE_UPRIGHT),
-				3 => Ok(Self::DESCRIPTOR_KAZE),
-				4 => Ok(Self::DESCRIPTOR_MLDB_UPRIGHT),
-				5 => Ok(Self::DESCRIPTOR_MLDB),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::AKAZE_DescriptorType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::features2d::AKAZE_DescriptorType }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum AgastFeatureDetector_DetectorType {
 		AGAST_5_8 = 0,
@@ -101,23 +87,9 @@ pub mod features2d {
 		OAST_9_16 = 3,
 	}
 
-	impl TryFrom<i32> for AgastFeatureDetector_DetectorType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::features2d::AgastFeatureDetector_DetectorType { AGAST_5_8, AGAST_7_12d, AGAST_7_12s, OAST_9_16 } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::AGAST_5_8),
-				1 => Ok(Self::AGAST_7_12d),
-				2 => Ok(Self::AGAST_7_12s),
-				3 => Ok(Self::OAST_9_16),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::AgastFeatureDetector_DetectorType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::features2d::AgastFeatureDetector_DetectorType }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum DescriptorMatcher_MatcherType {
 		FLANNBASED = 1,
@@ -128,60 +100,32 @@ pub mod features2d {
 		BRUTEFORCE_SL2 = 6,
 	}
 
-	impl TryFrom<i32> for DescriptorMatcher_MatcherType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::features2d::DescriptorMatcher_MatcherType { FLANNBASED, BRUTEFORCE, BRUTEFORCE_L1, BRUTEFORCE_HAMMING, BRUTEFORCE_HAMMINGLUT, BRUTEFORCE_SL2 } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::FLANNBASED),
-				2 => Ok(Self::BRUTEFORCE),
-				3 => Ok(Self::BRUTEFORCE_L1),
-				4 => Ok(Self::BRUTEFORCE_HAMMING),
-				5 => Ok(Self::BRUTEFORCE_HAMMINGLUT),
-				6 => Ok(Self::BRUTEFORCE_SL2),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::DescriptorMatcher_MatcherType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::features2d::DescriptorMatcher_MatcherType }
-
-	#[repr(C)]
+	#[repr(transparent)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum DrawMatchesFlags {
+	pub struct DrawMatchesFlags(i32);
+
+	impl DrawMatchesFlags {
 		/// Output image matrix will be created (Mat::create),
 		/// i.e. existing memory of output image may be reused.
 		/// Two source image, matches and single keypoints will be drawn.
 		/// For each keypoint only the center point will be drawn (without
 		/// the circle around keypoint with keypoint size and orientation).
-		DEFAULT = 0,
+		pub const DEFAULT: Self = Self(0);
 		/// Output image matrix will not be created (Mat::create).
 		/// Matches will be drawn on existing content of output image.
-		DRAW_OVER_OUTIMG = 1,
+		pub const DRAW_OVER_OUTIMG: Self = Self(1);
 		/// Single keypoints will not be drawn.
-		NOT_DRAW_SINGLE_POINTS = 2,
+		pub const NOT_DRAW_SINGLE_POINTS: Self = Self(2);
 		/// For each keypoint the circle around keypoint with keypoint size and
 		/// orientation will be drawn.
-		DRAW_RICH_KEYPOINTS = 4,
+		pub const DRAW_RICH_KEYPOINTS: Self = Self(4);
 	}
 
-	impl TryFrom<i32> for DrawMatchesFlags {
-		type Error = crate::Error;
+	opencv_type_bitfield_enum! { crate::features2d::DrawMatchesFlags { DEFAULT, DRAW_OVER_OUTIMG, NOT_DRAW_SINGLE_POINTS, DRAW_RICH_KEYPOINTS } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DEFAULT),
-				1 => Ok(Self::DRAW_OVER_OUTIMG),
-				2 => Ok(Self::NOT_DRAW_SINGLE_POINTS),
-				4 => Ok(Self::DRAW_RICH_KEYPOINTS),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::DrawMatchesFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::features2d::DrawMatchesFlags }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum FastFeatureDetector_DetectorType {
 		TYPE_5_8 = 0,
@@ -189,22 +133,9 @@ pub mod features2d {
 		TYPE_9_16 = 2,
 	}
 
-	impl TryFrom<i32> for FastFeatureDetector_DetectorType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::features2d::FastFeatureDetector_DetectorType { TYPE_5_8, TYPE_7_12, TYPE_9_16 } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::TYPE_5_8),
-				1 => Ok(Self::TYPE_7_12),
-				2 => Ok(Self::TYPE_9_16),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::FastFeatureDetector_DetectorType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::features2d::FastFeatureDetector_DetectorType }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum KAZE_DiffusivityType {
 		DIFF_PM_G1 = 0,
@@ -213,42 +144,16 @@ pub mod features2d {
 		DIFF_CHARBONNIER = 3,
 	}
 
-	impl TryFrom<i32> for KAZE_DiffusivityType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::features2d::KAZE_DiffusivityType { DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT, DIFF_CHARBONNIER } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DIFF_PM_G1),
-				1 => Ok(Self::DIFF_PM_G2),
-				2 => Ok(Self::DIFF_WEICKERT),
-				3 => Ok(Self::DIFF_CHARBONNIER),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::KAZE_DiffusivityType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::features2d::KAZE_DiffusivityType }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ORB_ScoreType {
 		HARRIS_SCORE = 0,
 		FAST_SCORE = 1,
 	}
 
-	impl TryFrom<i32> for ORB_ScoreType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::HARRIS_SCORE),
-				1 => Ok(Self::FAST_SCORE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::ORB_ScoreType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::features2d::ORB_ScoreType }
+	opencv_type_enum! { crate::features2d::ORB_ScoreType { HARRIS_SCORE, FAST_SCORE } }
 
 	pub type AffineDescriptorExtractor = crate::features2d::AffineFeature;
 	pub type AffineFeatureDetector = crate::features2d::AffineFeature;
@@ -263,7 +168,26 @@ pub mod features2d {
 	pub type FeatureDetector = crate::features2d::Feature2D;
 	pub type SiftDescriptorExtractor = crate::features2d::SIFT;
 	pub type SiftFeatureDetector = crate::features2d::SIFT;
-	/// @overload
+	/// Detects corners using the AGAST algorithm
+	///
+	/// ## Parameters
+	/// * image: grayscale image where keypoints (corners) are detected.
+	/// * keypoints: keypoints detected on the image.
+	/// * threshold: threshold on difference between intensity of the central pixel and pixels of a
+	/// circle around this pixel.
+	/// * nonmaxSuppression: if true, non-maximum suppression is applied to detected corners
+	/// (keypoints).
+	/// * type: one of the four neighborhoods as defined in the paper:
+	/// AgastFeatureDetector::AGAST_5_8, AgastFeatureDetector::AGAST_7_12d,
+	/// AgastFeatureDetector::AGAST_7_12s, AgastFeatureDetector::OAST_9_16
+	///
+	/// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
+	/// The 32-bit binary tree tables were generated automatically from original code using perl script.
+	/// The perl script and examples of tree generation are placed in features2d/doc folder.
+	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [agast] function uses the following default values for its arguments:
@@ -337,7 +261,28 @@ pub mod features2d {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Detects corners using the FAST algorithm
+	///
+	/// ## Parameters
+	/// * image: grayscale image where keypoints (corners) are detected.
+	/// * keypoints: keypoints detected on the image.
+	/// * threshold: threshold on difference between intensity of the central pixel and pixels of a
+	/// circle around this pixel.
+	/// * nonmaxSuppression: if true, non-maximum suppression is applied to detected corners
+	/// (keypoints).
+	/// * type: one of the three neighborhoods as defined in the paper:
+	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
+	/// FastFeatureDetector::TYPE_5_8
+	///
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Rosten06) .
+	///
+	///
+	/// Note: In Python API, types are given as cv.FAST_FEATURE_DETECTOR_TYPE_5_8,
+	/// cv.FAST_FEATURE_DETECTOR_TYPE_7_12 and cv.FAST_FEATURE_DETECTOR_TYPE_9_16. For corner
+	/// detection, use cv.FAST.detect() method.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [fast] function uses the following default values for its arguments:
@@ -568,7 +513,31 @@ pub mod features2d {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Draws the found matches of keypoints from two images.
+	///
+	/// ## Parameters
+	/// * img1: First source image.
+	/// * keypoints1: Keypoints from the first source image.
+	/// * img2: Second source image.
+	/// * keypoints2: Keypoints from the second source image.
+	/// * matches1to2: Matches from the first image to the second one, which means that keypoints1[i]
+	/// has a corresponding point in keypoints2[matches[i]] .
+	/// * outImg: Output image. Its content depends on the flags value defining what is drawn in the
+	/// output image. See possible flags bit values below.
+	/// * matchColor: Color of matches (lines and connected keypoints). If matchColor==Scalar::all(-1)
+	/// , the color is generated randomly.
+	/// * singlePointColor: Color of single keypoints (circles), which means that keypoints do not
+	/// have the matches. If singlePointColor==Scalar::all(-1) , the color is generated randomly.
+	/// * matchesMask: Mask determining which matches are drawn. If the mask is empty, all matches are
+	/// drawn.
+	/// * flags: Flags setting drawing features. Possible flags bit values are defined by
+	/// DrawMatchesFlags.
+	///
+	/// This function draws matches of keypoints from two images in the output image. Match is a line
+	/// connecting two keypoints (circles). See cv::DrawMatchesFlags.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [draw_matches_with_thickness] function uses the following default values for its arguments:
@@ -1730,8 +1699,19 @@ pub mod features2d {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Computes an image descriptor using the set visual vocabulary.
+		///
 		/// ## Parameters
+		/// * image: Image, for which the descriptor is computed.
+		/// * keypoints: Keypoints detected in the input image.
+		/// * imgDescriptor: Computed output image descriptor.
+		/// * pointIdxsOfClusters: Indices of keypoints that belong to the cluster. This means that
+		/// pointIdxsOfClusters[i] are keypoint indices that belong to the i -th cluster (word of vocabulary)
+		/// returned if it is non-zero.
+		/// * descriptors: Descriptors of the image keypoints that are returned if they are non-zero.
+		///
+		/// ## Overloaded parameters
+		///
 		/// * keypointDescriptors: Computed descriptors to match with vocabulary.
 		/// * imgDescriptor: Computed output image descriptor.
 		/// * pointIdxsOfClusters: Indices of keypoints that belong to the cluster. This means that
@@ -2797,8 +2777,25 @@ pub mod features2d {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Finds the best match for each descriptor from a query set.
+		///
 		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches. If a query descriptor is masked out in mask , no match is added for this
+		/// descriptor. So, matches size may be smaller than the query descriptors count.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		///
+		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
+		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
+		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
+		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
+		/// mask.at\<uchar\>(i,j) is non-zero.
+		///
+		/// ## Overloaded parameters
+		///
 		/// * queryDescriptors: Query set of descriptors.
 		/// * matches: Matches. If a query descriptor is masked out in mask , no match is added for this
 		/// descriptor. So, matches size may be smaller than the query descriptors count.
@@ -2863,8 +2860,27 @@ pub mod features2d {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Finds the k best matches for each descriptor from a query set.
+		///
 		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * matches: Matches. Each matches[i] is k or less matches for the same query descriptor.
+		/// * k: Count of best matches found per each query descriptor or less if a query descriptor has
+		/// less than k possible matches in total.
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		///
+		/// These extended variants of DescriptorMatcher::match methods find several best matches for each query
+		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::match
+		/// for the details about query and train descriptors.
+		///
+		/// ## Overloaded parameters
+		///
 		/// * queryDescriptors: Query set of descriptors.
 		/// * matches: Matches. Each matches[i] is k or less matches for the same query descriptor.
 		/// * k: Count of best matches found per each query descriptor or less if a query descriptor has
@@ -2936,8 +2952,28 @@ pub mod features2d {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// For each query descriptor, finds the training descriptors not farther than the specified distance.
+		///
 		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Found matches.
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		/// * maxDistance: Threshold for the distance between matched descriptors. Distance means here
+		/// metric distance (e.g. Hamming distance), not the distance between coordinates (which is measured
+		/// in Pixels)!
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		///
+		/// For each query descriptor, the methods find such training descriptors that the distance between the
+		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
+		/// returned in the distance increasing order.
+		///
+		/// ## Overloaded parameters
+		///
 		/// * queryDescriptors: Query set of descriptors.
 		/// * matches: Found matches.
 		/// * maxDistance: Threshold for the distance between matched descriptors. Distance means here
@@ -3380,8 +3416,17 @@ pub mod features2d {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Detects keypoints in an image (first variant) or image set (second variant).
+		///
 		/// ## Parameters
+		/// * image: Image.
+		/// * keypoints: The detected keypoints. In the second variant of the method keypoints[i] is a set
+		/// of keypoints detected in images[i] .
+		/// * mask: Mask specifying where to look for keypoints (optional). It must be a 8-bit integer
+		/// matrix with non-zero values in the region of interest.
+		///
+		/// ## Overloaded parameters
+		///
 		/// * images: Image set.
 		/// * keypoints: The detected keypoints. In the second variant of the method keypoints[i] is a set
 		/// of keypoints detected in images[i] .

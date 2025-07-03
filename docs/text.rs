@@ -99,48 +99,25 @@ pub mod text {
 	pub const PSM_SINGLE_COLUMN: i32 = 4;
 	pub const PSM_SINGLE_LINE: i32 = 7;
 	pub const PSM_SINGLE_WORD: i32 = 8;
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum classifier_type {
 		OCR_KNN_CLASSIFIER = 0,
 		OCR_CNN_CLASSIFIER = 1,
 	}
 
-	impl TryFrom<i32> for classifier_type {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::text::classifier_type { OCR_KNN_CLASSIFIER, OCR_CNN_CLASSIFIER } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::OCR_KNN_CLASSIFIER),
-				1 => Ok(Self::OCR_CNN_CLASSIFIER),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::text::classifier_type"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::text::classifier_type }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum decoder_mode {
 		OCR_DECODER_VITERBI = 0,
 	}
 
-	impl TryFrom<i32> for decoder_mode {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::OCR_DECODER_VITERBI),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::text::decoder_mode"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::text::decoder_mode }
+	opencv_type_enum! { crate::text::decoder_mode { OCR_DECODER_VITERBI } }
 
 	/// text::erGrouping operation modes
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum erGrouping_Modes {
 		/// Exhaustive Search algorithm proposed in [Neumann11](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Neumann11) for grouping horizontally aligned text.
@@ -166,22 +143,10 @@ pub mod text {
 		ERGROUPING_ORIENTATION_ANY = 1,
 	}
 
-	impl TryFrom<i32> for erGrouping_Modes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::ERGROUPING_ORIENTATION_HORIZ),
-				1 => Ok(Self::ERGROUPING_ORIENTATION_ANY),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::text::erGrouping_Modes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::text::erGrouping_Modes }
+	opencv_type_enum! { crate::text::erGrouping_Modes { ERGROUPING_ORIENTATION_HORIZ, ERGROUPING_ORIENTATION_ANY } }
 
 	/// Tesseract.OcrEngineMode Enumeration
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ocr_engine_mode {
 		OEM_TESSERACT_ONLY = 0,
@@ -190,24 +155,10 @@ pub mod text {
 		OEM_DEFAULT = 3,
 	}
 
-	impl TryFrom<i32> for ocr_engine_mode {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::OEM_TESSERACT_ONLY),
-				1 => Ok(Self::OEM_CUBE_ONLY),
-				2 => Ok(Self::OEM_TESSERACT_CUBE_COMBINED),
-				3 => Ok(Self::OEM_DEFAULT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::text::ocr_engine_mode"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::text::ocr_engine_mode }
+	opencv_type_enum! { crate::text::ocr_engine_mode { OEM_TESSERACT_ONLY, OEM_CUBE_ONLY, OEM_TESSERACT_CUBE_COMBINED, OEM_DEFAULT } }
 
 	/// Tesseract.PageSegMode Enumeration
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum page_seg_mode {
 		PSM_OSD_ONLY = 0,
@@ -223,28 +174,7 @@ pub mod text {
 		PSM_SINGLE_CHAR = 10,
 	}
 
-	impl TryFrom<i32> for page_seg_mode {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::PSM_OSD_ONLY),
-				1 => Ok(Self::PSM_AUTO_OSD),
-				2 => Ok(Self::PSM_AUTO_ONLY),
-				3 => Ok(Self::PSM_AUTO),
-				4 => Ok(Self::PSM_SINGLE_COLUMN),
-				5 => Ok(Self::PSM_SINGLE_BLOCK_VERT_TEXT),
-				6 => Ok(Self::PSM_SINGLE_BLOCK),
-				7 => Ok(Self::PSM_SINGLE_LINE),
-				8 => Ok(Self::PSM_SINGLE_WORD),
-				9 => Ok(Self::PSM_CIRCLE_WORD),
-				10 => Ok(Self::PSM_SINGLE_CHAR),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::text::page_seg_mode"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::text::page_seg_mode }
+	opencv_type_enum! { crate::text::page_seg_mode { PSM_OSD_ONLY, PSM_AUTO_OSD, PSM_AUTO_ONLY, PSM_AUTO, PSM_SINGLE_COLUMN, PSM_SINGLE_BLOCK_VERT_TEXT, PSM_SINGLE_BLOCK, PSM_SINGLE_LINE, PSM_SINGLE_WORD, PSM_CIRCLE_WORD, PSM_SINGLE_CHAR } }
 
 	/// Converts MSER contours (vector\<Point\>) to ERStat regions.
 	///
@@ -409,7 +339,29 @@ pub mod text {
 	/// Reads an Extremal Region Filter for the 1st stage classifier of N&M algorithm
 	///    from the provided path e.g. /path/to/cpp/trained_classifierNM1.xml
 	///
-	/// @overload
+	/// Create an Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Neumann12).
+	///
+	/// ## Parameters
+	/// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
+	/// loadClassifierNM1, e.g. from file in samples/cpp/trained_classifierNM1.xml
+	/// * thresholdDelta: :   Threshold step in subsequent thresholds when extracting the component tree
+	/// * minArea: :   The minimum area (% of image size) allowed for retreived ER's
+	/// * maxArea: :   The maximum area (% of image size) allowed for retreived ER's
+	/// * minProbability: :   The minimum probability P(er|character) allowed for retreived ER's
+	/// * nonMaxSuppression: :   Whenever non-maximum suppression is done over the branch probabilities
+	/// * minProbabilityDiff: :   The minimum probability difference between local maxima and local minima ERs
+	///
+	/// The component tree of the image is extracted by a threshold increased step by step from 0 to 255,
+	/// incrementally computable descriptors (aspect_ratio, compactness, number of holes, and number of
+	/// horizontal crossings) are computed for each ER and used as features for a classifier which estimates
+	/// the class-conditional probability P(er|character). The value of P(er|character) is tracked using the
+	/// inclusion relation of ER across all thresholds and only the ERs which correspond to local maximum of
+	/// the probability P(er|character) are selected (if the local maximum of the probability is above a
+	/// global limit pmin and the difference between local maximum and local minimum is greater than
+	/// minProbabilityDiff).
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [create_er_filter_nm1_from_file] function uses the following default values for its arguments:
@@ -526,7 +478,20 @@ pub mod text {
 	/// Reads an Extremal Region Filter for the 2nd stage classifier of N&M algorithm
 	///    from the provided path e.g. /path/to/cpp/trained_classifierNM2.xml
 	///
-	/// @overload
+	/// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Neumann12).
+	///
+	/// ## Parameters
+	/// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
+	/// loadClassifierNM2, e.g. from file in samples/cpp/trained_classifierNM2.xml
+	/// * minProbability: :   The minimum probability P(er|character) allowed for retreived ER's
+	///
+	/// In the second stage, the ERs that passed the first stage are classified into character and
+	/// non-character classes using more informative but also more computationally expensive features. The
+	/// classifier uses all the features calculated in the first stage and the following additional
+	/// features: hole area ratio, convex hull ratio, and number of outer inflexion points.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [create_er_filter_nm2_from_file] function uses the following default values for its arguments:
@@ -1768,7 +1733,27 @@ pub mod text {
 
 		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
 		///
-		/// @overload
+		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
+		///
+		/// ## Parameters
+		/// * classifier: The character classifier with built in feature extractor.
+		///
+		/// * vocabulary: The language vocabulary (chars when ASCII English text). vocabulary.size()
+		/// must be equal to the number of classes of the classifier.
+		///
+		/// * transition_probabilities_table: Table with transition probabilities between character
+		/// pairs. cols == rows == vocabulary.size().
+		///
+		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
+		/// rows == vocabulary.size().
+		///
+		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
+		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
+		///
+		/// * beam_size: Size of the beam in Beam Search algorithm.
+		///
+		/// ## Overloaded parameters
+		///
 		///
 		/// ## Note
 		/// This alternative version of [OCRBeamSearchDecoder::create_from_file] function uses the following default values for its arguments:
@@ -2250,7 +2235,25 @@ pub mod text {
 
 		/// Creates an instance of the OCRHMMDecoder class. Loads and initializes HMMDecoder from the specified path
 		///
-		/// @overload
+		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
+		///
+		/// ## Parameters
+		/// * classifier: The character classifier with built in feature extractor.
+		///
+		/// * vocabulary: The language vocabulary (chars when ascii english text). vocabulary.size()
+		/// must be equal to the number of classes of the classifier.
+		///
+		/// * transition_probabilities_table: Table with transition probabilities between character
+		/// pairs. cols == rows == vocabulary.size().
+		///
+		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
+		/// rows == vocabulary.size().
+		///
+		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
+		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
+		///
+		/// ## Overloaded parameters
+		///
 		///
 		/// ## Note
 		/// This alternative version of [OCRHMMDecoder::create_from_file] function uses the following default values for its arguments:

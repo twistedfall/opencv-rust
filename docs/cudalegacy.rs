@@ -12,9 +12,9 @@ pub mod cudalegacy {
 	pub const HaarFeatureDescriptor32_CreateCheck_MaxNumFeatures: i32 = 0x1F;
 	pub const HaarFeatureDescriptor32_Interpret_MaskFlagLeftNodeLeaf: i32 = 0x40000000;
 	pub const HaarFeatureDescriptor32_Interpret_MaskFlagRightNodeLeaf: i32 = 0x20000000;
-	pub const HaarFeatureDescriptor32_Interpret_MaskFlagTilted: i32 = 0x80000000;
+	pub const HaarFeatureDescriptor32_Interpret_MaskFlagTilted: i32 = 0x80000000u32 as i32;
 	pub const HaarFeatureDescriptor32_NumFeatures_Shift: i32 = 24;
-	pub const HaarStage64_Interpret_MaskRootNodeOffset: i32 = 0xFFFF0000;
+	pub const HaarStage64_Interpret_MaskRootNodeOffset: i32 = 0xFFFF0000u32 as i32;
 	pub const HaarStage64_Interpret_MaskRootNodes: i32 = 0x0000FFFF;
 	pub const HaarStage64_Interpret_ShiftRootNodeOffset: i32 = 16;
 	pub const NCVMemoryTypeDevice: i32 = 3;
@@ -84,7 +84,7 @@ pub mod cudalegacy {
 	pub const NPPST_SUCCESS: i32 = 0;
 	/// CUDA texture binding error or non-zero offset returned
 	pub const NPPST_TEXTURE_BIND_ERROR: i32 = 4;
-	pub const OBJDET_MASK_ELEMENT_INVALID_32U: i32 = 0xFFFFFFFF;
+	pub const OBJDET_MASK_ELEMENT_INVALID_32U: i32 = 0xFFFFFFFFu32 as i32;
 	pub const RECT_SIMILARITY_PROPORTION: f32 = 0.2;
 	/// Bicubic convolution filter, a = -0.5 (cubic Hermite spline)
 	pub const nppStBicubic: i32 = 1;
@@ -99,7 +99,7 @@ pub mod cudalegacy {
 	/// Supersampling. For downscaling only
 	pub const nppStSupersample: i32 = 0;
 	/// NCVMemoryType
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum NCVMemoryType {
 		NCVMemoryTypeNone = 0,
@@ -108,27 +108,13 @@ pub mod cudalegacy {
 		NCVMemoryTypeDevice = 3,
 	}
 
-	impl TryFrom<i32> for NCVMemoryType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::NCVMemoryTypeNone),
-				1 => Ok(Self::NCVMemoryTypeHostPageable),
-				2 => Ok(Self::NCVMemoryTypeHostPinned),
-				3 => Ok(Self::NCVMemoryTypeDevice),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudalegacy::NCVMemoryType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudalegacy::NCVMemoryType }
+	opencv_type_enum! { crate::cudalegacy::NCVMemoryType { NCVMemoryTypeNone, NCVMemoryTypeHostPageable, NCVMemoryTypeHostPinned, NCVMemoryTypeDevice } }
 
 	/// Border type
 	///
 	/// Filtering operations assume that each pixel has a neighborhood of pixels.
 	/// The following structure describes possible ways to define non-existent pixels.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum NppStBorderType {
 		/// There is no need to define additional pixels, image is extended already
@@ -141,24 +127,10 @@ pub mod cudalegacy {
 		nppStBorderMirror = 3,
 	}
 
-	impl TryFrom<i32> for NppStBorderType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::nppStBorderNone),
-				1 => Ok(Self::nppStBorderClamp),
-				2 => Ok(Self::nppStBorderWrap),
-				3 => Ok(Self::nppStBorderMirror),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudalegacy::NppStBorderType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudalegacy::NppStBorderType }
+	opencv_type_enum! { crate::cudalegacy::NppStBorderType { nppStBorderNone, nppStBorderClamp, nppStBorderWrap, nppStBorderMirror } }
 
 	/// Filter types for image resizing
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum NppStInterpMode {
 		/// Supersampling. For downscaling only
@@ -167,19 +139,7 @@ pub mod cudalegacy {
 		nppStBicubic = 1,
 	}
 
-	impl TryFrom<i32> for NppStInterpMode {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::nppStSupersample),
-				1 => Ok(Self::nppStBicubic),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudalegacy::NppStInterpMode"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudalegacy::NppStInterpMode }
+	opencv_type_enum! { crate::cudalegacy::NppStInterpMode { nppStSupersample, nppStBicubic } }
 
 	pub type NCVDebugOutputHandler = Option<unsafe extern "C" fn(*const c_char) -> ()>;
 	pub type NCVStatus = crate::cudalegacy::Ncv32u;

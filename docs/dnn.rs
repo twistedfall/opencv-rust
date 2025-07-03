@@ -69,7 +69,7 @@ pub mod dnn {
 	/// Enum of computation backends supported by layers.
 	/// ## See also
 	/// Net::setPreferableBackend
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum Backend {
 		/// DNN_BACKEND_DEFAULT equals to OPENCV_DNN_BACKEND_DEFAULT, which can be defined using CMake or a configuration parameter
@@ -88,31 +88,12 @@ pub mod dnn {
 		DNN_BACKEND_CANN = 8,
 	}
 
-	impl TryFrom<i32> for Backend {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DNN_BACKEND_DEFAULT),
-				1 => Ok(Self::DNN_BACKEND_HALIDE),
-				2 => Ok(Self::DNN_BACKEND_INFERENCE_ENGINE),
-				3 => Ok(Self::DNN_BACKEND_OPENCV),
-				4 => Ok(Self::DNN_BACKEND_VKCOM),
-				5 => Ok(Self::DNN_BACKEND_CUDA),
-				6 => Ok(Self::DNN_BACKEND_WEBNN),
-				7 => Ok(Self::DNN_BACKEND_TIMVX),
-				8 => Ok(Self::DNN_BACKEND_CANN),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::dnn::Backend"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::dnn::Backend }
+	opencv_type_enum! { crate::dnn::Backend { DNN_BACKEND_DEFAULT, DNN_BACKEND_HALIDE, DNN_BACKEND_INFERENCE_ENGINE, DNN_BACKEND_OPENCV, DNN_BACKEND_VKCOM, DNN_BACKEND_CUDA, DNN_BACKEND_WEBNN, DNN_BACKEND_TIMVX, DNN_BACKEND_CANN } }
 
 	/// Enum of data layout for model inference.
 	/// ## See also
 	/// Image2BlobParams
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum DataLayout {
 		DNN_LAYOUT_UNKNOWN = 0,
@@ -130,31 +111,14 @@ pub mod dnn {
 		DNN_LAYOUT_PLANAR = 6,
 	}
 
-	impl TryFrom<i32> for DataLayout {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DNN_LAYOUT_UNKNOWN),
-				1 => Ok(Self::DNN_LAYOUT_ND),
-				2 => Ok(Self::DNN_LAYOUT_NCHW),
-				3 => Ok(Self::DNN_LAYOUT_NCDHW),
-				4 => Ok(Self::DNN_LAYOUT_NHWC),
-				5 => Ok(Self::DNN_LAYOUT_NDHWC),
-				6 => Ok(Self::DNN_LAYOUT_PLANAR),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::dnn::DataLayout"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::dnn::DataLayout }
+	opencv_type_enum! { crate::dnn::DataLayout { DNN_LAYOUT_UNKNOWN, DNN_LAYOUT_ND, DNN_LAYOUT_NCHW, DNN_LAYOUT_NCDHW, DNN_LAYOUT_NHWC, DNN_LAYOUT_NDHWC, DNN_LAYOUT_PLANAR } }
 
 	/// Enum of image processing mode.
 	/// To facilitate the specialization pre-processing requirements of the dnn model.
 	/// For example, the `letter box` often used in the Yolo series of models.
 	/// ## See also
 	/// Image2BlobParams
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImagePaddingMode {
 		DNN_PMODE_NULL = 0,
@@ -162,49 +126,24 @@ pub mod dnn {
 		DNN_PMODE_LETTERBOX = 2,
 	}
 
-	impl TryFrom<i32> for ImagePaddingMode {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DNN_PMODE_NULL),
-				1 => Ok(Self::DNN_PMODE_CROP_CENTER),
-				2 => Ok(Self::DNN_PMODE_LETTERBOX),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::dnn::ImagePaddingMode"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::dnn::ImagePaddingMode }
+	opencv_type_enum! { crate::dnn::ImagePaddingMode { DNN_PMODE_NULL, DNN_PMODE_CROP_CENTER, DNN_PMODE_LETTERBOX } }
 
 	/// Enum of Soft NMS methods.
 	/// ## See also
 	/// softNMSBoxes
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SoftNMSMethod {
 		SOFTNMS_LINEAR = 1,
 		SOFTNMS_GAUSSIAN = 2,
 	}
 
-	impl TryFrom<i32> for SoftNMSMethod {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::SOFTNMS_LINEAR),
-				2 => Ok(Self::SOFTNMS_GAUSSIAN),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::dnn::SoftNMSMethod"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::dnn::SoftNMSMethod }
+	opencv_type_enum! { crate::dnn::SoftNMSMethod { SOFTNMS_LINEAR, SOFTNMS_GAUSSIAN } }
 
 	/// Enum of target devices for computations.
 	/// ## See also
 	/// Net::setPreferableTarget
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum Target {
 		DNN_TARGET_CPU = 0,
@@ -221,28 +160,7 @@ pub mod dnn {
 		DNN_TARGET_CPU_FP16 = 10,
 	}
 
-	impl TryFrom<i32> for Target {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DNN_TARGET_CPU),
-				1 => Ok(Self::DNN_TARGET_OPENCL),
-				2 => Ok(Self::DNN_TARGET_OPENCL_FP16),
-				3 => Ok(Self::DNN_TARGET_MYRIAD),
-				4 => Ok(Self::DNN_TARGET_VULKAN),
-				5 => Ok(Self::DNN_TARGET_FPGA),
-				6 => Ok(Self::DNN_TARGET_CUDA),
-				7 => Ok(Self::DNN_TARGET_CUDA_FP16),
-				8 => Ok(Self::DNN_TARGET_HDDL),
-				9 => Ok(Self::DNN_TARGET_NPU),
-				10 => Ok(Self::DNN_TARGET_CPU_FP16),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::dnn::Target"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::dnn::Target }
+	opencv_type_enum! { crate::dnn::Target { DNN_TARGET_CPU, DNN_TARGET_OPENCL, DNN_TARGET_OPENCL_FP16, DNN_TARGET_MYRIAD, DNN_TARGET_VULKAN, DNN_TARGET_FPGA, DNN_TARGET_CUDA, DNN_TARGET_CUDA_FP16, DNN_TARGET_HDDL, DNN_TARGET_NPU, DNN_TARGET_CPU_FP16 } }
 
 	/// Each Layer class must provide this function to the factory
 	pub type LayerFactory_Constructor = Option<unsafe extern "C" fn(*mut c_void) -> *mut c_void>;
@@ -473,7 +391,19 @@ pub mod dnn {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Creates 4-dimensional blob from image with given params.
+	///
+	/// @details This function is an extension of [blobFromImage] to meet more image preprocess needs.
+	/// Given input image and preprocessing parameters, and function outputs the blob.
+	///
+	/// ## Parameters
+	/// * image: input image (all with 1-, 3- or 4-channels).
+	/// * param: struct of Image2BlobParams, contains all parameters needed by processing of image to blob.
+	/// ## Returns
+	/// 4-dimensional Mat.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [blob_from_image_with_params_1] function uses the following default values for its arguments:
@@ -690,7 +620,19 @@ pub mod dnn {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Creates 4-dimensional blob from series of images with given params.
+	///
+	/// @details This function is an extension of [blobFromImages] to meet more image preprocess needs.
+	/// Given input image and preprocessing parameters, and function outputs the blob.
+	///
+	/// ## Parameters
+	/// * images: input image (all with 1-, 3- or 4-channels).
+	/// * param: struct of Image2BlobParams, contains all parameters needed by processing of image to blob.
+	/// ## Returns
+	/// 4-dimensional Mat.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [blob_from_images_with_params_1] function uses the following default values for its arguments:

@@ -319,8 +319,19 @@ pub mod bioinspired {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Try to open an XML retina parameters file to adjust current retina instance setup
+		///
+		/// - if the xml file does not exist, then default setup is applied
+		/// - warning, Exceptions are thrown if read XML file is not valid
 		/// ## Parameters
+		/// * retinaParameterFile: the parameters filename
+		/// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
+		///
+		/// You can retrieve the current parameters structure using the method Retina::getParameters and update
+		/// it before running method Retina::setup.
+		///
+		/// ## Overloaded parameters
+		///
 		/// * fs: the open Filestorage which contains retina parameters
 		/// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
 		///

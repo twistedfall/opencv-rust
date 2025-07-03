@@ -1,3 +1,16 @@
+* 0.96.0
+  * Introduce `OPENCV_CMAKE_TOOLCHAIN_FILE` and `OPENCV_CMAKE_ARGS` environment variables (fixes https://github.com/twistedfall/opencv-rust/issues/683).
+  * Enums that represent bitfields now generate the special `struct`s that allow flag combinations, see `OpenCVBitfieldEnum` trait
+    for details (fixes https://github.com/twistedfall/opencv-rust/issues/675).
+  * `Mat::at` no longer allows addressing matrices with more than 2 dimensions. OpenCV explicitly forbids this, and it was
+    previously allowed by accident.
+  * `Mat::from_exact_iter` now creates a 1-row matrix instead of 1-column matrix. Previous behavior was inconsistent with OpenCV.
+  * `MatStep` indexing operator is now unsafe as it allowed out-of-bounds access.
+  * "video" feature now depends on "dnn" (fixes https://github.com/twistedfall/opencv-rust/issues/686).
+  * Fix building with clang-21 on Windows (fixes https://github.com/twistedfall/opencv-rust/issues/693).
+  * Documentation generation improvements for overloaded functions.
+  * Bump Rust MSRV to 1.81.0.
+
 * 0.95.1
   * Add `Deref` for `MatSize`.
   * Fix assertion error with `Mat::at` addressing on OpenCV 4.12.

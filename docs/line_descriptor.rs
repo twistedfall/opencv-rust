@@ -88,36 +88,25 @@ pub mod line_descriptor {
 	pub const DrawLinesMatchesFlags_NOT_DRAW_SINGLE_LINES: i32 = 2;
 	pub const MLN10: f64 = 2.30258509299404568402;
 	pub const RELATIVE_ERROR_FACTOR: f64 = 100.0;
-	#[repr(C)]
+	#[repr(transparent)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum DrawLinesMatchesFlags {
+	pub struct DrawLinesMatchesFlags(i32);
+
+	impl DrawLinesMatchesFlags {
 		/// Output image matrix will be created (Mat::create),
 		/// i.e. existing memory of output image may be reused.
 		/// Two source images, matches, and single keylines
 		/// will be drawn.
-		DEFAULT = 0,
+		pub const DEFAULT: Self = Self(0);
 		/// Output image matrix will not be
 		/// created (using Mat::create). Matches will be drawn
 		/// on existing content of output image.
-		DRAW_OVER_OUTIMG = 1,
+		pub const DRAW_OVER_OUTIMG: Self = Self(1);
 		/// Single keylines will not be drawn.
-		NOT_DRAW_SINGLE_LINES = 2,
+		pub const NOT_DRAW_SINGLE_LINES: Self = Self(2);
 	}
 
-	impl TryFrom<i32> for DrawLinesMatchesFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::DEFAULT),
-				1 => Ok(Self::DRAW_OVER_OUTIMG),
-				2 => Ok(Self::NOT_DRAW_SINGLE_LINES),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::line_descriptor::DrawLinesMatchesFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::line_descriptor::DrawLinesMatchesFlags }
+	opencv_type_bitfield_enum! { crate::line_descriptor::DrawLinesMatchesFlags { DEFAULT, DRAW_OVER_OUTIMG, NOT_DRAW_SINGLE_LINES } }
 
 	pub type UINT16 = u16;
 	pub type UINT32 = u32;
@@ -360,9 +349,16 @@ pub mod line_descriptor {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Requires line detection
 		///
 		/// ## Parameters
+		/// * image: input image
+		/// * keypoints: vector that will store extracted lines for one or more images
+		/// * mask: mask matrix to detect only KeyLines of interest
+		///
+		/// ## Overloaded parameters
+		///
+		///
 		/// * images: input images
 		/// * keylines: set of vectors that will store extracted lines for one or more images
 		/// * masks: vector of mask matrices to detect only KeyLines of interest from each input image
@@ -445,9 +441,17 @@ pub mod line_descriptor {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Requires descriptors computation
 		///
 		/// ## Parameters
+		/// * image: input image
+		/// * keylines: vector containing lines for which descriptors must be computed
+		/// * descriptors: 
+		/// * returnFloatDescr: flag (when set to true, original non-binary descriptors are returned)
+		///
+		/// ## Overloaded parameters
+		///
+		///
 		/// * images: input images
 		/// * keylines: set of vectors containing lines for which descriptors must be computed
 		/// * descriptors: 
@@ -1099,8 +1103,17 @@ pub mod line_descriptor {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// For every input query descriptor, retrieve the best matching one from a dataset provided from user
+		/// or from the one internal to class
+		///
 		/// ## Parameters
+		/// * queryDescriptors: query descriptors
+		/// * trainDescriptors: dataset of descriptors furnished by user
+		/// * matches: vector to host retrieved matches
+		/// * mask: mask to select which input descriptors must be matched to one in dataset
+		///
+		/// ## Overloaded parameters
+		///
 		/// * queryDescriptors: query descriptors
 		/// * matches: vector to host retrieved matches
 		/// * masks: vector of masks to select which input descriptors must be matched to one in dataset
@@ -1154,8 +1167,20 @@ pub mod line_descriptor {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// For every input query descriptor, retrieve the best *k* matching ones from a dataset provided from
+		/// user or from the one internal to class
+		///
 		/// ## Parameters
+		/// * queryDescriptors: query descriptors
+		/// * trainDescriptors: dataset of descriptors furnished by user
+		/// * matches: vector to host retrieved matches
+		/// * k: number of the closest descriptors to be returned for every input query
+		/// * mask: mask to select which input descriptors must be matched to ones in dataset
+		/// * compactResult: flag to obtain a compact result (if true, a vector that doesn't contain any
+		/// matches for a given query is not inserted in final result)
+		///
+		/// ## Overloaded parameters
+		///
 		/// * queryDescriptors: query descriptors
 		/// * matches: vector to host retrieved matches
 		/// * k: number of the closest descriptors to be returned for every input query
@@ -1213,8 +1238,20 @@ pub mod line_descriptor {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// For every input query descriptor, retrieve, from a dataset provided from user or from the one
+		/// internal to class, all the descriptors that are not further than *maxDist* from input query
+		///
 		/// ## Parameters
+		/// * queryDescriptors: query descriptors
+		/// * trainDescriptors: dataset of descriptors furnished by user
+		/// * matches: vector to host retrieved matches
+		/// * maxDistance: search radius
+		/// * mask: mask to select which input descriptors must be matched to ones in dataset
+		/// * compactResult: flag to obtain a compact result (if true, a vector that doesn't contain any
+		/// matches for a given query is not inserted in final result)
+		///
+		/// ## Overloaded parameters
+		///
 		/// * queryDescriptors: query descriptors
 		/// * matches: vector to host retrieved matches
 		/// * maxDistance: search radius
@@ -1510,8 +1547,17 @@ pub mod line_descriptor {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Detect lines inside an image.
+		///
 		/// ## Parameters
+		/// * image: input image
+		/// * keypoints: vector that will store extracted lines for one or more images
+		/// * scale: scale factor used in pyramids generation
+		/// * numOctaves: number of octaves inside pyramid
+		/// * mask: mask matrix to detect only KeyLines of interest
+		///
+		/// ## Overloaded parameters
+		///
 		/// * images: input images
 		/// * keylines: set of vectors that will store extracted lines for one or more images
 		/// * scale: scale factor used in pyramids generation

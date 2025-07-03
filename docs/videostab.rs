@@ -38,7 +38,7 @@ pub mod videostab {
 	pub const MM_TRANSLATION_AND_SCALE: i32 = 1;
 	pub const MM_UNKNOWN: i32 = 7;
 	/// Describes motion model between two point clouds.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum MotionModel {
 		MM_TRANSLATION = 0,
@@ -51,25 +51,7 @@ pub mod videostab {
 		MM_UNKNOWN = 7,
 	}
 
-	impl TryFrom<i32> for MotionModel {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::MM_TRANSLATION),
-				1 => Ok(Self::MM_TRANSLATION_AND_SCALE),
-				2 => Ok(Self::MM_ROTATION),
-				3 => Ok(Self::MM_RIGID),
-				4 => Ok(Self::MM_SIMILARITY),
-				5 => Ok(Self::MM_AFFINE),
-				6 => Ok(Self::MM_HOMOGRAPHY),
-				7 => Ok(Self::MM_UNKNOWN),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::videostab::MotionModel"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::videostab::MotionModel }
+	opencv_type_enum! { crate::videostab::MotionModel { MM_TRANSLATION, MM_TRANSLATION_AND_SCALE, MM_ROTATION, MM_RIGID, MM_SIMILARITY, MM_AFFINE, MM_HOMOGRAPHY, MM_UNKNOWN } }
 
 	#[inline]
 	pub fn calc_blurriness(frame: &impl core::MatTraitConst) -> Result<f32> {

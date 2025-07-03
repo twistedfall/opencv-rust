@@ -747,7 +747,7 @@ pub mod videoio {
 	///
 	///
 	/// Note: In case of FFmpeg backend, it translated to enum AVHWDeviceType (<https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/hwcontext.h>)
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum VideoAccelerationType {
 		/// Do not require any specific H/W acceleration, prefer software processing.
@@ -767,22 +767,7 @@ pub mod videoio {
 		VIDEO_ACCELERATION_MFX = 4,
 	}
 
-	impl TryFrom<i32> for VideoAccelerationType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::VIDEO_ACCELERATION_NONE),
-				1 => Ok(Self::VIDEO_ACCELERATION_ANY),
-				2 => Ok(Self::VIDEO_ACCELERATION_D3D11),
-				3 => Ok(Self::VIDEO_ACCELERATION_VAAPI),
-				4 => Ok(Self::VIDEO_ACCELERATION_MFX),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::videoio::VideoAccelerationType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::videoio::VideoAccelerationType }
+	opencv_type_enum! { crate::videoio::VideoAccelerationType { VIDEO_ACCELERATION_NONE, VIDEO_ACCELERATION_ANY, VIDEO_ACCELERATION_D3D11, VIDEO_ACCELERATION_VAAPI, VIDEO_ACCELERATION_MFX } }
 
 	/// cv::VideoCapture API backends identifier.
 	///
@@ -797,7 +782,7 @@ pub mod videoio {
 	/// if possible. Environment flag "OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS" set to 0
 	/// disables it and may improve initialization time. More details:
 	/// <https://learn.microsoft.com/en-us/windows/win32/medfound/mf-readwrite-enable-hardware-transforms>
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum VideoCaptureAPIs {
 		/// Auto detect == 0
@@ -881,65 +866,12 @@ pub mod videoio {
 		CAP_OBSENSOR = 2600,
 	}
 
-	impl TryFrom<i32> for VideoCaptureAPIs {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::CAP_ANY),
-				200 => Ok(Self::CAP_VFW),
-				// Duplicate of CAP_VFW
-				// 200 => Ok(Self::CAP_V4L),
-				// Duplicate of CAP_V4L
-				// 200 => Ok(Self::CAP_V4L2),
-				300 => Ok(Self::CAP_FIREWIRE),
-				// Duplicate of CAP_FIREWIRE
-				// 300 => Ok(Self::CAP_FIREWARE),
-				// Duplicate of CAP_FIREWARE
-				// 300 => Ok(Self::CAP_IEEE1394),
-				// Duplicate of CAP_IEEE1394
-				// 300 => Ok(Self::CAP_DC1394),
-				// Duplicate of CAP_DC1394
-				// 300 => Ok(Self::CAP_CMU1394),
-				500 => Ok(Self::CAP_QT),
-				600 => Ok(Self::CAP_UNICAP),
-				700 => Ok(Self::CAP_DSHOW),
-				800 => Ok(Self::CAP_PVAPI),
-				900 => Ok(Self::CAP_OPENNI),
-				910 => Ok(Self::CAP_OPENNI_ASUS),
-				1000 => Ok(Self::CAP_ANDROID),
-				1100 => Ok(Self::CAP_XIAPI),
-				1200 => Ok(Self::CAP_AVFOUNDATION),
-				1300 => Ok(Self::CAP_GIGANETIX),
-				1400 => Ok(Self::CAP_MSMF),
-				1410 => Ok(Self::CAP_WINRT),
-				1500 => Ok(Self::CAP_INTELPERC),
-				// Duplicate of CAP_INTELPERC
-				// 1500 => Ok(Self::CAP_REALSENSE),
-				1600 => Ok(Self::CAP_OPENNI2),
-				1610 => Ok(Self::CAP_OPENNI2_ASUS),
-				1620 => Ok(Self::CAP_OPENNI2_ASTRA),
-				1700 => Ok(Self::CAP_GPHOTO2),
-				1800 => Ok(Self::CAP_GSTREAMER),
-				1900 => Ok(Self::CAP_FFMPEG),
-				2000 => Ok(Self::CAP_IMAGES),
-				2100 => Ok(Self::CAP_ARAVIS),
-				2200 => Ok(Self::CAP_OPENCV_MJPEG),
-				2300 => Ok(Self::CAP_INTEL_MFX),
-				2400 => Ok(Self::CAP_XINE),
-				2500 => Ok(Self::CAP_UEYE),
-				2600 => Ok(Self::CAP_OBSENSOR),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::videoio::VideoCaptureAPIs"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::videoio::VideoCaptureAPIs }
+	opencv_type_enum! { crate::videoio::VideoCaptureAPIs { CAP_ANY, CAP_VFW, CAP_FIREWIRE, CAP_QT, CAP_UNICAP, CAP_DSHOW, CAP_PVAPI, CAP_OPENNI, CAP_OPENNI_ASUS, CAP_ANDROID, CAP_XIAPI, CAP_AVFOUNDATION, CAP_GIGANETIX, CAP_MSMF, CAP_WINRT, CAP_INTELPERC, CAP_OPENNI2, CAP_OPENNI2_ASUS, CAP_OPENNI2_ASTRA, CAP_GPHOTO2, CAP_GSTREAMER, CAP_FFMPEG, CAP_IMAGES, CAP_ARAVIS, CAP_OPENCV_MJPEG, CAP_INTEL_MFX, CAP_XINE, CAP_UEYE, CAP_OBSENSOR } }
 
 	/// OBSENSOR (for Orbbec 3D-Sensor device/module )
 	///
 	/// //! OBSENSOR data given from image generator
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum VideoCaptureOBSensorDataType {
 		/// Depth values in mm (CV_16UC1)
@@ -950,23 +882,10 @@ pub mod videoio {
 		CAP_OBSENSOR_IR_IMAGE = 2,
 	}
 
-	impl TryFrom<i32> for VideoCaptureOBSensorDataType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::CAP_OBSENSOR_DEPTH_MAP),
-				1 => Ok(Self::CAP_OBSENSOR_BGR_IMAGE),
-				2 => Ok(Self::CAP_OBSENSOR_IR_IMAGE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::videoio::VideoCaptureOBSensorDataType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::videoio::VideoCaptureOBSensorDataType }
+	opencv_type_enum! { crate::videoio::VideoCaptureOBSensorDataType { CAP_OBSENSOR_DEPTH_MAP, CAP_OBSENSOR_BGR_IMAGE, CAP_OBSENSOR_IR_IMAGE } }
 
 	/// OBSENSOR stream generator
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum VideoCaptureOBSensorGenerators {
 		CAP_OBSENSOR_DEPTH_GENERATOR = 536870912,
@@ -975,24 +894,10 @@ pub mod videoio {
 		CAP_OBSENSOR_GENERATORS_MASK = 939524096,
 	}
 
-	impl TryFrom<i32> for VideoCaptureOBSensorGenerators {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				536870912 => Ok(Self::CAP_OBSENSOR_DEPTH_GENERATOR),
-				268435456 => Ok(Self::CAP_OBSENSOR_IMAGE_GENERATOR),
-				134217728 => Ok(Self::CAP_OBSENSOR_IR_GENERATOR),
-				939524096 => Ok(Self::CAP_OBSENSOR_GENERATORS_MASK),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::videoio::VideoCaptureOBSensorGenerators"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::videoio::VideoCaptureOBSensorGenerators }
+	opencv_type_enum! { crate::videoio::VideoCaptureOBSensorGenerators { CAP_OBSENSOR_DEPTH_GENERATOR, CAP_OBSENSOR_IMAGE_GENERATOR, CAP_OBSENSOR_IR_GENERATOR, CAP_OBSENSOR_GENERATORS_MASK } }
 
 	/// OBSENSOR properties
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum VideoCaptureOBSensorProperties {
 		CAP_PROP_OBSENSOR_INTRINSIC_FX = 26001,
@@ -1001,21 +906,7 @@ pub mod videoio {
 		CAP_PROP_OBSENSOR_INTRINSIC_CY = 26004,
 	}
 
-	impl TryFrom<i32> for VideoCaptureOBSensorProperties {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				26001 => Ok(Self::CAP_PROP_OBSENSOR_INTRINSIC_FX),
-				26002 => Ok(Self::CAP_PROP_OBSENSOR_INTRINSIC_FY),
-				26003 => Ok(Self::CAP_PROP_OBSENSOR_INTRINSIC_CX),
-				26004 => Ok(Self::CAP_PROP_OBSENSOR_INTRINSIC_CY),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::videoio::VideoCaptureOBSensorProperties"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::videoio::VideoCaptureOBSensorProperties }
+	opencv_type_enum! { crate::videoio::VideoCaptureOBSensorProperties { CAP_PROP_OBSENSOR_INTRINSIC_FX, CAP_PROP_OBSENSOR_INTRINSIC_FY, CAP_PROP_OBSENSOR_INTRINSIC_CX, CAP_PROP_OBSENSOR_INTRINSIC_CY } }
 
 	/// cv::VideoCapture generic properties identifier.
 	///
@@ -1023,7 +914,7 @@ pub mod videoio {
 	/// Effective behaviour depends from device hardware, driver and API Backend.
 	/// ## See also
 	/// videoio_flags_others, VideoCapture::get(), VideoCapture::set()
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum VideoCaptureProperties {
 		/// Current position of the video file in milliseconds.
@@ -1158,95 +1049,12 @@ pub mod videoio {
 		CV__CAP_PROP_LATEST = 73,
 	}
 
-	impl TryFrom<i32> for VideoCaptureProperties {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::CAP_PROP_POS_MSEC),
-				1 => Ok(Self::CAP_PROP_POS_FRAMES),
-				2 => Ok(Self::CAP_PROP_POS_AVI_RATIO),
-				3 => Ok(Self::CAP_PROP_FRAME_WIDTH),
-				4 => Ok(Self::CAP_PROP_FRAME_HEIGHT),
-				5 => Ok(Self::CAP_PROP_FPS),
-				6 => Ok(Self::CAP_PROP_FOURCC),
-				7 => Ok(Self::CAP_PROP_FRAME_COUNT),
-				8 => Ok(Self::CAP_PROP_FORMAT),
-				9 => Ok(Self::CAP_PROP_MODE),
-				10 => Ok(Self::CAP_PROP_BRIGHTNESS),
-				11 => Ok(Self::CAP_PROP_CONTRAST),
-				12 => Ok(Self::CAP_PROP_SATURATION),
-				13 => Ok(Self::CAP_PROP_HUE),
-				14 => Ok(Self::CAP_PROP_GAIN),
-				15 => Ok(Self::CAP_PROP_EXPOSURE),
-				16 => Ok(Self::CAP_PROP_CONVERT_RGB),
-				17 => Ok(Self::CAP_PROP_WHITE_BALANCE_BLUE_U),
-				18 => Ok(Self::CAP_PROP_RECTIFICATION),
-				19 => Ok(Self::CAP_PROP_MONOCHROME),
-				20 => Ok(Self::CAP_PROP_SHARPNESS),
-				21 => Ok(Self::CAP_PROP_AUTO_EXPOSURE),
-				22 => Ok(Self::CAP_PROP_GAMMA),
-				23 => Ok(Self::CAP_PROP_TEMPERATURE),
-				24 => Ok(Self::CAP_PROP_TRIGGER),
-				25 => Ok(Self::CAP_PROP_TRIGGER_DELAY),
-				26 => Ok(Self::CAP_PROP_WHITE_BALANCE_RED_V),
-				27 => Ok(Self::CAP_PROP_ZOOM),
-				28 => Ok(Self::CAP_PROP_FOCUS),
-				29 => Ok(Self::CAP_PROP_GUID),
-				30 => Ok(Self::CAP_PROP_ISO_SPEED),
-				32 => Ok(Self::CAP_PROP_BACKLIGHT),
-				33 => Ok(Self::CAP_PROP_PAN),
-				34 => Ok(Self::CAP_PROP_TILT),
-				35 => Ok(Self::CAP_PROP_ROLL),
-				36 => Ok(Self::CAP_PROP_IRIS),
-				37 => Ok(Self::CAP_PROP_SETTINGS),
-				38 => Ok(Self::CAP_PROP_BUFFERSIZE),
-				39 => Ok(Self::CAP_PROP_AUTOFOCUS),
-				40 => Ok(Self::CAP_PROP_SAR_NUM),
-				41 => Ok(Self::CAP_PROP_SAR_DEN),
-				42 => Ok(Self::CAP_PROP_BACKEND),
-				43 => Ok(Self::CAP_PROP_CHANNEL),
-				44 => Ok(Self::CAP_PROP_AUTO_WB),
-				45 => Ok(Self::CAP_PROP_WB_TEMPERATURE),
-				46 => Ok(Self::CAP_PROP_CODEC_PIXEL_FORMAT),
-				47 => Ok(Self::CAP_PROP_BITRATE),
-				48 => Ok(Self::CAP_PROP_ORIENTATION_META),
-				49 => Ok(Self::CAP_PROP_ORIENTATION_AUTO),
-				50 => Ok(Self::CAP_PROP_HW_ACCELERATION),
-				51 => Ok(Self::CAP_PROP_HW_DEVICE),
-				52 => Ok(Self::CAP_PROP_HW_ACCELERATION_USE_OPENCL),
-				53 => Ok(Self::CAP_PROP_OPEN_TIMEOUT_MSEC),
-				54 => Ok(Self::CAP_PROP_READ_TIMEOUT_MSEC),
-				55 => Ok(Self::CAP_PROP_STREAM_OPEN_TIME_USEC),
-				56 => Ok(Self::CAP_PROP_VIDEO_TOTAL_CHANNELS),
-				57 => Ok(Self::CAP_PROP_VIDEO_STREAM),
-				58 => Ok(Self::CAP_PROP_AUDIO_STREAM),
-				59 => Ok(Self::CAP_PROP_AUDIO_POS),
-				60 => Ok(Self::CAP_PROP_AUDIO_SHIFT_NSEC),
-				61 => Ok(Self::CAP_PROP_AUDIO_DATA_DEPTH),
-				62 => Ok(Self::CAP_PROP_AUDIO_SAMPLES_PER_SECOND),
-				63 => Ok(Self::CAP_PROP_AUDIO_BASE_INDEX),
-				64 => Ok(Self::CAP_PROP_AUDIO_TOTAL_CHANNELS),
-				65 => Ok(Self::CAP_PROP_AUDIO_TOTAL_STREAMS),
-				66 => Ok(Self::CAP_PROP_AUDIO_SYNCHRONIZE),
-				67 => Ok(Self::CAP_PROP_LRF_HAS_KEY_FRAME),
-				68 => Ok(Self::CAP_PROP_CODEC_EXTRADATA_INDEX),
-				69 => Ok(Self::CAP_PROP_FRAME_TYPE),
-				70 => Ok(Self::CAP_PROP_N_THREADS),
-				71 => Ok(Self::CAP_PROP_PTS),
-				72 => Ok(Self::CAP_PROP_DTS_DELAY),
-				73 => Ok(Self::CV__CAP_PROP_LATEST),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::videoio::VideoCaptureProperties"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::videoio::VideoCaptureProperties }
+	opencv_type_enum! { crate::videoio::VideoCaptureProperties { CAP_PROP_POS_MSEC, CAP_PROP_POS_FRAMES, CAP_PROP_POS_AVI_RATIO, CAP_PROP_FRAME_WIDTH, CAP_PROP_FRAME_HEIGHT, CAP_PROP_FPS, CAP_PROP_FOURCC, CAP_PROP_FRAME_COUNT, CAP_PROP_FORMAT, CAP_PROP_MODE, CAP_PROP_BRIGHTNESS, CAP_PROP_CONTRAST, CAP_PROP_SATURATION, CAP_PROP_HUE, CAP_PROP_GAIN, CAP_PROP_EXPOSURE, CAP_PROP_CONVERT_RGB, CAP_PROP_WHITE_BALANCE_BLUE_U, CAP_PROP_RECTIFICATION, CAP_PROP_MONOCHROME, CAP_PROP_SHARPNESS, CAP_PROP_AUTO_EXPOSURE, CAP_PROP_GAMMA, CAP_PROP_TEMPERATURE, CAP_PROP_TRIGGER, CAP_PROP_TRIGGER_DELAY, CAP_PROP_WHITE_BALANCE_RED_V, CAP_PROP_ZOOM, CAP_PROP_FOCUS, CAP_PROP_GUID, CAP_PROP_ISO_SPEED, CAP_PROP_BACKLIGHT, CAP_PROP_PAN, CAP_PROP_TILT, CAP_PROP_ROLL, CAP_PROP_IRIS, CAP_PROP_SETTINGS, CAP_PROP_BUFFERSIZE, CAP_PROP_AUTOFOCUS, CAP_PROP_SAR_NUM, CAP_PROP_SAR_DEN, CAP_PROP_BACKEND, CAP_PROP_CHANNEL, CAP_PROP_AUTO_WB, CAP_PROP_WB_TEMPERATURE, CAP_PROP_CODEC_PIXEL_FORMAT, CAP_PROP_BITRATE, CAP_PROP_ORIENTATION_META, CAP_PROP_ORIENTATION_AUTO, CAP_PROP_HW_ACCELERATION, CAP_PROP_HW_DEVICE, CAP_PROP_HW_ACCELERATION_USE_OPENCL, CAP_PROP_OPEN_TIMEOUT_MSEC, CAP_PROP_READ_TIMEOUT_MSEC, CAP_PROP_STREAM_OPEN_TIME_USEC, CAP_PROP_VIDEO_TOTAL_CHANNELS, CAP_PROP_VIDEO_STREAM, CAP_PROP_AUDIO_STREAM, CAP_PROP_AUDIO_POS, CAP_PROP_AUDIO_SHIFT_NSEC, CAP_PROP_AUDIO_DATA_DEPTH, CAP_PROP_AUDIO_SAMPLES_PER_SECOND, CAP_PROP_AUDIO_BASE_INDEX, CAP_PROP_AUDIO_TOTAL_CHANNELS, CAP_PROP_AUDIO_TOTAL_STREAMS, CAP_PROP_AUDIO_SYNCHRONIZE, CAP_PROP_LRF_HAS_KEY_FRAME, CAP_PROP_CODEC_EXTRADATA_INDEX, CAP_PROP_FRAME_TYPE, CAP_PROP_N_THREADS, CAP_PROP_PTS, CAP_PROP_DTS_DELAY, CV__CAP_PROP_LATEST } }
 
 	/// cv::VideoWriter generic properties identifier.
 	/// ## See also
 	/// VideoWriter::get(), VideoWriter::set()
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum VideoWriterProperties {
 		/// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
@@ -1279,31 +1087,7 @@ pub mod videoio {
 		CV__VIDEOWRITER_PROP_LATEST = 14,
 	}
 
-	impl TryFrom<i32> for VideoWriterProperties {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::VIDEOWRITER_PROP_QUALITY),
-				2 => Ok(Self::VIDEOWRITER_PROP_FRAMEBYTES),
-				3 => Ok(Self::VIDEOWRITER_PROP_NSTRIPES),
-				4 => Ok(Self::VIDEOWRITER_PROP_IS_COLOR),
-				5 => Ok(Self::VIDEOWRITER_PROP_DEPTH),
-				6 => Ok(Self::VIDEOWRITER_PROP_HW_ACCELERATION),
-				7 => Ok(Self::VIDEOWRITER_PROP_HW_DEVICE),
-				8 => Ok(Self::VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL),
-				9 => Ok(Self::VIDEOWRITER_PROP_RAW_VIDEO),
-				10 => Ok(Self::VIDEOWRITER_PROP_KEY_INTERVAL),
-				11 => Ok(Self::VIDEOWRITER_PROP_KEY_FLAG),
-				12 => Ok(Self::VIDEOWRITER_PROP_PTS),
-				13 => Ok(Self::VIDEOWRITER_PROP_DTS_DELAY),
-				14 => Ok(Self::CV__VIDEOWRITER_PROP_LATEST),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::videoio::VideoWriterProperties"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::videoio::VideoWriterProperties }
+	opencv_type_enum! { crate::videoio::VideoWriterProperties { VIDEOWRITER_PROP_QUALITY, VIDEOWRITER_PROP_FRAMEBYTES, VIDEOWRITER_PROP_NSTRIPES, VIDEOWRITER_PROP_IS_COLOR, VIDEOWRITER_PROP_DEPTH, VIDEOWRITER_PROP_HW_ACCELERATION, VIDEOWRITER_PROP_HW_DEVICE, VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL, VIDEOWRITER_PROP_RAW_VIDEO, VIDEOWRITER_PROP_KEY_INTERVAL, VIDEOWRITER_PROP_KEY_FLAG, VIDEOWRITER_PROP_PTS, VIDEOWRITER_PROP_DTS_DELAY, CV__VIDEOWRITER_PROP_LATEST } }
 
 	/// Returns backend API name or "UnknownVideoAPI(xxx)"
 	/// ## Parameters
@@ -1604,7 +1388,14 @@ pub mod videoio {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Default constructor
+		///
+		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
+		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
+		/// destructor.
+		///
+		/// ## Overloaded parameters
+		///
 		/// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference
 		///
 		/// ## Parameters
@@ -1687,7 +1478,14 @@ pub mod videoio {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Default constructor
+		///
+		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
+		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
+		/// destructor.
+		///
+		/// ## Overloaded parameters
+		///
 		/// Opens a camera for video capturing
 		///
 		/// ## Parameters
@@ -1911,7 +1709,7 @@ pub mod videoio {
 
 		/// Opens a video file or a capturing device or an IP video stream for video capturing.
 		///
-		/// @overload
+		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 		///
 		/// Parameters are same as the constructor VideoCapture(const String& filename, int apiPreference = CAP_ANY)
 		/// ## Returns
@@ -1976,7 +1774,7 @@ pub mod videoio {
 
 		/// Opens a camera for video capturing
 		///
-		/// @overload
+		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 		///
 		/// Parameters are same as the constructor VideoCapture(int index, int apiPreference = CAP_ANY)
 		/// ## Returns
@@ -2303,7 +2101,15 @@ pub mod videoio {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Default constructors
+		///
+		/// The constructors/functions initialize video writers.
+		/// *   On Linux FFMPEG is used to write videos;
+		/// *   On Windows FFMPEG or MSWF or DSHOW is used;
+		/// *   On MacOSX AVFoundation is used.
+		///
+		/// ## Overloaded parameters
+		///
 		/// ## Parameters
 		/// * filename: Name of the output video file.
 		/// * fourcc: 4-character code of codec used to compress the frames. For example,
@@ -2369,7 +2175,15 @@ pub mod videoio {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Default constructors
+		///
+		/// The constructors/functions initialize video writers.
+		/// *   On Linux FFMPEG is used to write videos;
+		/// *   On Windows FFMPEG or MSWF or DSHOW is used;
+		/// *   On MacOSX AVFoundation is used.
+		///
+		/// ## Overloaded parameters
+		///
 		/// The `apiPreference` parameter allows to specify API backends to use. Can be used to enforce a specific reader implementation
 		/// if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_GSTREAMER.
 		///
@@ -2564,7 +2378,17 @@ pub mod videoio {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Initializes or reinitializes video writer.
+		///
+		/// The method opens video writer. Parameters are the same as in the constructor
+		/// VideoWriter::VideoWriter.
+		/// ## Returns
+		/// `true` if video writer has been successfully initialized
+		///
+		/// The method first calls VideoWriter::release to close the already opened file.
+		///
+		/// ## Overloaded parameters
+		///
 		///
 		/// ## Note
 		/// This alternative version of [VideoWriterTrait::open_with_backend] function uses the following default values for its arguments:

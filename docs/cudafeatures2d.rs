@@ -248,7 +248,25 @@ pub mod cudafeatures2d {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Finds the best match for each descriptor from a query set (blocking version).
+		///
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches. If a query descriptor is masked out in mask , no match is added for this
+		/// descriptor. So, matches size may be smaller than the query descriptors count.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		///
+		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
+		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
+		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
+		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
+		/// mask.at\<uchar\>(i,j) is non-zero.
+		///
+		/// ## Overloaded parameters
+		///
 		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_] function uses the following default values for its arguments:
@@ -365,7 +383,26 @@ pub mod cudafeatures2d {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Finds the best match for each descriptor from a query set (asynchronous version).
+		///
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches array stored in GPU memory. Internal representation is not defined.
+		/// Use DescriptorMatcher::matchConvert method to retrieve results in standard representation.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * stream: CUDA stream.
+		///
+		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
+		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
+		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
+		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
+		/// mask.at\<uchar\>(i,j) is non-zero.
+		///
+		/// ## Overloaded parameters
+		///
 		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_async] function uses the following default values for its arguments:
@@ -502,7 +539,27 @@ pub mod cudafeatures2d {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Finds the k best matches for each descriptor from a query set (blocking version).
+		///
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches. Each matches[i] is k or less matches for the same query descriptor.
+		/// * k: Count of best matches found per each query descriptor or less if a query descriptor has
+		/// less than k possible matches in total.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		///
+		/// These extended variants of DescriptorMatcher::match methods find several best matches for each query
+		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::match
+		/// for the details about query and train descriptors.
+		///
+		/// ## Overloaded parameters
+		///
 		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match] function uses the following default values for its arguments:
@@ -620,7 +677,26 @@ pub mod cudafeatures2d {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// Finds the k best matches for each descriptor from a query set (asynchronous version).
+		///
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches array stored in GPU memory. Internal representation is not defined.
+		/// Use DescriptorMatcher::knnMatchConvert method to retrieve results in standard representation.
+		/// * k: Count of best matches found per each query descriptor or less if a query descriptor has
+		/// less than k possible matches in total.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * stream: CUDA stream.
+		///
+		/// These extended variants of DescriptorMatcher::matchAsync methods find several best matches for each query
+		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::matchAsync
+		/// for the details about query and train descriptors.
+		///
+		/// ## Overloaded parameters
+		///
 		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match_async] function uses the following default values for its arguments:
@@ -791,7 +867,28 @@ pub mod cudafeatures2d {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// For each query descriptor, finds the training descriptors not farther than the specified distance (blocking version).
+		///
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Found matches.
+		/// * maxDistance: Threshold for the distance between matched descriptors. Distance means here
+		/// metric distance (e.g. Hamming distance), not the distance between coordinates (which is measured
+		/// in Pixels)!
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		///
+		/// For each query descriptor, the methods find such training descriptors that the distance between the
+		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
+		/// returned in the distance increasing order.
+		///
+		/// ## Overloaded parameters
+		///
 		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match] function uses the following default values for its arguments:
@@ -912,7 +1009,27 @@ pub mod cudafeatures2d {
 			Ok(ret)
 		}
 
-		/// @overload
+		/// For each query descriptor, finds the training descriptors not farther than the specified distance (asynchronous version).
+		///
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches array stored in GPU memory. Internal representation is not defined.
+		/// Use DescriptorMatcher::radiusMatchConvert method to retrieve results in standard representation.
+		/// * maxDistance: Threshold for the distance between matched descriptors. Distance means here
+		/// metric distance (e.g. Hamming distance), not the distance between coordinates (which is measured
+		/// in Pixels)!
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * stream: CUDA stream.
+		///
+		/// For each query descriptor, the methods find such training descriptors that the distance between the
+		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
+		/// returned in the distance increasing order.
+		///
+		/// ## Overloaded parameters
+		///
 		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match_async] function uses the following default values for its arguments:

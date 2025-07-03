@@ -34,7 +34,7 @@ pub mod aruco {
 	/// ## See also
 	/// estimatePoseSingleMarkers()
 	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum PatternPositionType {
 		/// The marker coordinate system is centered on the middle of the marker.
@@ -53,21 +53,48 @@ pub mod aruco {
 		ARUCO_CW_TOP_LEFT_CORNER = 1,
 	}
 
-	impl TryFrom<i32> for PatternPositionType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::aruco::PatternPositionType { ARUCO_CCW_CENTER, ARUCO_CW_TOP_LEFT_CORNER } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::ARUCO_CCW_CENTER),
-				1 => Ok(Self::ARUCO_CW_TOP_LEFT_CORNER),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::aruco::PatternPositionType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::aruco::PatternPositionType }
-
-	/// @overload
+	/// Calibrate a camera using aruco markers
+	///
+	/// ## Parameters
+	/// * corners: vector of detected marker corners in all frames.
+	/// The corners should have the same format returned by detectMarkers (see #detectMarkers).
+	/// * ids: list of identifiers for each marker in corners
+	/// * counter: number of markers in each frame so that corners and ids can be split
+	/// * board: Marker Board layout
+	/// * imageSize: Size of the image used only to initialize the intrinsic camera matrix.
+	/// * cameraMatrix: Output 3x3 floating-point camera matrix
+	/// ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) . If CV\_CALIB\_USE\_INTRINSIC\_GUESS
+	/// and/or CV_CALIB_FIX_ASPECT_RATIO are specified, some or all of fx, fy, cx, cy must be
+	/// initialized before calling the function.
+	/// * distCoeffs: Output vector of distortion coefficients
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5D%2C%5Bs%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5D%5D%29) of 4, 5, 8 or 12 elements
+	/// * rvecs: Output vector of rotation vectors (see Rodrigues ) estimated for each board view
+	/// (e.g. std::vector<cv::Mat>>). That is, each k-th rotation vector together with the corresponding
+	/// k-th translation vector (see the next output parameter description) brings the board pattern
+	/// from the model coordinate space (in which object points are specified) to the world coordinate
+	/// space, that is, a real position of the board pattern in the k-th pattern view (k=0.. *M* -1).
+	/// * tvecs: Output vector of translation vectors estimated for each pattern view.
+	/// * stdDeviationsIntrinsics: Output vector of standard deviations estimated for intrinsic parameters.
+	/// Order of deviations values:
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%28f%5Fx%2C%20f%5Fy%2C%20c%5Fx%2C%20c%5Fy%2C%20k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%2C%20k%5F3%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%20%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%0As%5F4%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%29) If one of parameters is not estimated, it's deviation is equals to zero.
+	/// * stdDeviationsExtrinsics: Output vector of standard deviations estimated for extrinsic parameters.
+	/// Order of deviations values: ![inline formula](https://latex.codecogs.com/png.latex?%28R%5F1%2C%20T%5F1%2C%20%5Cdotsc%20%2C%20R%5FM%2C%20T%5FM%29) where M is number of pattern views,
+	/// ![inline formula](https://latex.codecogs.com/png.latex?R%5Fi%2C%20T%5Fi) are concatenated 1x3 vectors.
+	/// * perViewErrors: Output vector of average re-projection errors estimated for each pattern view.
+	/// * flags: flags Different flags  for the calibration process (see [calibrate_camera] for details).
+	/// * criteria: Termination criteria for the iterative optimization algorithm.
+	///
+	/// This function calibrates a camera using an Aruco Board. The function receives a list of
+	/// detected markers from several views of the Board. The process is similar to the chessboard
+	/// calibration in calibrateCamera(). The function returns the final re-projection error.
+	///
+	///
+	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
+	///
+	/// ## Overloaded parameters
+	///
 	/// It's the same function as [calibrate_camera_aruco] but without calibration error estimation.
 	///
 	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP

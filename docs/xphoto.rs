@@ -40,7 +40,7 @@ pub mod xphoto {
 	/// transformations
 	pub const INPAINT_SHIFTMAP: i32 = 0;
 	/// BM3D algorithm steps
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum Bm3dSteps {
 		/// Execute all steps of the algorithm
@@ -51,25 +51,12 @@ pub mod xphoto {
 		BM3D_STEP2 = 2,
 	}
 
-	impl TryFrom<i32> for Bm3dSteps {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::BM3D_STEPALL),
-				1 => Ok(Self::BM3D_STEP1),
-				2 => Ok(Self::BM3D_STEP2),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::xphoto::Bm3dSteps"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::xphoto::Bm3dSteps }
+	opencv_type_enum! { crate::xphoto::Bm3dSteps { BM3D_STEPALL, BM3D_STEP1, BM3D_STEP2 } }
 
 	/// Various inpainting algorithms
 	/// ## See also
 	/// inpaint
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum InpaintTypes {
 		/// This algorithm searches for dominant correspondences (transformations) of
@@ -99,41 +86,17 @@ pub mod xphoto {
 		INPAINT_FSR_FAST = 2,
 	}
 
-	impl TryFrom<i32> for InpaintTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::INPAINT_SHIFTMAP),
-				1 => Ok(Self::INPAINT_FSR_BEST),
-				2 => Ok(Self::INPAINT_FSR_FAST),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::xphoto::InpaintTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::xphoto::InpaintTypes }
+	opencv_type_enum! { crate::xphoto::InpaintTypes { INPAINT_SHIFTMAP, INPAINT_FSR_BEST, INPAINT_FSR_FAST } }
 
 	/// BM3D transform types
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum TransformTypes {
 		/// Un-normalized Haar transform
 		HAAR = 0,
 	}
 
-	impl TryFrom<i32> for TransformTypes {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::HAAR),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::xphoto::TransformTypes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::xphoto::TransformTypes }
+	opencv_type_enum! { crate::xphoto::TransformTypes { HAAR } }
 
 	/// Implements an efficient fixed-point approximation for applying channel gains, which is
 	///    the last step of multiple white balance algorithms.

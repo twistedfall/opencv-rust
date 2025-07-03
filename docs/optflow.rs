@@ -45,7 +45,7 @@ pub mod optflow {
 	/// < Apply standard iterative refinement
 	pub const ST_STANDART: i32 = 0;
 	/// Descriptor types for the Global Patch Collider.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum GPCDescType {
 		/// Better quality but slow
@@ -54,21 +54,9 @@ pub mod optflow {
 		GPC_DESCRIPTOR_WHT = 1,
 	}
 
-	impl TryFrom<i32> for GPCDescType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::optflow::GPCDescType { GPC_DESCRIPTOR_DCT, GPC_DESCRIPTOR_WHT } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::GPC_DESCRIPTOR_DCT),
-				1 => Ok(Self::GPC_DESCRIPTOR_WHT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::optflow::GPCDescType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::optflow::GPCDescType }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum InterpolationType {
 		/// <  Fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Geistert2016)
@@ -79,22 +67,9 @@ pub mod optflow {
 		INTERP_RIC = 2,
 	}
 
-	impl TryFrom<i32> for InterpolationType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::optflow::InterpolationType { INTERP_GEO, INTERP_EPIC, INTERP_RIC } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::INTERP_GEO),
-				1 => Ok(Self::INTERP_EPIC),
-				2 => Ok(Self::INTERP_RIC),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::optflow::InterpolationType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::optflow::InterpolationType }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SolverType {
 		/// < Apply standard iterative refinement
@@ -104,21 +79,9 @@ pub mod optflow {
 		ST_BILINEAR = 1,
 	}
 
-	impl TryFrom<i32> for SolverType {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::optflow::SolverType { ST_STANDART, ST_BILINEAR } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::ST_STANDART),
-				1 => Ok(Self::ST_BILINEAR),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::optflow::SolverType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::optflow::SolverType }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SupportRegionType {
 		/// <  Apply a constant support region
@@ -128,19 +91,7 @@ pub mod optflow {
 		SR_CROSS = 1,
 	}
 
-	impl TryFrom<i32> for SupportRegionType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::SR_FIXED),
-				1 => Ok(Self::SR_CROSS),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::optflow::SupportRegionType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::optflow::SupportRegionType }
+	opencv_type_enum! { crate::optflow::SupportRegionType { SR_FIXED, SR_CROSS } }
 
 	pub type GPCSamplesVector = core::Vector<crate::optflow::GPCPatchSample>;
 	/// Calculates a global motion orientation in a selected region.

@@ -266,7 +266,7 @@ pub mod imgcodecs {
 	pub const IMWRITE_TIFF_YDPI: i32 = 258;
 	/// For WEBP, it can be a quality from 1 to 100 (the higher is the better). By default (without any parameter) and for quality above 100 the lossless compression is used.
 	pub const IMWRITE_WEBP_QUALITY: i32 = 64;
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImageMetadataType {
 		IMAGE_METADATA_UNKNOWN = -1,
@@ -277,28 +277,12 @@ pub mod imgcodecs {
 		// IMAGE_METADATA_MAX = 2,
 	}
 
-	impl TryFrom<i32> for ImageMetadataType {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				-1 => Ok(Self::IMAGE_METADATA_UNKNOWN),
-				0 => Ok(Self::IMAGE_METADATA_EXIF),
-				1 => Ok(Self::IMAGE_METADATA_XMP),
-				2 => Ok(Self::IMAGE_METADATA_ICCP),
-				// Duplicate of IMAGE_METADATA_ICCP
-				// 2 => Ok(Self::IMAGE_METADATA_MAX),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImageMetadataType"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImageMetadataType }
+	opencv_type_enum! { crate::imgcodecs::ImageMetadataType { IMAGE_METADATA_UNKNOWN, IMAGE_METADATA_EXIF, IMAGE_METADATA_XMP, IMAGE_METADATA_ICCP } }
 
 	/// Imread flags
 	///
 	/// Note: IMREAD_COLOR_BGR (IMREAD_COLOR) and IMREAD_COLOR_RGB can not be set at the same time.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImreadModes {
 		/// If set, return the loaded image as is (with alpha channel, otherwise it gets cropped). Ignore EXIF orientation.
@@ -334,35 +318,9 @@ pub mod imgcodecs {
 		IMREAD_COLOR_RGB = 256,
 	}
 
-	impl TryFrom<i32> for ImreadModes {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::imgcodecs::ImreadModes { IMREAD_UNCHANGED, IMREAD_GRAYSCALE, IMREAD_COLOR_BGR, IMREAD_ANYDEPTH, IMREAD_ANYCOLOR, IMREAD_LOAD_GDAL, IMREAD_REDUCED_GRAYSCALE_2, IMREAD_REDUCED_COLOR_2, IMREAD_REDUCED_GRAYSCALE_4, IMREAD_REDUCED_COLOR_4, IMREAD_REDUCED_GRAYSCALE_8, IMREAD_REDUCED_COLOR_8, IMREAD_IGNORE_ORIENTATION, IMREAD_COLOR_RGB } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				-1 => Ok(Self::IMREAD_UNCHANGED),
-				0 => Ok(Self::IMREAD_GRAYSCALE),
-				1 => Ok(Self::IMREAD_COLOR_BGR),
-				// Duplicate of IMREAD_COLOR_BGR
-				// 1 => Ok(Self::IMREAD_COLOR),
-				2 => Ok(Self::IMREAD_ANYDEPTH),
-				4 => Ok(Self::IMREAD_ANYCOLOR),
-				8 => Ok(Self::IMREAD_LOAD_GDAL),
-				16 => Ok(Self::IMREAD_REDUCED_GRAYSCALE_2),
-				17 => Ok(Self::IMREAD_REDUCED_COLOR_2),
-				32 => Ok(Self::IMREAD_REDUCED_GRAYSCALE_4),
-				33 => Ok(Self::IMREAD_REDUCED_COLOR_4),
-				64 => Ok(Self::IMREAD_REDUCED_GRAYSCALE_8),
-				65 => Ok(Self::IMREAD_REDUCED_COLOR_8),
-				128 => Ok(Self::IMREAD_IGNORE_ORIENTATION),
-				256 => Ok(Self::IMREAD_COLOR_RGB),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImreadModes"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImreadModes }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteEXRCompressionFlags {
 		/// no compression
@@ -387,29 +345,9 @@ pub mod imgcodecs {
 		IMWRITE_EXR_COMPRESSION_DWAB = 9,
 	}
 
-	impl TryFrom<i32> for ImwriteEXRCompressionFlags {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::imgcodecs::ImwriteEXRCompressionFlags { IMWRITE_EXR_COMPRESSION_NO, IMWRITE_EXR_COMPRESSION_RLE, IMWRITE_EXR_COMPRESSION_ZIPS, IMWRITE_EXR_COMPRESSION_ZIP, IMWRITE_EXR_COMPRESSION_PIZ, IMWRITE_EXR_COMPRESSION_PXR24, IMWRITE_EXR_COMPRESSION_B44, IMWRITE_EXR_COMPRESSION_B44A, IMWRITE_EXR_COMPRESSION_DWAA, IMWRITE_EXR_COMPRESSION_DWAB } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::IMWRITE_EXR_COMPRESSION_NO),
-				1 => Ok(Self::IMWRITE_EXR_COMPRESSION_RLE),
-				2 => Ok(Self::IMWRITE_EXR_COMPRESSION_ZIPS),
-				3 => Ok(Self::IMWRITE_EXR_COMPRESSION_ZIP),
-				4 => Ok(Self::IMWRITE_EXR_COMPRESSION_PIZ),
-				5 => Ok(Self::IMWRITE_EXR_COMPRESSION_PXR24),
-				6 => Ok(Self::IMWRITE_EXR_COMPRESSION_B44),
-				7 => Ok(Self::IMWRITE_EXR_COMPRESSION_B44A),
-				8 => Ok(Self::IMWRITE_EXR_COMPRESSION_DWAA),
-				9 => Ok(Self::IMWRITE_EXR_COMPRESSION_DWAB),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwriteEXRCompressionFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImwriteEXRCompressionFlags }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteEXRTypeFlags {
 		/// store as HALF (FP16)
@@ -418,22 +356,10 @@ pub mod imgcodecs {
 		IMWRITE_EXR_TYPE_FLOAT = 2,
 	}
 
-	impl TryFrom<i32> for ImwriteEXRTypeFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::IMWRITE_EXR_TYPE_HALF),
-				2 => Ok(Self::IMWRITE_EXR_TYPE_FLOAT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwriteEXRTypeFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImwriteEXRTypeFlags }
+	opencv_type_enum! { crate::imgcodecs::ImwriteEXRTypeFlags { IMWRITE_EXR_TYPE_HALF, IMWRITE_EXR_TYPE_FLOAT } }
 
 	/// Imwrite flags
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteFlags {
 		/// For JPEG, it can be a quality from 0 to 100 (the higher is the better). Default value is 95.
@@ -514,58 +440,10 @@ pub mod imgcodecs {
 		IMWRITE_GIF_COLORTABLE = 1029,
 	}
 
-	impl TryFrom<i32> for ImwriteFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::IMWRITE_JPEG_QUALITY),
-				2 => Ok(Self::IMWRITE_JPEG_PROGRESSIVE),
-				3 => Ok(Self::IMWRITE_JPEG_OPTIMIZE),
-				4 => Ok(Self::IMWRITE_JPEG_RST_INTERVAL),
-				5 => Ok(Self::IMWRITE_JPEG_LUMA_QUALITY),
-				6 => Ok(Self::IMWRITE_JPEG_CHROMA_QUALITY),
-				7 => Ok(Self::IMWRITE_JPEG_SAMPLING_FACTOR),
-				16 => Ok(Self::IMWRITE_PNG_COMPRESSION),
-				17 => Ok(Self::IMWRITE_PNG_STRATEGY),
-				18 => Ok(Self::IMWRITE_PNG_BILEVEL),
-				19 => Ok(Self::IMWRITE_PNG_FILTER),
-				32 => Ok(Self::IMWRITE_PXM_BINARY),
-				48 => Ok(Self::IMWRITE_EXR_TYPE),
-				49 => Ok(Self::IMWRITE_EXR_COMPRESSION),
-				50 => Ok(Self::IMWRITE_EXR_DWA_COMPRESSION_LEVEL),
-				64 => Ok(Self::IMWRITE_WEBP_QUALITY),
-				80 => Ok(Self::IMWRITE_HDR_COMPRESSION),
-				128 => Ok(Self::IMWRITE_PAM_TUPLETYPE),
-				256 => Ok(Self::IMWRITE_TIFF_RESUNIT),
-				257 => Ok(Self::IMWRITE_TIFF_XDPI),
-				258 => Ok(Self::IMWRITE_TIFF_YDPI),
-				259 => Ok(Self::IMWRITE_TIFF_COMPRESSION),
-				278 => Ok(Self::IMWRITE_TIFF_ROWSPERSTRIP),
-				317 => Ok(Self::IMWRITE_TIFF_PREDICTOR),
-				272 => Ok(Self::IMWRITE_JPEG2000_COMPRESSION_X1000),
-				512 => Ok(Self::IMWRITE_AVIF_QUALITY),
-				513 => Ok(Self::IMWRITE_AVIF_DEPTH),
-				514 => Ok(Self::IMWRITE_AVIF_SPEED),
-				640 => Ok(Self::IMWRITE_JPEGXL_QUALITY),
-				641 => Ok(Self::IMWRITE_JPEGXL_EFFORT),
-				642 => Ok(Self::IMWRITE_JPEGXL_DISTANCE),
-				643 => Ok(Self::IMWRITE_JPEGXL_DECODING_SPEED),
-				1024 => Ok(Self::IMWRITE_GIF_LOOP),
-				1025 => Ok(Self::IMWRITE_GIF_SPEED),
-				1026 => Ok(Self::IMWRITE_GIF_QUALITY),
-				1027 => Ok(Self::IMWRITE_GIF_DITHER),
-				1028 => Ok(Self::IMWRITE_GIF_TRANSPARENCY),
-				1029 => Ok(Self::IMWRITE_GIF_COLORTABLE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwriteFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImwriteFlags }
+	opencv_type_enum! { crate::imgcodecs::ImwriteFlags { IMWRITE_JPEG_QUALITY, IMWRITE_JPEG_PROGRESSIVE, IMWRITE_JPEG_OPTIMIZE, IMWRITE_JPEG_RST_INTERVAL, IMWRITE_JPEG_LUMA_QUALITY, IMWRITE_JPEG_CHROMA_QUALITY, IMWRITE_JPEG_SAMPLING_FACTOR, IMWRITE_PNG_COMPRESSION, IMWRITE_PNG_STRATEGY, IMWRITE_PNG_BILEVEL, IMWRITE_PNG_FILTER, IMWRITE_PXM_BINARY, IMWRITE_EXR_TYPE, IMWRITE_EXR_COMPRESSION, IMWRITE_EXR_DWA_COMPRESSION_LEVEL, IMWRITE_WEBP_QUALITY, IMWRITE_HDR_COMPRESSION, IMWRITE_PAM_TUPLETYPE, IMWRITE_TIFF_RESUNIT, IMWRITE_TIFF_XDPI, IMWRITE_TIFF_YDPI, IMWRITE_TIFF_COMPRESSION, IMWRITE_TIFF_ROWSPERSTRIP, IMWRITE_TIFF_PREDICTOR, IMWRITE_JPEG2000_COMPRESSION_X1000, IMWRITE_AVIF_QUALITY, IMWRITE_AVIF_DEPTH, IMWRITE_AVIF_SPEED, IMWRITE_JPEGXL_QUALITY, IMWRITE_JPEGXL_EFFORT, IMWRITE_JPEGXL_DISTANCE, IMWRITE_JPEGXL_DECODING_SPEED, IMWRITE_GIF_LOOP, IMWRITE_GIF_SPEED, IMWRITE_GIF_QUALITY, IMWRITE_GIF_DITHER, IMWRITE_GIF_TRANSPARENCY, IMWRITE_GIF_COLORTABLE } }
 
 	/// Imwrite GIF specific values for IMWRITE_GIF_QUALITY parameter key, if larger than 3, then its related to the size of the color table.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteGIFCompressionFlags {
 		IMWRITE_GIF_FAST_NO_DITHER = 1,
@@ -578,49 +456,19 @@ pub mod imgcodecs {
 		IMWRITE_GIF_COLORTABLE_SIZE_256 = 8,
 	}
 
-	impl TryFrom<i32> for ImwriteGIFCompressionFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::IMWRITE_GIF_FAST_NO_DITHER),
-				2 => Ok(Self::IMWRITE_GIF_FAST_FLOYD_DITHER),
-				3 => Ok(Self::IMWRITE_GIF_COLORTABLE_SIZE_8),
-				4 => Ok(Self::IMWRITE_GIF_COLORTABLE_SIZE_16),
-				5 => Ok(Self::IMWRITE_GIF_COLORTABLE_SIZE_32),
-				6 => Ok(Self::IMWRITE_GIF_COLORTABLE_SIZE_64),
-				7 => Ok(Self::IMWRITE_GIF_COLORTABLE_SIZE_128),
-				8 => Ok(Self::IMWRITE_GIF_COLORTABLE_SIZE_256),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwriteGIFCompressionFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImwriteGIFCompressionFlags }
+	opencv_type_enum! { crate::imgcodecs::ImwriteGIFCompressionFlags { IMWRITE_GIF_FAST_NO_DITHER, IMWRITE_GIF_FAST_FLOYD_DITHER, IMWRITE_GIF_COLORTABLE_SIZE_8, IMWRITE_GIF_COLORTABLE_SIZE_16, IMWRITE_GIF_COLORTABLE_SIZE_32, IMWRITE_GIF_COLORTABLE_SIZE_64, IMWRITE_GIF_COLORTABLE_SIZE_128, IMWRITE_GIF_COLORTABLE_SIZE_256 } }
 
 	/// Imwrite HDR specific values for IMWRITE_HDR_COMPRESSION parameter key
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteHDRCompressionFlags {
 		IMWRITE_HDR_COMPRESSION_NONE = 0,
 		IMWRITE_HDR_COMPRESSION_RLE = 1,
 	}
 
-	impl TryFrom<i32> for ImwriteHDRCompressionFlags {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::imgcodecs::ImwriteHDRCompressionFlags { IMWRITE_HDR_COMPRESSION_NONE, IMWRITE_HDR_COMPRESSION_RLE } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::IMWRITE_HDR_COMPRESSION_NONE),
-				1 => Ok(Self::IMWRITE_HDR_COMPRESSION_RLE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwriteHDRCompressionFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImwriteHDRCompressionFlags }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteJPEGSamplingFactorParams {
 		/// 4x1,1x1,1x1
@@ -635,25 +483,10 @@ pub mod imgcodecs {
 		IMWRITE_JPEG_SAMPLING_FACTOR_444 = 1118481,
 	}
 
-	impl TryFrom<i32> for ImwriteJPEGSamplingFactorParams {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				4264209 => Ok(Self::IMWRITE_JPEG_SAMPLING_FACTOR_411),
-				2232593 => Ok(Self::IMWRITE_JPEG_SAMPLING_FACTOR_420),
-				2167057 => Ok(Self::IMWRITE_JPEG_SAMPLING_FACTOR_422),
-				1184017 => Ok(Self::IMWRITE_JPEG_SAMPLING_FACTOR_440),
-				1118481 => Ok(Self::IMWRITE_JPEG_SAMPLING_FACTOR_444),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwriteJPEGSamplingFactorParams"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImwriteJPEGSamplingFactorParams }
+	opencv_type_enum! { crate::imgcodecs::ImwriteJPEGSamplingFactorParams { IMWRITE_JPEG_SAMPLING_FACTOR_411, IMWRITE_JPEG_SAMPLING_FACTOR_420, IMWRITE_JPEG_SAMPLING_FACTOR_422, IMWRITE_JPEG_SAMPLING_FACTOR_440, IMWRITE_JPEG_SAMPLING_FACTOR_444 } }
 
 	/// Imwrite PAM specific tupletype flags used to define the 'TUPLETYPE' field of a PAM file.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwritePAMFlags {
 		IMWRITE_PAM_FORMAT_NULL = 0,
@@ -664,26 +497,10 @@ pub mod imgcodecs {
 		IMWRITE_PAM_FORMAT_RGB_ALPHA = 5,
 	}
 
-	impl TryFrom<i32> for ImwritePAMFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::IMWRITE_PAM_FORMAT_NULL),
-				1 => Ok(Self::IMWRITE_PAM_FORMAT_BLACKANDWHITE),
-				2 => Ok(Self::IMWRITE_PAM_FORMAT_GRAYSCALE),
-				3 => Ok(Self::IMWRITE_PAM_FORMAT_GRAYSCALE_ALPHA),
-				4 => Ok(Self::IMWRITE_PAM_FORMAT_RGB),
-				5 => Ok(Self::IMWRITE_PAM_FORMAT_RGB_ALPHA),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwritePAMFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImwritePAMFlags }
+	opencv_type_enum! { crate::imgcodecs::ImwritePAMFlags { IMWRITE_PAM_FORMAT_NULL, IMWRITE_PAM_FORMAT_BLACKANDWHITE, IMWRITE_PAM_FORMAT_GRAYSCALE, IMWRITE_PAM_FORMAT_GRAYSCALE_ALPHA, IMWRITE_PAM_FORMAT_RGB, IMWRITE_PAM_FORMAT_RGB_ALPHA } }
 
 	/// Imwrite PNG specific values for IMWRITE_PNG_FILTER parameter key
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwritePNGFilterFlags {
 		/// Applies no filter to the PNG image (useful when you want to save the raw pixel data without any compression filter).
@@ -702,24 +519,7 @@ pub mod imgcodecs {
 		IMWRITE_PNG_ALL_FILTERS = 248,
 	}
 
-	impl TryFrom<i32> for ImwritePNGFilterFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				8 => Ok(Self::IMWRITE_PNG_FILTER_NONE),
-				16 => Ok(Self::IMWRITE_PNG_FILTER_SUB),
-				32 => Ok(Self::IMWRITE_PNG_FILTER_UP),
-				64 => Ok(Self::IMWRITE_PNG_FILTER_AVG),
-				128 => Ok(Self::IMWRITE_PNG_FILTER_PAETH),
-				56 => Ok(Self::IMWRITE_PNG_FAST_FILTERS),
-				248 => Ok(Self::IMWRITE_PNG_ALL_FILTERS),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwritePNGFilterFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImwritePNGFilterFlags }
+	opencv_type_enum! { crate::imgcodecs::ImwritePNGFilterFlags { IMWRITE_PNG_FILTER_NONE, IMWRITE_PNG_FILTER_SUB, IMWRITE_PNG_FILTER_UP, IMWRITE_PNG_FILTER_AVG, IMWRITE_PNG_FILTER_PAETH, IMWRITE_PNG_FAST_FILTERS, IMWRITE_PNG_ALL_FILTERS } }
 
 	/// Imwrite PNG specific flags used to tune the compression algorithm.
 	/// These flags will be modify the way of PNG image compression and will be passed to the underlying zlib processing stage.
@@ -728,7 +528,7 @@ pub mod imgcodecs {
 	/// *   IMWRITE_PNG_STRATEGY_RLE is designed to be almost as fast as IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY, but give better compression for PNG image data.
 	/// *   The strategy parameter only affects the compression ratio but not the correctness of the compressed output even if it is not set appropriately.
 	/// *   IMWRITE_PNG_STRATEGY_FIXED prevents the use of dynamic Huffman codes, allowing for a simpler decoder for special applications.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwritePNGFlags {
 		/// Use this value for normal data.
@@ -743,24 +543,9 @@ pub mod imgcodecs {
 		IMWRITE_PNG_STRATEGY_FIXED = 4,
 	}
 
-	impl TryFrom<i32> for ImwritePNGFlags {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::imgcodecs::ImwritePNGFlags { IMWRITE_PNG_STRATEGY_DEFAULT, IMWRITE_PNG_STRATEGY_FILTERED, IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY, IMWRITE_PNG_STRATEGY_RLE, IMWRITE_PNG_STRATEGY_FIXED } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::IMWRITE_PNG_STRATEGY_DEFAULT),
-				1 => Ok(Self::IMWRITE_PNG_STRATEGY_FILTERED),
-				2 => Ok(Self::IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY),
-				3 => Ok(Self::IMWRITE_PNG_STRATEGY_RLE),
-				4 => Ok(Self::IMWRITE_PNG_STRATEGY_FIXED),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwritePNGFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImwritePNGFlags }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteTiffCompressionFlags {
 		/// dump mode
@@ -833,54 +618,9 @@ pub mod imgcodecs {
 		IMWRITE_TIFF_COMPRESSION_JXL = 50002,
 	}
 
-	impl TryFrom<i32> for ImwriteTiffCompressionFlags {
-		type Error = crate::Error;
+	opencv_type_enum! { crate::imgcodecs::ImwriteTiffCompressionFlags { IMWRITE_TIFF_COMPRESSION_NONE, IMWRITE_TIFF_COMPRESSION_CCITTRLE, IMWRITE_TIFF_COMPRESSION_CCITTFAX3, IMWRITE_TIFF_COMPRESSION_CCITTFAX4, IMWRITE_TIFF_COMPRESSION_LZW, IMWRITE_TIFF_COMPRESSION_OJPEG, IMWRITE_TIFF_COMPRESSION_JPEG, IMWRITE_TIFF_COMPRESSION_T85, IMWRITE_TIFF_COMPRESSION_T43, IMWRITE_TIFF_COMPRESSION_NEXT, IMWRITE_TIFF_COMPRESSION_CCITTRLEW, IMWRITE_TIFF_COMPRESSION_PACKBITS, IMWRITE_TIFF_COMPRESSION_THUNDERSCAN, IMWRITE_TIFF_COMPRESSION_IT8CTPAD, IMWRITE_TIFF_COMPRESSION_IT8LW, IMWRITE_TIFF_COMPRESSION_IT8MP, IMWRITE_TIFF_COMPRESSION_IT8BL, IMWRITE_TIFF_COMPRESSION_PIXARFILM, IMWRITE_TIFF_COMPRESSION_PIXARLOG, IMWRITE_TIFF_COMPRESSION_DEFLATE, IMWRITE_TIFF_COMPRESSION_ADOBE_DEFLATE, IMWRITE_TIFF_COMPRESSION_DCS, IMWRITE_TIFF_COMPRESSION_JBIG, IMWRITE_TIFF_COMPRESSION_SGILOG, IMWRITE_TIFF_COMPRESSION_SGILOG24, IMWRITE_TIFF_COMPRESSION_JP2000, IMWRITE_TIFF_COMPRESSION_LERC, IMWRITE_TIFF_COMPRESSION_LZMA, IMWRITE_TIFF_COMPRESSION_ZSTD, IMWRITE_TIFF_COMPRESSION_WEBP, IMWRITE_TIFF_COMPRESSION_JXL } }
 
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::IMWRITE_TIFF_COMPRESSION_NONE),
-				2 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITTRLE),
-				3 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITTFAX3),
-				// Duplicate of IMWRITE_TIFF_COMPRESSION_CCITTFAX3
-				// 3 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITT_T4),
-				4 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITTFAX4),
-				// Duplicate of IMWRITE_TIFF_COMPRESSION_CCITTFAX4
-				// 4 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITT_T6),
-				5 => Ok(Self::IMWRITE_TIFF_COMPRESSION_LZW),
-				6 => Ok(Self::IMWRITE_TIFF_COMPRESSION_OJPEG),
-				7 => Ok(Self::IMWRITE_TIFF_COMPRESSION_JPEG),
-				9 => Ok(Self::IMWRITE_TIFF_COMPRESSION_T85),
-				10 => Ok(Self::IMWRITE_TIFF_COMPRESSION_T43),
-				32766 => Ok(Self::IMWRITE_TIFF_COMPRESSION_NEXT),
-				32771 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITTRLEW),
-				32773 => Ok(Self::IMWRITE_TIFF_COMPRESSION_PACKBITS),
-				32809 => Ok(Self::IMWRITE_TIFF_COMPRESSION_THUNDERSCAN),
-				32895 => Ok(Self::IMWRITE_TIFF_COMPRESSION_IT8CTPAD),
-				32896 => Ok(Self::IMWRITE_TIFF_COMPRESSION_IT8LW),
-				32897 => Ok(Self::IMWRITE_TIFF_COMPRESSION_IT8MP),
-				32898 => Ok(Self::IMWRITE_TIFF_COMPRESSION_IT8BL),
-				32908 => Ok(Self::IMWRITE_TIFF_COMPRESSION_PIXARFILM),
-				32909 => Ok(Self::IMWRITE_TIFF_COMPRESSION_PIXARLOG),
-				32946 => Ok(Self::IMWRITE_TIFF_COMPRESSION_DEFLATE),
-				8 => Ok(Self::IMWRITE_TIFF_COMPRESSION_ADOBE_DEFLATE),
-				32947 => Ok(Self::IMWRITE_TIFF_COMPRESSION_DCS),
-				34661 => Ok(Self::IMWRITE_TIFF_COMPRESSION_JBIG),
-				34676 => Ok(Self::IMWRITE_TIFF_COMPRESSION_SGILOG),
-				34677 => Ok(Self::IMWRITE_TIFF_COMPRESSION_SGILOG24),
-				34712 => Ok(Self::IMWRITE_TIFF_COMPRESSION_JP2000),
-				34887 => Ok(Self::IMWRITE_TIFF_COMPRESSION_LERC),
-				34925 => Ok(Self::IMWRITE_TIFF_COMPRESSION_LZMA),
-				50000 => Ok(Self::IMWRITE_TIFF_COMPRESSION_ZSTD),
-				50001 => Ok(Self::IMWRITE_TIFF_COMPRESSION_WEBP),
-				50002 => Ok(Self::IMWRITE_TIFF_COMPRESSION_JXL),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwriteTiffCompressionFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImwriteTiffCompressionFlags }
-
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteTiffPredictorFlags {
 		/// no prediction scheme used
@@ -891,20 +631,7 @@ pub mod imgcodecs {
 		IMWRITE_TIFF_PREDICTOR_FLOATINGPOINT = 3,
 	}
 
-	impl TryFrom<i32> for ImwriteTiffPredictorFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::IMWRITE_TIFF_PREDICTOR_NONE),
-				2 => Ok(Self::IMWRITE_TIFF_PREDICTOR_HORIZONTAL),
-				3 => Ok(Self::IMWRITE_TIFF_PREDICTOR_FLOATINGPOINT),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwriteTiffPredictorFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::imgcodecs::ImwriteTiffPredictorFlags }
+	opencv_type_enum! { crate::imgcodecs::ImwriteTiffPredictorFlags { IMWRITE_TIFF_PREDICTOR_NONE, IMWRITE_TIFF_PREDICTOR_HORIZONTAL, IMWRITE_TIFF_PREDICTOR_FLOATINGPOINT } }
 
 	/// Checks if the specified image file can be decoded by OpenCV.
 	///

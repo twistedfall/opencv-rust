@@ -73,7 +73,7 @@ pub mod photo {
 	/// Recursive Filtering
 	pub const RECURS_FILTER: i32 = 1;
 	/// Flags for the seamlessClone algorithm
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SeamlessCloneFlags {
 		/// Normal seamless cloning.
@@ -107,23 +107,7 @@ pub mod photo {
 		MONOCHROME_TRANSFER_WIDE = 11,
 	}
 
-	impl TryFrom<i32> for SeamlessCloneFlags {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				1 => Ok(Self::NORMAL_CLONE),
-				2 => Ok(Self::MIXED_CLONE),
-				3 => Ok(Self::MONOCHROME_TRANSFER),
-				9 => Ok(Self::NORMAL_CLONE_WIDE),
-				10 => Ok(Self::MIXED_CLONE_WIDE),
-				11 => Ok(Self::MONOCHROME_TRANSFER_WIDE),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::photo::SeamlessCloneFlags"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::photo::SeamlessCloneFlags }
+	opencv_type_enum! { crate::photo::SeamlessCloneFlags { NORMAL_CLONE, MIXED_CLONE, MONOCHROME_TRANSFER, NORMAL_CLONE_WIDE, MIXED_CLONE_WIDE, MONOCHROME_TRANSFER_WIDE } }
 
 	/// Given an original color image, two differently colored versions of this image can be mixed
 	/// seamlessly.

@@ -41,7 +41,7 @@ pub mod cudaoptflow {
 	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_PERF_LEVEL_SLOW: i32 = 5;
 	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_PERF_LEVEL_UNDEFINED: i32 = 0;
 	/// Supported optical flow performance levels.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_NvidiaOpticalFlow_1_0_NVIDIA_OF_PERF_LEVEL {
 		NV_OF_PERF_LEVEL_UNDEFINED = 0,
@@ -54,25 +54,10 @@ pub mod cudaoptflow {
 		NV_OF_PERF_LEVEL_MAX = 21,
 	}
 
-	impl TryFrom<i32> for CUDA_NvidiaOpticalFlow_1_0_NVIDIA_OF_PERF_LEVEL {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::NV_OF_PERF_LEVEL_UNDEFINED),
-				5 => Ok(Self::NV_OF_PERF_LEVEL_SLOW),
-				10 => Ok(Self::NV_OF_PERF_LEVEL_MEDIUM),
-				20 => Ok(Self::NV_OF_PERF_LEVEL_FAST),
-				21 => Ok(Self::NV_OF_PERF_LEVEL_MAX),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0_NVIDIA_OF_PERF_LEVEL"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0_NVIDIA_OF_PERF_LEVEL }
+	opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0_NVIDIA_OF_PERF_LEVEL { NV_OF_PERF_LEVEL_UNDEFINED, NV_OF_PERF_LEVEL_SLOW, NV_OF_PERF_LEVEL_MEDIUM, NV_OF_PERF_LEVEL_FAST, NV_OF_PERF_LEVEL_MAX } }
 
 	/// Supported grid size for hint buffer.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HINT_VECTOR_GRID_SIZE {
 		NV_OF_HINT_VECTOR_GRID_SIZE_UNDEFINED = 0,
@@ -87,26 +72,10 @@ pub mod cudaoptflow {
 		NV_OF_HINT_VECTOR_GRID_SIZE_MAX = 9,
 	}
 
-	impl TryFrom<i32> for CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HINT_VECTOR_GRID_SIZE {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::NV_OF_HINT_VECTOR_GRID_SIZE_UNDEFINED),
-				1 => Ok(Self::NV_OF_HINT_VECTOR_GRID_SIZE_1),
-				2 => Ok(Self::NV_OF_HINT_VECTOR_GRID_SIZE_2),
-				4 => Ok(Self::NV_OF_HINT_VECTOR_GRID_SIZE_4),
-				8 => Ok(Self::NV_OF_HINT_VECTOR_GRID_SIZE_8),
-				9 => Ok(Self::NV_OF_HINT_VECTOR_GRID_SIZE_MAX),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HINT_VECTOR_GRID_SIZE"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HINT_VECTOR_GRID_SIZE }
+	opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HINT_VECTOR_GRID_SIZE { NV_OF_HINT_VECTOR_GRID_SIZE_UNDEFINED, NV_OF_HINT_VECTOR_GRID_SIZE_1, NV_OF_HINT_VECTOR_GRID_SIZE_2, NV_OF_HINT_VECTOR_GRID_SIZE_4, NV_OF_HINT_VECTOR_GRID_SIZE_8, NV_OF_HINT_VECTOR_GRID_SIZE_MAX } }
 
 	/// Supported grid size for output buffer.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE {
 		NV_OF_OUTPUT_VECTOR_GRID_SIZE_UNDEFINED = 0,
@@ -119,25 +88,10 @@ pub mod cudaoptflow {
 		NV_OF_OUTPUT_VECTOR_GRID_SIZE_MAX = 5,
 	}
 
-	impl TryFrom<i32> for CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::NV_OF_OUTPUT_VECTOR_GRID_SIZE_UNDEFINED),
-				1 => Ok(Self::NV_OF_OUTPUT_VECTOR_GRID_SIZE_1),
-				2 => Ok(Self::NV_OF_OUTPUT_VECTOR_GRID_SIZE_2),
-				4 => Ok(Self::NV_OF_OUTPUT_VECTOR_GRID_SIZE_4),
-				5 => Ok(Self::NV_OF_OUTPUT_VECTOR_GRID_SIZE_MAX),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE }
+	opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE { NV_OF_OUTPUT_VECTOR_GRID_SIZE_UNDEFINED, NV_OF_OUTPUT_VECTOR_GRID_SIZE_1, NV_OF_OUTPUT_VECTOR_GRID_SIZE_2, NV_OF_OUTPUT_VECTOR_GRID_SIZE_4, NV_OF_OUTPUT_VECTOR_GRID_SIZE_MAX } }
 
 	/// Supported optical flow performance levels.
-	#[repr(C)]
+	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL {
 		NV_OF_PERF_LEVEL_UNDEFINED = 0,
@@ -150,22 +104,7 @@ pub mod cudaoptflow {
 		NV_OF_PERF_LEVEL_MAX = 21,
 	}
 
-	impl TryFrom<i32> for CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL {
-		type Error = crate::Error;
-
-		fn try_from(value: i32) -> Result<Self, Self::Error> {
-			match value {
-				0 => Ok(Self::NV_OF_PERF_LEVEL_UNDEFINED),
-				5 => Ok(Self::NV_OF_PERF_LEVEL_SLOW),
-				10 => Ok(Self::NV_OF_PERF_LEVEL_MEDIUM),
-				20 => Ok(Self::NV_OF_PERF_LEVEL_FAST),
-				21 => Ok(Self::NV_OF_PERF_LEVEL_MAX),
-				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL"))),
-			}
-		}
-	}
-
-	opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL }
+	opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL { NV_OF_PERF_LEVEL_UNDEFINED, NV_OF_PERF_LEVEL_SLOW, NV_OF_PERF_LEVEL_MEDIUM, NV_OF_PERF_LEVEL_FAST, NV_OF_PERF_LEVEL_MAX } }
 
 	/// Class computing the optical flow for two images using Brox et al Optical Flow algorithm ([Brox2004](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Brox2004)).
 	pub struct CUDA_BroxOpticalFlow {

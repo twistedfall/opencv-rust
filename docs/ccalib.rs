@@ -132,7 +132,28 @@ pub mod ccalib {
 		Ok(ret)
 	}
 
-	/// @overload
+	/// Projects points for omnidirectional camera using CMei's model
+	///
+	/// ## Parameters
+	/// * objectPoints: Object points in world coordinate, vector of vector of Vec3f or Mat of
+	/// 1xN/Nx1 3-channel of type CV_32F and N is the number of points. 64F is also acceptable.
+	/// * imagePoints: Output array of image points, vector of vector of Vec2f or
+	/// 1xN/Nx1 2-channel of type CV_32F. 64F is also acceptable.
+	/// * rvec: vector of rotation between world coordinate and camera coordinate, i.e., om
+	/// * tvec: vector of translation between pattern coordinate and camera coordinate
+	/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%20s%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
+	/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%29).
+	/// * xi: The parameter xi for CMei's model
+	/// * jacobian: Optional output 2Nx16 of type CV_64F jacobian matrix, contains the derivatives of
+	/// image pixel points wrt parameters including ![inline formula](https://latex.codecogs.com/png.latex?om%2C%20T%2C%20f%5Fx%2C%20f%5Fy%2C%20s%2C%20c%5Fx%2C%20c%5Fy%2C%20xi%2C%20k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2).
+	/// This matrix will be used in calibration by optimization.
+	///
+	/// The function projects object 3D points of world coordinate to image pixels, parameter by intrinsic
+	/// and extrinsic parameters. Also, it optionally compute a by-product: the jacobian matrix containing
+	/// contains the derivatives of image pixel points wrt intrinsic and extrinsic parameters.
+	///
+	/// ## Overloaded parameters
+	///
 	///
 	/// ## Note
 	/// This alternative version of [project_points_1] function uses the following default values for its arguments:
