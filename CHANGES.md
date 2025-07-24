@@ -1,3 +1,8 @@
+* 0.95.1
+  * Add `Deref` for `MatSize`.
+  * Fix assertion error with `Mat::at` addressing on OpenCV 4.12.
+  * Drop unneeded dep that was causing build failures in crossbuild environments (fixes https://github.com/twistedfall/opencv-rust/issues/682).
+
 * 0.95.0
   * `MatSize` now carries a lifetime because it borrows the data from a `Mat` on creation.
   * Conditional compilation macros for detecting which module is enabled are now added in the form `opencv_has_module_<MODULE_NAME>!`.
