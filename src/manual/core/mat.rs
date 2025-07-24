@@ -122,21 +122,22 @@ fn match_length(sizes: &[i32], slice_len: usize, size_mul: usize) -> Result<()> 
 	Ok(())
 }
 
+/// Port of the algo from `Mat::at(int i0)`, includes OpenCV 5 specifics
 #[inline(always)]
-fn idx_to_row_col(mat: &(impl MatTraitConst + ?Sized), i0: i32) -> Result<(i32, i32)> {
-	Ok(if mat.is_continuous() {
-		(0, i0)
+unsafe fn data_at_idx<T: DataType>(mat: &(impl MatTraitConst + ?Sized), i0: usize) -> *const T {
+	let size = mat.mat_size();
+	let size = &*size;
+	let data = mat.data();
+	if size.len() <= 1 || mat.is_continuous() || size[0] == 1 {
+		unsafe { data.cast::<T>().add(i0) }
+	} else if size[1] == 1 {
+		unsafe { data.add(mat.mat_step()[0] * i0) }.cast::<T>()
 	} else {
-		let mat_size = mat.size()?;
-		if mat_size.width == 1 {
-			(0, i0)
-		} else if mat_size.height == 1 {
-			(i0, 0)
-		} else {
-			let i = i0 / mat_size.height;
-			(i, i0 - i * mat_size.height)
-		}
-	})
+		let cols = usize::try_from(size[1]).unwrap_or(1);
+		let i = i0 / cols;
+		let j = i0 - i * cols;
+		unsafe { data.add(mat.mat_step()[0] * i).cast::<T>().add(j) }
+	}
 }
 
 #[inline]
@@ -479,16 +480,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Caller must ensure that index is within Mat bounds
 	#[inline]
 	unsafe fn at_unchecked<T: DataType>(&self, i0: i32) -> Result<&T> {
-		let mat_size = self.size()?;
-		let (i, j) = if self.is_continuous() || mat_size.width == 1 {
-			(0, i0)
-		} else if mat_size.height == 1 {
-			(i0, 0)
-		} else {
-			let i = i0 / mat_size.height;
-			(i, i0 - i * mat_size.height)
-		};
-		self.ptr_2d(i, j).map(|ptr| unsafe { convert_ptr(ptr) })
+		Ok(unsafe { &*data_at_idx::<T>(self, i0 as usize) })
 	}
 
 	/// Like `Mat::at_2d()` but performs no bounds or type checks
@@ -656,8 +648,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Caller must ensure that index is within Mat bounds
 	#[inline]
 	unsafe fn at_unchecked_mut<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
-		let (i, j) = idx_to_row_col(self, i0)?;
-		self.ptr_2d_mut(i, j).map(|ptr| unsafe { convert_ptr_mut(ptr) })
+		Ok(unsafe { &mut *data_at_idx::<T>(self, i0 as usize).cast_mut() })
 	}
 
 	/// Like `Mat::at_2d_mut()` but performs no bounds or type checks

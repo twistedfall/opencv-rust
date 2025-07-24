@@ -609,12 +609,7 @@ fn mat_from_data() -> Result<()> {
 
 	{
 		let src = unsafe { Mat::new_nd_with_data_unsafe_def(&[3, 5, 6], u8::opencv_type(), bytes.as_mut_ptr().cast::<c_void>())? };
-		let expected_size = if cfg!(ocvrs_opencv_branch_5) {
-			Size::new(0, 0)
-		} else {
-			Size::new(5, 3)
-		};
-		assert_eq!(expected_size, src.size()?);
+		assert_eq!(&[3, 5, 6], &*src.mat_size());
 		assert_eq!(3, src.dims());
 		assert_eq!(-1, src.rows());
 		assert_eq!(-1, src.cols());
