@@ -116,10 +116,10 @@ fn fixed_array_return() -> Result<()> {
 	// mutable fixed array return and modification
 	let m = Mat::new_rows_cols_with_default(5, 3, i32::opencv_type(), 1.into())?;
 	let mut mat_step = m.mat_step();
-	assert_eq!([12, 4], &mat_step.buf()[0..2]);
-	mat_step.buf_mut()[0] = 16;
-	mat_step.buf_mut()[1] = 2;
-	assert_eq!([16, 2], &mat_step.buf()[0..2]);
+	assert_eq!([12, 4], &mat_step[0..2]);
+	mat_step[0] = 16;
+	mat_step[1] = 2;
+	assert_eq!([16, 2], &mat_step[0..2]);
 
 	Ok(())
 }

@@ -1,13 +1,13 @@
 use std::convert::TryInto;
 use std::ffi::c_void;
 use std::marker::PhantomData;
-use std::ops::Deref;
+use std::ops::{Deref, DerefMut};
 use std::{fmt, mem, ptr, slice};
 
 pub use mat_::*;
 
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
-use crate::core::{MatConstIterator, MatExpr, MatSize, Point, Rect, Scalar, Size, UMat};
+use crate::core::{MatConstIterator, MatExpr, MatSize, MatStep, Point, Rect, Scalar, Size, UMat};
 use crate::manual::core::DataType;
 use crate::prelude::*;
 use crate::{core, input_output_array, input_output_array_vector, Error, Result};
@@ -847,6 +847,23 @@ impl Deref for MatSize<'_> {
 impl fmt::Debug for MatSize<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		writeln!(f, "{:#?}", self.deref())
+	}
+}
+
+impl Deref for MatStep {
+	#[cfg(not(ocvrs_opencv_branch_5))]
+	type Target = [usize; 2];
+	#[cfg(ocvrs_opencv_branch_5)]
+	type Target = [usize; 3];
+
+	fn deref(&self) -> &Self::Target {
+		self.buf()
+	}
+}
+
+impl DerefMut for MatStep {
+	fn deref_mut(&mut self) -> &mut Self::Target {
+		self.buf_mut()
 	}
 }
 
