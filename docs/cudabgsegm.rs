@@ -108,7 +108,7 @@ pub mod cudabgsegm {
 	///
 	/// The class discriminates between foreground and background pixels by building and maintaining a model
 	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-	/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_MOG2001) .
+	/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_MOG2001) .
 	/// ## See also
 	/// BackgroundSubtractorMOG
 	///
@@ -291,7 +291,7 @@ pub mod cudabgsegm {
 	///
 	/// The class discriminates between foreground and background pixels by building and maintaining a model
 	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-	/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
+	/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
 	/// ## See also
 	/// BackgroundSubtractorMOG2
 	pub struct CUDA_BackgroundSubtractorMOG2 {

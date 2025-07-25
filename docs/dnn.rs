@@ -27,7 +27,7 @@ pub mod dnn {
 	pub const DNN_BACKEND_DEFAULT: i32 = 0;
 	/// DNN_BACKEND_DEFAULT equals to OPENCV_DNN_BACKEND_DEFAULT, which can be defined using CMake or a configuration parameter
 	pub const DNN_BACKEND_HALIDE: i32 = 1;
-	/// Intel OpenVINO computational backend
+	/// Intel OpenVINO computational backend, supported targets: CPU, OPENCL, OPENCL_FP16, MYRIAD, HDDL, NPU
 	///
 	/// Note: Tutorial how to build OpenCV with OpenVINO: [tutorial_dnn_openvino]
 	pub const DNN_BACKEND_INFERENCE_ENGINE: i32 = 2;
@@ -63,7 +63,7 @@ pub mod dnn {
 	pub const DNN_TARGET_OPENCL: i32 = 1;
 	pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 	pub const DNN_TARGET_VULKAN: i32 = 4;
-	pub const OPENCV_DNN_API_VERSION: i32 = 20241223;
+	pub const OPENCV_DNN_API_VERSION: i32 = 20250619;
 	pub const SoftNMSMethod_SOFTNMS_GAUSSIAN: i32 = 2;
 	pub const SoftNMSMethod_SOFTNMS_LINEAR: i32 = 1;
 	/// Enum of computation backends supported by layers.
@@ -76,7 +76,7 @@ pub mod dnn {
 		DNN_BACKEND_DEFAULT = 0,
 		/// DNN_BACKEND_DEFAULT equals to OPENCV_DNN_BACKEND_DEFAULT, which can be defined using CMake or a configuration parameter
 		DNN_BACKEND_HALIDE = 1,
-		/// Intel OpenVINO computational backend
+		/// Intel OpenVINO computational backend, supported targets: CPU, OPENCL, OPENCL_FP16, MYRIAD, HDDL, NPU
 		///
 		/// Note: Tutorial how to build OpenCV with OpenVINO: [tutorial_dnn_openvino]
 		DNN_BACKEND_INFERENCE_ENGINE = 2,
@@ -10093,7 +10093,7 @@ pub mod dnn {
 		/// * swap_rb: false
 		/// * ddepth: CV_32F
 		/// * datalayout: DNN_LAYOUT_NCHW
-		/// * mode: DNN_PMODE_NULL
+		/// * mode: dnn::DNN_PMODE_NULL
 		/// * border_value: 0.0
 		#[inline]
 		pub fn new(scalefactor: core::Scalar, size: core::Size, mean: core::Scalar, swap_rb: bool, ddepth: i32, datalayout: crate::dnn::DataLayout, mode: crate::dnn::ImagePaddingMode, border_value: core::Scalar) -> Result<crate::dnn::Image2BlobParams> {
@@ -10111,7 +10111,7 @@ pub mod dnn {
 		/// * swap_rb: false
 		/// * ddepth: CV_32F
 		/// * datalayout: DNN_LAYOUT_NCHW
-		/// * mode: DNN_PMODE_NULL
+		/// * mode: dnn::DNN_PMODE_NULL
 		/// * border_value: 0.0
 		#[inline]
 		pub fn new_def(scalefactor: core::Scalar) -> Result<crate::dnn::Image2BlobParams> {
@@ -20732,7 +20732,7 @@ pub mod dnn {
 
 	/// This class represents high-level API for text detection DL networks compatible with DB model.
 	///
-	/// Related publications: [liao2020real](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_liao2020real)
+	/// Related publications: [liao2020real](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_liao2020real)
 	/// Paper: <https://arxiv.org/abs/1911.08947>
 	/// For more information about the hyper-parameters setting, please refer to <https://github.com/MhLiao/DB>
 	///

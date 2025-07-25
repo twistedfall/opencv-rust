@@ -78,7 +78,7 @@ pub mod sfm {
 	/// * R: Output 3x3 rotation matrix.
 	/// * t: Output 3x1 translation vector.
 	///
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) A4.1.1 pag.579
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) A4.1.1 pag.579
 	#[inline]
 	pub fn k_rt_from_projection(p: &impl ToInputArray, k: &mut impl ToOutputArray, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(p);
@@ -156,7 +156,7 @@ pub mod sfm {
 	/// * K2: Input 3x3 second camera matrix. The parameters are similar to K1.
 	/// * E: Output 3x3 essential matrix.
 	///
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
 	#[inline]
 	pub fn essential_from_fundamental(f: &impl ToInputArray, k1: &impl ToInputArray, k2: &impl ToInputArray, e: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(f);
@@ -178,7 +178,7 @@ pub mod sfm {
 	/// * t2: Input 3x1 second camera translation vector.
 	/// * E: Output 3x3 essential matrix.
 	///
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
 	#[inline]
 	pub fn essential_from_rt(r1: &impl ToInputArray, t1: &impl ToInputArray, r2: &impl ToInputArray, t2: &impl ToInputArray, e: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(r1);
@@ -337,7 +337,7 @@ pub mod sfm {
 	/// * K2: Input 3x3 second camera matrix. The parameters are similar to K1.
 	/// * F: Output 3x3 fundamental matrix.
 	///
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12) or <http://ai.stanford.edu/~birch/projective/node20.html>
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12) or <http://ai.stanford.edu/~birch/projective/node20.html>
 	#[inline]
 	pub fn fundamental_from_essential(e: &impl ToInputArray, k1: &impl ToInputArray, k2: &impl ToInputArray, f: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(e);
@@ -446,7 +446,7 @@ pub mod sfm {
 	/// Computes the transformation matrix such that each coordinate direction will be scaled equally,
 	/// bringing the centroid to the origin with an average centroid ![inline formula](https://latex.codecogs.com/png.latex?%281%2C1%2C1%29%5ET).
 	///
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
 	#[inline]
 	pub fn isotropic_preconditioner_from_points(points: &impl ToInputArray, t: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(points);
@@ -489,7 +489,7 @@ pub mod sfm {
 	/// Decides the right solution by checking that the triangulation of a match
 	/// x1--x2 lies in front of the cameras. Return index of the right solution or -1 if no solution.
 	///
-	/// Reference: See [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (9.6.3 Geometrical interpretation of the 4 solutions).
+	/// Reference: See [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (9.6.3 Geometrical interpretation of the 4 solutions).
 	#[inline]
 	pub fn motion_from_essential_choose_solution(rs: &impl ToInputArray, ts: &impl ToInputArray, k1: &impl ToInputArray, x1: &impl ToInputArray, k2: &impl ToInputArray, x2: &impl ToInputArray) -> Result<i32> {
 		input_array_arg!(rs);
@@ -511,7 +511,7 @@ pub mod sfm {
 	/// * Rs: Output vector of 3x3 rotation matrices.
 	/// * ts: Output vector of 3x1 translation vectors.
 	///
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (Result 9.19)
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (Result 9.19)
 	#[inline]
 	pub fn motion_from_essential(e: &impl ToInputArray, rs: &mut impl ToOutputArray, ts: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(e);
@@ -550,7 +550,7 @@ pub mod sfm {
 	/// Internally calls [preconditionerFromPoints] in order to get the scaling matrix before applying [applyTransformationToPoints].
 	/// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.
 	///
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
 	#[inline]
 	pub fn normalize_isotropic_points(points: &impl ToInputArray, normalized_points: &mut impl ToOutputArray, t: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(points);
@@ -572,7 +572,7 @@ pub mod sfm {
 	/// Internally calls [preconditionerFromPoints] in order to get the scaling matrix before applying [applyTransformationToPoints].
 	/// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.
 	///
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
 	#[inline]
 	pub fn normalize_points(points: &impl ToInputArray, normalized_points: &mut impl ToOutputArray, t: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(points);
@@ -592,7 +592,7 @@ pub mod sfm {
 	/// * F: Output 3x3 fundamental matrix.
 	///
 	/// Uses the normalized 8-point fundamental matrix solver.
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.2 pag.281 (x1 = x, x2 = x')
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.2 pag.281 (x1 = x, x2 = x')
 	#[inline]
 	pub fn normalized_eight_point_solver(x1: &impl ToInputArray, x2: &impl ToInputArray, f: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(x1);
@@ -613,7 +613,7 @@ pub mod sfm {
 	/// Computes the transformation matrix such that the two principal moments of the set of points are equal to unity,
 	/// forming an approximately symmetric circular cloud of points of radius 1 about the origin.
 	///
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
 	#[inline]
 	pub fn preconditioner_from_points(points: &impl ToInputArray, t: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(points);
@@ -942,7 +942,7 @@ pub mod sfm {
 	/// ## Parameters
 	/// * x: Input 3x1 vector.
 	///
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00), p581, equation (A4.5).
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00), p581, equation (A4.5).
 	#[inline]
 	pub fn skew(x: &impl ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(x);
@@ -961,7 +961,7 @@ pub mod sfm {
 	/// * points3d: Output array with computed 3d points. Is 3 x N.
 	///
 	/// Triangulates the 3d position of 2d correspondences between several images.
-	/// Reference: Internally it uses DLT method [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 12.2 pag.312
+	/// Reference: Internally it uses DLT method [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 12.2 pag.312
 	#[inline]
 	pub fn triangulate_points(points2d: &impl ToInputArray, projection_matrices: &impl ToInputArray, points3d: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(points2d);

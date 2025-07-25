@@ -3,7 +3,7 @@ pub mod videostab {
 	//!
 	//! The video stabilization module contains a set of functions and classes that can be used to solve the
 	//! problem of video stabilization. There are a few methods implemented, most of them are described in
-	//! the papers [OF06](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
+	//! the papers [OF06](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
 	//! paper methods.
 	//!
 	//! ### References
@@ -21,7 +21,7 @@ pub mod videostab {
 	//!
 	//!    # Fast Marching Method
 	//!
-	//!    The Fast Marching Method [Telea04](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
+	//!    The Fast Marching Method [Telea04](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
 	//!    color inpainting. The method is implemented is a flexible way and it's made public for other users.
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};

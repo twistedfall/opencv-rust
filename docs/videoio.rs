@@ -66,7 +66,7 @@ pub mod videoio {
 	pub const CAP_INTEL_MFX: i32 = 2300;
 	/// Microsoft Media Foundation (via videoInput). See platform specific notes above.
 	pub const CAP_MSMF: i32 = 1400;
-	/// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Femto Mega) attention: Astra2 cameras currently only support Windows and Linux kernel versions no higher than 4.15, and higher versions of Linux kernel may have exceptions.
+	/// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Gemini330, Femto Mega) attention: Astra2 cameras currently only support Windows and Linux kernel versions no higher than 4.15, and higher versions of Linux kernel may have exceptions.
 	pub const CAP_OBSENSOR: i32 = 2600;
 	/// Data given from BGR stream generator
 	pub const CAP_OBSENSOR_BGR_IMAGE: i32 = 1;
@@ -639,6 +639,7 @@ pub mod videoio {
 	pub const CAP_PROP_XI_WB_KR: i32 = 448;
 	/// Width of the Image provided by the device (in pixels).
 	pub const CAP_PROP_XI_WIDTH: i32 = 451;
+	/// Android: May switch physical cameras/lenses. Factor and range are hardware-dependent.
 	pub const CAP_PROP_ZOOM: i32 = 27;
 	/// PvAPI, Prosilica GigE SDK
 	pub const CAP_PVAPI: i32 = 800;
@@ -876,7 +877,7 @@ pub mod videoio {
 		CAP_XINE = 2400,
 		/// uEye Camera API
 		CAP_UEYE = 2500,
-		/// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Femto Mega) attention: Astra2 cameras currently only support Windows and Linux kernel versions no higher than 4.15, and higher versions of Linux kernel may have exceptions.
+		/// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Gemini330, Femto Mega) attention: Astra2 cameras currently only support Windows and Linux kernel versions no higher than 4.15, and higher versions of Linux kernel may have exceptions.
 		CAP_OBSENSOR = 2600,
 	}
 
@@ -1074,6 +1075,7 @@ pub mod videoio {
 		CAP_PROP_TRIGGER = 24,
 		CAP_PROP_TRIGGER_DELAY = 25,
 		CAP_PROP_WHITE_BALANCE_RED_V = 26,
+		/// Android: May switch physical cameras/lenses. Factor and range are hardware-dependent.
 		CAP_PROP_ZOOM = 27,
 		CAP_PROP_FOCUS = 28,
 		CAP_PROP_GUID = 29,
@@ -1462,6 +1464,13 @@ pub mod videoio {
 		fn as_raw_mut_IStreamReader(&mut self) -> *mut c_void;
 
 		/// Read bytes from stream
+		///
+		/// ## Parameters
+		/// * buffer: already allocated buffer of at least @p size bytes
+		/// * size: maximum number of bytes to read
+		///
+		/// ## Returns
+		/// actual number of read bytes
 		#[inline]
 		fn read(&mut self, buffer: &mut String, size: i64) -> Result<i64> {
 			string_arg_output_send!(via buffer_via);

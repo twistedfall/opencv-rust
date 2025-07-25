@@ -4214,13 +4214,17 @@ pub mod cudaarithm {
 
 	/// Applies a fixed-level threshold to each array element.
 	///
+	/// The special value cv::THRESH_OTSU may be combined with one of the other types. In this case, the function determines the
+	/// optimal threshold value using the Otsu's and uses it instead of the specified threshold. The function returns the
+	/// computed threshold value in addititon to the thresholded matrix.
+	/// The Otsu's method is implemented only for 8-bit matrices.
+	///
 	/// ## Parameters
 	/// * src: Source array (single-channel).
-	/// * dst: Destination array with the same size and type as src .
+	/// * dst: Destination array with the same size and type as src.
 	/// * thresh: Threshold value.
 	/// * maxval: Maximum value to use with THRESH_BINARY and THRESH_BINARY_INV threshold types.
-	/// * type: Threshold type. For details, see threshold . The THRESH_OTSU and THRESH_TRIANGLE
-	/// threshold types are not supported.
+	/// * type: Threshold type. For details, see threshold. The THRESH_TRIANGLE threshold type is not supported.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// threshold
@@ -4241,13 +4245,17 @@ pub mod cudaarithm {
 
 	/// Applies a fixed-level threshold to each array element.
 	///
+	/// The special value cv::THRESH_OTSU may be combined with one of the other types. In this case, the function determines the
+	/// optimal threshold value using the Otsu's and uses it instead of the specified threshold. The function returns the
+	/// computed threshold value in addititon to the thresholded matrix.
+	/// The Otsu's method is implemented only for 8-bit matrices.
+	///
 	/// ## Parameters
 	/// * src: Source array (single-channel).
-	/// * dst: Destination array with the same size and type as src .
+	/// * dst: Destination array with the same size and type as src.
 	/// * thresh: Threshold value.
 	/// * maxval: Maximum value to use with THRESH_BINARY and THRESH_BINARY_INV threshold types.
-	/// * type: Threshold type. For details, see threshold . The THRESH_OTSU and THRESH_TRIANGLE
-	/// threshold types are not supported.
+	/// * type: Threshold type. For details, see threshold. The THRESH_TRIANGLE threshold type is not supported.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// threshold

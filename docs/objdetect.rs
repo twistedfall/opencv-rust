@@ -2,8 +2,8 @@ pub mod objdetect {
 	//! # Object Detection
 	//!    # Cascade Classifier for Object Detection
 	//!
-	//!    The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Viola01) and
-	//!    improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
+	//!    The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Viola01) and
+	//!    improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
 	//!
 	//!    First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 	//!    trained with a few hundred sample views of a particular object (i.e., a face or a car), called
@@ -29,7 +29,7 @@ pub mod objdetect {
 	//!    classifiers, and are calculated as described below. The current algorithm uses the following
 	//!    Haar-like features:
 	//!
-	//!    ![image](https://docs.opencv.org/4.11.0/haarfeatures.png)
+	//!    ![image](https://docs.opencv.org/4.12.0/haarfeatures.png)
 	//!
 	//!    The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 	//!    the region of interest and the scale (this scale is not the same as the scale used at the detection
@@ -69,11 +69,11 @@ pub mod objdetect {
 	//!        ArUco markers can also be used for advanced chessboard corner finding. To do this, group the markers in the
 	//!        CharucoBoard and find the corners of the chessboard with the CharucoDetector::detectBoard().
 	//!
-	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Aruco2014).
+	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Aruco2014).
 	//!
-	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
 	//! ## See also
-	//! [Aruco2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Aruco2014)
+	//! [Aruco2014](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Aruco2014)
 	//!        This code has been originally developed by Sergio Garrido-Jurado as a project
 	//!        for Google Summer of Code 2015 (GSoC 15).
 	use crate::mod_prelude::*;
@@ -86,7 +86,7 @@ pub mod objdetect {
 	pub const CASCADE_DO_ROUGH_SEARCH: i32 = 8;
 	pub const CASCADE_FIND_BIGGEST_OBJECT: i32 = 4;
 	pub const CASCADE_SCALE_IMAGE: i32 = 2;
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 	pub const CORNER_REFINE_APRILTAG: i32 = 3;
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -154,6 +154,7 @@ pub mod objdetect {
 	pub const QRCodeEncoder_CORRECT_LEVEL_L: i32 = 0;
 	pub const QRCodeEncoder_CORRECT_LEVEL_M: i32 = 1;
 	pub const QRCodeEncoder_CORRECT_LEVEL_Q: i32 = 2;
+	pub const QRCodeEncoder_ECI_SHIFT_JIS: i32 = 20;
 	pub const QRCodeEncoder_ECI_UTF8: i32 = 26;
 	pub const QRCodeEncoder_MODE_ALPHANUMERIC: i32 = 2;
 	pub const QRCodeEncoder_MODE_AUTO: i32 = -1;
@@ -171,7 +172,7 @@ pub mod objdetect {
 		CORNER_REFINE_SUBPIX = 1,
 		/// ArUco approach and refine the corners locations using the contour-points line fitting
 		CORNER_REFINE_CONTOUR = 2,
-		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 		CORNER_REFINE_APRILTAG = 3,
 	}
 
@@ -395,6 +396,7 @@ pub mod objdetect {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum QRCodeEncoder_ECIEncodings {
+		ECI_SHIFT_JIS = 20,
 		ECI_UTF8 = 26,
 	}
 
@@ -403,6 +405,7 @@ pub mod objdetect {
 
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
+				20 => Ok(Self::ECI_SHIFT_JIS),
 				26 => Ok(Self::ECI_UTF8),
 				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::QRCodeEncoder_ECIEncodings"))),
 			}
@@ -2436,7 +2439,7 @@ pub mod objdetect {
 
 		/// Detects faces in the input image. Following is an example output.
 		///
-		/// * ![image](https://docs.opencv.org/4.11.0/lena-face-detection.jpg)
+		/// * ![image](https://docs.opencv.org/4.12.0/lena-face-detection.jpg)
 		///
 		/// ## Parameters
 		/// * image: an image to detect
@@ -3005,7 +3008,7 @@ pub mod objdetect {
 
 	/// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 	///
-	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
+	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
 	///
 	/// useful links:
 	///
@@ -4225,6 +4228,41 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
+		/// Returns a kind of encoding for the decoded info from the latest [decode] or [detectAndDecode] call
+		/// ## Parameters
+		/// * codeIdx: an index of the previously decoded QR code.
+		///                When [decode] or [detectAndDecode] is used, valid value is zero.
+		///                For [decodeMulti] or [detectAndDecodeMulti] use indices corresponding to the output order.
+		///
+		/// ## C++ default parameters
+		/// * code_idx: 0
+		#[inline]
+		fn get_encoding(&mut self, code_idx: i32) -> Result<crate::objdetect::QRCodeEncoder_ECIEncodings> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetector_getEncoding_int(self.as_raw_mut_QRCodeDetector(), code_idx, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Returns a kind of encoding for the decoded info from the latest [decode] or [detectAndDecode] call
+		/// ## Parameters
+		/// * codeIdx: an index of the previously decoded QR code.
+		///                When [decode] or [detectAndDecode] is used, valid value is zero.
+		///                For [decodeMulti] or [detectAndDecodeMulti] use indices corresponding to the output order.
+		///
+		/// ## Note
+		/// This alternative version of [QRCodeDetectorTrait::get_encoding] function uses the following default values for its arguments:
+		/// * code_idx: 0
+		#[inline]
+		fn get_encoding_def(&mut self) -> Result<crate::objdetect::QRCodeEncoder_ECIEncodings> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetector_getEncoding(self.as_raw_mut_QRCodeDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 	}
 
 	impl Clone for QRCodeDetector {
@@ -4721,6 +4759,47 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
+		/// ArucoDetector constructor for multiple dictionaries
+		///
+		/// ## Parameters
+		/// * dictionaries: indicates the type of markers that will be searched. Empty dictionaries will throw an error.
+		/// * detectorParams: marker detection parameters
+		/// * refineParams: marker refine detection parameters
+		///
+		/// ## C++ default parameters
+		/// * detector_params: DetectorParameters()
+		/// * refine_params: RefineParameters()
+		#[inline]
+		pub fn new_1(dictionaries: &core::Vector<crate::objdetect::Dictionary>, detector_params: &impl crate::objdetect::DetectorParametersTraitConst, refine_params: crate::objdetect::RefineParameters) -> Result<crate::objdetect::ArucoDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_ArucoDetector_ArucoDetector_const_vectorLDictionaryGR_const_DetectorParametersR_const_RefineParametersR(dictionaries.as_raw_VectorOfDictionary(), detector_params.as_raw_DetectorParameters(), &refine_params, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::ArucoDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ArucoDetector constructor for multiple dictionaries
+		///
+		/// ## Parameters
+		/// * dictionaries: indicates the type of markers that will be searched. Empty dictionaries will throw an error.
+		/// * detectorParams: marker detection parameters
+		/// * refineParams: marker refine detection parameters
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * detector_params: DetectorParameters()
+		/// * refine_params: RefineParameters()
+		#[inline]
+		pub fn new_def_1(dictionaries: &core::Vector<crate::objdetect::Dictionary>) -> Result<crate::objdetect::ArucoDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_ArucoDetector_ArucoDetector_const_vectorLDictionaryGR(dictionaries.as_raw_VectorOfDictionary(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::ArucoDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::objdetect::ArucoDetector]
@@ -4740,7 +4819,7 @@ pub mod objdetect {
 		/// * rejectedImgPoints: contains the imgPoints of those squares whose inner code has not a
 		/// correct codification. Useful for debugging purposes.
 		///
-		/// Performs marker detection in the input image. Only markers included in the specific dictionary
+		/// Performs marker detection in the input image. Only markers included in the first specified dictionary
 		/// are searched. For each detected marker, it returns the 2D position of its corner in the image
 		/// and its corresponding identifier.
 		/// Note that this function does not perform pose estimation.
@@ -4778,7 +4857,7 @@ pub mod objdetect {
 		/// * rejectedImgPoints: contains the imgPoints of those squares whose inner code has not a
 		/// correct codification. Useful for debugging purposes.
 		///
-		/// Performs marker detection in the input image. Only markers included in the specific dictionary
+		/// Performs marker detection in the input image. Only markers included in the first specified dictionary
 		/// are searched. For each detected marker, it returns the 2D position of its corner in the image
 		/// and its corresponding identifier.
 		/// Note that this function does not perform pose estimation.
@@ -4826,6 +4905,9 @@ pub mod objdetect {
 		/// using projectPoint function. If not, missing marker projections are interpolated using global
 		/// homography, and all the marker corners in the board must have the same Z coordinate.
 		///
+		/// Note: This function assumes that the board only contains markers from one dictionary, so only the
+		/// first configured dictionary is used. It has to match the dictionary of the board to work properly.
+		///
 		/// ## C++ default parameters
 		/// * camera_matrix: noArray()
 		/// * dist_coeffs: noArray()
@@ -4869,6 +4951,9 @@ pub mod objdetect {
 		/// using projectPoint function. If not, missing marker projections are interpolated using global
 		/// homography, and all the marker corners in the board must have the same Z coordinate.
 		///
+		/// Note: This function assumes that the board only contains markers from one dictionary, so only the
+		/// first configured dictionary is used. It has to match the dictionary of the board to work properly.
+		///
 		/// ## Note
 		/// This alternative version of [ArucoDetectorTraitConst::refine_detected_markers] function uses the following default values for its arguments:
 		/// * camera_matrix: noArray()
@@ -4887,6 +4972,93 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
+		/// Basic marker detection
+		///
+		/// ## Parameters
+		/// * image: input image
+		/// * corners: vector of detected marker corners. For each marker, its four corners
+		/// are provided, (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers,
+		/// the dimensions of this array is Nx4. The order of the corners is clockwise.
+		/// * ids: vector of identifiers of the detected markers. The identifier is of type int
+		/// (e.g. std::vector<int>). For N detected markers, the size of ids is also N.
+		/// The identifiers have the same order than the markers in the imgPoints array.
+		/// * rejectedImgPoints: contains the imgPoints of those squares whose inner code has not a
+		/// correct codification. Useful for debugging purposes.
+		/// * dictIndices: vector of dictionary indices for each detected marker. Use getDictionaries() to get the
+		/// list of corresponding dictionaries.
+		///
+		/// Performs marker detection in the input image. Only markers included in the specific dictionaries
+		/// are searched. For each detected marker, it returns the 2D position of its corner in the image
+		/// and its corresponding identifier.
+		/// Note that this function does not perform pose estimation.
+		///
+		/// Note: The function does not correct lens distortion or takes it into account. It's recommended to undistort
+		/// input image with corresponding camera model, if camera parameters are known
+		/// ## See also
+		/// undistort, estimatePoseSingleMarkers,  estimatePoseBoard
+		///
+		/// ## C++ default parameters
+		/// * rejected_img_points: noArray()
+		/// * dict_indices: noArray()
+		#[inline]
+		fn detect_markers_multi_dict(&self, image: &impl ToInputArray, corners: &mut impl ToOutputArray, ids: &mut impl ToOutputArray, rejected_img_points: &mut impl ToOutputArray, dict_indices: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(corners);
+			output_array_arg!(ids);
+			output_array_arg!(rejected_img_points);
+			output_array_arg!(dict_indices);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_ArucoDetector_detectMarkersMultiDict_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_ArucoDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), ids.as_raw__OutputArray(), rejected_img_points.as_raw__OutputArray(), dict_indices.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Basic marker detection
+		///
+		/// ## Parameters
+		/// * image: input image
+		/// * corners: vector of detected marker corners. For each marker, its four corners
+		/// are provided, (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers,
+		/// the dimensions of this array is Nx4. The order of the corners is clockwise.
+		/// * ids: vector of identifiers of the detected markers. The identifier is of type int
+		/// (e.g. std::vector<int>). For N detected markers, the size of ids is also N.
+		/// The identifiers have the same order than the markers in the imgPoints array.
+		/// * rejectedImgPoints: contains the imgPoints of those squares whose inner code has not a
+		/// correct codification. Useful for debugging purposes.
+		/// * dictIndices: vector of dictionary indices for each detected marker. Use getDictionaries() to get the
+		/// list of corresponding dictionaries.
+		///
+		/// Performs marker detection in the input image. Only markers included in the specific dictionaries
+		/// are searched. For each detected marker, it returns the 2D position of its corner in the image
+		/// and its corresponding identifier.
+		/// Note that this function does not perform pose estimation.
+		///
+		/// Note: The function does not correct lens distortion or takes it into account. It's recommended to undistort
+		/// input image with corresponding camera model, if camera parameters are known
+		/// ## See also
+		/// undistort, estimatePoseSingleMarkers,  estimatePoseBoard
+		///
+		/// ## Note
+		/// This alternative version of [ArucoDetectorTraitConst::detect_markers_multi_dict] function uses the following default values for its arguments:
+		/// * rejected_img_points: noArray()
+		/// * dict_indices: noArray()
+		#[inline]
+		fn detect_markers_multi_dict_def(&self, image: &impl ToInputArray, corners: &mut impl ToOutputArray, ids: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(corners);
+			output_array_arg!(ids);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_ArucoDetector_detectMarkersMultiDict_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_ArucoDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), ids.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Returns first dictionary from internal list used for marker detection.
+		///
+		/// ## Returns
+		/// The first dictionary from the configured ArucoDetector.
 		#[inline]
 		fn get_dictionary(&self) -> Result<crate::objdetect::Dictionary> {
 			return_send!(via ocvrs_return);
@@ -4894,6 +5066,20 @@ pub mod objdetect {
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Returns all dictionaries currently used for marker detection as a vector.
+		///
+		/// ## Returns
+		/// A std::vector<Dictionary> containing all dictionaries used by the ArucoDetector.
+		#[inline]
+		fn get_dictionaries(&self) -> Result<core::Vector<crate::objdetect::Dictionary>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_ArucoDetector_getDictionaries_const(self.as_raw_ArucoDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<crate::objdetect::Dictionary>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -4932,10 +5118,32 @@ pub mod objdetect {
 	pub trait ArucoDetectorTrait: core::AlgorithmTrait + crate::objdetect::ArucoDetectorTraitConst {
 		fn as_raw_mut_ArucoDetector(&mut self) -> *mut c_void;
 
+		/// Sets and replaces the first dictionary in internal list to be used for marker detection.
+		///
+		/// ## Parameters
+		/// * dictionary: The new dictionary that will replace the first dictionary in the internal list.
 		#[inline]
 		fn set_dictionary(&mut self, dictionary: &impl crate::objdetect::DictionaryTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_ArucoDetector_setDictionary_const_DictionaryR(self.as_raw_mut_ArucoDetector(), dictionary.as_raw_Dictionary(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets the entire collection of dictionaries to be used for marker detection, replacing any existing dictionaries.
+		///
+		/// ## Parameters
+		/// * dictionaries: A std::vector<Dictionary> containing the new set of dictionaries to be used.
+		///
+		/// Configures the ArucoDetector to use the provided vector of dictionaries for marker detection.
+		/// This method replaces any dictionaries that were previously set.
+		///
+		/// Note: Setting an empty vector of dictionaries will throw an error.
+		#[inline]
+		fn set_dictionaries(&mut self, dictionaries: &core::Vector<crate::objdetect::Dictionary>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_ArucoDetector_setDictionaries_const_vectorLDictionaryGR(self.as_raw_mut_ArucoDetector(), dictionaries.as_raw_VectorOfDictionary(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5873,6 +6081,13 @@ pub mod objdetect {
 			ret
 		}
 
+		/// run check to verify that markers belong to the same board, default true
+		#[inline]
+		fn check_markers(&self) -> bool {
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propCheckMarkers_const(self.as_raw_CharucoParameters()) };
+			ret
+		}
+
 	}
 
 	/// Mutable methods for [crate::objdetect::CharucoParameters]
@@ -5907,6 +6122,13 @@ pub mod objdetect {
 			ret
 		}
 
+		/// run check to verify that markers belong to the same board, default true
+		#[inline]
+		fn set_check_markers(&mut self, val: bool) {
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propCheckMarkers_const_bool(self.as_raw_mut_CharucoParameters(), val) };
+			ret
+		}
+
 	}
 
 	impl Clone for CharucoParameters {
@@ -5924,6 +6146,7 @@ pub mod objdetect {
 				.field("dist_coeffs", &crate::objdetect::CharucoParametersTraitConst::dist_coeffs(self))
 				.field("min_markers", &crate::objdetect::CharucoParametersTraitConst::min_markers(self))
 				.field("try_refine_markers", &crate::objdetect::CharucoParametersTraitConst::try_refine_markers(self))
+				.field("check_markers", &crate::objdetect::CharucoParametersTraitConst::check_markers(self))
 				.finish()
 		}
 	}

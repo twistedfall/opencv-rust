@@ -19,7 +19,7 @@ pub mod calib3d {
 	//! world to camera coordinate systems (or camera frame) and ![inline formula](https://latex.codecogs.com/png.latex?s) is the projective transformation's
 	//! arbitrary scaling and not part of the camera model.
 	//!
-	//! The camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?A) (notation used as in [Zhang2000](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zhang2000) and also generally notated
+	//! The camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?A) (notation used as in [Zhang2000](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zhang2000) and also generally notated
 	//! as ![inline formula](https://latex.codecogs.com/png.latex?K)) projects 3D points given in the camera coordinate system to 2D pixel coordinates, i.e.
 	//!
 	//! ![block formula](https://latex.codecogs.com/png.latex?p%20%3D%20A%20P%5Fc%2E)
@@ -83,7 +83,7 @@ pub mod calib3d {
 	//!
 	//! The following figure illustrates the pinhole camera model.
 	//!
-	//! ![Pinhole camera model](https://docs.opencv.org/4.11.0/pinhole_camera_model.png)
+	//! ![Pinhole camera model](https://docs.opencv.org/4.12.0/pinhole_camera_model.png)
 	//!
 	//! Real lenses usually have some distortion, mostly radial distortion, and slight tangential distortion.
 	//! So, the above model is extended as:
@@ -121,13 +121,13 @@ pub mod calib3d {
 	//! the framework does not support the required integer programming and polynomial inequalities.
 	//! See [issue #15992](https://github.com/opencv/opencv/issues/15992) for additional information.
 	//!
-	//! ![](https://docs.opencv.org/4.11.0/distortion_examples.png)
-	//! ![](https://docs.opencv.org/4.11.0/distortion_examples2.png)
+	//! ![](https://docs.opencv.org/4.12.0/distortion_examples.png)
+	//! ![](https://docs.opencv.org/4.12.0/distortion_examples2.png)
 	//!
 	//! In some cases, the image sensor may be tilted in order to focus an oblique plane in front of the
 	//! camera (Scheimpflug principle). This can be useful for particle image velocimetry (PIV) or
 	//! triangulation with a laser fan. The tilt causes a perspective distortion of ![inline formula](https://latex.codecogs.com/png.latex?x%27%27) and
-	//! ![inline formula](https://latex.codecogs.com/png.latex?y%27%27). This distortion can be modeled in the following way, see e.g. [Louhichi07](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Louhichi07).
+	//! ![inline formula](https://latex.codecogs.com/png.latex?y%27%27). This distortion can be modeled in the following way, see e.g. [Louhichi07](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Louhichi07).
 	//!
 	//! ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%0Au%20%5C%5C%0Av%0A%5Cend%7Bbmatrix%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%0Af%5Fx%20x%27%27%27%20%2B%20c%5Fx%20%5C%5C%0Af%5Fy%20y%27%27%27%20%2B%20c%5Fy%0A%5Cend%7Bbmatrix%7D%2C)
 	//!
@@ -193,6 +193,72 @@ pub mod calib3d {
 	//!
 	//! ![block formula](https://latex.codecogs.com/png.latex?P%5F1%20%3D%20R%20P%5F0%20%2B%20t%20%5Crightarrow%20P%5F%7Bh%5F1%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%0AR%20%26%20t%20%5C%5C%0A0%20%26%201%0A%5Cend%7Bbmatrix%7D%20P%5F%7Bh%5F0%7D%2E)
 	//!
+	//! <B> Homogeneous Transformations, Object frame / Camera frame </B><br>
+	//! Change of basis or computing the 3D coordinates from one frame to another frame can be achieved easily using
+	//! the following notation:
+	//!
+	//! ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7BX%7D%5Fc%20%3D%20%5Chspace%7B0%2E2em%7D%0A%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20%5Chspace%7B0%2E2em%7D%20%5Cmathbf%7BX%7D%5Fo%0A)
+	//!
+	//! ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0AX%5Fc%20%5C%5C%0AY%5Fc%20%5C%5C%0AZ%5Fc%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20%3D%0A%5Cbegin%7Bbmatrix%7D%0A%7B%7D%5E%7Bc%7D%5Cmathbf%7BR%7D%5Fo%20%26%20%7B%7D%5E%7Bc%7D%5Cmathbf%7Bt%7D%5Fo%20%5C%5C%0A0%5F%7B1%20%5Ctimes%203%7D%20%26%201%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0AX%5Fo%20%5C%5C%0AY%5Fo%20%5C%5C%0AZ%5Fo%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%0A)
+	//!
+	//! For a 3D points (![inline formula](https://latex.codecogs.com/png.latex?%20%5Cmathbf%7BX%7D%5Fo%20)) expressed in the object frame, the homogeneous transformation matrix
+	//! ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) allows computing the corresponding coordinate (![inline formula](https://latex.codecogs.com/png.latex?%20%5Cmathbf%7BX%7D%5Fc%20)) in the camera frame.
+	//! This transformation matrix is composed of a 3x3 rotation matrix ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BR%7D%5Fo%20) and a 3x1 translation vector
+	//! ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7Bt%7D%5Fo%20).
+	//! The 3x1 translation vector ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7Bt%7D%5Fo%20) is the position of the object frame in the camera frame and the
+	//! 3x3 rotation matrix ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BR%7D%5Fo%20) the orientation of the object frame in the camera frame.
+	//!
+	//! With this simple notation, it is easy to chain the transformations. For instance, to compute the 3D coordinates of a point
+	//! expressed in the object frame in the world frame can be done with:
+	//!
+	//! ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7BX%7D%5Fw%20%3D%20%5Chspace%7B0%2E2em%7D%0A%7B%7D%5E%7Bw%7D%5Cmathbf%7BT%7D%5Fc%20%5Chspace%7B0%2E2em%7D%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20%5Chspace%7B0%2E2em%7D%0A%5Cmathbf%7BX%7D%5Fo%20%3D%0A%7B%7D%5E%7Bw%7D%5Cmathbf%7BT%7D%5Fo%20%5Chspace%7B0%2E2em%7D%20%5Cmathbf%7BX%7D%5Fo%0A)
+	//!
+	//! Similarly, computing the inverse transformation can be done with:
+	//!
+	//! ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7BX%7D%5Fo%20%3D%20%5Chspace%7B0%2E2em%7D%0A%7B%7D%5E%7Bo%7D%5Cmathbf%7BT%7D%5Fc%20%5Chspace%7B0%2E2em%7D%20%5Cmathbf%7BX%7D%5Fc%20%3D%0A%5Cleft%28%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20%5Cright%29%5E%7B%2D1%7D%20%5Chspace%7B0%2E2em%7D%20%5Cmathbf%7BX%7D%5Fc%0A)
+	//!
+	//! The inverse of an homogeneous transformation matrix is then:
+	//!
+	//! ![block formula](https://latex.codecogs.com/png.latex?%0A%7B%7D%5E%7Bo%7D%5Cmathbf%7BT%7D%5Fc%20%3D%20%5Cleft%28%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20%5Cright%29%5E%7B%2D1%7D%20%3D%0A%5Cbegin%7Bbmatrix%7D%0A%7B%7D%5E%7Bc%7D%5Cmathbf%7BR%7D%5E%7B%5Ctop%7D%5Fo%20%26%20%2D%20%5Chspace%7B0%2E2em%7D%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BR%7D%5E%7B%5Ctop%7D%5Fo%20%5Chspace%7B0%2E2em%7D%20%7B%7D%5E%7Bc%7D%5Cmathbf%7Bt%7D%5Fo%20%5C%5C%0A0%5F%7B1%20%5Ctimes%203%7D%20%26%201%0A%5Cend%7Bbmatrix%7D%0A)
+	//!
+	//! One can note that the inverse of a 3x3 rotation matrix is directly its matrix transpose.
+	//!
+	//! ![Perspective projection, from object to camera frame](https://docs.opencv.org/4.12.0/pinhole_homogeneous_transformation.png)
+	//!
+	//! This figure summarizes the whole process. The object pose returned for instance by the [solvePnP] function
+	//! or pose from fiducial marker detection is this ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) transformation.
+	//!
+	//! The camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cmathbf%7BK%7D%20) allows projecting the 3D point expressed in the camera frame onto the image plane
+	//! assuming a perspective projection model (pinhole camera model). Image coordinates extracted from classical image processing functions
+	//! assume a (u,v) top-left coordinates frame.
+	//!
+	//! \note
+	//! - for an online video course on this topic, see for instance:
+	//!   - ["3.3.1. Homogeneous Transformation Matrices", Modern Robotics, Kevin M. Lynch and Frank C. Park](https://modernrobotics.northwestern.edu/nu-gm-book-resource/3-3-1-homogeneous-transformation-matrices/)
+	//! - the 3x3 rotation matrix is composed of 9 values but describes a 3 dof transformation
+	//! - some additional properties of the 3x3 rotation matrix are:
+	//!   - ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cmathrm%7Bdet%7D%20%5Cleft%28%20%5Cmathbf%7BR%7D%20%5Cright%29%20%3D%201%20)
+	//!   - ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cmathbf%7BR%7D%20%5Cmathbf%7BR%7D%5E%7B%5Ctop%7D%20%3D%20%5Cmathbf%7BR%7D%5E%7B%5Ctop%7D%20%5Cmathbf%7BR%7D%20%3D%20%5Cmathrm%7BI%7D%5F%7B3%20%5Ctimes%203%7D%20)
+	//!   - interpolating rotation can be done using the [Slerp (spherical linear interpolation)](https://en.wikipedia.org/wiki/Slerp) method
+	//! - quick conversions between the different rotation formalisms can be done using this [online tool](https://www.andre-gaschler.com/rotationconverter/)
+	//!
+	//! <B> Intrinsic parameters from camera lens specifications </B><br>
+	//! When dealing with industrial cameras, the camera intrinsic matrix or more precisely ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cleft%28f%5Fx%2C%20f%5Fy%20%5Cright%29%20)
+	//! can be deduced, approximated from the camera specifications:
+	//!
+	//! ![block formula](https://latex.codecogs.com/png.latex?%0Af%5Fx%20%3D%20%5Cfrac%7Bf%5F%7B%5Ctext%7Bmm%7D%7D%7D%7B%5Ctext%7Bpixel%5Fsize%5Fin%5Fmm%7D%7D%20%3D%20%5Cfrac%7Bf%5F%7B%5Ctext%7Bmm%7D%7D%7D%7B%5Ctext%7Bsensor%5Fsize%5Fin%5Fmm%7D%20%2F%20%5Ctext%7Bnb%5Fpixels%7D%7D%0A)
+	//!
+	//! In a same way, the physical focal length can be deduced from the angular field of view:
+	//!
+	//! ![block formula](https://latex.codecogs.com/png.latex?%0Af%5F%7B%5Ctext%7Bmm%7D%7D%20%3D%20%5Cfrac%7B%5Ctext%7Bsensor%5Fsize%5Fin%5Fmm%7D%7D%7B2%20%5Ctimes%20%5Ctan%7B%5Cfrac%7B%5Ctext%7Bfov%7D%7D%7B2%7D%7D%7D%0A)
+	//!
+	//! This latter conversion can be useful when using a rendering software to mimic a physical camera device.
+	//!
+	//!
+	//! Note:
+	//!    *    See also [calibration_matrix_values]
+	//!
+	//! <B> Additional references, notes </B><br>
 	//!
 	//! Note:
 	//!    *   Many functions in this module take a camera intrinsic matrix as an input parameter. Although all
@@ -240,7 +306,7 @@ pub mod calib3d {
 	//!    ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20u%20%3D%20f%5Fx%20%28x%27%20%2B%20%5Calpha%20y%27%29%20%2B%20c%5Fx%20%5C%5C%0A%20%20%20%20v%20%3D%20f%5Fy%20y%27%20%2B%20c%5Fy%20%5Cend%7Barray%7D%20)
 	//!
 	//!    Summary:
-	//!    Generic camera model [Kannala2006](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Kannala2006) with perspective projection and without distortion correction
+	//!    Generic camera model [Kannala2006](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Kannala2006) with perspective projection and without distortion correction
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
@@ -272,21 +338,21 @@ pub mod calib3d {
 	pub const CALIB_FIX_S1_S2_S3_S4: i32 = 65536;
 	pub const CALIB_FIX_TANGENT_DIST: i32 = 2097152;
 	pub const CALIB_FIX_TAUX_TAUY: i32 = 524288;
-	/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Andreff99)
+	/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Andreff99)
 	pub const CALIB_HAND_EYE_ANDREFF: i32 = 3;
-	/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Daniilidis98)
+	/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Daniilidis98)
 	pub const CALIB_HAND_EYE_DANIILIDIS: i32 = 4;
-	/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Horaud95)
+	/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Horaud95)
 	pub const CALIB_HAND_EYE_HORAUD: i32 = 2;
-	/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Park94)
+	/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Park94)
 	pub const CALIB_HAND_EYE_PARK: i32 = 1;
-	/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Tsai89)
+	/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Tsai89)
 	pub const CALIB_HAND_EYE_TSAI: i32 = 0;
 	pub const CALIB_NINTRINSIC: i32 = 18;
 	pub const CALIB_RATIONAL_MODEL: i32 = 16384;
-	/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
+	/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
 	pub const CALIB_ROBOT_WORLD_HAND_EYE_LI: i32 = 1;
-	/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
+	/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
 	pub const CALIB_ROBOT_WORLD_HAND_EYE_SHAH: i32 = 0;
 	pub const CALIB_SAME_FOCAL_LENGTH: i32 = 512;
 	pub const CALIB_THIN_PRISM_MODEL: i32 = 32768;
@@ -350,19 +416,19 @@ pub mod calib3d {
 	pub const SCORE_METHOD_MAGSAC: i32 = 2;
 	pub const SCORE_METHOD_MSAC: i32 = 1;
 	pub const SCORE_METHOD_RANSAC: i32 = 0;
-	/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Ke17)
+	/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Ke17)
 	pub const SOLVEPNP_AP3P: i32 = 5;
 	/// **Broken implementation. Using this flag will fallback to EPnP.** 
 	///
-	/// A Direct Least-Squares (DLS) Method for PnP [hesch2011direct](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_hesch2011direct)
+	/// A Direct Least-Squares (DLS) Method for PnP [hesch2011direct](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_hesch2011direct)
 	pub const SOLVEPNP_DLS: i32 = 3;
-	/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
+	/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
 	pub const SOLVEPNP_EPNP: i32 = 1;
-	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Collins14) 
+	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Collins14) 
 	///
 	/// Object points must be coplanar.
 	pub const SOLVEPNP_IPPE: i32 = 6;
-	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Collins14) 
+	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Collins14) 
 	///
 	/// This is a special case suitable for marker pose estimation.
 	///
@@ -372,7 +438,7 @@ pub mod calib3d {
 	///   - point 2: [ squareLength / 2, -squareLength / 2, 0]
 	///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
 	pub const SOLVEPNP_IPPE_SQUARE: i32 = 7;
-	/// Pose refinement using non-linear Levenberg-Marquardt minimization scheme [Madsen04](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Eade13) 
+	/// Pose refinement using non-linear Levenberg-Marquardt minimization scheme [Madsen04](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Eade13) 
 	///
 	/// Initial solution for non-planar "objectPoints" needs at least 6 points and uses the DLT algorithm. 
 	///
@@ -380,15 +446,17 @@ pub mod calib3d {
 	pub const SOLVEPNP_ITERATIVE: i32 = 0;
 	/// Used for count
 	pub const SOLVEPNP_MAX_COUNT: i32 = 9;
-	/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_gao2003complete)
+	/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_gao2003complete)
 	pub const SOLVEPNP_P3P: i32 = 2;
-	/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis2020SQPnP](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Terzakis2020SQPnP)
+	/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis2020SQPnP](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Terzakis2020SQPnP)
 	pub const SOLVEPNP_SQPNP: i32 = 8;
 	/// **Broken implementation. Using this flag will fallback to EPnP.** 
 	///
-	/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
+	/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
 	pub const SOLVEPNP_UPNP: i32 = 4;
+	/// Normalized response pre-filter
 	pub const StereoBM_PREFILTER_NORMALIZED_RESPONSE: i32 = 0;
+	/// X-Sobel pre-filter
 	pub const StereoBM_PREFILTER_XSOBEL: i32 = 1;
 	pub const StereoMatcher_DISP_SCALE: i32 = 16;
 	pub const StereoMatcher_DISP_SHIFT: i32 = 4;
@@ -434,15 +502,15 @@ pub mod calib3d {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum HandEyeCalibrationMethod {
-		/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Tsai89)
+		/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Tsai89)
 		CALIB_HAND_EYE_TSAI = 0,
-		/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Park94)
+		/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Park94)
 		CALIB_HAND_EYE_PARK = 1,
-		/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Horaud95)
+		/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Horaud95)
 		CALIB_HAND_EYE_HORAUD = 2,
-		/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Andreff99)
+		/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Andreff99)
 		CALIB_HAND_EYE_ANDREFF = 3,
-		/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Daniilidis98)
+		/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Daniilidis98)
 		CALIB_HAND_EYE_DANIILIDIS = 4,
 	}
 
@@ -541,9 +609,9 @@ pub mod calib3d {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum RobotWorldHandEyeCalibrationMethod {
-		/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
+		/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
 		CALIB_ROBOT_WORLD_HAND_EYE_SHAH = 0,
-		/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
+		/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
 		CALIB_ROBOT_WORLD_HAND_EYE_LI = 1,
 	}
 
@@ -614,31 +682,31 @@ pub mod calib3d {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SolvePnPMethod {
-		/// Pose refinement using non-linear Levenberg-Marquardt minimization scheme [Madsen04](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Eade13) 
+		/// Pose refinement using non-linear Levenberg-Marquardt minimization scheme [Madsen04](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Eade13) 
 		///
 		/// Initial solution for non-planar "objectPoints" needs at least 6 points and uses the DLT algorithm. 
 		///
 		/// Initial solution for planar "objectPoints" needs at least 4 points and uses pose from homography decomposition.
 		SOLVEPNP_ITERATIVE = 0,
-		/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
+		/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
 		SOLVEPNP_EPNP = 1,
-		/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_gao2003complete)
+		/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_gao2003complete)
 		SOLVEPNP_P3P = 2,
 		/// **Broken implementation. Using this flag will fallback to EPnP.** 
 		///
-		/// A Direct Least-Squares (DLS) Method for PnP [hesch2011direct](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_hesch2011direct)
+		/// A Direct Least-Squares (DLS) Method for PnP [hesch2011direct](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_hesch2011direct)
 		SOLVEPNP_DLS = 3,
 		/// **Broken implementation. Using this flag will fallback to EPnP.** 
 		///
-		/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
+		/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
 		SOLVEPNP_UPNP = 4,
-		/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Ke17)
+		/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Ke17)
 		SOLVEPNP_AP3P = 5,
-		/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Collins14) 
+		/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Collins14) 
 		///
 		/// Object points must be coplanar.
 		SOLVEPNP_IPPE = 6,
-		/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Collins14) 
+		/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Collins14) 
 		///
 		/// This is a special case suitable for marker pose estimation.
 		///
@@ -648,7 +716,7 @@ pub mod calib3d {
 		///   - point 2: [ squareLength / 2, -squareLength / 2, 0]
 		///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
 		SOLVEPNP_IPPE_SQUARE = 7,
-		/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis2020SQPnP](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Terzakis2020SQPnP)
+		/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis2020SQPnP](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Terzakis2020SQPnP)
 		SOLVEPNP_SQPNP = 8,
 		/// Used for count
 		SOLVEPNP_MAX_COUNT = 9,
@@ -716,7 +784,7 @@ pub mod calib3d {
 	/// It optionally returns three rotation matrices, one for each axis, and the three Euler angles in
 	/// degrees (as the return value) that could be used in OpenGL. Note, there is always more than one
 	/// sequence of rotations about the three principal axes that results in the same orientation of an
-	/// object, e.g. see [Slabaugh](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned three rotation matrices and corresponding three Euler angles
+	/// object, e.g. see [Slabaugh](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned three rotation matrices and corresponding three Euler angles
 	/// are only one of the possible solutions.
 	///
 	/// ## Note
@@ -753,7 +821,7 @@ pub mod calib3d {
 	/// It optionally returns three rotation matrices, one for each axis, and the three Euler angles in
 	/// degrees (as the return value) that could be used in OpenGL. Note, there is always more than one
 	/// sequence of rotations about the three principal axes that results in the same orientation of an
-	/// object, e.g. see [Slabaugh](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned three rotation matrices and corresponding three Euler angles
+	/// object, e.g. see [Slabaugh](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned three rotation matrices and corresponding three Euler angles
 	/// are only one of the possible solutions.
 	///
 	/// ## C++ default parameters
@@ -796,13 +864,13 @@ pub mod calib3d {
 	///
 	/// Note: More information about the computation of the derivative of a 3D rotation matrix with respect to its exponential coordinate
 	/// can be found in:
-	///    - A Compact Formula for the Derivative of a 3-D Rotation in Exponential Coordinates, Guillermo Gallego, Anthony J. Yezzi [Gallego2014ACF](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Gallego2014ACF)
+	///    - A Compact Formula for the Derivative of a 3-D Rotation in Exponential Coordinates, Guillermo Gallego, Anthony J. Yezzi [Gallego2014ACF](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Gallego2014ACF)
 	///
 	///
 	/// Note: Useful information on SE(3) and Lie Groups can be found in:
-	///    - A tutorial on SE(3) transformation parameterizations and on-manifold optimization, Jose-Luis Blanco [blanco2010tutorial](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_blanco2010tutorial)
-	///    - Lie Groups for 2D and 3D Transformation, Ethan Eade [Eade17](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Eade17)
-	///    - A micro Lie theory for state estimation in robotics, Joan Solà, Jérémie Deray, Dinesh Atchuthan [Sol2018AML](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Sol2018AML)
+	///    - A tutorial on SE(3) transformation parameterizations and on-manifold optimization, Jose-Luis Blanco [blanco2010tutorial](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_blanco2010tutorial)
+	///    - Lie Groups for 2D and 3D Transformation, Ethan Eade [Eade17](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Eade17)
+	///    - A micro Lie theory for state estimation in robotics, Joan Solà, Jérémie Deray, Dinesh Atchuthan [Sol2018AML](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Sol2018AML)
 	///
 	/// ## Note
 	/// This alternative version of [rodrigues] function uses the following default values for its arguments:
@@ -839,13 +907,13 @@ pub mod calib3d {
 	///
 	/// Note: More information about the computation of the derivative of a 3D rotation matrix with respect to its exponential coordinate
 	/// can be found in:
-	///    - A Compact Formula for the Derivative of a 3-D Rotation in Exponential Coordinates, Guillermo Gallego, Anthony J. Yezzi [Gallego2014ACF](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Gallego2014ACF)
+	///    - A Compact Formula for the Derivative of a 3-D Rotation in Exponential Coordinates, Guillermo Gallego, Anthony J. Yezzi [Gallego2014ACF](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Gallego2014ACF)
 	///
 	///
 	/// Note: Useful information on SE(3) and Lie Groups can be found in:
-	///    - A tutorial on SE(3) transformation parameterizations and on-manifold optimization, Jose-Luis Blanco [blanco2010tutorial](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_blanco2010tutorial)
-	///    - Lie Groups for 2D and 3D Transformation, Ethan Eade [Eade17](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Eade17)
-	///    - A micro Lie theory for state estimation in robotics, Joan Solà, Jérémie Deray, Dinesh Atchuthan [Sol2018AML](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Sol2018AML)
+	///    - A tutorial on SE(3) transformation parameterizations and on-manifold optimization, Jose-Luis Blanco [blanco2010tutorial](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_blanco2010tutorial)
+	///    - Lie Groups for 2D and 3D Transformation, Ethan Eade [Eade17](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Eade17)
+	///    - A micro Lie theory for state estimation in robotics, Joan Solà, Jérémie Deray, Dinesh Atchuthan [Sol2018AML](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Sol2018AML)
 	///
 	/// ## C++ default parameters
 	/// * jacobian: noArray()
@@ -886,7 +954,7 @@ pub mod calib3d {
 	/// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 	///
 	/// This function is an extension of [calibrate_camera] with the method of releasing object which was
-	/// proposed in [strobl2011iccv](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
+	/// proposed in [strobl2011iccv](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
 	/// targets (calibration plates), this method can dramatically improve the precision of the estimated
 	/// camera parameters. Both the object-releasing method and standard method are supported by this
 	/// function. Use the parameter **iFixedPoint** for method selection. In the internal implementation,
@@ -937,7 +1005,7 @@ pub mod calib3d {
 	/// the overall RMS re-projection error.
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BouguetMCT) and [strobl2011iccv](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). See
+	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BouguetMCT) and [strobl2011iccv](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). See
 	/// [calibrate_camera] for other detailed explanations.
 	/// ## See also
 	/// calibrateCamera, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
@@ -969,7 +1037,7 @@ pub mod calib3d {
 	/// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 	///
 	/// This function is an extension of [calibrate_camera] with the method of releasing object which was
-	/// proposed in [strobl2011iccv](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
+	/// proposed in [strobl2011iccv](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
 	/// targets (calibration plates), this method can dramatically improve the precision of the estimated
 	/// camera parameters. Both the object-releasing method and standard method are supported by this
 	/// function. Use the parameter **iFixedPoint** for method selection. In the internal implementation,
@@ -1020,7 +1088,7 @@ pub mod calib3d {
 	/// the overall RMS re-projection error.
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BouguetMCT) and [strobl2011iccv](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). See
+	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BouguetMCT) and [strobl2011iccv](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). See
 	/// [calibrate_camera] for other detailed explanations.
 	/// ## See also
 	/// calibrateCamera, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
@@ -1051,7 +1119,7 @@ pub mod calib3d {
 	/// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 	///
 	/// This function is an extension of [calibrate_camera] with the method of releasing object which was
-	/// proposed in [strobl2011iccv](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
+	/// proposed in [strobl2011iccv](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
 	/// targets (calibration plates), this method can dramatically improve the precision of the estimated
 	/// camera parameters. Both the object-releasing method and standard method are supported by this
 	/// function. Use the parameter **iFixedPoint** for method selection. In the internal implementation,
@@ -1102,7 +1170,7 @@ pub mod calib3d {
 	/// the overall RMS re-projection error.
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BouguetMCT) and [strobl2011iccv](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). See
+	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BouguetMCT) and [strobl2011iccv](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). See
 	/// [calibrate_camera] for other detailed explanations.
 	/// ## See also
 	/// calibrateCamera, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
@@ -1232,7 +1300,7 @@ pub mod calib3d {
 	/// the overall RMS re-projection error.
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
+	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
 	/// points and their corresponding 2D projections in each view must be specified. That may be achieved
 	/// by using an object with known geometry and easily detectable feature points. Such an object is
 	/// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
@@ -1376,7 +1444,7 @@ pub mod calib3d {
 	/// the overall RMS re-projection error.
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
+	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
 	/// points and their corresponding 2D projections in each view must be specified. That may be achieved
 	/// by using an object with known geometry and easily detectable feature points. Such an object is
 	/// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
@@ -1519,7 +1587,7 @@ pub mod calib3d {
 	/// the overall RMS re-projection error.
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
+	/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
 	/// points and their corresponding 2D projections in each view must be specified. That may be achieved
 	/// by using an object with known geometry and easily detectable feature points. Such an object is
 	/// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
@@ -1621,7 +1689,7 @@ pub mod calib3d {
 	/// end-effector. The transformation from the camera to the robot base frame can then be estimated by inputting
 	/// the suitable transformations to the function, see below.
 	///
-	/// ![](https://docs.opencv.org/4.11.0/hand-eye_figure.png)
+	/// ![](https://docs.opencv.org/4.12.0/hand-eye_figure.png)
 	///
 	/// The calibration procedure is the following:
 	///   - a static calibration pattern is used to estimate the transformation between the target frame
@@ -1711,7 +1779,7 @@ pub mod calib3d {
 	/// end-effector. The transformation from the camera to the robot base frame can then be estimated by inputting
 	/// the suitable transformations to the function, see below.
 	///
-	/// ![](https://docs.opencv.org/4.11.0/hand-eye_figure.png)
+	/// ![](https://docs.opencv.org/4.12.0/hand-eye_figure.png)
 	///
 	/// The calibration procedure is the following:
 	///   - a static calibration pattern is used to estimate the transformation between the target frame
@@ -1797,7 +1865,7 @@ pub mod calib3d {
 	/// The following picture describes the Robot-World/Hand-Eye calibration problem where the transformations between a robot and a world frame
 	/// and between a robot gripper ("hand") and a camera ("eye") mounted at the robot end-effector have to be estimated.
 	///
-	/// ![](https://docs.opencv.org/4.11.0/robot-world_hand-eye_figure.png)
+	/// ![](https://docs.opencv.org/4.12.0/robot-world_hand-eye_figure.png)
 	///
 	/// The calibration procedure is the following:
 	///   - a static calibration pattern is used to estimate the transformation between the target frame
@@ -1883,7 +1951,7 @@ pub mod calib3d {
 	/// The following picture describes the Robot-World/Hand-Eye calibration problem where the transformations between a robot and a world frame
 	/// and between a robot gripper ("hand") and a camera ("eye") mounted at the robot end-effector have to be estimated.
 	///
-	/// ![](https://docs.opencv.org/4.11.0/robot-world_hand-eye_figure.png)
+	/// ![](https://docs.opencv.org/4.12.0/robot-world_hand-eye_figure.png)
 	///
 	/// The calibration procedure is the following:
 	///   - a static calibration pattern is used to estimate the transformation between the target frame
@@ -2191,7 +2259,7 @@ pub mod calib3d {
 	/// * newPoints1: The optimized points1.
 	/// * newPoints2: The optimized points2.
 	///
-	/// The function implements the Optimal Triangulation Method (see Multiple View Geometry [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) for details).
+	/// The function implements the Optimal Triangulation Method (see Multiple View Geometry [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) for details).
 	/// For each given point correspondence points1[i] \<-\> points2[i], and a fundamental matrix F, it
 	/// computes the corrected correspondences newPoints1[i] \<-\> newPoints2[i] that minimize the geometric
 	/// error ![inline formula](https://latex.codecogs.com/png.latex?d%28points1%5Bi%5D%2C%20newPoints1%5Bi%5D%29%5E2%20%2B%20d%28points2%5Bi%5D%2CnewPoints2%5Bi%5D%29%5E2) (where ![inline formula](https://latex.codecogs.com/png.latex?d%28a%2Cb%29) is the
@@ -2219,7 +2287,7 @@ pub mod calib3d {
 	/// * R2: Another possible rotation matrix.
 	/// * t: One possible translation.
 	///
-	/// This function decomposes the essential matrix E using svd decomposition [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00). In
+	/// This function decomposes the essential matrix E using svd decomposition [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00). In
 	/// general, four possible poses exist for the decomposition of E. They are ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F1%2C%20t%5D),
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F1%2C%20%2Dt%5D), ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F2%2C%20t%5D), ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F2%2C%20%2Dt%5D).
 	///
@@ -2253,7 +2321,7 @@ pub mod calib3d {
 	///
 	/// This function extracts relative camera motion between two views of a planar object and returns up to
 	/// four mathematical solution tuples of rotation, translation, and plane normal. The decomposition of
-	/// the homography matrix H is described in detail in [Malis2007](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Malis2007).
+	/// the homography matrix H is described in detail in [Malis2007](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Malis2007).
 	///
 	/// If the homography H, induced by the plane, gives the constraint
 	/// ![block formula](https://latex.codecogs.com/png.latex?s%5Fi%20%5Cbegin%7Bbmatrix%7D%20x%27%5Fi%5C%5C%20y%27%5Fi%5C%5C%201%20%5Cend%7Bbmatrix%7D%20%5Csim%20H%20%5Cbegin%7Bbmatrix%7D%20x%5Fi%5C%5C%20y%5Fi%5C%5C%201%20%5Cend%7Bbmatrix%7D) on the source image points
@@ -2296,7 +2364,7 @@ pub mod calib3d {
 	///
 	/// It optionally returns three rotation matrices, one for each axis, and three Euler angles that could
 	/// be used in OpenGL. Note, there is always more than one sequence of rotations about the three
-	/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
+	/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
 	/// three rotation matrices and corresponding three Euler angles are only one of the possible solutions.
 	///
 	/// The function is based on [rq_decomp3x3] .
@@ -2338,7 +2406,7 @@ pub mod calib3d {
 	///
 	/// It optionally returns three rotation matrices, one for each axis, and three Euler angles that could
 	/// be used in OpenGL. Note, there is always more than one sequence of rotations about the three
-	/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
+	/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
 	/// three rotation matrices and corresponding three Euler angles are only one of the possible solutions.
 	///
 	/// The function is based on [rq_decomp3x3] .
@@ -3038,7 +3106,7 @@ pub mod calib3d {
 	/// * pointsMask: optional Mat/Vector of 8u type representing the mask for the inliers as given by the [find_homography] function
 	///
 	/// This function is intended to filter the output of the [decompose_homography_mat] based on additional
-	/// information as described in [Malis2007](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Malis2007) . The summary of the method: the [decompose_homography_mat] function
+	/// information as described in [Malis2007](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Malis2007) . The summary of the method: the [decompose_homography_mat] function
 	/// returns 2 unique solutions and their "opposites" for a total of 4 solutions. If we have access to the
 	/// sets of points visible in the camera frame before and after the homography transformation is applied,
 	/// we can determine which are the true potential solutions and which are the opposites by verifying which
@@ -3073,7 +3141,7 @@ pub mod calib3d {
 	/// * pointsMask: optional Mat/Vector of 8u type representing the mask for the inliers as given by the [find_homography] function
 	///
 	/// This function is intended to filter the output of the [decompose_homography_mat] based on additional
-	/// information as described in [Malis2007](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Malis2007) . The summary of the method: the [decompose_homography_mat] function
+	/// information as described in [Malis2007](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Malis2007) . The summary of the method: the [decompose_homography_mat] function
 	/// returns 2 unique solutions and their "opposites" for a total of 4 solutions. If we have access to the
 	/// sets of points visible in the camera frame before and after the homography transformation is applied,
 	/// we can determine which are the true potential solutions and which are the opposites by verifying which
@@ -3203,7 +3271,7 @@ pub mod calib3d {
 	/// transformation approximated by box filters being more robust to all sort of
 	/// noise, faster on larger images and is able to directly return the sub-pixel
 	/// position of the internal chessboard corners. The Method is based on the paper
-	/// [duda2018](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
+	/// [duda2018](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
 	/// Calibration" demonstrating that the returned sub-pixel positions are more
 	/// accurate than the one returned by cornerSubPix allowing a precise camera
 	/// calibration for demanding applications.
@@ -3226,8 +3294,9 @@ pub mod calib3d {
 	/// a sample checkerboard optimized for the detection. However, any other checkerboard
 	/// can be used as well.
 	///
-	/// Use gen_pattern.py ([tutorial_camera_calibration_pattern]) to create checkerboard.
-	/// ![Checkerboard](https://docs.opencv.org/4.11.0/checkerboard_radon.png)
+	/// Use the `gen_pattern.py` Python script ([tutorial_camera_calibration_pattern])
+	/// to create the corresponding checkerboard pattern:
+	/// \image html pics/checkerboard_radon.png width=60%
 	///
 	/// ## Overloaded parameters
 	///
@@ -3270,7 +3339,7 @@ pub mod calib3d {
 	/// transformation approximated by box filters being more robust to all sort of
 	/// noise, faster on larger images and is able to directly return the sub-pixel
 	/// position of the internal chessboard corners. The Method is based on the paper
-	/// [duda2018](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
+	/// [duda2018](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
 	/// Calibration" demonstrating that the returned sub-pixel positions are more
 	/// accurate than the one returned by cornerSubPix allowing a precise camera
 	/// calibration for demanding applications.
@@ -3293,8 +3362,9 @@ pub mod calib3d {
 	/// a sample checkerboard optimized for the detection. However, any other checkerboard
 	/// can be used as well.
 	///
-	/// Use gen_pattern.py ([tutorial_camera_calibration_pattern]) to create checkerboard.
-	/// ![Checkerboard](https://docs.opencv.org/4.11.0/checkerboard_radon.png)
+	/// Use the `gen_pattern.py` Python script ([tutorial_camera_calibration_pattern])
+	/// to create the corresponding checkerboard pattern:
+	/// \image html pics/checkerboard_radon.png width=60%
 	#[inline]
 	pub fn find_chessboard_corners_sb_with_meta(image: &impl ToInputArray, pattern_size: core::Size, corners: &mut impl ToOutputArray, flags: i32, meta: &mut impl ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
@@ -3363,7 +3433,8 @@ pub mod calib3d {
 	/// border and the background is dark, the outer black squares cannot be segmented properly and so the
 	/// square grouping and ordering algorithm fails.
 	///
-	/// Use gen_pattern.py ([tutorial_camera_calibration_pattern]) to create checkerboard.
+	/// Use the `gen_pattern.py` Python script ([tutorial_camera_calibration_pattern])
+	/// to create the desired checkerboard pattern.
 	///
 	/// ## Note
 	/// This alternative version of [find_chessboard_corners] function uses the following default values for its arguments:
@@ -3435,7 +3506,8 @@ pub mod calib3d {
 	/// border and the background is dark, the outer black squares cannot be segmented properly and so the
 	/// square grouping and ordering algorithm fails.
 	///
-	/// Use gen_pattern.py ([tutorial_camera_calibration_pattern]) to create checkerboard.
+	/// Use the `gen_pattern.py` Python script ([tutorial_camera_calibration_pattern])
+	/// to create the desired checkerboard pattern.
 	///
 	/// ## C++ default parameters
 	/// * flags: CALIB_CB_ADAPTIVE_THRESH+CALIB_CB_NORMALIZE_IMAGE
@@ -3639,8 +3711,8 @@ pub mod calib3d {
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	/// * maxIters: The maximum number of robust method iterations.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -3694,8 +3766,8 @@ pub mod calib3d {
 	/// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -3768,8 +3840,8 @@ pub mod calib3d {
 	/// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -3824,8 +3896,8 @@ pub mod calib3d {
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	/// * maxIters: The maximum number of robust method iterations.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -3873,8 +3945,8 @@ pub mod calib3d {
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	/// * maxIters: The maximum number of robust method iterations.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -3927,8 +3999,8 @@ pub mod calib3d {
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	/// * maxIters: The maximum number of robust method iterations.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -3975,8 +4047,8 @@ pub mod calib3d {
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	/// * maxIters: The maximum number of robust method iterations.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -5107,7 +5179,7 @@ pub mod calib3d {
 		Ok(ret)
 	}
 
-	/// Finds an object pose from 3D-2D point correspondences for fisheye camera moodel.
+	/// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme for fisheye camera moodel.
 	///
 	/// ## Parameters
 	/// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
@@ -5122,6 +5194,12 @@ pub mod calib3d {
 	/// * useExtrinsicGuess: Parameter used for #SOLVEPNP_ITERATIVE. If true (1), the function uses
 	/// the provided rvec and tvec values as initial approximations of the rotation and translation
 	/// vectors, respectively, and further optimizes them.
+	/// * iterationsCount: Number of iterations.
+	/// * reprojectionError: Inlier threshold value used by the RANSAC procedure. The parameter value
+	/// is the maximum allowed distance between the observed and computed point projections to consider it
+	/// an inlier.
+	/// * confidence: The probability that the algorithm produces a useful result.
+	/// * inliers: Output vector that contains indices of inliers in objectPoints and imagePoints .
 	/// * flags: Method for solving a PnP problem: see [calib3d_solvePnP_flags]
 	/// This function returns the rotation and the translation vectors that transform a 3D point expressed in the object
 	/// coordinate frame to the camera coordinate frame, using different methods:
@@ -5134,6 +5212,113 @@ pub mod calib3d {
 	/// - point 2: [ squareLength / 2, -squareLength / 2, 0]
 	/// - point 3: [-squareLength / 2, -squareLength / 2, 0]
 	/// - for all the other flags, number of input points must be >= 4 and object points can be in any configuration.
+	/// * criteria: Termination criteria for internal undistortPoints call.
+	/// The function interally undistorts points with [undistortPoints] and call [cv::solvePnP],
+	/// thus the input are very similar. More information about Perspective-n-Points is described in [calib3d_solvePnP]
+	/// for more information.
+	///
+	/// ## Note
+	/// This alternative version of [solve_pnp_ransac_2] function uses the following default values for its arguments:
+	/// * use_extrinsic_guess: false
+	/// * iterations_count: 100
+	/// * reprojection_error: 8.0
+	/// * confidence: 0.99
+	/// * inliers: noArray()
+	/// * flags: SOLVEPNP_ITERATIVE
+	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,10,1e-8)
+	#[inline]
+	pub fn solve_pnp_ransac_2_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray) -> Result<bool> {
+		input_array_arg!(object_points);
+		input_array_arg!(image_points);
+		input_array_arg!(camera_matrix);
+		input_array_arg!(dist_coeffs);
+		output_array_arg!(rvec);
+		output_array_arg!(tvec);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_fisheye_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme for fisheye camera moodel.
+	///
+	/// ## Parameters
+	/// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
+	/// 1xN/Nx1 3-channel, where N is the number of points. vector\<Point3d\> can be also passed here.
+	/// * imagePoints: Array of corresponding image points, Nx2 1-channel or 1xN/Nx1 2-channel,
+	/// where N is the number of points. vector\<Point2d\> can be also passed here.
+	/// * cameraMatrix: Input camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
+	/// * distCoeffs: Input vector of distortion coefficients (4x1/1x4).
+	/// * rvec: Output rotation vector (see [Rodrigues] ) that, together with tvec, brings points from
+	/// the model coordinate system to the camera coordinate system.
+	/// * tvec: Output translation vector.
+	/// * useExtrinsicGuess: Parameter used for #SOLVEPNP_ITERATIVE. If true (1), the function uses
+	/// the provided rvec and tvec values as initial approximations of the rotation and translation
+	/// vectors, respectively, and further optimizes them.
+	/// * iterationsCount: Number of iterations.
+	/// * reprojectionError: Inlier threshold value used by the RANSAC procedure. The parameter value
+	/// is the maximum allowed distance between the observed and computed point projections to consider it
+	/// an inlier.
+	/// * confidence: The probability that the algorithm produces a useful result.
+	/// * inliers: Output vector that contains indices of inliers in objectPoints and imagePoints .
+	/// * flags: Method for solving a PnP problem: see [calib3d_solvePnP_flags]
+	/// This function returns the rotation and the translation vectors that transform a 3D point expressed in the object
+	/// coordinate frame to the camera coordinate frame, using different methods:
+	/// - P3P methods ([SOLVEPNP_P3P], [SOLVEPNP_AP3P]): need 4 input points to return a unique solution.
+	/// - [SOLVEPNP_IPPE] Input points must be >= 4 and object points must be coplanar.
+	/// - [SOLVEPNP_IPPE_SQUARE] Special case suitable for marker pose estimation.
+	/// Number of input points must be 4. Object points must be defined in the following order:
+	/// - point 0: [-squareLength / 2,  squareLength / 2, 0]
+	/// - point 1: [ squareLength / 2,  squareLength / 2, 0]
+	/// - point 2: [ squareLength / 2, -squareLength / 2, 0]
+	/// - point 3: [-squareLength / 2, -squareLength / 2, 0]
+	/// - for all the other flags, number of input points must be >= 4 and object points can be in any configuration.
+	/// * criteria: Termination criteria for internal undistortPoints call.
+	/// The function interally undistorts points with [undistortPoints] and call [cv::solvePnP],
+	/// thus the input are very similar. More information about Perspective-n-Points is described in [calib3d_solvePnP]
+	/// for more information.
+	///
+	/// ## C++ default parameters
+	/// * use_extrinsic_guess: false
+	/// * iterations_count: 100
+	/// * reprojection_error: 8.0
+	/// * confidence: 0.99
+	/// * inliers: noArray()
+	/// * flags: SOLVEPNP_ITERATIVE
+	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,10,1e-8)
+	#[inline]
+	pub fn solve_pnp_ransac_2(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, confidence: f64, inliers: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<bool> {
+		input_array_arg!(object_points);
+		input_array_arg!(image_points);
+		input_array_arg!(camera_matrix);
+		input_array_arg!(dist_coeffs);
+		output_array_arg!(rvec);
+		output_array_arg!(tvec);
+		output_array_arg!(inliers);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_fisheye_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int_float_double_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, confidence, inliers.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Finds an object pose from 3D-2D point correspondences for fisheye camera moodel.
+	///
+	/// ## Parameters
+	/// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
+	/// 1xN/Nx1 3-channel, where N is the number of points. vector\<Point3d\> can also be passed here.
+	/// * imagePoints: Array of corresponding image points, Nx2 1-channel or 1xN/Nx1 2-channel,
+	/// where N is the number of points. vector\<Point2d\> can also be passed here.
+	/// * cameraMatrix: Input camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
+	/// * distCoeffs: Input vector of distortion coefficients (4x1/1x4).
+	/// * rvec: Output rotation vector (see [Rodrigues] ) that, together with tvec, brings points from
+	/// the model coordinate system to the camera coordinate system.
+	/// * tvec: Output translation vector.
+	/// * useExtrinsicGuess: Parameter used for #SOLVEPNP_ITERATIVE. If true (1), the function uses
+	/// the provided rvec and tvec values as initial approximations of the rotation and translation
+	/// vectors, respectively, and further optimizes them.
+	/// * flags: Method for solving a PnP problem: see [calib3d_solvePnP_flags]
 	/// * criteria: Termination criteria for internal undistortPoints call.
 	/// The function interally undistorts points with [undistortPoints] and call [cv::solvePnP],
 	/// thus the input are very similar. More information about Perspective-n-Points is described in [calib3d_solvePnP]
@@ -5163,9 +5348,9 @@ pub mod calib3d {
 	///
 	/// ## Parameters
 	/// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
-	/// 1xN/Nx1 3-channel, where N is the number of points. vector\<Point3d\> can be also passed here.
+	/// 1xN/Nx1 3-channel, where N is the number of points. vector\<Point3d\> can also be passed here.
 	/// * imagePoints: Array of corresponding image points, Nx2 1-channel or 1xN/Nx1 2-channel,
-	/// where N is the number of points. vector\<Point2d\> can be also passed here.
+	/// where N is the number of points. vector\<Point2d\> can also be passed here.
 	/// * cameraMatrix: Input camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 	/// * distCoeffs: Input vector of distortion coefficients (4x1/1x4).
 	/// * rvec: Output rotation vector (see [Rodrigues] ) that, together with tvec, brings points from
@@ -5175,17 +5360,6 @@ pub mod calib3d {
 	/// the provided rvec and tvec values as initial approximations of the rotation and translation
 	/// vectors, respectively, and further optimizes them.
 	/// * flags: Method for solving a PnP problem: see [calib3d_solvePnP_flags]
-	/// This function returns the rotation and the translation vectors that transform a 3D point expressed in the object
-	/// coordinate frame to the camera coordinate frame, using different methods:
-	/// - P3P methods ([SOLVEPNP_P3P], [SOLVEPNP_AP3P]): need 4 input points to return a unique solution.
-	/// - [SOLVEPNP_IPPE] Input points must be >= 4 and object points must be coplanar.
-	/// - [SOLVEPNP_IPPE_SQUARE] Special case suitable for marker pose estimation.
-	/// Number of input points must be 4. Object points must be defined in the following order:
-	/// - point 0: [-squareLength / 2,  squareLength / 2, 0]
-	/// - point 1: [ squareLength / 2,  squareLength / 2, 0]
-	/// - point 2: [ squareLength / 2, -squareLength / 2, 0]
-	/// - point 3: [-squareLength / 2, -squareLength / 2, 0]
-	/// - for all the other flags, number of input points must be >= 4 and object points can be in any configuration.
 	/// * criteria: Termination criteria for internal undistortPoints call.
 	/// The function interally undistorts points with [undistortPoints] and call [cv::solvePnP],
 	/// thus the input are very similar. More information about Perspective-n-Points is described in [calib3d_solvePnP]
@@ -5568,7 +5742,7 @@ pub mod calib3d {
 	/// Pictures a) and b) almost the same. But if we consider points of image located far from the center
 	/// of image, we can notice that on image a) these points are distorted.
 	///
-	/// ![image](https://docs.opencv.org/4.11.0/fisheye_undistorted.jpg)
+	/// ![image](https://docs.opencv.org/4.12.0/fisheye_undistorted.jpg)
 	///
 	/// ## Note
 	/// This alternative version of [fisheye_undistort_image] function uses the following default values for its arguments:
@@ -5614,7 +5788,7 @@ pub mod calib3d {
 	/// Pictures a) and b) almost the same. But if we consider points of image located far from the center
 	/// of image, we can notice that on image a) these points are distorted.
 	///
-	/// ![image](https://docs.opencv.org/4.11.0/fisheye_undistorted.jpg)
+	/// ![image](https://docs.opencv.org/4.12.0/fisheye_undistorted.jpg)
 	///
 	/// ## C++ default parameters
 	/// * knew: cv::noArray()
@@ -6257,7 +6431,7 @@ pub mod calib3d {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing cheirality check. The cheirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for findEssentialMat.:
@@ -6346,7 +6520,7 @@ pub mod calib3d {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing cheirality check. The cheirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for findEssentialMat.:
@@ -6422,7 +6596,7 @@ pub mod calib3d {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for [find_essential_mat] :
@@ -6492,7 +6666,7 @@ pub mod calib3d {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for [find_essential_mat] :
@@ -6607,7 +6781,7 @@ pub mod calib3d {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for [find_essential_mat] :
@@ -6749,7 +6923,7 @@ pub mod calib3d {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for [find_essential_mat] :
@@ -6942,7 +7116,7 @@ pub mod calib3d {
 	///
 	/// The function cv::sampsonDistance calculates and returns the first order approximation of the geometric error as:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Asd%28%20%5Ctexttt%7Bpt1%7D%20%2C%20%5Ctexttt%7Bpt2%7D%20%29%3D%0A%5Cfrac%7B%28%5Ctexttt%7Bpt2%7D%5Et%20%5Ccdot%20%5Ctexttt%7BF%7D%20%5Ccdot%20%5Ctexttt%7Bpt1%7D%29%5E2%7D%0A%7B%28%28%5Ctexttt%7BF%7D%20%5Ccdot%20%5Ctexttt%7Bpt1%7D%29%280%29%29%5E2%20%2B%0A%28%28%5Ctexttt%7BF%7D%20%5Ccdot%20%5Ctexttt%7Bpt1%7D%29%281%29%29%5E2%20%2B%0A%28%28%5Ctexttt%7BF%7D%5Et%20%5Ccdot%20%5Ctexttt%7Bpt2%7D%29%280%29%29%5E2%20%2B%0A%28%28%5Ctexttt%7BF%7D%5Et%20%5Ccdot%20%5Ctexttt%7Bpt2%7D%29%281%29%29%5E2%7D%0A)
-	/// The fundamental matrix may be calculated using the [find_fundamental_mat] function. See [HartleyZ00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.4.3 for details.
+	/// The fundamental matrix may be calculated using the [find_fundamental_mat] function. See [HartleyZ00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.4.3 for details.
 	/// ## Parameters
 	/// * pt1: first homogeneous 2d point
 	/// * pt2: second homogeneous 2d point
@@ -6961,7 +7135,9 @@ pub mod calib3d {
 		Ok(ret)
 	}
 
-	/// Finds an object pose from 3 3D-2D point correspondences.
+	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from **3** 3D-2D point correspondences.
+	///
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/4.12.0/pinhole_homogeneous_transformation.png){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -6979,9 +7155,9 @@ pub mod calib3d {
 	/// * tvecs: Output translation vectors.
 	/// * flags: Method for solving a P3P problem:
 	/// *   [SOLVEPNP_P3P] Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
-	/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_gao2003complete)).
+	/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_gao2003complete)).
 	/// *   [SOLVEPNP_AP3P] Method is based on the paper of T. Ke and S. Roumeliotis.
-	/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Ke17)).
+	/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Ke17)).
 	///
 	/// The function estimates the object pose given 3 object points, their corresponding image
 	/// projections, as well as the camera intrinsic matrix and the distortion coefficients.
@@ -7004,7 +7180,9 @@ pub mod calib3d {
 		Ok(ret)
 	}
 
-	/// Finds an object pose from 3D-2D point correspondences.
+	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences.
+	///
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/4.12.0/pinhole_homogeneous_transformation.png){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -7077,6 +7255,7 @@ pub mod calib3d {
 	///          - point 1: [ squareLength / 2,  squareLength / 2, 0]
 	///          - point 2: [ squareLength / 2, -squareLength / 2, 0]
 	///          - point 3: [-squareLength / 2, -squareLength / 2, 0]
+	///    *   With [SOLVEPNP_SQPNP] input points must be >= 3
 	///
 	/// ## Note
 	/// This alternative version of [solve_pnp_generic] function uses the following default values for its arguments:
@@ -7100,7 +7279,9 @@ pub mod calib3d {
 		Ok(ret)
 	}
 
-	/// Finds an object pose from 3D-2D point correspondences.
+	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences.
+	///
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/4.12.0/pinhole_homogeneous_transformation.png){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -7173,6 +7354,7 @@ pub mod calib3d {
 	///          - point 1: [ squareLength / 2,  squareLength / 2, 0]
 	///          - point 2: [ squareLength / 2, -squareLength / 2, 0]
 	///          - point 3: [-squareLength / 2, -squareLength / 2, 0]
+	///    *   With [SOLVEPNP_SQPNP] input points must be >= 3
 	///
 	/// ## C++ default parameters
 	/// * use_extrinsic_guess: false
@@ -7198,7 +7380,9 @@ pub mod calib3d {
 		Ok(ret)
 	}
 
-	/// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
+	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences using the RANSAC scheme to deal with bad matches.
+	///
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/4.12.0/pinhole_homogeneous_transformation.png){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -7233,8 +7417,8 @@ pub mod calib3d {
 	///
 	///
 	/// Note:
-	///    *   An example of how to use solvePNPRansac for object detection can be found at
-	///        opencv_source_code/samples/cpp/tutorial_code/calib3d/real_time_pose_estimation/
+	///    *   An example of how to use solvePnPRansac for object detection can be found at
+	///        [tutorial_real_time_pose]
 	///    *   The default method used to estimate the camera pose for the Minimal Sample Sets step
 	///        is #SOLVEPNP_EPNP. Exceptions are:
 	///          - if you choose [SOLVEPNP_P3P] or #SOLVEPNP_AP3P, these methods will be used.
@@ -7266,7 +7450,9 @@ pub mod calib3d {
 		Ok(ret)
 	}
 
-	/// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
+	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences using the RANSAC scheme to deal with bad matches.
+	///
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/4.12.0/pinhole_homogeneous_transformation.png){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -7301,8 +7487,8 @@ pub mod calib3d {
 	///
 	///
 	/// Note:
-	///    *   An example of how to use solvePNPRansac for object detection can be found at
-	///        opencv_source_code/samples/cpp/tutorial_code/calib3d/real_time_pose_estimation/
+	///    *   An example of how to use solvePnPRansac for object detection can be found at
+	///        [tutorial_real_time_pose]
 	///    *   The default method used to estimate the camera pose for the Minimal Sample Sets step
 	///        is #SOLVEPNP_EPNP. Exceptions are:
 	///          - if you choose [SOLVEPNP_P3P] or #SOLVEPNP_AP3P, these methods will be used.
@@ -7394,7 +7580,7 @@ pub mod calib3d {
 	/// projections, an initial solution for the rotation and translation vector,
 	/// as well as the camera intrinsic matrix and the distortion coefficients.
 	/// The function minimizes the projection error with respect to the rotation and the translation vectors, according
-	/// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Eade13) process.
+	/// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Eade13) process.
 	///
 	/// ## Note
 	/// This alternative version of [solve_pnp_refine_lm] function uses the following default values for its arguments:
@@ -7437,7 +7623,7 @@ pub mod calib3d {
 	/// projections, an initial solution for the rotation and translation vector,
 	/// as well as the camera intrinsic matrix and the distortion coefficients.
 	/// The function minimizes the projection error with respect to the rotation and the translation vectors, according
-	/// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Eade13) process.
+	/// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Eade13) process.
 	///
 	/// ## C++ default parameters
 	/// * criteria: TermCriteria(TermCriteria::EPS+TermCriteria::COUNT,20,FLT_EPSILON)
@@ -7481,7 +7667,7 @@ pub mod calib3d {
 	/// projections, an initial solution for the rotation and translation vector,
 	/// as well as the camera intrinsic matrix and the distortion coefficients.
 	/// The function minimizes the projection error with respect to the rotation and the translation vectors, using a
-	/// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
+	/// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
 	///
 	/// ## Note
 	/// This alternative version of [solve_pnp_refine_vvs] function uses the following default values for its arguments:
@@ -7527,7 +7713,7 @@ pub mod calib3d {
 	/// projections, an initial solution for the rotation and translation vector,
 	/// as well as the camera intrinsic matrix and the distortion coefficients.
 	/// The function minimizes the projection error with respect to the rotation and the translation vectors, using a
-	/// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
+	/// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
 	///
 	/// ## C++ default parameters
 	/// * criteria: TermCriteria(TermCriteria::EPS+TermCriteria::COUNT,20,FLT_EPSILON)
@@ -7547,7 +7733,9 @@ pub mod calib3d {
 		Ok(ret)
 	}
 
-	/// Finds an object pose from 3D-2D point correspondences.
+	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences:
+	///
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/4.12.0/pinhole_homogeneous_transformation.png){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -7612,7 +7800,7 @@ pub mod calib3d {
 	///          - point 1: [ squareLength / 2,  squareLength / 2, 0]
 	///          - point 2: [ squareLength / 2, -squareLength / 2, 0]
 	///          - point 3: [-squareLength / 2, -squareLength / 2, 0]
-	///    *  With [SOLVEPNP_SQPNP] input points must be >= 3
+	///    *   With [SOLVEPNP_SQPNP] input points must be >= 3
 	///
 	/// ## Note
 	/// This alternative version of [solve_pnp] function uses the following default values for its arguments:
@@ -7633,7 +7821,9 @@ pub mod calib3d {
 		Ok(ret)
 	}
 
-	/// Finds an object pose from 3D-2D point correspondences.
+	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences:
+	///
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/4.12.0/pinhole_homogeneous_transformation.png){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -7698,7 +7888,7 @@ pub mod calib3d {
 	///          - point 1: [ squareLength / 2,  squareLength / 2, 0]
 	///          - point 2: [ squareLength / 2, -squareLength / 2, 0]
 	///          - point 3: [-squareLength / 2, -squareLength / 2, 0]
-	///    *  With [SOLVEPNP_SQPNP] input points must be >= 3
+	///    *   With [SOLVEPNP_SQPNP] input points must be >= 3
 	///
 	/// ## C++ default parameters
 	/// * use_extrinsic_guess: false
@@ -8371,7 +8561,7 @@ pub mod calib3d {
 	/// cameras and their relative position in the space, which explains the suffix "uncalibrated". Another
 	/// related difference from [stereo_rectify] is that the function outputs not the rectification
 	/// transformations in the object (3D) space, but the planar perspective transformations encoded by the
-	/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Hartley99) .
+	/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Hartley99) .
 	///
 	///
 	/// Note:
@@ -8419,7 +8609,7 @@ pub mod calib3d {
 	/// cameras and their relative position in the space, which explains the suffix "uncalibrated". Another
 	/// related difference from [stereo_rectify] is that the function outputs not the rectification
 	/// transformations in the object (3D) space, but the planar perspective transformations encoded by the
-	/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Hartley99) .
+	/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Hartley99) .
 	///
 	///
 	/// Note:
@@ -8538,7 +8728,7 @@ pub mod calib3d {
 	/// stereo correspondence algorithms rely on. The green rectangles are roi1 and roi2 . You see that
 	/// their interiors are all valid pixels.
 	///
-	/// ![image](https://docs.opencv.org/4.11.0/stereo_undistort.jpg)
+	/// ![image](https://docs.opencv.org/4.12.0/stereo_undistort.jpg)
 	///
 	/// ## Note
 	/// This alternative version of [stereo_rectify] function uses the following default values for its arguments:
@@ -8659,7 +8849,7 @@ pub mod calib3d {
 	/// stereo correspondence algorithms rely on. The green rectangles are roi1 and roi2 . You see that
 	/// their interiors are all valid pixels.
 	///
-	/// ![image](https://docs.opencv.org/4.11.0/stereo_undistort.jpg)
+	/// ![image](https://docs.opencv.org/4.12.0/stereo_undistort.jpg)
 	///
 	/// ## C++ default parameters
 	/// * flags: CALIB_ZERO_DISPARITY
@@ -9276,8 +9466,8 @@ pub mod calib3d {
 
 	boxed_ref! { LMSolver_Callback, crate::calib3d::LMSolver_CallbackTraitConst, as_raw_LMSolver_Callback, crate::calib3d::LMSolver_CallbackTrait, as_raw_mut_LMSolver_Callback }
 
-	/// Class for computing stereo correspondence using the block matching algorithm, introduced and
-	/// contributed to OpenCV by K. Konolige.
+	/// Class for computing stereo correspondence using the block matching algorithm, introduced and contributed to OpenCV by K. Konolige.
+	/// @details This class implements a block matching algorithm for stereo correspondence, which is used to compute disparity maps from stereo image pairs. It provides methods to fine-tune parameters such as pre-filtering, texture thresholds, uniqueness ratios, and regions of interest (ROIs) to optimize performance and accuracy.
 	pub struct StereoBM {
 		ptr: *mut c_void,
 	}
@@ -9295,18 +9485,12 @@ pub mod calib3d {
 
 	impl StereoBM {
 		/// Creates StereoBM object
-		///
 		/// ## Parameters
-		/// * numDisparities: the disparity search range. For each pixel algorithm will find the best
-		/// disparity from 0 (default minimum disparity) to numDisparities. The search range can then be
-		/// shifted by changing the minimum disparity.
-		/// * blockSize: the linear size of the blocks compared by the algorithm. The size should be odd
-		/// (as the block is centered at the current pixel). Larger block size implies smoother, though less
-		/// accurate disparity map. Smaller block size gives more detailed disparity map, but there is higher
-		/// chance for algorithm to find a wrong correspondence.
-		///
-		/// The function create StereoBM object. You can then call StereoBM::compute() to compute disparity for
-		/// a specific stereo pair.
+		/// * numDisparities: The disparity search range. For each pixel, the algorithm will find the best disparity from 0 (default minimum disparity) to numDisparities. The search range can be shifted by changing the minimum disparity.
+		/// * blockSize: The linear size of the blocks compared by the algorithm. The size should be odd (as the block is centered at the current pixel). Larger block size implies smoother, though less accurate disparity map. Smaller block size gives more detailed disparity map, but there is a higher chance for the algorithm to find a wrong correspondence.
+		/// ## Returns
+		/// A pointer to the created StereoBM object.
+		/// @details The function creates a StereoBM object. You can then call StereoBM::compute() to compute disparity for a specific stereo pair.
 		///
 		/// ## C++ default parameters
 		/// * num_disparities: 0
@@ -9322,18 +9506,12 @@ pub mod calib3d {
 		}
 
 		/// Creates StereoBM object
-		///
 		/// ## Parameters
-		/// * numDisparities: the disparity search range. For each pixel algorithm will find the best
-		/// disparity from 0 (default minimum disparity) to numDisparities. The search range can then be
-		/// shifted by changing the minimum disparity.
-		/// * blockSize: the linear size of the blocks compared by the algorithm. The size should be odd
-		/// (as the block is centered at the current pixel). Larger block size implies smoother, though less
-		/// accurate disparity map. Smaller block size gives more detailed disparity map, but there is higher
-		/// chance for algorithm to find a wrong correspondence.
-		///
-		/// The function create StereoBM object. You can then call StereoBM::compute() to compute disparity for
-		/// a specific stereo pair.
+		/// * numDisparities: The disparity search range. For each pixel, the algorithm will find the best disparity from 0 (default minimum disparity) to numDisparities. The search range can be shifted by changing the minimum disparity.
+		/// * blockSize: The linear size of the blocks compared by the algorithm. The size should be odd (as the block is centered at the current pixel). Larger block size implies smoother, though less accurate disparity map. Smaller block size gives more detailed disparity map, but there is a higher chance for the algorithm to find a wrong correspondence.
+		/// ## Returns
+		/// A pointer to the created StereoBM object.
+		/// @details The function creates a StereoBM object. You can then call StereoBM::compute() to compute disparity for a specific stereo pair.
 		///
 		/// ## Note
 		/// This alternative version of [StereoBM::create] function uses the following default values for its arguments:
@@ -9355,6 +9533,9 @@ pub mod calib3d {
 	pub trait StereoBMTraitConst: crate::calib3d::StereoMatcherTraitConst {
 		fn as_raw_StereoBM(&self) -> *const c_void;
 
+		/// Gets the type of pre-filtering currently used in the algorithm.
+		/// ## Returns
+		/// The current pre-filter type: 0 for PREFILTER_NORMALIZED_RESPONSE or 1 for PREFILTER_XSOBEL.
 		#[inline]
 		fn get_pre_filter_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -9364,6 +9545,9 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Gets the current size of the pre-filter kernel.
+		/// ## Returns
+		/// The current pre-filter size.
 		#[inline]
 		fn get_pre_filter_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -9373,6 +9557,9 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Gets the current truncation value for prefiltered pixels.
+		/// ## Returns
+		/// The current pre-filter cap value.
 		#[inline]
 		fn get_pre_filter_cap(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -9382,6 +9569,9 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Gets the current texture threshold value.
+		/// ## Returns
+		/// The current texture threshold.
 		#[inline]
 		fn get_texture_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -9391,6 +9581,9 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Gets the current uniqueness ratio value.
+		/// ## Returns
+		/// The current uniqueness ratio.
 		#[inline]
 		fn get_uniqueness_ratio(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -9400,6 +9593,9 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Gets the current size of the smaller block used for texture check.
+		/// ## Returns
+		/// The current smaller block size.
 		#[inline]
 		fn get_smaller_block_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -9409,6 +9605,9 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Gets the current Region of Interest (ROI) for the left image.
+		/// ## Returns
+		/// The current ROI for the left image.
 		#[inline]
 		fn get_roi1(&self) -> Result<core::Rect> {
 			return_send!(via ocvrs_return);
@@ -9418,6 +9617,9 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Gets the current Region of Interest (ROI) for the right image.
+		/// ## Returns
+		/// The current ROI for the right image.
 		#[inline]
 		fn get_roi2(&self) -> Result<core::Rect> {
 			return_send!(via ocvrs_return);
@@ -9433,6 +9635,12 @@ pub mod calib3d {
 	pub trait StereoBMTrait: crate::calib3d::StereoBMTraitConst + crate::calib3d::StereoMatcherTrait {
 		fn as_raw_mut_StereoBM(&mut self) -> *mut c_void;
 
+		/// Sets the type of pre-filtering used in the algorithm.
+		/// ## Parameters
+		/// * preFilterType: The type of pre-filter to use. Possible values are:
+		/// - PREFILTER_NORMALIZED_RESPONSE (0): Uses normalized response for pre-filtering.
+		/// - PREFILTER_XSOBEL (1): Uses the X-Sobel operator for pre-filtering.
+		/// @details The pre-filter type affects how the images are prepared before computing the disparity map. Different pre-filtering methods can enhance specific image features or reduce noise, influencing the quality of the disparity map.
 		#[inline]
 		fn set_pre_filter_type(&mut self, pre_filter_type: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -9442,6 +9650,10 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Sets the size of the pre-filter kernel.
+		/// ## Parameters
+		/// * preFilterSize: The size of the pre-filter kernel. Must be an odd integer, typically between 5 and 255.
+		/// @details The pre-filter size determines the spatial extent of the pre-filtering operation, which prepares the images for disparity computation by normalizing brightness and enhancing texture. Larger sizes reduce noise but may blur details, while smaller sizes preserve details but are more susceptible to noise.
 		#[inline]
 		fn set_pre_filter_size(&mut self, pre_filter_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -9451,6 +9663,10 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Sets the truncation value for prefiltered pixels.
+		/// ## Parameters
+		/// * preFilterCap: The truncation value. Typically in the range [1, 63].
+		/// @details This value caps the output of the pre-filter to [-preFilterCap, preFilterCap], helping to reduce the impact of noise and outliers in the pre-filtered image.
 		#[inline]
 		fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -9460,6 +9676,10 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Sets the threshold for filtering low-texture regions.
+		/// ## Parameters
+		/// * textureThreshold: The threshold value. Must be non-negative.
+		/// @details This parameter filters out regions with low texture, where establishing correspondences is difficult, thus reducing noise in the disparity map. Higher values filter more aggressively but may discard valid information.
 		#[inline]
 		fn set_texture_threshold(&mut self, texture_threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -9469,6 +9689,10 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Sets the uniqueness ratio for filtering ambiguous matches.
+		/// ## Parameters
+		/// * uniquenessRatio: The uniqueness ratio value. Typically in the range [5, 15], but can be from 0 to 100.
+		/// @details This parameter ensures that the best match is sufficiently better than the next best match, reducing false positives. Higher values are stricter but may filter out valid matches in difficult regions.
 		#[inline]
 		fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -9478,6 +9702,10 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Sets the size of the smaller block used for texture check.
+		/// ## Parameters
+		/// * blockSize: The size of the smaller block. Must be an odd integer between 5 and 255.
+		/// @details This parameter determines the size of the block used to compute texture variance. Smaller blocks capture finer details but are more sensitive to noise, while larger blocks are more robust but may miss fine details.
 		#[inline]
 		fn set_smaller_block_size(&mut self, block_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -9487,6 +9715,10 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Sets the Region of Interest (ROI) for the left image.
+		/// ## Parameters
+		/// * roi1: The ROI rectangle for the left image.
+		/// @details By setting the ROI, the stereo matching computation is limited to the specified region, improving performance and potentially accuracy by focusing on relevant parts of the image.
 		#[inline]
 		fn set_roi1(&mut self, roi1: core::Rect) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -9496,6 +9728,10 @@ pub mod calib3d {
 			Ok(ret)
 		}
 
+		/// Sets the Region of Interest (ROI) for the right image.
+		/// ## Parameters
+		/// * roi2: The ROI rectangle for the right image.
+		/// @details Similar to setROI1, this limits the computation to the specified region in the right image.
 		#[inline]
 		fn set_roi2(&mut self, roi2: core::Rect) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -9739,7 +9975,7 @@ pub mod calib3d {
 
 	boxed_ref! { StereoMatcher, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
 
-	/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
+	/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
 	/// one as follows:
 	///
 	/// *   By default, the algorithm is single-pass, which means that you consider only 5 directions
@@ -9748,7 +9984,7 @@ pub mod calib3d {
 	/// *   The algorithm matches blocks, not individual pixels. Though, setting blockSize=1 reduces the
 	/// blocks to single pixels.
 	/// *   Mutual information cost function is not implemented. Instead, a simpler Birchfield-Tomasi
-	/// sub-pixel metric from [BT98](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BT98) is used. Though, the color images are supported as well.
+	/// sub-pixel metric from [BT98](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BT98) is used. Though, the color images are supported as well.
 	/// *   Some pre- and post- processing steps from K. Konolige algorithm StereoBM are included, for
 	/// example: pre-filtering (StereoBM::PREFILTER_XSOBEL type) and post-filtering (uniqueness
 	/// check, quadratic interpolation and speckle filtering).

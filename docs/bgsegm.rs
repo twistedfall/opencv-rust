@@ -196,16 +196,16 @@ pub mod bgsegm {
 
 	/// Creates an instance of BackgroundSubtractorLSBP algorithm.
 	///
-	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LGuo2016)
+	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016)
 	///
 	/// ## Parameters
 	/// * mc: Whether to use camera motion compensation.
 	/// * nSamples: Number of samples to maintain at each point of the frame.
 	/// * LSBPRadius: LSBP descriptor radius.
-	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
 	/// * Rscale: Scale coefficient for threshold values.
 	/// * Rincdec: Increase/Decrease step for threshold values.
 	/// * noiseRemovalThresholdFacBG: Strength of the noise removal for background points.
@@ -240,16 +240,16 @@ pub mod bgsegm {
 
 	/// Creates an instance of BackgroundSubtractorLSBP algorithm.
 	///
-	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LGuo2016)
+	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016)
 	///
 	/// ## Parameters
 	/// * mc: Whether to use camera motion compensation.
 	/// * nSamples: Number of samples to maintain at each point of the frame.
 	/// * LSBPRadius: LSBP descriptor radius.
-	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
 	/// * Rscale: Scale coefficient for threshold values.
 	/// * Rincdec: Increase/Decrease step for threshold values.
 	/// * noiseRemovalThresholdFacBG: Strength of the noise removal for background points.
@@ -577,7 +577,7 @@ pub mod bgsegm {
 
 	boxed_ref! { BackgroundSubtractorCNT, crate::bgsegm::BackgroundSubtractorCNTTraitConst, as_raw_BackgroundSubtractorCNT, crate::bgsegm::BackgroundSubtractorCNTTrait, as_raw_mut_BackgroundSubtractorCNT }
 
-	/// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Gold2012) .
+	/// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Gold2012) .
 	///
 	/// Takes a series of images and returns a sequence of mask (8UC1)
 	/// images of the same size, where 255 indicates Foreground and 0 represents Background.
@@ -1026,7 +1026,7 @@ pub mod bgsegm {
 
 	boxed_ref! { BackgroundSubtractorGSOC, crate::bgsegm::BackgroundSubtractorGSOCTraitConst, as_raw_BackgroundSubtractorGSOC, crate::bgsegm::BackgroundSubtractorGSOCTrait, as_raw_mut_BackgroundSubtractorGSOC }
 
-	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LGuo2016)
+	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016)
 	pub struct BackgroundSubtractorLSBP {
 		ptr: *mut c_void,
 	}
@@ -1230,7 +1230,7 @@ pub mod bgsegm {
 
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 	///
-	/// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_KB2001) .
+	/// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_KB2001) .
 	pub struct BackgroundSubtractorMOG {
 		ptr: *mut c_void,
 	}

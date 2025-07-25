@@ -395,9 +395,9 @@ pub mod core {
 	pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 	pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 	pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-	pub const CV_VERSION: &str = "4.11.0";
+	pub const CV_VERSION: &str = "4.12.0";
 	pub const CV_VERSION_MAJOR: i32 = 4;
-	pub const CV_VERSION_MINOR: i32 = 11;
+	pub const CV_VERSION_MINOR: i32 = 12;
 	pub const CV_VERSION_REVISION: i32 = 0;
 	pub const CV_VERSION_STATUS: &str = "";
 	pub const CV_VSX: i32 = 0;
@@ -951,7 +951,69 @@ pub mod core {
 
 	opencv_type_enum! { core::AlgorithmHint }
 
-	/// Various border types, image boundaries are denoted with `|`
+	/// ! Various border types, image boundaries are denoted with the `|` character in the table below, when describing each method.
+	///
+	/// The following examples show the result of the [copyMakeBorder] call according to different methods.
+	/// Input image is `6x4` (width x height) size and the [copyMakeBorder] function is used with a border size of 2 pixels
+	/// in each direction, giving a resulting image of `10x8` resolution.
+	///
+	/// ```C++
+	/// Input image:
+	/// [[ 0  1  2  3  4  5]
+	///  [ 6  7  8  9 10 11]
+	///  [12 13 14 15 16 17]
+	///  [18 19 20 21 22 23]]
+	///
+	/// Border type: BORDER_CONSTANT (a constant value of 255 is used)
+	/// [[255 255 255 255 255 255 255 255 255 255]
+	///  [255 255 255 255 255 255 255 255 255 255]
+	///  [255 255   0   1   2   3   4   5 255 255]
+	///  [255 255   6   7   8   9  10  11 255 255]
+	///  [255 255  12  13  14  15  16  17 255 255]
+	///  [255 255  18  19  20  21  22  23 255 255]
+	///  [255 255 255 255 255 255 255 255 255 255]
+	///  [255 255 255 255 255 255 255 255 255 255]]
+	///
+	/// Border type: BORDER_REPLICATE
+	/// [[ 0  0  0  1  2  3  4  5  5  5]
+	///  [ 0  0  0  1  2  3  4  5  5  5]
+	///  [ 0  0  0  1  2  3  4  5  5  5]
+	///  [ 6  6  6  7  8  9 10 11 11 11]
+	///  [12 12 12 13 14 15 16 17 17 17]
+	///  [18 18 18 19 20 21 22 23 23 23]
+	///  [18 18 18 19 20 21 22 23 23 23]
+	///  [18 18 18 19 20 21 22 23 23 23]]
+	///
+	/// Border type: BORDER_REFLECT
+	/// [[ 7  6  6  7  8  9 10 11 11 10]
+	///  [ 1  0  0  1  2  3  4  5  5  4]
+	///  [ 1  0  0  1  2  3  4  5  5  4]
+	///  [ 7  6  6  7  8  9 10 11 11 10]
+	///  [13 12 12 13 14 15 16 17 17 16]
+	///  [19 18 18 19 20 21 22 23 23 22]
+	///  [19 18 18 19 20 21 22 23 23 22]
+	///  [13 12 12 13 14 15 16 17 17 16]]
+	///
+	/// Border type: BORDER_WRAP
+	/// [[16 17 12 13 14 15 16 17 12 13]
+	///  [22 23 18 19 20 21 22 23 18 19]
+	///  [ 4  5  0  1  2  3  4  5  0  1]
+	///  [10 11  6  7  8  9 10 11  6  7]
+	///  [16 17 12 13 14 15 16 17 12 13]
+	///  [22 23 18 19 20 21 22 23 18 19]
+	///  [ 4  5  0  1  2  3  4  5  0  1]
+	///  [10 11  6  7  8  9 10 11  6  7]]
+	///
+	/// Border type: BORDER_REFLECT_101
+	/// [[14 13 12 13 14 15 16 17 16 15]
+	///  [ 8  7  6  7  8  9 10 11 10  9]
+	///  [ 2  1  0  1  2  3  4  5  4  3]
+	///  [ 8  7  6  7  8  9 10 11 10  9]
+	///  [14 13 12 13 14 15 16 17 16 15]
+	///  [20 19 18 19 20 21 22 23 22 21]
+	///  [14 13 12 13 14 15 16 17 16 15]
+	///  [ 8  7  6  7  8  9 10 11 10  9]]
+	/// ```
 	/// ## See also
 	/// borderInterpolate, copyMakeBorder
 	#[repr(C)]
@@ -2691,6 +2753,10 @@ pub mod core {
 	pub type Stream_StreamCallback = Option<Box<dyn FnMut(i32) -> () + Send + Sync + 'static>>;
 	pub type float16_t = core::hfloat;
 	pub type ProgramSource_hash_t = u64;
+	/// Function pointer type for writeLogMessageEx. Used by replaceWriteLogMessageEx.
+	pub type WriteLogMessageExFuncType = Option<unsafe extern "C" fn(core::LogLevel, *const c_char, *const c_char, i32, *const c_char, *const c_char) -> ()>;
+	/// Function pointer type for writeLogMessage. Used by replaceWriteLogMessage.
+	pub type WriteLogMessageFuncType = Option<unsafe extern "C" fn(core::LogLevel, *const c_char) -> ()>;
 	/// proxy for hal::Cholesky
 	#[inline]
 	pub fn cholesky(a: &mut f64, astep: size_t, m: i32, b: &mut f64, bstep: size_t, n: i32) -> Result<bool> {
@@ -7269,7 +7335,7 @@ pub mod core {
 	/// advanced way, use cv::mixChannels.
 	///
 	/// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 	///
 	/// ## Parameters
 	/// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -8090,7 +8156,7 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.11.0/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.12.0/NormTypes_OneArray_1-2-INF.png)
 	///
 	/// When the mask parameter is specified and it is not empty, the norm is
 	///
@@ -8195,7 +8261,7 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.11.0/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.12.0/NormTypes_OneArray_1-2-INF.png)
 	///
 	/// When the mask parameter is specified and it is not empty, the norm is
 	///
@@ -8273,6 +8339,12 @@ pub mod core {
 	/// ```
 	///
 	///
+	///
+	/// Note: Due to rounding issues, min-max normalization can result in values outside provided boundaries.
+	/// If exact range conformity is needed, following workarounds can be used:
+	/// - use double floating point precision (dtype = CV_64F)
+	/// - manually clip values (`cv::max(res, left_bound, res)`, `cv::min(res, right_bound, res)` or `np.clip`)
+	///
 	/// ## Parameters
 	/// * src: input array.
 	/// * dst: output array of the same size as src .
@@ -8349,6 +8421,12 @@ pub mod core {
 	///    normalize(positiveData, normalizedData_minmax, 1.0, 0.0, NORM_MINMAX);
 	/// ```
 	///
+	///
+	///
+	/// Note: Due to rounding issues, min-max normalization can result in values outside provided boundaries.
+	/// If exact range conformity is needed, following workarounds can be used:
+	/// - use double floating point precision (dtype = CV_64F)
+	/// - manually clip values (`cv::max(res, left_bound, res)`, `cv::min(res, right_bound, res)` or `np.clip`)
 	///
 	/// ## Parameters
 	/// * src: input array.
@@ -8428,6 +8506,12 @@ pub mod core {
 	///    normalize(positiveData, normalizedData_minmax, 1.0, 0.0, NORM_MINMAX);
 	/// ```
 	///
+	///
+	///
+	/// Note: Due to rounding issues, min-max normalization can result in values outside provided boundaries.
+	/// If exact range conformity is needed, following workarounds can be used:
+	/// - use double floating point precision (dtype = CV_64F)
+	/// - manually clip values (`cv::max(res, left_bound, res)`, `cv::min(res, right_bound, res)` or `np.clip`)
 	///
 	/// ## Parameters
 	/// * src: input array.
@@ -10376,10 +10460,10 @@ pub mod core {
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	///
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// ## Parameters
 	/// * src: input 2D matrix.
@@ -10416,10 +10500,10 @@ pub mod core {
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	///
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// ## Parameters
 	/// * src: input 2D matrix.
@@ -10870,9 +10954,9 @@ pub mod core {
 	/// The roots are stored in the roots array.
 	/// ## Parameters
 	/// * coeffs: equation coefficients, an array of 3 or 4 elements.
-	/// * roots: output array of real roots that has 1 or 3 elements.
+	/// * roots: output array of real roots that has 0, 1, 2 or 3 elements.
 	/// ## Returns
-	/// number of real roots. It can be 0, 1 or 2.
+	/// number of real roots. It can be -1 (all real numbers), 0, 1, 2 or 3.
 	#[inline]
 	pub fn solve_cubic(coeffs: &impl ToInputArray, roots: &mut impl ToOutputArray) -> Result<i32> {
 		input_array_arg!(coeffs);
@@ -11158,7 +11242,7 @@ pub mod core {
 	/// mixChannels.
 	///
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	///
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -11183,7 +11267,7 @@ pub mod core {
 	/// mixChannels.
 	///
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	///
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -11947,6 +12031,56 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Replaces the OpenCV writeLogMessageEx function with a user-defined function.
+	///
+	/// Note: The user-defined function must have the same signature as writeLogMessage.
+	///
+	/// Note: The user-defined function must accept arguments that can be potentially null.
+	///
+	/// Note: The user-defined function must be thread-safe, as OpenCV logging may be called
+	///       from multiple threads.
+	///
+	/// Note: The user-defined function must not perform any action that can trigger
+	///       deadlocks or infinite loop. Many OpenCV functions are not re-entrant.
+	///
+	/// Note: Once replaced, logs will not go through any of the OpenCV logging functions
+	///       such as writeLogMessage or writeLogMessageEx, until their respective restore
+	///       methods are called.
+	///
+	/// Note: To restore, call this function with a nullptr.
+	#[inline]
+	pub fn replace_write_log_message_ex(f: core::WriteLogMessageExFuncType) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_logging_internal_replaceWriteLogMessageEx_WriteLogMessageExFuncType(f, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Replaces the OpenCV writeLogMessage function with a user-defined function.
+	///
+	/// Note: The user-defined function must have the same signature as writeLogMessage.
+	///
+	/// Note: The user-defined function must accept arguments that can be potentially null.
+	///
+	/// Note: The user-defined function must be thread-safe, as OpenCV logging may be called
+	///       from multiple threads.
+	///
+	/// Note: The user-defined function must not perform any action that can trigger
+	///       deadlocks or infinite loop. Many OpenCV functions are not re-entrant.
+	///
+	/// Note: Once replaced, logs will not go through the OpenCV writeLogMessage function.
+	///
+	/// Note: To restore, call this function with a nullptr.
+	#[inline]
+	pub fn replace_write_log_message(f: core::WriteLogMessageFuncType) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_logging_internal_replaceWriteLogMessage_WriteLogMessageFuncType(f, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Write log message
 	#[inline]
 	pub fn write_log_message_ex(log_level: core::LogLevel, tag: &str, file: &str, line: i32, func: &str, message: &str) -> Result<()> {
@@ -12465,7 +12599,7 @@ pub mod core {
 	/// etc.).
 	///
 	/// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-	/// [Algorithm](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [Algorithm](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	pub struct Algorithm {
 		ptr: *mut c_void,
 	}
@@ -18841,6 +18975,23 @@ pub mod core {
 			Ok(ret)
 		}
 
+		/// Reset the type of matrix.
+		///
+		/// The methods reset the data type of matrix. If the new type and the old type of the matrix
+		/// have the same element size, the current buffer can be reused. The method needs to consider whether the
+		/// current mat is a submatrix or has any references.
+		/// ## Parameters
+		/// * type: New data type.
+		#[inline]
+		fn reinterpret(&self, typ: i32) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_reinterpret_const_int(self.as_raw_Mat(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 		/// Transposes a matrix.
 		///
 		/// The method performs matrix transposition by means of matrix expressions. It does not perform the
@@ -19333,10 +19484,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		///
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// ## C++ default parameters
 		/// * depth: -1
@@ -19367,10 +19518,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		///
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// ## Note
 		/// This alternative version of [MatTraitConst::check_vector] function uses the following default values for its arguments:
@@ -21389,7 +21540,7 @@ pub mod core {
 	/// Matrix expression representation
 	/// @anchor MatrixExpressions
 	/// This is a list of implemented matrix operations that can be combined in arbitrary complex
-	/// expressions (here A, B stand for matrices ( Mat ), s for a scalar ( Scalar ), alpha for a
+	/// expressions (here A, B stand for matrices ( cv::Mat ), s for a cv::Scalar, alpha for a
 	/// real-valued scalar ( double )):
 	/// *   Addition, subtraction, negation: `A+B`, `A-B`, `A+s`, `A-s`, `s+A`, `s-A`, `-A`
 	/// *   Scaling: `A*alpha`
@@ -21404,13 +21555,13 @@ pub mod core {
 	///    0.
 	/// *   Bitwise logical operations: `A logicop B`, `A logicop s`, `s logicop A`, `~A`, where *logicop* is one of
 	///   `&`, `|`, `^`.
-	/// *   Element-wise minimum and maximum: `min(A, B)`, `min(A, alpha)`, `max(A, B)`, `max(A, alpha)`
-	/// *   Element-wise absolute value: `abs(A)`
+	/// *   Element-wise minimum and maximum: cv::min(A, B), cv::min(A, alpha), cv::max(A, B), cv::max(A, alpha)
+	/// *   Element-wise absolute value: cv::abs(A)
 	/// *   Cross-product, dot-product: `A.cross(B)`, `A.dot(B)`
-	/// *   Any function of matrix or matrices and scalars that returns a matrix or a scalar, such as norm,
-	///    mean, sum, countNonZero, trace, determinant, repeat, and others.
+	/// *   Any function of matrix or matrices and scalars that returns a matrix or a scalar, such as cv::norm,
+	///    cv::mean, cv::sum, cv::countNonZero, cv::trace, cv::determinant, cv::repeat, and others.
 	/// *   Matrix initializers ( Mat::eye(), Mat::zeros(), Mat::ones() ), matrix comma-separated
-	///    initializers, matrix constructors and operators that extract sub-matrices (see Mat description).
+	///    initializers, matrix constructors and operators that extract sub-matrices (see cv::Mat description).
 	/// *   Mat_<destination_type>() constructors to cast the result to the proper type.
 	///
 	/// Note: Comma-separated initializers and probably some other operations may require additional
@@ -24620,8 +24771,8 @@ pub mod core {
 	/// [size2f] structure) and the rotation angle in degrees.
 	///
 	/// The sample below demonstrates how to use RotatedRect:
-	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-	/// ![image](https://docs.opencv.org/4.11.0/rotatedrect.png)
+	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// ![image](https://docs.opencv.org/4.12.0/rotatedrect.png)
 	/// ## See also
 	/// CamShift, fitEllipse, minAreaRect, CvBox2D
 	#[repr(C)]
@@ -26630,10 +26781,10 @@ pub mod core {
 	///
 	/// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 	/// execution time in seconds:
-	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	///
 	/// It is also possible to compute the average time over multiple runs:
-	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.12.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	/// ## See also
 	/// getTickCount, getTickFrequency
 	pub struct TickMeter {
@@ -30292,6 +30443,16 @@ pub mod core {
 		}
 
 		#[inline]
+		fn reinterpret(&self, typ: i32) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray_reinterpret_const_int(self.as_raw__OutputArray(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
 		fn assign_umat(&self, u: &impl core::UMatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_assign_const_const_UMatR(self.as_raw__OutputArray(), u.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
@@ -32040,9 +32201,19 @@ pub mod core {
 			Ok(ret)
 		}
 
+		/// bindings overload which converts GpuMat to another datatype (Blocking call)
+		#[inline]
+		fn convert_to_1(&self, dst: &mut impl core::GpuMatTrait, rtype: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 		/// converts GpuMat to another datatype (Non-Blocking call)
 		#[inline]
-		fn convert_to_1(&self, dst: &mut impl ToOutputArray, rtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+		fn convert_to_2(&self, dst: &mut impl ToOutputArray, rtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
@@ -32053,7 +32224,7 @@ pub mod core {
 
 		/// bindings overload which converts GpuMat to another datatype (Non-Blocking call)
 		#[inline]
-		fn convert_to_2(&self, dst: &mut impl core::GpuMatTrait, rtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+		fn convert_to_3(&self, dst: &mut impl core::GpuMatTrait, rtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int_StreamR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -32066,7 +32237,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * beta: 0.0
 		#[inline]
-		fn convert_to_3(&self, dst: &mut impl ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+		fn convert_to_4(&self, dst: &mut impl ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
@@ -32085,35 +32256,6 @@ pub mod core {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// bindings overload which converts GpuMat to another datatype with scaling(Blocking call)
-		///
-		/// ## C++ default parameters
-		/// * alpha: 1.0
-		/// * beta: 0.0
-		#[inline]
-		fn convert_to_4(&self, dst: &mut impl core::GpuMatTrait, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int_double_double(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// bindings overload which converts GpuMat to another datatype with scaling(Blocking call)
-		///
-		/// ## Note
-		/// This alternative version of [GpuMatTraitConst::convert_to] function uses the following default values for its arguments:
-		/// * alpha: 1.0
-		/// * beta: 0.0
-		#[inline]
-		fn convert_to_def_1(&self, dst: &mut impl core::GpuMatTrait, rtype: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

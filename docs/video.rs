@@ -26,7 +26,7 @@ pub mod video {
 	/// * criteria: Stop criteria for the underlying meanShift.
 	/// returns
 	/// (in old interfaces) Number of iterations CAMSHIFT took to converge
-	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
+	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
 	/// object center using meanShift and then adjusts the window size and finds the optimal rotation. The
 	/// function returns the rotated rectangle structure that includes the object position, size, and
 	/// orientation. The next position of the search window can be obtained with RotatedRect::boundingRect()
@@ -142,7 +142,7 @@ pub mod video {
 	///      normally, winsize for a Gaussian window should be set to a larger value to achieve the same
 	///      level of robustness.
 	///
-	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
+	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bprev%7D%20%28y%2Cx%29%20%20%5Csim%20%5Ctexttt%7Bnext%7D%20%28%20y%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B1%5D%2C%20%20x%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B0%5D%29)
 	///
@@ -196,13 +196,13 @@ pub mod video {
 	///      around the original and a moved point, divided by number of pixels in a window, is used as a
 	///      error measure.
 	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 	/// performance boost.
 	///
 	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-	/// [Bouguet00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// [Bouguet00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 	///
 	///
 	/// Note: Some examples:
@@ -267,13 +267,13 @@ pub mod video {
 	///      around the original and a moved point, divided by number of pixels in a window, is used as a
 	///      error measure.
 	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 	/// performance boost.
 	///
 	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-	/// [Bouguet00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// [Bouguet00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 	///
 	///
 	/// Note: Some examples:
@@ -306,7 +306,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -330,7 +330,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -512,7 +512,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -537,7 +537,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -582,7 +582,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -607,7 +607,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -844,7 +844,7 @@ pub mod video {
 
 	/// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
 	///
-	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	/// Very efficient if number of foreground pixels is low.
 	pub struct BackgroundSubtractorKNN {
 		ptr: *mut c_void,
@@ -1076,8 +1076,8 @@ pub mod video {
 
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 	///
-	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
-	/// and [Zivkovic2006](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
+	/// and [Zivkovic2006](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	pub struct BackgroundSubtractorMOG2 {
 		ptr: *mut c_void,
 	}
@@ -1463,7 +1463,7 @@ pub mod video {
 	/// DIS optical flow algorithm.
 	///
 	/// This class implements the Dense Inverse Search (DIS) optical flow algorithm. More
-	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
+	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
 	/// parameters to provide reasonable trade-off between speed and quality. However, even the slowest preset is
 	/// still relatively fast, use DeepFlow if you need better quality and don't care about speed.
 	///
@@ -2216,7 +2216,7 @@ pub mod video {
 	/// Kalman filter class.
 	///
 	/// The class implements a standard Kalman filter <http://en.wikipedia.org/wiki/Kalman_filter>,
-	/// [Welch95](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
+	/// [Welch95](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
 	/// an extended Kalman filter functionality.
 	///
 	/// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
@@ -3096,6 +3096,21 @@ pub mod video {
 			Ok(ret)
 		}
 
+		/// Constructor
+		/// ## Parameters
+		/// * siam_rpn: pre-loaded SiamRPN model
+		/// * kernel_cls1: pre-loaded CLS model
+		/// * kernel_r1: pre-loaded R1 model
+		#[inline]
+		pub fn create_1(siam_rpn: &impl crate::dnn::NetTraitConst, kernel_cls1: &impl crate::dnn::NetTraitConst, kernel_r1: &impl crate::dnn::NetTraitConst) -> Result<core::Ptr<crate::video::TrackerDaSiamRPN>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerDaSiamRPN_create_const_NetR_const_NetR_const_NetR(siam_rpn.as_raw_Net(), kernel_cls1.as_raw_Net(), kernel_r1.as_raw_Net(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerDaSiamRPN>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::video::TrackerDaSiamRPN]
@@ -3288,7 +3303,7 @@ pub mod video {
 
 	/// the GOTURN (Generic Object Tracking Using Regression Networks) tracker
 	///
-	/// GOTURN ([GOTURN](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
+	/// GOTURN ([GOTURN](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
 	/// GOTURN is much faster due to offline training without online fine-tuning nature.
 	/// GOTURN tracker addresses the problem of single target tracking: given a bounding box label of an object in the first frame of the video,
 	/// we track that object through the rest of the video. NOTE: Current method of GOTURN does not handle occlusions; however, it is fairly
@@ -3343,6 +3358,19 @@ pub mod video {
 		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerGOTURN_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerGOTURN>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructor
+		/// ## Parameters
+		/// * model: pre-loaded GOTURN model
+		#[inline]
+		pub fn create_1(model: &impl crate::dnn::NetTraitConst) -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerGOTURN_create_const_NetR(model.as_raw_Net(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerGOTURN>::opencv_from_extern(ret) };
@@ -3492,7 +3520,7 @@ pub mod video {
 	/// background.
 	///
 	/// Multiple Instance Learning avoids the drift problem for a robust tracking. The implementation is
-	/// based on [MIL](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_MIL) .
+	/// based on [MIL](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_MIL) .
 	///
 	/// Original code can be found here <http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml>
 	pub struct TrackerMIL {
@@ -3671,6 +3699,20 @@ pub mod video {
 		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerNano>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerNano_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerNano>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructor
+		/// ## Parameters
+		/// * backbone: pre-loaded backbone model
+		/// * neckhead: pre-loaded neckhead model
+		#[inline]
+		pub fn create_1(backbone: &impl crate::dnn::NetTraitConst, neckhead: &impl crate::dnn::NetTraitConst) -> Result<core::Ptr<crate::video::TrackerNano>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerNano_create_const_NetR_const_NetR(backbone.as_raw_Net(), neckhead.as_raw_Net(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerNano>::opencv_from_extern(ret) };
@@ -3906,6 +3948,49 @@ pub mod video {
 			Ok(ret)
 		}
 
+		/// Constructor
+		/// ## Parameters
+		/// * model: pre-loaded DNN model
+		/// * meanvalue: mean value for image preprocessing
+		/// * stdvalue: std value for image preprocessing
+		/// * tracking_score_threshold: threshold for tracking score
+		///
+		/// ## C++ default parameters
+		/// * meanvalue: Scalar(0.485,0.456,0.406)
+		/// * stdvalue: Scalar(0.229,0.224,0.225)
+		/// * tracking_score_threshold: 0.20f
+		#[inline]
+		pub fn create_1(model: &impl crate::dnn::NetTraitConst, meanvalue: core::Scalar, stdvalue: core::Scalar, tracking_score_threshold: f32) -> Result<core::Ptr<crate::video::TrackerVit>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerVit_create_const_NetR_Scalar_Scalar_float(model.as_raw_Net(), &meanvalue, &stdvalue, tracking_score_threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerVit>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructor
+		/// ## Parameters
+		/// * model: pre-loaded DNN model
+		/// * meanvalue: mean value for image preprocessing
+		/// * stdvalue: std value for image preprocessing
+		/// * tracking_score_threshold: threshold for tracking score
+		///
+		/// ## Note
+		/// This alternative version of [TrackerVit::create] function uses the following default values for its arguments:
+		/// * meanvalue: Scalar(0.485,0.456,0.406)
+		/// * stdvalue: Scalar(0.229,0.224,0.225)
+		/// * tracking_score_threshold: 0.20f
+		#[inline]
+		pub fn create_def_1(model: &impl crate::dnn::NetTraitConst) -> Result<core::Ptr<crate::video::TrackerVit>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerVit_create_const_NetR(model.as_raw_Net(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerVit>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::video::TrackerVit]
@@ -4117,7 +4202,7 @@ pub mod video {
 	/// where ![inline formula](https://latex.codecogs.com/png.latex?E%5FI%2CE%5FG%2CE%5FS) are color constancy, gradient constancy and smoothness terms
 	/// respectively. ![inline formula](https://latex.codecogs.com/png.latex?%5CPsi%28s%5E2%29%3D%5Csqrt%7Bs%5E2%2B%5Cepsilon%5E2%7D) is a robust penalizer to limit the
 	/// influence of outliers. A complete formulation and a description of the minimization
-	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Brox2004)
+	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Brox2004)
 	pub struct VariationalRefinement {
 		ptr: *mut c_void,
 	}

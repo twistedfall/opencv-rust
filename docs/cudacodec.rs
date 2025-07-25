@@ -1059,6 +1059,8 @@ pub mod cudacodec {
 		pub gop_length: i32,
 		/// IDR interval, ensuring \ref idrPeriod >= \ref gopLength.
 		pub idr_period: i32,
+		/// Indicates if the black level, luma and chroma of the source are represented using the full or limited range (AKA TV or "analogue" range) of values as defined in Annex E of the ITU-T Specification.
+		pub video_full_range_flag: bool,
 	}
 
 	opencv_type_simple! { crate::cudacodec::CUDA_EncoderParams }

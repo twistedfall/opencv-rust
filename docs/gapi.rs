@@ -6884,11 +6884,11 @@ pub mod gapi {
 	/// executed. The below example expresses calculation of Sobel operator
 	/// for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
 	///
-	/// [graph_def](https://github.com/opencv/opencv_contrib/blob/4.11.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// [graph_def](https://github.com/opencv/opencv_contrib/blob/4.12.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	///
 	/// Full pipeline can be now captured with this object declaration:
 	///
-	/// [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.11.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.12.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	///
 	/// Input/output data objects on which a call graph should be
 	/// reconstructed are passed using special wrappers cv::GIn and
@@ -6901,7 +6901,7 @@ pub mod gapi {
 	/// expects that image gradients are already pre-calculated may be
 	/// defined like this:
 	///
-	/// [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.11.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.12.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	///
 	/// The resulting graph would expect two inputs and produce one
 	/// output. In this case, it doesn't matter if gx/gy data objects are
@@ -8952,7 +8952,7 @@ pub mod gapi {
 		/// This constructor overload is not marked `explicit` and can be
 		/// used in G-API expression code like this:
 		///
-		/// [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.11.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+		/// [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.12.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 		///
 		/// Here operator+(GMat,GScalar) is used to wrap cv::gapi::addC()
 		/// and a value-initialized GScalar is created on the fly.

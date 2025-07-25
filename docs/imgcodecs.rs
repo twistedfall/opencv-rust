@@ -9,6 +9,11 @@ pub mod imgcodecs {
 		pub use super::{AnimationTrait, AnimationTraitConst, ImageCollectionTrait, ImageCollectionTraitConst, ImageCollection_iteratorTrait, ImageCollection_iteratorTraitConst};
 	}
 
+	pub const IMAGE_METADATA_EXIF: i32 = 0;
+	pub const IMAGE_METADATA_ICCP: i32 = 2;
+	pub const IMAGE_METADATA_MAX: i32 = 2;
+	pub const IMAGE_METADATA_UNKNOWN: i32 = -1;
+	pub const IMAGE_METADATA_XMP: i32 = 1;
 	/// If set, the image is read in any possible color format.
 	pub const IMREAD_ANYCOLOR: i32 = 4;
 	/// If set, return 16-bit/32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.
@@ -87,11 +92,11 @@ pub mod imgcodecs {
 	pub const IMWRITE_GIF_DITHER: i32 = 1027;
 	pub const IMWRITE_GIF_FAST_FLOYD_DITHER: i32 = 2;
 	pub const IMWRITE_GIF_FAST_NO_DITHER: i32 = 1;
-	/// For GIF, it can be a loop flag from 0 to 65535. Default is 0 - loop forever.
+	/// Not functional since 4.12.0. Replaced by cv::Animation::loop_count.
 	pub const IMWRITE_GIF_LOOP: i32 = 1024;
 	/// For GIF, it can be a quality from 1 to 8. Default is 2. See cv::ImwriteGifCompressionFlags.
 	pub const IMWRITE_GIF_QUALITY: i32 = 1026;
-	/// For GIF, it is between 1 (slowest) and 100 (fastest). Default is 96.
+	/// Not functional since 4.12.0. Replaced by cv::Animation::durations.
 	pub const IMWRITE_GIF_SPEED: i32 = 1025;
 	/// For GIF, the alpha channel lower than this will be set to transparent. Default is 1.
 	pub const IMWRITE_GIF_TRANSPARENCY: i32 = 1028;
@@ -141,10 +146,26 @@ pub mod imgcodecs {
 	pub const IMWRITE_PAM_FORMAT_RGB_ALPHA: i32 = 5;
 	/// For PAM, sets the TUPLETYPE field to the corresponding string value that is defined for the format
 	pub const IMWRITE_PAM_TUPLETYPE: i32 = 128;
+	/// This combines all available filters (NONE, SUB, UP, AVG, and PAETH), which will attempt to apply all of them for the best possible compression.
+	pub const IMWRITE_PNG_ALL_FILTERS: i32 = 248;
 	/// Binary level PNG, 0 or 1, default is 0.
 	pub const IMWRITE_PNG_BILEVEL: i32 = 18;
 	/// For PNG, it can be the compression level from 0 to 9. A higher value means a smaller size and longer compression time. If specified, strategy is changed to IMWRITE_PNG_STRATEGY_DEFAULT (Z_DEFAULT_STRATEGY). Default value is 1 (best speed setting).
 	pub const IMWRITE_PNG_COMPRESSION: i32 = 16;
+	/// This is a combination of IMWRITE_PNG_FILTER_NONE, IMWRITE_PNG_FILTER_SUB, and IMWRITE_PNG_FILTER_UP, typically used for faster compression.
+	pub const IMWRITE_PNG_FAST_FILTERS: i32 = 56;
+	/// One of cv::ImwritePNGFilterFlags, default is IMWRITE_PNG_FILTER_SUB.
+	pub const IMWRITE_PNG_FILTER: i32 = 19;
+	/// applies the "average" filter, which calculates the average of the byte to the left and the byte above.
+	pub const IMWRITE_PNG_FILTER_AVG: i32 = 64;
+	/// Applies no filter to the PNG image (useful when you want to save the raw pixel data without any compression filter).
+	pub const IMWRITE_PNG_FILTER_NONE: i32 = 8;
+	/// applies the "Paeth" filter, a more complex filter that predicts the next pixel value based on neighboring pixels.
+	pub const IMWRITE_PNG_FILTER_PAETH: i32 = 128;
+	/// Applies the "sub" filter, which calculates the difference between the current byte and the previous byte in the row.
+	pub const IMWRITE_PNG_FILTER_SUB: i32 = 16;
+	/// applies the "up" filter, which calculates the difference between the current byte and the corresponding byte directly above it.
+	pub const IMWRITE_PNG_FILTER_UP: i32 = 32;
 	/// One of cv::ImwritePNGFlags, default is IMWRITE_PNG_STRATEGY_RLE.
 	pub const IMWRITE_PNG_STRATEGY: i32 = 17;
 	/// Use this value for normal data.
@@ -245,7 +266,38 @@ pub mod imgcodecs {
 	pub const IMWRITE_TIFF_YDPI: i32 = 258;
 	/// For WEBP, it can be a quality from 1 to 100 (the higher is the better). By default (without any parameter) and for quality above 100 the lossless compression is used.
 	pub const IMWRITE_WEBP_QUALITY: i32 = 64;
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum ImageMetadataType {
+		IMAGE_METADATA_UNKNOWN = -1,
+		IMAGE_METADATA_EXIF = 0,
+		IMAGE_METADATA_XMP = 1,
+		IMAGE_METADATA_ICCP = 2,
+		// Duplicate, use IMAGE_METADATA_ICCP instead
+		// IMAGE_METADATA_MAX = 2,
+	}
+
+	impl TryFrom<i32> for ImageMetadataType {
+		type Error = crate::Error;
+
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				-1 => Ok(Self::IMAGE_METADATA_UNKNOWN),
+				0 => Ok(Self::IMAGE_METADATA_EXIF),
+				1 => Ok(Self::IMAGE_METADATA_XMP),
+				2 => Ok(Self::IMAGE_METADATA_ICCP),
+				// Duplicate of IMAGE_METADATA_ICCP
+				// 2 => Ok(Self::IMAGE_METADATA_MAX),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImageMetadataType"))),
+			}
+		}
+	}
+
+	opencv_type_enum! { crate::imgcodecs::ImageMetadataType }
+
 	/// Imread flags
+	///
+	/// Note: IMREAD_COLOR_BGR (IMREAD_COLOR) and IMREAD_COLOR_RGB can not be set at the same time.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImreadModes {
@@ -404,6 +456,8 @@ pub mod imgcodecs {
 		IMWRITE_PNG_STRATEGY = 17,
 		/// Binary level PNG, 0 or 1, default is 0.
 		IMWRITE_PNG_BILEVEL = 18,
+		/// One of cv::ImwritePNGFilterFlags, default is IMWRITE_PNG_FILTER_SUB.
+		IMWRITE_PNG_FILTER = 19,
 		/// For PPM, PGM, or PBM, it can be a binary format flag, 0 or 1. Default value is 1.
 		IMWRITE_PXM_BINARY = 32,
 		/// override EXR storage type (FLOAT (FP32) is default)
@@ -446,9 +500,9 @@ pub mod imgcodecs {
 		IMWRITE_JPEGXL_DISTANCE = 642,
 		/// For JPEG XL, decoding speed tier for the provided options; minimum is 0 (slowest to decode, best quality/density), and maximum is 4 (fastest to decode, at the cost of some quality/density). Default is 0.
 		IMWRITE_JPEGXL_DECODING_SPEED = 643,
-		/// For GIF, it can be a loop flag from 0 to 65535. Default is 0 - loop forever.
+		/// Not functional since 4.12.0. Replaced by cv::Animation::loop_count.
 		IMWRITE_GIF_LOOP = 1024,
-		/// For GIF, it is between 1 (slowest) and 100 (fastest). Default is 96.
+		/// Not functional since 4.12.0. Replaced by cv::Animation::durations.
 		IMWRITE_GIF_SPEED = 1025,
 		/// For GIF, it can be a quality from 1 to 8. Default is 2. See cv::ImwriteGifCompressionFlags.
 		IMWRITE_GIF_QUALITY = 1026,
@@ -475,6 +529,7 @@ pub mod imgcodecs {
 				16 => Ok(Self::IMWRITE_PNG_COMPRESSION),
 				17 => Ok(Self::IMWRITE_PNG_STRATEGY),
 				18 => Ok(Self::IMWRITE_PNG_BILEVEL),
+				19 => Ok(Self::IMWRITE_PNG_FILTER),
 				32 => Ok(Self::IMWRITE_PXM_BINARY),
 				48 => Ok(Self::IMWRITE_EXR_TYPE),
 				49 => Ok(Self::IMWRITE_EXR_COMPRESSION),
@@ -626,6 +681,45 @@ pub mod imgcodecs {
 	}
 
 	opencv_type_enum! { crate::imgcodecs::ImwritePAMFlags }
+
+	/// Imwrite PNG specific values for IMWRITE_PNG_FILTER parameter key
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum ImwritePNGFilterFlags {
+		/// Applies no filter to the PNG image (useful when you want to save the raw pixel data without any compression filter).
+		IMWRITE_PNG_FILTER_NONE = 8,
+		/// Applies the "sub" filter, which calculates the difference between the current byte and the previous byte in the row.
+		IMWRITE_PNG_FILTER_SUB = 16,
+		/// applies the "up" filter, which calculates the difference between the current byte and the corresponding byte directly above it.
+		IMWRITE_PNG_FILTER_UP = 32,
+		/// applies the "average" filter, which calculates the average of the byte to the left and the byte above.
+		IMWRITE_PNG_FILTER_AVG = 64,
+		/// applies the "Paeth" filter, a more complex filter that predicts the next pixel value based on neighboring pixels.
+		IMWRITE_PNG_FILTER_PAETH = 128,
+		/// This is a combination of IMWRITE_PNG_FILTER_NONE, IMWRITE_PNG_FILTER_SUB, and IMWRITE_PNG_FILTER_UP, typically used for faster compression.
+		IMWRITE_PNG_FAST_FILTERS = 56,
+		/// This combines all available filters (NONE, SUB, UP, AVG, and PAETH), which will attempt to apply all of them for the best possible compression.
+		IMWRITE_PNG_ALL_FILTERS = 248,
+	}
+
+	impl TryFrom<i32> for ImwritePNGFilterFlags {
+		type Error = crate::Error;
+
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				8 => Ok(Self::IMWRITE_PNG_FILTER_NONE),
+				16 => Ok(Self::IMWRITE_PNG_FILTER_SUB),
+				32 => Ok(Self::IMWRITE_PNG_FILTER_UP),
+				64 => Ok(Self::IMWRITE_PNG_FILTER_AVG),
+				128 => Ok(Self::IMWRITE_PNG_FILTER_PAETH),
+				56 => Ok(Self::IMWRITE_PNG_FAST_FILTERS),
+				248 => Ok(Self::IMWRITE_PNG_ALL_FILTERS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwritePNGFilterFlags"))),
+			}
+		}
+	}
+
+	opencv_type_enum! { crate::imgcodecs::ImwritePNGFilterFlags }
 
 	/// Imwrite PNG specific flags used to tune the compression algorithm.
 	/// These flags will be modify the way of PNG image compression and will be passed to the underlying zlib processing stage.
@@ -824,7 +918,7 @@ pub mod imgcodecs {
 	///
 	///
 	/// Note: The function checks the availability of image codecs that are either built into OpenCV or dynamically loaded.
-	/// It does not check for the actual existence of the file but rather the ability to read the specified file type.
+	/// It does not load the image codec implementation and decode data, but uses signature check.
 	/// If the file cannot be opened or the format is unsupported, the function will return false.
 	/// ## See also
 	/// cv::haveImageWriter, cv::imread, cv::imdecode
@@ -907,6 +1001,65 @@ pub mod imgcodecs {
 		Ok(ret)
 	}
 
+	/// Reads an image from a buffer in memory together with associated metadata.
+	///
+	/// The function imdecode reads an image from the specified buffer in the memory. If the buffer is too short or
+	/// contains invalid data, the function returns an empty matrix ( Mat::data==NULL ).
+	///
+	/// See cv::imread for the list of supported formats and flags description.
+	///
+	///
+	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
+	/// ## Parameters
+	/// * buf: Input array or vector of bytes.
+	/// * metadataTypes: Output vector with types of metadata chucks returned in metadata, see ImageMetadataType.
+	/// * metadata: Output vector of vectors or vector of matrices to store the retrieved metadata
+	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+	///
+	/// ## Note
+	/// This alternative version of [imdecode_with_metadata] function uses the following default values for its arguments:
+	/// * flags: IMREAD_ANYCOLOR
+	#[inline]
+	pub fn imdecode_with_metadata_def(buf: &impl ToInputArray, metadata_types: &mut core::Vector<i32>, metadata: &mut impl ToOutputArray) -> Result<core::Mat> {
+		input_array_arg!(buf);
+		output_array_arg!(metadata);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imdecodeWithMetadata_const__InputArrayR_vectorLintGR_const__OutputArrayR(buf.as_raw__InputArray(), metadata_types.as_raw_mut_VectorOfi32(), metadata.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Reads an image from a buffer in memory together with associated metadata.
+	///
+	/// The function imdecode reads an image from the specified buffer in the memory. If the buffer is too short or
+	/// contains invalid data, the function returns an empty matrix ( Mat::data==NULL ).
+	///
+	/// See cv::imread for the list of supported formats and flags description.
+	///
+	///
+	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
+	/// ## Parameters
+	/// * buf: Input array or vector of bytes.
+	/// * metadataTypes: Output vector with types of metadata chucks returned in metadata, see ImageMetadataType.
+	/// * metadata: Output vector of vectors or vector of matrices to store the retrieved metadata
+	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+	///
+	/// ## C++ default parameters
+	/// * flags: IMREAD_ANYCOLOR
+	#[inline]
+	pub fn imdecode_with_metadata(buf: &impl ToInputArray, metadata_types: &mut core::Vector<i32>, metadata: &mut impl ToOutputArray, flags: i32) -> Result<core::Mat> {
+		input_array_arg!(buf);
+		output_array_arg!(metadata);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imdecodeWithMetadata_const__InputArrayR_vectorLintGR_const__OutputArrayR_int(buf.as_raw__InputArray(), metadata_types.as_raw_mut_VectorOfi32(), metadata.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
 	/// Reads an image from a buffer in memory.
 	///
 	/// The function imdecode reads an image from the specified buffer in the memory. If the buffer is too short or
@@ -958,6 +1111,59 @@ pub mod imgcodecs {
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Loads frames from an animated image buffer into an Animation structure.
+	///
+	/// The function imdecodeanimation loads frames from an animated image buffer (e.g., GIF, AVIF, APNG, WEBP) into the provided Animation struct.
+	///
+	/// ## Parameters
+	/// * buf: A reference to an InputArray containing the image buffer.
+	/// * animation: A reference to an Animation structure where the loaded frames will be stored. It should be initialized before the function is called.
+	/// * start: The index of the first frame to load. This is optional and defaults to 0.
+	/// * count: The number of frames to load. This is optional and defaults to 32767.
+	///
+	/// ## Returns
+	/// Returns true if the buffer was successfully loaded and frames were extracted; returns false otherwise.
+	///
+	/// ## Note
+	/// This alternative version of [imdecodeanimation] function uses the following default values for its arguments:
+	/// * start: 0
+	/// * count: INT16_MAX
+	#[inline]
+	pub fn imdecodeanimation_def(buf: &impl ToInputArray, animation: &mut impl crate::imgcodecs::AnimationTrait) -> Result<bool> {
+		input_array_arg!(buf);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imdecodeanimation_const__InputArrayR_AnimationR(buf.as_raw__InputArray(), animation.as_raw_mut_Animation(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Loads frames from an animated image buffer into an Animation structure.
+	///
+	/// The function imdecodeanimation loads frames from an animated image buffer (e.g., GIF, AVIF, APNG, WEBP) into the provided Animation struct.
+	///
+	/// ## Parameters
+	/// * buf: A reference to an InputArray containing the image buffer.
+	/// * animation: A reference to an Animation structure where the loaded frames will be stored. It should be initialized before the function is called.
+	/// * start: The index of the first frame to load. This is optional and defaults to 0.
+	/// * count: The number of frames to load. This is optional and defaults to 32767.
+	///
+	/// ## Returns
+	/// Returns true if the buffer was successfully loaded and frames were extracted; returns false otherwise.
+	///
+	/// ## C++ default parameters
+	/// * start: 0
+	/// * count: INT16_MAX
+	#[inline]
+	pub fn imdecodeanimation(buf: &impl ToInputArray, animation: &mut impl crate::imgcodecs::AnimationTrait, start: i32, count: i32) -> Result<bool> {
+		input_array_arg!(buf);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imdecodeanimation_const__InputArrayR_AnimationR_int_int(buf.as_raw__InputArray(), animation.as_raw_mut_Animation(), start, count, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 
@@ -1024,6 +1230,61 @@ pub mod imgcodecs {
 	/// ## Parameters
 	/// * ext: File extension that defines the output format. Must include a leading period.
 	/// * img: Image to be compressed.
+	/// * metadataTypes: Vector with types of metadata chucks stored in metadata to write, see ImageMetadataType.
+	/// * metadata: Vector of vectors or vector of matrices with chunks of metadata to store into the file
+	/// * buf: Output buffer resized to fit the compressed image.
+	/// * params: Format-specific parameters. See cv::imwrite and cv::ImwriteFlags.
+	///
+	/// ## Note
+	/// This alternative version of [imencode_with_metadata] function uses the following default values for its arguments:
+	/// * params: std::vector<int>()
+	#[inline]
+	pub fn imencode_with_metadata_def(ext: &str, img: &impl ToInputArray, metadata_types: &core::Vector<i32>, metadata: &impl ToInputArray, buf: &mut core::Vector<u8>) -> Result<bool> {
+		extern_container_arg!(ext);
+		input_array_arg!(img);
+		input_array_arg!(metadata);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imencodeWithMetadata_const_StringR_const__InputArrayR_const_vectorLintGR_const__InputArrayR_vectorLunsigned_charGR(ext.opencv_as_extern(), img.as_raw__InputArray(), metadata_types.as_raw_VectorOfi32(), metadata.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Encodes an image into a memory buffer.
+	///
+	/// The function imencode compresses the image and stores it in the memory buffer that is resized to fit the
+	/// result. See cv::imwrite for the list of supported formats and flags description.
+	///
+	/// ## Parameters
+	/// * ext: File extension that defines the output format. Must include a leading period.
+	/// * img: Image to be compressed.
+	/// * metadataTypes: Vector with types of metadata chucks stored in metadata to write, see ImageMetadataType.
+	/// * metadata: Vector of vectors or vector of matrices with chunks of metadata to store into the file
+	/// * buf: Output buffer resized to fit the compressed image.
+	/// * params: Format-specific parameters. See cv::imwrite and cv::ImwriteFlags.
+	///
+	/// ## C++ default parameters
+	/// * params: std::vector<int>()
+	#[inline]
+	pub fn imencode_with_metadata(ext: &str, img: &impl ToInputArray, metadata_types: &core::Vector<i32>, metadata: &impl ToInputArray, buf: &mut core::Vector<u8>, params: &core::Vector<i32>) -> Result<bool> {
+		extern_container_arg!(ext);
+		input_array_arg!(img);
+		input_array_arg!(metadata);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imencodeWithMetadata_const_StringR_const__InputArrayR_const_vectorLintGR_const__InputArrayR_vectorLunsigned_charGR_const_vectorLintGR(ext.opencv_as_extern(), img.as_raw__InputArray(), metadata_types.as_raw_VectorOfi32(), metadata.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Encodes an image into a memory buffer.
+	///
+	/// The function imencode compresses the image and stores it in the memory buffer that is resized to fit the
+	/// result. See cv::imwrite for the list of supported formats and flags description.
+	///
+	/// ## Parameters
+	/// * ext: File extension that defines the output format. Must include a leading period.
+	/// * img: Image to be compressed.
 	/// * buf: Output buffer resized to fit the compressed image.
 	/// * params: Format-specific parameters. See cv::imwrite and cv::ImwriteFlags.
 	///
@@ -1060,6 +1321,71 @@ pub mod imgcodecs {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vectorLunsigned_charGR_const_vectorLintGR(ext.opencv_as_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Encodes an Animation to a memory buffer.
+	///
+	/// The function imencodeanimation encodes the provided Animation data into a memory
+	/// buffer in an animated format. Supported formats depend on the implementation and
+	/// may include formats like GIF, AVIF, APNG, or WEBP.
+	///
+	/// ## Parameters
+	/// * ext: The file extension that determines the format of the encoded data.
+	/// * animation: A constant reference to an Animation struct containing the
+	/// frames and metadata to be encoded.
+	/// * buf: A reference to a vector of unsigned chars where the encoded data will
+	/// be stored.
+	/// * params: Optional format-specific parameters encoded as pairs (paramId_1,
+	/// paramValue_1, paramId_2, paramValue_2, ...). These parameters are used to
+	/// specify additional options for the encoding process. Refer to `cv::ImwriteFlags`
+	/// for details on possible parameters.
+	///
+	/// ## Returns
+	/// Returns true if the animation was successfully encoded; returns false otherwise.
+	///
+	/// ## Note
+	/// This alternative version of [imencodeanimation] function uses the following default values for its arguments:
+	/// * params: std::vector<int>()
+	#[inline]
+	pub fn imencodeanimation_def(ext: &str, animation: &impl crate::imgcodecs::AnimationTraitConst, buf: &mut core::Vector<u8>) -> Result<bool> {
+		extern_container_arg!(ext);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imencodeanimation_const_StringR_const_AnimationR_vectorLunsigned_charGR(ext.opencv_as_extern(), animation.as_raw_Animation(), buf.as_raw_mut_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Encodes an Animation to a memory buffer.
+	///
+	/// The function imencodeanimation encodes the provided Animation data into a memory
+	/// buffer in an animated format. Supported formats depend on the implementation and
+	/// may include formats like GIF, AVIF, APNG, or WEBP.
+	///
+	/// ## Parameters
+	/// * ext: The file extension that determines the format of the encoded data.
+	/// * animation: A constant reference to an Animation struct containing the
+	/// frames and metadata to be encoded.
+	/// * buf: A reference to a vector of unsigned chars where the encoded data will
+	/// be stored.
+	/// * params: Optional format-specific parameters encoded as pairs (paramId_1,
+	/// paramValue_1, paramId_2, paramValue_2, ...). These parameters are used to
+	/// specify additional options for the encoding process. Refer to `cv::ImwriteFlags`
+	/// for details on possible parameters.
+	///
+	/// ## Returns
+	/// Returns true if the animation was successfully encoded; returns false otherwise.
+	///
+	/// ## C++ default parameters
+	/// * params: std::vector<int>()
+	#[inline]
+	pub fn imencodeanimation(ext: &str, animation: &impl crate::imgcodecs::AnimationTraitConst, buf: &mut core::Vector<u8>, params: &core::Vector<i32>) -> Result<bool> {
+		extern_container_arg!(ext);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imencodeanimation_const_StringR_const_AnimationR_vectorLunsigned_charGR_const_vectorLintGR(ext.opencv_as_extern(), animation.as_raw_Animation(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1111,6 +1437,53 @@ pub mod imgcodecs {
 		unsafe { sys::cv_imencodemulti_const_StringR_const__InputArrayR_vectorLunsigned_charGR_const_vectorLintGR(ext.opencv_as_extern(), imgs.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Reads an image from a file together with associated metadata.
+	///
+	/// The function imreadWithMetadata reads image from the specified file. It does the same thing as imread, but additionally reads metadata if the corresponding file contains any.
+	/// ## Parameters
+	/// * filename: Name of the file to be loaded.
+	/// * metadataTypes: Output vector with types of metadata chucks returned in metadata, see ImageMetadataType.
+	/// * metadata: Output vector of vectors or vector of matrices to store the retrieved metadata
+	/// * flags: Flag that can take values of cv::ImreadModes
+	///
+	/// ## Note
+	/// This alternative version of [imread_with_metadata] function uses the following default values for its arguments:
+	/// * flags: IMREAD_ANYCOLOR
+	#[inline]
+	pub fn imread_with_metadata_def(filename: &str, metadata_types: &mut core::Vector<i32>, metadata: &mut impl ToOutputArray) -> Result<core::Mat> {
+		extern_container_arg!(filename);
+		output_array_arg!(metadata);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imreadWithMetadata_const_StringR_vectorLintGR_const__OutputArrayR(filename.opencv_as_extern(), metadata_types.as_raw_mut_VectorOfi32(), metadata.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Reads an image from a file together with associated metadata.
+	///
+	/// The function imreadWithMetadata reads image from the specified file. It does the same thing as imread, but additionally reads metadata if the corresponding file contains any.
+	/// ## Parameters
+	/// * filename: Name of the file to be loaded.
+	/// * metadataTypes: Output vector with types of metadata chucks returned in metadata, see ImageMetadataType.
+	/// * metadata: Output vector of vectors or vector of matrices to store the retrieved metadata
+	/// * flags: Flag that can take values of cv::ImreadModes
+	///
+	/// ## C++ default parameters
+	/// * flags: IMREAD_ANYCOLOR
+	#[inline]
+	pub fn imread_with_metadata(filename: &str, metadata_types: &mut core::Vector<i32>, metadata: &mut impl ToOutputArray, flags: i32) -> Result<core::Mat> {
+		extern_container_arg!(filename);
+		output_array_arg!(metadata);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imreadWithMetadata_const_StringR_vectorLintGR_const__OutputArrayR_int(filename.opencv_as_extern(), metadata_types.as_raw_mut_VectorOfi32(), metadata.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 
@@ -1445,6 +1818,55 @@ pub mod imgcodecs {
 		Ok(ret)
 	}
 
+	/// Saves an image to a specified file with metadata
+	///
+	/// The function imwriteWithMetadata saves the image to the specified file. It does the same thing as imwrite, but additionally writes metadata if the corresponding format supports it.
+	/// ## Parameters
+	/// * filename: Name of the file. As with imwrite, image format is determined by the file extension.
+	/// * img: (Mat or vector of Mat) Image or Images to be saved.
+	/// * metadataTypes: Vector with types of metadata chucks stored in metadata to write, see ImageMetadataType.
+	/// * metadata: Vector of vectors or vector of matrices with chunks of metadata to store into the file
+	/// * params: Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .) see cv::ImwriteFlags
+	///
+	/// ## Note
+	/// This alternative version of [imwrite_with_metadata] function uses the following default values for its arguments:
+	/// * params: std::vector<int>()
+	#[inline]
+	pub fn imwrite_with_metadata_def(filename: &str, img: &impl ToInputArray, metadata_types: &core::Vector<i32>, metadata: &impl ToInputArray) -> Result<bool> {
+		extern_container_arg!(filename);
+		input_array_arg!(img);
+		input_array_arg!(metadata);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imwriteWithMetadata_const_StringR_const__InputArrayR_const_vectorLintGR_const__InputArrayR(filename.opencv_as_extern(), img.as_raw__InputArray(), metadata_types.as_raw_VectorOfi32(), metadata.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Saves an image to a specified file with metadata
+	///
+	/// The function imwriteWithMetadata saves the image to the specified file. It does the same thing as imwrite, but additionally writes metadata if the corresponding format supports it.
+	/// ## Parameters
+	/// * filename: Name of the file. As with imwrite, image format is determined by the file extension.
+	/// * img: (Mat or vector of Mat) Image or Images to be saved.
+	/// * metadataTypes: Vector with types of metadata chucks stored in metadata to write, see ImageMetadataType.
+	/// * metadata: Vector of vectors or vector of matrices with chunks of metadata to store into the file
+	/// * params: Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .) see cv::ImwriteFlags
+	///
+	/// ## C++ default parameters
+	/// * params: std::vector<int>()
+	#[inline]
+	pub fn imwrite_with_metadata(filename: &str, img: &impl ToInputArray, metadata_types: &core::Vector<i32>, metadata: &impl ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
+		extern_container_arg!(filename);
+		input_array_arg!(img);
+		input_array_arg!(metadata);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imwriteWithMetadata_const_StringR_const__InputArrayR_const_vectorLintGR_const__InputArrayR_const_vectorLintGR(filename.opencv_as_extern(), img.as_raw__InputArray(), metadata_types.as_raw_VectorOfi32(), metadata.as_raw__InputArray(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Saves an image to a specified file.
 	///
 	/// The function imwrite saves the image to the specified file. The image format is chosen based on the
@@ -1459,13 +1881,13 @@ pub mod imgcodecs {
 	/// - With JPEG 2000 encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
 	/// - With JPEG XL encoder, 8-bit unsigned (CV_8U), 16-bit unsigned (CV_16U) and 32-bit float(CV_32F) images can be saved.
 	///   - JPEG XL images with an alpha channel can be saved using this function.
-	///    To do this, create 8-bit (or 16-bit, 32-bit float) 4-channel image BGRA, where the alpha channel goes last.
-	///    Fully transparent pixels should have alpha set to 0, fully opaque pixels should have alpha set to 255/65535/1.0.
+	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) / 16-bit 4-channel (CV_16UC4) / 32-bit float 4-channel (CV_32FC4) BGRA image, ensuring the alpha channel is the last component.
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255/65535/1.0.
 	/// - With PAM encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
 	/// - With PNG encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
-	///   - PNG images with an alpha channel can be saved using this function. To do this, create
-	///    8-bit (or 16-bit) 4-channel image BGRA, where the alpha channel goes last. Fully transparent pixels
-	///    should have alpha set to 0, fully opaque pixels should have alpha set to 255/65535 (see the code sample below).
+	///   - PNG images with an alpha channel can be saved using this function.
+	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) / 16-bit 4-channel (CV_16UC4) BGRA image, ensuring the alpha channel is the last component.
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255/65535(see the code sample below).
 	/// - With PGM/PPM encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
 	/// - With TIFF encoder, 8-bit unsigned (CV_8U), 8-bit signed (CV_8S),
 	///                      16-bit unsigned (CV_16U), 16-bit signed (CV_16S),
@@ -1474,6 +1896,11 @@ pub mod imgcodecs {
 	///   - Multiple images (vector of Mat) can be saved in TIFF format (see the code sample below).
 	///   - 32-bit float 3-channel (CV_32FC3) TIFF images will be saved
 	///    using the LogLuv high dynamic range encoding (4 bytes per pixel)
+	/// - With GIF encoder, 8-bit unsigned (CV_8U) images can be saved.
+	///   - GIF images with an alpha channel can be saved using this function.
+	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) BGRA image, ensuring the alpha channel is the last component.
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255.
+	///   - 8-bit single-channel images (CV_8UC1) are not supported due to GIF's limitation to indexed color formats.
 	///
 	/// If the image format is not supported, the image will be converted to 8-bit unsigned (CV_8U) and saved that way.
 	///
@@ -1517,13 +1944,13 @@ pub mod imgcodecs {
 	/// - With JPEG 2000 encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
 	/// - With JPEG XL encoder, 8-bit unsigned (CV_8U), 16-bit unsigned (CV_16U) and 32-bit float(CV_32F) images can be saved.
 	///   - JPEG XL images with an alpha channel can be saved using this function.
-	///    To do this, create 8-bit (or 16-bit, 32-bit float) 4-channel image BGRA, where the alpha channel goes last.
-	///    Fully transparent pixels should have alpha set to 0, fully opaque pixels should have alpha set to 255/65535/1.0.
+	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) / 16-bit 4-channel (CV_16UC4) / 32-bit float 4-channel (CV_32FC4) BGRA image, ensuring the alpha channel is the last component.
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255/65535/1.0.
 	/// - With PAM encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
 	/// - With PNG encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
-	///   - PNG images with an alpha channel can be saved using this function. To do this, create
-	///    8-bit (or 16-bit) 4-channel image BGRA, where the alpha channel goes last. Fully transparent pixels
-	///    should have alpha set to 0, fully opaque pixels should have alpha set to 255/65535 (see the code sample below).
+	///   - PNG images with an alpha channel can be saved using this function.
+	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) / 16-bit 4-channel (CV_16UC4) BGRA image, ensuring the alpha channel is the last component.
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255/65535(see the code sample below).
 	/// - With PGM/PPM encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
 	/// - With TIFF encoder, 8-bit unsigned (CV_8U), 8-bit signed (CV_8S),
 	///                      16-bit unsigned (CV_16U), 16-bit signed (CV_16S),
@@ -1532,6 +1959,11 @@ pub mod imgcodecs {
 	///   - Multiple images (vector of Mat) can be saved in TIFF format (see the code sample below).
 	///   - 32-bit float 3-channel (CV_32FC3) TIFF images will be saved
 	///    using the LogLuv high dynamic range encoding (4 bytes per pixel)
+	/// - With GIF encoder, 8-bit unsigned (CV_8U) images can be saved.
+	///   - GIF images with an alpha channel can be saved using this function.
+	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) BGRA image, ensuring the alpha channel is the last component.
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255.
+	///   - 8-bit single-channel images (CV_8UC1) are not supported due to GIF's limitation to indexed color formats.
 	///
 	/// If the image format is not supported, the image will be converted to 8-bit unsigned (CV_8U) and saved that way.
 	///
@@ -1672,7 +2104,7 @@ pub mod imgcodecs {
 		/// - If a negative value or a value beyond the maximum of `0xffff` (65535) is provided, it is reset to `0`
 		/// (infinite looping) to maintain valid bounds.
 		///
-		/// * bgColor: A `Scalar` object representing the background color in BGRA format:
+		/// * bgColor: A `Scalar` object representing the background color in BGR format:
 		/// - Defaults to `Scalar()`, indicating an empty color (usually transparent if supported).
 		/// - This background color provides a solid fill behind frames that have transparency, ensuring a consistent display appearance.
 		///
@@ -1698,7 +2130,7 @@ pub mod imgcodecs {
 		/// - If a negative value or a value beyond the maximum of `0xffff` (65535) is provided, it is reset to `0`
 		/// (infinite looping) to maintain valid bounds.
 		///
-		/// * bgColor: A `Scalar` object representing the background color in BGRA format:
+		/// * bgColor: A `Scalar` object representing the background color in BGR format:
 		/// - Defaults to `Scalar()`, indicating an empty color (usually transparent if supported).
 		/// - This background color provides a solid fill behind frames that have transparency, ensuring a consistent display appearance.
 		///
@@ -1723,6 +2155,11 @@ pub mod imgcodecs {
 		fn as_raw_Animation(&self) -> *const c_void;
 
 		/// Number of times the animation should loop. 0 means infinite looping.
+		///
+		/// Note: At some file format, when N is set, whether it is displayed N or N+1 times depends on the implementation of the user application. This loop times behaviour has not been documented clearly.
+		///      *  - (GIF) See <https://issues.chromium.org/issues/40459899>
+		///      *    And animated GIF with loop is extended with the Netscape Application Block(NAB), which it not a part of GIF89a specification. See <https://en.wikipedia.org/wiki/GIF>[animated_gif] .
+		///      *  - (WebP) See <https://issues.chromium.org/issues/41276895>
 		#[inline]
 		fn loop_count(&self) -> i32 {
 			let ret = unsafe { sys::cv_Animation_propLoop_count_const(self.as_raw_Animation()) };
@@ -1739,6 +2176,11 @@ pub mod imgcodecs {
 		}
 
 		/// Duration for each frame in milliseconds.
+		///
+		/// Note: (GIF) Due to file format limitation
+		///      *  - Durations must be multiples of 10 milliseconds. Any provided value will be rounded down to the nearest 10ms (e.g., 88ms → 80ms).
+		///      *  - 0ms(or smaller than expected in user application) duration may cause undefined behavior, e.g. it is handled with default duration.
+		///      *  - Over 65535 * 10 milliseconds duration is not supported.
 		#[inline]
 		fn durations(&self) -> core::Vector<i32> {
 			let ret = unsafe { sys::cv_Animation_propDurations_const(self.as_raw_Animation()) };
@@ -1754,6 +2196,14 @@ pub mod imgcodecs {
 			ret
 		}
 
+		/// image that can be used for the format in addition to the animation or if animation is not supported in the reader (like in PNG).
+		#[inline]
+		fn still_image(&self) -> core::Mat {
+			let ret = unsafe { sys::cv_Animation_propStill_image_const(self.as_raw_Animation()) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Mutable methods for [crate::imgcodecs::Animation]
@@ -1761,6 +2211,11 @@ pub mod imgcodecs {
 		fn as_raw_mut_Animation(&mut self) -> *mut c_void;
 
 		/// Number of times the animation should loop. 0 means infinite looping.
+		///
+		/// Note: At some file format, when N is set, whether it is displayed N or N+1 times depends on the implementation of the user application. This loop times behaviour has not been documented clearly.
+		///      *  - (GIF) See <https://issues.chromium.org/issues/40459899>
+		///      *    And animated GIF with loop is extended with the Netscape Application Block(NAB), which it not a part of GIF89a specification. See <https://en.wikipedia.org/wiki/GIF>[animated_gif] .
+		///      *  - (WebP) See <https://issues.chromium.org/issues/41276895>
 		#[inline]
 		fn set_loop_count(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_Animation_propLoop_count_const_int(self.as_raw_mut_Animation(), val) };
@@ -1775,6 +2230,11 @@ pub mod imgcodecs {
 		}
 
 		/// Duration for each frame in milliseconds.
+		///
+		/// Note: (GIF) Due to file format limitation
+		///      *  - Durations must be multiples of 10 milliseconds. Any provided value will be rounded down to the nearest 10ms (e.g., 88ms → 80ms).
+		///      *  - 0ms(or smaller than expected in user application) duration may cause undefined behavior, e.g. it is handled with default duration.
+		///      *  - Over 65535 * 10 milliseconds duration is not supported.
 		#[inline]
 		fn set_durations(&mut self, val: core::Vector<i32>) {
 			let ret = unsafe { sys::cv_Animation_propDurations_const_vectorLintG(self.as_raw_mut_Animation(), val.as_raw_VectorOfi32()) };
@@ -1785,6 +2245,13 @@ pub mod imgcodecs {
 		#[inline]
 		fn set_frames(&mut self, val: core::Vector<core::Mat>) {
 			let ret = unsafe { sys::cv_Animation_propFrames_const_vectorLMatG(self.as_raw_mut_Animation(), val.as_raw_VectorOfMat()) };
+			ret
+		}
+
+		/// image that can be used for the format in addition to the animation or if animation is not supported in the reader (like in PNG).
+		#[inline]
+		fn set_still_image(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_Animation_propStill_image_const_Mat(self.as_raw_mut_Animation(), val.as_raw_Mat()) };
 			ret
 		}
 
@@ -1805,6 +2272,7 @@ pub mod imgcodecs {
 				.field("bgcolor", &crate::imgcodecs::AnimationTraitConst::bgcolor(self))
 				.field("durations", &crate::imgcodecs::AnimationTraitConst::durations(self))
 				.field("frames", &crate::imgcodecs::AnimationTraitConst::frames(self))
+				.field("still_image", &crate::imgcodecs::AnimationTraitConst::still_image(self))
 				.finish()
 		}
 	}

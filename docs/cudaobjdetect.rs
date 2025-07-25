@@ -332,7 +332,7 @@ pub mod cudaobjdetect {
 
 	boxed_ref! { CUDA_CascadeClassifier, crate::cudaobjdetect::CUDA_CascadeClassifierTraitConst, as_raw_CUDA_CascadeClassifier, crate::cudaobjdetect::CUDA_CascadeClassifierTrait, as_raw_mut_CUDA_CascadeClassifier }
 
-	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
+	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
 	///
 	///
 	/// Note:

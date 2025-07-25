@@ -8,10 +8,10 @@ pub mod quality {
 	/// BRISQUE (Blind/Referenceless Image Spatial Quality Evaluator) is a No Reference Image Quality Assessment (NR-IQA) algorithm.
 	///
 	/// BRISQUE computes a score based on extracting Natural Scene Statistics (<https://en.wikipedia.org/wiki/Scene_statistics>)
-	/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Mittal2_software) .
+	/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Mittal2_software) .
 	///
-	/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
-	/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
+	/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
+	/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
 	/// C++ code for the BRISQUE LIVE-R2 trainer and TID2008 evaluator are also provided in the /samples/ directory.
 	pub struct QualityBRISQUE {
 		ptr: *mut c_void,
