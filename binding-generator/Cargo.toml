@@ -23,6 +23,11 @@ shlex = { version = "1.3", default-features = false }
 
 [dev-dependencies]
 tempfile = { version = "3", default-features = false }
+criterion = "0.7"
 
 [features]
 clang-runtime = ["clang/runtime", "clang-sys/runtime"]
+
+[[bench]]
+name = "benchit"
+harness = false
