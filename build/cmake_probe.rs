@@ -110,6 +110,7 @@ pub struct CmakeProbe<'r> {
 	package_name: &'r str,
 	toolchain: Option<&'r Path>,
 	is_release: bool,
+	args: Option<&'r str>,
 }
 
 impl<'r> CmakeProbe<'r> {
@@ -120,6 +121,7 @@ impl<'r> CmakeProbe<'r> {
 		package_name: &'r str,
 		toolchain: Option<&'r Path>,
 		is_release: bool,
+		args: Option<&'r str>,
 	) -> Self {
 		Self {
 			cmake_bin: cmake_bin.unwrap_or_else(|| "cmake".into()),
@@ -128,6 +130,7 @@ impl<'r> CmakeProbe<'r> {
 			package_name,
 			toolchain,
 			is_release,
+			args,
 		}
 	}
 
@@ -161,6 +164,9 @@ impl<'r> CmakeProbe<'r> {
 			out.arg("-DCMAKE_BUILD_TYPE=Release");
 		} else {
 			out.arg("-DCMAKE_BUILD_TYPE=Debug");
+		}
+		if let Some(args) = &self.args {
+			out.args(args.split(' '));
 		}
 		out
 	}

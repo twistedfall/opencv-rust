@@ -341,6 +341,8 @@ impl Library {
 		cmake_bin: Option<&Path>,
 		ninja_bin: Option<&Path>,
 	) -> Result<Self> {
+		let toolchain_var = env::var_os("OPENCV_CMAKE_TOOLCHAIN_FILE").map(PathBuf::from);
+		let toolchain = toolchain.or_else(|| toolchain_var.as_ref().map(PathBuf::as_path));
 		eprintln!(
 			"=== Probing OpenCV library using cmake{}",
 			toolchain.map_or_else(|| "".to_string(), |tc| format!(" with toolchain: {}", tc.display()))
@@ -348,6 +350,7 @@ impl Library {
 
 		let src_dir = MANIFEST_DIR.join("cmake");
 		let package_name = PackageName::cmake();
+		let args = env::var_os("OPENCV_CMAKE_ARGS");
 		let cmake = CmakeProbe::new(
 			env::var_os("OPENCV_CMAKE_BIN")
 				.map(PathBuf::from)
@@ -357,6 +360,7 @@ impl Library {
 			package_name.as_ref(),
 			toolchain,
 			env::var_os("PROFILE").is_some_and(|p| p == "release"),
+			args.as_ref().and_then(|p| p.to_str()),
 		);
 		let mut probe_result = cmake
 			.probe_ninja(ninja_bin)
