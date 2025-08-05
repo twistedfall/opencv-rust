@@ -24,7 +24,7 @@ shlex = { version = "1.3", default-features = false }
 [dev-dependencies]
 tempfile = { version = "3", default-features = false }
 # todo: MSRV, bump to 0.7 when MSRV is 1.80
-criterion = "0.5"
+criterion = "0.7"
 
 [features]
 clang-runtime = ["clang/runtime", "clang-sys/runtime"]
