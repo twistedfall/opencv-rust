@@ -54,6 +54,8 @@ fn core_factory() -> FuncUnsafe {
 			],
 		),
 		("cv::_OutputArray::createSameSize", vec![(pred!(const, ["arr", "mtype"]), ())]),
+		// allows addressing outside its buffer
+		("cv::MatStep::operator[]", vec![(pred!(["i"], ["int"]), ())]),
 		// manual manipulation of reference counter
 		("cv::Mat::addref", vec![(pred!(mut, []), ())]),
 		("cv::Mat::release", vec![(pred!(mut, []), ())]),
