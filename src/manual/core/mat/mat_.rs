@@ -3,7 +3,7 @@ use std::ffi::c_void;
 use std::fmt;
 use std::marker::PhantomData;
 
-use super::{match_format, match_indices, match_is_continuous, match_total, DataType};
+use super::{match_format, DataType, MatMatcher};
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{
 	Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, Point, ToInputArray, ToInputOutputArray, ToOutputArray,
@@ -67,25 +67,29 @@ impl<T: DataType> Mat_<T> {
 	/// See [Mat::at]
 	#[inline]
 	pub fn at(&self, i0: i32) -> Result<&T> {
-		match_total(self, i0).and_then(|_| unsafe { self.at_unchecked(i0) })
+		self.match_total(i0).and_then(|_| unsafe { self.at_unchecked(i0) })
 	}
 
 	/// See [Mat::at_2d]
 	#[inline]
 	pub fn at_2d(&self, row: i32, col: i32) -> Result<&T> {
-		match_indices(self, &[row, col]).and_then(|_| unsafe { self.at_2d_unchecked(row, col) })
+		self
+			.match_indices(&[row, col])
+			.and_then(|_| unsafe { self.at_2d_unchecked(row, col) })
 	}
 
 	/// See [Mat::at_3d]
 	#[inline]
 	pub fn at_3d(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
-		match_indices(self, &[i0, i1, i2]).and_then(|_| unsafe { self.at_3d_unchecked(i0, i1, i2) })
+		self
+			.match_indices(&[i0, i1, i2])
+			.and_then(|_| unsafe { self.at_3d_unchecked(i0, i1, i2) })
 	}
 
 	/// See [Mat::at_nd]
 	#[inline]
 	pub fn at_nd(&self, idx: &[i32]) -> Result<&T> {
-		match_indices(self, idx).and_then(|_| unsafe { self.at_nd_unchecked(idx) })
+		self.match_indices(idx).and_then(|_| unsafe { self.at_nd_unchecked(idx) })
 	}
 
 	/// See [Mat::at_pt]
@@ -97,34 +101,36 @@ impl<T: DataType> Mat_<T> {
 	/// See [Mat::at_row]
 	#[inline]
 	pub fn at_row(&self, row: i32) -> Result<&[T]> {
-		match_indices(self, &[row, 0]).and_then(|_| unsafe { self.at_row_unchecked(row) })
+		self
+			.match_indices(&[row, 0])
+			.and_then(|_| unsafe { self.at_row_unchecked(row) })
 	}
 
 	/// See [Mat::at_mut]
 	#[inline]
 	pub fn at_mut(&mut self, i0: i32) -> Result<&mut T> {
-		match_total(self, i0)?;
+		self.match_total(i0)?;
 		unsafe { self.at_unchecked_mut(i0) }
 	}
 
 	/// See [Mat::at_2d_mut]
 	#[inline]
 	pub fn at_2d_mut(&mut self, row: i32, col: i32) -> Result<&mut T> {
-		match_indices(self, &[row, col])?;
+		self.match_indices(&[row, col])?;
 		unsafe { self.at_2d_unchecked_mut(row, col) }
 	}
 
 	/// See [Mat::at_3d_mut]
 	#[inline]
 	pub fn at_3d_mut(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
-		match_indices(self, &[i0, i1, i2])?;
+		self.match_indices(&[i0, i1, i2])?;
 		unsafe { self.at_3d_unchecked_mut(i0, i1, i2) }
 	}
 
 	/// See [Mat::at_nd_mut]
 	#[inline]
 	pub fn at_nd_mut(&mut self, idx: &[i32]) -> Result<&mut T> {
-		match_indices(self, idx)?;
+		self.match_indices(idx)?;
 		unsafe { self.at_nd_unchecked_mut(idx) }
 	}
 
@@ -137,20 +143,22 @@ impl<T: DataType> Mat_<T> {
 	/// See [Mat::at_row_mut]
 	#[inline]
 	pub fn at_row_mut(&mut self, row: i32) -> Result<&mut [T]> {
-		match_indices(self, &[row, 0])?;
+		self.match_indices(&[row, 0])?;
 		unsafe { self.at_row_unchecked_mut(row) }
 	}
 
 	/// See [Mat::data_typed]
 	#[inline]
 	pub fn data_typed(&self) -> Result<&[T]> {
-		match_is_continuous(self).and_then(|_| unsafe { self.data_typed_unchecked() })
+		self
+			.match_is_continuous()
+			.and_then(|_| unsafe { self.data_typed_unchecked() })
 	}
 
 	/// See [Mat::data_typed_mut]
 	#[inline]
 	pub fn data_typed_mut(&mut self) -> Result<&mut [T]> {
-		match_is_continuous(self)?;
+		self.match_is_continuous()?;
 		unsafe { self.data_typed_unchecked_mut() }
 	}
 }

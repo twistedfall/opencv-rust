@@ -26,6 +26,68 @@ unsafe fn convert_ptr_mut<'r, T>(r: *mut u8) -> &'r mut T {
 	unsafe { &mut *(r.cast::<T>()) }
 }
 
+trait MatMatcher {
+	fn match_indices(&self, idx: &[i32]) -> Result<()>;
+	fn match_total(&self, idx: i32) -> Result<()>;
+	fn match_is_continuous(&self) -> Result<()>;
+}
+
+impl<T: MatTraitConst + ?Sized> MatMatcher for T {
+	fn match_indices(&self, idx: &[i32]) -> Result<()> {
+		let mat_size = self.mat_size();
+		let size = &*mat_size;
+		if size.len() != idx.len() {
+			return Err(Error::new(
+				core::StsUnmatchedSizes,
+				format!(
+					"Amount of Mat dimensions: {} doesn't match the amount of requested indices: {}",
+					size.len(),
+					idx.len()
+				),
+			));
+		}
+		if let Some((out_idx, (out_idx_val, out_size))) = idx
+			.iter()
+			.zip(size)
+			.enumerate()
+			.find(|(_, (idx_val, &size))| !(0..size).contains(idx_val))
+		{
+			Err(Error::new(
+				core::StsOutOfRange,
+				format!("Index: {out_idx_val} along dimension: {out_idx} out of bounds 0..{out_size}"),
+			))
+		} else {
+			Ok(())
+		}
+	}
+
+	#[inline]
+	fn match_total(&self, idx: i32) -> Result<()> {
+		let size = self.total();
+		// safe because of the `0 <= idx` check
+		if 0 <= idx && (idx as usize) < size {
+			Ok(())
+		} else {
+			Err(Error::new(
+				core::StsOutOfRange,
+				format!("Index: {idx} out of bounds: 0..{size}"),
+			))
+		}
+	}
+
+	#[inline]
+	fn match_is_continuous(&self) -> Result<()> {
+		if self.is_continuous() {
+			Ok(())
+		} else {
+			Err(Error::new(
+				core::StsUnmatchedSizes,
+				"Mat is not continuous, operation is not applicable",
+			))
+		}
+	}
+}
+
 #[inline]
 fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
 	let out_type = T::opencv_type();
@@ -37,60 +99,6 @@ fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
 		Err(Error::new(
 			core::StsUnmatchedFormats,
 			format!("Mat type is: {mat_type}, but requested type is: {out_type}"),
-		))
-	}
-}
-
-fn match_indices(mat: &(impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<()> {
-	let mat_size = mat.mat_size();
-	let size = &*mat_size;
-	if size.len() != idx.len() {
-		return Err(Error::new(
-			core::StsUnmatchedSizes,
-			format!(
-				"Amount of Mat dimensions: {} doesn't match the amount of requested indices: {}",
-				size.len(),
-				idx.len()
-			),
-		));
-	}
-	if let Some((out_idx, (out_idx_val, out_size))) = idx
-		.iter()
-		.zip(size)
-		.enumerate()
-		.find(|(_, (idx_val, &size))| !(0..size).contains(idx_val))
-	{
-		Err(Error::new(
-			core::StsOutOfRange,
-			format!("Index: {out_idx_val} along dimension: {out_idx} out of bounds 0..{out_size}"),
-		))
-	} else {
-		Ok(())
-	}
-}
-
-#[inline]
-fn match_total(mat: &(impl MatTraitConst + ?Sized), idx: i32) -> Result<()> {
-	let size = mat.total();
-	// safe because of the `0 <= idx` check
-	if 0 <= idx && (idx as usize) < size {
-		Ok(())
-	} else {
-		Err(Error::new(
-			core::StsOutOfRange,
-			format!("Index: {idx} out of bounds: 0..{size}"),
-		))
-	}
-}
-
-#[inline]
-fn match_is_continuous(mat: &(impl MatTraitConst + ?Sized)) -> Result<()> {
-	if mat.is_continuous() {
-		Ok(())
-	} else {
-		Err(Error::new(
-			core::StsUnmatchedSizes,
-			"Mat is not continuous, operation is not applicable",
 		))
 	}
 }
@@ -403,7 +411,7 @@ pub(crate) mod mat_forward {
 	#[inline]
 	pub fn at<T: DataType>(mat: &(impl MatTraitConst + ?Sized), i0: i32) -> Result<&T> {
 		match_format::<T>(mat.typ())
-			.and_then(|_| match_total(mat, i0))
+			.and_then(|_| mat.match_total(i0))
 			.and_then(|_| unsafe { mat.at_unchecked(i0) })
 	}
 
@@ -414,7 +422,7 @@ pub(crate) mod mat_forward {
 
 	#[inline]
 	pub fn at_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), i0: i32) -> Result<&mut T> {
-		match_format::<T>(mat.typ()).and_then(|_| match_total(mat, i0))?;
+		match_format::<T>(mat.typ()).and_then(|_| mat.match_total(i0))?;
 		unsafe { mat.at_unchecked_mut(i0) }
 	}
 
@@ -426,13 +434,13 @@ pub(crate) mod mat_forward {
 	#[inline]
 	pub fn at_2d<T: DataType>(mat: &(impl MatTraitConst + ?Sized), row: i32, col: i32) -> Result<&T> {
 		match_format::<T>(mat.typ())
-			.and_then(|_| match_indices(mat, &[row, col]))
+			.and_then(|_| mat.match_indices(&[row, col]))
 			.and_then(|_| unsafe { mat.at_2d_unchecked(row, col) })
 	}
 
 	#[inline]
 	pub fn at_2d_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), row: i32, col: i32) -> Result<&mut T> {
-		match_format::<T>(mat.typ()).and_then(|_| match_indices(mat, &[row, col]))?;
+		match_format::<T>(mat.typ()).and_then(|_| mat.match_indices(&[row, col]))?;
 		unsafe { mat.at_2d_unchecked_mut(row, col) }
 	}
 
@@ -449,26 +457,26 @@ pub(crate) mod mat_forward {
 	#[inline]
 	pub fn at_3d<T: DataType>(mat: &(impl MatTraitConst + ?Sized), i0: i32, i1: i32, i2: i32) -> Result<&T> {
 		match_format::<T>(mat.typ())
-			.and_then(|_| match_indices(mat, &[i0, i1, i2]))
+			.and_then(|_| mat.match_indices(&[i0, i1, i2]))
 			.and_then(|_| unsafe { mat.at_3d_unchecked(i0, i1, i2) })
 	}
 
 	#[inline]
 	pub fn at_3d_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
-		match_format::<T>(mat.typ()).and_then(|_| match_indices(mat, &[i0, i1, i2]))?;
+		match_format::<T>(mat.typ()).and_then(|_| mat.match_indices(&[i0, i1, i2]))?;
 		unsafe { mat.at_3d_unchecked_mut(i0, i1, i2) }
 	}
 
 	#[inline]
 	pub fn at_nd<'s, T: DataType>(mat: &'s (impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<&'s T> {
 		match_format::<T>(mat.typ())
-			.and_then(|_| match_indices(mat, idx))
+			.and_then(|_| mat.match_indices(idx))
 			.and_then(|_| unsafe { mat.at_nd_unchecked(idx) })
 	}
 
 	#[inline]
 	pub fn at_nd_mut<'s, T: DataType>(mat: &'s mut (impl MatTrait + ?Sized), idx: &[i32]) -> Result<&'s mut T> {
-		match_format::<T>(mat.typ()).and_then(|_| match_indices(mat, idx))?;
+		match_format::<T>(mat.typ()).and_then(|_| mat.match_indices(idx))?;
 		unsafe { mat.at_nd_unchecked_mut(idx) }
 	}
 }
@@ -519,7 +527,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	#[inline]
 	fn at_row<T: DataType>(&self, row: i32) -> Result<&[T]> {
 		match_format::<T>(self.typ())
-			.and_then(|_| match_indices(self, &[row, 0]))
+			.and_then(|_| self.match_indices(&[row, 0]))
 			.and_then(|_| unsafe { self.at_row_unchecked(row) })
 	}
 
@@ -547,7 +555,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Returns the underlying data array as a byte slice, [Mat] must be continuous
 	#[inline]
 	fn data_bytes(&self) -> Result<&[u8]> {
-		match_is_continuous(self).and_then(|_| {
+		self.match_is_continuous().and_then(|_| {
 			let data = self.data();
 			Ok(if data.is_null() {
 				&[]
@@ -560,7 +568,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	#[inline]
 	fn data_typed<T: DataType>(&self) -> Result<&[T]> {
 		match_format::<T>(self.typ())
-			.and_then(|_| match_is_continuous(self))
+			.and_then(|_| self.match_is_continuous())
 			.and_then(|_| unsafe { self.data_typed_unchecked() })
 	}
 
@@ -686,7 +694,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Return a complete writeable row
 	#[inline]
 	fn at_row_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
-		match_format::<T>(self.typ()).and_then(|_| match_indices(self, &[row, 0]))?;
+		match_format::<T>(self.typ()).and_then(|_| self.match_indices(&[row, 0]))?;
 		unsafe { self.at_row_unchecked_mut(row) }
 	}
 
@@ -709,7 +717,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Returns the underlying data array as a mutable byte slice, Mat must be continuous.
 	#[inline]
 	fn data_bytes_mut(&mut self) -> Result<&mut [u8]> {
-		match_is_continuous(self).and_then(|_| {
+		self.match_is_continuous().and_then(|_| {
 			let data = self.data_mut();
 			Ok(if data.is_null() {
 				&mut []
@@ -721,7 +729,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 
 	#[inline]
 	fn data_typed_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
-		match_format::<T>(self.typ()).and_then(|_| match_is_continuous(self))?;
+		match_format::<T>(self.typ()).and_then(|_| self.match_is_continuous())?;
 		unsafe { self.data_typed_unchecked_mut() }
 	}
 
