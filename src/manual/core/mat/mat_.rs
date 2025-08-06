@@ -67,7 +67,10 @@ impl<T: DataType> Mat_<T> {
 	/// See [Mat::at]
 	#[inline]
 	pub fn at(&self, i0: i32) -> Result<&T> {
-		self.match_total(i0).and_then(|_| unsafe { self.at_unchecked(i0) })
+		self
+			.match_total(i0)
+			.and_then(|_| self.match_max_dims(2))
+			.map(|_| unsafe { self.at_unchecked(i0) })
 	}
 
 	/// See [Mat::at_2d]
@@ -110,7 +113,7 @@ impl<T: DataType> Mat_<T> {
 	#[inline]
 	pub fn at_mut(&mut self, i0: i32) -> Result<&mut T> {
 		self.match_total(i0)?;
-		unsafe { self.at_unchecked_mut(i0) }
+		Ok(unsafe { self.at_unchecked_mut(i0) })
 	}
 
 	/// See [Mat::at_2d_mut]

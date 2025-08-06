@@ -29,6 +29,7 @@ unsafe fn convert_ptr_mut<'r, T>(r: *mut u8) -> &'r mut T {
 trait MatMatcher {
 	fn match_indices(&self, idx: &[i32]) -> Result<()>;
 	fn match_total(&self, idx: i32) -> Result<()>;
+	fn match_max_dims(&self, max_dims: i32) -> Result<()>;
 	fn match_is_continuous(&self) -> Result<()>;
 }
 
@@ -71,6 +72,20 @@ impl<T: MatTraitConst + ?Sized> MatMatcher for T {
 			Err(Error::new(
 				core::StsOutOfRange,
 				format!("Index: {idx} out of bounds: 0..{size}"),
+			))
+		}
+	}
+
+	#[inline]
+	fn match_max_dims(&self, max_dims: i32) -> Result<()> {
+		let dims = self.dims();
+		// safe because of the `0 <= idx` check
+		if (0..=max_dims).contains(&dims) {
+			Ok(())
+		} else {
+			Err(Error::new(
+				core::StsOutOfRange,
+				format!("Mat contains too many dimensions: {dims}, maximum for this operation: {max_dims}"),
 			))
 		}
 	}
@@ -161,11 +176,11 @@ fn col_count_i32(col_count: usize) -> Result<i32> {
 impl Mat {
 	/// Create a new [Mat] from the iterator of known size
 	pub fn from_exact_iter<T: DataType>(s: impl ExactSizeIterator<Item = T>) -> Result<Self> {
-		let mut out = unsafe { Self::new_rows_cols(row_count_i32(s.len())?, 1, T::opencv_type()) }?;
+		let mut out = unsafe { Self::new_rows_cols(1, col_count_i32(s.len())?, T::opencv_type()) }?;
 		for (i, x) in s.enumerate() {
 			// safe because `row_count_i32` ensures that len of `s` fits `i32`
 			let i = i as i32;
-			unsafe { ptr::write(out.at_unchecked_mut::<T>(i)?, x) };
+			unsafe { ptr::write(out.at_unchecked_mut::<T>(i), x) };
 		}
 		Ok(out)
 	}
@@ -412,7 +427,8 @@ pub(crate) mod mat_forward {
 	pub fn at<T: DataType>(mat: &(impl MatTraitConst + ?Sized), i0: i32) -> Result<&T> {
 		match_format::<T>(mat.typ())
 			.and_then(|_| mat.match_total(i0))
-			.and_then(|_| unsafe { mat.at_unchecked(i0) })
+			.and_then(|_| mat.match_max_dims(2))
+			.map(|_| unsafe { mat.at_unchecked(i0) })
 	}
 
 	#[inline]
@@ -423,7 +439,7 @@ pub(crate) mod mat_forward {
 	#[inline]
 	pub fn at_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), i0: i32) -> Result<&mut T> {
 		match_format::<T>(mat.typ()).and_then(|_| mat.match_total(i0))?;
-		unsafe { mat.at_unchecked_mut(i0) }
+		Ok(unsafe { mat.at_unchecked_mut(i0) })
 	}
 
 	#[inline]
@@ -487,8 +503,8 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// # Safety
 	/// Caller must ensure that index is within Mat bounds
 	#[inline]
-	unsafe fn at_unchecked<T: DataType>(&self, i0: i32) -> Result<&T> {
-		Ok(unsafe { &*data_at_idx::<T>(self, i0 as usize) })
+	unsafe fn at_unchecked<T: DataType>(&self, i0: i32) -> &T {
+		unsafe { &*data_at_idx::<T>(self, i0 as usize) }
 	}
 
 	/// Like [Mat::at_2d()] but performs no bounds or type checks
@@ -655,8 +671,8 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// # Safety
 	/// Caller must ensure that index is within Mat bounds
 	#[inline]
-	unsafe fn at_unchecked_mut<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
-		Ok(unsafe { &mut *data_at_idx::<T>(self, i0 as usize).cast_mut() })
+	unsafe fn at_unchecked_mut<T: DataType>(&mut self, i0: i32) -> &mut T {
+		unsafe { &mut *data_at_idx::<T>(self, i0 as usize).cast_mut() }
 	}
 
 	/// Like [Mat::at_2d_mut()] but performs no bounds or type checks
@@ -798,11 +814,12 @@ impl fmt::Debug for Mat {
 			.field("channels", &self.channels())
 			.field("depth", &depth)
 			.field("dims", &self.dims())
-			.field("size", &self.size().map_err(|_| fmt::Error)?)
 			.field("rows", &self.rows())
 			.field("cols", &self.cols())
+			.field("mat_size", &self.mat_size())
 			.field("elem_size", &self.elem_size().map_err(|_| fmt::Error)?)
 			.field("elem_size1", &self.elem_size1())
+			.field("mat_step", &self.mat_step())
 			.field("total", &self.total())
 			.field("is_continuous", &self.is_continuous())
 			.field("is_submatrix", &self.is_submatrix())

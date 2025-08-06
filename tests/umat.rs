@@ -35,26 +35,26 @@ fn umat_to_mat() -> Result<()> {
 		vec.push(3);
 		let mat = Mat::from_exact_iter(vec.into_iter())?;
 		let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
-		assert_eq!(3, umat.rows());
-		assert_eq!(1, umat.cols());
+		assert_eq!(1, umat.rows());
+		assert_eq!(3, umat.cols());
 		assert_eq!(i32::opencv_type(), umat.typ());
 		let mat = umat.get_mat(ACCESS_READ)?;
 		assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
-		assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
-		assert_eq!(3, *mat.at_2d::<i32>(2, 0)?);
+		assert_eq!(2, *mat.at_2d::<i32>(0, 1)?);
+		assert_eq!(3, *mat.at_2d::<i32>(0, 2)?);
 	}
 
 	{
 		let vec: Vec<i32> = vec![1, 2, 3];
 		let mat = Mat::from_exact_iter(vec.into_iter())?;
 		let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
-		assert_eq!(3, umat.rows());
-		assert_eq!(1, umat.cols());
+		assert_eq!(1, umat.rows());
+		assert_eq!(3, umat.cols());
 		assert_eq!(i32::opencv_type(), umat.typ());
 		let mat = umat.get_mat(ACCESS_READ)?;
 		assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
-		assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
-		assert_eq!(3, *mat.at_2d::<i32>(2, 0)?);
+		assert_eq!(2, *mat.at_2d::<i32>(0, 1)?);
+		assert_eq!(3, *mat.at_2d::<i32>(0, 2)?);
 	}
 	Ok(())
 }
