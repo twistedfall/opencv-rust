@@ -1,8 +1,7 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
 use std::iter;
-
-use once_cell::sync::Lazy;
+use std::sync::LazyLock;
 
 use super::rust_generate_debug_fields;
 use crate::debug::NameDebug;
@@ -16,12 +15,12 @@ use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{settings, Class, CompiledInterpolation, Constness, CppNameStyle, Element, Func, IteratorExt, NameStyle, StrExt};
 
 pub fn gen_simple_class(c: &Class, opencv_version: &str) -> String {
-	static SIMPLE_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| include_str!("../tpl/class/simple.tpl.rs").compile_interpolation());
+	static SIMPLE_TPL: LazyLock<CompiledInterpolation> =
+		LazyLock::new(|| include_str!("../tpl/class/simple.tpl.rs").compile_interpolation());
 
 	static SIMPLE_FIELD_TPL_SRC: &str = include_str!("../tpl/class/simple_field.tpl.rs");
 
-	static SIMPLE_FIELD_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| SIMPLE_FIELD_TPL_SRC.compile_interpolation());
+	static SIMPLE_FIELD_TPL: LazyLock<CompiledInterpolation> = LazyLock::new(|| SIMPLE_FIELD_TPL_SRC.compile_interpolation());
 
 	let rust_local = c.rust_name(NameStyle::decl());
 
@@ -73,12 +72,12 @@ pub fn gen_simple_class(c: &Class, opencv_version: &str) -> String {
 }
 
 pub fn gen_boxed_class(c: &Class, opencv_version: &str) -> String {
-	static BOXED_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| include_str!("../tpl/class/boxed.tpl.rs").compile_interpolation());
+	static BOXED_TPL: LazyLock<CompiledInterpolation> =
+		LazyLock::new(|| include_str!("../tpl/class/boxed.tpl.rs").compile_interpolation());
 
 	static BASE_TPL_SRC: &str = include_str!("../tpl/class/base.tpl.rs");
 
-	static BASE_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| BASE_TPL_SRC.compile_interpolation());
+	static BASE_TPL: LazyLock<CompiledInterpolation> = LazyLock::new(|| BASE_TPL_SRC.compile_interpolation());
 
 	let fields = c.fields(|f| f.exclude_kind().is_included());
 	let (mut const_methods, mut mut_methods) = (
@@ -303,7 +302,8 @@ fn gen_impl<'f>(
 	rust_decl_lt: &str,
 	opencv_version: &str,
 ) -> String {
-	static IMPL_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("../tpl/class/impl.tpl.rs").compile_interpolation());
+	static IMPL_TPL: LazyLock<CompiledInterpolation> =
+		LazyLock::new(|| include_str!("../tpl/class/impl.tpl.rs").compile_interpolation());
 
 	let consts = c.consts().iter().map(|c| c.gen_rust(opencv_version)).join("");
 
@@ -331,8 +331,8 @@ fn gen_traits(
 	mut_methods: &[Func],
 	opencv_version: &str,
 ) -> String {
-	static TRAIT_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| include_str!("../tpl/class/trait.tpl.rs").compile_interpolation());
+	static TRAIT_TPL: LazyLock<CompiledInterpolation> =
+		LazyLock::new(|| include_str!("../tpl/class/trait.tpl.rs").compile_interpolation());
 
 	let mut bases_const = Vec::with_capacity(bases.len());
 	let mut bases_mut = Vec::with_capacity(bases.len() + 1);
@@ -399,8 +399,8 @@ trait Impls {
 
 impl Impls for String {
 	fn add_default_impl(&mut self, c: &Class, mut_methods: &[Func], rust_local: &str) {
-		static IMPL_DEFAULT_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("../tpl/class/impl_default.tpl.rs").compile_interpolation());
+		static IMPL_DEFAULT_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("../tpl/class/impl_default.tpl.rs").compile_interpolation());
 
 		let needs_default_impl = needs_default_ctor(c, c.kind().is_boxed())
 			|| mut_methods
@@ -413,8 +413,8 @@ impl Impls for String {
 	}
 
 	fn add_explicit_clone(&mut self, c: &Class, rust_local: &str) {
-		static IMPL_EXPLICIT_CLONE_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("../tpl/class/impl_explicit_clone.tpl.rs").compile_interpolation());
+		static IMPL_EXPLICIT_CLONE_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("../tpl/class/impl_explicit_clone.tpl.rs").compile_interpolation());
 
 		if c.has_explicit_clone() {
 			IMPL_EXPLICIT_CLONE_TPL.interpolate_into(self, &HashMap::from([("rust_local", rust_local)]));
@@ -422,8 +422,8 @@ impl Impls for String {
 	}
 
 	fn add_implicit_clone(&mut self, c: &Class, type_ref: &TypeRef, rust_local: &str) {
-		static IMPL_IMPLICIT_CLONE_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("../tpl/class/impl_implicit_clone.tpl.rs").compile_interpolation());
+		static IMPL_IMPLICIT_CLONE_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("../tpl/class/impl_implicit_clone.tpl.rs").compile_interpolation());
 
 		if c.has_implicit_clone() {
 			let extern_implicit_clone = method::implicit_clone(c.clone(), type_ref.clone()).identifier();
@@ -439,8 +439,8 @@ impl Impls for String {
 	}
 
 	fn add_descendant_cast(&mut self, c: &Class, descendant: &Class, rust_local: &str) {
-		static DESCENDANT_CAST_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("../tpl/class/descendant_cast.tpl.rs").compile_interpolation());
+		static DESCENDANT_CAST_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("../tpl/class/descendant_cast.tpl.rs").compile_interpolation());
 
 		let desc_full = descendant.rust_name(NameStyle::ref_());
 		let extern_cast_to_descendant = method::cast_to_descendant(c.clone(), descendant.clone()).identifier();
@@ -455,8 +455,8 @@ impl Impls for String {
 	}
 
 	fn add_base_cast(&mut self, c: &Class, base: &Class, rust_local: &str) {
-		static BASE_CAST_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("../tpl/class/base_cast.tpl.rs").compile_interpolation());
+		static BASE_CAST_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("../tpl/class/base_cast.tpl.rs").compile_interpolation());
 
 		let base_full = base.rust_name(NameStyle::ref_());
 		let extern_cast_to_base = method::cast_to_base(c.clone(), base.clone()).identifier();
@@ -471,8 +471,8 @@ impl Impls for String {
 	}
 
 	fn add_debug<'tu, 'ge>(&mut self, bases: &[Class<'tu, 'ge>], mut field_const_methods: Vec<Func<'tu, 'ge>>, rust_local: &str) {
-		static IMPL_DEBUG_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("../tpl/class/impl_debug.rs").compile_interpolation());
+		static IMPL_DEBUG_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("../tpl/class/impl_debug.rs").compile_interpolation());
 
 		for b in bases {
 			field_const_methods.extend(b.field_methods(&b.fields(|f| f.exclude_kind().is_included()), Some(Constness::Const)));

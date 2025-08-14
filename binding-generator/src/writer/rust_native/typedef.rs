@@ -1,7 +1,6 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
-
-use once_cell::sync::Lazy;
+use std::sync::LazyLock;
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
@@ -50,7 +49,7 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/typedef/tpl.rs").compile_interpolation());
+		static TPL: LazyLock<CompiledInterpolation> = LazyLock::new(|| include_str!("tpl/typedef/tpl.rs").compile_interpolation());
 		let underlying_type = self.underlying_type_ref();
 		let lifetimes = Lifetime::automatic()
 			.into_iter()

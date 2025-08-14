@@ -1,5 +1,4 @@
-// MSRV: switch to #[expect] when MSRV is 1.81
-#[allow(
+#[expect(
 	clippy::doc_lazy_continuation,
 	clippy::doc_overindented_list_items,
 	clippy::double_must_use,
@@ -10,17 +9,15 @@
 	clippy::should_implement_trait,
 	clippy::tabs_in_doc_comments,
 	clippy::too_many_arguments,
-	clippy::unnecessary_operation,
 	clippy::unused_unit,
 	dead_code,
-	deprecated,
 	non_camel_case_types,
 	non_snake_case,
 	non_upper_case_globals,
-	overflowing_literals,
 	unused_imports,
 	unused_parens
 )]
+#[cfg_attr(ocvrs_opencv_branch_4, expect(deprecated))]
 pub mod hub {
 	include!(concat!(env!("OUT_DIR"), "/opencv/hub.rs"));
 }

@@ -1,11 +1,10 @@
 use std::collections::HashMap;
-
-use once_cell::sync::Lazy;
+use std::sync::LazyLock;
 
 use crate::element::ExcludeKind;
 
 /// cpp_name(Reference)
-pub static ELEMENT_EXCLUDE_KIND: Lazy<HashMap<&str, ExcludeKind>> = Lazy::new(|| {
+pub static ELEMENT_EXCLUDE_KIND: LazyLock<HashMap<&str, ExcludeKind>> = LazyLock::new(|| {
 	HashMap::from([
 		("cv::face::FacemarkLBF::BBox", ExcludeKind::Excluded), // not used, not exported in windows dll
 		("CV_DEPRECATED", ExcludeKind::Ignored),

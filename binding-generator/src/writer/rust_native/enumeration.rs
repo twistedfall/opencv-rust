@@ -1,7 +1,6 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
-
-use once_cell::sync::Lazy;
+use std::sync::LazyLock;
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
@@ -30,20 +29,21 @@ impl RustNativeGeneratedElement for Enum<'_> {
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
-		static ENUM_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/enum/enum.tpl.rs").compile_interpolation());
+		static ENUM_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/enum/enum.tpl.rs").compile_interpolation());
 
 		static CONST_TPL_SRC: &str = include_str!("tpl/enum/const.tpl.rs");
-		static CONST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| CONST_TPL_SRC.compile_interpolation());
+		static CONST_TPL: LazyLock<CompiledInterpolation> = LazyLock::new(|| CONST_TPL_SRC.compile_interpolation());
 
 		static CONST_IGNORED_TPL_SRC: &str = include_str!("tpl/enum/const_ignored.tpl.rs");
-		static CONST_IGNORED_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| CONST_IGNORED_TPL_SRC.compile_interpolation());
+		static CONST_IGNORED_TPL: LazyLock<CompiledInterpolation> = LazyLock::new(|| CONST_IGNORED_TPL_SRC.compile_interpolation());
 
 		static FROM_CONST_TPL_SRC: &str = include_str!("tpl/enum/from_const.tpl.rs");
-		static FROM_CONST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| FROM_CONST_TPL_SRC.compile_interpolation());
+		static FROM_CONST_TPL: LazyLock<CompiledInterpolation> = LazyLock::new(|| FROM_CONST_TPL_SRC.compile_interpolation());
 
 		static FROM_CONST_IGNORED_TPL_SRC: &str = include_str!("tpl/enum/from_const_ignored.tpl.rs");
-		static FROM_CONST_IGNORED_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| FROM_CONST_IGNORED_TPL_SRC.compile_interpolation());
+		static FROM_CONST_IGNORED_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| FROM_CONST_IGNORED_TPL_SRC.compile_interpolation());
 
 		let consts = self.consts();
 

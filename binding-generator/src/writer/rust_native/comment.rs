@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 use std::fmt::Write;
+use std::sync::LazyLock;
 
-use once_cell::sync::Lazy;
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 use regex::bytes::Regex;
 
@@ -23,9 +23,9 @@ impl RenderComment {
 		// todo, simplify/optimize this function, spec is here https://www.doxygen.nl/manual/docblocks.html
 		doc_comment.replace_in_place("\r\n", "\n");
 		// module titles
-		static MODULE_TITLE_1: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)\s*@[}{].*$").unwrap());
-		static MODULE_TITLE_2: Lazy<Regex> = Lazy::new(|| Regex::new(r"@defgroup [^ ]+ (.*)").unwrap());
-		static MODULE_TITLE_3: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^.*?@addtogroup\s+.+").unwrap());
+		static MODULE_TITLE_1: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)\s*@[}{].*$").unwrap());
+		static MODULE_TITLE_2: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"@defgroup [^ ]+ (.*)").unwrap());
+		static MODULE_TITLE_3: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^.*?@addtogroup\s+.+").unwrap());
 		doc_comment.replace_in_place_regex(&MODULE_TITLE_1, "");
 		doc_comment.replace_in_place_regex(&MODULE_TITLE_2, r#"# $1"#);
 		doc_comment.replace_in_place_regex(&MODULE_TITLE_3, "");
@@ -35,12 +35,12 @@ impl RenderComment {
 		}
 
 		// comment body markers
-		static BRIEF: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@brief[ :]*"#).unwrap());
+		static BRIEF: LazyLock<Regex> = LazyLock::new(|| Regex::new(r#"@brief[ :]*"#).unwrap());
 		doc_comment.replace_in_place_regex(&BRIEF, "");
 		doc_comment.replace_in_place("@note", "\nNote:");
 
 		// code blocks, don't run them during tests
-		static CODE: Lazy<Regex> = Lazy::new(|| Regex::new(r"@code(?: ?\{.+?})?").unwrap());
+		static CODE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"@code(?: ?\{.+?})?").unwrap());
 		doc_comment.replace_in_place_regex(&CODE, "```C++");
 		doc_comment.replace_in_place("@endcode", "```\n");
 
@@ -48,7 +48,7 @@ impl RenderComment {
 		doc_comment.replace_in_place("@name ", "");
 
 		// snippets
-		static SNIPPET: Lazy<Regex> = Lazy::new(|| Regex::new(r"@snippet\s+([\w/.]+)\s+([\w-]+)").unwrap());
+		static SNIPPET: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"@snippet\s+([\w/.]+)\s+([\w-]+)").unwrap());
 		doc_comment.replace_in_place_regex_cb(&SNIPPET, |comment, caps| {
 			let path = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
 			let name = caps.get(2).map(|(s, e)| &comment[s..e]).expect("Impossible");
@@ -68,8 +68,8 @@ impl RenderComment {
 		doc_comment.replace_in_place("'cv::Exception'", r#""cv::Exception""#);
 
 		// see also block
-		static SEE_ALSO_BLOCK: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^\s*@(sa|see)\s+").unwrap());
-		static SEE_ALSO_INLINE: Lazy<Regex> = Lazy::new(|| Regex::new(r"@(sa|see)\s+").unwrap());
+		static SEE_ALSO_BLOCK: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^\s*@(sa|see)\s+").unwrap());
+		static SEE_ALSO_INLINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"@(sa|see)\s+").unwrap());
 		if doc_comment.replacen_in_place_regex(&SEE_ALSO_BLOCK, 1, "## See also\n") {
 			doc_comment.replace_in_place_regex(&SEE_ALSO_INLINE, "");
 		} else {
@@ -77,17 +77,17 @@ impl RenderComment {
 		}
 
 		// citation links
-		static CITE: Lazy<Regex> = Lazy::new(|| Regex::new(r"@cite\s+([\w:]+)").unwrap());
+		static CITE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"@cite\s+([\w:]+)").unwrap());
 		doc_comment.replace_in_place_regex(
 			&CITE,
 			&format!("[$1](https://docs.opencv.org/{opencv_version}/d0/de3/citelist.html#CITEREF_$1)"),
 		);
 
 		// references
-		static REF: Lazy<Regex> = Lazy::new(|| Regex::new(r"@ref\s+([\w:]+)").unwrap());
+		static REF: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"@ref\s+([\w:]+)").unwrap());
 		doc_comment.replace_in_place_regex(&REF, "[$1]");
 
-		static REF_2: Lazy<Regex> = Lazy::new(|| Regex::new(r"#(\w+)(\s+)").unwrap());
+		static REF_2: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"#(\w+)(\s+)").unwrap());
 		doc_comment.replace_in_place_regex_cb(&REF_2, |comment, caps| {
 			let name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
 			let space = caps.get(2).map(|(s, e)| &comment[s..e]).expect("Impossible");
@@ -100,21 +100,21 @@ impl RenderComment {
 		});
 
 		// images
-		static IMAGE: Lazy<Regex> = Lazy::new(|| Regex::new(r"!\[(.*?)]\((?:.*/)?(.+)?\)").unwrap());
+		static IMAGE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"!\[(.*?)]\((?:.*/)?(.+)?\)").unwrap());
 		doc_comment.replace_in_place_regex(&IMAGE, &format!("![$1](https://docs.opencv.org/{opencv_version}/$2)"));
 
 		// returns
-		static RETURNS: Lazy<Regex> = Lazy::new(|| Regex::new(r".*?@returns?\s*").unwrap());
+		static RETURNS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r".*?@returns?\s*").unwrap());
 		doc_comment.replace_in_place_regex(&RETURNS, "## Returns\n");
 
 		// parameter list
-		static PARAM_HEADER: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)^(.*?@param)"#).unwrap());
-		static PARAM: Lazy<Regex> = Lazy::new(|| Regex::new(r".*?@param\s*(?:\[in]|(\[out]))?\s+(\w+) *(.*)").unwrap());
+		static PARAM_HEADER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r#"(?m)^(.*?@param)"#).unwrap());
+		static PARAM: LazyLock<Regex> = LazyLock::new(|| Regex::new(r".*?@param\s*(?:\[in]|(\[out]))?\s+(\w+) *(.*)").unwrap());
 		doc_comment.replacen_in_place_regex(&PARAM_HEADER, 1, "## Parameters\n$1");
 		doc_comment.replace_in_place_regex(&PARAM, "* $2:$1 $3");
 
 		// deprecated
-		static DEPRECATED: Lazy<Regex> = Lazy::new(|| Regex::new(r".*?@deprecated\s+(.+)").unwrap());
+		static DEPRECATED: LazyLock<Regex> = LazyLock::new(|| Regex::new(r".*?@deprecated\s+(.+)").unwrap());
 		let mut deprecated = None;
 		doc_comment.replace_in_place_regex_cb(&DEPRECATED, |comment, caps| {
 			let deprecated_msg = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible").to_string();
@@ -124,12 +124,12 @@ impl RenderComment {
 		});
 
 		// leading dashes
-		static LEADING_DASH: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^(\s*)-(\s{2,})").unwrap());
+		static LEADING_DASH: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^(\s*)-(\s{2,})").unwrap());
 		doc_comment.replace_in_place_regex(&LEADING_DASH, "$1*$2");
 
 		// math expressions
-		static BLOCK_FORMULA: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?s)\\f\[(.*?)\\f]").unwrap());
-		static INLINE_FORMULA: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?s)\\f\$(.*?)\\f\$").unwrap());
+		static BLOCK_FORMULA: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?s)\\f\[(.*?)\\f]").unwrap());
+		static INLINE_FORMULA: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?s)\\f\$(.*?)\\f\$").unwrap());
 		doc_comment.replace_in_place_regex_cb(&BLOCK_FORMULA, |out, caps| {
 			let formula = preprocess_formula(caps.get(1).map(|(s, e)| &out[s..e]).expect("Impossible"));
 			let encoded = utf8_percent_encode(&formula, NON_ALPHANUMERIC);
@@ -142,17 +142,17 @@ impl RenderComment {
 		});
 
 		// separate urls
-		static URL: Lazy<Regex> = Lazy::new(|| {
+		static URL: LazyLock<Regex> = LazyLock::new(|| {
 			Regex::new(r#"([^<"/(]|[^]]\(|^)(https?://[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*[-a-zA-Z0-9@:%_+~#?&/=])?)"#).unwrap()
 		});
 		doc_comment.replace_in_place_regex(&URL, "$1<$2>");
 
 		// escapes
-		static ESCAPE: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)\\n$").unwrap());
+		static ESCAPE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)\\n$").unwrap());
 		doc_comment.replace_in_place_regex(&ESCAPE, "\n");
 
 		// catch sequences of 4 indents and reduce them to avoid cargo test running them as code
-		static INDENTS: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^(\s{3}|\s{7}|\s{11}|\s{15}|\s{19})\s(\S)").unwrap());
+		static INDENTS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?m)^(\s{3}|\s{7}|\s{11}|\s{15}|\s{19})\s(\S)").unwrap());
 		doc_comment.replace_in_place_regex(&INDENTS, "$1$2");
 
 		let mut attributes = vec![];
@@ -176,7 +176,7 @@ impl RenderComment {
 
 fn preprocess_formula(formula: &str) -> String {
 	const ARG_REGEX: &str = r"\s*\{([^}]*?)\}";
-	static MACROS: Lazy<[(Regex, &str); 9]> = Lazy::new(|| {
+	static MACROS: LazyLock<[(Regex, &str); 9]> = LazyLock::new(|| {
 		[
 			(
 				Regex::new(&format!("\\\\matTT{}", ARG_REGEX.repeat(9))).unwrap(),

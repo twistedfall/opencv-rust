@@ -1,7 +1,6 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
-
-use once_cell::sync::Lazy;
+use std::sync::LazyLock;
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
@@ -44,7 +43,8 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 	}
 
 	fn gen_rust(&self, _opencv_version: &str) -> String {
-		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/tuple/rust.tpl.rs").compile_interpolation());
+		static RUST_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/tuple/rust.tpl.rs").compile_interpolation());
 
 		let type_ref = self.type_ref();
 		let rust_localalias = self.rust_localalias();
@@ -85,7 +85,8 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 	}
 
 	fn gen_cpp(&self) -> String {
-		static CPP_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/tuple/cpp.tpl.cpp").compile_interpolation());
+		static CPP_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/tuple/cpp.tpl.cpp").compile_interpolation());
 
 		CPP_TPL.interpolate(&HashMap::from([(
 			"methods",

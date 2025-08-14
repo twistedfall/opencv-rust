@@ -40,6 +40,7 @@ macro_rules! pred {
 }
 
 use std::collections::{BTreeSet, HashMap, HashSet};
+use std::sync::LazyLock;
 
 pub use argument_names::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
 pub use argument_override::{
@@ -64,7 +65,6 @@ pub use implemented::{
 	IMPLEMENTED_CONST_GENERICS, IMPLEMENTED_FUNCTION_LIKE_MACROS, IMPLEMENTED_GENERICS, IMPLEMENTED_MANUAL_DEBUG,
 	IMPLEMENTED_SYSTEM_CLASSES,
 };
-use once_cell::sync::Lazy;
 pub use property_tweaks::{property_tweaks_factory, PropertyReadWrite, PropertyTweak, PropertyTweaks};
 
 use crate::func::{FuncMatcher, UsageTracker};
@@ -179,7 +179,7 @@ impl Settings {
 /// map of reserved Rust keywords and their replacement to be used in var, function and class names
 /// key: reserved keyword
 /// value: replacement
-pub static RESERVED_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
+pub static RESERVED_RENAME: LazyLock<HashMap<&str, &str>> = LazyLock::new(|| {
 	HashMap::from([
 		("box", "box_"),
 		("fn", "fn_"),
@@ -197,7 +197,7 @@ pub static RESERVED_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 });
 
 /// cpp_name(Reference) => ( rust_name(Reference(No)), cpp_name(Reference) )
-pub static PRIMITIVE_TYPEDEFS: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| {
+pub static PRIMITIVE_TYPEDEFS: LazyLock<HashMap<&str, (&str, &str)>> = LazyLock::new(|| {
 	HashMap::from([
 		("size_t", ("size_t", "size_t")),
 		("ptrdiff_t", ("ptrdiff_t", "ptrdiff_t")),
@@ -216,11 +216,11 @@ pub static PRIMITIVE_TYPEDEFS: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| 
 	])
 });
 
-pub static STATIC_RUST_MODULES: Lazy<BTreeSet<&str>> = Lazy::new(|| BTreeSet::from(["core", "sys", "types"]));
+pub static STATIC_RUST_MODULES: LazyLock<BTreeSet<&str>> = LazyLock::new(|| BTreeSet::from(["core", "sys", "types"]));
 
 /// Types that can be used as `Mat` element
 /// cpp_name(Reference)
-pub static DATA_TYPES: Lazy<HashSet<&str>> = Lazy::new(|| {
+pub static DATA_TYPES: LazyLock<HashSet<&str>> = LazyLock::new(|| {
 	HashSet::from([
 		"unsigned char",
 		"char",
@@ -249,39 +249,40 @@ pub static DATA_TYPES: Lazy<HashSet<&str>> = Lazy::new(|| {
 
 /// Types that can be used as `Mat` element since OpenCV 5.0
 /// cpp_name(Reference)
-pub static DATA_TYPES_5_0: Lazy<HashSet<&str>> =
-	Lazy::new(|| HashSet::from(["uint32_t", "bfloat", "bfloat16_t", "uint64_t", "int64_t", "bool"]));
+pub static DATA_TYPES_5_0: LazyLock<HashSet<&str>> =
+	LazyLock::new(|| HashSet::from(["uint32_t", "bfloat", "bfloat16_t", "uint64_t", "int64_t", "bool"]));
 
-pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<Option<SupportedModule>, HashMap<&str, &str>>> = Lazy::new(|| {
-	HashMap::from([
-		(None, HashMap::from([("detail", "Detail")])),
-		(Some(SupportedModule::Calib3d), HashMap::from([("fisheye", "Fisheye")])),
-		(Some(SupportedModule::CudaBgSegm), HashMap::from([("cuda", "CUDA")])),
-		(Some(SupportedModule::CudaCodec), HashMap::from([("cudacodec", "CUDA")])),
-		(Some(SupportedModule::CudaFeatures2d), HashMap::from([("cuda", "CUDA")])),
-		(Some(SupportedModule::CudaImgProc), HashMap::from([("cuda", "CUDA")])),
-		(Some(SupportedModule::CudaLegacy), HashMap::from([("cuda", "CUDA")])),
-		(Some(SupportedModule::CudaObjDetect), HashMap::from([("cuda", "CUDA")])),
-		(Some(SupportedModule::CudaOptFlow), HashMap::from([("cuda", "CUDA")])),
-		(Some(SupportedModule::CudaStereo), HashMap::from([("cuda", "CUDA")])),
-		(Some(SupportedModule::Gapi), HashMap::from([("imgproc", "ImgProc")])),
-		(Some(SupportedModule::Mcc), HashMap::from([("mcc", "MCC")])),
-		(Some(SupportedModule::Rapid), HashMap::from([("rapid", "Rapid")])),
-		(
-			Some(SupportedModule::Rgbd),
-			HashMap::from([
-				("dynafu", "Dynafu"),
-				("kinfu", "Kinfu"),
-				("colored_kinfu", "ColoredKinfu"),
-				("linemod", "LineMod"),
-			]),
-		),
-		(Some(SupportedModule::Stitching), HashMap::from([("fisheye", "Fisheye")])),
-		(Some(SupportedModule::SuperRes), HashMap::from([("superres", "SuperRes")])),
-	])
-});
+pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: LazyLock<HashMap<Option<SupportedModule>, HashMap<&str, &str>>> =
+	LazyLock::new(|| {
+		HashMap::from([
+			(None, HashMap::from([("detail", "Detail")])),
+			(Some(SupportedModule::Calib3d), HashMap::from([("fisheye", "Fisheye")])),
+			(Some(SupportedModule::CudaBgSegm), HashMap::from([("cuda", "CUDA")])),
+			(Some(SupportedModule::CudaCodec), HashMap::from([("cudacodec", "CUDA")])),
+			(Some(SupportedModule::CudaFeatures2d), HashMap::from([("cuda", "CUDA")])),
+			(Some(SupportedModule::CudaImgProc), HashMap::from([("cuda", "CUDA")])),
+			(Some(SupportedModule::CudaLegacy), HashMap::from([("cuda", "CUDA")])),
+			(Some(SupportedModule::CudaObjDetect), HashMap::from([("cuda", "CUDA")])),
+			(Some(SupportedModule::CudaOptFlow), HashMap::from([("cuda", "CUDA")])),
+			(Some(SupportedModule::CudaStereo), HashMap::from([("cuda", "CUDA")])),
+			(Some(SupportedModule::Gapi), HashMap::from([("imgproc", "ImgProc")])),
+			(Some(SupportedModule::Mcc), HashMap::from([("mcc", "MCC")])),
+			(Some(SupportedModule::Rapid), HashMap::from([("rapid", "Rapid")])),
+			(
+				Some(SupportedModule::Rgbd),
+				HashMap::from([
+					("dynafu", "Dynafu"),
+					("kinfu", "Kinfu"),
+					("colored_kinfu", "ColoredKinfu"),
+					("linemod", "LineMod"),
+				]),
+			),
+			(Some(SupportedModule::Stitching), HashMap::from([("fisheye", "Fisheye")])),
+			(Some(SupportedModule::SuperRes), HashMap::from([("superres", "SuperRes")])),
+		])
+	});
 
-pub static PREVENT_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| {
+pub static PREVENT_VECTOR_TYPEDEF_GENERATION: LazyLock<HashSet<&str>> = LazyLock::new(|| {
 	HashSet::from([
 		// `MatShape` is an alias to `Vector<i32>` and this leads to duplication of definition for the `Vector<Vector<i32>>` type
 		"cv::dnn::MatShape",

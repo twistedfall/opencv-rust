@@ -1,10 +1,9 @@
 use std::collections::HashSet;
+use std::sync::LazyLock;
 
-use once_cell::sync::Lazy;
+pub static IMPLEMENTED_FUNCTION_LIKE_MACROS: LazyLock<HashSet<&str>> = LazyLock::new(|| HashSet::from(["CV_MAKETYPE"]));
 
-pub static IMPLEMENTED_FUNCTION_LIKE_MACROS: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["CV_MAKETYPE"]));
-
-pub static IMPLEMENTED_SYSTEM_CLASSES: Lazy<HashSet<&str>> = Lazy::new(|| {
+pub static IMPLEMENTED_SYSTEM_CLASSES: LazyLock<HashSet<&str>> = LazyLock::new(|| {
 	HashSet::from([
 		"std::pair",
 		"std::string",
@@ -21,14 +20,14 @@ pub static IMPLEMENTED_SYSTEM_CLASSES: Lazy<HashSet<&str>> = Lazy::new(|| {
 });
 
 /// classes that have a manual `Debug` implementation, element is cpp_name(Reference)
-pub static IMPLEMENTED_MANUAL_DEBUG: Lazy<HashSet<&str>> =
-	Lazy::new(|| HashSet::from(["cv::Mat", "cv::MatSize", "cv::dnn::DictValue"]));
+pub static IMPLEMENTED_MANUAL_DEBUG: LazyLock<HashSet<&str>> =
+	LazyLock::new(|| HashSet::from(["cv::Mat", "cv::MatSize", "cv::dnn::DictValue"]));
 
 /// cpp_name(Reference)
-pub static IMPLEMENTED_CONST_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["cv::Vec"]));
+pub static IMPLEMENTED_CONST_GENERICS: LazyLock<HashSet<&str>> = LazyLock::new(|| HashSet::from(["cv::Vec"]));
 
 /// cpp_name(Reference)
-pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| {
+pub static IMPLEMENTED_GENERICS: LazyLock<HashSet<&str>> = LazyLock::new(|| {
 	let mut out = HashSet::from([
 		"cv::Affine3",
 		"cv::Mat_",

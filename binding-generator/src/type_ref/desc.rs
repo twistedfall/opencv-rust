@@ -1,8 +1,8 @@
+use std::cell::LazyCell;
 use std::rc::Rc;
+use std::sync::LazyLock;
 
 use clang::{Entity, EntityKind, Type, TypeKind};
-use once_cell::sync::Lazy;
-use once_cell::unsync::Lazy as UnsyncLazy;
 use regex::bytes::{Captures, Regex};
 
 use crate::class::ClassDesc;
@@ -555,7 +555,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 				let args = self.get_template_argument_types().unwrap_or_default();
 				// there is no way to extract constant generic arguments (e.g. Vec<double, 3>) via libclang
 				// so we have to apply some hacks
-				static TYPE_EXTRACT: Lazy<Regex> = Lazy::new(|| {
+				static TYPE_EXTRACT: LazyLock<Regex> = LazyLock::new(|| {
 					Regex::new(r"^.+<\s*(.+?)\s*(?:,\s*(.+?)\s*)?(?:,\s*(.+?)\s*)?(?:,\s*(.+?)\s*)?>$")
 						.expect("Can't compile static regex")
 				});
@@ -564,8 +564,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					.get_declaration()
 					.and_then(|d| d.get_display_name())
 					.unwrap_or_else(|| self.get_display_name());
-				let generic_args: UnsyncLazy<Option<Captures>, _> =
-					UnsyncLazy::new(|| TYPE_EXTRACT.captures(display_name.as_bytes()));
+				let generic_args: LazyCell<Option<Captures>, _> = LazyCell::new(|| TYPE_EXTRACT.captures(display_name.as_bytes()));
 				args
 					.into_iter()
 					.enumerate()

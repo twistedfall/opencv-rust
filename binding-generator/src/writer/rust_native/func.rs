@@ -4,9 +4,9 @@ use std::fmt::Write;
 use std::iter;
 use std::iter::{Chain, Once};
 use std::rc::Rc;
+use std::sync::LazyLock;
 use std::vec::IntoIter;
 
-use once_cell::sync::Lazy;
 use Cow::{Borrowed, Owned};
 
 use super::comment::{render_ref, RenderComment};
@@ -216,7 +216,8 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust.tpl.rs").compile_interpolation());
+		static TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/func/rust.tpl.rs").compile_interpolation());
 
 		let name = self.rust_leafname(FishStyle::No);
 		let kind = self.kind();
@@ -361,7 +362,8 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 	}
 
 	fn gen_rust_externs(&self) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust_extern.tpl.rs").compile_interpolation());
+		static TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/func/rust_extern.tpl.rs").compile_interpolation());
 
 		if matches!(self.rust_extern_definition(), FuncRustExtern::Absent) {
 			return "".to_string();
@@ -415,7 +417,8 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 	}
 
 	fn gen_cpp(&self) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/cpp.tpl.cpp").compile_interpolation());
+		static TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/func/cpp.tpl.cpp").compile_interpolation());
 
 		if matches!(self.cpp_body(), FuncCppBody::Absent) {
 			return "".to_string();
@@ -526,8 +529,8 @@ fn rust_call(
 	return_kind: ReturnKind,
 ) -> String {
 	#![allow(clippy::too_many_arguments)]
-	static CALL_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| "{{ret_receive}}unsafe { sys::{{identifier}}({{call_args}}) };".compile_interpolation());
+	static CALL_TPL: LazyLock<CompiledInterpolation> =
+		LazyLock::new(|| "{{ret_receive}}unsafe { sys::{{identifier}}({{call_args}}) };".compile_interpolation());
 
 	let ret_receive = if return_kind.is_naked() {
 		"let ret = "
@@ -648,19 +651,21 @@ fn rust_return_map(return_type: &TypeRef, ret_name: &str, return_kind: ReturnKin
 }
 
 fn cpp_call(f: &Func, kind: &FuncKind, call_args: &[String], return_type_ref: &TypeRef) -> String {
-	static CALL_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{name}}({{args}})".compile_interpolation());
+	static CALL_TPL: LazyLock<CompiledInterpolation> = LazyLock::new(|| "{{name}}({{args}})".compile_interpolation());
 
-	static VOID_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{call}};".compile_interpolation());
+	static VOID_TPL: LazyLock<CompiledInterpolation> = LazyLock::new(|| "{{call}};".compile_interpolation());
 
-	static RETURN_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| "{{ret_with_type}} = {{doref}}{{call}};".compile_interpolation());
+	static RETURN_TPL: LazyLock<CompiledInterpolation> =
+		LazyLock::new(|| "{{ret_with_type}} = {{doref}}{{call}};".compile_interpolation());
 
-	static CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{ret_with_type}}({{args}});".compile_interpolation());
+	static CONSTRUCTOR_TPL: LazyLock<CompiledInterpolation> =
+		LazyLock::new(|| "{{ret_with_type}}({{args}});".compile_interpolation());
 
-	static CONSTRUCTOR_NO_ARGS_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{ret_with_type}};".compile_interpolation());
+	static CONSTRUCTOR_NO_ARGS_TPL: LazyLock<CompiledInterpolation> =
+		LazyLock::new(|| "{{ret_with_type}};".compile_interpolation());
 
-	static BOXED_CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| "{{ret_type}}* ret = new {{ret_type}}({{args}});".compile_interpolation());
+	static BOXED_CONSTRUCTOR_TPL: LazyLock<CompiledInterpolation> =
+		LazyLock::new(|| "{{ret_type}}* ret = new {{ret_type}}({{args}});".compile_interpolation());
 
 	let call_args = call_args.join(", ");
 

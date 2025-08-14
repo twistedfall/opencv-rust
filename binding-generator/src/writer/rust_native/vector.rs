@@ -1,7 +1,6 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
-
-use once_cell::sync::Lazy;
+use std::sync::LazyLock;
 
 use super::element::RustElement;
 use super::type_ref::{Lifetime, TypeRefExt};
@@ -55,25 +54,26 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
-		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/vector/rust.tpl.rs").compile_interpolation());
+		static RUST_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/vector/rust.tpl.rs").compile_interpolation());
 
-		static EXTERN_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/vector/rust_extern.tpl.rs").compile_interpolation());
+		static EXTERN_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/vector/rust_extern.tpl.rs").compile_interpolation());
 
-		static COPY_NON_BOOL_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/vector/rust_copy_non_bool.tpl.rs").compile_interpolation());
+		static COPY_NON_BOOL_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/vector/rust_copy_non_bool.tpl.rs").compile_interpolation());
 
-		static NON_COPY_OR_BOOL_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/vector/rust_non_copy_or_bool.tpl.rs").compile_interpolation());
+		static NON_COPY_OR_BOOL_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/vector/rust_non_copy_or_bool.tpl.rs").compile_interpolation());
 
-		static BOXED_REF_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/vector/rust_boxed_ref.tpl.rs").compile_interpolation());
+		static BOXED_REF_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/vector/rust_boxed_ref.tpl.rs").compile_interpolation());
 
-		static INPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/vector/rust_input_array.tpl.rs").compile_interpolation());
+		static INPUT_ARRAY_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/vector/rust_input_array.tpl.rs").compile_interpolation());
 
-		static OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/vector/rust_output_array.tpl.rs").compile_interpolation());
+		static OUTPUT_ARRAY_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/vector/rust_output_array.tpl.rs").compile_interpolation());
 
 		let vec_type_ref = self.type_ref();
 		if vec_type_ref.constness().is_const() {
@@ -224,8 +224,8 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 	}
 
 	fn gen_cpp(&self) -> String {
-		static COMMON_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/vector/cpp.tpl.cpp").compile_interpolation());
+		static COMMON_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/vector/cpp.tpl.cpp").compile_interpolation());
 
 		if self.type_ref().constness().is_const() {
 			// todo we should generate smth like VectorRef in this case

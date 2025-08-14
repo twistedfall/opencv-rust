@@ -1,13 +1,13 @@
 use std::borrow::Cow;
 use std::fmt::Display;
 use std::path::{Path, PathBuf};
+use std::sync::LazyLock;
 use std::{env, fmt};
 
 use clang::Entity;
 use dunce::canonicalize;
-use once_cell::sync::Lazy;
 
-pub static EMIT_DEBUG: Lazy<bool> = Lazy::new(|| env::var("OPENCV_BINDING_GENERATOR_EMIT_DEBUG").is_ok_and(|v| v == "1"));
+pub static EMIT_DEBUG: LazyLock<bool> = LazyLock::new(|| env::var("OPENCV_BINDING_GENERATOR_EMIT_DEBUG").is_ok_and(|v| v == "1"));
 
 #[derive(Clone, Debug)]
 pub struct LocationName<'me> {

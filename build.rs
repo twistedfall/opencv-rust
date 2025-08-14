@@ -2,6 +2,7 @@ use std::collections::{HashMap, HashSet};
 use std::env;
 use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
+use std::sync::LazyLock;
 use std::time::Instant;
 
 use binding_generator::handle_running_binding_generator;
@@ -10,7 +11,6 @@ use enums::{InherentFeature, SUPPORTED_INHERENT_FEATURES, SUPPORTED_MODULES};
 use generator::BindingGenerator;
 use header::IncludePath;
 use library::Library;
-use once_cell::sync::Lazy;
 use opencv_binding_generator::SupportedModule;
 use semver::{Version, VersionReq};
 
@@ -31,15 +31,15 @@ pub mod library;
 
 type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
-// replace `Lazy` with `LazyLock` when MSRV is 1.80.0
-static OUT_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("OUT_DIR").expect("Can't read OUT_DIR env var")));
-static MANIFEST_DIR: Lazy<PathBuf> =
-	Lazy::new(|| PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var")));
-static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
-static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
-static TARGET_ENV_MSVC: Lazy<bool> = Lazy::new(|| env::var("CARGO_CFG_TARGET_ENV").is_ok_and(|target_env| target_env == "msvc"));
-static TARGET_VENDOR_APPLE: Lazy<bool> =
-	Lazy::new(|| env::var("CARGO_CFG_TARGET_VENDOR").is_ok_and(|target_vendor| target_vendor == "apple"));
+static OUT_DIR: LazyLock<PathBuf> = LazyLock::new(|| PathBuf::from(env::var_os("OUT_DIR").expect("Can't read OUT_DIR env var")));
+static MANIFEST_DIR: LazyLock<PathBuf> =
+	LazyLock::new(|| PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var")));
+static SRC_DIR: LazyLock<PathBuf> = LazyLock::new(|| MANIFEST_DIR.join("src"));
+static SRC_CPP_DIR: LazyLock<PathBuf> = LazyLock::new(|| MANIFEST_DIR.join("src_cpp"));
+static TARGET_ENV_MSVC: LazyLock<bool> =
+	LazyLock::new(|| env::var("CARGO_CFG_TARGET_ENV").is_ok_and(|target_env| target_env == "msvc"));
+static TARGET_VENDOR_APPLE: LazyLock<bool> =
+	LazyLock::new(|| env::var("CARGO_CFG_TARGET_VENDOR").is_ok_and(|target_vendor| target_vendor == "apple"));
 
 /// Environment vars that affect the build, the source will be rebuilt if those change, the contents of those vars will also
 /// be present in the debug log
@@ -218,9 +218,10 @@ fn make_compiler(opencv: &Library, ffi_export_suffix: &str) -> cc::Build {
 	opencv.include_paths.iter().for_each(|p| {
 		out.include(p);
 		if *TARGET_VENDOR_APPLE {
-			// Weirdly causes issues on macOS: https://github.com/twistedfall/opencv-rust/issues/620
-			// MSRV: replace with `reason` when MSRV is 1.81.0
-			#[allow(clippy::needless_borrows_for_generic_args)]
+			#[expect(
+				clippy::needless_borrows_for_generic_args,
+				reason = "Weirdly causes issues on macOS: https://github.com/twistedfall/opencv-rust/issues/620"
+			)]
 			out.flag_if_supported(&format!("-F{}", p.to_str().expect("Can't convert path to str")));
 		}
 	});

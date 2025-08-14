@@ -15,7 +15,7 @@ pub type FuncFactory = fn() -> Func<'static, 'static>;
 pub fn func_inject_factory(module: SupportedModule) -> FuncInject {
 	match module {
 		SupportedModule::Core => vec![
-			(|| {
+			|| {
 				Func::new_desc(
 					FuncDesc::new(
 						InstanceMethod(ClassDesc::cv_matconstiterator()),
@@ -28,7 +28,7 @@ pub fn func_inject_factory(module: SupportedModule) -> FuncInject {
 					)
 					.cpp_body(FuncCppBody::ManualCall("instance->m->type()".into())),
 				)
-			}) as FuncFactory, // todo: remove this cast when MSRV allows
+			},
 			|| {
 				Func::new_desc(FuncDesc::new(
 					InstanceMethod(ClassDesc::cv_mat()),
@@ -83,8 +83,7 @@ pub fn func_inject_factory(module: SupportedModule) -> FuncInject {
 							)),
 							Field::new_desc(FieldDesc::new(
 								"n",
-								// todo, MSRV: remove `as_slice()` when MSRV allows
-								TypeRefDesc::int().with_type_hint(TypeRefTypeHint::LenForSlice(["vec".to_string()].as_slice().into(), 1)),
+								TypeRefDesc::int().with_type_hint(TypeRefTypeHint::LenForSlice(["vec".to_string()].into(), 1)),
 							)),
 						],
 						TypeRefDesc::cv_input_array()

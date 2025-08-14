@@ -1,7 +1,6 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
-
-use once_cell::sync::Lazy;
+use std::sync::LazyLock;
 
 use super::class::ClassExt;
 use super::element::{DefaultRustNativeElement, RustElement};
@@ -60,19 +59,20 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 	}
 
 	fn gen_rust(&self, _opencv_version: &str) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/smart_ptr/rust.tpl.rs").compile_interpolation());
+		static TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/smart_ptr/rust.tpl.rs").compile_interpolation());
 
-		static TRAIT_RAW_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/smart_ptr/trait_raw.tpl.rs").compile_interpolation());
+		static TRAIT_RAW_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/smart_ptr/trait_raw.tpl.rs").compile_interpolation());
 
-		static BASE_CAST_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/smart_ptr/base_cast.tpl.rs").compile_interpolation());
+		static BASE_CAST_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/smart_ptr/base_cast.tpl.rs").compile_interpolation());
 
-		static IMPL_DEBUG_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/smart_ptr/impl_debug.rs").compile_interpolation());
+		static IMPL_DEBUG_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/smart_ptr/impl_debug.rs").compile_interpolation());
 
-		static CTOR_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/smart_ptr/ctor.tpl.rs").compile_interpolation());
+		static CTOR_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/smart_ptr/ctor.tpl.rs").compile_interpolation());
 
 		let rust_localalias = self.rust_localalias();
 		let rust_full = self.rust_name(NameStyle::ref_());
@@ -185,7 +185,8 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 	}
 
 	fn gen_cpp(&self) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/smart_ptr/cpp.tpl.cpp").compile_interpolation());
+		static TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/smart_ptr/cpp.tpl.cpp").compile_interpolation());
 
 		TPL.interpolate(&[("methods", extern_functions(self).iter().map(Func::gen_cpp).join(""))].into())
 	}

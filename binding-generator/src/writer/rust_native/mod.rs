@@ -3,6 +3,7 @@ use std::fmt::Debug;
 use std::fs::{File, OpenOptions};
 use std::io::{BufWriter, ErrorKind, Write};
 use std::path::{Path, PathBuf};
+use std::sync::LazyLock;
 use std::{fs, io, iter};
 
 use class::ClassExt;
@@ -10,7 +11,6 @@ use comment::RenderComment;
 use dunce::canonicalize;
 use element::{RustElement, RustNativeGeneratedElement};
 use func::FuncExt;
-use once_cell::sync::Lazy;
 pub use string_ext::RustStringExt;
 
 use crate::comment::strip_doxygen_comment_markers;
@@ -212,14 +212,14 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 	}
 
 	fn goodbye(mut self) {
-		static RUST_HDR: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/module/rust_hdr.tpl").compile_interpolation());
+		static RUST_HDR: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/module/rust_hdr.tpl").compile_interpolation());
 
-		static RUST_PRELUDE: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/module/prelude.tpl.rs").compile_interpolation());
+		static RUST_PRELUDE: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/module/prelude.tpl.rs").compile_interpolation());
 
-		static CPP_HDR: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/module/cpp_hdr.tpl.cpp").compile_interpolation());
+		static CPP_HDR: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/module/cpp_hdr.tpl.cpp").compile_interpolation());
 
 		let pub_use_traits = if self.prelude_traits.is_empty() {
 			"".to_string()

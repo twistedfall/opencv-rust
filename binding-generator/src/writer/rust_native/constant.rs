@@ -1,8 +1,8 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
+use std::sync::LazyLock;
 
 use clang::EntityKind;
-use once_cell::sync::Lazy;
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
@@ -36,7 +36,8 @@ impl RustNativeGeneratedElement for Const<'_> {
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
-		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/const/rust.tpl.rs").compile_interpolation());
+		static RUST_TPL: LazyLock<CompiledInterpolation> =
+			LazyLock::new(|| include_str!("tpl/const/rust.tpl.rs").compile_interpolation());
 
 		let parent_is_class = self
 			.entity()
@@ -49,14 +50,10 @@ impl RustNativeGeneratedElement for Const<'_> {
 		};
 
 		if let Some(value) = self.value() {
-			let typ = match settings::CONST_TYPE_OVERRIDE.get(name.as_ref()).unwrap_or(&value.kind) {
-				ValueKind::Integer => "i32",
-				ValueKind::UnsignedInteger => "u32",
-				ValueKind::Usize => "usize",
-				ValueKind::Float => "f32",
-				ValueKind::Double => "f64",
-				ValueKind::String => "&str",
-			};
+			let typ = settings::CONST_TYPE_OVERRIDE
+				.get(name.as_ref())
+				.unwrap_or(&value.kind)
+				.rust_type();
 			RUST_TPL.interpolate(&HashMap::from([
 				("doc_comment", Cow::Owned(self.rendered_doc_comment("///", opencv_version))),
 				("debug", self.get_debug().into()),
@@ -66,6 +63,23 @@ impl RustNativeGeneratedElement for Const<'_> {
 			]))
 		} else {
 			"".to_string()
+		}
+	}
+}
+
+pub trait ValueKindExt {
+	fn rust_type(self) -> &'static str;
+}
+
+impl ValueKindExt for ValueKind {
+	fn rust_type(self) -> &'static str {
+		match self {
+			ValueKind::Integer => "i32",
+			ValueKind::UnsignedInteger => "u32",
+			ValueKind::Usize => "usize",
+			ValueKind::Float => "f32",
+			ValueKind::Double => "f64",
+			ValueKind::String => "&str",
 		}
 	}
 }
@@ -80,12 +94,19 @@ impl ValueExt for Value {
 			ValueKind::Float | ValueKind::Double if !self.value.contains('.') => {
 				format!("{}.", self.value)
 			}
-			ValueKind::Integer
-			| ValueKind::UnsignedInteger
-			| ValueKind::Usize
-			| ValueKind::Float
-			| ValueKind::Double
-			| ValueKind::String => self.value,
+			ValueKind::Integer => {
+				if let Some(no_prefix) = self.value.strip_prefix("0x") {
+					// todo: use let chain when MSRV is 1.88
+					if i32::from_str_radix(no_prefix, 16).is_err() {
+						format!("{}u32 as i32", self.value)
+					} else {
+						self.value
+					}
+				} else {
+					self.value
+				}
+			}
+			ValueKind::UnsignedInteger | ValueKind::Usize | ValueKind::Float | ValueKind::Double | ValueKind::String => self.value,
 		}
 	}
 }

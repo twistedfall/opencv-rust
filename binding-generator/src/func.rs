@@ -3,12 +3,12 @@ use std::borrow::Cow::{Borrowed, Owned};
 use std::fmt;
 use std::ops::ControlFlow;
 use std::rc::Rc;
+use std::sync::LazyLock;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 pub use desc::{FuncCppBody, FuncDesc, FuncRustBody, FuncRustExtern};
 pub use func_matcher::{FuncMatchProperties, FuncMatcher, Pred, UsageTracker};
 pub use kind::{FuncKind, OperatorKind, ReturnKind};
-use once_cell::sync::Lazy;
 use regex::bytes::Regex;
 use slice_arg_finder::SliceArgFinder;
 
@@ -366,7 +366,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					};
 					out.to_mut().replace_range(idx..idx + OVERLOAD.len(), &rep);
 				}
-				static COPY_BRIEF: Lazy<Regex> = Lazy::new(|| Regex::new(r"@copybrief\s+(\w+)").unwrap());
+				static COPY_BRIEF: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"@copybrief\s+(\w+)").unwrap());
 				out.to_mut().replace_in_place_regex_cb(&COPY_BRIEF, |comment, caps| {
 					let copy_name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
 					let mut copy_full_name = self.cpp_namespace().into_owned();

@@ -1,8 +1,8 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
 use std::iter;
+use std::sync::LazyLock;
 
-use once_cell::sync::Lazy;
 use regex::bytes::{CaptureLocations, Regex};
 
 use crate::CppNameStyle;
@@ -460,7 +460,7 @@ impl StrExt for str {
 	}
 
 	fn compile_interpolation(&self) -> CompiledInterpolation<'_> {
-		static VARS: Lazy<Regex> = Lazy::new(|| Regex::new(r"\{\{\s*([^{}]+?)\s*}}").expect("Can't compile regex"));
+		static VARS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\{\{\s*([^{}]+?)\s*}}").expect("Can't compile regex"));
 
 		// trim leading newline
 		let tpl = self.strip_prefix('\n').unwrap_or(self);
@@ -548,16 +548,9 @@ impl StrExt for str {
 	}
 
 	fn capitalize_first_ascii_letter(&self) -> Option<(char, &str)> {
-		// MSRV: replace with `split_at_checked()` when MSRV is 1.80
-		// self.split_at_checked(1).map(|(first_letter, rest)| {
-		// 	let [first_letter]: [u8; 1] = first_letter.as_bytes().try_into().expect("first part of split_at(1)");
-		// 	(char::from(first_letter.to_ascii_uppercase()), rest)
-		// })
-		if self.is_empty() || !self.is_ascii() {
-			return None;
-		}
-		let (first_letter, rest) = self.split_at(1);
-		let [first_letter]: [u8; 1] = first_letter.as_bytes().try_into().expect("first part of split_at(1)");
-		Some((char::from(first_letter.to_ascii_uppercase()), rest))
+		self.split_at_checked(1).map(|(first_letter, rest)| {
+			let [first_letter]: [u8; 1] = first_letter.as_bytes().try_into().expect("first part of split_at(1)");
+			(char::from(first_letter.to_ascii_uppercase()), rest)
+		})
 	}
 }
