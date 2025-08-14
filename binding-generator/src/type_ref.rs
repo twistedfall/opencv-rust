@@ -156,7 +156,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn kind(&self) -> Cow<TypeRefKind<'tu, 'ge>> {
+	pub fn kind(&self) -> Cow<'_, TypeRefKind<'tu, 'ge>> {
 		match self {
 			Self::Clang {
 				type_ref,
@@ -169,7 +169,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	/// TypeRef with all the typedef's traversed
-	pub fn canonical(&self) -> Cow<Self> {
+	pub fn canonical(&self) -> Cow<'_, Self> {
 		match self.kind().as_ref() {
 			TypeRefKind::Typedef(tdef) => Owned(tdef.underlying_type_ref().canonical().into_owned()),
 			_ => Borrowed(self),
@@ -177,7 +177,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	/// Removes indirection by pointer and reference, this will also remove typedef if it references a pointer or reference
-	pub fn source(&self) -> Cow<Self> {
+	pub fn source(&self) -> Cow<'_, Self> {
 		match self.kind().as_ref() {
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
 				Owned(inner.source().into_owned())
@@ -390,7 +390,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		self.is_data_type_inner(&settings::DATA_TYPES_5_0)
 	}
 
-	pub fn template_specialization_args(&self) -> Cow<[TemplateArg<'tu, 'ge>]> {
+	pub fn template_specialization_args(&self) -> Cow<'_, [TemplateArg<'tu, 'ge>]> {
 		match self {
 			&Self::Clang { type_ref, gen_env, .. } => type_ref.template_specialization_args(gen_env).into(),
 			Self::Desc(desc) => desc.template_specialization_args.as_ref().into(),
@@ -454,19 +454,19 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn cpp_name(&self, name_style: CppNameStyle) -> Cow<str> {
+	pub fn cpp_name(&self, name_style: CppNameStyle) -> Cow<'_, str> {
 		self.cpp_name_ext(name_style, "", true)
 	}
 
-	pub fn cpp_name_ext(&self, name_style: CppNameStyle, name: &str, extern_types: bool) -> Cow<str> {
+	pub fn cpp_name_ext(&self, name_style: CppNameStyle, name: &str, extern_types: bool) -> Cow<'_, str> {
 		CppRenderer::new(name_style, name, extern_types).render(self)
 	}
 
-	pub fn cpp_extern_return(&self) -> Cow<str> {
+	pub fn cpp_extern_return(&self) -> Cow<'_, str> {
 		CppExternReturnRenderer.render(self)
 	}
 
-	pub fn cpp_extern_return_fallible(&self) -> Cow<str> {
+	pub fn cpp_extern_return_fallible(&self) -> Cow<'_, str> {
 		if self.kind().is_void() {
 			"ResultVoid".into()
 		} else {

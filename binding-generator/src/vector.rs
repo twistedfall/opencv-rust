@@ -74,16 +74,16 @@ impl Element for Vector<'_, '_> {
 		true
 	}
 
-	fn doc_comment(&self) -> Cow<str> {
+	fn doc_comment(&self) -> Cow<'_, str> {
 		"".into()
 	}
 
-	fn cpp_namespace(&self) -> Cow<str> {
+	fn cpp_namespace(&self) -> Cow<'_, str> {
 		// force this to be std because on some systems the actual namespace for vector is something like "std::__1"
 		"std".into()
 	}
 
-	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<'_, str> {
 		"std::vector".cpp_name_from_fullname(style).into()
 	}
 }

@@ -37,7 +37,7 @@ impl RenderLaneTrait for InputArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		let typ = if self.canonical.kind().as_reference().is_some() {
 			Borrowed(&self.canonical)
 		} else {
@@ -85,7 +85,7 @@ impl RenderLaneTrait for OutputArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		let typ = if self.canonical.kind().as_reference().is_some() {
 			Borrowed(&self.canonical)
 		} else {
@@ -133,7 +133,7 @@ impl RenderLaneTrait for InputOutputArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		let typ = if self.canonical.kind().as_reference().is_some() {
 			Borrowed(&self.canonical)
 		} else {

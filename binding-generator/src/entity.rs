@@ -23,15 +23,15 @@ impl Element for Entity<'_> {
 		DefaultElement::is_public(self.entity())
 	}
 
-	fn doc_comment(&self) -> Cow<str> {
+	fn doc_comment(&self) -> Cow<'_, str> {
 		strip_doxygen_comment_markers(&self.get_comment().unwrap_or_default()).into()
 	}
 
-	fn cpp_namespace(&self) -> Cow<str> {
+	fn cpp_namespace(&self) -> Cow<'_, str> {
 		DefaultElement::cpp_namespace(self.entity()).into()
 	}
 
-	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<'_, str> {
 		DefaultElement::cpp_name(self, self.entity(), style)
 	}
 }

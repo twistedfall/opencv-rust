@@ -71,7 +71,7 @@ impl RenderLaneTrait for SimpleClassRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &typ.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		TypeRef::new_pointer(self.non_canonical.clone())
 			.cpp_name_ext(CppNameStyle::Reference, name, true)
 			.into_owned()

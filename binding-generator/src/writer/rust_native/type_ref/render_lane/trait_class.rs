@@ -71,7 +71,7 @@ impl RenderLaneTrait for TraitClassRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.non_canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		let typ = match self.indirection {
 			Indirection::None => Owned(TypeRef::new_pointer(
 				self

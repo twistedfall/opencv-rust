@@ -128,11 +128,11 @@ pub trait Element: fmt::Debug {
 
 	fn is_public(&self) -> bool;
 
-	fn doc_comment(&self) -> Cow<str>;
+	fn doc_comment(&self) -> Cow<'_, str>;
 
-	fn cpp_namespace(&self) -> Cow<str>;
+	fn cpp_namespace(&self) -> Cow<'_, str>;
 
-	fn cpp_name(&self, style: CppNameStyle) -> Cow<str>;
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<'_, str>;
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]

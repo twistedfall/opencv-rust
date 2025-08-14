@@ -78,15 +78,15 @@ impl Element for Tuple<'_, '_> {
 		DefaultElement::is_public(self.entity())
 	}
 
-	fn doc_comment(&self) -> Cow<str> {
+	fn doc_comment(&self) -> Cow<'_, str> {
 		"".into()
 	}
 
-	fn cpp_namespace(&self) -> Cow<str> {
+	fn cpp_namespace(&self) -> Cow<'_, str> {
 		"std".into()
 	}
 
-	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<'_, str> {
 		match style {
 			CppNameStyle::Declaration => self.tuple_type.into(),
 			CppNameStyle::Reference => DefaultElement::cpp_decl_name_with_namespace(self, self.tuple_type),

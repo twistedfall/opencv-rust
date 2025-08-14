@@ -58,7 +58,7 @@ impl RenderLaneTrait for CppPassByVoidPtrRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.non_canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		let typ = if self.non_canonical.kind().as_pointer_reference_move().is_some() {
 			Borrowed(&self.non_canonical)
 		} else {

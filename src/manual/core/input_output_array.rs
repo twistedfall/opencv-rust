@@ -14,7 +14,7 @@ use crate::{sys, Result};
 ///
 /// More info in [OpenCV docs](https://docs.opencv.org/master/d4/d32/classcv_1_1__InputArray.html#details).
 pub trait ToInputArray {
-	fn input_array(&self) -> Result<BoxedRef<_InputArray>>;
+	fn input_array(&self) -> Result<BoxedRef<'_, _InputArray>>;
 }
 
 /// Trait to serve as a replacement for `OutputArray` in C++ OpenCV
@@ -24,7 +24,7 @@ pub trait ToInputArray {
 ///
 /// More info in [OpenCV docs](https://docs.opencv.org/master/d2/d9e/classcv_1_1__OutputArray.html#details).
 pub trait ToOutputArray {
-	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>>;
+	fn output_array(&mut self) -> Result<BoxedRefMut<'_, _OutputArray>>;
 }
 
 /// Trait to serve as a replacement for `InputOutputArray` in C++ OpenCV
@@ -34,11 +34,11 @@ pub trait ToOutputArray {
 ///
 /// For more info see comments for [ToInputArray] and [ToOutputArray].
 pub trait ToInputOutputArray {
-	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>>;
+	fn input_output_array(&mut self) -> Result<BoxedRefMut<'_, _InputOutputArray>>;
 }
 
 #[inline]
-fn call_input_array(input_array: &impl _InputArrayTraitConst) -> Result<BoxedRef<_InputArray>> {
+fn call_input_array(input_array: &impl _InputArrayTraitConst) -> Result<BoxedRef<'_, _InputArray>> {
 	// MSRV: change to `unsafe extern "C"` when MSRV is 1.82
 	extern "C" {
 		fn cv_InputArray_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>);
@@ -50,7 +50,7 @@ fn call_input_array(input_array: &impl _InputArrayTraitConst) -> Result<BoxedRef
 }
 
 #[inline]
-fn call_output_array(output_array: &mut impl _OutputArrayTrait) -> Result<BoxedRefMut<_OutputArray>> {
+fn call_output_array(output_array: &mut impl _OutputArrayTrait) -> Result<BoxedRefMut<'_, _OutputArray>> {
 	extern "C" {
 		fn cv_OutputArray_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>);
 	}
@@ -62,42 +62,42 @@ fn call_output_array(output_array: &mut impl _OutputArrayTrait) -> Result<BoxedR
 
 impl ToInputArray for _InputArray {
 	#[inline]
-	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+	fn input_array(&self) -> Result<BoxedRef<'_, _InputArray>> {
 		call_input_array(self)
 	}
 }
 
 impl ToInputArray for _OutputArray {
 	#[inline]
-	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+	fn input_array(&self) -> Result<BoxedRef<'_, _InputArray>> {
 		call_input_array(self)
 	}
 }
 
 impl ToInputArray for _InputOutputArray {
 	#[inline]
-	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+	fn input_array(&self) -> Result<BoxedRef<'_, _InputArray>> {
 		call_input_array(self)
 	}
 }
 
 impl ToOutputArray for _OutputArray {
 	#[inline]
-	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
+	fn output_array(&mut self) -> Result<BoxedRefMut<'_, _OutputArray>> {
 		call_output_array(self)
 	}
 }
 
 impl ToOutputArray for _InputOutputArray {
 	#[inline]
-	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
+	fn output_array(&mut self) -> Result<BoxedRefMut<'_, _OutputArray>> {
 		call_output_array(self)
 	}
 }
 
 impl ToInputOutputArray for _InputOutputArray {
 	#[inline]
-	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
+	fn input_output_array(&mut self) -> Result<BoxedRefMut<'_, _InputOutputArray>> {
 		extern "C" {
 			fn cv_InputOutputArray_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>);
 		}
@@ -115,7 +115,7 @@ macro_rules! input_output_array {
 	($type: ty, $const_cons: ident) => {
 		impl $crate::core::ToInputArray for $type {
 			#[inline]
-			fn input_array(&self) -> $crate::Result<$crate::boxed_ref::BoxedRef<$crate::core::_InputArray>> {
+			fn input_array(&self) -> $crate::Result<$crate::boxed_ref::BoxedRef<'_, $crate::core::_InputArray>> {
 				$crate::core::_InputArray::$const_cons(self)
 			}
 		}
@@ -128,14 +128,14 @@ macro_rules! input_output_array {
 
 		impl $crate::core::ToOutputArray for $type {
 			#[inline]
-			fn output_array(&mut self) -> $crate::Result<$crate::boxed_ref::BoxedRefMut<$crate::core::_OutputArray>> {
+			fn output_array(&mut self) -> $crate::Result<$crate::boxed_ref::BoxedRefMut<'_, $crate::core::_OutputArray>> {
 				$crate::core::_OutputArray::$mut_cons(self)
 			}
 		}
 
 		impl $crate::core::ToInputOutputArray for $type {
 			#[inline]
-			fn input_output_array(&mut self) -> $crate::Result<$crate::boxed_ref::BoxedRefMut<$crate::core::_InputOutputArray>> {
+			fn input_output_array(&mut self) -> $crate::Result<$crate::boxed_ref::BoxedRefMut<'_, $crate::core::_InputOutputArray>> {
 				$crate::core::_InputOutputArray::$mut_cons(self)
 			}
 		}
@@ -150,7 +150,7 @@ macro_rules! input_output_array_vector {
 	($type: ty, $const_cons: ident) => {
 		impl $crate::core::ToInputArray for $crate::core::Vector<$crate::boxed_ref::BoxedRef<'_, $type>> {
 			#[inline]
-			fn input_array(&self) -> $crate::Result<$crate::boxed_ref::BoxedRef<$crate::core::_InputArray>> {
+			fn input_array(&self) -> $crate::Result<$crate::boxed_ref::BoxedRef<'_, $crate::core::_InputArray>> {
 				$crate::core::_InputArray::$const_cons(self.as_non_ref_vec())
 			}
 		}
@@ -163,7 +163,7 @@ macro_rules! input_output_array_vector {
 	($type: ty, $const_cons: ident, $mut_cons: ident) => {
 		impl $crate::core::ToInputArray for $crate::core::Vector<$crate::boxed_ref::BoxedRef<'_, $type>> {
 			#[inline]
-			fn input_array(&self) -> $crate::Result<$crate::boxed_ref::BoxedRef<$crate::core::_InputArray>> {
+			fn input_array(&self) -> $crate::Result<$crate::boxed_ref::BoxedRef<'_, $crate::core::_InputArray>> {
 				$crate::core::_InputArray::$const_cons(self.as_non_ref_vec())
 			}
 		}
@@ -181,7 +181,7 @@ macro_rules! input_array_ref_forward {
 	($type: ty) => {
 		impl $crate::core::ToInputArray for &$type {
 			#[inline]
-			fn input_array(&self) -> $crate::Result<$crate::boxed_ref::BoxedRef<$crate::core::_InputArray>> {
+			fn input_array(&self) -> $crate::Result<$crate::boxed_ref::BoxedRef<'_, $crate::core::_InputArray>> {
 				(*self).input_array()
 			}
 		}
@@ -195,14 +195,14 @@ macro_rules! output_array_ref_forward {
 	($type: ty) => {
 		impl $crate::core::ToOutputArray for &mut $type {
 			#[inline]
-			fn output_array(&mut self) -> $crate::Result<$crate::boxed_ref::BoxedRefMut<$crate::core::_OutputArray>> {
+			fn output_array(&mut self) -> $crate::Result<$crate::boxed_ref::BoxedRefMut<'_, $crate::core::_OutputArray>> {
 				(*self).output_array()
 			}
 		}
 
 		impl $crate::core::ToInputOutputArray for &mut $type {
 			#[inline]
-			fn input_output_array(&mut self) -> $crate::Result<$crate::boxed_ref::BoxedRefMut<$crate::core::_InputOutputArray>> {
+			fn input_output_array(&mut self) -> $crate::Result<$crate::boxed_ref::BoxedRefMut<'_, $crate::core::_InputOutputArray>> {
 				(*self).input_output_array()
 			}
 		}
@@ -213,70 +213,70 @@ input_output_array! { f64, from_f64 }
 
 impl ToInputArray for &[u8] {
 	#[inline]
-	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+	fn input_array(&self) -> Result<BoxedRef<'_, _InputArray>> {
 		_InputArray::from_byte_slice(self)
 	}
 }
 
 impl<const N: usize> ToInputArray for [u8; N] {
 	#[inline]
-	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+	fn input_array(&self) -> Result<BoxedRef<'_, _InputArray>> {
 		_InputArray::from_byte_slice(self)
 	}
 }
 
 impl<T: Boxed + ToInputArray> ToInputArray for BoxedRef<'_, T> {
 	#[inline]
-	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+	fn input_array(&self) -> Result<BoxedRef<'_, _InputArray>> {
 		self.reference.input_array()
 	}
 }
 
 impl<T: Boxed + ToInputArray> ToInputArray for &BoxedRef<'_, T> {
 	#[inline]
-	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+	fn input_array(&self) -> Result<BoxedRef<'_, _InputArray>> {
 		(*self).input_array()
 	}
 }
 
 impl<T: Boxed + ToInputArray> ToInputArray for BoxedRefMut<'_, T> {
 	#[inline]
-	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+	fn input_array(&self) -> Result<BoxedRef<'_, _InputArray>> {
 		self.reference.input_array()
 	}
 }
 
 impl<T: Boxed + ToInputArray> ToInputArray for &BoxedRefMut<'_, T> {
 	#[inline]
-	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+	fn input_array(&self) -> Result<BoxedRef<'_, _InputArray>> {
 		(*self).input_array()
 	}
 }
 
 impl<T: Boxed + ToOutputArray> ToOutputArray for BoxedRefMut<'_, T> {
 	#[inline]
-	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
+	fn output_array(&mut self) -> Result<BoxedRefMut<'_, _OutputArray>> {
 		self.reference.output_array()
 	}
 }
 
 impl<T: Boxed + ToOutputArray> ToOutputArray for &mut BoxedRefMut<'_, T> {
 	#[inline]
-	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
+	fn output_array(&mut self) -> Result<BoxedRefMut<'_, _OutputArray>> {
 		(*self).output_array()
 	}
 }
 
 impl<T: Boxed + ToInputOutputArray> ToInputOutputArray for BoxedRefMut<'_, T> {
 	#[inline]
-	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
+	fn input_output_array(&mut self) -> Result<BoxedRefMut<'_, _InputOutputArray>> {
 		self.reference.input_output_array()
 	}
 }
 
 impl<T: Boxed + ToInputOutputArray> ToInputOutputArray for &mut BoxedRefMut<'_, T> {
 	#[inline]
-	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
+	fn input_output_array(&mut self) -> Result<BoxedRefMut<'_, _InputOutputArray>> {
 		(*self).input_output_array()
 	}
 }

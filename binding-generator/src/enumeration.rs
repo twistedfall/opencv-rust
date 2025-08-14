@@ -80,11 +80,11 @@ impl Element for Enum<'_> {
 		DefaultElement::is_public(self.entity)
 	}
 
-	fn doc_comment(&self) -> Cow<str> {
+	fn doc_comment(&self) -> Cow<'_, str> {
 		strip_doxygen_comment_markers(&self.entity.get_comment().unwrap_or_default()).into()
 	}
 
-	fn cpp_namespace(&self) -> Cow<str> {
+	fn cpp_namespace(&self) -> Cow<'_, str> {
 		if let Some(custom_fullname) = &self.custom_fullname {
 			custom_fullname.namespace().into()
 		} else {
@@ -92,7 +92,7 @@ impl Element for Enum<'_> {
 		}
 	}
 
-	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<'_, str> {
 		if let Some(custom_fullname) = self.custom_fullname.as_deref() {
 			custom_fullname.cpp_name_from_fullname(style).into()
 		} else {

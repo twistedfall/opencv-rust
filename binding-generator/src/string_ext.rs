@@ -62,7 +62,7 @@ impl StringExt for String {
 			}
 
 			#[inline(always)]
-			fn compile_captures(rep: &str) -> Vec<Elem> {
+			fn compile_captures(rep: &str) -> Vec<Elem<'_>> {
 				let mut out = Vec::with_capacity(10);
 				let mut last_idx = 0;
 				for (idx, _) in rep.match_indices('$') {
@@ -378,10 +378,10 @@ impl CompiledInterpolation<'_> {
 }
 
 pub trait StrExt {
-	fn cpp_name_to_rust_fn_case(&self) -> Cow<str>;
-	fn lines_with_nl(&self) -> LinesWithNl;
+	fn cpp_name_to_rust_fn_case(&self) -> Cow<'_, str>;
+	fn lines_with_nl(&self) -> LinesWithNl<'_>;
 	fn detect_indent(&self) -> Indent;
-	fn compile_interpolation(&self) -> CompiledInterpolation;
+	fn compile_interpolation(&self) -> CompiledInterpolation<'_>;
 	fn trim_start_idx(&self) -> usize;
 	fn trim_end_idx(&self) -> usize;
 	/// For `cv::rapid::Rapid` returns `Rapid`
@@ -395,7 +395,7 @@ pub trait StrExt {
 }
 
 impl StrExt for str {
-	fn cpp_name_to_rust_fn_case(&self) -> Cow<str> {
+	fn cpp_name_to_rust_fn_case(&self) -> Cow<'_, str> {
 		let mut out = String::with_capacity(self.len() + 8);
 		#[derive(Copy, Clone)]
 		enum State {
@@ -440,7 +440,7 @@ impl StrExt for str {
 		out.into()
 	}
 
-	fn lines_with_nl(&self) -> LinesWithNl {
+	fn lines_with_nl(&self) -> LinesWithNl<'_> {
 		LinesWithNl {
 			string: self,
 			len: self.len(),
@@ -459,7 +459,7 @@ impl StrExt for str {
 			})
 	}
 
-	fn compile_interpolation(&self) -> CompiledInterpolation {
+	fn compile_interpolation(&self) -> CompiledInterpolation<'_> {
 		static VARS: Lazy<Regex> = Lazy::new(|| Regex::new(r"\{\{\s*([^{}]+?)\s*}}").expect("Can't compile regex"));
 
 		// trim leading newline

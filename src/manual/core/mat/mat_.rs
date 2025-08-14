@@ -196,21 +196,21 @@ impl<T> Boxed for Mat_<T> {
 
 impl<T> ToInputArray for Mat_<T> {
 	#[inline]
-	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+	fn input_array(&self) -> Result<BoxedRef<'_, _InputArray>> {
 		self.inner.input_array()
 	}
 }
 
 impl<T> ToOutputArray for Mat_<T> {
 	#[inline]
-	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
+	fn output_array(&mut self) -> Result<BoxedRefMut<'_, _OutputArray>> {
 		self.inner.output_array()
 	}
 }
 
 impl<T> ToInputOutputArray for Mat_<T> {
 	#[inline]
-	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
+	fn input_output_array(&mut self) -> Result<BoxedRefMut<'_, _InputOutputArray>> {
 		self.inner.input_output_array()
 	}
 }

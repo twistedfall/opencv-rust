@@ -37,12 +37,12 @@ fn render_rust_tpl<'a>(
 			TemplateArg::Unknown => None,
 		});
 		let mut generics = generic_types.join(", ");
-		if let Some(lifetime) = lifetime.filter(|lt| lt.is_explicit()) {
-			generics.insert_str(0, &format!("{lifetime}, "));
+		if let Some(lifetime) = lifetime {
+			generics.insert_str(0, &format!("{lifetime:,<#}"));
 		}
 		format!("{constant_suffix}{fish}<{generics}>", fish = fish_style.rust_qual())
-	} else if let Some(lifetime) = lifetime.filter(|lt| lt.is_explicit()) {
-		format!("{fish}<{lifetime}>", fish = fish_style.rust_qual())
+	} else if let Some(lifetime) = lifetime {
+		format!("{fish}<{lifetime:#}>", fish = fish_style.rust_qual())
 	} else {
 		"".to_string()
 	}
@@ -259,7 +259,7 @@ impl TypeRefRenderer<'_> for RustReturnRenderer {
 		if kind.as_abstract_class_ptr().is_some() {
 			let lt = self.next_lifetime();
 			format!(
-				"types::AbstractRef{mut_suf}{fish}<{lt:,<}{typ}>",
+				"types::AbstractRef{mut_suf}{fish}<{lt:,<#}{typ}>",
 				mut_suf = type_ref.constness().rust_name_qual(),
 				fish = self.turbo_fish_style.rust_qual(),
 				typ = self.recurse().render(&type_ref.source()),
@@ -268,7 +268,7 @@ impl TypeRefRenderer<'_> for RustReturnRenderer {
 		} else if type_ref.type_hint().as_boxed_as_ref().is_some() {
 			let lt = self.next_lifetime();
 			format!(
-				"BoxedRef{mut_suf}{fish}<{lt:,<}{typ}>",
+				"BoxedRef{mut_suf}{fish}<{lt:,<#}{typ}>",
 				mut_suf = type_ref.constness().rust_name_qual(),
 				fish = self.turbo_fish_style.rust_qual(),
 				typ = self.recurse().render(type_ref)

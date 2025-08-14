@@ -19,7 +19,7 @@ impl RustElement for Typedef<'_, '_> {
 		}
 	}
 
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+	fn rust_name(&self, style: NameStyle) -> Cow<'_, str> {
 		match self {
 			Typedef::Clang { entity, .. } => DefaultRustNativeElement::rust_name(self, *entity, style).into(),
 			Typedef::Desc(_) => {

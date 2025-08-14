@@ -15,7 +15,7 @@ impl RustElement for Enum<'_> {
 		DefaultRustNativeElement::rust_module(self.entity())
 	}
 
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+	fn rust_name(&self, style: NameStyle) -> Cow<'_, str> {
 		DefaultRustNativeElement::rust_name(self, self.entity(), style).into()
 	}
 

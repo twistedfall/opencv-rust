@@ -29,10 +29,10 @@ pub mod render_lane;
 
 pub trait TypeRefExt {
 	/// A high level category of the type that affects how it's passed from Rust to C++
-	fn render_lane(&self) -> RenderLane;
+	fn render_lane(&self) -> RenderLane<'_, '_>;
 
 	fn rust_as_raw_name(&self, constness: Constness) -> String;
-	fn rust_safe_id(&self, add_const: bool) -> Cow<str>;
+	fn rust_safe_id(&self, add_const: bool) -> Cow<'_, str>;
 	fn rust_module(&self) -> SupportedModule;
 
 	/// For when a type needs to be part of the user-visible Rust method name
@@ -40,17 +40,17 @@ pub trait TypeRefExt {
 	/// Return a lightweight lowercase type representation, might not be precise. For example, it's used for operator bindings so
 	/// that `operator &` on 2 `Mat`s translates into `and_mat_mat()`.
 	fn rust_simple_name(&self) -> String;
-	fn rust_name(&self, name_style: NameStyle) -> Cow<str>;
-	fn rust_name_ext(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str>;
+	fn rust_name(&self, name_style: NameStyle) -> Cow<'_, str>;
+	fn rust_name_ext(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<'_, str>;
 
-	fn rust_extern(&self, dir: ExternDir) -> Cow<str>;
-	fn rust_return(&self, turbo_fish_style: FishStyle, lifetime: Lifetime) -> Cow<str>;
-	fn rust_extern_return_fallible(&self) -> Cow<str>;
+	fn rust_extern(&self, dir: ExternDir) -> Cow<'_, str>;
+	fn rust_return(&self, turbo_fish_style: FishStyle, lifetime: Lifetime) -> Cow<'_, str>;
+	fn rust_extern_return_fallible(&self) -> Cow<'_, str>;
 	fn rust_lifetime_count(&self) -> usize;
 }
 
 impl TypeRefExt for TypeRef<'_, '_> {
-	fn render_lane(&self) -> RenderLane {
+	fn render_lane(&self) -> RenderLane<'_, '_> {
 		// todo, some of the `self.clone()` can be replaced with `canonical`, e.g. `FunctionRenderLane` and `TraitClassRenderLane`, the output will change, but will remain valid
 		let canonical = self.canonical();
 		let kind = canonical.kind();
@@ -157,7 +157,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		}
 	}
 
-	fn rust_safe_id(&self, add_const: bool) -> Cow<str> {
+	fn rust_safe_id(&self, add_const: bool) -> Cow<'_, str> {
 		let mut out = String::with_capacity(64);
 		if add_const && self.inherent_constness().is_const() {
 			out.push_str("const_");
@@ -217,24 +217,24 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		type_ref.rust_name(NameStyle::Declaration).to_lowercase()
 	}
 
-	fn rust_name(&self, name_style: NameStyle) -> Cow<str> {
+	fn rust_name(&self, name_style: NameStyle) -> Cow<'_, str> {
 		let lt = self.type_hint().as_explicit_lifetime().unwrap_or(Lifetime::Elided);
 		self.rust_name_ext(name_style, lt)
 	}
 
-	fn rust_name_ext(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str> {
+	fn rust_name_ext(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<'_, str> {
 		RustRenderer::new(name_style, lifetime).render(self)
 	}
 
-	fn rust_extern(&self, dir: ExternDir) -> Cow<str> {
+	fn rust_extern(&self, dir: ExternDir) -> Cow<'_, str> {
 		RustExternRenderer::new(dir).render(self)
 	}
 
-	fn rust_return(&self, turbo_fish_style: FishStyle, lifetime: Lifetime) -> Cow<str> {
+	fn rust_return(&self, turbo_fish_style: FishStyle, lifetime: Lifetime) -> Cow<'_, str> {
 		RustReturnRenderer::new(turbo_fish_style, lifetime).render(self)
 	}
 
-	fn rust_extern_return_fallible(&self) -> Cow<str> {
+	fn rust_extern_return_fallible(&self) -> Cow<'_, str> {
 		format!("Result<{ext}>", ext = self.rust_extern(ExternDir::FromCpp)).into()
 	}
 

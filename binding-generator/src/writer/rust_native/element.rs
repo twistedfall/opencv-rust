@@ -23,7 +23,7 @@ impl DefaultRustNativeElement {
 			.unwrap_or(SupportedModule::Core)
 	}
 
-	pub fn rust_module_reference(this: &(impl RustElement + ?Sized)) -> Cow<str> {
+	pub fn rust_module_reference(this: &(impl RustElement + ?Sized)) -> Cow<'_, str> {
 		let module = this.rust_module();
 		let module_rust_safe_name = module.rust_safe_name();
 		if settings::STATIC_RUST_MODULES.contains(module_rust_safe_name) {
@@ -33,7 +33,7 @@ impl DefaultRustNativeElement {
 		}
 	}
 
-	pub fn rust_leafname(this: &(impl Element + ?Sized)) -> Cow<str> {
+	pub fn rust_leafname(this: &(impl Element + ?Sized)) -> Cow<'_, str> {
 		reserved_rename(this.cpp_name(CppNameStyle::Declaration))
 	}
 
@@ -123,17 +123,17 @@ pub trait RustNativeGeneratedElement {
 pub trait RustElement: Element {
 	fn rust_module(&self) -> SupportedModule;
 
-	fn rust_module_reference(&self) -> Cow<str> {
+	fn rust_module_reference(&self) -> Cow<'_, str> {
 		DefaultRustNativeElement::rust_module_reference(self)
 	}
 
-	fn rust_name(&self, style: NameStyle) -> Cow<str>;
+	fn rust_name(&self, style: NameStyle) -> Cow<'_, str>;
 
 	/// The very last concrete part of the name in Rust
 	///
 	/// This might not match `rust_name(NameStyle::Declaration)` because some classes in Rust are prefixed with their namespace. E.g.
 	/// `Detail_Blender`, in this case the `rust_leafname()` == `Blender` and `rust_name(NameStyle::Declaration)` == `Detail_Blender`.
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<'_, str> {
 		DefaultRustNativeElement::rust_leafname(self)
 	}
 

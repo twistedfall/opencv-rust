@@ -47,7 +47,7 @@ pub enum BorrowKind {
 }
 
 impl BorrowKind {
-	/// Returns a variante that requires a more complicated handling, i.e., in the following order from the higher complication to the lower:
+	/// Returns a variant that requires a more complicated handling, i.e., in the following order from the higher complication to the lower:
 	/// * [Self::FromPointer]
 	/// * [Self::FromLifetime]
 	/// * [Self::Impossible]

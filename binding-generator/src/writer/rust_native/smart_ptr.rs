@@ -21,11 +21,11 @@ impl RustElement for SmartPtr<'_, '_> {
 	}
 
 	// fixme, we shouldn't override the rust_module_reference and rely on rust_module to provide the correct module
-	fn rust_module_reference(&self) -> Cow<str> {
+	fn rust_module_reference(&self) -> Cow<'_, str> {
 		"core".into()
 	}
 
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+	fn rust_name(&self, style: NameStyle) -> Cow<'_, str> {
 		let decl_name = self.rust_leafname(style.turbo_fish_style());
 		match style {
 			NameStyle::Declaration => decl_name,
@@ -37,7 +37,7 @@ impl RustElement for SmartPtr<'_, '_> {
 		}
 	}
 
-	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
+	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<'_, str> {
 		format!(
 			"Ptr{fish}<{typ}>",
 			fish = fish_style.rust_qual(),
@@ -246,11 +246,11 @@ fn all_bases<'tu, 'ge>(cls: &Class<'tu, 'ge>) -> Vec<Class<'tu, 'ge>> {
 }
 
 pub trait SmartPtrExt {
-	fn rust_localalias(&self) -> Cow<str>;
+	fn rust_localalias(&self) -> Cow<'_, str>;
 }
 
 impl SmartPtrExt for SmartPtr<'_, '_> {
-	fn rust_localalias(&self) -> Cow<str> {
+	fn rust_localalias(&self) -> Cow<'_, str> {
 		/*
 		let pointee = self.pointee();
 		let pointee_alias = pointee.rust_safe_id(true);

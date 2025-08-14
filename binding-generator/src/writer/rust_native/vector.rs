@@ -18,7 +18,7 @@ impl RustElement for Vector<'_, '_> {
 		SupportedModule::Core
 	}
 
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+	fn rust_name(&self, style: NameStyle) -> Cow<'_, str> {
 		let decl_name = self.rust_leafname(style.turbo_fish_style());
 		match style {
 			NameStyle::Declaration => decl_name,
@@ -30,7 +30,7 @@ impl RustElement for Vector<'_, '_> {
 		}
 	}
 
-	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
+	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<'_, str> {
 		let mut inner_typ = self.element_type();
 		if let Some(inner) = inner_typ.kind().as_pointer() {
 			// fixme, implement references properly, use VectorRef/Mut type
@@ -308,7 +308,7 @@ fn is_data_type_or_vec_of_data_type(type_ref: &TypeRef, for_opencv_5: bool) -> b
 
 pub trait VectorExt {
 	fn rust_element_module(&self) -> SupportedModule;
-	fn rust_localalias(&self) -> Cow<str>;
+	fn rust_localalias(&self) -> Cow<'_, str>;
 }
 
 impl VectorExt for Vector<'_, '_> {
@@ -316,7 +316,7 @@ impl VectorExt for Vector<'_, '_> {
 		self.element_type().rust_module()
 	}
 
-	fn rust_localalias(&self) -> Cow<str> {
+	fn rust_localalias(&self) -> Cow<'_, str> {
 		format!("VectorOf{typ}", typ = self.element_type().rust_safe_id(true)).into()
 	}
 }

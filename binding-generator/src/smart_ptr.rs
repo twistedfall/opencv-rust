@@ -37,7 +37,7 @@ impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 		}
 	}
 
-	pub fn pointee(&self) -> Cow<TypeRef<'tu, 'ge>> {
+	pub fn pointee(&self) -> Cow<'_, TypeRef<'tu, 'ge>> {
 		match self {
 			&Self::Clang { .. } => Owned(
 				self
@@ -89,15 +89,15 @@ impl Element for SmartPtr<'_, '_> {
 		}
 	}
 
-	fn doc_comment(&self) -> Cow<str> {
+	fn doc_comment(&self) -> Cow<'_, str> {
 		"".into()
 	}
 
-	fn cpp_namespace(&self) -> Cow<str> {
+	fn cpp_namespace(&self) -> Cow<'_, str> {
 		"cv".into()
 	}
 
-	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<'_, str> {
 		"cv::Ptr".cpp_name_from_fullname(style).into()
 	}
 }

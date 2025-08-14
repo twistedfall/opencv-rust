@@ -163,7 +163,7 @@ impl Settings {
 		self.func_unsafe.start_usage_tracking();
 	}
 
-	pub fn finish_usage_tracking(&mut self) -> HashMap<&'static str, HashSet<UsageTracker>> {
+	pub fn finish_usage_tracking(&mut self) -> HashMap<&'static str, HashSet<UsageTracker<'_>>> {
 		HashMap::from([
 			("ARG_OVERRIDE", self.arg_override.finish_usage_tracking()),
 			("RETURN_OVERRIDE", self.return_override.finish_usage_tracking()),

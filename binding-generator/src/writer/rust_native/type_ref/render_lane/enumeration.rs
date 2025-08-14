@@ -57,7 +57,7 @@ impl RenderLaneTrait for EnumRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &typ.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		let typ = match self.indirection {
 			Indirection::None | Indirection::Reference => Borrowed(&self.non_canonical),
 			Indirection::Pointer => Owned(TypeRef::new_pointer(self.non_canonical.clone())),

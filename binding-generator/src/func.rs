@@ -271,7 +271,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
-	pub fn kind(&self) -> Cow<FuncKind<'tu, 'ge>> {
+	pub fn kind(&self) -> Cow<'_, FuncKind<'tu, 'ge>> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				const OPERATOR: &str = "operator";
@@ -352,7 +352,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	/// Like [Self::doc_comment], but processes `@overload` and `@copybrief` directives if possible by copying the corresponding
 	/// doccomment
-	pub fn doc_comment_overloaded(&self) -> Cow<str> {
+	pub fn doc_comment_overloaded(&self) -> Cow<'_, str> {
 		let mut out = self.doc_comment();
 		match self {
 			Func::Clang { gen_env, .. } => {
@@ -443,7 +443,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
-	pub fn return_type_ref(&self) -> Cow<TypeRef<'tu, 'ge>> {
+	pub fn return_type_ref(&self) -> Cow<'_, TypeRef<'tu, 'ge>> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				let mut out = match self.kind().as_ref() {
@@ -515,7 +515,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
-	pub fn arguments(&self) -> Cow<[Field<'tu, 'ge>]> {
+	pub fn arguments(&self) -> Cow<'_, [Field<'tu, 'ge>]> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				let arg_overrides = gen_env.settings.arg_override.get(&mut self.matcher());
@@ -603,7 +603,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		out
 	}
 
-	pub fn matcher(&self) -> FuncMatchProperties {
+	pub fn matcher(&self) -> FuncMatchProperties<'_> {
 		FuncMatchProperties::new(self, self.cpp_name(CppNameStyle::Reference))
 	}
 
@@ -689,14 +689,14 @@ impl Element for Func<'_, '_> {
 		}
 	}
 
-	fn doc_comment(&self) -> Cow<str> {
+	fn doc_comment(&self) -> Cow<'_, str> {
 		match self {
 			&Self::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
 			Self::Desc(desc) => desc.doc_comment.as_ref().into(),
 		}
 	}
 
-	fn cpp_namespace(&self) -> Cow<str> {
+	fn cpp_namespace(&self) -> Cow<'_, str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultElement::cpp_namespace(entity).into(),
 			Self::Desc(desc) => self.kind().map_borrowed(|kind| match kind {
@@ -712,7 +712,7 @@ impl Element for Func<'_, '_> {
 		}
 	}
 
-	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<'_, str> {
 		let decl_name = match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				if matches!(entity.get_kind(), EntityKind::ConversionFunction) {

@@ -164,13 +164,13 @@ impl Mat {
 
 	/// Create a new [Mat] from a single-dimensional slice
 	#[inline]
-	pub fn from_slice<T: DataType>(s: &[T]) -> Result<BoxedRef<Self>> {
+	pub fn from_slice<T: DataType>(s: &[T]) -> Result<BoxedRef<'_, Self>> {
 		Self::new_rows_cols_with_data(1, i32::try_from(s.len())?, s)
 	}
 
 	/// Create a new [Mat] from a single-dimensional byte slice
 	#[inline]
-	pub fn from_bytes<T: DataType>(s: &[u8]) -> Result<BoxedRef<Self>> {
+	pub fn from_bytes<T: DataType>(s: &[u8]) -> Result<BoxedRef<'_, Self>> {
 		let rem = s.len() % mem::size_of::<T>();
 		if rem != 0 {
 			return Err(Error::new(
@@ -188,7 +188,7 @@ impl Mat {
 
 	/// Create a new [Mat] from a mutable single-dimensional byte slice
 	#[inline]
-	pub fn from_bytes_mut<T: DataType>(s: &mut [u8]) -> Result<BoxedRefMut<Self>> {
+	pub fn from_bytes_mut<T: DataType>(s: &mut [u8]) -> Result<BoxedRefMut<'_, Self>> {
 		let rem = s.len() % mem::size_of::<T>();
 		if rem != 0 {
 			return Err(Error::new(
@@ -206,7 +206,7 @@ impl Mat {
 
 	/// Create a new [Mat] from a mutable single-dimensional slice
 	#[inline]
-	pub fn from_slice_mut<T: DataType>(s: &mut [T]) -> Result<BoxedRefMut<Self>> {
+	pub fn from_slice_mut<T: DataType>(s: &mut [T]) -> Result<BoxedRefMut<'_, Self>> {
 		Self::new_rows_cols_with_data_mut(1, i32::try_from(s.len())?, s)
 	}
 
@@ -249,7 +249,7 @@ impl Mat {
 
 	/// Create a new [Mat] that references a single-dimensional slice with a custom shape
 	#[inline]
-	pub fn new_rows_cols_with_data<T: DataType>(rows: i32, cols: i32, data: &[T]) -> Result<BoxedRef<Self>> {
+	pub fn new_rows_cols_with_data<T: DataType>(rows: i32, cols: i32, data: &[T]) -> Result<BoxedRef<'_, Self>> {
 		match_length(&[rows, cols], data.len(), 1)?;
 		let m = unsafe {
 			Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut())
@@ -259,7 +259,7 @@ impl Mat {
 
 	/// Create a new [Mat] that references a single-dimensional byte slice with a custom shape
 	#[inline]
-	pub fn new_rows_cols_with_bytes<T: DataType>(rows: i32, cols: i32, data: &[u8]) -> Result<BoxedRef<Self>> {
+	pub fn new_rows_cols_with_bytes<T: DataType>(rows: i32, cols: i32, data: &[u8]) -> Result<BoxedRef<'_, Self>> {
 		match_length(&[rows, cols], data.len(), mem::size_of::<T>())?;
 		let m = unsafe {
 			Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut())
@@ -269,7 +269,7 @@ impl Mat {
 
 	/// Create a new mutable [Mat] that references a single-dimensional slice with a custom shape
 	#[inline]
-	pub fn new_rows_cols_with_data_mut<T: DataType>(rows: i32, cols: i32, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
+	pub fn new_rows_cols_with_data_mut<T: DataType>(rows: i32, cols: i32, data: &mut [T]) -> Result<BoxedRefMut<'_, Self>> {
 		match_length(&[rows, cols], data.len(), 1)?;
 		let m =
 			unsafe { Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
@@ -278,7 +278,7 @@ impl Mat {
 
 	/// Create a new mutable [Mat] that references a single-dimensional byte slice with a custom shape
 	#[inline]
-	pub fn new_rows_cols_with_bytes_mut<T: DataType>(rows: i32, cols: i32, data: &mut [u8]) -> Result<BoxedRefMut<Self>> {
+	pub fn new_rows_cols_with_bytes_mut<T: DataType>(rows: i32, cols: i32, data: &mut [u8]) -> Result<BoxedRefMut<'_, Self>> {
 		match_length(&[rows, cols], data.len(), mem::size_of::<T>())?;
 		let m =
 			unsafe { Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
@@ -287,7 +287,7 @@ impl Mat {
 
 	/// Create a new [Mat] that references a single-dimensional slice with a custom shape
 	#[inline]
-	pub fn new_size_with_data<T: DataType>(size: Size, data: &[T]) -> Result<BoxedRef<Self>> {
+	pub fn new_size_with_data<T: DataType>(size: Size, data: &[T]) -> Result<BoxedRef<'_, Self>> {
 		match_length(&[size.width, size.height], data.len(), 1)?;
 		let m = unsafe { Self::new_size_with_data_unsafe_def(size, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut()) }?;
 		Ok(<BoxedRef<Mat>>::from(m))
@@ -295,7 +295,7 @@ impl Mat {
 
 	/// Create a new mutable [Mat] that references a single-dimensional slice with a custom shape
 	#[inline]
-	pub fn new_size_with_data_mut<T: DataType>(size: Size, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
+	pub fn new_size_with_data_mut<T: DataType>(size: Size, data: &mut [T]) -> Result<BoxedRefMut<'_, Self>> {
 		match_length(&[size.width, size.height], data.len(), 1)?;
 		let m = unsafe { Self::new_size_with_data_unsafe_def(size, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
 		Ok(<BoxedRefMut<Mat>>::from(m))
@@ -318,7 +318,7 @@ impl Mat {
 	}
 
 	/// Returns 2 mutable ROIs into a single [Mat] as long as they do not intersect
-	pub fn roi_2_mut<MAT: MatTrait>(m: &mut MAT, roi1: Rect, roi2: Rect) -> Result<(BoxedRefMut<Mat>, BoxedRefMut<Mat>)> {
+	pub fn roi_2_mut<MAT: MatTrait>(m: &mut MAT, roi1: Rect, roi2: Rect) -> Result<(BoxedRefMut<'_, Mat>, BoxedRefMut<'_, Mat>)> {
 		if (roi1 & roi2).empty() {
 			// safe because we made sure that the interest areas do not intersect
 			let m2 = unsafe { (m as *mut MAT).as_mut().expect("Can't fail") };
@@ -619,7 +619,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 
 	/// Returns an iterator over [Mat] elements and their positions
 	#[inline]
-	fn iter<T: DataType>(&self) -> Result<MatIter<T>>
+	fn iter<T: DataType>(&self) -> Result<MatIter<'_, T>>
 	where
 		Self: Sized,
 	{
@@ -740,7 +740,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 
 	/// Returns a mutable iterator over [Mat] elements and their positions
 	#[inline]
-	fn iter_mut<T: DataType>(&mut self) -> Result<MatIterMut<T>>
+	fn iter_mut<T: DataType>(&mut self) -> Result<MatIterMut<'_, T>>
 	where
 		Self: Sized,
 	{

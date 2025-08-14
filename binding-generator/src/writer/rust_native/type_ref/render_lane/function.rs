@@ -78,7 +78,7 @@ impl RenderLaneTrait for FunctionRenderLane<'_, '_> {
 		)
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		self.non_canonical.cpp_name_ext(CppNameStyle::Reference, name, true)
 	}
 

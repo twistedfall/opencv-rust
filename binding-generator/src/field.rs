@@ -82,7 +82,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		}
 	}
 
-	pub fn type_ref(&self) -> Cow<TypeRef<'tu, 'ge>> {
+	pub fn type_ref(&self) -> Cow<'_, TypeRef<'tu, 'ge>> {
 		match self {
 			Self::Clang {
 				entity,
@@ -139,7 +139,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		}
 	}
 
-	pub fn default_value(&self) -> Option<Cow<str>> {
+	pub fn default_value(&self) -> Option<Cow<'_, str>> {
 		match self {
 			&Self::Clang { entity, .. } => {
 				// fixme: clang-2.0.0 contains a bug that causes rust-1.78.0+ to panic when calling .tokenize()
@@ -246,21 +246,21 @@ impl Element for Field<'_, '_> {
 		}
 	}
 
-	fn doc_comment(&self) -> Cow<str> {
+	fn doc_comment(&self) -> Cow<'_, str> {
 		match self {
 			Field::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
 			Field::Desc(_) => "".into(),
 		}
 	}
 
-	fn cpp_namespace(&self) -> Cow<str> {
+	fn cpp_namespace(&self) -> Cow<'_, str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultElement::cpp_namespace(entity).into(),
 			Self::Desc(desc) => desc.cpp_fullname.namespace().into(),
 		}
 	}
 
-	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<'_, str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultElement::cpp_name(self, entity, style),
 			Self::Desc(desc) => desc.cpp_fullname.cpp_name_from_fullname(style).into(),

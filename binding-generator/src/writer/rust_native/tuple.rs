@@ -20,11 +20,11 @@ impl RustElement for Tuple<'_, '_> {
 		DefaultRustNativeElement::rust_module(self.entity())
 	}
 
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+	fn rust_name(&self, style: NameStyle) -> Cow<'_, str> {
 		DefaultRustNativeElement::rust_name(self, self.entity(), style).into()
 	}
 
-	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
+	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<'_, str> {
 		format!(
 			"Tuple{fish}<{inner}>",
 			fish = fish_style.rust_qual(),
@@ -109,13 +109,13 @@ fn extern_functions<'tu, 'ge>(tuple: &Tuple<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 }
 
 pub trait TupleExt {
-	fn rust_localalias(&self) -> Cow<str>;
+	fn rust_localalias(&self) -> Cow<'_, str>;
 	fn rust_inner(&self) -> String;
 	fn rust_element_module(&self) -> SupportedModule;
 }
 
 impl TupleExt for Tuple<'_, '_> {
-	fn rust_localalias(&self) -> Cow<str> {
+	fn rust_localalias(&self) -> Cow<'_, str> {
 		const PREFIX: &str = "TupleOf";
 
 		let elems = self.elements();

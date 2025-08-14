@@ -86,7 +86,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 
 	/// TypeRefKind with all the typedef's traversed
 	#[inline]
-	pub fn canonical(&self) -> Cow<Self> {
+	pub fn canonical(&self) -> Cow<'_, Self> {
 		match self {
 			TypeRefKind::Typedef(tdef) => Owned(tdef.underlying_type_ref().kind().canonical().into_owned()),
 			_ => Borrowed(self),
@@ -102,7 +102,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_pointer(&self) -> Option<Cow<TypeRef<'tu, 'ge>>> {
+	pub fn as_pointer(&self) -> Option<Cow<'_, TypeRef<'tu, 'ge>>> {
 		match self {
 			TypeRefKind::Pointer(out) => Some(Borrowed(out)),
 			TypeRefKind::Typedef(tdef) => tdef
@@ -114,7 +114,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_reference(&self) -> Option<Cow<TypeRef<'tu, 'ge>>> {
+	pub fn as_reference(&self) -> Option<Cow<'_, TypeRef<'tu, 'ge>>> {
 		match self {
 			TypeRefKind::Reference(inner) => Some(Borrowed(inner)),
 			TypeRefKind::Typedef(tdef) => tdef
@@ -134,7 +134,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_pointer_reference_move(&self) -> Option<Cow<TypeRef<'tu, 'ge>>> {
+	pub fn as_pointer_reference_move(&self) -> Option<Cow<'_, TypeRef<'tu, 'ge>>> {
 		match self {
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
 				Some(Borrowed(inner))
@@ -149,7 +149,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 	}
 
 	/// Some with inner type for types whose values are moved as per C++ function specification (denoted with &&)
-	pub fn as_by_move(&self) -> Option<Cow<TypeRef<'tu, 'ge>>> {
+	pub fn as_by_move(&self) -> Option<Cow<'_, TypeRef<'tu, 'ge>>> {
 		match self {
 			TypeRefKind::RValueReference(inner) => Some(Borrowed(inner)),
 			TypeRefKind::Typedef(tdef) => tdef
@@ -169,7 +169,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_fixed_array(&self) -> Option<(Cow<TypeRef<'tu, 'ge>>, usize)> {
+	pub fn as_fixed_array(&self) -> Option<(Cow<'_, TypeRef<'tu, 'ge>>, usize)> {
 		match self {
 			TypeRefKind::Array(elem, Some(size)) => Some((Borrowed(elem), *size)),
 			TypeRefKind::Typedef(tdef) => tdef
@@ -181,7 +181,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_variable_array(&self) -> Option<Cow<TypeRef<'tu, 'ge>>> {
+	pub fn as_variable_array(&self) -> Option<Cow<'_, TypeRef<'tu, 'ge>>> {
 		match self {
 			TypeRefKind::Array(elem, None) => Some(Borrowed(elem)),
 			TypeRefKind::Typedef(tdef) => tdef
@@ -201,7 +201,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_class(&self) -> Option<Cow<Class<'tu, 'ge>>> {
+	pub fn as_class(&self) -> Option<Cow<'_, Class<'tu, 'ge>>> {
 		match self {
 			TypeRefKind::Class(out) => Some(Borrowed(out)),
 			TypeRefKind::Typedef(tdef) => tdef
@@ -213,7 +213,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_vector(&self) -> Option<Cow<Vector<'tu, 'ge>>> {
+	pub fn as_vector(&self) -> Option<Cow<'_, Vector<'tu, 'ge>>> {
 		match self {
 			TypeRefKind::StdVector(out) => Some(Borrowed(out)),
 			TypeRefKind::Typedef(tdef) => tdef
@@ -352,7 +352,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_abstract_class_ptr(&self) -> Option<(Cow<TypeRef<'tu, 'ge>>, Class<'tu, 'ge>)> {
+	pub fn as_abstract_class_ptr(&self) -> Option<(Cow<'_, TypeRef<'tu, 'ge>>, Class<'tu, 'ge>)> {
 		if let Some(pointee) = self.as_pointer() {
 			if let Some(class) = pointee.kind().as_class().filter(|cls| cls.is_abstract()) {
 				let class = class.into_owned();

@@ -120,21 +120,21 @@ impl Element for Typedef<'_, '_> {
 		}
 	}
 
-	fn doc_comment(&self) -> Cow<str> {
+	fn doc_comment(&self) -> Cow<'_, str> {
 		match self {
 			Self::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
 			Self::Desc(_) => "".into(),
 		}
 	}
 
-	fn cpp_namespace(&self) -> Cow<str> {
+	fn cpp_namespace(&self) -> Cow<'_, str> {
 		match self {
 			Self::Clang { entity, .. } => DefaultElement::cpp_namespace(*entity).into(),
 			Self::Desc(desc) => desc.cpp_fullname.namespace().into(),
 		}
 	}
 
-	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<'_, str> {
 		match self {
 			Self::Clang { entity, .. } => DefaultElement::cpp_name(self, *entity, style),
 			Self::Desc(desc) => desc.cpp_fullname.cpp_name_from_fullname(style).into(),

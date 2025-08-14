@@ -45,7 +45,7 @@ impl RenderLaneTrait for InStringRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.non_canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		format!("const char* {name}").into()
 	}
 
@@ -99,7 +99,7 @@ impl RenderLaneTrait for OutStringRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		format!("void** {name}").into()
 	}
 

@@ -51,7 +51,7 @@ impl RenderLaneTrait for FixedArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		self.canonical.cpp_name_ext(CppNameStyle::Reference, name, true)
 	}
 
@@ -104,7 +104,7 @@ impl RenderLaneTrait for VariableArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<'_, str> {
 		self.canonical.cpp_name_ext(CppNameStyle::Reference, name, true)
 	}
 

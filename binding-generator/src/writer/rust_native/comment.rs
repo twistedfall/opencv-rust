@@ -162,7 +162,7 @@ impl RenderComment {
 		Self { doc_comment, attributes }
 	}
 
-	pub fn render_with_comment_marker(&self, comment_marker: &str) -> Cow<str> {
+	pub fn render_with_comment_marker(&self, comment_marker: &str) -> Cow<'_, str> {
 		let mut out = add_comment_markers(&self.doc_comment, comment_marker);
 		if !out.is_empty() && !self.attributes.is_empty() {
 			out.to_mut().push('\n');

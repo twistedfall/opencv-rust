@@ -11,11 +11,11 @@ impl RustElement for Field<'_, '_> {
 		SupportedModule::Core
 	}
 
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+	fn rust_name(&self, style: NameStyle) -> Cow<'_, str> {
 		self.rust_leafname(style.turbo_fish_style())
 	}
 
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<'_, str> {
 		match self {
 			Self::Clang { .. } => DefaultRustNativeElement::rust_leafname(self).map_borrowed(|s| s.cpp_name_to_rust_fn_case()),
 			Self::Desc(desc) => reserved_rename(desc.cpp_fullname.localname().cpp_name_to_rust_fn_case()),

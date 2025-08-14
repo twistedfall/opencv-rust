@@ -18,7 +18,7 @@ impl RustElement for Class<'_, '_> {
 		}
 	}
 
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+	fn rust_name(&self, style: NameStyle) -> Cow<'_, str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultRustNativeElement::rust_name(self, entity, style).into(),
 			Self::Desc(_) => match style {
@@ -33,7 +33,7 @@ impl RustElement for Class<'_, '_> {
 		}
 	}
 
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<'_, str> {
 		if self.string_type().is_some() {
 			"String".into()
 		} else {
@@ -77,13 +77,13 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 }
 
 pub trait ClassExt {
-	fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<str>;
+	fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<'_, str>;
 	fn rust_as_raw_name(&self, constness: Constness) -> String;
 	fn rust_lifetime(&self) -> Option<Lifetime>;
 }
 
 impl ClassExt for Class<'_, '_> {
-	fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<str> {
+	fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<'_, str> {
 		let mut out = self.rust_name(style);
 		if self.kind().is_trait() {
 			if constness.is_const() {

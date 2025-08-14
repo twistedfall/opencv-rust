@@ -211,7 +211,7 @@ where
 	}
 
 	#[inline]
-	pub fn iter(&self) -> VectorRefIterator<T> {
+	pub fn iter(&self) -> VectorRefIterator<'_, T> {
 		VectorRefIterator::new(self)
 	}
 

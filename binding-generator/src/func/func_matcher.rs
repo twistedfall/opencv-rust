@@ -46,7 +46,7 @@ impl<'f> FuncMatchProperties<'f> {
 		})
 	}
 
-	pub fn arg_names(&mut self) -> &[Cow<str>] {
+	pub fn arg_names(&mut self) -> &[Cow<'_, str>] {
 		self
 			.arg_names
 			.get_or_insert_with(|| {
@@ -69,7 +69,7 @@ impl<'f> FuncMatchProperties<'f> {
 			.as_slice()
 	}
 
-	pub fn arg_types(&mut self) -> &[Cow<str>] {
+	pub fn arg_types(&mut self) -> &[Cow<'_, str>] {
 		self
 			.arg_types
 			.get_or_insert_with(|| match &self.func {
@@ -172,7 +172,7 @@ impl<'l, RES> FuncMatcher<'l, RES> {
 		}
 	}
 
-	pub fn finish_usage_tracking(&mut self) -> HashSet<UsageTracker> {
+	pub fn finish_usage_tracking(&mut self) -> HashSet<UsageTracker<'_>> {
 		if let Some(out) = self.usage_tracking.take() {
 			if let Ok(usage_tracking) = out.into_inner() {
 				if !usage_tracking.is_empty() {

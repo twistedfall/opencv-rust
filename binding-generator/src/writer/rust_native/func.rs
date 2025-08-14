@@ -54,7 +54,7 @@ impl RustElement for Func<'_, '_> {
 		}
 	}
 
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+	fn rust_name(&self, style: NameStyle) -> Cow<'_, str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultRustNativeElement::rust_name(self, entity, style).into(),
 			Self::Desc(_) => match style {
@@ -69,7 +69,7 @@ impl RustElement for Func<'_, '_> {
 		}
 	}
 
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<'_, str> {
 		if let Some(rust_custom_leafname) = self.rust_custom_leafname() {
 			return rust_custom_leafname.into();
 		}

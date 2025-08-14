@@ -236,7 +236,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
-	pub fn bases(&self) -> Cow<[Class<'tu, 'ge>]> {
+	pub fn bases(&self) -> Cow<'_, [Class<'tu, 'ge>]> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				let mut out = vec![];
@@ -640,16 +640,16 @@ impl Element for Class<'_, '_> {
 		}
 	}
 
-	fn doc_comment(&self) -> Cow<str> {
+	fn doc_comment(&self) -> Cow<'_, str> {
 		match self {
 			&Self::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
 			Self::Desc(_) => "".into(),
 		}
 	}
 
-	fn cpp_namespace(&self) -> Cow<str> {
+	fn cpp_namespace(&self) -> Cow<'_, str> {
 		#[inline(always)]
-		fn inner(cpp_fullname: &str) -> Cow<str> {
+		fn inner(cpp_fullname: &str) -> Cow<'_, str> {
 			cpp_fullname.namespace().into()
 		}
 
@@ -663,7 +663,7 @@ impl Element for Class<'_, '_> {
 		}
 	}
 
-	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<'_, str> {
 		match self {
 			Self::Clang {
 				custom_fullname: Some(cpp_fullname),

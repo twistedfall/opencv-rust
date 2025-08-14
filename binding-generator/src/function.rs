@@ -47,15 +47,15 @@ impl Element for Function<'_, '_> {
 		true
 	}
 
-	fn doc_comment(&self) -> Cow<str> {
+	fn doc_comment(&self) -> Cow<'_, str> {
 		"".into()
 	}
 
-	fn cpp_namespace(&self) -> Cow<str> {
+	fn cpp_namespace(&self) -> Cow<'_, str> {
 		"<unset>".into()
 	}
 
-	fn cpp_name(&self, _style: CppNameStyle) -> Cow<str> {
+	fn cpp_name(&self, _style: CppNameStyle) -> Cow<'_, str> {
 		let args = self
 			.arguments()
 			.iter()

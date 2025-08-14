@@ -11,7 +11,7 @@ impl RustElement for Function<'_, '_> {
 		SupportedModule::Core
 	}
 
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+	fn rust_name(&self, style: NameStyle) -> Cow<'_, str> {
 		let ret = self.return_type();
 		let args = self.arguments();
 		if let Some(userdata_idx) = args.iter().position(|a| a.is_user_data()) {
@@ -41,11 +41,11 @@ impl RustElement for Function<'_, '_> {
 }
 
 pub trait FunctionExt<'tu, 'ge> {
-	fn rust_extern(&self) -> Cow<str>;
+	fn rust_extern(&self) -> Cow<'_, str>;
 }
 
 impl<'tu, 'ge> FunctionExt<'tu, 'ge> for Function<'tu, 'ge> {
-	fn rust_extern(&self) -> Cow<str> {
+	fn rust_extern(&self) -> Cow<'_, str> {
 		let args = self.arguments();
 		let mut args_str = String::with_capacity(args.len() * 16);
 		for arg in &args {
