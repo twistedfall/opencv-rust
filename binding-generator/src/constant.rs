@@ -1,5 +1,4 @@
 use std::borrow::Cow;
-use std::fmt::Write;
 
 use clang::token::{Token, TokenKind};
 use clang::{Entity, EntityKind, EvaluationResult};
@@ -142,7 +141,9 @@ impl Value {
 		for t in tokens {
 			match t.get_kind() {
 				TokenKind::Comment => {
-					write!(out.value, "/* {} */", t.get_spelling()).expect("write! to String shouldn't fail");
+					out.value.push_str("/* ");
+					out.value.push_str(&t.get_spelling());
+					out.value.push_str(" */");
 				}
 				TokenKind::Identifier => {
 					let spelling = t.get_spelling();
@@ -188,7 +189,7 @@ impl Value {
 					if spelling == "{" || spelling == "}" {
 						return None;
 					}
-					out.value += &t.get_spelling();
+					out.value += &spelling;
 				}
 			}
 		}

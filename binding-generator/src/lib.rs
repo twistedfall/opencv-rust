@@ -99,11 +99,7 @@ fn get_definition_text(entity: Entity) -> String {
 }
 
 fn reserved_rename(val: Cow<str>) -> Cow<str> {
-	if let Some(&v) = settings::RESERVED_RENAME.get(val.as_ref()) {
-		v.into()
-	} else {
-		val
-	}
+	settings::RESERVED_RENAME.get(val.as_ref()).map_or(val, |&v| v.into())
 }
 
 #[inline(always)]

@@ -37,7 +37,7 @@ impl RustElement for Class<'_, '_> {
 		if self.string_type().is_some() {
 			"String".into()
 		} else {
-			let cpp_declname = self.cpp_name(CppNameStyle::Declaration);
+			let cpp_declname = DefaultRustNativeElement::rust_leafname(self);
 			if cpp_declname == "Vec" {
 				"VecN".into()
 			} else {
