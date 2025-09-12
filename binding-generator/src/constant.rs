@@ -1,13 +1,18 @@
 use std::borrow::Cow;
+use std::borrow::Cow::{Borrowed, Owned};
+use std::rc::Rc;
 
 use clang::token::{Token, TokenKind};
 use clang::{Entity, EntityKind, EvaluationResult};
+use desc::ConstDesc;
 
 use crate::comment::strip_doxygen_comment_markers;
-use crate::debug::LocationName;
+use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::type_ref::CppNameStyle;
-use crate::{settings, DefaultElement, Element, EntityElement, NameDebug};
+use crate::{settings, DefaultElement, Element, NameDebug, StrExt};
+
+mod desc;
 
 pub fn render_constant_cpp(tokens: &[Token]) -> String {
 	tokens
@@ -41,78 +46,96 @@ pub fn render_evaluation_result_rust(result: EvaluationResult) -> Value {
 }
 
 #[derive(Clone, Debug)]
-pub struct Const<'tu> {
-	entity: Entity<'tu>,
+pub enum Const<'tu> {
+	Clang { entity: Entity<'tu> },
+	Desc(Rc<ConstDesc>),
 }
 
 impl<'tu> Const<'tu> {
 	pub fn new(entity: Entity<'tu>) -> Self {
-		Self { entity }
+		Self::Clang { entity }
 	}
 
-	pub fn value(&self) -> Option<Value> {
-		match self.entity.get_kind() {
-			EntityKind::MacroDefinition => {
-				let tokens = self.entity.get_range().expect("Can't get macro definition range").tokenize();
-				if tokens.len() <= 1 {
-					None
-				} else {
-					Value::try_from_tokens(&tokens[1..])
+	pub fn value(&self) -> Option<Cow<'_, Value>> {
+		match self {
+			Self::Clang { entity } => match entity.get_kind() {
+				EntityKind::MacroDefinition => {
+					let tokens = entity.get_range().expect("Can't get macro definition range").tokenize();
+					if tokens.len() <= 1 {
+						None
+					} else {
+						Value::try_from_tokens(&tokens[1..]).map(Owned)
+					}
 				}
-			}
-			EntityKind::EnumConstantDecl => Some(Value {
-				kind: ValueKind::Integer,
-				value: self
-					.entity
-					.get_enum_constant_value()
-					.expect("Can't get enum constant value")
-					.0
-					.to_string(),
-			}),
-			EntityKind::VarDecl => self.entity.evaluate().map(render_evaluation_result_rust),
-			_ => unreachable!("Invalid entity type for constant"),
+				EntityKind::EnumConstantDecl => Some(Owned(Value {
+					kind: ValueKind::Integer,
+					value: entity
+						.get_enum_constant_value()
+						.expect("Can't get enum constant value")
+						.0
+						.to_string(),
+				})),
+				EntityKind::VarDecl => entity.evaluate().map(render_evaluation_result_rust).map(Owned),
+				_ => unreachable!("Invalid entity type for constant"),
+			},
+			Self::Desc(desc) => Some(Borrowed(desc.value.as_ref())),
 		}
-	}
-}
-
-impl<'tu> EntityElement<'tu> for Const<'tu> {
-	fn entity(&self) -> Entity<'tu> {
-		self.entity
 	}
 }
 
 impl Element for Const<'_> {
 	fn exclude_kind(&self) -> ExcludeKind {
-		DefaultElement::exclude_kind(self).with_is_excluded(|| {
-			self.entity.is_function_like_macro()
-				&& !settings::IMPLEMENTED_FUNCTION_LIKE_MACROS.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
-		})
+		match self {
+			Self::Clang { entity } => DefaultElement::exclude_kind(self).with_is_excluded(|| {
+				entity.is_function_like_macro()
+					&& !settings::IMPLEMENTED_FUNCTION_LIKE_MACROS.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
+			}),
+			Self::Desc(_) => ExcludeKind::Included,
+		}
 	}
 
 	fn is_system(&self) -> bool {
-		DefaultElement::is_system(self.entity)
+		match self {
+			&Self::Clang { entity } => DefaultElement::is_system(entity),
+			Self::Desc(_) => false,
+		}
 	}
 
 	fn is_public(&self) -> bool {
-		DefaultElement::is_public(self.entity)
+		match self {
+			&Self::Clang { entity } => DefaultElement::is_public(entity),
+			Self::Desc(_) => true,
+		}
 	}
 
 	fn doc_comment(&self) -> Cow<'_, str> {
-		strip_doxygen_comment_markers(&self.entity.get_comment().unwrap_or_default()).into()
+		match self {
+			Self::Clang { entity } => Owned(strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default())),
+			Self::Desc(_) => Borrowed(""),
+		}
 	}
 
 	fn cpp_namespace(&self) -> Cow<'_, str> {
-		DefaultElement::cpp_namespace(self.entity).into()
+		match self {
+			&Self::Clang { entity } => DefaultElement::cpp_namespace(entity).into(),
+			Self::Desc(desc) => Borrowed(desc.cpp_fullname.namespace()),
+		}
 	}
 
 	fn cpp_name(&self, style: CppNameStyle) -> Cow<'_, str> {
-		DefaultElement::cpp_name(self, self.entity(), style)
+		match self {
+			&Self::Clang { entity } => DefaultElement::cpp_name(self, entity, style),
+			Self::Desc(desc) => Borrowed(desc.cpp_fullname.cpp_name_from_fullname(style)),
+		}
 	}
 }
 
 impl<'me> NameDebug<'me> for &'me Const<'_> {
 	fn file_line_name(self) -> LocationName<'me> {
-		self.entity.file_line_name()
+		match self {
+			Const::Clang { entity } => entity.file_line_name(),
+			Const::Desc(desc) => LocationName::new(DefinitionLocation::Generated, desc.cpp_fullname.as_ref()),
+		}
 	}
 }
 

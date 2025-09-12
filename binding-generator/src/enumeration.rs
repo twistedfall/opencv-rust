@@ -96,7 +96,7 @@ impl Element for Enum<'_> {
 		if let Some(custom_fullname) = self.custom_fullname.as_deref() {
 			custom_fullname.cpp_name_from_fullname(style).into()
 		} else {
-			DefaultElement::cpp_name(self, self.entity(), style)
+			DefaultElement::cpp_name(self, self.entity, style)
 		}
 	}
 }

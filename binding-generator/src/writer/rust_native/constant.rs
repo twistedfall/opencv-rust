@@ -9,24 +9,43 @@ use super::RustNativeGeneratedElement;
 use crate::constant::{Value, ValueKind};
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
-use crate::{settings, CompiledInterpolation, Const, EntityElement, StrExt, SupportedModule};
+use crate::{settings, CompiledInterpolation, Const, StrExt, SupportedModule};
 
 impl RustElement for Const<'_> {
 	fn rust_module(&self) -> SupportedModule {
-		DefaultRustNativeElement::rust_module(self.entity())
+		match self {
+			&Self::Clang { entity } => DefaultRustNativeElement::rust_module(entity),
+			Self::Desc(desc) => desc.rust_module,
+		}
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<'_, str> {
-		let mut out = DefaultRustNativeElement::rust_name(self, self.entity(), style);
-		if let Some(without_suffix) = out.strip_suffix("_OCVRS_OVERRIDE") {
-			let new_len = without_suffix.len();
-			out.truncate(new_len);
+		match self {
+			&Self::Clang { entity } => {
+				let mut out = DefaultRustNativeElement::rust_name(self, entity, style);
+				if let Some(without_suffix) = out.strip_suffix("_OCVRS_OVERRIDE") {
+					let new_len = without_suffix.len();
+					out.truncate(new_len);
+				}
+				out.into()
+			}
+			Self::Desc(_) => match style {
+				NameStyle::Declaration => self.rust_leafname(FishStyle::No),
+				NameStyle::Reference(fish_style) => format!(
+					"{}::{}",
+					DefaultRustNativeElement::rust_module_reference(self),
+					self.rust_leafname(fish_style)
+				)
+				.into(),
+			},
 		}
-		out.into()
 	}
 
 	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment(self.entity(), comment_marker, opencv_version)
+		match self {
+			&Self::Clang { entity } => DefaultRustNativeElement::rendered_doc_comment(entity, comment_marker, opencv_version),
+			Self::Desc(_) => "".to_string(),
+		}
 	}
 }
 
@@ -39,10 +58,12 @@ impl RustNativeGeneratedElement for Const<'_> {
 		static RUST_TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("tpl/const/rust.tpl.rs").compile_interpolation());
 
-		let parent_is_class = self
-			.entity()
-			.get_lexical_parent()
-			.is_some_and(|p| matches!(p.get_kind(), EntityKind::ClassDecl | EntityKind::StructDecl));
+		let parent_is_class = match self {
+			&Self::Clang { entity } => entity
+				.get_lexical_parent()
+				.is_some_and(|p| matches!(p.get_kind(), EntityKind::ClassDecl | EntityKind::StructDecl)),
+			Self::Desc(_) => false,
+		};
 		let name = if parent_is_class {
 			self.rust_leafname(FishStyle::No)
 		} else {
