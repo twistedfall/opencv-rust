@@ -26,6 +26,7 @@ if [ ! -d "$opencv_contrib_src" ]; then
 fi
 
 if [[ "$OPENCV_VERSION" == "3.4.20" ]]; then # old OpenCV doesn't support choosing archs
+	export CMAKE_POLICY_VERSION_MINIMUM=3.5
 	arch_arg=
 else
 	arch_arg="--macos_archs $(uname -m)"
