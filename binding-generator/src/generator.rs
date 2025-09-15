@@ -362,7 +362,7 @@ pub struct Generator {
 
 impl Drop for Generator {
 	fn drop(&mut self) {
-		const BAD_VERSIONS: [&str; 2] = [" 19.", " 20."];
+		const BAD_VERSIONS: [&str; 3] = [" 19.", " 20.", " 21."];
 		if !(cfg!(windows)
 			&& cfg!(feature = "clang-runtime")
 			&& BAD_VERSIONS
