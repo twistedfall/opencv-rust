@@ -104,7 +104,7 @@ pub struct ProbeResult {
 }
 
 pub struct CmakeProbe<'r> {
-	cmake_bin: PathBuf,
+	cmake_bin: &'r Path,
 	build_dir: PathBuf,
 	src_dir: &'r Path,
 	package_name: &'r str,
@@ -115,7 +115,7 @@ pub struct CmakeProbe<'r> {
 
 impl<'r> CmakeProbe<'r> {
 	pub fn new(
-		cmake_bin: Option<PathBuf>,
+		cmake_bin: Option<&'r Path>,
 		build_dir: &Path,
 		src_dir: &'r Path,
 		package_name: &'r str,
@@ -124,7 +124,7 @@ impl<'r> CmakeProbe<'r> {
 		args: Option<&'r str>,
 	) -> Self {
 		Self {
-			cmake_bin: cmake_bin.unwrap_or_else(|| "cmake".into()),
+			cmake_bin: cmake_bin.unwrap_or(Path::new("cmake")),
 			build_dir: build_dir.join("cmake_probe_build"),
 			src_dir,
 			package_name,
@@ -148,7 +148,7 @@ impl<'r> CmakeProbe<'r> {
 	}
 
 	fn make_cmd(&self) -> Command {
-		let mut out = Command::new(&self.cmake_bin);
+		let mut out = Command::new(self.cmake_bin);
 		out.current_dir(&self.build_dir)
 			.args(["-S"])
 			.arg(self.src_dir)
@@ -166,7 +166,9 @@ impl<'r> CmakeProbe<'r> {
 			out.arg("-DCMAKE_BUILD_TYPE=Debug");
 		}
 		if let Some(args) = &self.args {
-			out.args(args.split(' '));
+			for arg in Shlex::new(args) {
+				out.arg(arg);
+			}
 		}
 		out
 	}

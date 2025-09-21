@@ -34,13 +34,6 @@ impl RustElement for Typedef<'_, '_> {
 			}
 		}
 	}
-
-	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
-		match self {
-			Typedef::Clang { entity, .. } => DefaultRustNativeElement::rendered_doc_comment(*entity, comment_marker, opencv_version),
-			Typedef::Desc(_) => "".to_string(),
-		}
-	}
 }
 
 impl RustNativeGeneratedElement for Typedef<'_, '_> {
@@ -63,7 +56,7 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 		};
 
 		TPL.interpolate(&HashMap::from([
-			("doc_comment", self.rendered_doc_comment("///", opencv_version).as_str()),
+			("doc_comment", self.rust_doc_comment("///", opencv_version).as_str()),
 			("debug", &self.get_debug()),
 			("rust_local", &self.rust_name(NameStyle::decl())),
 			("generic_args", &generic_args),

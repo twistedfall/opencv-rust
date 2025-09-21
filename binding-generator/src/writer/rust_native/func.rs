@@ -194,7 +194,7 @@ impl RustElement for Func<'_, '_> {
 		Owned(rust_name.into_owned())
 	}
 
-	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
+	fn rust_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
 		let mut comment = RenderComment::new(self.doc_comment_overloaded().into_owned(), opencv_version);
 		let args = self.arguments();
 		let (_, default_args) = split_default_args(&args);
@@ -309,7 +309,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			call_args.push("ocvrs_return.as_mut_ptr()".to_string());
 		}
 
-		let doc_comment = self.rendered_doc_comment("///", opencv_version);
+		let doc_comment = self.rust_doc_comment("///", opencv_version);
 		let visibility = if let Some(cls) = as_instance_method {
 			if cls.kind().is_trait() {
 				""

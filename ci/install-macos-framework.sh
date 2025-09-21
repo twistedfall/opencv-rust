@@ -2,8 +2,6 @@
 
 set -xeu
 
-macos_version="$(sw_vers -productVersion)"
-
 dist_dir="$HOME/dist/"
 build_dir="$HOME/build/opencv/opencv-$OPENCV_VERSION-build/"
 

@@ -4,9 +4,8 @@ use std::rc::Rc;
 
 use clang::token::{Token, TokenKind};
 use clang::{Entity, EntityKind, EvaluationResult};
-use desc::ConstDesc;
+pub use desc::ConstDesc;
 
-use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::type_ref::CppNameStyle;
@@ -54,6 +53,10 @@ pub enum Const<'tu> {
 impl<'tu> Const<'tu> {
 	pub fn new(entity: Entity<'tu>) -> Self {
 		Self::Clang { entity }
+	}
+
+	pub fn new_desc(desc: ConstDesc) -> Self {
+		Self::Desc(Rc::new(desc))
 	}
 
 	pub fn value(&self) -> Option<Cow<'_, Value>> {
@@ -110,8 +113,8 @@ impl Element for Const<'_> {
 
 	fn doc_comment(&self) -> Cow<'_, str> {
 		match self {
-			Self::Clang { entity } => Owned(strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default())),
-			Self::Desc(_) => Borrowed(""),
+			Self::Clang { entity } => entity.doc_comment(),
+			Self::Desc(desc) => Borrowed(desc.doc_comment.as_ref()),
 		}
 	}
 
@@ -156,6 +159,13 @@ pub struct Value {
 }
 
 impl Value {
+	pub fn integer(val: i32) -> Self {
+		Self {
+			kind: ValueKind::Integer,
+			value: val.to_string(),
+		}
+	}
+
 	pub fn try_from_tokens(tokens: &[Token]) -> Option<Self> {
 		let mut out = Value {
 			kind: ValueKind::Integer,

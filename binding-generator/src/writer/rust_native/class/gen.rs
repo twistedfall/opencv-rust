@@ -37,10 +37,10 @@ pub fn gen_simple_class(c: &Class, opencv_version: &str) -> String {
 		SIMPLE_FIELD_TPL.interpolate_into(
 			&mut fields,
 			&HashMap::from([
-				("doc_comment", Cow::Owned(f.rendered_doc_comment("///", opencv_version))),
-				("visibility", visibility.into()),
-				("name", f.rust_leafname(FishStyle::No)),
-				("type", typ),
+				("doc_comment", f.rust_doc_comment("///", opencv_version).as_str()),
+				("visibility", visibility),
+				("name", &f.rust_leafname(FishStyle::No)),
+				("type", &typ),
 			]),
 		)
 	});
@@ -52,7 +52,7 @@ pub fn gen_simple_class(c: &Class, opencv_version: &str) -> String {
 	impls.add_explicit_clone(c, &rust_local);
 
 	SIMPLE_TPL.interpolate(&HashMap::from([
-		("doc_comment", c.rendered_doc_comment("///", opencv_version).as_str()),
+		("doc_comment", c.rust_doc_comment("///", opencv_version).as_str()),
 		("debug", &c.get_debug()),
 		("rust_local", &rust_local),
 		("rust_full", &c.rust_name(NameStyle::ref_())),
@@ -168,7 +168,7 @@ pub fn gen_boxed_class(c: &Class, opencv_version: &str) -> String {
 
 	let (type_ref_const, type_ref_mut) = make_const_mut(type_ref);
 	BOXED_TPL.interpolate(&HashMap::from([
-		("doc_comment", c.rendered_doc_comment("///", opencv_version).as_str()),
+		("doc_comment", c.rust_doc_comment("///", opencv_version).as_str()),
 		("debug", &c.get_debug()),
 		("rust_local", &rust_local),
 		("rust_decl_lt", &rust_decl_lt),

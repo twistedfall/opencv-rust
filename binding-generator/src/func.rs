@@ -12,7 +12,6 @@ pub use kind::{FuncKind, OperatorKind, ReturnKind};
 use regex::bytes::Regex;
 use slice_arg_finder::SliceArgFinder;
 
-use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::ToEntity;
@@ -691,7 +690,7 @@ impl Element for Func<'_, '_> {
 
 	fn doc_comment(&self) -> Cow<'_, str> {
 		match self {
-			&Self::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
+			Self::Clang { entity, .. } => entity.doc_comment(),
 			Self::Desc(desc) => desc.doc_comment.as_ref().into(),
 		}
 	}

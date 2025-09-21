@@ -12,6 +12,8 @@
 	// strip dnn experimental ns when generating headers
 	#define CV_DNN_DONT_ADD_EXPERIMENTAL_NS
 	#define CV_DNN_DONT_ADD_INLINE_NS
+	// Defining CV_DOXYGEN hides some implementation details, but currently fails compilation
+	//#define CV_DOXYGEN
 	// the FFI export suffix only matters during actual linking
 	#define OCVRS_FFI_EXPORT_SUFFIX
 #endif

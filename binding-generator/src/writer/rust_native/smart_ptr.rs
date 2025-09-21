@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::sync::LazyLock;
 
 use super::class::ClassExt;
-use super::element::{DefaultRustNativeElement, RustElement};
+use super::element::RustElement;
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 use crate::class::ClassDesc;
@@ -43,13 +43,6 @@ impl RustElement for SmartPtr<'_, '_> {
 			typ = self.pointee().rust_name(NameStyle::ref_()),
 		)
 		.into()
-	}
-
-	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
-		match self {
-			&Self::Clang { entity, .. } => DefaultRustNativeElement::rendered_doc_comment(entity, comment_marker, opencv_version),
-			Self::Desc(_) => "".to_string(),
-		}
 	}
 }
 

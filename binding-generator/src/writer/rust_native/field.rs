@@ -21,13 +21,6 @@ impl RustElement for Field<'_, '_> {
 			Self::Desc(desc) => reserved_rename(desc.cpp_fullname.localname().cpp_name_to_rust_fn_case()),
 		}
 	}
-
-	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
-		match self {
-			&Field::Clang { entity, .. } => DefaultRustNativeElement::rendered_doc_comment(entity, comment_marker, opencv_version),
-			Field::Desc(_) => "".to_string(),
-		}
-	}
 }
 
 #[derive(Debug)]

@@ -43,7 +43,7 @@ static TARGET_VENDOR_APPLE: LazyLock<bool> =
 
 /// Environment vars that affect the build, the source will be rebuilt if those change, the contents of those vars will also
 /// be present in the debug log
-static AFFECTING_ENV_VARS: [&str; 18] = [
+static AFFECTING_ENV_VARS: [&str; 20] = [
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
 	"OPENCV_CMAKE_NAME",
@@ -54,6 +54,8 @@ static AFFECTING_ENV_VARS: [&str; 18] = [
 	"OPENCV_INCLUDE_PATHS",
 	"OPENCV_DISABLE_PROBES",
 	"OPENCV_MSVC_CRT",
+	"OPENCV_CMAKE_TOOLCHAIN_FILE",
+	"OPENCV_CMAKE_ARGS",
 	"CMAKE_PREFIX_PATH",
 	"OpenCV_DIR",
 	"PKG_CONFIG_PATH",

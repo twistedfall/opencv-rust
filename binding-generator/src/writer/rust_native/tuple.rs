@@ -31,10 +31,6 @@ impl RustElement for Tuple<'_, '_> {
 		)
 		.into()
 	}
-
-	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment(self.entity(), comment_marker, opencv_version)
-	}
 }
 
 impl RustNativeGeneratedElement for Tuple<'_, '_> {

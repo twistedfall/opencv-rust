@@ -345,10 +345,9 @@ impl Library {
 		let src_dir = MANIFEST_DIR.join("cmake");
 		let package_name = PackageName::cmake();
 		let args = env::var_os("OPENCV_CMAKE_ARGS");
+		let cmake_bin_var = env::var_os("OPENCV_CMAKE_BIN").map(PathBuf::from);
 		let cmake = CmakeProbe::new(
-			env::var_os("OPENCV_CMAKE_BIN")
-				.map(PathBuf::from)
-				.or_else(|| cmake_bin.map(PathBuf::from)),
+			cmake_bin.or(cmake_bin_var.as_deref()),
 			&OUT_DIR,
 			&src_dir,
 			package_name.as_ref(),
@@ -483,7 +482,9 @@ impl Library {
 		let explicit_cmake = env::var_os("OpenCV_DIR").is_some()
 			|| env::var_os("OPENCV_CMAKE_NAME").is_some()
 			|| env::var_os("CMAKE_PREFIX_PATH").is_some()
-			|| env::var_os("OPENCV_CMAKE_BIN").is_some();
+			|| env::var_os("OPENCV_CMAKE_BIN").is_some()
+			|| env::var_os("OPENCV_CMAKE_TOOLCHAIN_FILE").is_some()
+			|| env::var_os("OPENCV_CMAKE_ARGS").is_some();
 		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some();
 		eprintln!(
 			"=== Detected probe priority boost based on environment vars: pkg_config: {explicit_pkg_config}, cmake: {explicit_cmake}, vcpkg: {explicit_vcpkg}"

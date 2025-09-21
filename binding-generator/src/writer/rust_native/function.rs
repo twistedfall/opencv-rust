@@ -34,10 +34,6 @@ impl RustElement for Function<'_, '_> {
 			self.rust_extern()
 		}
 	}
-
-	fn rendered_doc_comment(&self, _comment_marker: &str, _opencv_version: &str) -> String {
-		"".to_string()
-	}
 }
 
 pub trait FunctionExt<'tu, 'ge> {

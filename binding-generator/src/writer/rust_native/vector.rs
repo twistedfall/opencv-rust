@@ -42,10 +42,6 @@ impl RustElement for Vector<'_, '_> {
 		)
 		.into()
 	}
-
-	fn rendered_doc_comment(&self, _comment_marker: &str, _opencv_version: &str) -> String {
-		"".to_string()
-	}
 }
 
 impl RustNativeGeneratedElement for Vector<'_, '_> {

@@ -6,7 +6,6 @@ use std::rc::Rc;
 use clang::{Entity, EntityKind};
 pub use desc::TypedefDesc;
 
-use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::type_ref::{CppNameStyle, NameStyle, TypeRefDesc, TypeRefKind, TypeRefTypeHint};
@@ -122,7 +121,7 @@ impl Element for Typedef<'_, '_> {
 
 	fn doc_comment(&self) -> Cow<'_, str> {
 		match self {
-			Self::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
+			Self::Clang { entity, .. } => entity.doc_comment(),
 			Self::Desc(_) => "".into(),
 		}
 	}

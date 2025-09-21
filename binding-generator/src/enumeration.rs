@@ -5,7 +5,6 @@ use std::rc::Rc;
 
 use clang::{Entity, EntityKind, EntityVisitResult};
 
-use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::LocationName;
 use crate::element::ExcludeKind;
 use crate::type_ref::CppNameStyle;
@@ -81,7 +80,7 @@ impl Element for Enum<'_> {
 	}
 
 	fn doc_comment(&self) -> Cow<'_, str> {
-		strip_doxygen_comment_markers(&self.entity.get_comment().unwrap_or_default()).into()
+		self.entity.doc_comment()
 	}
 
 	fn cpp_namespace(&self) -> Cow<'_, str> {

@@ -5,7 +5,6 @@ use std::rc::Rc;
 use clang::token::TokenKind;
 use clang::{Entity, EntityKind, EntityVisitResult};
 
-use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName, NameDebug};
 use crate::element::ExcludeKind;
 use crate::settings::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
@@ -248,7 +247,7 @@ impl Element for Field<'_, '_> {
 
 	fn doc_comment(&self) -> Cow<'_, str> {
 		match self {
-			Field::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
+			Field::Clang { entity, .. } => entity.doc_comment(),
 			Field::Desc(_) => "".into(),
 		}
 	}

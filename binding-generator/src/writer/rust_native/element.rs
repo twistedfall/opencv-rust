@@ -91,12 +91,6 @@ impl DefaultRustNativeElement {
 			}
 		}
 	}
-
-	pub fn rendered_doc_comment(entity: Entity, comment_marker: &str, opencv_version: &str) -> String {
-		RenderComment::new(entity.doc_comment().into_owned(), opencv_version)
-			.render_with_comment_marker(comment_marker)
-			.into_owned()
-	}
 }
 
 pub trait RustNativeGeneratedElement {
@@ -137,7 +131,11 @@ pub trait RustElement: Element {
 		DefaultRustNativeElement::rust_leafname(self)
 	}
 
-	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String;
+	fn rust_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
+		RenderComment::new(self.doc_comment().into_owned(), opencv_version)
+			.render_with_comment_marker(comment_marker)
+			.into_owned()
+	}
 }
 
 pub trait DebugRust {

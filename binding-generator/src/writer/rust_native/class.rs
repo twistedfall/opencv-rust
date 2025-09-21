@@ -45,13 +45,6 @@ impl RustElement for Class<'_, '_> {
 			}
 		}
 	}
-
-	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
-		match self {
-			&Self::Clang { entity, .. } => DefaultRustNativeElement::rendered_doc_comment(entity, comment_marker, opencv_version),
-			Self::Desc(_) => "".to_string(),
-		}
-	}
 }
 
 impl RustNativeGeneratedElement for Class<'_, '_> {

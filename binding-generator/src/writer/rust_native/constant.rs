@@ -1,4 +1,5 @@
 use std::borrow::Cow;
+use std::borrow::Cow::{Borrowed, Owned};
 use std::collections::HashMap;
 use std::sync::LazyLock;
 
@@ -40,13 +41,6 @@ impl RustElement for Const<'_> {
 			},
 		}
 	}
-
-	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
-		match self {
-			&Self::Clang { entity } => DefaultRustNativeElement::rendered_doc_comment(entity, comment_marker, opencv_version),
-			Self::Desc(_) => "".to_string(),
-		}
-	}
 }
 
 impl RustNativeGeneratedElement for Const<'_> {
@@ -76,11 +70,11 @@ impl RustNativeGeneratedElement for Const<'_> {
 				.unwrap_or(&value.kind)
 				.rust_type();
 			RUST_TPL.interpolate(&HashMap::from([
-				("doc_comment", Cow::Owned(self.rendered_doc_comment("///", opencv_version))),
+				("doc_comment", Owned(self.rust_doc_comment("///", opencv_version))),
 				("debug", self.get_debug().into()),
 				("name", name),
 				("type", typ.into()),
-				("value", value.rust_render().into()),
+				("value", value.rust_render()),
 			]))
 		} else {
 			"".to_string()
@@ -106,28 +100,28 @@ impl ValueKindExt for ValueKind {
 }
 
 pub trait ValueExt {
-	fn rust_render(self) -> String;
+	fn rust_render(&self) -> Cow<'_, str>;
 }
 
 impl ValueExt for Value {
-	fn rust_render(self) -> String {
+	fn rust_render(&self) -> Cow<'_, str> {
 		match self.kind {
-			ValueKind::Float | ValueKind::Double if !self.value.contains('.') => {
-				format!("{}.", self.value)
-			}
+			ValueKind::Float | ValueKind::Double if !self.value.contains('.') => Owned(format!("{}.", self.value)),
 			ValueKind::Integer => {
 				if let Some(no_prefix) = self.value.strip_prefix("0x") {
 					// todo: use let chain when MSRV is 1.88
 					if i32::from_str_radix(no_prefix, 16).is_err() {
-						format!("{}u32 as i32", self.value)
+						Owned(format!("{}u32 as i32", self.value))
 					} else {
-						self.value
+						Borrowed(&self.value)
 					}
 				} else {
-					self.value
+					Borrowed(&self.value)
 				}
 			}
-			ValueKind::UnsignedInteger | ValueKind::Usize | ValueKind::Float | ValueKind::Double | ValueKind::String => self.value,
+			ValueKind::UnsignedInteger | ValueKind::Usize | ValueKind::Float | ValueKind::Double | ValueKind::String => {
+				Borrowed(&self.value)
+			}
 		}
 	}
 }
