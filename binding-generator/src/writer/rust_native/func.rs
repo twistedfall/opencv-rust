@@ -195,7 +195,7 @@ impl RustElement for Func<'_, '_> {
 	}
 
 	fn rust_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
-		let mut comment = RenderComment::new(self.doc_comment_overloaded().into_owned(), opencv_version);
+		let mut comment = RenderComment::new(self.doc_comment().into_owned(), opencv_version);
 		let args = self.arguments();
 		let (_, default_args) = split_default_args(&args);
 		let default_args_comment = comment::render_cpp_default_args(default_args);

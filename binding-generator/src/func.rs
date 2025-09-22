@@ -229,7 +229,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				desc.cpp_name = ancestor.cpp_name(CppNameStyle::Reference).into();
 			}
 			if config.doc_comment {
-				desc.doc_comment = ancestor.doc_comment_overloaded().into();
+				desc.doc_comment = ancestor.doc_comment().into();
 			}
 			if config.arguments {
 				desc.arguments = ancestor.arguments().into();
@@ -347,39 +347,6 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				| FuncKind::InstanceOperator(..) => false,
 			},
 		}
-	}
-
-	/// Like [Self::doc_comment], but processes `@overload` and `@copybrief` directives if possible by copying the corresponding
-	/// doccomment
-	pub fn doc_comment_overloaded(&self) -> Cow<'_, str> {
-		let mut out = self.doc_comment();
-		match self {
-			Func::Clang { gen_env, .. } => {
-				let line = self.file_line_name().location.as_file().map_or(0, |(_, line)| line);
-				const OVERLOAD: &str = "@overload";
-				if let Some(idx) = out.find(OVERLOAD) {
-					let rep = if let Some(copy) = gen_env.get_func_comment(line, self.cpp_name(CppNameStyle::Reference).as_ref()) {
-						Owned(format!("{copy}\n\n## Overloaded parameters\n"))
-					} else {
-						"This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.".into()
-					};
-					out.to_mut().replace_range(idx..idx + OVERLOAD.len(), &rep);
-				}
-				static COPY_BRIEF: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"@copybrief\s+(\w+)").unwrap());
-				out.to_mut().replace_in_place_regex_cb(&COPY_BRIEF, |comment, caps| {
-					let copy_name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
-					let mut copy_full_name = self.cpp_namespace().into_owned();
-					copy_full_name.extend_sep("::", copy_name);
-					if let Some(copy) = gen_env.get_func_comment(line, &copy_full_name) {
-						Some(copy.into())
-					} else {
-						Some("".into())
-					}
-				});
-			}
-			Func::Desc(_) => {}
-		}
-		out
 	}
 
 	pub fn return_kind(&self) -> ReturnKind {
@@ -690,7 +657,28 @@ impl Element for Func<'_, '_> {
 
 	fn doc_comment(&self) -> Cow<'_, str> {
 		match self {
-			Self::Clang { entity, .. } => entity.doc_comment(),
+			Self::Clang { entity, gen_env, .. } => {
+				// Process `@overload` and `@copybrief` directives if possible by copying the corresponding doccomment
+				let mut out = entity.doc_comment();
+				let line = self.file_line_name().location.as_file().map_or(0, |(_, line)| line);
+				const OVERLOAD: &str = "@overload";
+				if let Some(idx) = out.find(OVERLOAD) {
+					let rep = if let Some(copy) = gen_env.get_func_comment(line, self.cpp_name(CppNameStyle::Reference).as_ref()) {
+						Owned(format!("{copy}\n\n## Overloaded parameters\n"))
+					} else {
+						"This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.".into()
+					};
+					out.to_mut().replace_range(idx..idx + OVERLOAD.len(), &rep);
+				}
+				static COPY_BRIEF: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"@copybrief\s+(\w+)").unwrap());
+				out.to_mut().replace_in_place_regex_cb(&COPY_BRIEF, |comment, caps| {
+					let copy_name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
+					let mut copy_full_name = self.cpp_namespace().into_owned();
+					copy_full_name.extend_sep("::", copy_name);
+					Some(gen_env.get_func_comment(line, &copy_full_name).unwrap_or("").into())
+				});
+				out
+			}
 			Self::Desc(desc) => desc.doc_comment.as_ref().into(),
 		}
 	}
