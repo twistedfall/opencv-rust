@@ -7,7 +7,7 @@ readme = "README.md"
 keywords = ["opencv", "vision", "cv"]
 categories = ["api-bindings", "computer-vision", "external-ffi-bindings", "multimedia"]
 license = "MIT"
-version = "0.95.1"
+version = "0.96.0"
 # bump edition to 2024 when MSRV is 1.85
 edition = "2021"
 rust-version = "1.81.0"
@@ -35,7 +35,7 @@ rgb = { version = "0.8.20", default-features = false, features = ["argb"], optio
 windows = { version = "0.59", features = ["Win32_Graphics_Direct3D9", "Win32_Graphics_Direct3D10", "Win32_Graphics_Direct3D11"] }
 
 [build-dependencies]
-opencv-binding-generator = { version = "0.97.0", path = "binding-generator" }
+opencv-binding-generator = { version = "0.98.0", path = "binding-generator" }
 cc = { version = "1.0.83", features = ["parallel"] }
 dunce = "1"
 # jobserver-0.1.25 is the first one that has Client::available() method
@@ -49,7 +49,7 @@ vcpkg = "0.2.9"
 [dev-dependencies]
 matches = "0.1"
 # copy of build-dependencies because we need to test methods of the build script
-opencv-binding-generator = { version = "0.97.0", path = "binding-generator" }
+opencv-binding-generator = { version = "0.98.0", path = "binding-generator" }
 cc = { version = "1.0.83", features = ["parallel"] }
 dunce = "1"
 # jobserver-0.1.25 is the first one that has Client::available() method
