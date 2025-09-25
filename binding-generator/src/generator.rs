@@ -363,21 +363,21 @@ pub struct Generator {
 impl Drop for Generator {
 	fn drop(&mut self) {
 		const BAD_VERSIONS: [&str; 3] = [" 19.", " 20.", " 21."];
-		if !(cfg!(windows)
+		// `clang` has an issue on Windows when running with the `runtime` feature and clang-19+:
+		// https://github.com/KyleMayes/clang-rs/issues/63
+		// So we avoid dropping clang in that case as a workaround.
+		// `clang::get_version()` is a string like "Apple clang version 15.0.0 (clang-1500.1.0.2.5)"
+		if cfg!(windows)
 			&& cfg!(feature = "clang-runtime")
 			&& BAD_VERSIONS
 				.iter()
-				.any(|bad_version| clang::get_version().contains(bad_version)))
+				.any(|bad_version| clang::get_version().contains(bad_version))
 		{
-			// `clang` has an issue on Windows when running with the `runtime` feature and clang-19+:
-			// https://github.com/KyleMayes/clang-rs/issues/63
-			// So we avoid dropping clang in that case as a workaround.
-			// `clang::get_version()` is string like "Apple clang version 15.0.0 (clang-1500.1.0.2.5)"
-			unsafe {
-				ManuallyDrop::drop(&mut self.clang);
-			}
-		} else {
 			eprintln!("=== Windows + clang-runtime + clang version is known to be problematic, skipping drop of Generator");
+			return;
+		}
+		unsafe {
+			ManuallyDrop::drop(&mut self.clang);
 		}
 	}
 }

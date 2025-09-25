@@ -8,6 +8,9 @@ pub trait OpenCVBitfieldEnum: Sized + Copy + 'static {
 	const ALL_FLAGS: &'static [Self];
 
 	/// Construct the enum from an `i32` value without checking its validity
+	///
+	/// # Safety
+	/// The caller must ensure that `value` is a valid combination of flags defined in `Self::ALL_FLAGS`.
 	unsafe fn from_i32_unchecked(value: i32) -> Self;
 
 	/// Get the `i32` value of this enum
@@ -32,7 +35,7 @@ pub trait OpenCVBitfieldEnum: Sized + Copy + 'static {
 		}
 	}
 
-	/// Check whether the specified flag or flags are set.
+	/// Check whether the specified flag or flags are set
 	#[inline]
 	fn is_set(self, flag: Self) -> bool {
 		let s = self.to_i32();
