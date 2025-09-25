@@ -171,7 +171,7 @@ impl<'r> Collector<'r> {
 		writeln!(sys_rs, "mod {module_rust_safe_name}_sys {{")?;
 		writeln!(sys_rs, "\tuse super::*;")?;
 		writeln!(sys_rs)?;
-		writeln!(sys_rs, "\textern \"C\" {{")?;
+		writeln!(sys_rs, "\tunsafe extern \"C\" {{")?;
 		copy_indent(BufReader::new(File::open(&externs_rs)?), sys_rs, "\t\t")?;
 		let _ = fs::remove_file(externs_rs);
 		let mut type_extern_files = files_with_extension(self.out_dir, "rs")?
@@ -199,16 +199,15 @@ impl<'r> Collector<'r> {
 		writeln!(hub_rs, "\nmod ffi_exports {{")?;
 		writeln!(hub_rs, "\tuse crate::mod_prelude_sys::*;")?;
 		write!(hub_rs, "\t")?;
-		// MSRV: use #[unsafe(no_mangle)] when MSRV is 1.82
 		writeln!(
 			hub_rs,
-			r#"#[no_mangle] unsafe extern "C" fn ocvrs_create_string{}(s: *const c_char) -> *mut String {{ unsafe {{ crate::templ::ocvrs_create_string(s) }} }}"#,
+			r#"#[unsafe(no_mangle)] unsafe extern "C" fn ocvrs_create_string{}(s: *const c_char) -> *mut String {{ unsafe {{ crate::templ::ocvrs_create_string(s) }} }}"#,
 			self.ffi_export_suffix
 		)?;
 		write!(hub_rs, "\t")?;
 		writeln!(
 			hub_rs,
-			r#"#[no_mangle] unsafe extern "C" fn ocvrs_create_byte_string{}(v: *const u8, len: size_t) -> *mut Vec<u8> {{ unsafe {{ crate::templ::ocvrs_create_byte_string(v, len) }} }}"#,
+			r#"#[unsafe(no_mangle)] unsafe extern "C" fn ocvrs_create_byte_string{}(v: *const u8, len: size_t) -> *mut Vec<u8> {{ unsafe {{ crate::templ::ocvrs_create_byte_string(v, len) }} }}"#,
 			self.ffi_export_suffix
 		)?;
 		writeln!(hub_rs, "}}")?;

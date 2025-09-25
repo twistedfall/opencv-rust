@@ -219,7 +219,7 @@ impl StringExt for String {
 		for line in lines {
 			// there is more than just a newline in the buffer
 			if line.len() > 1 {
-				self.extend(iter::repeat(indent.symbol).take(indent.len));
+				self.extend(iter::repeat_n(indent.symbol, indent.len));
 			}
 			self.push_str(line);
 		}

@@ -37,8 +37,7 @@ impl DefaultElement {
 	}
 
 	pub fn is_public(entity: Entity) -> bool {
-		// MSRV: use `is_none_or` when MSRV is 1.82
-		entity.get_accessibility().map_or(true, |a| Accessibility::Public == a)
+		entity.get_accessibility().is_none_or(|a| Accessibility::Public == a)
 	}
 
 	pub fn cpp_namespace(entity: Entity) -> String {

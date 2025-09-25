@@ -242,7 +242,7 @@ pub trait VecExtern {
 
 macro_rules! vecn_extern {
 	($type: ty, $len: expr, $extern_input_array: ident, $extern_ouput_array: ident, $extern_input_array_output: ident) => {
-		extern "C" {
+		unsafe extern "C" {
 			fn $extern_input_array(instance: extern_send!($crate::core::VecN<$type, $len>), ocvrs_return: *mut $crate::sys::Result<extern_receive!($crate::core::_InputArray)>);
 			fn $extern_ouput_array(instance: extern_send!(mut $crate::core::VecN<$type, $len>), ocvrs_return: *mut $crate::sys::Result<extern_receive!($crate::core::_OutputArray)>);
 			fn $extern_input_array_output(instance: extern_send!(mut $crate::core::VecN<$type, $len>), ocvrs_return: *mut $crate::sys::Result<extern_receive!($crate::core::_InputOutputArray)>);

@@ -453,7 +453,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 					let fld_declname = fld_refname.localname();
 					let (mut read_const_yield, mut read_mut_yield) = if read_write.is_read() {
 						if fld_const.is_mut() && passed_by_ref {
-							let read_const_func = if constness_filter.map_or(true, |c| c.is_const()) {
+							let read_const_func = if constness_filter.is_none_or(|c| c.is_const()) {
 								Some(Func::new_desc(
 									FuncDesc::new(
 										FuncKind::FieldAccessor(cls.clone(), fld.clone()),
@@ -472,7 +472,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							} else {
 								None
 							};
-							let read_mut_func = if constness_filter.map_or(true, |c| c.is_mut()) {
+							let read_mut_func = if constness_filter.is_none_or(|c| c.is_mut()) {
 								Some(Func::new_desc(
 									FuncDesc::new(
 										FuncKind::FieldAccessor(cls.clone(), fld.clone()),
@@ -493,7 +493,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							};
 							(read_const_func, read_mut_func)
 						} else {
-							let single_read_func = if constness_filter.map_or(true, |c| c == fld_const) {
+							let single_read_func = if constness_filter.is_none_or(|c| c == fld_const) {
 								Some(Func::new_desc(
 									FuncDesc::new(
 										FuncKind::FieldAccessor(cls.clone(), fld.clone()),
@@ -518,7 +518,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 						(None, None)
 					};
 					let mut write_yield = if read_write.is_write()
-						&& constness_filter.map_or(true, |c| c.is_mut())
+						&& constness_filter.is_none_or(|c| c.is_mut())
 						&& !fld_type_ref.constness().is_const()
 						&& !fld_type_kind.as_fixed_array().is_some()
 					{

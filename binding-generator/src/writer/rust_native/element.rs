@@ -46,7 +46,7 @@ impl DefaultRustNativeElement {
 			match parent.get_kind() {
 				EntityKind::ClassDecl | EntityKind::StructDecl | EntityKind::ClassTemplate => {
 					let parent_name = parent.get_name().expect("Can't get parent name");
-					if parts.last().map_or(true, |last| last != &parent_name) {
+					if parts.last().is_none_or(|last| last != &parent_name) {
 						parts.push(parent_name.into());
 					}
 				}

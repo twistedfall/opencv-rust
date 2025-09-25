@@ -288,7 +288,7 @@ impl Library {
 				.map(|p| LinkSearch(Linkage::Default, p))
 				.collect(),
 		));
-		if link_paths.map_or(true, |link_paths| link_paths.is_extend()) {
+		if link_paths.is_none_or(|link_paths| link_paths.is_extend()) {
 			cargo_metadata.extend(Self::process_link_paths(
 				None,
 				opencv

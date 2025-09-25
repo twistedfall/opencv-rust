@@ -41,7 +41,7 @@ impl<'tu, 'ge> Typedef<'tu, 'ge> {
 		let _ = entity.walk_children_while(|child| {
 			let child_unnamed_or_same_name = child
 				.get_name()
-				.map_or(true, |child_name| Some(child_name) == entity.get_name());
+				.is_none_or(|child_name| Some(child_name) == entity.get_name());
 			if child_unnamed_or_same_name {
 				match child.get_kind() {
 					EntityKind::StructDecl => {
