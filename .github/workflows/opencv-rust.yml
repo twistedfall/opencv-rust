@@ -15,7 +15,7 @@ jobs:
       matrix:
         os-image:
           - ubuntu-24.04
-          - macos-14
+          - macos-15
         opencv-version:
           - 4.11.0
         linkage:
@@ -30,7 +30,7 @@ jobs:
           - os-image: ubuntu-22.04
             opencv-version: 3.4.20
             linkage: dynamic
-          - os-image: macos-13
+          - os-image: macos-14
             opencv-version: 3.4.20
             linkage: dynamic
     runs-on: ${{ matrix.os-image }}
@@ -64,20 +64,20 @@ jobs:
       matrix:
         os-image:
           - ubuntu-24.04
-          - windows-2022
+          - windows-2025
         vcpkg-version:
-          - 2025.08.27 # https://github.com/microsoft/vcpkg/releases
+          - 2025.09.17 # https://github.com/microsoft/vcpkg/releases
         vcpkg-features-cache-key:
           - full
         vcpkg-features:
           - contrib,nonfree,ade,opencl
         include:
-          - os-image: windows-2022
-            vcpkg-version: 2025.08.27
+          - os-image: windows-2025
+            vcpkg-version: 2025.09.17
             vcpkg-features-cache-key: min
             vcpkg-features: contrib
-          - os-image: macos-14
-            vcpkg-version: 2025.08.27
+          - os-image: macos-15
+            vcpkg-version: 2025.09.17
             vcpkg-features-cache-key: full-no-opencl
             vcpkg-features: contrib,nonfree,ade
     runs-on: ${{ matrix.os-image }}
@@ -108,7 +108,7 @@ jobs:
       fail-fast: false
       matrix:
         os-image:
-          - windows-2022
+          - windows-2025
         version:
           - opencv: 3.4.16
           - opencv: 4.11.0 # https://community.chocolatey.org/packages/OpenCV#versionhistory
@@ -119,7 +119,7 @@ jobs:
           - os-image: ubuntu-22.04
             version:
               opencv: 4.5.4
-          - os-image: macos-14
+          - os-image: macos-15
             version:
               brew: "@4"
     runs-on: ${{ matrix.os-image }}

@@ -1,0 +1,11 @@
+diff '--color=auto' -ur opencv-3.4.20.orig/platforms/osx/build_framework.py opencv-3.4.20/platforms/osx/build_framework.py
+--- opencv-3.4.20.orig/platforms/osx/build_framework.py	2023-06-27 13:29:13.000000000 +0200
++++ opencv-3.4.20/platforms/osx/build_framework.py	2025-10-03 11:25:30.786775436 +0200
+@@ -53,6 +53,6 @@
+ 
+     b = OSXBuilder(args.opencv, args.contrib, False, False, args.without, args.disable, args.enablenonfree,
+         [
+-            (["x86_64"], "MacOSX")
++            (["arm64"], "MacOSX")
+         ], args.debug, args.debug_info)
+     b.build(args.out)

@@ -23,9 +23,15 @@ if [ ! -d "$opencv_contrib_src" ]; then
 	curl -L "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" | tar -xz -C "$dist_dir"
 fi
 
-if [[ "$OPENCV_VERSION" == "3.4.20" ]]; then # old OpenCV doesn't support choosing archs
-	export CMAKE_POLICY_VERSION_MINIMUM=3.5
+if [[ "$OPENCV_VERSION" == "3.4.20" ]]; then
+	# old OpenCV doesn't support choosing archs, patch hardcoded value to be arm64
 	arch_arg=
+	script_dir="$(dirname "$(readlink -f "$0")")"
+	patch -p1 -d"$opencv_src" < "$script_dir/opencv-3.4-macos-arm64-build.patch"
+	# old OpenCV CMake min version requirement is too old for the newer CMake
+	export CMAKE_POLICY_VERSION_MINIMUM=3.5
+	# old OpenCV requires too old SDK for macOS 10.14
+	export MACOSX_DEPLOYMENT_TARGET=10.13
 else
 	arch_arg="--macos_archs $(uname -m)"
 fi
