@@ -139,7 +139,7 @@ The following variables affect the building the of the `opencv` crate, but belon
   Allow custom arguments for generating and parsing code with clang, see
   the [documentation for clang arguments](https://docs.rs/clang/latest/clang/struct.Parser.html#method.arguments).
 
-* clang crate environment variables
+* `clang` crate environment variables
   See crate's [README](https://github.com/KyleMayes/clang-sys/blob/master/README.md#environment-variables)
 
 ## Cargo features
@@ -169,7 +169,7 @@ The following OpenCV versions are supported at the moment:
 * 4.x
 * 5.x (preliminary)
 
-### Minimum rustc version (MSRV)
+### Minimum `rustc` version (MSRV)
 
 Currently, Rust version 1.82.0 or later is required. General policy is that rust version from 1 year ago is supported.
 Bumping versions older than that is not considered a breaking change.
@@ -198,7 +198,7 @@ that.
 Most functions return a `Result` to expose a potential C++ exception. Although some methods like property reads
 or functions that are marked `CV_NOEXCEPT` in the OpenCV headers are infallible and return a naked value.
 
-### CV_MAKETYPE
+### `CV_MAKETYPE`
 
 `CV_MAKETYPE` and related `CV_MAT_DEPTH` constant functions are available to replace the corresponding OpenCV macros.
 Yet it's usually easier to call `::opencv_type()` function on the corresponding Rust type. E.g.:
