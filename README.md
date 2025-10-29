@@ -47,7 +47,8 @@ on any platform, the specified values will override those automatically discover
 * `OPENCV_LINK_LIBS`
   Comma separated list of library names to link to. `.lib`, `.so` or `.dylib` extension is optional. For every
   library you can specify optional "dylib=", "static=" or "framework=" prefix to indicate the specific type.
-  E.g. "opencv_world411", "framework=OpenCL".
+  E.g. "opencv_world411", "framework=OpenCL". Additionally, extensions can be used to indicate the type as well,
+  ".a" and ".lib" for static libraries and ".framework" for macOS frameworks. E.g. "OpenCL.framework".
 
   If this list starts with '+' (plus sign) then the specified items will be appended to whatever the system
   probe returned. E.g. a value of "+dc1394" will do a system discovery of the OpenCV library and its linked

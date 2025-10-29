@@ -65,7 +65,7 @@ elif [[ "$os_family" == "Linux" ]]; then
 		export OPENCV_LINK_LIBS="+freetype,bz2,brotlidec,brotlicommon"
 	else
 		if [[ "${OPENCV_LINKAGE:-dynamic}" == "static" ]]; then # static build
-			export OPENCV_LINK_LIBS=opencv_gapi,opencv_highgui,opencv_objdetect,opencv_dnn,opencv_videostab,opencv_calib3d,opencv_features2d,opencv_stitching,opencv_flann,opencv_videoio,opencv_rgbd,opencv_aruco,opencv_video,opencv_ml,opencv_imgcodecs,opencv_imgproc,opencv_core,ade,ittnotify,liblibwebp,liblibtiff,liblibjpeg-turbo,liblibpng,liblibopenjp2,ippiw,ippicv,liblibprotobuf,quirc,zlib
+			export OPENCV_LINK_LIBS=static=opencv_gapi,static=opencv_highgui,static=opencv_objdetect,static=opencv_dnn,static=opencv_videostab,static=opencv_calib3d,static=opencv_features2d,static=opencv_stitching,static=opencv_flann,static=opencv_videoio,static=opencv_rgbd,static=opencv_aruco,static=opencv_video,static=opencv_ml,static=opencv_imgcodecs,static=opencv_imgproc,static=opencv_core,ade,ittnotify,liblibwebp,liblibtiff,liblibjpeg-turbo,liblibpng,liblibopenjp2,ippiw,ippicv,liblibprotobuf,quirc,zlib
 		fi
 	fi
 fi

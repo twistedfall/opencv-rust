@@ -1,4 +1,3 @@
-use std::ffi::OsStr;
 use std::fs;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -8,91 +7,8 @@ use std::process::{Command, Output};
 use semver::Version;
 use shlex::Shlex;
 
-use super::library::Linkage;
-use super::{Result, TARGET_ENV_MSVC};
-
-#[derive(Debug, PartialEq, Eq)]
-pub struct LinkLib(pub Linkage, pub String);
-
-impl LinkLib {
-	#[inline]
-	pub fn emit_cargo_rustc_link(&self) -> String {
-		format!(
-			"cargo::rustc-link-lib={}{}",
-			self.0.as_cargo_rustc_link_spec_no_static(),
-			self.1
-		)
-	}
-
-	/// Removes some common library filename parts that are not meant to be passed as part of the link name.
-	///
-	/// E.g. "libopencv_core.so.4.6.0" becomes "opencv_core".
-	pub fn cleanup_lib_filename(filename: &OsStr) -> &OsStr {
-		let mut new_filename = filename;
-		// used to check for the file extension (with dots stripped) and for the part of the filename
-		const LIB_EXTS: [&str; 6] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".tbd."];
-		let filename_path = Path::new(new_filename);
-		// strip lib extension from the filename
-		if let (Some(stem), Some(extension)) = (filename_path.file_stem(), filename_path.extension().and_then(OsStr::to_str)) {
-			if LIB_EXTS.iter().any(|e| e.trim_matches('.').eq_ignore_ascii_case(extension)) {
-				new_filename = stem;
-			}
-		}
-		if let Some(mut file) = new_filename.to_str() {
-			let orig_len = file.len();
-
-			// strip "lib" prefix from the filename unless targeting MSVC
-			if !*TARGET_ENV_MSVC {
-				file = file.strip_prefix("lib").unwrap_or(file);
-			}
-
-			// strip lib extension + suffix (e.g. .so.4.6.0) from the filename
-			LIB_EXTS.iter().for_each(|&inner_ext| {
-				if let Some(inner_ext_idx) = file.rfind(inner_ext) {
-					file = &file[..inner_ext_idx];
-				}
-			});
-			if orig_len != file.len() {
-				new_filename = OsStr::new(file);
-			}
-		}
-		new_filename
-	}
-}
-
-impl From<&str> for LinkLib {
-	fn from(value: &str) -> Self {
-		let (linkage, value) = Linkage::from_prefixed_str(value);
-		let path = Path::new(value);
-		let value = path
-			.file_name()
-			.map(Self::cleanup_lib_filename)
-			.and_then(OsStr::to_str)
-			.unwrap_or(value);
-		Self(linkage, value.to_string())
-	}
-}
-
-#[derive(Debug, PartialEq, Eq)]
-pub struct LinkSearch(pub Linkage, pub PathBuf);
-
-impl LinkSearch {
-	#[inline]
-	pub fn emit_cargo_rustc_link_search(&self) -> String {
-		format!(
-			"cargo::rustc-link-search={}{}",
-			self.0.as_cargo_rustc_link_search_spec(),
-			self.1.to_str().expect("Can't convert link search path to UTF-8 string")
-		)
-	}
-}
-
-impl From<&str> for LinkSearch {
-	fn from(value: &str) -> Self {
-		let (linkage, value) = Linkage::from_prefixed_str(value);
-		Self(linkage, PathBuf::from(value))
-	}
-}
+use super::library::{LinkLib, LinkSearch, Linkage};
+use super::Result;
 
 pub struct ProbeResult {
 	pub version: Option<Version>,
@@ -221,6 +137,9 @@ impl<'r> CmakeProbe<'r> {
 		}
 		while let Some(arg) = args.next() {
 			let arg = arg.trim();
+			if Self::skip_ignorable_arg(&mut args, arg) {
+				continue;
+			}
 			if let Some(path) = arg.strip_prefix("-I") {
 				let path = PathBuf::from(path.trim_start());
 				if !include_paths.contains(&path) {
@@ -244,29 +163,44 @@ impl<'r> CmakeProbe<'r> {
 					framework.to_string()
 				};
 				link_libs.push(LinkLib(Linkage::Framework, framework));
-			} else if let Some(output_file) = arg.strip_prefix("-o") {
-				if output_file.trim().is_empty() {
-					args.next().expect("No output file after -o");
-				}
 			} else if !arg.starts_with('-') {
 				let path = Path::new(arg);
-				if let Some(cleaned_lib_filename) = path.file_name().map(LinkLib::cleanup_lib_filename) {
-					let linkage = Linkage::from_path(path);
+				if let Some(link_lib) = LinkLib::try_from_library_path(path) {
 					if let Some(parent) = path.parent().map(|p| p.to_owned()) {
-						let search_path = LinkSearch(linkage, parent);
-						if !link_paths.contains(&search_path) {
-							link_paths.push(search_path);
+						// only care about non-empty parent paths
+						if parent.components().next().is_some() {
+							let search_path = LinkSearch(link_lib.0, parent);
+							if !link_paths.contains(&search_path) {
+								link_paths.push(search_path);
+							}
 						}
 					}
-					link_libs.push(LinkLib(
-						linkage,
-						cleaned_lib_filename.to_str().expect("Non-UTF8 filename").to_string(),
-					));
+					link_libs.push(link_lib);
 				}
 			} else {
 				eprintln!("=== Unexpected cmake compiler argument found: {arg}");
 			}
 		}
+	}
+
+	fn skip_ignorable_arg(args: &mut Shlex, arg: &str) -> bool {
+		if let Some(output_file) = arg.strip_prefix("-o") {
+			if output_file.trim().is_empty() {
+				args.next().expect("No output file after -o");
+				return true;
+			}
+		} else if let Some(sysroot) = arg.strip_prefix("-isysroot") {
+			if sysroot.trim().is_empty() {
+				args.next().expect("No sysroot path after -isysroot");
+				return true;
+			}
+		} else if let Some(arch) = arg.strip_prefix("-arch") {
+			if arch.trim().is_empty() {
+				args.next().expect("No arch name after -arch");
+				return true;
+			}
+		}
+		false
 	}
 
 	fn extract_from_makefile(&self, link_paths: &mut Vec<LinkSearch>, link_libs: &mut Vec<LinkLib>) -> Result<()> {

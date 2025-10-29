@@ -7,8 +7,9 @@ use std::{env, fmt, iter};
 use dunce::canonicalize;
 use semver::Version;
 
-use super::cmake_probe::{CmakeProbe, LinkLib, LinkSearch};
+use super::cmake_probe::CmakeProbe;
 use super::header::IncludePath;
+use super::path_ext::{LibraryKind, PathExt};
 use super::{header, Result, MANIFEST_DIR, OUT_DIR, TARGET_VENDOR_APPLE};
 
 struct PackageName;
@@ -90,19 +91,22 @@ pub enum Linkage {
 }
 
 impl Linkage {
+	pub fn from_extension(path: &Path) -> Self {
+		path.library_kind().map_or(Self::Default, Self::from)
+	}
+
+	fn from_prefixed_str(s: &str) -> (Self, &str) {
+		[Self::Dynamic, Self::Static, Self::Framework]
+			.iter()
+			.find_map(|l| s.strip_prefix(l.as_cargo_rustc_link_spec()).map(|s| (*l, s)))
+			.unwrap_or_else(|| (Linkage::from_extension(Path::new(s)), s))
+	}
+
 	pub fn as_cargo_rustc_link_spec(self) -> &'static str {
 		match self {
 			Self::Default => "",
 			Self::Dynamic => "dylib=",
 			Self::Static => "static=",
-			Self::Framework => "framework=",
-		}
-	}
-
-	pub fn as_cargo_rustc_link_spec_no_static(self) -> &'static str {
-		// fixme: specifying static linkage breaks things in CI
-		match self {
-			Self::Default | Self::Dynamic | Self::Static => "",
 			Self::Framework => "framework=",
 		}
 	}
@@ -114,29 +118,57 @@ impl Linkage {
 			Self::Framework => "framework=",
 		}
 	}
+}
 
-	pub fn from_path(path: &Path) -> Self {
-		let ext = path.extension();
-		if Self::is_static_archive(ext) {
-			Self::Static
-		} else {
-			Self::Default
+impl From<LibraryKind> for Linkage {
+	fn from(value: LibraryKind) -> Self {
+		match value {
+			LibraryKind::Framework => Self::Framework,
+			LibraryKind::Static => Self::Static,
+			LibraryKind::Other => Self::Default,
 		}
 	}
+}
 
-	pub fn from_prefixed_str(s: &str) -> (Self, &str) {
-		// for backwards compatibility to allow specifying as "OpenCL.framework" in addition to "framework=OpenCL"
-		if let Some(name) = s.strip_suffix(".framework") {
-			return (Self::Framework, name);
-		}
-		[Self::Dynamic, Self::Static, Self::Framework]
-			.iter()
-			.find_map(|l| s.strip_prefix(l.as_cargo_rustc_link_spec()).map(|s| (*l, s)))
-			.unwrap_or((Self::Default, s))
+#[derive(Debug, PartialEq, Eq)]
+pub struct LinkLib(pub Linkage, pub String);
+
+impl LinkLib {
+	pub fn try_from_library_path(path: &Path) -> Option<Self> {
+		path.library_kind().and_then(|lib_kind| {
+			Some(Self(
+				Linkage::from(lib_kind),
+				path.cleanedup_lib_filename()?.to_str()?.to_string(),
+			))
+		})
 	}
 
-	fn is_static_archive(ext: Option<&OsStr>) -> bool {
-		ext.is_some_and(|ext| ext.eq_ignore_ascii_case("a"))
+	#[inline]
+	pub fn emit_cargo_rustc_link(&self) -> String {
+		format!("cargo::rustc-link-lib={}{}", self.0.as_cargo_rustc_link_spec(), self.1)
+	}
+}
+
+impl From<&str> for LinkLib {
+	fn from(user_str: &str) -> Self {
+		let (linkage, lib_name) = Linkage::from_prefixed_str(user_str);
+		let path = Path::new(lib_name);
+		let lib_name = path.cleanedup_lib_filename().and_then(OsStr::to_str).unwrap_or(lib_name);
+		Self(linkage, lib_name.to_string())
+	}
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LinkSearch(pub Linkage, pub PathBuf);
+
+impl LinkSearch {
+	#[inline]
+	pub fn emit_cargo_rustc_link_search(&self) -> String {
+		format!(
+			"cargo::rustc-link-search={}{}",
+			self.0.as_cargo_rustc_link_search_spec(),
+			self.1.to_str().expect("Can't convert link search path to UTF-8 string")
+		)
 	}
 }
 
@@ -182,17 +214,18 @@ impl Library {
 	fn process_link_paths<'a>(link_paths: Option<EnvList>, sys_link_paths: Vec<LinkSearch>) -> impl Iterator<Item = String> + 'a {
 		Self::process_env_var_list(link_paths, sys_link_paths)
 			.into_iter()
-			.flat_map(move |path| {
-				iter::once(path.emit_cargo_rustc_link_search()).chain(
-					(*TARGET_VENDOR_APPLE && path.0 != Linkage::Framework)
-						.then(|| LinkSearch(Linkage::Framework, path.1).emit_cargo_rustc_link_search()),
-				)
+			.flat_map(move |search| {
+				iter::once(search.clone())
+					.chain((*TARGET_VENDOR_APPLE && search.0 != Linkage::Framework).then(|| LinkSearch(Linkage::Framework, search.1)))
 			})
+			.inspect(|s| eprintln!("=== Link search path: {s:?}"))
+			.map(|search| search.emit_cargo_rustc_link_search())
 	}
 
 	fn process_link_libs<'a>(link_libs: Option<EnvList>, sys_link_libs: Vec<LinkLib>) -> impl Iterator<Item = String> + 'a {
 		Self::process_env_var_list(link_libs, sys_link_libs)
 			.into_iter()
+			.inspect(|l| eprintln!("=== Linking to library: {l:?}"))
 			.map(|l| l.emit_cargo_rustc_link())
 	}
 
@@ -652,4 +685,11 @@ impl Probe {
 
 fn probe_list(probes: &[Probe]) -> String {
 	probes.iter().map(|probe| probe.as_str()).collect::<Vec<_>>().join(", ")
+}
+
+impl From<&str> for LinkSearch {
+	fn from(user_str: &str) -> Self {
+		let (linkage, lib_name) = Linkage::from_prefixed_str(user_str);
+		Self(linkage, PathBuf::from(lib_name))
+	}
 }

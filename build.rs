@@ -28,6 +28,8 @@ mod generator;
 mod header;
 #[path = "build/library.rs"]
 pub mod library;
+#[path = "build/path_ext.rs"]
+mod path_ext;
 
 type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
