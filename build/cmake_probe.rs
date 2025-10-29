@@ -24,8 +24,10 @@ impl LinkLib {
 		)
 	}
 
-	/// Returns Some(new_file_name) if some parts of the filename were removed, None otherwise
-	pub fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
+	/// Removes some common library filename parts that are not meant to be passed as part of the link name.
+	///
+	/// E.g. "libopencv_core.so.4.6.0" becomes "opencv_core".
+	pub fn cleanup_lib_filename(filename: &OsStr) -> &OsStr {
 		let mut new_filename = filename;
 		// used to check for the file extension (with dots stripped) and for the part of the filename
 		const LIB_EXTS: [&str; 6] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".tbd."];
@@ -46,7 +48,7 @@ impl LinkLib {
 
 			// strip lib extension + suffix (e.g. .so.4.6.0) from the filename
 			LIB_EXTS.iter().for_each(|&inner_ext| {
-				if let Some(inner_ext_idx) = file.find(inner_ext) {
+				if let Some(inner_ext_idx) = file.rfind(inner_ext) {
 					file = &file[..inner_ext_idx];
 				}
 			});
@@ -54,11 +56,7 @@ impl LinkLib {
 				new_filename = OsStr::new(file);
 			}
 		}
-		if new_filename.len() != filename.len() {
-			Some(new_filename)
-		} else {
-			None
-		}
+		new_filename
 	}
 }
 
@@ -68,7 +66,7 @@ impl From<&str> for LinkLib {
 		let path = Path::new(value);
 		let value = path
 			.file_name()
-			.and_then(Self::cleanup_lib_filename)
+			.map(Self::cleanup_lib_filename)
 			.and_then(OsStr::to_str)
 			.unwrap_or(value);
 		Self(linkage, value.to_string())
@@ -92,7 +90,7 @@ impl LinkSearch {
 impl From<&str> for LinkSearch {
 	fn from(value: &str) -> Self {
 		let (linkage, value) = Linkage::from_prefixed_str(value);
-		Self(linkage, value.into())
+		Self(linkage, PathBuf::from(value))
 	}
 }
 
@@ -252,15 +250,13 @@ impl<'r> CmakeProbe<'r> {
 				}
 			} else if !arg.starts_with('-') {
 				let path = Path::new(arg);
-				if let Some(cleaned_lib_filename) = path.file_name().and_then(LinkLib::cleanup_lib_filename) {
+				if let Some(cleaned_lib_filename) = path.file_name().map(LinkLib::cleanup_lib_filename) {
 					let linkage = Linkage::from_path(path);
 					if let Some(parent) = path.parent().map(|p| p.to_owned()) {
 						let search_path = LinkSearch(linkage, parent);
 						if !link_paths.contains(&search_path) {
 							link_paths.push(search_path);
 						}
-					} else {
-						panic!("{}", arg.to_string());
 					}
 					link_libs.push(LinkLib(
 						linkage,
@@ -316,6 +312,7 @@ impl<'r> CmakeProbe<'r> {
 		}
 		Ok(())
 	}
+
 	pub fn probe_makefile(&self) -> Result<ProbeResult> {
 		self.prepare()?;
 

@@ -486,6 +486,7 @@ impl StrExt for str {
 				let line = &line[common_indent_len.min(line.len())..];
 				let mut last_idx = 0;
 				for cap in VARS.captures_iter(line.as_bytes()) {
+					// todo: MSRV 1.88 use let chains
 					if let (Some(whole), Some(var)) = (cap.get(0), cap.get(1)) {
 						if last_idx == 0 {
 							elems.push(Compiled::IntpLineStart(&line[last_idx..whole.start()]));

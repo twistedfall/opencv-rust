@@ -228,6 +228,7 @@ impl Library {
 		link_paths: Option<EnvList>,
 		link_libs: Option<EnvList>,
 	) -> Result<Self> {
+		// todo: MSRV 1.88 use let chains
 		if let (Some(include_paths), Some(link_paths), Some(link_libs)) = (include_paths, link_paths, link_libs) {
 			eprintln!("=== Configuring OpenCV library from the environment:");
 			eprintln!("===   include_paths: {include_paths}");

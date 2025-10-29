@@ -155,6 +155,7 @@ impl RustElement for Func<'_, '_> {
 					if kind.add_args_to_name() {
 						let args = self.arguments();
 						let args = args.as_ref();
+						// todo: MSRV 1.88 use let chains
 						let is_single_arg_same_as_class = if let (Some(cls), [single_arg]) = (cls, args) {
 							single_arg
 								.type_ref()

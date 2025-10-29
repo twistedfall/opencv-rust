@@ -53,6 +53,7 @@ impl IncludePath for Path {
 			}
 			if let Some(line) = line.strip_prefix("#define CV_VERSION_") {
 				let mut parts = line.split_whitespace();
+				// todo: MSRV 1.88 use let chains
 				if let (Some(ver_spec), Some(version)) = (parts.next(), parts.next()) {
 					match ver_spec {
 						"MAJOR" => {
@@ -73,6 +74,7 @@ impl IncludePath for Path {
 			}
 			line.clear();
 		}
+		// todo: MSRV 1.88 use let chains
 		if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
 			Some(Version::new(major, minor, revision))
 		} else {

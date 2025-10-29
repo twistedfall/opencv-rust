@@ -30,6 +30,7 @@ fn get_version_from_headers(header_dir: &Path) -> Option<String> {
 	line_reader(reader, |line| {
 		if let Some(line) = line.strip_prefix("#define CV_VERSION_") {
 			let mut parts = line.split_whitespace();
+			// todo: MSRV 1.88 use let chains
 			if let (Some(ver_spec), Some(version)) = (parts.next(), parts.next()) {
 				match ver_spec {
 					"MAJOR" => {
@@ -50,6 +51,7 @@ fn get_version_from_headers(header_dir: &Path) -> Option<String> {
 		}
 		ControlFlow::Continue(())
 	});
+	// todo: MSRV 1.88 use let chains
 	if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
 		Some(format!("{major}.{minor}.{revision}"))
 	} else {
