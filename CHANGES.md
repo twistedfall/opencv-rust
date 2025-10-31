@@ -1,3 +1,11 @@
+* 0.97.0
+  * Static building has been improved for the cases where there are both static and dynamic libraries present: "static=" prefix is
+    now correctly propagated to the linker flags.
+  * For manually specified libraries via `OPENCV_LINK_LIBS` extension is used to hint on the linkage type, ".a", ".lib" and
+    ".framework" are supported.
+  * Another attempt to bump the `windows` crate to the latest version.
+  * Bump MSRV to 1.82.0
+
 * 0.96.0
   * Introduce `OPENCV_CMAKE_TOOLCHAIN_FILE` and `OPENCV_CMAKE_ARGS` environment variables (fixes https://github.com/twistedfall/opencv-rust/issues/683).
   * Enums that represent bitfields now generate the special `struct`s that allow flag combinations, see `OpenCVBitfieldEnum` trait
