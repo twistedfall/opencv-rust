@@ -105,8 +105,12 @@ fn make_modules_and_alises(
 				.and_then(|s| SupportedModule::try_from_opencv_name(&s.to_lowercase()))
 		}))
 		.collect::<HashSet<_>>();
+	eprintln!("=== Enabled OpenCV modules from the environment: {enable_modules:#?}");
 
-	let mut modules = files_with_extension(opencv_dir, "hpp")?
+	let files_hpp = files_with_extension(opencv_dir, "hpp")?.collect::<Vec<_>>();
+	eprintln!("=== Found HPP files: {files_hpp:#?}");
+	let mut modules = files_hpp
+		.into_iter()
 		.filter_map(|entry| {
 			entry
 				.file_stem()
@@ -127,6 +131,7 @@ fn make_modules_and_alises(
 	};
 
 	modules.sort_unstable();
+	eprintln!("=== Final OpenCV modules to be built: {modules:#?}");
 	Ok((modules, aliases))
 }
 
