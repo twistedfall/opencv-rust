@@ -143,7 +143,7 @@ impl<'r> CmakeProbe<'r> {
 				if !include_paths.contains(&path) {
 					include_paths.push(path);
 				}
-			} else if let Some(path) = arg.strip_prefix("-L").or_else(|| arg.strip_prefix("-Wl,-rpath,")) {
+			} else if let Some(path) = arg.strip_prefix("-L") {
 				let path = LinkSearch(Linkage::Default, PathBuf::from(path.trim_start()));
 				if !link_paths.contains(&path) {
 					link_paths.push(path);
