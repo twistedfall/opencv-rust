@@ -85,7 +85,11 @@ fn files_with_predicate<'p>(
 	Ok(dir
 		.read_dir()?
 		.flatten()
-		.filter_map(|e| e.file_type().is_ok_and(|typ| typ.is_file()).then(|| e.path()))
+		.filter_map(|e| {
+			let path = e.path();
+			// Use path.metadata() instead of e.file_type() to follow symlinks
+			path.metadata().is_ok_and(|m| m.is_file()).then(|| path)
+		})
 		.filter(move |p| predicate(p)))
 }
 
