@@ -1,3 +1,6 @@
+* 0.97.1
+  * Fix building when OpenCV headers are symlinks (fixes https://github.com/twistedfall/opencv-rust/issues/697, kudos to matanox)
+
 * 0.97.0
   * Static building has been improved for the cases where there are both static and dynamic libraries present: "static=" prefix is
     now correctly propagated to the linker flags.
