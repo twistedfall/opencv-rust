@@ -23112,8 +23112,786 @@ pub use text_types::*;
 mod tracking_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	ptr_extern! { crate::tracking::Detail_TrackerContribFeature,
+		cv_PtrLcv_detail_TrackerContribFeatureG_new_null_const, cv_PtrLcv_detail_TrackerContribFeatureG_delete, cv_PtrLcv_detail_TrackerContribFeatureG_getInnerPtr_const, cv_PtrLcv_detail_TrackerContribFeatureG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::tracking::Detail_TrackerContribFeature> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerContribFeature(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerContribFeature(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureTraitConst for core::Ptr<crate::tracking::Detail_TrackerContribFeature> {
+		#[inline] fn as_raw_Detail_TrackerContribFeature(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureTrait for core::Ptr<crate::tracking::Detail_TrackerContribFeature> {
+		#[inline] fn as_raw_mut_Detail_TrackerContribFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::video::Detail_TrackerFeatureTraitConst for core::Ptr<crate::tracking::Detail_TrackerContribFeature> {
+		#[inline] fn as_raw_Detail_TrackerFeature(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerFeatureTrait for core::Ptr<crate::tracking::Detail_TrackerContribFeature> {
+		#[inline] fn as_raw_mut_Detail_TrackerFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerContribFeature>, core::Ptr<crate::video::Detail_TrackerFeature>, cv_PtrLcv_detail_TrackerContribFeatureG_to_PtrOfDetail_TrackerFeature }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribFeature> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerContribFeature")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Detail_TrackerContribFeatureHAAR,
+		cv_PtrLcv_detail_TrackerContribFeatureHAARG_new_null_const, cv_PtrLcv_detail_TrackerContribFeatureHAARG_delete, cv_PtrLcv_detail_TrackerContribFeatureHAARG_getInnerPtr_const, cv_PtrLcv_detail_TrackerContribFeatureHAARG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::tracking::Detail_TrackerContribFeatureHAAR, cv_PtrLcv_detail_TrackerContribFeatureHAARG_new_const_TrackerContribFeatureHAAR }
+	impl core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerContribFeatureHAAR(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerContribFeatureHAAR(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureHAARTraitConst for core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR> {
+		#[inline] fn as_raw_Detail_TrackerContribFeatureHAAR(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureHAARTrait for core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR> {
+		#[inline] fn as_raw_mut_Detail_TrackerContribFeatureHAAR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureTraitConst for core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR> {
+		#[inline] fn as_raw_Detail_TrackerContribFeature(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureTrait for core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR> {
+		#[inline] fn as_raw_mut_Detail_TrackerContribFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR>, core::Ptr<crate::tracking::Detail_TrackerContribFeature>, cv_PtrLcv_detail_TrackerContribFeatureHAARG_to_PtrOfDetail_TrackerContribFeature }
+
+	impl crate::video::Detail_TrackerFeatureTraitConst for core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR> {
+		#[inline] fn as_raw_Detail_TrackerFeature(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerFeatureTrait for core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR> {
+		#[inline] fn as_raw_mut_Detail_TrackerFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR>, core::Ptr<crate::video::Detail_TrackerFeature>, cv_PtrLcv_detail_TrackerContribFeatureHAARG_to_PtrOfDetail_TrackerFeature }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerContribFeatureHAAR")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Detail_TrackerContribSamplerAlgorithm,
+		cv_PtrLcv_detail_TrackerContribSamplerAlgorithmG_new_null_const, cv_PtrLcv_detail_TrackerContribSamplerAlgorithmG_delete, cv_PtrLcv_detail_TrackerContribSamplerAlgorithmG_getInnerPtr_const, cv_PtrLcv_detail_TrackerContribSamplerAlgorithmG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerContribSamplerAlgorithm(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerContribSamplerAlgorithm(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribSamplerAlgorithmTraitConst for core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm> {
+		#[inline] fn as_raw_Detail_TrackerContribSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribSamplerAlgorithmTrait for core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm> {
+		#[inline] fn as_raw_mut_Detail_TrackerContribSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTraitConst for core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm> {
+		#[inline] fn as_raw_Detail_TrackerSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTrait for core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm> {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm>, core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm>, cv_PtrLcv_detail_TrackerContribSamplerAlgorithmG_to_PtrOfDetail_TrackerSamplerAlgorithm }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerContribSamplerAlgorithm")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Detail_TrackerContribSamplerCSC,
+		cv_PtrLcv_detail_TrackerContribSamplerCSCG_new_null_const, cv_PtrLcv_detail_TrackerContribSamplerCSCG_delete, cv_PtrLcv_detail_TrackerContribSamplerCSCG_getInnerPtr_const, cv_PtrLcv_detail_TrackerContribSamplerCSCG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::tracking::Detail_TrackerContribSamplerCSC, cv_PtrLcv_detail_TrackerContribSamplerCSCG_new_const_TrackerContribSamplerCSC }
+	impl core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerContribSamplerCSC(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerContribSamplerCSC(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribSamplerCSCTraitConst for core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC> {
+		#[inline] fn as_raw_Detail_TrackerContribSamplerCSC(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribSamplerCSCTrait for core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC> {
+		#[inline] fn as_raw_mut_Detail_TrackerContribSamplerCSC(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribSamplerAlgorithmTraitConst for core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC> {
+		#[inline] fn as_raw_Detail_TrackerContribSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribSamplerAlgorithmTrait for core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC> {
+		#[inline] fn as_raw_mut_Detail_TrackerContribSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC>, core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm>, cv_PtrLcv_detail_TrackerContribSamplerCSCG_to_PtrOfDetail_TrackerContribSamplerAlgorithm }
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTraitConst for core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC> {
+		#[inline] fn as_raw_Detail_TrackerSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTrait for core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC> {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC>, core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm>, cv_PtrLcv_detail_TrackerContribSamplerCSCG_to_PtrOfDetail_TrackerSamplerAlgorithm }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerContribSamplerCSC")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Detail_TrackerFeatureFeature2d,
+		cv_PtrLcv_detail_TrackerFeatureFeature2dG_new_null_const, cv_PtrLcv_detail_TrackerFeatureFeature2dG_delete, cv_PtrLcv_detail_TrackerFeatureFeature2dG_getInnerPtr_const, cv_PtrLcv_detail_TrackerFeatureFeature2dG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::tracking::Detail_TrackerFeatureFeature2d, cv_PtrLcv_detail_TrackerFeatureFeature2dG_new_const_TrackerFeatureFeature2d }
+	impl core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerFeatureFeature2d(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerFeatureFeature2d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerFeatureFeature2dTraitConst for core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d> {
+		#[inline] fn as_raw_Detail_TrackerFeatureFeature2d(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerFeatureFeature2dTrait for core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d> {
+		#[inline] fn as_raw_mut_Detail_TrackerFeatureFeature2d(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureTraitConst for core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d> {
+		#[inline] fn as_raw_Detail_TrackerContribFeature(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureTrait for core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d> {
+		#[inline] fn as_raw_mut_Detail_TrackerContribFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d>, core::Ptr<crate::tracking::Detail_TrackerContribFeature>, cv_PtrLcv_detail_TrackerFeatureFeature2dG_to_PtrOfDetail_TrackerContribFeature }
+
+	impl crate::video::Detail_TrackerFeatureTraitConst for core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d> {
+		#[inline] fn as_raw_Detail_TrackerFeature(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerFeatureTrait for core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d> {
+		#[inline] fn as_raw_mut_Detail_TrackerFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d>, core::Ptr<crate::video::Detail_TrackerFeature>, cv_PtrLcv_detail_TrackerFeatureFeature2dG_to_PtrOfDetail_TrackerFeature }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerFeatureFeature2d")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Detail_TrackerFeatureHOG,
+		cv_PtrLcv_detail_TrackerFeatureHOGG_new_null_const, cv_PtrLcv_detail_TrackerFeatureHOGG_delete, cv_PtrLcv_detail_TrackerFeatureHOGG_getInnerPtr_const, cv_PtrLcv_detail_TrackerFeatureHOGG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::tracking::Detail_TrackerFeatureHOG, cv_PtrLcv_detail_TrackerFeatureHOGG_new_const_TrackerFeatureHOG }
+	impl core::Ptr<crate::tracking::Detail_TrackerFeatureHOG> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerFeatureHOG(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerFeatureHOG(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerFeatureHOGTraitConst for core::Ptr<crate::tracking::Detail_TrackerFeatureHOG> {
+		#[inline] fn as_raw_Detail_TrackerFeatureHOG(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerFeatureHOGTrait for core::Ptr<crate::tracking::Detail_TrackerFeatureHOG> {
+		#[inline] fn as_raw_mut_Detail_TrackerFeatureHOG(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureTraitConst for core::Ptr<crate::tracking::Detail_TrackerFeatureHOG> {
+		#[inline] fn as_raw_Detail_TrackerContribFeature(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureTrait for core::Ptr<crate::tracking::Detail_TrackerFeatureHOG> {
+		#[inline] fn as_raw_mut_Detail_TrackerContribFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerFeatureHOG>, core::Ptr<crate::tracking::Detail_TrackerContribFeature>, cv_PtrLcv_detail_TrackerFeatureHOGG_to_PtrOfDetail_TrackerContribFeature }
+
+	impl crate::video::Detail_TrackerFeatureTraitConst for core::Ptr<crate::tracking::Detail_TrackerFeatureHOG> {
+		#[inline] fn as_raw_Detail_TrackerFeature(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerFeatureTrait for core::Ptr<crate::tracking::Detail_TrackerFeatureHOG> {
+		#[inline] fn as_raw_mut_Detail_TrackerFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerFeatureHOG>, core::Ptr<crate::video::Detail_TrackerFeature>, cv_PtrLcv_detail_TrackerFeatureHOGG_to_PtrOfDetail_TrackerFeature }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerFeatureHOG> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerFeatureHOG")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Detail_TrackerFeatureLBP,
+		cv_PtrLcv_detail_TrackerFeatureLBPG_new_null_const, cv_PtrLcv_detail_TrackerFeatureLBPG_delete, cv_PtrLcv_detail_TrackerFeatureLBPG_getInnerPtr_const, cv_PtrLcv_detail_TrackerFeatureLBPG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::tracking::Detail_TrackerFeatureLBP, cv_PtrLcv_detail_TrackerFeatureLBPG_new_const_TrackerFeatureLBP }
+	impl core::Ptr<crate::tracking::Detail_TrackerFeatureLBP> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerFeatureLBP(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerFeatureLBP(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerFeatureLBPTraitConst for core::Ptr<crate::tracking::Detail_TrackerFeatureLBP> {
+		#[inline] fn as_raw_Detail_TrackerFeatureLBP(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerFeatureLBPTrait for core::Ptr<crate::tracking::Detail_TrackerFeatureLBP> {
+		#[inline] fn as_raw_mut_Detail_TrackerFeatureLBP(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureTraitConst for core::Ptr<crate::tracking::Detail_TrackerFeatureLBP> {
+		#[inline] fn as_raw_Detail_TrackerContribFeature(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribFeatureTrait for core::Ptr<crate::tracking::Detail_TrackerFeatureLBP> {
+		#[inline] fn as_raw_mut_Detail_TrackerContribFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerFeatureLBP>, core::Ptr<crate::tracking::Detail_TrackerContribFeature>, cv_PtrLcv_detail_TrackerFeatureLBPG_to_PtrOfDetail_TrackerContribFeature }
+
+	impl crate::video::Detail_TrackerFeatureTraitConst for core::Ptr<crate::tracking::Detail_TrackerFeatureLBP> {
+		#[inline] fn as_raw_Detail_TrackerFeature(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerFeatureTrait for core::Ptr<crate::tracking::Detail_TrackerFeatureLBP> {
+		#[inline] fn as_raw_mut_Detail_TrackerFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerFeatureLBP>, core::Ptr<crate::video::Detail_TrackerFeature>, cv_PtrLcv_detail_TrackerFeatureLBPG_to_PtrOfDetail_TrackerFeature }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerFeatureLBP> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerFeatureLBP")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Detail_TrackerSamplerCS,
+		cv_PtrLcv_detail_TrackerSamplerCSG_new_null_const, cv_PtrLcv_detail_TrackerSamplerCSG_delete, cv_PtrLcv_detail_TrackerSamplerCSG_getInnerPtr_const, cv_PtrLcv_detail_TrackerSamplerCSG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::tracking::Detail_TrackerSamplerCS, cv_PtrLcv_detail_TrackerSamplerCSG_new_const_TrackerSamplerCS }
+	impl core::Ptr<crate::tracking::Detail_TrackerSamplerCS> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerSamplerCS(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerSamplerCS(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerSamplerCSTraitConst for core::Ptr<crate::tracking::Detail_TrackerSamplerCS> {
+		#[inline] fn as_raw_Detail_TrackerSamplerCS(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerSamplerCSTrait for core::Ptr<crate::tracking::Detail_TrackerSamplerCS> {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerCS(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribSamplerAlgorithmTraitConst for core::Ptr<crate::tracking::Detail_TrackerSamplerCS> {
+		#[inline] fn as_raw_Detail_TrackerContribSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribSamplerAlgorithmTrait for core::Ptr<crate::tracking::Detail_TrackerSamplerCS> {
+		#[inline] fn as_raw_mut_Detail_TrackerContribSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerSamplerCS>, core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm>, cv_PtrLcv_detail_TrackerSamplerCSG_to_PtrOfDetail_TrackerContribSamplerAlgorithm }
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTraitConst for core::Ptr<crate::tracking::Detail_TrackerSamplerCS> {
+		#[inline] fn as_raw_Detail_TrackerSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTrait for core::Ptr<crate::tracking::Detail_TrackerSamplerCS> {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerSamplerCS>, core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm>, cv_PtrLcv_detail_TrackerSamplerCSG_to_PtrOfDetail_TrackerSamplerAlgorithm }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerSamplerCS> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerSamplerCS")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Detail_TrackerSamplerPF,
+		cv_PtrLcv_detail_TrackerSamplerPFG_new_null_const, cv_PtrLcv_detail_TrackerSamplerPFG_delete, cv_PtrLcv_detail_TrackerSamplerPFG_getInnerPtr_const, cv_PtrLcv_detail_TrackerSamplerPFG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::tracking::Detail_TrackerSamplerPF, cv_PtrLcv_detail_TrackerSamplerPFG_new_const_TrackerSamplerPF }
+	impl core::Ptr<crate::tracking::Detail_TrackerSamplerPF> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerSamplerPF(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerSamplerPF(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerSamplerPFTraitConst for core::Ptr<crate::tracking::Detail_TrackerSamplerPF> {
+		#[inline] fn as_raw_Detail_TrackerSamplerPF(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerSamplerPFTrait for core::Ptr<crate::tracking::Detail_TrackerSamplerPF> {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerPF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribSamplerAlgorithmTraitConst for core::Ptr<crate::tracking::Detail_TrackerSamplerPF> {
+		#[inline] fn as_raw_Detail_TrackerContribSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Detail_TrackerContribSamplerAlgorithmTrait for core::Ptr<crate::tracking::Detail_TrackerSamplerPF> {
+		#[inline] fn as_raw_mut_Detail_TrackerContribSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerSamplerPF>, core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm>, cv_PtrLcv_detail_TrackerSamplerPFG_to_PtrOfDetail_TrackerContribSamplerAlgorithm }
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTraitConst for core::Ptr<crate::tracking::Detail_TrackerSamplerPF> {
+		#[inline] fn as_raw_Detail_TrackerSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTrait for core::Ptr<crate::tracking::Detail_TrackerSamplerPF> {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerSamplerPF>, core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm>, cv_PtrLcv_detail_TrackerSamplerPFG_to_PtrOfDetail_TrackerSamplerAlgorithm }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerSamplerPF> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerSamplerPF")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Legacy_MultiTracker,
+		cv_PtrLcv_legacy_MultiTrackerG_new_null_const, cv_PtrLcv_legacy_MultiTrackerG_delete, cv_PtrLcv_legacy_MultiTrackerG_getInnerPtr_const, cv_PtrLcv_legacy_MultiTrackerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::tracking::Legacy_MultiTracker, cv_PtrLcv_legacy_MultiTrackerG_new_const_MultiTracker }
+	impl core::Ptr<crate::tracking::Legacy_MultiTracker> {
+		#[inline] pub fn as_raw_PtrOfLegacy_MultiTracker(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLegacy_MultiTracker(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Legacy_MultiTrackerTraitConst for core::Ptr<crate::tracking::Legacy_MultiTracker> {
+		#[inline] fn as_raw_Legacy_MultiTracker(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_MultiTrackerTrait for core::Ptr<crate::tracking::Legacy_MultiTracker> {
+		#[inline] fn as_raw_mut_Legacy_MultiTracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::tracking::Legacy_MultiTracker> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::tracking::Legacy_MultiTracker> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_MultiTracker>, core::Ptr<core::Algorithm>, cv_PtrLcv_legacy_MultiTrackerG_to_PtrOfAlgorithm }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_MultiTracker> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfLegacy_MultiTracker")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Legacy_Tracker,
+		cv_PtrLcv_legacy_TrackerG_new_null_const, cv_PtrLcv_legacy_TrackerG_delete, cv_PtrLcv_legacy_TrackerG_getInnerPtr_const, cv_PtrLcv_legacy_TrackerG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::tracking::Legacy_Tracker> {
+		#[inline] pub fn as_raw_PtrOfLegacy_Tracker(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLegacy_Tracker(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Legacy_TrackerTraitConst for core::Ptr<crate::tracking::Legacy_Tracker> {
+		#[inline] fn as_raw_Legacy_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerTrait for core::Ptr<crate::tracking::Legacy_Tracker> {
+		#[inline] fn as_raw_mut_Legacy_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::tracking::Legacy_Tracker> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::tracking::Legacy_Tracker> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_Tracker>, core::Ptr<core::Algorithm>, cv_PtrLcv_legacy_TrackerG_to_PtrOfAlgorithm }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_Tracker> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfLegacy_Tracker")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Legacy_TrackerBoosting,
+		cv_PtrLcv_legacy_TrackerBoostingG_new_null_const, cv_PtrLcv_legacy_TrackerBoostingG_delete, cv_PtrLcv_legacy_TrackerBoostingG_getInnerPtr_const, cv_PtrLcv_legacy_TrackerBoostingG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::tracking::Legacy_TrackerBoosting> {
+		#[inline] pub fn as_raw_PtrOfLegacy_TrackerBoosting(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLegacy_TrackerBoosting(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Legacy_TrackerBoostingTraitConst for core::Ptr<crate::tracking::Legacy_TrackerBoosting> {
+		#[inline] fn as_raw_Legacy_TrackerBoosting(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerBoostingTrait for core::Ptr<crate::tracking::Legacy_TrackerBoosting> {
+		#[inline] fn as_raw_mut_Legacy_TrackerBoosting(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::tracking::Legacy_TrackerBoosting> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::tracking::Legacy_TrackerBoosting> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerBoosting>, core::Ptr<core::Algorithm>, cv_PtrLcv_legacy_TrackerBoostingG_to_PtrOfAlgorithm }
+
+	impl crate::tracking::Legacy_TrackerTraitConst for core::Ptr<crate::tracking::Legacy_TrackerBoosting> {
+		#[inline] fn as_raw_Legacy_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerTrait for core::Ptr<crate::tracking::Legacy_TrackerBoosting> {
+		#[inline] fn as_raw_mut_Legacy_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerBoosting>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerBoostingG_to_PtrOfLegacy_Tracker }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerBoosting> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfLegacy_TrackerBoosting")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Legacy_TrackerCSRT,
+		cv_PtrLcv_legacy_TrackerCSRTG_new_null_const, cv_PtrLcv_legacy_TrackerCSRTG_delete, cv_PtrLcv_legacy_TrackerCSRTG_getInnerPtr_const, cv_PtrLcv_legacy_TrackerCSRTG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::tracking::Legacy_TrackerCSRT> {
+		#[inline] pub fn as_raw_PtrOfLegacy_TrackerCSRT(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLegacy_TrackerCSRT(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Legacy_TrackerCSRTTraitConst for core::Ptr<crate::tracking::Legacy_TrackerCSRT> {
+		#[inline] fn as_raw_Legacy_TrackerCSRT(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerCSRTTrait for core::Ptr<crate::tracking::Legacy_TrackerCSRT> {
+		#[inline] fn as_raw_mut_Legacy_TrackerCSRT(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::tracking::Legacy_TrackerCSRT> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::tracking::Legacy_TrackerCSRT> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerCSRT>, core::Ptr<core::Algorithm>, cv_PtrLcv_legacy_TrackerCSRTG_to_PtrOfAlgorithm }
+
+	impl crate::tracking::Legacy_TrackerTraitConst for core::Ptr<crate::tracking::Legacy_TrackerCSRT> {
+		#[inline] fn as_raw_Legacy_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerTrait for core::Ptr<crate::tracking::Legacy_TrackerCSRT> {
+		#[inline] fn as_raw_mut_Legacy_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerCSRT>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerCSRTG_to_PtrOfLegacy_Tracker }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerCSRT> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfLegacy_TrackerCSRT")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Legacy_TrackerKCF,
+		cv_PtrLcv_legacy_TrackerKCFG_new_null_const, cv_PtrLcv_legacy_TrackerKCFG_delete, cv_PtrLcv_legacy_TrackerKCFG_getInnerPtr_const, cv_PtrLcv_legacy_TrackerKCFG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::tracking::Legacy_TrackerKCF> {
+		#[inline] pub fn as_raw_PtrOfLegacy_TrackerKCF(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLegacy_TrackerKCF(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Legacy_TrackerKCFTraitConst for core::Ptr<crate::tracking::Legacy_TrackerKCF> {
+		#[inline] fn as_raw_Legacy_TrackerKCF(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerKCFTrait for core::Ptr<crate::tracking::Legacy_TrackerKCF> {
+		#[inline] fn as_raw_mut_Legacy_TrackerKCF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::tracking::Legacy_TrackerKCF> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::tracking::Legacy_TrackerKCF> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerKCF>, core::Ptr<core::Algorithm>, cv_PtrLcv_legacy_TrackerKCFG_to_PtrOfAlgorithm }
+
+	impl crate::tracking::Legacy_TrackerTraitConst for core::Ptr<crate::tracking::Legacy_TrackerKCF> {
+		#[inline] fn as_raw_Legacy_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerTrait for core::Ptr<crate::tracking::Legacy_TrackerKCF> {
+		#[inline] fn as_raw_mut_Legacy_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerKCF>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerKCFG_to_PtrOfLegacy_Tracker }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerKCF> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfLegacy_TrackerKCF")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Legacy_TrackerMIL,
+		cv_PtrLcv_legacy_TrackerMILG_new_null_const, cv_PtrLcv_legacy_TrackerMILG_delete, cv_PtrLcv_legacy_TrackerMILG_getInnerPtr_const, cv_PtrLcv_legacy_TrackerMILG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::tracking::Legacy_TrackerMIL> {
+		#[inline] pub fn as_raw_PtrOfLegacy_TrackerMIL(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLegacy_TrackerMIL(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Legacy_TrackerMILTraitConst for core::Ptr<crate::tracking::Legacy_TrackerMIL> {
+		#[inline] fn as_raw_Legacy_TrackerMIL(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerMILTrait for core::Ptr<crate::tracking::Legacy_TrackerMIL> {
+		#[inline] fn as_raw_mut_Legacy_TrackerMIL(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::tracking::Legacy_TrackerMIL> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::tracking::Legacy_TrackerMIL> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerMIL>, core::Ptr<core::Algorithm>, cv_PtrLcv_legacy_TrackerMILG_to_PtrOfAlgorithm }
+
+	impl crate::tracking::Legacy_TrackerTraitConst for core::Ptr<crate::tracking::Legacy_TrackerMIL> {
+		#[inline] fn as_raw_Legacy_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerTrait for core::Ptr<crate::tracking::Legacy_TrackerMIL> {
+		#[inline] fn as_raw_mut_Legacy_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerMIL>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerMILG_to_PtrOfLegacy_Tracker }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerMIL> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfLegacy_TrackerMIL")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Legacy_TrackerMOSSE,
+		cv_PtrLcv_legacy_TrackerMOSSEG_new_null_const, cv_PtrLcv_legacy_TrackerMOSSEG_delete, cv_PtrLcv_legacy_TrackerMOSSEG_getInnerPtr_const, cv_PtrLcv_legacy_TrackerMOSSEG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::tracking::Legacy_TrackerMOSSE> {
+		#[inline] pub fn as_raw_PtrOfLegacy_TrackerMOSSE(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLegacy_TrackerMOSSE(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Legacy_TrackerMOSSETraitConst for core::Ptr<crate::tracking::Legacy_TrackerMOSSE> {
+		#[inline] fn as_raw_Legacy_TrackerMOSSE(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerMOSSETrait for core::Ptr<crate::tracking::Legacy_TrackerMOSSE> {
+		#[inline] fn as_raw_mut_Legacy_TrackerMOSSE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::tracking::Legacy_TrackerMOSSE> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::tracking::Legacy_TrackerMOSSE> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerMOSSE>, core::Ptr<core::Algorithm>, cv_PtrLcv_legacy_TrackerMOSSEG_to_PtrOfAlgorithm }
+
+	impl crate::tracking::Legacy_TrackerTraitConst for core::Ptr<crate::tracking::Legacy_TrackerMOSSE> {
+		#[inline] fn as_raw_Legacy_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerTrait for core::Ptr<crate::tracking::Legacy_TrackerMOSSE> {
+		#[inline] fn as_raw_mut_Legacy_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerMOSSE>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerMOSSEG_to_PtrOfLegacy_Tracker }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerMOSSE> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfLegacy_TrackerMOSSE")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Legacy_TrackerMedianFlow,
+		cv_PtrLcv_legacy_TrackerMedianFlowG_new_null_const, cv_PtrLcv_legacy_TrackerMedianFlowG_delete, cv_PtrLcv_legacy_TrackerMedianFlowG_getInnerPtr_const, cv_PtrLcv_legacy_TrackerMedianFlowG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::tracking::Legacy_TrackerMedianFlow> {
+		#[inline] pub fn as_raw_PtrOfLegacy_TrackerMedianFlow(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLegacy_TrackerMedianFlow(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Legacy_TrackerMedianFlowTraitConst for core::Ptr<crate::tracking::Legacy_TrackerMedianFlow> {
+		#[inline] fn as_raw_Legacy_TrackerMedianFlow(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerMedianFlowTrait for core::Ptr<crate::tracking::Legacy_TrackerMedianFlow> {
+		#[inline] fn as_raw_mut_Legacy_TrackerMedianFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::tracking::Legacy_TrackerMedianFlow> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::tracking::Legacy_TrackerMedianFlow> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerMedianFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_legacy_TrackerMedianFlowG_to_PtrOfAlgorithm }
+
+	impl crate::tracking::Legacy_TrackerTraitConst for core::Ptr<crate::tracking::Legacy_TrackerMedianFlow> {
+		#[inline] fn as_raw_Legacy_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerTrait for core::Ptr<crate::tracking::Legacy_TrackerMedianFlow> {
+		#[inline] fn as_raw_mut_Legacy_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerMedianFlow>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerMedianFlowG_to_PtrOfLegacy_Tracker }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerMedianFlow> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfLegacy_TrackerMedianFlow")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::tracking::Legacy_TrackerTLD,
+		cv_PtrLcv_legacy_TrackerTLDG_new_null_const, cv_PtrLcv_legacy_TrackerTLDG_delete, cv_PtrLcv_legacy_TrackerTLDG_getInnerPtr_const, cv_PtrLcv_legacy_TrackerTLDG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::tracking::Legacy_TrackerTLD> {
+		#[inline] pub fn as_raw_PtrOfLegacy_TrackerTLD(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLegacy_TrackerTLD(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::tracking::Legacy_TrackerTLDTraitConst for core::Ptr<crate::tracking::Legacy_TrackerTLD> {
+		#[inline] fn as_raw_Legacy_TrackerTLD(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerTLDTrait for core::Ptr<crate::tracking::Legacy_TrackerTLD> {
+		#[inline] fn as_raw_mut_Legacy_TrackerTLD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::tracking::Legacy_TrackerTLD> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::tracking::Legacy_TrackerTLD> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerTLD>, core::Ptr<core::Algorithm>, cv_PtrLcv_legacy_TrackerTLDG_to_PtrOfAlgorithm }
+
+	impl crate::tracking::Legacy_TrackerTraitConst for core::Ptr<crate::tracking::Legacy_TrackerTLD> {
+		#[inline] fn as_raw_Legacy_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::tracking::Legacy_TrackerTrait for core::Ptr<crate::tracking::Legacy_TrackerTLD> {
+		#[inline] fn as_raw_mut_Legacy_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerTLD>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerTLDG_to_PtrOfLegacy_Tracker }
+
+	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerTLD> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfLegacy_TrackerTLD")
+				.finish()
+		}
+	}
+
 	ptr_extern! { crate::tracking::TrackerCSRT,
-		cv_PtrLcv_tracking_TrackerCSRTG_new_null_const, cv_PtrLcv_tracking_TrackerCSRTG_delete, cv_PtrLcv_tracking_TrackerCSRTG_getInnerPtr_const, cv_PtrLcv_tracking_TrackerCSRTG_getInnerPtrMut
+		cv_PtrLcv_TrackerCSRTG_new_null_const, cv_PtrLcv_TrackerCSRTG_delete, cv_PtrLcv_TrackerCSRTG_getInnerPtr_const, cv_PtrLcv_TrackerCSRTG_getInnerPtrMut
 	}
 
 	impl core::Ptr<crate::tracking::TrackerCSRT> {
@@ -23137,7 +23915,7 @@ mod tracking_types {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	ptr_cast_base! { core::Ptr<crate::tracking::TrackerCSRT>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_tracking_TrackerCSRTG_to_PtrOfTracker }
+	ptr_cast_base! { core::Ptr<crate::tracking::TrackerCSRT>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerCSRTG_to_PtrOfTracker }
 
 	impl std::fmt::Debug for core::Ptr<crate::tracking::TrackerCSRT> {
 		#[inline]
@@ -23148,7 +23926,7 @@ mod tracking_types {
 	}
 
 	ptr_extern! { crate::tracking::TrackerKCF,
-		cv_PtrLcv_tracking_TrackerKCFG_new_null_const, cv_PtrLcv_tracking_TrackerKCFG_delete, cv_PtrLcv_tracking_TrackerKCFG_getInnerPtr_const, cv_PtrLcv_tracking_TrackerKCFG_getInnerPtrMut
+		cv_PtrLcv_TrackerKCFG_new_null_const, cv_PtrLcv_TrackerKCFG_delete, cv_PtrLcv_TrackerKCFG_getInnerPtr_const, cv_PtrLcv_TrackerKCFG_getInnerPtrMut
 	}
 
 	impl core::Ptr<crate::tracking::TrackerKCF> {
@@ -23172,7 +23950,7 @@ mod tracking_types {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	ptr_cast_base! { core::Ptr<crate::tracking::TrackerKCF>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_tracking_TrackerKCFG_to_PtrOfTracker }
+	ptr_cast_base! { core::Ptr<crate::tracking::TrackerKCF>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerKCFG_to_PtrOfTracker }
 
 	impl std::fmt::Debug for core::Ptr<crate::tracking::TrackerKCF> {
 		#[inline]
@@ -23181,6 +23959,82 @@ mod tracking_types {
 				.finish()
 		}
 	}
+
+	impl core::Tuple<(String, core::Ptr<crate::tracking::Detail_TrackerContribFeature>)> {
+		pub fn as_raw_TupleOfString_PtrOfDetail_TrackerContribFeature(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_TupleOfString_PtrOfDetail_TrackerContribFeature(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	tuple_extern! { (String, core::Ptr<crate::tracking::Detail_TrackerContribFeature>),
+		std_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGG_new_const_String_PtrLTrackerContribFeatureG, std_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGG_delete,
+		0 = arg: String, get_0 via std_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGG_get_0_const,
+		1 = arg_1: core::Ptr<crate::tracking::Detail_TrackerContribFeature>, get_1 via std_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGG_get_1_const
+	}
+
+	impl core::Tuple<(String, core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm>)> {
+		pub fn as_raw_TupleOfString_PtrOfDetail_TrackerContribSamplerAlgorithm(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_TupleOfString_PtrOfDetail_TrackerContribSamplerAlgorithm(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	tuple_extern! { (String, core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm>),
+		std_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGG_new_const_String_PtrLTrackerContribSamplerAlgorithmG, std_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGG_delete,
+		0 = arg: String, get_0 via std_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGG_get_0_const,
+		1 = arg_1: core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm>, get_1 via std_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGG_get_1_const
+	}
+
+	impl core::Vector<core::Ptr<crate::tracking::Legacy_Tracker>> {
+		pub fn as_raw_VectorOfPtrOfLegacy_Tracker(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfPtrOfLegacy_Tracker(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { core::Ptr<crate::tracking::Legacy_Tracker>,
+		std_vectorLcv_PtrLcv_legacy_TrackerGG_new_const, std_vectorLcv_PtrLcv_legacy_TrackerGG_delete,
+		std_vectorLcv_PtrLcv_legacy_TrackerGG_len_const, std_vectorLcv_PtrLcv_legacy_TrackerGG_isEmpty_const,
+		std_vectorLcv_PtrLcv_legacy_TrackerGG_capacity_const, std_vectorLcv_PtrLcv_legacy_TrackerGG_shrinkToFit,
+		std_vectorLcv_PtrLcv_legacy_TrackerGG_reserve_size_t, std_vectorLcv_PtrLcv_legacy_TrackerGG_remove_size_t,
+		std_vectorLcv_PtrLcv_legacy_TrackerGG_swap_size_t_size_t, std_vectorLcv_PtrLcv_legacy_TrackerGG_clear,
+		std_vectorLcv_PtrLcv_legacy_TrackerGG_get_const_size_t, std_vectorLcv_PtrLcv_legacy_TrackerGG_set_size_t_const_PtrLTrackerG,
+		std_vectorLcv_PtrLcv_legacy_TrackerGG_push_const_PtrLTrackerG, std_vectorLcv_PtrLcv_legacy_TrackerGG_insert_size_t_const_PtrLTrackerG,
+	}
+
+	vector_non_copy_or_bool! { core::Ptr<crate::tracking::Legacy_Tracker> }
+
+
+	impl core::Vector<core::Tuple<(String, core::Ptr<crate::tracking::Detail_TrackerContribFeature>)>> {
+		pub fn as_raw_VectorOfTupleOfString_PtrOfDetail_TrackerContribFeature(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfTupleOfString_PtrOfDetail_TrackerContribFeature(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { core::Tuple<(String, core::Ptr<crate::tracking::Detail_TrackerContribFeature>)>,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_new_const, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_delete,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_len_const, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_isEmpty_const,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_capacity_const, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_shrinkToFit,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_reserve_size_t, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_remove_size_t,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_swap_size_t_size_t, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_clear,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_get_const_size_t, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_set_size_t_const_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGG,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_push_const_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGG, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGGG_insert_size_t_const_pairLcv_String__cv_PtrLcv_detail_TrackerContribFeatureGG,
+	}
+
+	vector_non_copy_or_bool! { core::Tuple<(String, core::Ptr<crate::tracking::Detail_TrackerContribFeature>)> }
+
+
+	impl core::Vector<core::Tuple<(String, core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm>)>> {
+		pub fn as_raw_VectorOfTupleOfString_PtrOfDetail_TrackerContribSamplerAlgorithm(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfTupleOfString_PtrOfDetail_TrackerContribSamplerAlgorithm(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { core::Tuple<(String, core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm>)>,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_new_const, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_delete,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_len_const, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_isEmpty_const,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_capacity_const, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_shrinkToFit,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_reserve_size_t, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_remove_size_t,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_swap_size_t_size_t, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_clear,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_get_const_size_t, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_set_size_t_const_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGG,
+		std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_push_const_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGG, std_vectorLstd_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGGG_insert_size_t_const_pairLcv_String__cv_PtrLcv_detail_TrackerContribSamplerAlgorithmGG,
+	}
+
+	vector_non_copy_or_bool! { core::Tuple<(String, core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm>)> }
+
 
 }
 pub use tracking_types::*;
@@ -23389,6 +24243,143 @@ mod video_types {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDenseOpticalFlow")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::video::Detail_TrackerFeature,
+		cv_PtrLcv_detail_TrackerFeatureG_new_null_const, cv_PtrLcv_detail_TrackerFeatureG_delete, cv_PtrLcv_detail_TrackerFeatureG_getInnerPtr_const, cv_PtrLcv_detail_TrackerFeatureG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::video::Detail_TrackerFeature> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerFeature(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerFeature(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::video::Detail_TrackerFeatureTraitConst for core::Ptr<crate::video::Detail_TrackerFeature> {
+		#[inline] fn as_raw_Detail_TrackerFeature(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerFeatureTrait for core::Ptr<crate::video::Detail_TrackerFeature> {
+		#[inline] fn as_raw_mut_Detail_TrackerFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl std::fmt::Debug for core::Ptr<crate::video::Detail_TrackerFeature> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerFeature")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::video::Detail_TrackerSamplerAlgorithm,
+		cv_PtrLcv_detail_TrackerSamplerAlgorithmG_new_null_const, cv_PtrLcv_detail_TrackerSamplerAlgorithmG_delete, cv_PtrLcv_detail_TrackerSamplerAlgorithmG_getInnerPtr_const, cv_PtrLcv_detail_TrackerSamplerAlgorithmG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerSamplerAlgorithm(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerSamplerAlgorithm(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTraitConst for core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm> {
+		#[inline] fn as_raw_Detail_TrackerSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTrait for core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm> {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl std::fmt::Debug for core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerSamplerAlgorithm")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::video::Detail_TrackerSamplerCSC,
+		cv_PtrLcv_detail_TrackerSamplerCSCG_new_null_const, cv_PtrLcv_detail_TrackerSamplerCSCG_delete, cv_PtrLcv_detail_TrackerSamplerCSCG_getInnerPtr_const, cv_PtrLcv_detail_TrackerSamplerCSCG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::video::Detail_TrackerSamplerCSC, cv_PtrLcv_detail_TrackerSamplerCSCG_new_const_TrackerSamplerCSC }
+	impl core::Ptr<crate::video::Detail_TrackerSamplerCSC> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerSamplerCSC(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerSamplerCSC(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerCSCTraitConst for core::Ptr<crate::video::Detail_TrackerSamplerCSC> {
+		#[inline] fn as_raw_Detail_TrackerSamplerCSC(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerCSCTrait for core::Ptr<crate::video::Detail_TrackerSamplerCSC> {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerCSC(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTraitConst for core::Ptr<crate::video::Detail_TrackerSamplerCSC> {
+		#[inline] fn as_raw_Detail_TrackerSamplerAlgorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTrait for core::Ptr<crate::video::Detail_TrackerSamplerCSC> {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::video::Detail_TrackerSamplerCSC>, core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm>, cv_PtrLcv_detail_TrackerSamplerCSCG_to_PtrOfDetail_TrackerSamplerAlgorithm }
+
+	impl std::fmt::Debug for core::Ptr<crate::video::Detail_TrackerSamplerCSC> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerSamplerCSC")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::video::Detail_TrackerStateEstimator,
+		cv_PtrLcv_detail_TrackerStateEstimatorG_new_null_const, cv_PtrLcv_detail_TrackerStateEstimatorG_delete, cv_PtrLcv_detail_TrackerStateEstimatorG_getInnerPtr_const, cv_PtrLcv_detail_TrackerStateEstimatorG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::video::Detail_TrackerStateEstimator> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerStateEstimator(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerStateEstimator(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::video::Detail_TrackerStateEstimatorTraitConst for core::Ptr<crate::video::Detail_TrackerStateEstimator> {
+		#[inline] fn as_raw_Detail_TrackerStateEstimator(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerStateEstimatorTrait for core::Ptr<crate::video::Detail_TrackerStateEstimator> {
+		#[inline] fn as_raw_mut_Detail_TrackerStateEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl std::fmt::Debug for core::Ptr<crate::video::Detail_TrackerStateEstimator> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerStateEstimator")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::video::Detail_TrackerTargetState,
+		cv_PtrLcv_detail_TrackerTargetStateG_new_null_const, cv_PtrLcv_detail_TrackerTargetStateG_delete, cv_PtrLcv_detail_TrackerTargetStateG_getInnerPtr_const, cv_PtrLcv_detail_TrackerTargetStateG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::video::Detail_TrackerTargetState, cv_PtrLcv_detail_TrackerTargetStateG_new_const_TrackerTargetState }
+	impl core::Ptr<crate::video::Detail_TrackerTargetState> {
+		#[inline] pub fn as_raw_PtrOfDetail_TrackerTargetState(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDetail_TrackerTargetState(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::video::Detail_TrackerTargetStateTraitConst for core::Ptr<crate::video::Detail_TrackerTargetState> {
+		#[inline] fn as_raw_Detail_TrackerTargetState(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerTargetStateTrait for core::Ptr<crate::video::Detail_TrackerTargetState> {
+		#[inline] fn as_raw_mut_Detail_TrackerTargetState(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl std::fmt::Debug for core::Ptr<crate::video::Detail_TrackerTargetState> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDetail_TrackerTargetState")
 				.finish()
 		}
 	}
@@ -23762,6 +24753,107 @@ mod video_types {
 				.finish()
 		}
 	}
+
+	impl core::Tuple<(core::Ptr<crate::video::Detail_TrackerTargetState>, f32)> {
+		pub fn as_raw_TupleOfPtrOfDetail_TrackerTargetState_f32(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_TupleOfPtrOfDetail_TrackerTargetState_f32(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	tuple_extern! { (core::Ptr<crate::video::Detail_TrackerTargetState>, f32),
+		std_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatG_new_const_PtrLTrackerTargetStateG_float, std_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatG_delete,
+		0 = arg: core::Ptr<crate::video::Detail_TrackerTargetState>, get_0 via std_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatG_get_0_const,
+		1 = arg_1: f32, get_1 via std_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatG_get_1_const
+	}
+
+	impl core::Vector<crate::video::Detail_ConfidenceMap> {
+		pub fn as_raw_VectorOfDetail_ConfidenceMap(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfDetail_ConfidenceMap(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { crate::video::Detail_ConfidenceMap,
+		std_vectorLcv_detail_ConfidenceMapG_new_const, std_vectorLcv_detail_ConfidenceMapG_delete,
+		std_vectorLcv_detail_ConfidenceMapG_len_const, std_vectorLcv_detail_ConfidenceMapG_isEmpty_const,
+		std_vectorLcv_detail_ConfidenceMapG_capacity_const, std_vectorLcv_detail_ConfidenceMapG_shrinkToFit,
+		std_vectorLcv_detail_ConfidenceMapG_reserve_size_t, std_vectorLcv_detail_ConfidenceMapG_remove_size_t,
+		std_vectorLcv_detail_ConfidenceMapG_swap_size_t_size_t, std_vectorLcv_detail_ConfidenceMapG_clear,
+		std_vectorLcv_detail_ConfidenceMapG_get_const_size_t, std_vectorLcv_detail_ConfidenceMapG_set_size_t_const_ConfidenceMap,
+		std_vectorLcv_detail_ConfidenceMapG_push_const_ConfidenceMap, std_vectorLcv_detail_ConfidenceMapG_insert_size_t_const_ConfidenceMap,
+	}
+
+	vector_non_copy_or_bool! { crate::video::Detail_ConfidenceMap }
+
+
+	impl core::Vector<core::Ptr<crate::video::Detail_TrackerFeature>> {
+		pub fn as_raw_VectorOfPtrOfDetail_TrackerFeature(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfPtrOfDetail_TrackerFeature(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { core::Ptr<crate::video::Detail_TrackerFeature>,
+		std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_new_const, std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_delete,
+		std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_len_const, std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_isEmpty_const,
+		std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_capacity_const, std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_shrinkToFit,
+		std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_reserve_size_t, std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_remove_size_t,
+		std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_swap_size_t_size_t, std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_clear,
+		std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_get_const_size_t, std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_set_size_t_const_PtrLTrackerFeatureG,
+		std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_push_const_PtrLTrackerFeatureG, std_vectorLcv_PtrLcv_detail_TrackerFeatureGG_insert_size_t_const_PtrLTrackerFeatureG,
+	}
+
+	vector_non_copy_or_bool! { core::Ptr<crate::video::Detail_TrackerFeature> }
+
+
+	impl core::Vector<core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm>> {
+		pub fn as_raw_VectorOfPtrOfDetail_TrackerSamplerAlgorithm(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfPtrOfDetail_TrackerSamplerAlgorithm(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm>,
+		std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_new_const, std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_delete,
+		std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_len_const, std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_isEmpty_const,
+		std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_capacity_const, std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_shrinkToFit,
+		std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_reserve_size_t, std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_remove_size_t,
+		std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_swap_size_t_size_t, std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_clear,
+		std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_get_const_size_t, std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_set_size_t_const_PtrLTrackerSamplerAlgorithmG,
+		std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_push_const_PtrLTrackerSamplerAlgorithmG, std_vectorLcv_PtrLcv_detail_TrackerSamplerAlgorithmGG_insert_size_t_const_PtrLTrackerSamplerAlgorithmG,
+	}
+
+	vector_non_copy_or_bool! { core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm> }
+
+
+	impl core::Vector<core::Ptr<crate::video::Detail_TrackerTargetState>> {
+		pub fn as_raw_VectorOfPtrOfDetail_TrackerTargetState(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfPtrOfDetail_TrackerTargetState(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { core::Ptr<crate::video::Detail_TrackerTargetState>,
+		std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_new_const, std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_delete,
+		std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_len_const, std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_isEmpty_const,
+		std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_capacity_const, std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_shrinkToFit,
+		std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_reserve_size_t, std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_remove_size_t,
+		std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_swap_size_t_size_t, std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_clear,
+		std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_get_const_size_t, std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_set_size_t_const_PtrLTrackerTargetStateG,
+		std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_push_const_PtrLTrackerTargetStateG, std_vectorLcv_PtrLcv_detail_TrackerTargetStateGG_insert_size_t_const_PtrLTrackerTargetStateG,
+	}
+
+	vector_non_copy_or_bool! { core::Ptr<crate::video::Detail_TrackerTargetState> }
+
+
+	impl core::Vector<core::Tuple<(core::Ptr<crate::video::Detail_TrackerTargetState>, f32)>> {
+		pub fn as_raw_VectorOfTupleOfPtrOfDetail_TrackerTargetState_f32(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfTupleOfPtrOfDetail_TrackerTargetState_f32(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { core::Tuple<(core::Ptr<crate::video::Detail_TrackerTargetState>, f32)>,
+		std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_new_const, std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_delete,
+		std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_len_const, std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_isEmpty_const,
+		std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_capacity_const, std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_shrinkToFit,
+		std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_reserve_size_t, std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_remove_size_t,
+		std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_swap_size_t_size_t, std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_clear,
+		std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_get_const_size_t, std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_set_size_t_const_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatG,
+		std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_push_const_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatG, std_vectorLstd_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatGG_insert_size_t_const_pairLcv_PtrLcv_detail_TrackerTargetStateG__floatG,
+	}
+
+	vector_non_copy_or_bool! { core::Tuple<(core::Ptr<crate::video::Detail_TrackerTargetState>, f32)> }
+
 
 }
 pub use video_types::*;

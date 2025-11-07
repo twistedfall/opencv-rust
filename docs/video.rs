@@ -5,12 +5,22 @@ pub mod video {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{BackgroundSubtractorKNNTrait, BackgroundSubtractorKNNTraitConst, BackgroundSubtractorMOG2Trait, BackgroundSubtractorMOG2TraitConst, BackgroundSubtractorTrait, BackgroundSubtractorTraitConst, DISOpticalFlowTrait, DISOpticalFlowTraitConst, DenseOpticalFlowTrait, DenseOpticalFlowTraitConst, FarnebackOpticalFlowTrait, FarnebackOpticalFlowTraitConst, KalmanFilterTrait, KalmanFilterTraitConst, SparseOpticalFlowTrait, SparseOpticalFlowTraitConst, SparsePyrLKOpticalFlowTrait, SparsePyrLKOpticalFlowTraitConst, TrackerDaSiamRPNTrait, TrackerDaSiamRPNTraitConst, TrackerDaSiamRPN_ParamsTrait, TrackerDaSiamRPN_ParamsTraitConst, TrackerGOTURNTrait, TrackerGOTURNTraitConst, TrackerGOTURN_ParamsTrait, TrackerGOTURN_ParamsTraitConst, TrackerMILTrait, TrackerMILTraitConst, TrackerNanoTrait, TrackerNanoTraitConst, TrackerNano_ParamsTrait, TrackerNano_ParamsTraitConst, TrackerTrait, TrackerTraitConst, TrackerVitTrait, TrackerVitTraitConst, TrackerVit_ParamsTrait, TrackerVit_ParamsTraitConst, VariationalRefinementTrait, VariationalRefinementTraitConst};
+		pub use super::{BackgroundSubtractorKNNTrait, BackgroundSubtractorKNNTraitConst, BackgroundSubtractorMOG2Trait, BackgroundSubtractorMOG2TraitConst, BackgroundSubtractorTrait, BackgroundSubtractorTraitConst, DISOpticalFlowTrait, DISOpticalFlowTraitConst, DenseOpticalFlowTrait, DenseOpticalFlowTraitConst, Detail_TrackerFeatureSetTrait, Detail_TrackerFeatureSetTraitConst, Detail_TrackerFeatureTrait, Detail_TrackerFeatureTraitConst, Detail_TrackerModelTrait, Detail_TrackerModelTraitConst, Detail_TrackerSamplerAlgorithmTrait, Detail_TrackerSamplerAlgorithmTraitConst, Detail_TrackerSamplerCSCTrait, Detail_TrackerSamplerCSCTraitConst, Detail_TrackerSamplerCSC_ParamsTrait, Detail_TrackerSamplerCSC_ParamsTraitConst, Detail_TrackerSamplerTrait, Detail_TrackerSamplerTraitConst, Detail_TrackerStateEstimatorTrait, Detail_TrackerStateEstimatorTraitConst, Detail_TrackerTargetStateTrait, Detail_TrackerTargetStateTraitConst, FarnebackOpticalFlowTrait, FarnebackOpticalFlowTraitConst, KalmanFilterTrait, KalmanFilterTraitConst, SparseOpticalFlowTrait, SparseOpticalFlowTraitConst, SparsePyrLKOpticalFlowTrait, SparsePyrLKOpticalFlowTraitConst, TrackerDaSiamRPNTrait, TrackerDaSiamRPNTraitConst, TrackerDaSiamRPN_ParamsTrait, TrackerDaSiamRPN_ParamsTraitConst, TrackerGOTURNTrait, TrackerGOTURNTraitConst, TrackerGOTURN_ParamsTrait, TrackerGOTURN_ParamsTraitConst, TrackerMILTrait, TrackerMILTraitConst, TrackerNanoTrait, TrackerNanoTraitConst, TrackerNano_ParamsTrait, TrackerNano_ParamsTraitConst, TrackerTrait, TrackerTraitConst, TrackerVitTrait, TrackerVitTraitConst, TrackerVit_ParamsTrait, TrackerVit_ParamsTraitConst, VariationalRefinementTrait, VariationalRefinementTraitConst};
 	}
 
 	pub const DISOpticalFlow_PRESET_FAST: i32 = 1;
 	pub const DISOpticalFlow_PRESET_MEDIUM: i32 = 2;
 	pub const DISOpticalFlow_PRESET_ULTRAFAST: i32 = 0;
+	/// mode for detect samples
+	pub const Detail_TrackerSamplerCSC_MODE_DETECT: i32 = 5;
+	/// mode for init negative samples
+	pub const Detail_TrackerSamplerCSC_MODE_INIT_NEG: i32 = 2;
+	/// mode for init positive samples
+	pub const Detail_TrackerSamplerCSC_MODE_INIT_POS: i32 = 1;
+	/// mode for update negative samples
+	pub const Detail_TrackerSamplerCSC_MODE_TRACK_NEG: i32 = 4;
+	/// mode for update positive samples
+	pub const Detail_TrackerSamplerCSC_MODE_TRACK_POS: i32 = 3;
 	pub const MOTION_AFFINE: i32 = 2;
 	pub const MOTION_EUCLIDEAN: i32 = 1;
 	pub const MOTION_HOMOGRAPHY: i32 = 3;
@@ -18,6 +28,35 @@ pub mod video {
 	pub const OPTFLOW_FARNEBACK_GAUSSIAN: i32 = 256;
 	pub const OPTFLOW_LK_GET_MIN_EIGENVALS: i32 = 8;
 	pub const OPTFLOW_USE_INITIAL_FLOW: i32 = 4;
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum Detail_TrackerSamplerCSC_MODE {
+		/// mode for init positive samples
+		MODE_INIT_POS = 1,
+		/// mode for init negative samples
+		MODE_INIT_NEG = 2,
+		/// mode for update positive samples
+		MODE_TRACK_POS = 3,
+		/// mode for update negative samples
+		MODE_TRACK_NEG = 4,
+		/// mode for detect samples
+		MODE_DETECT = 5,
+	}
+
+	opencv_type_enum! { crate::video::Detail_TrackerSamplerCSC_MODE { MODE_INIT_POS, MODE_INIT_NEG, MODE_TRACK_POS, MODE_TRACK_NEG, MODE_DETECT } }
+
+	/// Represents the model of the target at frame ![inline formula](https://latex.codecogs.com/png.latex?k) (all states and scores)
+	///
+	/// See [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) The set of the pair ![inline formula](https://latex.codecogs.com/png.latex?%5Clangle%20%5Chat%7Bx%7D%5E%7Bi%7D%5F%7Bk%7D%2C%20C%5E%7Bi%7D%5F%7Bk%7D%20%5Crangle)
+	/// ## See also
+	/// TrackerTargetState
+	pub type Detail_ConfidenceMap = core::Vector<core::Tuple<(core::Ptr<crate::video::Detail_TrackerTargetState>, f32)>>;
+	/// Represents the estimate states for all frames
+	///
+	/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) ![inline formula](https://latex.codecogs.com/png.latex?x%5F%7Bk%7D) is the trajectory of the target up to time ![inline formula](https://latex.codecogs.com/png.latex?k)
+	/// ## See also
+	/// TrackerTargetState
+	pub type Detail_Trajectory = core::Vector<core::Ptr<crate::video::Detail_TrackerTargetState>>;
 	/// Finds an object center, size, and orientation.
 	///
 	/// ## Parameters
@@ -4522,5 +4561,1040 @@ pub mod video {
 	}
 
 	boxed_ref! { VariationalRefinement, crate::video::VariationalRefinementTraitConst, as_raw_VariationalRefinement, crate::video::VariationalRefinementTrait, as_raw_mut_VariationalRefinement }
+
+	/// Abstract base class for TrackerFeature that represents the feature.
+	pub struct Detail_TrackerFeature {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_TrackerFeature }
+
+	impl Drop for Detail_TrackerFeature {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_TrackerFeature_delete(self.as_raw_mut_Detail_TrackerFeature()) };
+		}
+	}
+
+	unsafe impl Send for Detail_TrackerFeature {}
+
+	/// Constant methods for [crate::video::Detail_TrackerFeature]
+	pub trait Detail_TrackerFeatureTraitConst {
+		fn as_raw_Detail_TrackerFeature(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::video::Detail_TrackerFeature]
+	pub trait Detail_TrackerFeatureTrait: crate::video::Detail_TrackerFeatureTraitConst {
+		fn as_raw_mut_Detail_TrackerFeature(&mut self) -> *mut c_void;
+
+		/// Compute the features in the images collection
+		/// ## Parameters
+		/// * images: The images
+		/// * response: The output response
+		#[inline]
+		fn compute(&mut self, images: &core::Vector<core::Mat>, response: &mut impl core::MatTrait) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerFeature_compute_const_vectorLMatGR_MatR(self.as_raw_mut_Detail_TrackerFeature(), images.as_raw_VectorOfMat(), response.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for Detail_TrackerFeature {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_TrackerFeature")
+				.finish()
+		}
+	}
+
+	impl crate::video::Detail_TrackerFeatureTraitConst for Detail_TrackerFeature {
+		#[inline] fn as_raw_Detail_TrackerFeature(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerFeatureTrait for Detail_TrackerFeature {
+		#[inline] fn as_raw_mut_Detail_TrackerFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_TrackerFeature, crate::video::Detail_TrackerFeatureTraitConst, as_raw_Detail_TrackerFeature, crate::video::Detail_TrackerFeatureTrait, as_raw_mut_Detail_TrackerFeature }
+
+	/// Class that manages the extraction and selection of features
+	///
+	/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Feature Extraction and Feature Set Refinement (Feature Processing and Feature Selection).
+	/// See table I and section III C [AMVOT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AMVOT) Appearance modelling -\> Visual representation (Table II,
+	/// section 3.1 - 3.2)
+	///
+	/// TrackerFeatureSet is an aggregation of TrackerFeature
+	/// ## See also
+	/// TrackerFeature
+	pub struct Detail_TrackerFeatureSet {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_TrackerFeatureSet }
+
+	impl Drop for Detail_TrackerFeatureSet {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_TrackerFeatureSet_delete(self.as_raw_mut_Detail_TrackerFeatureSet()) };
+		}
+	}
+
+	unsafe impl Send for Detail_TrackerFeatureSet {}
+
+	impl Detail_TrackerFeatureSet {
+		#[inline]
+		pub fn default() -> Result<crate::video::Detail_TrackerFeatureSet> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerFeatureSet_TrackerFeatureSet(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::Detail_TrackerFeatureSet::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::video::Detail_TrackerFeatureSet]
+	pub trait Detail_TrackerFeatureSetTraitConst {
+		fn as_raw_Detail_TrackerFeatureSet(&self) -> *const c_void;
+
+		/// Get the TrackerFeature collection (TrackerFeature name, TrackerFeature pointer)
+		#[inline]
+		fn get_tracker_features(&self) -> Result<core::Vector<core::Ptr<crate::video::Detail_TrackerFeature>>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerFeatureSet_getTrackerFeatures_const(self.as_raw_Detail_TrackerFeatureSet(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<core::Ptr<crate::video::Detail_TrackerFeature>>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Get the responses
+		///
+		/// Note: Be sure to call extraction before getResponses Example TrackerFeatureSet::getResponses
+		#[inline]
+		fn get_responses(&self) -> Result<core::Vector<core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerFeatureSet_getResponses_const(self.as_raw_Detail_TrackerFeatureSet(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::video::Detail_TrackerFeatureSet]
+	pub trait Detail_TrackerFeatureSetTrait: crate::video::Detail_TrackerFeatureSetTraitConst {
+		fn as_raw_mut_Detail_TrackerFeatureSet(&mut self) -> *mut c_void;
+
+		/// Extract features from the images collection
+		/// ## Parameters
+		/// * images: The input images
+		#[inline]
+		fn extraction(&mut self, images: &core::Vector<core::Mat>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerFeatureSet_extraction_const_vectorLMatGR(self.as_raw_mut_Detail_TrackerFeatureSet(), images.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Add TrackerFeature in the collection. Return true if TrackerFeature is added, false otherwise
+		/// ## Parameters
+		/// * feature: The TrackerFeature class
+		#[inline]
+		fn add_tracker_feature(&mut self, feature: &core::Ptr<crate::video::Detail_TrackerFeature>) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerFeatureSet_addTrackerFeature_const_PtrLTrackerFeatureGR(self.as_raw_mut_Detail_TrackerFeatureSet(), feature.as_raw_PtrOfDetail_TrackerFeature(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for Detail_TrackerFeatureSet {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_TrackerFeatureSet")
+				.finish()
+		}
+	}
+
+	impl crate::video::Detail_TrackerFeatureSetTraitConst for Detail_TrackerFeatureSet {
+		#[inline] fn as_raw_Detail_TrackerFeatureSet(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerFeatureSetTrait for Detail_TrackerFeatureSet {
+		#[inline] fn as_raw_mut_Detail_TrackerFeatureSet(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_TrackerFeatureSet, crate::video::Detail_TrackerFeatureSetTraitConst, as_raw_Detail_TrackerFeatureSet, crate::video::Detail_TrackerFeatureSetTrait, as_raw_mut_Detail_TrackerFeatureSet }
+
+	/// Abstract class that represents the model of the target.
+	///
+	/// It must be instantiated by specialized tracker
+	///
+	/// See [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Ak
+	///
+	/// Inherits this with your TrackerModel
+	pub struct Detail_TrackerModel {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_TrackerModel }
+
+	impl Drop for Detail_TrackerModel {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_TrackerModel_delete(self.as_raw_mut_Detail_TrackerModel()) };
+		}
+	}
+
+	unsafe impl Send for Detail_TrackerModel {}
+
+	/// Constant methods for [crate::video::Detail_TrackerModel]
+	pub trait Detail_TrackerModelTraitConst {
+		fn as_raw_Detail_TrackerModel(&self) -> *const c_void;
+
+		/// Get the last TrackerTargetState from Trajectory
+		#[inline]
+		fn get_last_target_state(&self) -> Result<core::Ptr<crate::video::Detail_TrackerTargetState>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerModel_getLastTargetState_const(self.as_raw_Detail_TrackerModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::Detail_TrackerTargetState>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Get the list of the ConfidenceMap
+		#[inline]
+		fn get_confidence_maps(&self) -> Result<core::Vector<crate::video::Detail_ConfidenceMap>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerModel_getConfidenceMaps_const(self.as_raw_Detail_TrackerModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<crate::video::Detail_ConfidenceMap>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Get the last ConfidenceMap for the current frame
+		#[inline]
+		fn get_last_confidence_map(&self) -> Result<crate::video::Detail_ConfidenceMap> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerModel_getLastConfidenceMap_const(self.as_raw_Detail_TrackerModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::Detail_ConfidenceMap::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Get the TrackerStateEstimator
+		#[inline]
+		fn get_tracker_state_estimator(&self) -> Result<core::Ptr<crate::video::Detail_TrackerStateEstimator>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerModel_getTrackerStateEstimator_const(self.as_raw_Detail_TrackerModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::Detail_TrackerStateEstimator>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::video::Detail_TrackerModel]
+	pub trait Detail_TrackerModelTrait: crate::video::Detail_TrackerModelTraitConst {
+		fn as_raw_mut_Detail_TrackerModel(&mut self) -> *mut c_void;
+
+		/// Set TrackerEstimator, return true if the tracker state estimator is added, false otherwise
+		/// ## Parameters
+		/// * trackerStateEstimator: The TrackerStateEstimator
+		///
+		/// Note: You can add only one TrackerStateEstimator
+		#[inline]
+		fn set_tracker_state_estimator(&mut self, mut tracker_state_estimator: core::Ptr<crate::video::Detail_TrackerStateEstimator>) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerModel_setTrackerStateEstimator_PtrLTrackerStateEstimatorG(self.as_raw_mut_Detail_TrackerModel(), tracker_state_estimator.as_raw_mut_PtrOfDetail_TrackerStateEstimator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Estimate the most likely target location
+		///
+		/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) ME, Model Estimation table I
+		/// ## Parameters
+		/// * responses: Features extracted from TrackerFeatureSet
+		#[inline]
+		fn model_estimation(&mut self, responses: &core::Vector<core::Mat>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerModel_modelEstimation_const_vectorLMatGR(self.as_raw_mut_Detail_TrackerModel(), responses.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Update the model
+		///
+		/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) MU, Model Update table I
+		#[inline]
+		fn model_update(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerModel_modelUpdate(self.as_raw_mut_Detail_TrackerModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Run the TrackerStateEstimator, return true if is possible to estimate a new state, false otherwise
+		#[inline]
+		fn run_state_estimator(&mut self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerModel_runStateEstimator(self.as_raw_mut_Detail_TrackerModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Set the current TrackerTargetState in the Trajectory
+		/// ## Parameters
+		/// * lastTargetState: The current TrackerTargetState
+		#[inline]
+		fn set_last_target_state(&mut self, last_target_state: &core::Ptr<crate::video::Detail_TrackerTargetState>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerModel_setLastTargetState_const_PtrLTrackerTargetStateGR(self.as_raw_mut_Detail_TrackerModel(), last_target_state.as_raw_PtrOfDetail_TrackerTargetState(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for Detail_TrackerModel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_TrackerModel")
+				.finish()
+		}
+	}
+
+	impl crate::video::Detail_TrackerModelTraitConst for Detail_TrackerModel {
+		#[inline] fn as_raw_Detail_TrackerModel(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerModelTrait for Detail_TrackerModel {
+		#[inline] fn as_raw_mut_Detail_TrackerModel(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_TrackerModel, crate::video::Detail_TrackerModelTraitConst, as_raw_Detail_TrackerModel, crate::video::Detail_TrackerModelTrait, as_raw_mut_Detail_TrackerModel }
+
+	/// Class that manages the sampler in order to select regions for the update the model of the tracker
+	///
+	/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Sampling e Labeling. See table I and section III B
+	///
+	/// TrackerSampler is an aggregation of TrackerSamplerAlgorithm
+	/// ## See also
+	/// TrackerSamplerAlgorithm
+	pub struct Detail_TrackerSampler {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_TrackerSampler }
+
+	impl Drop for Detail_TrackerSampler {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_TrackerSampler_delete(self.as_raw_mut_Detail_TrackerSampler()) };
+		}
+	}
+
+	unsafe impl Send for Detail_TrackerSampler {}
+
+	impl Detail_TrackerSampler {
+		#[inline]
+		pub fn default() -> Result<crate::video::Detail_TrackerSampler> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerSampler_TrackerSampler(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::Detail_TrackerSampler::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::video::Detail_TrackerSampler]
+	pub trait Detail_TrackerSamplerTraitConst {
+		fn as_raw_Detail_TrackerSampler(&self) -> *const c_void;
+
+		/// Return the collection of the TrackerSamplerAlgorithm
+		#[inline]
+		fn get_samplers(&self) -> Result<core::Vector<core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm>>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerSampler_getSamplers_const(self.as_raw_Detail_TrackerSampler(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm>>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Return the samples from all TrackerSamplerAlgorithm, [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
+		#[inline]
+		fn get_samples(&self) -> Result<core::Vector<core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerSampler_getSamples_const(self.as_raw_Detail_TrackerSampler(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::video::Detail_TrackerSampler]
+	pub trait Detail_TrackerSamplerTrait: crate::video::Detail_TrackerSamplerTraitConst {
+		fn as_raw_mut_Detail_TrackerSampler(&mut self) -> *mut c_void;
+
+		/// Computes the regions starting from a position in an image
+		/// ## Parameters
+		/// * image: The current frame
+		/// * boundingBox: The bounding box from which regions can be calculated
+		#[inline]
+		fn sampling(&mut self, image: &impl core::MatTraitConst, bounding_box: core::Rect) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerSampler_sampling_const_MatR_Rect(self.as_raw_mut_Detail_TrackerSampler(), image.as_raw_Mat(), &bounding_box, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Add TrackerSamplerAlgorithm in the collection. Return true if sampler is added, false otherwise
+		/// ## Parameters
+		/// * sampler: The TrackerSamplerAlgorithm
+		#[inline]
+		fn add_tracker_sampler_algorithm(&mut self, sampler: &core::Ptr<crate::video::Detail_TrackerSamplerAlgorithm>) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerSampler_addTrackerSamplerAlgorithm_const_PtrLTrackerSamplerAlgorithmGR(self.as_raw_mut_Detail_TrackerSampler(), sampler.as_raw_PtrOfDetail_TrackerSamplerAlgorithm(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for Detail_TrackerSampler {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_TrackerSampler")
+				.finish()
+		}
+	}
+
+	impl crate::video::Detail_TrackerSamplerTraitConst for Detail_TrackerSampler {
+		#[inline] fn as_raw_Detail_TrackerSampler(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerTrait for Detail_TrackerSampler {
+		#[inline] fn as_raw_mut_Detail_TrackerSampler(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_TrackerSampler, crate::video::Detail_TrackerSamplerTraitConst, as_raw_Detail_TrackerSampler, crate::video::Detail_TrackerSamplerTrait, as_raw_mut_Detail_TrackerSampler }
+
+	/// Abstract base class for TrackerSamplerAlgorithm that represents the algorithm for the specific
+	/// sampler.
+	pub struct Detail_TrackerSamplerAlgorithm {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_TrackerSamplerAlgorithm }
+
+	impl Drop for Detail_TrackerSamplerAlgorithm {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_TrackerSamplerAlgorithm_delete(self.as_raw_mut_Detail_TrackerSamplerAlgorithm()) };
+		}
+	}
+
+	unsafe impl Send for Detail_TrackerSamplerAlgorithm {}
+
+	/// Constant methods for [crate::video::Detail_TrackerSamplerAlgorithm]
+	pub trait Detail_TrackerSamplerAlgorithmTraitConst {
+		fn as_raw_Detail_TrackerSamplerAlgorithm(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::video::Detail_TrackerSamplerAlgorithm]
+	pub trait Detail_TrackerSamplerAlgorithmTrait: crate::video::Detail_TrackerSamplerAlgorithmTraitConst {
+		fn as_raw_mut_Detail_TrackerSamplerAlgorithm(&mut self) -> *mut c_void;
+
+		/// Computes the regions starting from a position in an image.
+		///
+		/// Return true if samples are computed, false otherwise
+		///
+		/// ## Parameters
+		/// * image: The current frame
+		/// * boundingBox: The bounding box from which regions can be calculated
+		///
+		/// * sample: The computed samples [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
+		#[inline]
+		fn sampling(&mut self, image: &impl core::MatTraitConst, bounding_box: core::Rect, sample: &mut core::Vector<core::Mat>) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerSamplerAlgorithm_sampling_const_MatR_const_RectR_vectorLMatGR(self.as_raw_mut_Detail_TrackerSamplerAlgorithm(), image.as_raw_Mat(), &bounding_box, sample.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for Detail_TrackerSamplerAlgorithm {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_TrackerSamplerAlgorithm")
+				.finish()
+		}
+	}
+
+	boxed_cast_descendant! { Detail_TrackerSamplerAlgorithm, crate::video::Detail_TrackerSamplerCSC, cv_detail_TrackerSamplerAlgorithm_to_Detail_TrackerSamplerCSC }
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTraitConst for Detail_TrackerSamplerAlgorithm {
+		#[inline] fn as_raw_Detail_TrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTrait for Detail_TrackerSamplerAlgorithm {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_TrackerSamplerAlgorithm, crate::video::Detail_TrackerSamplerAlgorithmTraitConst, as_raw_Detail_TrackerSamplerAlgorithm, crate::video::Detail_TrackerSamplerAlgorithmTrait, as_raw_mut_Detail_TrackerSamplerAlgorithm }
+
+	/// TrackerSampler based on CSC (current state centered), used by MIL algorithm TrackerMIL
+	pub struct Detail_TrackerSamplerCSC {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_TrackerSamplerCSC }
+
+	impl Drop for Detail_TrackerSamplerCSC {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_TrackerSamplerCSC_delete(self.as_raw_mut_Detail_TrackerSamplerCSC()) };
+		}
+	}
+
+	unsafe impl Send for Detail_TrackerSamplerCSC {}
+
+	impl Detail_TrackerSamplerCSC {
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: TrackerSamplerCSC parameters TrackerSamplerCSC::Params
+		///
+		/// ## C++ default parameters
+		/// * parameters: TrackerSamplerCSC::Params()
+		#[inline]
+		pub fn new(parameters: &impl crate::video::Detail_TrackerSamplerCSC_ParamsTraitConst) -> Result<crate::video::Detail_TrackerSamplerCSC> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerSamplerCSC_TrackerSamplerCSC_const_ParamsR(parameters.as_raw_Detail_TrackerSamplerCSC_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::Detail_TrackerSamplerCSC::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: TrackerSamplerCSC parameters TrackerSamplerCSC::Params
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * parameters: TrackerSamplerCSC::Params()
+		#[inline]
+		pub fn new_def() -> Result<crate::video::Detail_TrackerSamplerCSC> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerSamplerCSC_TrackerSamplerCSC(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::Detail_TrackerSamplerCSC::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::video::Detail_TrackerSamplerCSC]
+	pub trait Detail_TrackerSamplerCSCTraitConst: crate::video::Detail_TrackerSamplerAlgorithmTraitConst {
+		fn as_raw_Detail_TrackerSamplerCSC(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::video::Detail_TrackerSamplerCSC]
+	pub trait Detail_TrackerSamplerCSCTrait: crate::video::Detail_TrackerSamplerAlgorithmTrait + crate::video::Detail_TrackerSamplerCSCTraitConst {
+		fn as_raw_mut_Detail_TrackerSamplerCSC(&mut self) -> *mut c_void;
+
+		/// Set the sampling mode of TrackerSamplerCSC
+		/// ## Parameters
+		/// * samplingMode: The sampling mode
+		///
+		/// The modes are:
+		///
+		/// *   "MODE_INIT_POS = 1" -- for the positive sampling in initialization step
+		/// *   "MODE_INIT_NEG = 2" -- for the negative sampling in initialization step
+		/// *   "MODE_TRACK_POS = 3" -- for the positive sampling in update step
+		/// *   "MODE_TRACK_NEG = 4" -- for the negative sampling in update step
+		/// *   "MODE_DETECT = 5" -- for the sampling in detection step
+		#[inline]
+		fn set_mode(&mut self, sampling_mode: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerSamplerCSC_setMode_int(self.as_raw_mut_Detail_TrackerSamplerCSC(), sampling_mode, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn sampling(&mut self, image: &impl core::MatTraitConst, bounding_box: core::Rect, sample: &mut core::Vector<core::Mat>) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerSamplerCSC_sampling_const_MatR_const_RectR_vectorLMatGR(self.as_raw_mut_Detail_TrackerSamplerCSC(), image.as_raw_Mat(), &bounding_box, sample.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for Detail_TrackerSamplerCSC {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_TrackerSamplerCSC")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_TrackerSamplerCSC, crate::video::Detail_TrackerSamplerAlgorithm, cv_detail_TrackerSamplerCSC_to_Detail_TrackerSamplerAlgorithm }
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTraitConst for Detail_TrackerSamplerCSC {
+		#[inline] fn as_raw_Detail_TrackerSamplerAlgorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerAlgorithmTrait for Detail_TrackerSamplerCSC {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_TrackerSamplerCSC, crate::video::Detail_TrackerSamplerAlgorithmTraitConst, as_raw_Detail_TrackerSamplerAlgorithm, crate::video::Detail_TrackerSamplerAlgorithmTrait, as_raw_mut_Detail_TrackerSamplerAlgorithm }
+
+	impl crate::video::Detail_TrackerSamplerCSCTraitConst for Detail_TrackerSamplerCSC {
+		#[inline] fn as_raw_Detail_TrackerSamplerCSC(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerCSCTrait for Detail_TrackerSamplerCSC {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerCSC(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_TrackerSamplerCSC, crate::video::Detail_TrackerSamplerCSCTraitConst, as_raw_Detail_TrackerSamplerCSC, crate::video::Detail_TrackerSamplerCSCTrait, as_raw_mut_Detail_TrackerSamplerCSC }
+
+	pub struct Detail_TrackerSamplerCSC_Params {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_TrackerSamplerCSC_Params }
+
+	impl Drop for Detail_TrackerSamplerCSC_Params {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_TrackerSamplerCSC_Params_delete(self.as_raw_mut_Detail_TrackerSamplerCSC_Params()) };
+		}
+	}
+
+	unsafe impl Send for Detail_TrackerSamplerCSC_Params {}
+
+	impl Detail_TrackerSamplerCSC_Params {
+		#[inline]
+		pub fn default() -> Result<crate::video::Detail_TrackerSamplerCSC_Params> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerSamplerCSC_Params_Params(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::Detail_TrackerSamplerCSC_Params::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::video::Detail_TrackerSamplerCSC_Params]
+	pub trait Detail_TrackerSamplerCSC_ParamsTraitConst {
+		fn as_raw_Detail_TrackerSamplerCSC_Params(&self) -> *const c_void;
+
+		/// radius for gathering positive instances during init
+		#[inline]
+		fn init_in_rad(&self) -> f32 {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propInitInRad_const(self.as_raw_Detail_TrackerSamplerCSC_Params()) };
+			ret
+		}
+
+		/// radius for gathering positive instances during tracking
+		#[inline]
+		fn track_in_pos_rad(&self) -> f32 {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackInPosRad_const(self.as_raw_Detail_TrackerSamplerCSC_Params()) };
+			ret
+		}
+
+		/// size of search window
+		#[inline]
+		fn search_win_size(&self) -> f32 {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propSearchWinSize_const(self.as_raw_Detail_TrackerSamplerCSC_Params()) };
+			ret
+		}
+
+		/// # negative samples to use during init
+		#[inline]
+		fn init_max_neg_num(&self) -> i32 {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propInitMaxNegNum_const(self.as_raw_Detail_TrackerSamplerCSC_Params()) };
+			ret
+		}
+
+		/// # positive samples to use during training
+		#[inline]
+		fn track_max_pos_num(&self) -> i32 {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackMaxPosNum_const(self.as_raw_Detail_TrackerSamplerCSC_Params()) };
+			ret
+		}
+
+		/// # negative samples to use during training
+		#[inline]
+		fn track_max_neg_num(&self) -> i32 {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackMaxNegNum_const(self.as_raw_Detail_TrackerSamplerCSC_Params()) };
+			ret
+		}
+
+	}
+
+	/// Mutable methods for [crate::video::Detail_TrackerSamplerCSC_Params]
+	pub trait Detail_TrackerSamplerCSC_ParamsTrait: crate::video::Detail_TrackerSamplerCSC_ParamsTraitConst {
+		fn as_raw_mut_Detail_TrackerSamplerCSC_Params(&mut self) -> *mut c_void;
+
+		/// radius for gathering positive instances during init
+		#[inline]
+		fn set_init_in_rad(&mut self, val: f32) {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propInitInRad_const_float(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			ret
+		}
+
+		/// radius for gathering positive instances during tracking
+		#[inline]
+		fn set_track_in_pos_rad(&mut self, val: f32) {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackInPosRad_const_float(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			ret
+		}
+
+		/// size of search window
+		#[inline]
+		fn set_search_win_size(&mut self, val: f32) {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propSearchWinSize_const_float(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			ret
+		}
+
+		/// # negative samples to use during init
+		#[inline]
+		fn set_init_max_neg_num(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propInitMaxNegNum_const_int(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			ret
+		}
+
+		/// # positive samples to use during training
+		#[inline]
+		fn set_track_max_pos_num(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackMaxPosNum_const_int(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			ret
+		}
+
+		/// # negative samples to use during training
+		#[inline]
+		fn set_track_max_neg_num(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackMaxNegNum_const_int(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			ret
+		}
+
+	}
+
+	impl std::fmt::Debug for Detail_TrackerSamplerCSC_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_TrackerSamplerCSC_Params")
+				.field("init_in_rad", &crate::video::Detail_TrackerSamplerCSC_ParamsTraitConst::init_in_rad(self))
+				.field("track_in_pos_rad", &crate::video::Detail_TrackerSamplerCSC_ParamsTraitConst::track_in_pos_rad(self))
+				.field("search_win_size", &crate::video::Detail_TrackerSamplerCSC_ParamsTraitConst::search_win_size(self))
+				.field("init_max_neg_num", &crate::video::Detail_TrackerSamplerCSC_ParamsTraitConst::init_max_neg_num(self))
+				.field("track_max_pos_num", &crate::video::Detail_TrackerSamplerCSC_ParamsTraitConst::track_max_pos_num(self))
+				.field("track_max_neg_num", &crate::video::Detail_TrackerSamplerCSC_ParamsTraitConst::track_max_neg_num(self))
+				.finish()
+		}
+	}
+
+	impl crate::video::Detail_TrackerSamplerCSC_ParamsTraitConst for Detail_TrackerSamplerCSC_Params {
+		#[inline] fn as_raw_Detail_TrackerSamplerCSC_Params(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerSamplerCSC_ParamsTrait for Detail_TrackerSamplerCSC_Params {
+		#[inline] fn as_raw_mut_Detail_TrackerSamplerCSC_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_TrackerSamplerCSC_Params, crate::video::Detail_TrackerSamplerCSC_ParamsTraitConst, as_raw_Detail_TrackerSamplerCSC_Params, crate::video::Detail_TrackerSamplerCSC_ParamsTrait, as_raw_mut_Detail_TrackerSamplerCSC_Params }
+
+	/// Abstract base class for TrackerStateEstimator that estimates the most likely target state.
+	///
+	/// See [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) State estimator
+	///
+	/// See [AMVOT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AMVOT) Statistical modeling (Fig. 3), Table III (generative) - IV (discriminative) - V (hybrid)
+	pub struct Detail_TrackerStateEstimator {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_TrackerStateEstimator }
+
+	impl Drop for Detail_TrackerStateEstimator {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_TrackerStateEstimator_delete(self.as_raw_mut_Detail_TrackerStateEstimator()) };
+		}
+	}
+
+	unsafe impl Send for Detail_TrackerStateEstimator {}
+
+	impl Detail_TrackerStateEstimator {
+		/// Create TrackerStateEstimator by tracker state estimator type
+		/// ## Parameters
+		/// * trackeStateEstimatorType: The TrackerStateEstimator name
+		///
+		/// The modes available now:
+		///
+		/// *   "BOOSTING" -- Boosting-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.4
+		///
+		/// The modes available soon:
+		///
+		/// *   "SVM" -- SVM-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.5
+		#[inline]
+		pub fn create(tracke_state_estimator_type: &str) -> Result<core::Ptr<crate::video::Detail_TrackerStateEstimator>> {
+			extern_container_arg!(tracke_state_estimator_type);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerStateEstimator_create_const_StringR(tracke_state_estimator_type.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::Detail_TrackerStateEstimator>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::video::Detail_TrackerStateEstimator]
+	pub trait Detail_TrackerStateEstimatorTraitConst {
+		fn as_raw_Detail_TrackerStateEstimator(&self) -> *const c_void;
+
+		/// Get the name of the specific TrackerStateEstimator
+		#[inline]
+		fn get_class_name(&self) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerStateEstimator_getClassName_const(self.as_raw_Detail_TrackerStateEstimator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::video::Detail_TrackerStateEstimator]
+	pub trait Detail_TrackerStateEstimatorTrait: crate::video::Detail_TrackerStateEstimatorTraitConst {
+		fn as_raw_mut_Detail_TrackerStateEstimator(&mut self) -> *mut c_void;
+
+		/// Estimate the most likely target state, return the estimated state
+		/// ## Parameters
+		/// * confidenceMaps: The overall appearance model as a list of :cConfidenceMap
+		#[inline]
+		fn estimate(&mut self, confidence_maps: &core::Vector<crate::video::Detail_ConfidenceMap>) -> Result<core::Ptr<crate::video::Detail_TrackerTargetState>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerStateEstimator_estimate_const_vectorLConfidenceMapGR(self.as_raw_mut_Detail_TrackerStateEstimator(), confidence_maps.as_raw_VectorOfDetail_ConfidenceMap(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::Detail_TrackerTargetState>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Update the ConfidenceMap with the scores
+		/// ## Parameters
+		/// * confidenceMaps: The overall appearance model as a list of :cConfidenceMap
+		#[inline]
+		fn update(&mut self, confidence_maps: &mut core::Vector<crate::video::Detail_ConfidenceMap>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerStateEstimator_update_vectorLConfidenceMapGR(self.as_raw_mut_Detail_TrackerStateEstimator(), confidence_maps.as_raw_mut_VectorOfDetail_ConfidenceMap(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for Detail_TrackerStateEstimator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_TrackerStateEstimator")
+				.finish()
+		}
+	}
+
+	impl crate::video::Detail_TrackerStateEstimatorTraitConst for Detail_TrackerStateEstimator {
+		#[inline] fn as_raw_Detail_TrackerStateEstimator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerStateEstimatorTrait for Detail_TrackerStateEstimator {
+		#[inline] fn as_raw_mut_Detail_TrackerStateEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_TrackerStateEstimator, crate::video::Detail_TrackerStateEstimatorTraitConst, as_raw_Detail_TrackerStateEstimator, crate::video::Detail_TrackerStateEstimatorTrait, as_raw_mut_Detail_TrackerStateEstimator }
+
+	/// Abstract base class for TrackerTargetState that represents a possible state of the target.
+	///
+	/// See [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) ![inline formula](https://latex.codecogs.com/png.latex?%5Chat%7Bx%7D%5E%7Bi%7D%5F%7Bk%7D) all the states candidates.
+	///
+	/// Inherits this class with your Target state, In own implementation you can add scale variation,
+	/// width, height, orientation, etc.
+	pub struct Detail_TrackerTargetState {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_TrackerTargetState }
+
+	impl Drop for Detail_TrackerTargetState {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_TrackerTargetState_delete(self.as_raw_mut_Detail_TrackerTargetState()) };
+		}
+	}
+
+	unsafe impl Send for Detail_TrackerTargetState {}
+
+	impl Detail_TrackerTargetState {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::video::Detail_TrackerTargetState {
+			let ret = unsafe { sys::cv_detail_TrackerTargetState_defaultNew_const() };
+			let ret = unsafe { crate::video::Detail_TrackerTargetState::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
+	/// Constant methods for [crate::video::Detail_TrackerTargetState]
+	pub trait Detail_TrackerTargetStateTraitConst {
+		fn as_raw_Detail_TrackerTargetState(&self) -> *const c_void;
+
+		/// Get the position
+		/// ## Returns
+		/// The position
+		#[inline]
+		fn get_target_position(&self) -> Result<core::Point2f> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerTargetState_getTargetPosition_const(self.as_raw_Detail_TrackerTargetState(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Get the width of the target
+		/// ## Returns
+		/// The width of the target
+		#[inline]
+		fn get_target_width(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerTargetState_getTargetWidth_const(self.as_raw_Detail_TrackerTargetState(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Get the height of the target
+		/// ## Returns
+		/// The height of the target
+		#[inline]
+		fn get_target_height(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerTargetState_getTargetHeight_const(self.as_raw_Detail_TrackerTargetState(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::video::Detail_TrackerTargetState]
+	pub trait Detail_TrackerTargetStateTrait: crate::video::Detail_TrackerTargetStateTraitConst {
+		fn as_raw_mut_Detail_TrackerTargetState(&mut self) -> *mut c_void;
+
+		/// Set the position
+		/// ## Parameters
+		/// * position: The position
+		#[inline]
+		fn set_target_position(&mut self, position: core::Point2f) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerTargetState_setTargetPosition_const_Point2fR(self.as_raw_mut_Detail_TrackerTargetState(), &position, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Set the width of the target
+		/// ## Parameters
+		/// * width: The width of the target
+		#[inline]
+		fn set_target_width(&mut self, width: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerTargetState_setTargetWidth_int(self.as_raw_mut_Detail_TrackerTargetState(), width, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Set the height of the target
+		/// ## Parameters
+		/// * height: The height of the target
+		#[inline]
+		fn set_target_height(&mut self, height: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TrackerTargetState_setTargetHeight_int(self.as_raw_mut_Detail_TrackerTargetState(), height, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl Default for Detail_TrackerTargetState {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+
+	impl std::fmt::Debug for Detail_TrackerTargetState {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_TrackerTargetState")
+				.finish()
+		}
+	}
+
+	impl crate::video::Detail_TrackerTargetStateTraitConst for Detail_TrackerTargetState {
+		#[inline] fn as_raw_Detail_TrackerTargetState(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::Detail_TrackerTargetStateTrait for Detail_TrackerTargetState {
+		#[inline] fn as_raw_mut_Detail_TrackerTargetState(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_TrackerTargetState, crate::video::Detail_TrackerTargetStateTraitConst, as_raw_Detail_TrackerTargetState, crate::video::Detail_TrackerTargetStateTrait, as_raw_mut_Detail_TrackerTargetState }
 
 }
