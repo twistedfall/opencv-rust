@@ -152,9 +152,7 @@ impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'t
 					unreachable!("Unsupported VarDecl: {:#?}", entity)
 				}
 			}
-			_ => {
-				unreachable!("Unsupported entity: {:#?}", entity)
-			}
+			_ => unreachable!("Unsupported entity: {:#?}", entity),
 		}
 		ControlFlow::Continue(())
 	}

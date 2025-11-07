@@ -57,9 +57,7 @@ impl<'tu> EntityWalkerExt<'tu> for Entity<'tu> {
 					| EntityKind::Destructor
 					| EntityKind::LinkageSpec
 					| EntityKind::VarDecl => ControlFlow::Continue(()),
-					_ => {
-						unreachable!("Unsupported decl for file: {:#?}", root_decl)
-					}
+					_ => unreachable!("Unsupported decl for file: {:#?}", root_decl),
 				}
 				.into_entity_visit_result()
 			} else {
@@ -96,9 +94,7 @@ fn visit_cv_namespace<'tu>(ns: Entity<'tu>, visitor: &mut impl EntityWalkerVisit
 				/* ignoring */
 				ControlFlow::Continue(())
 			}
-			_ => {
-				unreachable!("Unsupported decl for OpenCV namespace: {:#?}", decl)
-			}
+			_ => unreachable!("Unsupported decl for OpenCV namespace: {:#?}", decl),
 		}
 		.into_entity_visit_result()
 	});

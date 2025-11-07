@@ -55,9 +55,7 @@ impl DefaultRustNativeElement {
 						parts.push(parent.get_name().expect("Can't get parent name").into());
 					}
 				}
-				EntityKind::TranslationUnit | EntityKind::UnexposedDecl | EntityKind::FunctionTemplate => {
-					break;
-				}
+				EntityKind::TranslationUnit | EntityKind::UnexposedDecl | EntityKind::FunctionTemplate => break,
 				EntityKind::Namespace => {
 					let parent_namespace = parent.get_name().expect("Can't get parent name");
 					let no_skip_prefix = settings::NO_SKIP_NAMESPACE_IN_LOCALNAME
@@ -70,14 +68,10 @@ impl DefaultRustNativeElement {
 						});
 					if let Some(&prefix) = no_skip_prefix {
 						parts.push(prefix.into());
-					} else {
-						break;
 					}
 				}
 				EntityKind::Constructor | EntityKind::FunctionDecl | EntityKind::Method | EntityKind::NotImplemented => {}
-				_ => {
-					unreachable!("Can't get kind of parent: {parent:#?} for element: {entity:#?}")
-				}
+				_ => unreachable!("Can't get kind of parent: {parent:#?} for element: {entity:#?}"),
 			}
 			entity = parent;
 		}

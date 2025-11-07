@@ -284,6 +284,7 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: LazyLock<HashMap<Option<SupportedModu
 			),
 			(Some(SupportedModule::Stitching), HashMap::from([("fisheye", "Fisheye")])),
 			(Some(SupportedModule::SuperRes), HashMap::from([("superres", "SuperRes")])),
+			(Some(SupportedModule::Tracking), HashMap::from([("legacy", "Legacy")])),
 		])
 	});
 

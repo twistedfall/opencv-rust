@@ -44,9 +44,9 @@ impl DefaultElement {
 		let mut entity = entity;
 		let mut parts = vec![];
 		while let Some(parent) = entity.get_semantic_parent() {
-			match parent.get_kind() {
+			let is_namespace_element = match parent.get_kind() {
+				EntityKind::Namespace => !parent.is_inline_namespace(),
 				EntityKind::ClassDecl
-				| EntityKind::Namespace
 				| EntityKind::StructDecl
 				| EntityKind::EnumDecl
 				| EntityKind::UnionDecl
@@ -54,19 +54,18 @@ impl DefaultElement {
 				| EntityKind::ClassTemplatePartialSpecialization
 				| EntityKind::FunctionTemplate
 				| EntityKind::Method
-				| EntityKind::FunctionDecl => {
-					// handle anonymous enums inside classes and anonymous namespaces
-					if let Some(parent_name) = parent.get_name() {
-						parts.push(parent_name);
-					}
-				}
+				| EntityKind::FunctionDecl => true,
 				EntityKind::TranslationUnit
 				| EntityKind::UnexposedDecl
 				| EntityKind::LinkageSpec
 				| EntityKind::NotImplemented
-				| EntityKind::Constructor => {}
-				_ => {
-					unreachable!("Can't get kind of parent for cpp namespace: {:#?}", parent)
+				| EntityKind::Constructor => false,
+				_ => unreachable!("Can't get kind of parent for cpp namespace: {:#?}", parent),
+			};
+			if is_namespace_element {
+				// handle anonymous enums inside classes and anonymous namespaces
+				if let Some(parent_name) = parent.get_name() {
+					parts.push(parent_name);
 				}
 			}
 			entity = parent;
