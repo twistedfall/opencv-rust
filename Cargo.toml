@@ -7,7 +7,7 @@ readme = "README.md"
 keywords = ["opencv", "vision", "cv"]
 categories = ["api-bindings", "computer-vision", "external-ffi-bindings", "multimedia"]
 license = "MIT"
-version = "0.97.1"
+version = "0.97.2"
 # bump edition to 2024 when MSRV is 1.85
 edition = "2021"
 rust-version = "1.82.0"
