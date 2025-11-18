@@ -105,30 +105,62 @@ impl IncludePath for Path {
 ///
 /// https://wiki.debian.org/Multiarch/Implementation
 pub fn get_multiarch_header_dir() -> Option<PathBuf> {
-	let try_multiarch = Command::new("dpkg-architecture")
-		.args(["--query", "DEB_TARGET_MULTIARCH"])
-		.output()
-		.inspect_err(|e| eprintln!("=== Failed to get DEB_TARGET_MULTIARCH: {e}"))
-		.ok()
-		.or_else(|| {
-			Command::new("cc")
-				.arg("-print-multiarch")
-				.output()
-				.inspect_err(|e| eprintln!("=== Failed to get -print-multiarch: {e}"))
-				.ok()
-		})
-		.and_then(|output| String::from_utf8(output.stdout).ok())
-		.map_or_else(
-			|| {
-				eprintln!("=== Failed to get DEB_TARGET_MULTIARCH, trying common multiarch paths");
-				vec![
-					"x86_64-linux-gnu".to_string(),
-					"aarch64-linux-gnu".to_string(),
-					"arm-linux-gnueabihf".to_string(),
-				]
-			},
-			|multiarch| vec![multiarch.trim().to_string()],
-		);
+	// When cross-compiling, try to derive the target's multiarch from Cargo's target triple
+	let target_multiarch = if let (Ok(arch), Ok(os), Ok(env)) = (
+		env::var("CARGO_CFG_TARGET_ARCH"),
+		env::var("CARGO_CFG_TARGET_OS"),
+		env::var("CARGO_CFG_TARGET_ENV"),
+	) {
+		if os == "linux" && env == "gnu" {
+			// Map Rust target arch to Debian multiarch
+			let multiarch_arch = match arch.as_str() {
+				"x86_64" => Some("x86_64"),
+				"aarch64" => Some("aarch64"),
+				"arm" | "armv7" => Some("arm"),
+				"i686" => Some("i386"),
+				_ => None,
+			};
+			multiarch_arch.map(|a| format!("{}-linux-gnu", a))
+		} else if os == "linux" && env == "gnueabihf" {
+			// armv7-unknown-linux-gnueabihf -> arm-linux-gnueabihf
+			Some("arm-linux-gnueabihf".to_string())
+		} else {
+			None
+		}
+	} else {
+		None
+	};
+
+	let try_multiarch = if let Some(ref target_arch) = target_multiarch {
+		eprintln!("=== Detected target multiarch from Cargo target: {target_arch}");
+		vec![target_arch.clone()]
+	} else {
+		// Fallback to detecting the host's multiarch
+		Command::new("dpkg-architecture")
+			.args(["--query", "DEB_TARGET_MULTIARCH"])
+			.output()
+			.inspect_err(|e| eprintln!("=== Failed to get DEB_TARGET_MULTIARCH: {e}"))
+			.ok()
+			.or_else(|| {
+				Command::new("cc")
+					.arg("-print-multiarch")
+					.output()
+					.inspect_err(|e| eprintln!("=== Failed to get -print-multiarch: {e}"))
+					.ok()
+			})
+			.and_then(|output| String::from_utf8(output.stdout).ok())
+			.map_or_else(
+				|| {
+					eprintln!("=== Failed to get DEB_TARGET_MULTIARCH, trying common multiarch paths");
+					vec![
+						"x86_64-linux-gnu".to_string(),
+						"aarch64-linux-gnu".to_string(),
+						"arm-linux-gnueabihf".to_string(),
+					]
+				},
+				|multiarch| vec![multiarch.trim().to_string()],
+			)
+	};
 
 	eprintln!("=== Trying multiarch paths: {try_multiarch:?}");
 
