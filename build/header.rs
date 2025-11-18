@@ -1,3 +1,4 @@
+use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
@@ -131,7 +132,22 @@ pub fn get_multiarch_header_dir() -> Option<PathBuf> {
 
 	eprintln!("=== Trying multiarch paths: {try_multiarch:?}");
 
+	// Get PKG_CONFIG_SYSROOT_DIR if set (used in cross-compilation scenarios)
+	let sysroot = env::var_os("PKG_CONFIG_SYSROOT_DIR").map(PathBuf::from);
+	if let Some(ref sysroot_path) = sysroot {
+		eprintln!("=== PKG_CONFIG_SYSROOT_DIR is set: {}", sysroot_path.display());
+	}
+
 	for multiarch in try_multiarch {
+		// Try with sysroot first (for cross-compilation)
+		if let Some(ref sysroot_path) = sysroot {
+			let header_dir = sysroot_path.join(format!("usr/include/{multiarch}/opencv4"));
+			eprintln!("=== Checking sysroot multiarch path: {}", header_dir.display());
+			if header_dir.is_dir() {
+				return Some(header_dir);
+			}
+		}
+		// Fallback to host system paths
 		let header_dir = PathBuf::from(format!("/usr/include/{multiarch}/opencv4"));
 		if header_dir.is_dir() {
 			return Some(header_dir);
