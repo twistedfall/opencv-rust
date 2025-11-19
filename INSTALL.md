@@ -24,6 +24,7 @@ and additionally to support more OpenCV modules:
 `zypper install opencv-devel clang-devel gcc-c++`
 
 #### Other Linux:
+
 You have several options of getting the OpenCV library:
 
 * install it from the repository, make sure to install `-dev` packages because they contain headers necessary
@@ -36,8 +37,9 @@ You have several options of getting the OpenCV library:
 
 Additionally, please make sure to install `clang` package or its derivative that contains `libclang.so` and
 `clang` binary.
-  * Gentoo, Fedora: `clang`
-  * Debian, Ubuntu: `clang` and `libclang-dev`
+
+* Gentoo, Fedora: `clang`
+* Debian, Ubuntu: `clang` and `libclang-dev`
 
 ### Windows package
 
@@ -78,7 +80,8 @@ Get OpenCV from homebrew:
   brew install llvm
   ```
 
-  If you have already installed OpenCV via Homebrew, there is no need to configure any environment variables specifically for OpenCV on macOS. The OpenCV installation can be automatically detected if it was installed through Homebrew.
+  If you have already installed OpenCV via Homebrew, there is no need to configure any environment variables specifically for
+  OpenCV on macOS. The OpenCV installation can be automatically detected if it was installed through Homebrew.
 
   To take advantage of this automatic detection, refrain from setting the following environment variables:
 
@@ -112,9 +115,9 @@ you can get some information on how to perform the build in CI scripts:
 [install-ubuntu.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-ubuntu.sh) and
 [script.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh), search for `"static"` string.
 
-### Crosscompilation
+### Cross-compilation
 
-Cross-compilation is supported to at least some extent. The ability to crosscompile projects using `opencv` from x86-64
+Cross-compilation is supported to at least some extent. The ability to cross-compile projects using `opencv` from x86-64
 Linux host machine to Raspberry Pi is tested regularly. Cross-compilation is notoriously difficult to set up, so you can
 use this example [rpi-xcompile.Dockerfile](https://github.com/twistedfall/opencv-rust/blob/master/tools/docker/rpi-xcompile.Dockerfile).
 
@@ -128,4 +131,4 @@ Building this image requries `qemu-arm` to be present on the host system and the
 
 After the successful build you will have an image configured for cross-compilation to Raspberry Pi. It will contain the
 sample build script `/usr/local/bin/cargo-xbuild` that you can check for the correct environment setup and the specific
-command line arguments to use when crosscompiling the project inside the container created from that image.
+command line arguments to use when cross-compiling the project inside the container created from that image.

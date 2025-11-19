@@ -1,6 +1,6 @@
-# Straghtforward Ubuntu 22.04 container that uses system OpenCV
+# Straghtforward Ubuntu 24.04 container that uses system OpenCV
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 RUN set -xeu && \
     apt-get update && \

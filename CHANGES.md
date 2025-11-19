@@ -283,7 +283,7 @@
   * Don't require `runtime` feature of `clang`.
 
 * 0.81.2
-  * Fix building when crosscompiling with target-specific RUSTFLAGS.
+  * Fix building when cross-compiling with target-specific RUSTFLAGS.
 
 * 0.81.1
   * Fix building on macOS (fixes https://github.com/twistedfall/opencv-rust/issues/460).
@@ -309,7 +309,7 @@
 
 * 0.78.1
   * Automatically implement `Clone` for those classes that are constructor-copiable in C++, e.g. `KeyPoint`.
-  * Fixes for crosscompiling (kudos to icedrocket).
+  * Fixes for cross-compiling (kudos to icedrocket).
 
 * 0.78.0
   * Don't strip "lib" prefix from linked libraries when building with MSVC (kudos to icedrocket)
@@ -648,7 +648,7 @@
   * Internal improvements and cleanups
 
 * 0.38.0
-  * Fix crosscompilation when targeting Windows platform.
+  * Fix cross-compilation when targeting Windows platform.
   * Fix generation of bigger binaries
 
 * 0.37.0

@@ -1,6 +1,6 @@
-# Ubuntu 22.04 container builds OpenCV from source with the maximum possible enabled amount of features
+# Ubuntu 24.04 container builds OpenCV from source with the maximum possible enabled amount of features
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 RUN set -xeu && \
     apt-get update && \
@@ -9,29 +9,60 @@ RUN set -xeu && \
     apt-get -y autoclean
 
 RUN set -xeu && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y curl clang libclang-dev \
-    cmake python3-numpy libatlas-base-dev libceres-dev libeigen3-dev liblapacke-dev libprotobuf-dev protobuf-compiler nvidia-cuda-dev libtesseract-dev \
-    libwebp-dev libpng-dev libtiff-dev libopenexr-dev libgdal-dev libopenjp2-7-dev libopenjpip-server libopenjpip-dec-server libopenjp2-tools libhdf5-dev \
-    libavcodec-dev libavformat-dev libavutil-dev  libgphoto2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libva-dev libdc1394-dev \
-    libfreetype6-dev libharfbuzz-dev qtbase5-dev libvtk9-dev libogre-1.12-dev
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    clang \
+    cmake \
+    curl \
+    libatlas-base-dev \
+    libavcodec-dev \
+    libavformat-dev \
+    libavutil-dev \
+    libceres-dev \
+    libclang-dev \
+    libdc1394-dev \
+    libeigen3-dev \
+    libfreetype6-dev \
+    libgdal-dev \
+    libgphoto2-dev \
+    libgstreamer-plugins-base1.0-dev \
+    libgstreamer1.0-dev \
+    libharfbuzz-dev \
+    libhdf5-dev \
+    liblapacke64-dev \
+    libogre-1.12-dev \
+    libopenexr-dev \
+    libopenjp2-7-dev \
+    libopenjp2-tools \
+    libopenjpip-dec-server \
+    libopenjpip-server \
+    libpng-dev \
+    libprotobuf-dev \
+    libtesseract-dev \
+    libtiff-dev \
+    libva-dev \
+    libvtk9-dev \
+    libwebp-dev \
+    nvidia-cuda-dev \
+    protobuf-compiler \
+    python3-numpy \
+    qtbase5-dev
 
 RUN set -xeu && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile=minimal
 
 ENV PATH="${PATH}:/root/.cargo/bin"
 
-ARG OPENCV_VERSION=4.8.0
+ARG OPENCV_VERSION=4.11.0
 
 RUN set -xeu && \
     mkdir -p /root/dist && \
     curl -sSfL "https://github.com/opencv/opencv/archive/refs/tags/${OPENCV_VERSION}.tar.gz" | tar xz -C /root/dist && \
-    curl -sSfL "https://github.com/opencv/opencv_contrib/archive/refs/tags/${OPENCV_VERSION}.tar.gz" | tar xz -C /root/dist && \
-    sed -ri 's/Ptr<FarnebackOpticalFlow> cv::cuda::FarnebackOpticalFlow::create/Ptr<cv::cuda::FarnebackOpticalFlow> cv::cuda::FarnebackOpticalFlow::create/' "/root/dist/opencv_contrib-${OPENCV_VERSION}/modules/cudaoptflow/src/farneback.cpp" # patch for version 4.8.0
+    curl -sSfL "https://github.com/opencv/opencv_contrib/archive/refs/tags/${OPENCV_VERSION}.tar.gz" | tar xz -C /root/dist
 
 RUN set -xeu && \
     mkdir -p /root/build && \
     cmake -B /root/build -S "/root/dist/opencv-${OPENCV_VERSION}" -D OPENCV_EXTRA_MODULES_PATH="/root/dist/opencv_contrib-${OPENCV_VERSION}/modules" -D CMAKE_INSTALL_PREFIX=/usr \
-    	-D BUILD_CUDA_STUBS=ON \
+    	-D BUILD_CUDA_STUBS=OFF \
     	-D BUILD_DOCS=OFF \
     	-D BUILD_EXAMPLES=OFF \
     	-D BUILD_IPP_IW=ON \
