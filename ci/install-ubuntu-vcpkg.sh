@@ -2,6 +2,14 @@
 
 set -xeu
 
+# Remove unused files to increase available disk space
+sudo rm -rf /usr/local/.ghcup
+sudo rm -rf /opt/hostedtoolcache/CodeQL
+sudo rm -rf /usr/local/lib/android/sdk/ndk
+sudo rm -rf /usr/share/dotnet
+sudo rm -rf /opt/ghc
+sudo rm -rf /usr/local/share/boost
+
 sudo apt-get update
 sudo apt-get install -y \
 	autoconf \
