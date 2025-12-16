@@ -88,7 +88,7 @@ fn files_with_predicate<'p>(
 		.filter_map(|e| {
 			let path = e.path();
 			// Use path.metadata() instead of e.file_type() to follow symlinks
-			path.metadata().is_ok_and(|m| m.is_file()).then(|| path)
+			path.metadata().is_ok_and(|m| m.is_file()).then_some(path)
 		})
 		.filter(move |p| predicate(p)))
 }

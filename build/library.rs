@@ -215,8 +215,9 @@ impl Library {
 		Self::process_env_var_list(link_paths, sys_link_paths)
 			.into_iter()
 			.flat_map(move |search| {
-				iter::once(search.clone())
-					.chain((*TARGET_VENDOR_APPLE && search.0 != Linkage::Framework).then(|| LinkSearch(Linkage::Framework, search.1)))
+				iter::once(search.clone()).chain(
+					(*TARGET_VENDOR_APPLE && search.0 != Linkage::Framework).then_some(LinkSearch(Linkage::Framework, search.1)),
+				)
 			})
 			.inspect(|s| eprintln!("=== Link search path: {s:?}"))
 			.map(|search| search.emit_cargo_rustc_link_search())

@@ -1,4 +1,5 @@
 #[expect(
+	clippy::approx_constant,
 	clippy::doc_lazy_continuation,
 	clippy::doc_overindented_list_items,
 	clippy::double_must_use,
@@ -9,8 +10,8 @@
 	clippy::should_implement_trait,
 	clippy::tabs_in_doc_comments,
 	clippy::too_many_arguments,
+	clippy::type_complexity,
 	clippy::unused_unit,
-	clippy::approx_constant,
 	dead_code,
 	non_camel_case_types,
 	non_snake_case,

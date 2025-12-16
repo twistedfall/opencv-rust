@@ -95,17 +95,15 @@ impl<'r> CmakeProbe<'r> {
 				if bytes_read == 0 {
 					break;
 				}
-				if line.starts_with("OCVRS") {
-					if let Some((name, value)) = line.split_once(':') {
-						match name {
-							"OCVRS_INCLUDE_DIRS" => {
-								opencv_include_paths.extend(value.split(';').filter(|s| !s.is_empty()).map(|s| PathBuf::from(s.trim())));
-							}
-							"OCVRS_VERSION" => {
-								*version = Some(Version::parse(value.trim())?);
-							}
-							_ => {}
+				if let Some((key, value)) = line.strip_prefix("OCVRS_").and_then(|kv| kv.split_once(':')) {
+					match key {
+						"INCLUDE_DIRS" => {
+							opencv_include_paths.extend(value.split(';').filter(|s| !s.is_empty()).map(|s| PathBuf::from(s.trim())));
 						}
+						"VERSION" => {
+							*version = Some(Version::parse(value.trim())?);
+						}
+						_ => {}
 					}
 				}
 				line.clear();
