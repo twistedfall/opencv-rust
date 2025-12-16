@@ -1,7 +1,6 @@
 use std::ffi::c_void;
 
 use opencv::core::Ptr;
-use opencv::flann::IndexParams;
 use opencv::prelude::*;
 use opencv::Result;
 
@@ -33,6 +32,9 @@ fn ptr_f32_into_raw() -> Result<()> {
 
 #[test]
 fn into_raw_ptrofboxed() -> Result<()> {
+	#![cfg(ocvrs_has_module_flann)]
+	use opencv::flann::IndexParams;
+
 	#[inline(never)]
 	fn into_raw(a: Ptr<IndexParams>) -> *mut c_void {
 		a.into_raw()
