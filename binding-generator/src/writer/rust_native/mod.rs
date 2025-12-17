@@ -117,7 +117,11 @@ impl<'s> RustNativeBindingWriter<'s> {
 
 impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
-		opencv_module_from_path(path) == Some(self.module)
+		match self.module {
+			// tracking_legacy.hpp includes header from the video module, but we need those definitions in the tracking module
+			SupportedModule::Tracking if path.ends_with("video/detail/tracking.detail.hpp") => true,
+			_ => opencv_module_from_path(path) == Some(self.module),
+		}
 	}
 
 	fn visit_module_comment(&mut self, comment: String) {

@@ -77,6 +77,7 @@ pub trait EntityExt<'tu> {
 	fn walk_fields_while(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()>;
 	fn walk_consts_while(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()>;
 	fn walk_methods_while(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()>;
+	fn walk_parents<T>(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<T>) -> ControlFlow<T>;
 }
 
 impl<'tu> EntityExt<'tu> for Entity<'tu> {
@@ -148,6 +149,17 @@ impl<'tu> EntityExt<'tu> for Entity<'tu> {
 			}
 			_ => ControlFlow::Continue(()),
 		})
+	}
+
+	fn walk_parents<T>(&self, mut predicate: impl FnMut(Entity<'tu>) -> ControlFlow<T>) -> ControlFlow<T> {
+		let mut current = *self;
+		while let Some(parent) = current.get_semantic_parent() {
+			match predicate(parent) {
+				ControlFlow::Continue(()) => current = parent,
+				ControlFlow::Break(out) => return ControlFlow::Break(out),
+			}
+		}
+		ControlFlow::Continue(())
 	}
 }
 

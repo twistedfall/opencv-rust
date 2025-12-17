@@ -1,13 +1,14 @@
 use std::borrow::Cow;
 use std::fmt::Debug;
+use std::ops::ControlFlow;
 
 use clang::{Entity, EntityKind};
 
 use super::comment::RenderComment;
 use crate::type_ref::FishStyle;
 use crate::{
-	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, GeneratedType, IteratorExt, NameStyle, StringExt,
-	SupportedModule,
+	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, EntityExt, GeneratedType, IteratorExt, NameStyle,
+	StringExt, SupportedModule,
 };
 
 pub struct DefaultRustNativeElement;
@@ -20,7 +21,7 @@ impl DefaultRustNativeElement {
 			.get_spelling_location()
 			.file
 			.and_then(|file| opencv_module_from_path(&file.get_path()))
-			.unwrap_or(SupportedModule::Core)
+			.map_or(SupportedModule::Core, |m| rust_module_hack(entity, m))
 	}
 
 	pub fn rust_module_reference(this: &(impl RustElement + ?Sized)) -> Cow<'_, str> {
@@ -146,5 +147,30 @@ impl<'ne, 'tu: 'ne, 'ge: 'ne> AsRef<dyn RustNativeGeneratedElement + 'ne> for Ge
 			GeneratedType::Tuple(tuple) => tuple,
 			GeneratedType::AbstractRefWrapper(aref) => aref,
 		}
+	}
+}
+
+/// Adjusts the module for certain entities that are technically in one module but actually implemented in another.
+///
+/// One (and for now the only) example is that some class declarations are technically in `hpp` files in the `video` module, but
+/// their code is actually in the `tracking` module of `opencv_contrib`. This mismatch leads to linking errors if only the
+/// `opencv_video` module is linked.
+fn rust_module_hack(entity: Entity, module_from_path: SupportedModule) -> SupportedModule {
+	match module_from_path {
+		SupportedModule::Video => {
+			let break_res = entity.walk_parents(|parent| match parent.get_kind() {
+				EntityKind::Namespace if parent.is_inline_namespace() && parent.get_name().is_some_and(|n| n == "tracking") => {
+					ControlFlow::Break(SupportedModule::Tracking)
+				}
+				_ => ControlFlow::Continue(()),
+			});
+			// todo: MSRV 1.83 use `break_value()`
+			match break_res {
+				ControlFlow::Break(m) => Some(m),
+				ControlFlow::Continue(_) => None,
+			}
+			.unwrap_or(module_from_path)
+		}
+		_ => module_from_path,
 	}
 }
