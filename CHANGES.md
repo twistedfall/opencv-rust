@@ -1,3 +1,7 @@
+* 0.98.0
+  * Fix linking issue when using `video` module without `tracking`, this also moved some of the symbols from `video` to `tracking`.
+  * Fix how multiarch include dir is calculated, should help with the building issues in cross-compilation scenarios.
+
 * 0.97.2
   * Expose legacy tracking types too (fixes https://github.com/twistedfall/opencv-rust/issues/700).
 
