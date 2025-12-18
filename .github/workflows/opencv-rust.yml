@@ -41,11 +41,11 @@ jobs:
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - uses: mozilla-actions/sccache-action@v0.0.9
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: ~/build
           key: build-${{ matrix.opencv-version }}-${{ matrix.linkage }}-${{ matrix.os-image }}
@@ -87,10 +87,10 @@ jobs:
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - uses: mozilla-actions/sccache-action@v0.0.9
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: ~/build
           key: vcpkg-${{ matrix.vcpkg-version }}-${{ matrix.os-image }}-${{ matrix.vcpkg-features-cache-key }}
@@ -129,7 +129,7 @@ jobs:
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - uses: mozilla-actions/sccache-action@v0.0.9
 
@@ -144,7 +144,7 @@ jobs:
   docs-rs:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
 
       - name: Run a documentation generation test
@@ -158,10 +158,10 @@ jobs:
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: mozilla-actions/sccache-action@v0.0.9
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: ~/build
           key: build-${{ env.OPENCV_VERSION }}-dynamic-ubuntu-24.04
