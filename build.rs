@@ -42,6 +42,8 @@ static TARGET_ENV_MSVC: LazyLock<bool> =
 	LazyLock::new(|| env::var("CARGO_CFG_TARGET_ENV").is_ok_and(|target_env| target_env == "msvc"));
 static TARGET_VENDOR_APPLE: LazyLock<bool> =
 	LazyLock::new(|| env::var("CARGO_CFG_TARGET_VENDOR").is_ok_and(|target_vendor| target_vendor == "apple"));
+static TARGET_OS_LINUX: LazyLock<bool> =
+	LazyLock::new(|| env::var("CARGO_CFG_TARGET_OS").is_ok_and(|target_os| target_os == "linux"));
 
 /// Environment vars that affect the build, the source will be rebuilt if those change, the contents of those vars will also
 /// be present in the debug log

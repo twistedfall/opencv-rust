@@ -1,3 +1,4 @@
+use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
@@ -100,42 +101,117 @@ impl IncludePath for Path {
 	}
 }
 
-/// Something like `/usr/include/x86_64-linux-gnu/opencv4/` on newer Debian-derived distros
+const POSSIBLE_MULTIARCHES: &[&str] = &[
+	"x86_64-linux-gnu",
+	"aarch64-linux-gnu",
+	"arm-linux-gnueabihf",
+	"i386-linux-gnu",
+	"arm-linux-gnueabi",
+];
+
+/// When cross-compiling, try to derive the target's multiarch from Cargo's target triple
 ///
-/// https://wiki.debian.org/Multiarch/Implementation
-pub fn get_multiarch_header_dir() -> Option<PathBuf> {
-	let try_multiarch = Command::new("dpkg-architecture")
-		.args(["--query", "DEB_TARGET_MULTIARCH"])
-		.output()
-		.inspect_err(|e| eprintln!("=== Failed to get DEB_TARGET_MULTIARCH: {e}"))
-		.ok()
-		.or_else(|| {
-			Command::new("cc")
-				.arg("-print-multiarch")
+/// https://doc.rust-lang.org/reference/conditional-compilation.html#target_arch
+/// https://wiki.debian.org/Multiarch/Tuples#Architectures_in_Debian
+fn target_linux_multiarch_from_cargo() -> Option<&'static str> {
+	let target_arch = env::var("CARGO_CFG_TARGET_ARCH").ok()?;
+	let target_abi = env::var("CARGO_CFG_TARGET_ABI").ok()?;
+	match (target_arch.as_str(), target_abi.as_str()) {
+		("x86", _) => Some("i386-linux-gnu"),
+		("x86_64", _) => Some("x86_64-linux-gnu"),
+		("aarch64", _) => Some("aarch64-linux-gnu"),
+		("arm", "eabihf") => Some("arm-linux-gnueabihf"),
+		("arm", _) => Some("arm-linux-gnueabi"),
+		_ => None,
+	}
+}
+
+fn target_linux_multiarch_from_path(cmake_dir: &Path) -> Option<&str> {
+	cmake_dir.components().rev().find_map(|comp| {
+		comp
+			.as_os_str()
+			.to_str()
+			.filter(|comp_str| POSSIBLE_MULTIARCHES.contains(comp_str))
+	})
+}
+
+pub fn get_multiarch_header_dirs(non_multiarch_include_dirs: &[PathBuf]) -> Vec<PathBuf> {
+	let mut try_multiarches = vec![];
+
+	try_multiarches.extend(
+		target_linux_multiarch_from_cargo()
+			.map(|s| s.to_string())
+			.inspect(|target_arch| eprintln!("=== Detected target multiarch from Cargo target: {target_arch}")),
+	);
+	try_multiarches.extend(
+		env::var_os("OpenCV_DIR")
+			.and_then(|d| target_linux_multiarch_from_path(&PathBuf::from(d)).map(|s| s.to_string()))
+			.inspect(|target_arch| eprintln!("=== Detected target multiarch from cmake OpenCV_DIR: {target_arch}")),
+	);
+	if try_multiarches.is_empty() {
+		// Fallback to detecting the host's multiarch
+		try_multiarches.extend(
+			Command::new("dpkg-architecture")
+				.args(["--query", "DEB_TARGET_MULTIARCH"])
 				.output()
-				.inspect_err(|e| eprintln!("=== Failed to get -print-multiarch: {e}"))
+				.inspect_err(|e| eprintln!("=== Failed to query DEB_TARGET_MULTIARCH: {e}"))
 				.ok()
-		})
-		.and_then(|output| String::from_utf8(output.stdout).ok())
-		.map_or_else(
-			|| {
-				eprintln!("=== Failed to get DEB_TARGET_MULTIARCH, trying common multiarch paths");
-				vec![
-					"x86_64-linux-gnu".to_string(),
-					"aarch64-linux-gnu".to_string(),
-					"arm-linux-gnueabihf".to_string(),
-				]
-			},
-			|multiarch| vec![multiarch.trim().to_string()],
+				.or_else(|| {
+					Command::new("cc")
+						.arg("-print-multiarch")
+						.output()
+						.inspect_err(|e| eprintln!("=== Failed to get -print-multiarch: {e}"))
+						.ok()
+				})
+				.and_then(|output| String::from_utf8(output.stdout).ok())
+				.map_or_else(
+					|| {
+						eprintln!("=== Failed to detect multiarch path, trying common paths");
+						POSSIBLE_MULTIARCHES.iter().map(|s| s.to_string()).collect::<Vec<_>>()
+					},
+					|multiarch| vec![multiarch.trim().to_string()],
+				),
 		);
+	};
 
-	eprintln!("=== Trying multiarch paths: {try_multiarch:?}");
+	eprintln!("=== Trying multiarches: {try_multiarches:?}");
 
-	for multiarch in try_multiarch {
-		let header_dir = PathBuf::from(format!("/usr/include/{multiarch}/opencv4"));
-		if header_dir.is_dir() {
-			return Some(header_dir);
+	let mut out = Vec::with_capacity(non_multiarch_include_dirs.len());
+	for multiarch in try_multiarches {
+		for non_multiarch_include_dir in non_multiarch_include_dirs {
+			if let Some(multiarch_include_dir) = add_multiarch_dir_before_opencv4(non_multiarch_include_dir, &multiarch) {
+				if multiarch_include_dir.is_dir() {
+					out.push(multiarch_include_dir);
+				}
+			} else if let Some(multiarch_include_dir) = add_multiarch_dir_after_include(non_multiarch_include_dir, &multiarch) {
+				if multiarch_include_dir.is_dir() {
+					out.push(multiarch_include_dir);
+				}
+			}
 		}
 	}
-	None
+	eprintln!("=== Found multiarch header dirs: {out:?}");
+	out
+}
+
+/// Finds the "opencv4" component in the path and inserts the multiarch directory before it
+///
+/// This works starting with OpenCV 4.0.0
+fn add_multiarch_dir_before_opencv4(path: &Path, multiarch: &str) -> Option<PathBuf> {
+	let opencv4_idx = path
+		.components()
+		.position(|comp| comp.as_os_str().to_str().is_some_and(|s| s == "opencv4"))?;
+	let mut comps = path.components();
+	let mut out = PathBuf::with_capacity(path.as_os_str().len() + multiarch.len() + 1);
+	out.extend((&mut comps).take(opencv4_idx));
+	out.push(multiarch);
+	out.extend(comps);
+	Some(out)
+}
+
+/// Finds the "include" component in the path and inserts the multiarch directory after it
+///
+/// This works starting for OpenCV 3.4 as it doesn't have the "opencv4" component
+fn add_multiarch_dir_after_include(path: &Path, multiarch: &str) -> Option<PathBuf> {
+	path.ends_with("include").then(|| path.join(multiarch))
 }

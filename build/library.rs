@@ -10,7 +10,7 @@ use semver::Version;
 use super::cmake_probe::CmakeProbe;
 use super::header::IncludePath;
 use super::path_ext::{LibraryKind, PathExt};
-use super::{header, Result, MANIFEST_DIR, OUT_DIR, TARGET_VENDOR_APPLE};
+use super::{header, Result, MANIFEST_DIR, OUT_DIR, TARGET_OS_LINUX, TARGET_VENDOR_APPLE};
 
 struct PackageName;
 
@@ -181,11 +181,18 @@ pub struct Library {
 }
 
 impl Library {
+	/// Adds the multiarch directories if no `cvconfig.h` found in the provided include paths
+	///
+	/// On the newer Debian-derived distros the `cvconfig.h` is located in the multiarch include directory, it won't be reported
+	/// by pkg-config/cmake/vcpkg. It looks like `/usr/include/x86_64-linux-gnu/opencv4/` and contains architecture specific
+	/// headers: https://wiki.debian.org/Multiarch/Implementation
 	fn add_multiarch_dir_if_needed(include_paths: &mut Vec<PathBuf>) {
-		if include_paths.iter().all(|p| p.get_config_header().is_none()) {
-			if let Some(multiarch_include_path) = header::get_multiarch_header_dir() {
-				include_paths.push(multiarch_include_path);
-			}
+		if *TARGET_OS_LINUX && include_paths.iter().all(|p| p.get_config_header().is_none()) {
+			include_paths.extend(
+				header::get_multiarch_header_dirs(include_paths)
+					.into_iter()
+					.filter(|p| p.get_config_header().is_some()),
+			);
 		}
 	}
 
