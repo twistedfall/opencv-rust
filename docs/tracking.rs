@@ -86,13 +86,13 @@ pub mod tracking {
 	pub type TrackerKCF_FeatureExtractorCallbackFN = Option<unsafe extern "C" fn(*const c_void, core::Rect, *mut c_void) -> ()>;
 	/// Represents the model of the target at frame ![inline formula](https://latex.codecogs.com/png.latex?k) (all states and scores)
 	///
-	/// See [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) The set of the pair ![inline formula](https://latex.codecogs.com/png.latex?%5Clangle%20%5Chat%7Bx%7D%5E%7Bi%7D%5F%7Bk%7D%2C%20C%5E%7Bi%7D%5F%7Bk%7D%20%5Crangle)
+	/// See [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) The set of the pair ![inline formula](https://latex.codecogs.com/png.latex?%5Clangle%20%5Chat%7Bx%7D%5E%7Bi%7D%5F%7Bk%7D%2C%20C%5E%7Bi%7D%5F%7Bk%7D%20%5Crangle)
 	/// ## See also
 	/// TrackerTargetState
 	pub type Detail_ConfidenceMap = core::Vector<core::Tuple<(core::Ptr<crate::tracking::Detail_TrackerTargetState>, f32)>>;
 	/// Represents the estimate states for all frames
 	///
-	/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) ![inline formula](https://latex.codecogs.com/png.latex?x%5F%7Bk%7D) is the trajectory of the target up to time ![inline formula](https://latex.codecogs.com/png.latex?k)
+	/// [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) ![inline formula](https://latex.codecogs.com/png.latex?x%5F%7Bk%7D) is the trajectory of the target up to time ![inline formula](https://latex.codecogs.com/png.latex?k)
 	/// ## See also
 	/// TrackerTargetState
 	pub type Detail_Trajectory = core::Vector<core::Ptr<crate::tracking::Detail_TrackerTargetState>>;
@@ -113,7 +113,7 @@ pub mod tracking {
 
 	/// the CSRT tracker
 	///
-	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
+	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
 	pub struct TrackerCSRT {
 		ptr: *mut c_void,
 	}
@@ -642,7 +642,7 @@ pub mod tracking {
 	/// the KCF (Kernelized Correlation Filter) tracker
 	///
 	/// * KCF is a novel tracking framework that utilizes properties of circulant matrix to enhance the processing speed.
-	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
+	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
 	/// * The original paper of KCF is available at <http://www.robots.ox.ac.uk/~joao/publications/henriques_tpami2015.pdf>
 	/// * as well as the matlab implementation. For more information about KCF with color-names features, please refer to
 	/// * <http://www.cvl.isy.liu.se/research/objrec/visualtracking/colvistrack/index.html>.
@@ -1187,8 +1187,8 @@ pub mod tracking {
 
 	/// Class that manages the extraction and selection of features
 	///
-	/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Feature Extraction and Feature Set Refinement (Feature Processing and Feature Selection).
-	/// See table I and section III C [AMVOT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AMVOT) Appearance modelling -\> Visual representation (Table II,
+	/// [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) Feature Extraction and Feature Set Refinement (Feature Processing and Feature Selection).
+	/// See table I and section III C [AMVOT](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AMVOT) Appearance modelling -\> Visual representation (Table II,
 	/// section 3.1 - 3.2)
 	///
 	/// TrackerContribFeatureSet is an aggregation of TrackerContribFeature
@@ -1388,7 +1388,7 @@ pub mod tracking {
 
 	/// Class that manages the sampler in order to select regions for the update the model of the tracker
 	///
-	/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Sampling e Labeling. See table I and section III B
+	/// [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) Sampling e Labeling. See table I and section III B
 	///
 	/// TrackerContribSampler is an aggregation of TrackerContribSamplerAlgorithm
 	/// ## See also
@@ -1437,7 +1437,7 @@ pub mod tracking {
 			Ok(ret)
 		}
 
-		/// Return the samples from all TrackerContribSamplerAlgorithm, [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
+		/// Return the samples from all TrackerContribSamplerAlgorithm, [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
 		#[inline]
 		fn get_samples(&self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
@@ -1624,7 +1624,7 @@ pub mod tracking {
 		/// * image: The current frame
 		/// * boundingBox: The bounding box from which regions can be calculated
 		///
-		/// * sample: The computed samples [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
+		/// * sample: The computed samples [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
 		#[inline]
 		fn sampling(&mut self, image: &impl core::MatTraitConst, bounding_box: core::Rect, sample: &mut core::Vector<core::Mat>) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -2298,8 +2298,8 @@ pub mod tracking {
 
 	/// Class that manages the extraction and selection of features
 	///
-	/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Feature Extraction and Feature Set Refinement (Feature Processing and Feature Selection).
-	/// See table I and section III C [AMVOT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AMVOT) Appearance modelling -\> Visual representation (Table II,
+	/// [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) Feature Extraction and Feature Set Refinement (Feature Processing and Feature Selection).
+	/// See table I and section III C [AMVOT](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AMVOT) Appearance modelling -\> Visual representation (Table II,
 	/// section 3.1 - 3.2)
 	///
 	/// TrackerFeatureSet is an aggregation of TrackerFeature
@@ -2415,7 +2415,7 @@ pub mod tracking {
 	///
 	/// It must be instantiated by specialized tracker
 	///
-	/// See [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Ak
+	/// See [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) Ak
 	///
 	/// Inherits this with your TrackerModel
 	pub struct Detail_TrackerModel {
@@ -2503,7 +2503,7 @@ pub mod tracking {
 
 		/// Estimate the most likely target location
 		///
-		/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) ME, Model Estimation table I
+		/// [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) ME, Model Estimation table I
 		/// ## Parameters
 		/// * responses: Features extracted from TrackerFeatureSet
 		#[inline]
@@ -2517,7 +2517,7 @@ pub mod tracking {
 
 		/// Update the model
 		///
-		/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) MU, Model Update table I
+		/// [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) MU, Model Update table I
 		#[inline]
 		fn model_update(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2571,7 +2571,7 @@ pub mod tracking {
 
 	/// Class that manages the sampler in order to select regions for the update the model of the tracker
 	///
-	/// [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Sampling e Labeling. See table I and section III B
+	/// [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) Sampling e Labeling. See table I and section III B
 	///
 	/// TrackerSampler is an aggregation of TrackerSamplerAlgorithm
 	/// ## See also
@@ -2619,7 +2619,7 @@ pub mod tracking {
 			Ok(ret)
 		}
 
-		/// Return the samples from all TrackerSamplerAlgorithm, [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
+		/// Return the samples from all TrackerSamplerAlgorithm, [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
 		#[inline]
 		fn get_samples(&self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
@@ -2716,7 +2716,7 @@ pub mod tracking {
 		/// * image: The current frame
 		/// * boundingBox: The bounding box from which regions can be calculated
 		///
-		/// * sample: The computed samples [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
+		/// * sample: The computed samples [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
 		#[inline]
 		fn sampling(&mut self, image: &impl core::MatTraitConst, bounding_box: core::Rect, sample: &mut core::Vector<core::Mat>) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -3508,9 +3508,9 @@ pub mod tracking {
 
 	/// Abstract base class for TrackerStateEstimator that estimates the most likely target state.
 	///
-	/// See [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) State estimator
+	/// See [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) State estimator
 	///
-	/// See [AMVOT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AMVOT) Statistical modeling (Fig. 3), Table III (generative) - IV (discriminative) - V (hybrid)
+	/// See [AMVOT](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AMVOT) Statistical modeling (Fig. 3), Table III (generative) - IV (discriminative) - V (hybrid)
 	pub struct Detail_TrackerStateEstimator {
 		ptr: *mut c_void,
 	}
@@ -3533,11 +3533,11 @@ pub mod tracking {
 		///
 		/// The modes available now:
 		///
-		/// *   "BOOSTING" -- Boosting-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.4
+		/// *   "BOOSTING" -- Boosting-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.4
 		///
 		/// The modes available soon:
 		///
-		/// *   "SVM" -- SVM-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.5
+		/// *   "SVM" -- SVM-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.5
 		#[inline]
 		pub fn create(tracke_state_estimator_type: &str) -> Result<core::Ptr<crate::tracking::Detail_TrackerStateEstimator>> {
 			extern_container_arg!(tracke_state_estimator_type);
@@ -3961,7 +3961,7 @@ pub mod tracking {
 
 	/// Abstract base class for TrackerTargetState that represents a possible state of the target.
 	///
-	/// See [AAM](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_AAM) ![inline formula](https://latex.codecogs.com/png.latex?%5Chat%7Bx%7D%5E%7Bi%7D%5F%7Bk%7D) all the states candidates.
+	/// See [AAM](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_AAM) ![inline formula](https://latex.codecogs.com/png.latex?%5Chat%7Bx%7D%5E%7Bi%7D%5F%7Bk%7D) all the states candidates.
 	///
 	/// Inherits this class with your Target state, In own implementation you can add scale variation,
 	/// width, height, orientation, etc.
@@ -4265,7 +4265,7 @@ pub mod tracking {
 	///
 	/// The tracker follows the object from frame to frame. The detector localizes all appearances that
 	/// have been observed so far and corrects the tracker if necessary. The learning estimates detector's
-	/// errors and updates it to avoid these errors in the future. The implementation is based on [TLD](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_TLD) .
+	/// errors and updates it to avoid these errors in the future. The implementation is based on [TLD](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_TLD) .
 	///
 	/// The Median Flow algorithm (see cv::TrackerMedianFlow) was chosen as a tracking component in this
 	/// implementation, following authors. The tracker is supposed to be able to handle rapid motions, partial
@@ -4665,7 +4665,7 @@ pub mod tracking {
 	///
 	/// This is a real-time object tracking based on a novel on-line version of the AdaBoost algorithm.
 	/// The classifier uses the surrounding background as negative examples in update step to avoid the
-	/// drifting problem. The implementation is based on [OLB](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_OLB) .
+	/// drifting problem. The implementation is based on [OLB](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_OLB) .
 	pub struct Legacy_TrackerBoosting {
 		ptr: *mut c_void,
 	}
@@ -4917,7 +4917,7 @@ pub mod tracking {
 	/// ********************************* CSRT ***********************************
 	/// the CSRT tracker
 	///
-	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
+	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
 	pub struct Legacy_TrackerCSRT {
 		ptr: *mut c_void,
 	}
@@ -5149,7 +5149,7 @@ pub mod tracking {
 	/// the KCF (Kernelized Correlation Filter) tracker
 	///
 	/// * KCF is a novel tracking framework that utilizes properties of circulant matrix to enhance the processing speed.
-	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
+	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
 	/// * The original paper of KCF is available at <http://www.robots.ox.ac.uk/~joao/publications/henriques_tpami2015.pdf>
 	/// * as well as the matlab implementation. For more information about KCF with color-names features, please refer to
 	/// * <http://www.cvl.isy.liu.se/research/objrec/visualtracking/colvistrack/index.html>.
@@ -5357,7 +5357,7 @@ pub mod tracking {
 	/// background.
 	///
 	/// Multiple Instance Learning avoids the drift problem for a robust tracking. The implementation is
-	/// based on [MIL](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_MIL) .
+	/// based on [MIL](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MIL) .
 	///
 	/// Original code can be found here <http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml>
 	pub struct Legacy_TrackerMIL {
@@ -5539,7 +5539,7 @@ pub mod tracking {
 
 	/// the MOSSE (Minimum Output Sum of Squared %Error) tracker
 	///
-	/// The implementation is based on [MOSSE](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_MOSSE) Visual Object Tracking using Adaptive Correlation Filters
+	/// The implementation is based on [MOSSE](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MOSSE) Visual Object Tracking using Adaptive Correlation Filters
 	///
 	/// Note: this tracker works with grayscale images, if passed bgr ones, they will get converted internally.
 	pub struct Legacy_TrackerMOSSE {
@@ -5627,7 +5627,7 @@ pub mod tracking {
 
 	/// the Median Flow tracker
 	///
-	/// Implementation of a paper [MedianFlow](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_MedianFlow) .
+	/// Implementation of a paper [MedianFlow](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MedianFlow) .
 	///
 	/// The tracker is suitable for very smooth and predictable movements when object is visible throughout
 	/// the whole sequence. It's quite and accurate for this type of problems (in particular, it was shown
@@ -5910,7 +5910,7 @@ pub mod tracking {
 	///
 	/// The tracker follows the object from frame to frame. The detector localizes all appearances that
 	/// have been observed so far and corrects the tracker if necessary. The learning estimates detector's
-	/// errors and updates it to avoid these errors in the future. The implementation is based on [TLD](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_TLD) .
+	/// errors and updates it to avoid these errors in the future. The implementation is based on [TLD](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_TLD) .
 	///
 	/// The Median Flow algorithm (see cv::TrackerMedianFlow) was chosen as a tracking component in this
 	/// implementation, following authors. The tracker is supposed to be able to handle rapid motions, partial

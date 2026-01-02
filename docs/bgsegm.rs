@@ -184,16 +184,16 @@ pub mod bgsegm {
 
 	/// Creates an instance of BackgroundSubtractorLSBP algorithm.
 	///
-	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016)
+	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LGuo2016)
 	///
 	/// ## Parameters
 	/// * mc: Whether to use camera motion compensation.
 	/// * nSamples: Number of samples to maintain at each point of the frame.
 	/// * LSBPRadius: LSBP descriptor radius.
-	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
 	/// * Rscale: Scale coefficient for threshold values.
 	/// * Rincdec: Increase/Decrease step for threshold values.
 	/// * noiseRemovalThresholdFacBG: Strength of the noise removal for background points.
@@ -228,16 +228,16 @@ pub mod bgsegm {
 
 	/// Creates an instance of BackgroundSubtractorLSBP algorithm.
 	///
-	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016)
+	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LGuo2016)
 	///
 	/// ## Parameters
 	/// * mc: Whether to use camera motion compensation.
 	/// * nSamples: Number of samples to maintain at each point of the frame.
 	/// * LSBPRadius: LSBP descriptor radius.
-	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
 	/// * Rscale: Scale coefficient for threshold values.
 	/// * Rincdec: Increase/Decrease step for threshold values.
 	/// * noiseRemovalThresholdFacBG: Strength of the noise removal for background points.
@@ -481,6 +481,65 @@ pub mod bgsegm {
 			Ok(ret)
 		}
 
+		/// Computes a foreground mask with known foreground mask input.
+		///
+		/// ## Parameters
+		/// * image: Next video frame.
+		/// * knownForegroundMask: The mask for inputting already known foreground.
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		///
+		/// Note: This method has a default virtual implementation that throws a "not impemented" error.
+		/// Foreground masking may not be supported by all background subtractors.
+		///
+		/// ## C++ default parameters
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorCNT(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Computes a foreground mask with known foreground mask input.
+		///
+		/// ## Parameters
+		/// * image: Next video frame.
+		/// * knownForegroundMask: The mask for inputting already known foreground.
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		///
+		/// Note: This method has a default virtual implementation that throws a "not impemented" error.
+		/// Foreground masking may not be supported by all background subtractors.
+		///
+		/// ## Note
+		/// This alternative version of [BackgroundSubtractorCNTTrait::apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorCNT(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 		/// Sets the number of frames with same pixel color to consider stable.
 		#[inline]
 		fn set_min_pixel_stability(&mut self, value: i32) -> Result<()> {
@@ -565,7 +624,7 @@ pub mod bgsegm {
 
 	boxed_ref! { BackgroundSubtractorCNT, crate::bgsegm::BackgroundSubtractorCNTTraitConst, as_raw_BackgroundSubtractorCNT, crate::bgsegm::BackgroundSubtractorCNTTrait, as_raw_mut_BackgroundSubtractorCNT }
 
-	/// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Gold2012) .
+	/// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Gold2012) .
 	///
 	/// Takes a series of images and returns a sequence of mask (8UC1)
 	/// images of the same size, where 255 indicates Foreground and 0 represents Background.
@@ -756,6 +815,65 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorGMG(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Computes a foreground mask with known foreground mask input.
+		///
+		/// ## Parameters
+		/// * image: Next video frame.
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * knownForegroundMask: The mask for inputting already known foreground.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		///
+		/// Note: This method has a default virtual implementation that throws a "not implemented" error.
+		/// Foreground masking may not be supported by all background subtractors.
+		///
+		/// ## C++ default parameters
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorGMG(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Computes a foreground mask with known foreground mask input.
+		///
+		/// ## Parameters
+		/// * image: Next video frame.
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * knownForegroundMask: The mask for inputting already known foreground.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		///
+		/// Note: This method has a default virtual implementation that throws a "not implemented" error.
+		/// Foreground masking may not be supported by all background subtractors.
+		///
+		/// ## Note
+		/// This alternative version of [BackgroundSubtractorGMGTrait::apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorGMG(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -970,6 +1088,35 @@ pub mod bgsegm {
 			Ok(ret)
 		}
 
+		/// ## C++ default parameters
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorGSOC(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [BackgroundSubtractorGSOCTrait::apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorGSOC(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 	}
 
 	impl std::fmt::Debug for BackgroundSubtractorGSOC {
@@ -1014,7 +1161,7 @@ pub mod bgsegm {
 
 	boxed_ref! { BackgroundSubtractorGSOC, crate::bgsegm::BackgroundSubtractorGSOCTraitConst, as_raw_BackgroundSubtractorGSOC, crate::bgsegm::BackgroundSubtractorGSOCTrait, as_raw_mut_BackgroundSubtractorGSOC }
 
-	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LGuo2016)
+	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LGuo2016)
 	pub struct BackgroundSubtractorLSBP {
 		ptr: *mut c_void,
 	}
@@ -1072,6 +1219,35 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorLSBP(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorLSBP(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [BackgroundSubtractorLSBPTrait::apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorLSBP(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1218,7 +1394,7 @@ pub mod bgsegm {
 
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 	///
-	/// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_KB2001) .
+	/// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_KB2001) .
 	pub struct BackgroundSubtractorMOG {
 		ptr: *mut c_void,
 	}
@@ -1279,6 +1455,104 @@ pub mod bgsegm {
 	/// Mutable methods for [crate::bgsegm::BackgroundSubtractorMOG]
 	pub trait BackgroundSubtractorMOGTrait: crate::bgsegm::BackgroundSubtractorMOGTraitConst + crate::video::BackgroundSubtractorTrait {
 		fn as_raw_mut_BackgroundSubtractorMOG(&mut self) -> *mut c_void;
+
+		/// Computes a foreground mask.
+		///
+		/// ## Parameters
+		/// * image: Next video frame of type CV_8UC(n),CV_8SC(n),CV_16UC(n),CV_16SC(n),CV_32SC(n),CV_32FC(n),CV_64FC(n), where n is 1,2,3,4.
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		/// ## C++ default parameters
+		/// * learning_rate: -1
+		#[inline]
+		fn apply(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorMOG(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Computes a foreground mask.
+		///
+		/// ## Parameters
+		/// * image: Next video frame of type CV_8UC(n),CV_8SC(n),CV_16UC(n),CV_16SC(n),CV_32SC(n),CV_32FC(n),CV_64FC(n), where n is 1,2,3,4.
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		/// ## Note
+		/// This alternative version of [BackgroundSubtractorMOGTrait::apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorMOG(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Computes a foreground mask and skips known foreground in evaluation.
+		///
+		/// ## Parameters
+		/// * image: Next video frame of type CV_8UC(n),CV_8SC(n),CV_16UC(n),CV_16SC(n),CV_32SC(n),CV_32FC(n),CV_64FC(n), where n is 1,2,3,4.
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * knownForegroundMask: The mask for inputting already known foreground, allows model to ignore learning known pixels.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		/// ## C++ default parameters
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorMOG(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Computes a foreground mask and skips known foreground in evaluation.
+		///
+		/// ## Parameters
+		/// * image: Next video frame of type CV_8UC(n),CV_8SC(n),CV_16UC(n),CV_16SC(n),CV_32SC(n),CV_32FC(n),CV_64FC(n), where n is 1,2,3,4.
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * knownForegroundMask: The mask for inputting already known foreground, allows model to ignore learning known pixels.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		/// ## Note
+		/// This alternative version of [BackgroundSubtractorMOGTrait::apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorMOG(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
 
 		#[inline]
 		fn set_history(&mut self, nframes: i32) -> Result<()> {

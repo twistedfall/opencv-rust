@@ -24,9 +24,9 @@ pub mod cudaimgproc {
 	pub const CUDA_ALPHA_PREMUL: i32 = 12;
 	pub const CUDA_ALPHA_XOR: i32 = 4;
 	pub const CUDA_ALPHA_XOR_PREMUL: i32 = 10;
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 	pub const CUDA_CCL_BKE: i32 = 0;
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 	pub const CUDA_CCL_DEFAULT: i32 = -1;
 	/// Bayer Demosaicing (Malvar, He, and Cutler)
 	pub const CUDA_COLOR_BayerBG2BGR_MHT: i32 = 256;
@@ -79,9 +79,9 @@ pub mod cudaimgproc {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_ConnectedComponentsAlgorithmsTypes {
-		/// BKE [Allegretti2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+		/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 		CCL_DEFAULT = -1,
-		/// BKE [Allegretti2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+		/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 		CCL_BKE = 0,
 	}
 
@@ -429,7 +429,7 @@ pub mod cudaimgproc {
 	/// ltype specifies the output label image type, an important consideration based on the total
 	/// number of labels or alternatively the total number of pixels in the source image.
 	/// ccltype specifies the connected components labeling algorithm to use, currently
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
 	/// for details. Note that labels in the output are not required to be sequential.
 	///
 	/// ## Parameters
@@ -474,7 +474,7 @@ pub mod cudaimgproc {
 	/// ltype specifies the output label image type, an important consideration based on the total
 	/// number of labels or alternatively the total number of pixels in the source image.
 	/// ccltype specifies the connected components labeling algorithm to use, currently
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
 	/// for details. Note that labels in the output are not required to be sequential.
 	///
 	/// ## Parameters
@@ -518,7 +518,7 @@ pub mod cudaimgproc {
 	/// ltype specifies the output label image type, an important consideration based on the total
 	/// number of labels or alternatively the total number of pixels in the source image.
 	/// ccltype specifies the connected components labeling algorithm to use, currently
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
 	/// for details. Note that labels in the output are not required to be sequential.
 	///
 	/// ## Parameters
@@ -652,7 +652,7 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 
-	/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
+	/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 	#[inline]
 	pub fn create_generalized_hough_ballard() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughBallard>> {
 		return_send!(via ocvrs_return);
@@ -663,7 +663,7 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 
-	/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Guil1999) .
+	/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 	#[inline]
 	pub fn create_generalized_hough_guil() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughGuil>> {
 		return_send!(via ocvrs_return);
@@ -1155,7 +1155,7 @@ pub mod cudaimgproc {
 	///    > -   COLOR_BayerBG2GRAY , COLOR_BayerGB2GRAY , COLOR_BayerRG2GRAY , COLOR_BayerGR2GRAY
 	///    > -   COLOR_BayerBG2BGR , COLOR_BayerGB2BGR , COLOR_BayerRG2BGR , COLOR_BayerGR2BGR
 	///
-	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_MHT2011))
+	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MHT2011))
 	///
 	///    > -   COLOR_BayerBG2GRAY_MHT , COLOR_BayerGB2GRAY_MHT , COLOR_BayerRG2GRAY_MHT ,
 	///    >     COLOR_BayerGR2GRAY_MHT
@@ -1196,7 +1196,7 @@ pub mod cudaimgproc {
 	///    > -   COLOR_BayerBG2GRAY , COLOR_BayerGB2GRAY , COLOR_BayerRG2GRAY , COLOR_BayerGR2GRAY
 	///    > -   COLOR_BayerBG2BGR , COLOR_BayerGB2BGR , COLOR_BayerRG2BGR , COLOR_BayerGR2BGR
 	///
-	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_MHT2011))
+	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MHT2011))
 	///
 	///    > -   COLOR_BayerBG2GRAY_MHT , COLOR_BayerGB2GRAY_MHT , COLOR_BayerRG2GRAY_MHT ,
 	///    >     COLOR_BayerGR2GRAY_MHT
@@ -1315,6 +1315,18 @@ pub mod cudaimgproc {
 	/// * forward: true for forward gamma correction or false for inverse gamma correction.
 	/// * stream: Stream for the asynchronous version.
 	///
+	/// Gamma correction is conformant to BT.709 [BT](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BT).709 with &gamma;=0.45.
+	///
+	/// For the forward transform, RGB values are normalised to fit in the range L=[0..1], then:
+	/// - For L < 0.018
+	///   + V = 4.5*L
+	/// - For L >= 0.018
+	///   + V = 1.099 * L^0.45 - 0.099
+	///
+	/// With V then being scaled back to [0..255].
+	///
+	/// ![image](https://docs.opencv.org/4.13.0/gammacorrection.png)
+	///
 	/// ## Note
 	/// This alternative version of [gamma_correction] function uses the following default values for its arguments:
 	/// * forward: true
@@ -1337,6 +1349,18 @@ pub mod cudaimgproc {
 	/// * dst: Destination image.
 	/// * forward: true for forward gamma correction or false for inverse gamma correction.
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// Gamma correction is conformant to BT.709 [BT](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BT).709 with &gamma;=0.45.
+	///
+	/// For the forward transform, RGB values are normalised to fit in the range L=[0..1], then:
+	/// - For L < 0.018
+	///   + V = 4.5*L
+	/// - For L >= 0.018
+	///   + V = 1.099 * L^0.45 - 0.099
+	///
+	/// With V then being scaled back to [0..255].
+	///
+	/// ![image](https://docs.opencv.org/4.13.0/gammacorrection.png)
 	///
 	/// ## C++ default parameters
 	/// * forward: true
@@ -2003,7 +2027,7 @@ pub mod cudaimgproc {
 	pub trait CUDA_CannyEdgeDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst {
 		fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void;
 
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		///
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
@@ -2023,7 +2047,7 @@ pub mod cudaimgproc {
 			Ok(ret)
 		}
 
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		///
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
@@ -2044,7 +2068,7 @@ pub mod cudaimgproc {
 			Ok(ret)
 		}
 
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		///
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
@@ -2072,7 +2096,7 @@ pub mod cudaimgproc {
 			Ok(ret)
 		}
 
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		///
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.

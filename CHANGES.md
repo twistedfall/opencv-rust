@@ -1,3 +1,6 @@
+* 0.98.1
+  * Regenerated docs with OpenCV 4.13
+
 * 0.98.0
   * Fix linking issue when using `video` module without `tracking`, this also moved some of the symbols from `video` to `tracking`.
   * Fix how multiarch include dir is calculated, should help with the building issues in cross-compilation scenarios.

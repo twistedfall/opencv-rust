@@ -15,7 +15,7 @@ pub mod highgui {
 	//!    # OpenGL support
 	//!    # Qt New Functions
 	//!
-	//!    ![image](https://docs.opencv.org/4.12.0/qtgui.png)
+	//!    ![image](https://docs.opencv.org/4.13.0/qtgui.png)
 	//!
 	//!    This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 	//!    a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.

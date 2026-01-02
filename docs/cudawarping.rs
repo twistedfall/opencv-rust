@@ -397,8 +397,8 @@ pub mod cudawarping {
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B%28double%29dsize%2Ewidth%2Fsrc%2Ecols%7D)
 	/// * fy: Scale factor along the vertical axis. If it is zero, it is computed as:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B%28double%29dsize%2Eheight%2Fsrc%2Erows%7D)
-	/// * interpolation: Interpolation method. INTER_NEAREST , INTER_LINEAR and INTER_CUBIC are
-	/// supported for now.
+	/// * interpolation: Interpolation method. INTER_NEAREST , INTER_LINEAR , INTER_CUBIC , and INTER_AREA are
+	/// supported.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// resize
@@ -433,8 +433,8 @@ pub mod cudawarping {
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B%28double%29dsize%2Ewidth%2Fsrc%2Ecols%7D)
 	/// * fy: Scale factor along the vertical axis. If it is zero, it is computed as:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B%28double%29dsize%2Eheight%2Fsrc%2Erows%7D)
-	/// * interpolation: Interpolation method. INTER_NEAREST , INTER_LINEAR and INTER_CUBIC are
-	/// supported for now.
+	/// * interpolation: Interpolation method. INTER_NEAREST , INTER_LINEAR , INTER_CUBIC , and INTER_AREA are
+	/// supported.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// resize
@@ -592,6 +592,7 @@ pub mod cudawarping {
 	/// * src: Source image. CV_8U , CV_16U , CV_32S , or CV_32F depth and 1, 3, or 4 channels are
 	/// supported.
 	/// * dst: Destination image with the same type as src . The size is dsize .
+	///    **In-place operation (src == dst) is not supported and will result in an error.**
 	/// * M: *2x3* Mat or UMat transformation matrix.
 	/// * dsize: Size of the destination image.
 	/// * flags: Combination of interpolation methods (see resize) and the optional flag
@@ -600,6 +601,9 @@ pub mod cudawarping {
 	/// * borderMode: 
 	/// * borderValue: 
 	/// * stream: Stream for the asynchronous version.
+	///
+	///
+	/// Note: In-place operation is not supported. If src and dst refer to the same data, the behavior is undefined.
 	/// ## See also
 	/// warpAffine
 	///
@@ -627,6 +631,7 @@ pub mod cudawarping {
 	/// * src: Source image. CV_8U , CV_16U , CV_32S , or CV_32F depth and 1, 3, or 4 channels are
 	/// supported.
 	/// * dst: Destination image with the same type as src . The size is dsize .
+	///    **In-place operation (src == dst) is not supported and will result in an error.**
 	/// * M: *2x3* Mat or UMat transformation matrix.
 	/// * dsize: Size of the destination image.
 	/// * flags: Combination of interpolation methods (see resize) and the optional flag
@@ -635,6 +640,9 @@ pub mod cudawarping {
 	/// * borderMode: 
 	/// * borderValue: 
 	/// * stream: Stream for the asynchronous version.
+	///
+	///
+	/// Note: In-place operation is not supported. If src and dst refer to the same data, the behavior is undefined.
 	/// ## See also
 	/// warpAffine
 	///

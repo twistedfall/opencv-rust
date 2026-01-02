@@ -25,7 +25,7 @@ pub mod saliency {
 	//! to cover all objects in an image. Being able to perceive objects before identifying them is closely
 	//! related to bottom up visual attention (saliency).
 	//!
-	//! ![Saliency diagram](https://docs.opencv.org/4.12.0/saliency.png)
+	//! ![Saliency diagram](https://docs.opencv.org/4.13.0/saliency.png)
 	//!
 	//! To see how API works, try tracker demo:
 	//! <https://github.com/fpuja/opencv_contrib/blob/saliencyModuleDevelop/modules/saliency/samples/computeSaliency.cpp>
@@ -117,7 +117,7 @@ pub mod saliency {
 	///  * [2]  B. Wang and P. Dudek "A Fast Self-tuning Background Subtraction Algorithm", in proc of IEEE Workshop on Change Detection, 2014
 	///  *
 	///
-	/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BinWangApr2014)
+	/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BinWangApr2014)
 	pub struct MotionSaliencyBinWangApr2014 {
 		ptr: *mut c_void,
 	}
@@ -366,7 +366,7 @@ pub mod saliency {
 
 	boxed_ref! { Objectness, crate::saliency::ObjectnessTraitConst, as_raw_Objectness, crate::saliency::ObjectnessTrait, as_raw_mut_Objectness }
 
-	/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BING)
+	/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BING)
 	pub struct ObjectnessBING {
 		ptr: *mut c_void,
 	}
@@ -410,15 +410,6 @@ pub mod saliency {
 		fn as_raw_ObjectnessBING(&self) -> *const c_void;
 
 		#[inline]
-		fn write(&self) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_saliency_ObjectnessBING_write_const(self.as_raw_ObjectnessBING(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
 		fn get_base(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_getBase_const(self.as_raw_ObjectnessBING(), ocvrs_return.as_mut_ptr()) };
@@ -457,15 +448,6 @@ pub mod saliency {
 			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ObjectnessBING(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn read(&mut self) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_saliency_ObjectnessBING_read(self.as_raw_mut_ObjectnessBING(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -787,7 +769,7 @@ pub mod saliency {
 
 	boxed_ref! { StaticSaliency, crate::saliency::StaticSaliencyTraitConst, as_raw_StaticSaliency, crate::saliency::StaticSaliencyTrait, as_raw_mut_StaticSaliency }
 
-	/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_FGS)
+	/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_FGS)
 	///
 	/// This method calculates saliency based on center-surround differences.
 	/// High resolution saliency maps are generated in real time by using integral images.
@@ -906,7 +888,7 @@ pub mod saliency {
 
 	boxed_ref! { StaticSaliencyFineGrained, crate::saliency::StaticSaliencyFineGrainedTraitConst, as_raw_StaticSaliencyFineGrained, crate::saliency::StaticSaliencyFineGrainedTrait, as_raw_mut_StaticSaliencyFineGrained }
 
-	/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_SR)
+	/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_SR)
 	///
 	/// Starting from the principle of natural image statistics, this method simulate the behavior of
 	/// pre-attentive visual search. The algorithm analyze the log spectrum of each image and obtain the

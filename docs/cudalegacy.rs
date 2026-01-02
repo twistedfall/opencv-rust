@@ -213,7 +213,7 @@ pub mod cudalegacy {
 	/// Creates FGD Background Subtractor
 	///
 	/// ## Parameters
-	/// * params: Algorithm's parameters. See [FGD2003](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_FGD2003) for explanation.
+	/// * params: Algorithm's parameters. See [FGD2003](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_FGD2003) for explanation.
 	///
 	/// ## Note
 	/// This alternative version of [create_background_subtractor_fgd] function uses the following default values for its arguments:
@@ -231,7 +231,7 @@ pub mod cudalegacy {
 	/// Creates FGD Background Subtractor
 	///
 	/// ## Parameters
-	/// * params: Algorithm's parameters. See [FGD2003](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_FGD2003) for explanation.
+	/// * params: Algorithm's parameters. See [FGD2003](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_FGD2003) for explanation.
 	///
 	/// ## C++ default parameters
 	/// * params: FGDParams()
@@ -577,7 +577,7 @@ pub mod cudalegacy {
 	/// of the background.
 	///
 	/// Any pixel which does not fit this model is then deemed to be foreground. The class implements
-	/// algorithm described in [FGD2003](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_FGD2003) .
+	/// algorithm described in [FGD2003](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_FGD2003) .
 	/// ## See also
 	/// BackgroundSubtractor
 	pub struct CUDA_BackgroundSubtractorFGD {
@@ -667,7 +667,7 @@ pub mod cudalegacy {
 	///
 	/// The class discriminates between foreground and background pixels by building and maintaining a model
 	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-	/// class implements algorithm described in [Gold2012](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Gold2012) .
+	/// class implements algorithm described in [Gold2012](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Gold2012) .
 	pub struct CUDA_BackgroundSubtractorGMG {
 		ptr: *mut c_void,
 	}
@@ -789,6 +789,18 @@ pub mod cudalegacy {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_apply_const__InputArrayR_const__OutputArrayR_double_StreamR(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn apply_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64, stream: &mut impl core::StreamTrait) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_StreamR(self.as_raw_mut_CUDA_BackgroundSubtractorGMG(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

@@ -6,9 +6,9 @@ pub mod stitching {
 	//! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 	//! one can combine and use them separately.
 	//!
-	//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BL07) .
+	//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BL07) .
 	//!
-	//! ![stitching pipeline](https://docs.opencv.org/4.12.0/StitchingPipeline.jpg)
+	//! ![stitching pipeline](https://docs.opencv.org/4.13.0/StitchingPipeline.jpg)
 	//!
 	//! Camera models
 	//! -------------
@@ -3905,7 +3905,7 @@ pub mod stitching {
 	boxed_ref! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksCompensatorTraitConst, as_raw_Detail_BlocksCompensator, crate::stitching::Detail_BlocksCompensatorTrait, as_raw_mut_Detail_BlocksCompensator }
 
 	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-	/// intensities, see [UES01](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_UES01) for details.
+	/// intensities, see [UES01](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_UES01) for details.
 	pub struct Detail_BlocksGainCompensator {
 		ptr: *mut c_void,
 	}
@@ -6769,7 +6769,7 @@ pub mod stitching {
 	boxed_ref! { Detail_FisheyeWarper, crate::stitching::Detail_FisheyeWarperTraitConst, as_raw_Detail_FisheyeWarper, crate::stitching::Detail_FisheyeWarperTrait, as_raw_mut_Detail_FisheyeWarper }
 
 	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-	/// intensities, see [BL07](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
+	/// intensities, see [BL07](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
 	pub struct Detail_GainCompensator {
 		ptr: *mut c_void,
 	}
@@ -7052,7 +7052,7 @@ pub mod stitching {
 
 	boxed_ref! { Detail_Graph, crate::stitching::Detail_GraphTraitConst, as_raw_Detail_Graph, crate::stitching::Detail_GraphTrait, as_raw_mut_Detail_Graph }
 
-	/// Minimum graph cut-based seam estimator. See details in [Kwatra03](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Kwatra03) .
+	/// Minimum graph cut-based seam estimator. See details in [Kwatra03](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Kwatra03) .
 	pub struct Detail_GraphCutSeamFinder {
 		ptr: *mut c_void,
 	}
@@ -8111,7 +8111,7 @@ pub mod stitching {
 
 	boxed_ref! { Detail_MercatorWarper, crate::stitching::Detail_MercatorWarperTraitConst, as_raw_Detail_MercatorWarper, crate::stitching::Detail_MercatorWarperTrait, as_raw_mut_Detail_MercatorWarper }
 
-	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BA83)).
+	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BA83)).
 	pub struct Detail_MultiBandBlender {
 		ptr: *mut c_void,
 	}

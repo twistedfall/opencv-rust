@@ -2,8 +2,8 @@ pub mod objdetect {
 	//! # Object Detection
 	//!    # Cascade Classifier for Object Detection
 	//!
-	//!    The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Viola01) and
-	//!    improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
+	//!    The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Viola01) and
+	//!    improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
 	//!
 	//!    First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 	//!    trained with a few hundred sample views of a particular object (i.e., a face or a car), called
@@ -29,7 +29,7 @@ pub mod objdetect {
 	//!    classifiers, and are calculated as described below. The current algorithm uses the following
 	//!    Haar-like features:
 	//!
-	//!    ![image](https://docs.opencv.org/4.12.0/haarfeatures.png)
+	//!    ![image](https://docs.opencv.org/4.13.0/haarfeatures.png)
 	//!
 	//!    The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 	//!    the region of interest and the scale (this scale is not the same as the scale used at the detection
@@ -69,11 +69,11 @@ pub mod objdetect {
 	//!        ArUco markers can also be used for advanced chessboard corner finding. To do this, group the markers in the
 	//!        CharucoBoard and find the corners of the chessboard with the CharucoDetector::detectBoard().
 	//!
-	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Aruco2014).
+	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Aruco2014).
 	//!
-	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
 	//! ## See also
-	//! [Aruco2014](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Aruco2014)
+	//! [Aruco2014](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Aruco2014)
 	//!        This code has been originally developed by Sergio Garrido-Jurado as a project
 	//!        for Google Summer of Code 2015 (GSoC 15).
 	use crate::mod_prelude::*;
@@ -86,7 +86,7 @@ pub mod objdetect {
 	pub const CASCADE_DO_ROUGH_SEARCH: i32 = 8;
 	pub const CASCADE_FIND_BIGGEST_OBJECT: i32 = 4;
 	pub const CASCADE_SCALE_IMAGE: i32 = 2;
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 	pub const CORNER_REFINE_APRILTAG: i32 = 3;
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -172,7 +172,7 @@ pub mod objdetect {
 		CORNER_REFINE_SUBPIX = 1,
 		/// ArUco approach and refine the corners locations using the contour-points line fitting
 		CORNER_REFINE_CONTOUR = 2,
-		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 		CORNER_REFINE_APRILTAG = 3,
 	}
 
@@ -2378,7 +2378,7 @@ pub mod objdetect {
 
 		/// Detects faces in the input image. Following is an example output.
 		///
-		/// * ![image](https://docs.opencv.org/4.12.0/lena-face-detection.jpg)
+		/// * ![image](https://docs.opencv.org/4.13.0/lena-face-detection.jpg)
 		///
 		/// ## Parameters
 		/// * image: an image to detect
@@ -2947,7 +2947,7 @@ pub mod objdetect {
 
 	/// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 	///
-	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
+	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
 	///
 	/// useful links:
 	///
@@ -4826,6 +4826,92 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
+		/// Marker detection with confidence computation
+		///
+		/// ## Parameters
+		/// * image: input image
+		/// * corners: vector of detected marker corners. For each marker, its four corners
+		/// are provided, (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers,
+		/// the dimensions of this array is Nx4. The order of the corners is clockwise.
+		/// * ids: vector of identifiers of the detected markers. The identifier is of type int
+		/// (e.g. std::vector<int>). For N detected markers, the size of ids is also N.
+		/// The identifiers have the same order than the markers in the imgPoints array.
+		/// * markersConfidence: contains the normalized confidence [0;1] of the markers' detection,
+		/// defined as 1 minus the normalized uncertainty (percentage of incorrect pixel detections),
+		/// with 1 describing a pixel perfect detection. The confidence values are of type float
+		/// (e.g. std::vector<float>)
+		/// * rejectedImgPoints: contains the imgPoints of those squares whose inner code has not a
+		/// correct codification. Useful for debugging purposes.
+		///
+		/// Performs marker detection in the input image. Only markers included in the first specified dictionary
+		/// are searched. For each detected marker, it returns the 2D position of its corner in the image
+		/// and its corresponding identifier.
+		/// Note that this function does not perform pose estimation.
+		///
+		/// Note: The function does not correct lens distortion or takes it into account. It's recommended to undistort
+		/// input image with corresponding camera model, if camera parameters are known
+		/// ## See also
+		/// undistort, estimatePoseSingleMarkers,  estimatePoseBoard
+		///
+		/// ## C++ default parameters
+		/// * rejected_img_points: noArray()
+		#[inline]
+		fn detect_markers_with_confidence(&self, image: &impl ToInputArray, corners: &mut impl ToOutputArray, ids: &mut impl ToOutputArray, markers_confidence: &mut impl ToOutputArray, rejected_img_points: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(corners);
+			output_array_arg!(ids);
+			output_array_arg!(markers_confidence);
+			output_array_arg!(rejected_img_points);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_ArucoDetector_detectMarkersWithConfidence_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_ArucoDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), ids.as_raw__OutputArray(), markers_confidence.as_raw__OutputArray(), rejected_img_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Marker detection with confidence computation
+		///
+		/// ## Parameters
+		/// * image: input image
+		/// * corners: vector of detected marker corners. For each marker, its four corners
+		/// are provided, (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers,
+		/// the dimensions of this array is Nx4. The order of the corners is clockwise.
+		/// * ids: vector of identifiers of the detected markers. The identifier is of type int
+		/// (e.g. std::vector<int>). For N detected markers, the size of ids is also N.
+		/// The identifiers have the same order than the markers in the imgPoints array.
+		/// * markersConfidence: contains the normalized confidence [0;1] of the markers' detection,
+		/// defined as 1 minus the normalized uncertainty (percentage of incorrect pixel detections),
+		/// with 1 describing a pixel perfect detection. The confidence values are of type float
+		/// (e.g. std::vector<float>)
+		/// * rejectedImgPoints: contains the imgPoints of those squares whose inner code has not a
+		/// correct codification. Useful for debugging purposes.
+		///
+		/// Performs marker detection in the input image. Only markers included in the first specified dictionary
+		/// are searched. For each detected marker, it returns the 2D position of its corner in the image
+		/// and its corresponding identifier.
+		/// Note that this function does not perform pose estimation.
+		///
+		/// Note: The function does not correct lens distortion or takes it into account. It's recommended to undistort
+		/// input image with corresponding camera model, if camera parameters are known
+		/// ## See also
+		/// undistort, estimatePoseSingleMarkers,  estimatePoseBoard
+		///
+		/// ## Note
+		/// This alternative version of [ArucoDetectorTraitConst::detect_markers_with_confidence] function uses the following default values for its arguments:
+		/// * rejected_img_points: noArray()
+		#[inline]
+		fn detect_markers_with_confidence_def(&self, image: &impl ToInputArray, corners: &mut impl ToOutputArray, ids: &mut impl ToOutputArray, markers_confidence: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(corners);
+			output_array_arg!(ids);
+			output_array_arg!(markers_confidence);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_ArucoDetector_detectMarkersWithConfidence_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_ArucoDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), ids.as_raw__OutputArray(), markers_confidence.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 		/// Refine not detected markers based on the already detected and the board layout
 		///
 		/// ## Parameters
@@ -5731,7 +5817,7 @@ pub mod objdetect {
 
 		/// detect aruco markers and interpolate position of ChArUco board corners
 		/// ## Parameters
-		/// * image: input image necesary for corner refinement. Note that markers are not detected and
+		/// * image: input image necessary for corner refinement. Note that markers are not detected and
 		/// should be sent in corners and ids parameters.
 		/// * charucoCorners: interpolated chessboard corners.
 		/// * charucoIds: interpolated chessboard corners identifiers.
@@ -5775,7 +5861,7 @@ pub mod objdetect {
 
 		/// detect aruco markers and interpolate position of ChArUco board corners
 		/// ## Parameters
-		/// * image: input image necesary for corner refinement. Note that markers are not detected and
+		/// * image: input image necessary for corner refinement. Note that markers are not detected and
 		/// should be sent in corners and ids parameters.
 		/// * charucoCorners: interpolated chessboard corners.
 		/// * charucoIds: interpolated chessboard corners identifiers.
@@ -6912,8 +6998,26 @@ pub mod objdetect {
 		}
 
 		/// Transform list of bytes to matrix of bits
+		///
+		/// ## C++ default parameters
+		/// * rotation_id: 0
 		#[inline]
-		pub fn get_bits_from_byte_list(byte_list: &impl core::MatTraitConst, marker_size: i32) -> Result<core::Mat> {
+		pub fn get_bits_from_byte_list(byte_list: &impl core::MatTraitConst, marker_size: i32, rotation_id: i32) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_Dictionary_getBitsFromByteList_const_MatR_int_int(byte_list.as_raw_Mat(), marker_size, rotation_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Transform list of bytes to matrix of bits
+		///
+		/// ## Note
+		/// This alternative version of [Dictionary::get_bits_from_byte_list] function uses the following default values for its arguments:
+		/// * rotation_id: 0
+		#[inline]
+		pub fn get_bits_from_byte_list_def(byte_list: &impl core::MatTraitConst, marker_size: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_Dictionary_getBitsFromByteList_const_MatR_int(byte_list.as_raw_Mat(), marker_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);

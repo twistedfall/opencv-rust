@@ -24,6 +24,10 @@ pub mod cudafilters {
 	/// center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// boxFilter
 	///
@@ -52,6 +56,10 @@ pub mod cudafilters {
 	/// center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// boxFilter
 	///
@@ -78,6 +86,10 @@ pub mod cudafilters {
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
 	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
+	///
 	/// ## Note
 	/// This alternative version of [create_box_max_filter] function uses the following default values for its arguments:
 	/// * anchor: Point(-1,-1)
@@ -102,6 +114,10 @@ pub mod cudafilters {
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
 	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
+	///
 	/// ## C++ default parameters
 	/// * anchor: Point(-1,-1)
 	/// * border_mode: BORDER_DEFAULT
@@ -124,6 +140,10 @@ pub mod cudafilters {
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	///
 	/// ## Note
 	/// This alternative version of [create_box_min_filter] function uses the following default values for its arguments:
@@ -149,6 +169,10 @@ pub mod cudafilters {
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
 	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
+	///
 	/// ## C++ default parameters
 	/// * anchor: Point(-1,-1)
 	/// * border_mode: BORDER_DEFAULT
@@ -172,6 +196,10 @@ pub mod cudafilters {
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	///
 	/// ## Note
 	/// This alternative version of [create_column_sum_filter] function uses the following default values for its arguments:
@@ -197,6 +225,10 @@ pub mod cudafilters {
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	///
 	/// ## C++ default parameters
 	/// * anchor: -1
@@ -227,6 +259,10 @@ pub mod cudafilters {
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction. For details, see
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	///
 	/// ## Note
 	/// This alternative version of [create_deriv_filter] function uses the following default values for its arguments:
@@ -260,6 +296,10 @@ pub mod cudafilters {
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
 	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
+	///
 	/// ## C++ default parameters
 	/// * normalize: false
 	/// * scale: 1
@@ -287,6 +327,10 @@ pub mod cudafilters {
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction. For details, see
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// GaussianBlur
 	///
@@ -317,6 +361,10 @@ pub mod cudafilters {
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction. For details, see
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// GaussianBlur
 	///
@@ -345,6 +393,10 @@ pub mod cudafilters {
 	/// applied (see getDerivKernels ).
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// Laplacian
 	///
@@ -375,6 +427,10 @@ pub mod cudafilters {
 	/// applied (see getDerivKernels ).
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// Laplacian
 	///
@@ -403,6 +459,10 @@ pub mod cudafilters {
 	/// center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// filter2D
 	///
@@ -432,6 +492,10 @@ pub mod cudafilters {
 	/// center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// filter2D
 	///
@@ -453,15 +517,24 @@ pub mod cudafilters {
 	/// Performs median filtering for each point of the source image.
 	///
 	/// ## Parameters
-	/// * srcType: type of of source image. Only CV_8UC1 images are supported for now.
+	/// * srcType: type of of source image. Only CV_8UC1 if CUDA_VERSION < 11. CV_8UC1, CV_8UC3, CV_8UC4, CV_16UC1, CV_16UC3, CV_16UC4, CV_32FC1, CV_32FC3 or CV_32FC4 if CUDA_VERSION >= 11.
 	/// * windowSize: Size of the kernerl used for the filtering. Uses a (windowSize x windowSize) filter.
-	/// * partition: Specifies the parallel granularity of the workload. This parameter should be used GPU experts when optimizing performance.
+	/// * partition: Specifies the parallel granularity of the workload. Only used if CUDA_VERSION < 11.
 	///
 	/// Outputs an image that has been filtered using a median-filtering formulation.
 	///
-	/// Details on this algorithm can be found in:
+	/// If compiled with CUDA 11 or greater, a wavelet based algorithm is used as described at:
+	/// <https://cgenglab.github.io/en/publication/sigga22_wmatrix_median/>
+	/// Yuji Moroto, Nobuyuki Umetani, 2022, "Constant Time Median Filter Using 2D Wavelet Matrix",
+	///                                      ACM Transactions on Graphics, Volume 41, Issue 6.
+	///
+	/// For earlier versions of CUDA, details on the algorithm used can be found in:
 	/// Green, O., 2017. "Efficient scalable median filtering using histogram-based operations",
 	///                   IEEE Transactions on Image Processing, 27(5), pp.2217-2228.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	///
 	/// ## Note
 	/// This alternative version of [create_median_filter] function uses the following default values for its arguments:
@@ -479,15 +552,24 @@ pub mod cudafilters {
 	/// Performs median filtering for each point of the source image.
 	///
 	/// ## Parameters
-	/// * srcType: type of of source image. Only CV_8UC1 images are supported for now.
+	/// * srcType: type of of source image. Only CV_8UC1 if CUDA_VERSION < 11. CV_8UC1, CV_8UC3, CV_8UC4, CV_16UC1, CV_16UC3, CV_16UC4, CV_32FC1, CV_32FC3 or CV_32FC4 if CUDA_VERSION >= 11.
 	/// * windowSize: Size of the kernerl used for the filtering. Uses a (windowSize x windowSize) filter.
-	/// * partition: Specifies the parallel granularity of the workload. This parameter should be used GPU experts when optimizing performance.
+	/// * partition: Specifies the parallel granularity of the workload. Only used if CUDA_VERSION < 11.
 	///
 	/// Outputs an image that has been filtered using a median-filtering formulation.
 	///
-	/// Details on this algorithm can be found in:
+	/// If compiled with CUDA 11 or greater, a wavelet based algorithm is used as described at:
+	/// <https://cgenglab.github.io/en/publication/sigga22_wmatrix_median/>
+	/// Yuji Moroto, Nobuyuki Umetani, 2022, "Constant Time Median Filter Using 2D Wavelet Matrix",
+	///                                      ACM Transactions on Graphics, Volume 41, Issue 6.
+	///
+	/// For earlier versions of CUDA, details on the algorithm used can be found in:
 	/// Green, O., 2017. "Efficient scalable median filtering using histogram-based operations",
 	///                   IEEE Transactions on Image Processing, 27(5), pp.2217-2228.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	///
 	/// ## C++ default parameters
 	/// * partition: 128
@@ -517,6 +599,10 @@ pub mod cudafilters {
 	/// * anchor: Anchor position within the structuring element. Negative values mean that the anchor
 	/// is at the center.
 	/// * iterations: Number of times erosion and dilation to be applied.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// morphologyEx
 	///
@@ -551,6 +637,10 @@ pub mod cudafilters {
 	/// * anchor: Anchor position within the structuring element. Negative values mean that the anchor
 	/// is at the center.
 	/// * iterations: Number of times erosion and dilation to be applied.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// morphologyEx
 	///
@@ -578,6 +668,10 @@ pub mod cudafilters {
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
 	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
+	///
 	/// ## Note
 	/// This alternative version of [create_row_sum_filter] function uses the following default values for its arguments:
 	/// * anchor: -1
@@ -602,6 +696,10 @@ pub mod cudafilters {
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	///
 	/// ## C++ default parameters
 	/// * anchor: -1
@@ -629,6 +727,10 @@ pub mod cudafilters {
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction. For details, see
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// Scharr
 	///
@@ -659,6 +761,10 @@ pub mod cudafilters {
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction. For details, see
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// Scharr
 	///
@@ -690,6 +796,10 @@ pub mod cudafilters {
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction For details, see
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// sepFilter2D
 	///
@@ -724,6 +834,10 @@ pub mod cudafilters {
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction For details, see
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// sepFilter2D
 	///
@@ -756,6 +870,10 @@ pub mod cudafilters {
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction. For details, see
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// Sobel
 	///
@@ -788,6 +906,10 @@ pub mod cudafilters {
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction. For details, see
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
+	///
+	///
+	/// Note:
+	/// If applied in a CUDA Stream, a distinct filter instance must be created for each Stream. Sharing a single instance across multiple streams is unsupported and may lead to undefined behavior due to stream-specific internal state.
 	/// ## See also
 	/// Sobel
 	///

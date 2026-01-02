@@ -952,20 +952,18 @@ pub mod cudacodec {
 		/// * outputFormat: The requested output color format.
 		/// * bitDepth: The requested bit depth of the output frame.
 		/// * planar: Request seperate planes for each color plane.
-		/// * videoFullRangeFlag: Indicates if the black level, luma and chroma of the source are represented using the full or limited range (AKA TV or "analogue" range) of values as defined in Annex E of the ITU-T Specification.
 		/// * stream: Stream for the asynchronous version.
 		///
 		/// ## C++ default parameters
 		/// * bit_depth: BitDepth::UNCHANGED
 		/// * planar: false
-		/// * video_full_range_flag: false
 		/// * stream: cuda::Stream::Null()
 		#[inline]
-		fn convert(&mut self, yuv: &impl ToInputArray, color: &mut impl ToOutputArray, surface_format: crate::cudacodec::CUDA_SurfaceFormat, output_format: crate::cudacodec::CUDA_ColorFormat, bit_depth: crate::cudacodec::CUDA_BitDepth, planar: bool, video_full_range_flag: bool, stream: &mut impl core::StreamTrait) -> Result<bool> {
+		fn convert(&mut self, yuv: &impl ToInputArray, color: &mut impl ToOutputArray, surface_format: crate::cudacodec::CUDA_SurfaceFormat, output_format: crate::cudacodec::CUDA_ColorFormat, bit_depth: crate::cudacodec::CUDA_BitDepth, planar: bool, stream: &mut impl core::StreamTrait) -> Result<bool> {
 			input_array_arg!(yuv);
 			output_array_arg!(color);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cudacodec_NVSurfaceToColorConverter_convert_const__InputArrayR_const__OutputArrayR_const_SurfaceFormat_const_ColorFormat_const_BitDepth_const_bool_const_bool_StreamR(self.as_raw_mut_CUDA_NVSurfaceToColorConverter(), yuv.as_raw__InputArray(), color.as_raw__OutputArray(), surface_format, output_format, bit_depth, planar, video_full_range_flag, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cudacodec_NVSurfaceToColorConverter_convert_const__InputArrayR_const__OutputArrayR_const_SurfaceFormat_const_ColorFormat_const_BitDepth_const_bool_StreamR(self.as_raw_mut_CUDA_NVSurfaceToColorConverter(), yuv.as_raw__InputArray(), color.as_raw__OutputArray(), surface_format, output_format, bit_depth, planar, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -979,14 +977,12 @@ pub mod cudacodec {
 		/// * outputFormat: The requested output color format.
 		/// * bitDepth: The requested bit depth of the output frame.
 		/// * planar: Request seperate planes for each color plane.
-		/// * videoFullRangeFlag: Indicates if the black level, luma and chroma of the source are represented using the full or limited range (AKA TV or "analogue" range) of values as defined in Annex E of the ITU-T Specification.
 		/// * stream: Stream for the asynchronous version.
 		///
 		/// ## Note
 		/// This alternative version of [CUDA_NVSurfaceToColorConverterTrait::convert] function uses the following default values for its arguments:
 		/// * bit_depth: BitDepth::UNCHANGED
 		/// * planar: false
-		/// * video_full_range_flag: false
 		/// * stream: cuda::Stream::Null()
 		#[inline]
 		fn convert_def(&mut self, yuv: &impl ToInputArray, color: &mut impl ToOutputArray, surface_format: crate::cudacodec::CUDA_SurfaceFormat, output_format: crate::cudacodec::CUDA_ColorFormat) -> Result<bool> {

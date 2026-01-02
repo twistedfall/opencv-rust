@@ -26,7 +26,7 @@ pub mod video {
 	/// * criteria: Stop criteria for the underlying meanShift.
 	/// returns
 	/// (in old interfaces) Number of iterations CAMSHIFT took to converge
-	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
+	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
 	/// object center using meanShift and then adjusts the window size and finds the optimal rotation. The
 	/// function returns the rotated rectangle structure that includes the object position, size, and
 	/// orientation. The next position of the search window can be obtained with RotatedRect::boundingRect()
@@ -142,7 +142,7 @@ pub mod video {
 	///      normally, winsize for a Gaussian window should be set to a larger value to achieve the same
 	///      level of robustness.
 	///
-	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
+	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bprev%7D%20%28y%2Cx%29%20%20%5Csim%20%5Ctexttt%7Bnext%7D%20%28%20y%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B1%5D%2C%20%20x%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B0%5D%29)
 	///
@@ -196,13 +196,13 @@ pub mod video {
 	///      around the original and a moved point, divided by number of pixels in a window, is used as a
 	///      error measure.
 	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 	/// performance boost.
 	///
 	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-	/// [Bouguet00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// [Bouguet00](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 	///
 	///
 	/// Note: Some examples:
@@ -267,13 +267,13 @@ pub mod video {
 	///      around the original and a moved point, divided by number of pixels in a window, is used as a
 	///      error measure.
 	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 	/// performance boost.
 	///
 	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-	/// [Bouguet00](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// [Bouguet00](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 	///
 	///
 	/// Note: Some examples:
@@ -306,13 +306,33 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Computes the Enhanced Correlation Coefficient (ECC) value between two images
+	///
+	/// The Enhanced Correlation Coefficient (ECC) is a normalized measure of similarity between two images [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08).
+	/// The result lies in the range [-1, 1], where 1 corresponds to perfect similarity (modulo affine shift and scale),
+	/// 0 indicates no correlation, and -1 indicates perfect negative correlation.
+	///
+	/// For single-channel images, the ECC is defined as:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cmathrm%7BECC%7D%28I%2C%20T%29%20%3D%20%5Cfrac%7B%5Csum%5F%7Bx%7D%20%28I%28x%29%20%2D%20%5Cmu%5FI%29%28T%28x%29%20%2D%20%5Cmu%5FT%29%7D%0A%7B%5Csqrt%7B%5Csum%5F%7Bx%7D%20%28I%28x%29%20%2D%20%5Cmu%5FI%29%5E2%7D%20%5Ccdot%20%5Csqrt%7B%5Csum%5F%7Bx%7D%20%28T%28x%29%20%2D%20%5Cmu%5FT%29%5E2%7D%7D%0A)
+	///
+	/// For multi-channel images (e.g., 3-channel RGB), the formula generalizes to:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cmathrm%7BECC%7D%28I%2C%20T%29%20%3D%0A%5Cfrac%7B%5Csum%5F%7Bx%7D%20%5Csum%5F%7Bc%3D1%7D%5E%7BC%7D%20%28I%5Fc%28x%29%20%2D%20%5Cmu%5F%7BI%5Fc%7D%29%28T%5Fc%28x%29%20%2D%20%5Cmu%5F%7BT%5Fc%7D%29%7D%0A%7B%5Csqrt%7B%5Csum%5F%7Bx%7D%20%5Csum%5F%7Bc%3D1%7D%5E%7BC%7D%20%28I%5Fc%28x%29%20%2D%20%5Cmu%5F%7BI%5Fc%7D%29%5E2%7D%20%5Ccdot%0A%20%5Csqrt%7B%5Csum%5F%7Bx%7D%20%5Csum%5F%7Bc%3D1%7D%5E%7BC%7D%20%28T%5Fc%28x%29%20%2D%20%5Cmu%5F%7BT%5Fc%7D%29%5E2%7D%7D%0A)
+	///
+	/// Where:
+	/// - ![inline formula](https://latex.codecogs.com/png.latex?I%5Fc%28x%29%2C%20T%5Fc%28x%29) are the values of channel ![inline formula](https://latex.codecogs.com/png.latex?c) at spatial location ![inline formula](https://latex.codecogs.com/png.latex?x),
+	/// - ![inline formula](https://latex.codecogs.com/png.latex?%5Cmu%5F%7BI%5Fc%7D%2C%20%5Cmu%5F%7BT%5Fc%7D) are the mean values of channel ![inline formula](https://latex.codecogs.com/png.latex?c) over the masked region (if provided),
+	/// - ![inline formula](https://latex.codecogs.com/png.latex?C) is the number of channels (only 1 and 3 are currently supported),
+	/// - The sums run over all pixels ![inline formula](https://latex.codecogs.com/png.latex?x) in the image domain (optionally restricted by mask).
 	///
 	/// ## Parameters
-	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
-	/// * inputImage: single-channel input image to be warped to provide an image similar to
-	///  templateImage, same type as templateImage.
-	/// * inputMask: An optional mask to indicate valid values of inputImage.
+	/// * templateImage: Input template image; must have either 1 or 3 channels and be of type CV_8U, CV_16U, CV_32F, or CV_64F.
+	/// * inputImage: Input image to be compared with the template; must have the same type and number of channels as templateImage.
+	/// * inputMask: Optional single-channel mask to specify the valid region of interest in inputImage and templateImage.
+	///
+	/// ## Returns
+	/// The ECC similarity coefficient in the range [-1, 1].
 	/// ## See also
 	/// findTransformECC
 	///
@@ -330,13 +350,33 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Computes the Enhanced Correlation Coefficient (ECC) value between two images
+	///
+	/// The Enhanced Correlation Coefficient (ECC) is a normalized measure of similarity between two images [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08).
+	/// The result lies in the range [-1, 1], where 1 corresponds to perfect similarity (modulo affine shift and scale),
+	/// 0 indicates no correlation, and -1 indicates perfect negative correlation.
+	///
+	/// For single-channel images, the ECC is defined as:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cmathrm%7BECC%7D%28I%2C%20T%29%20%3D%20%5Cfrac%7B%5Csum%5F%7Bx%7D%20%28I%28x%29%20%2D%20%5Cmu%5FI%29%28T%28x%29%20%2D%20%5Cmu%5FT%29%7D%0A%7B%5Csqrt%7B%5Csum%5F%7Bx%7D%20%28I%28x%29%20%2D%20%5Cmu%5FI%29%5E2%7D%20%5Ccdot%20%5Csqrt%7B%5Csum%5F%7Bx%7D%20%28T%28x%29%20%2D%20%5Cmu%5FT%29%5E2%7D%7D%0A)
+	///
+	/// For multi-channel images (e.g., 3-channel RGB), the formula generalizes to:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cmathrm%7BECC%7D%28I%2C%20T%29%20%3D%0A%5Cfrac%7B%5Csum%5F%7Bx%7D%20%5Csum%5F%7Bc%3D1%7D%5E%7BC%7D%20%28I%5Fc%28x%29%20%2D%20%5Cmu%5F%7BI%5Fc%7D%29%28T%5Fc%28x%29%20%2D%20%5Cmu%5F%7BT%5Fc%7D%29%7D%0A%7B%5Csqrt%7B%5Csum%5F%7Bx%7D%20%5Csum%5F%7Bc%3D1%7D%5E%7BC%7D%20%28I%5Fc%28x%29%20%2D%20%5Cmu%5F%7BI%5Fc%7D%29%5E2%7D%20%5Ccdot%0A%20%5Csqrt%7B%5Csum%5F%7Bx%7D%20%5Csum%5F%7Bc%3D1%7D%5E%7BC%7D%20%28T%5Fc%28x%29%20%2D%20%5Cmu%5F%7BT%5Fc%7D%29%5E2%7D%7D%0A)
+	///
+	/// Where:
+	/// - ![inline formula](https://latex.codecogs.com/png.latex?I%5Fc%28x%29%2C%20T%5Fc%28x%29) are the values of channel ![inline formula](https://latex.codecogs.com/png.latex?c) at spatial location ![inline formula](https://latex.codecogs.com/png.latex?x),
+	/// - ![inline formula](https://latex.codecogs.com/png.latex?%5Cmu%5F%7BI%5Fc%7D%2C%20%5Cmu%5F%7BT%5Fc%7D) are the mean values of channel ![inline formula](https://latex.codecogs.com/png.latex?c) over the masked region (if provided),
+	/// - ![inline formula](https://latex.codecogs.com/png.latex?C) is the number of channels (only 1 and 3 are currently supported),
+	/// - The sums run over all pixels ![inline formula](https://latex.codecogs.com/png.latex?x) in the image domain (optionally restricted by mask).
 	///
 	/// ## Parameters
-	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
-	/// * inputImage: single-channel input image to be warped to provide an image similar to
-	///  templateImage, same type as templateImage.
-	/// * inputMask: An optional mask to indicate valid values of inputImage.
+	/// * templateImage: Input template image; must have either 1 or 3 channels and be of type CV_8U, CV_16U, CV_32F, or CV_64F.
+	/// * inputImage: Input image to be compared with the template; must have the same type and number of channels as templateImage.
+	/// * inputMask: Optional single-channel mask to specify the valid region of interest in inputImage and templateImage.
+	///
+	/// ## Returns
+	/// The ECC similarity coefficient in the range [-1, 1].
 	/// ## See also
 	/// findTransformECC
 	///
@@ -493,11 +533,120 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08)
+	/// using validity masks for both the template and the input images.
+	///
+	/// This function extends findTransformECC() by adding a mask for the template image.
+	/// The Enhanced Correlation Coefficient is evaluated only over pixels that are valid in both images:
+	/// on each iteration inputMask is warped into the template frame and combined with templateMask, and
+	/// only the intersection of these masks contributes to the objective function.
 	///
 	/// ## Parameters
-	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
-	/// * inputImage: single-channel input image which should be warped with the final warpMatrix in
+	/// * templateImage: 1 or 3 channel template image; CV_8U, CV_16U, CV_32F, CV_64F type.
+	/// * inputImage: input image which should be warped with the final warpMatrix in
+	/// order to provide an image similar to templateImage, same type as templateImage.
+	/// * templateMask: single-channel 8-bit mask for templateImage indicating valid pixels
+	/// to be used in the alignment. Must have the same size as templateImage.
+	/// * inputMask: single-channel 8-bit mask for inputImage indicating valid pixels
+	/// before warping. Must have the same size as inputImage.
+	/// * warpMatrix: floating-point ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) or ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mapping matrix (warp).
+	/// * motionType: parameter, specifying the type of motion:
+	///  *   **MOTION_TRANSLATION** sets a translational motion model; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) with
+	///      the first ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%202) part being the unity matrix and the rest two parameters being
+	///      estimated.
+	///  *   **MOTION_EUCLIDEAN** sets a Euclidean (rigid) transformation as motion model; three
+	///      parameters are estimated; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
+	///  *   **MOTION_AFFINE** sets an affine motion model (DEFAULT); six parameters are estimated;
+	///      warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
+	///  *   **MOTION_HOMOGRAPHY** sets a homography as a motion model; eight parameters are
+	///      estimated; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203).
+	/// * criteria: parameter, specifying the termination criteria of the ECC algorithm;
+	/// criteria.epsilon defines the threshold of the increment in the correlation coefficient between two
+	/// iterations (a negative criteria.epsilon makes criteria.maxcount the only termination criterion).
+	/// Default values are shown in the declaration above.
+	/// * gaussFiltSize: size of the Gaussian blur filter used for smoothing images and masks
+	/// before computing the alignment (DEFAULT: 5).
+	/// ## See also
+	/// findTransformECC, computeECC, estimateAffine2D, estimateAffinePartial2D, findHomography
+	///
+	/// ## Note
+	/// This alternative version of [find_transform_ecc_with_mask] function uses the following default values for its arguments:
+	/// * motion_type: MOTION_AFFINE
+	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,50,1e-6)
+	/// * gauss_filt_size: 5
+	#[inline]
+	pub fn find_transform_ecc_with_mask_def(template_image: &impl ToInputArray, input_image: &impl ToInputArray, template_mask: &impl ToInputArray, input_mask: &impl ToInputArray, warp_matrix: &mut impl ToInputOutputArray) -> Result<f64> {
+		input_array_arg!(template_image);
+		input_array_arg!(input_image);
+		input_array_arg!(template_mask);
+		input_array_arg!(input_mask);
+		input_output_array_arg!(warp_matrix);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findTransformECCWithMask_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), template_mask.as_raw__InputArray(), input_mask.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08)
+	/// using validity masks for both the template and the input images.
+	///
+	/// This function extends findTransformECC() by adding a mask for the template image.
+	/// The Enhanced Correlation Coefficient is evaluated only over pixels that are valid in both images:
+	/// on each iteration inputMask is warped into the template frame and combined with templateMask, and
+	/// only the intersection of these masks contributes to the objective function.
+	///
+	/// ## Parameters
+	/// * templateImage: 1 or 3 channel template image; CV_8U, CV_16U, CV_32F, CV_64F type.
+	/// * inputImage: input image which should be warped with the final warpMatrix in
+	/// order to provide an image similar to templateImage, same type as templateImage.
+	/// * templateMask: single-channel 8-bit mask for templateImage indicating valid pixels
+	/// to be used in the alignment. Must have the same size as templateImage.
+	/// * inputMask: single-channel 8-bit mask for inputImage indicating valid pixels
+	/// before warping. Must have the same size as inputImage.
+	/// * warpMatrix: floating-point ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) or ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mapping matrix (warp).
+	/// * motionType: parameter, specifying the type of motion:
+	///  *   **MOTION_TRANSLATION** sets a translational motion model; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) with
+	///      the first ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%202) part being the unity matrix and the rest two parameters being
+	///      estimated.
+	///  *   **MOTION_EUCLIDEAN** sets a Euclidean (rigid) transformation as motion model; three
+	///      parameters are estimated; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
+	///  *   **MOTION_AFFINE** sets an affine motion model (DEFAULT); six parameters are estimated;
+	///      warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
+	///  *   **MOTION_HOMOGRAPHY** sets a homography as a motion model; eight parameters are
+	///      estimated; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203).
+	/// * criteria: parameter, specifying the termination criteria of the ECC algorithm;
+	/// criteria.epsilon defines the threshold of the increment in the correlation coefficient between two
+	/// iterations (a negative criteria.epsilon makes criteria.maxcount the only termination criterion).
+	/// Default values are shown in the declaration above.
+	/// * gaussFiltSize: size of the Gaussian blur filter used for smoothing images and masks
+	/// before computing the alignment (DEFAULT: 5).
+	/// ## See also
+	/// findTransformECC, computeECC, estimateAffine2D, estimateAffinePartial2D, findHomography
+	///
+	/// ## C++ default parameters
+	/// * motion_type: MOTION_AFFINE
+	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,50,1e-6)
+	/// * gauss_filt_size: 5
+	#[inline]
+	pub fn find_transform_ecc_with_mask(template_image: &impl ToInputArray, input_image: &impl ToInputArray, template_mask: &impl ToInputArray, input_mask: &impl ToInputArray, warp_matrix: &mut impl ToInputOutputArray, motion_type: i32, criteria: core::TermCriteria, gauss_filt_size: i32) -> Result<f64> {
+		input_array_arg!(template_image);
+		input_array_arg!(input_image);
+		input_array_arg!(template_mask);
+		input_array_arg!(input_mask);
+		input_output_array_arg!(warp_matrix);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findTransformECCWithMask_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_int(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), template_mask.as_raw__InputArray(), input_mask.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, &criteria, gauss_filt_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08) .
+	///
+	/// ## Parameters
+	/// * templateImage: 1 or 3 channel template image; CV_8U, CV_16U, CV_32F, CV_64F type.
+	/// * inputImage: input image which should be warped with the final warpMatrix in
 	/// order to provide an image similar to templateImage, same type as templateImage.
 	/// * warpMatrix: floating-point ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) or ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mapping matrix (warp).
 	/// * motionType: parameter, specifying the type of motion:
@@ -514,11 +663,11 @@ pub mod video {
 	/// criteria.epsilon defines the threshold of the increment in the correlation coefficient between two
 	/// iterations (a negative criteria.epsilon makes criteria.maxcount the only termination criterion).
 	/// Default values are shown in the declaration above.
-	/// * inputMask: An optional mask to indicate valid values of inputImage.
+	/// * inputMask: An optional single channel mask to indicate valid values of inputImage.
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -564,11 +713,11 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
-	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
-	/// * inputImage: single-channel input image which should be warped with the final warpMatrix in
+	/// * templateImage: 1 or 3 channel template image; CV_8U, CV_16U, CV_32F, CV_64F type.
+	/// * inputImage: input image which should be warped with the final warpMatrix in
 	/// order to provide an image similar to templateImage, same type as templateImage.
 	/// * warpMatrix: floating-point ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) or ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mapping matrix (warp).
 	/// * motionType: parameter, specifying the type of motion:
@@ -585,11 +734,11 @@ pub mod video {
 	/// criteria.epsilon defines the threshold of the increment in the correlation coefficient between two
 	/// iterations (a negative criteria.epsilon makes criteria.maxcount the only termination criterion).
 	/// Default values are shown in the declaration above.
-	/// * inputMask: An optional mask to indicate valid values of inputImage.
+	/// * inputMask: An optional single channel mask to indicate valid values of inputImage.
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -634,11 +783,11 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
-	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
-	/// * inputImage: single-channel input image which should be warped with the final warpMatrix in
+	/// * templateImage: 1 or 3 channel template image; CV_8U, CV_16U, CV_32F, CV_64F type.
+	/// * inputImage: input image which should be warped with the final warpMatrix in
 	/// order to provide an image similar to templateImage, same type as templateImage.
 	/// * warpMatrix: floating-point ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) or ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mapping matrix (warp).
 	/// * motionType: parameter, specifying the type of motion:
@@ -655,11 +804,11 @@ pub mod video {
 	/// criteria.epsilon defines the threshold of the increment in the correlation coefficient between two
 	/// iterations (a negative criteria.epsilon makes criteria.maxcount the only termination criterion).
 	/// Default values are shown in the declaration above.
-	/// * inputMask: An optional mask to indicate valid values of inputImage.
+	/// * inputMask: An optional single channel mask to indicate valid values of inputImage.
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -858,6 +1007,65 @@ pub mod video {
 			Ok(ret)
 		}
 
+		/// Computes a foreground mask with known foreground mask input.
+		///
+		/// ## Parameters
+		/// * image: Next video frame. Floating point frame will be used without scaling and should be in range ![inline formula](https://latex.codecogs.com/png.latex?%5B0%2C255%5D).
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * knownForegroundMask: The mask for inputting already known foreground, allows model to ignore pixels.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		///
+		/// Note: This method has a default virtual implementation that throws a "not impemented" error.
+		/// Foreground masking may not be supported by all background subtractors.
+		///
+		/// ## C++ default parameters
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BackgroundSubtractor_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractor(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Computes a foreground mask with known foreground mask input.
+		///
+		/// ## Parameters
+		/// * image: Next video frame. Floating point frame will be used without scaling and should be in range ![inline formula](https://latex.codecogs.com/png.latex?%5B0%2C255%5D).
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * knownForegroundMask: The mask for inputting already known foreground, allows model to ignore pixels.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		///
+		/// Note: This method has a default virtual implementation that throws a "not impemented" error.
+		/// Foreground masking may not be supported by all background subtractors.
+		///
+		/// ## Note
+		/// This alternative version of [BackgroundSubtractorTrait::apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BackgroundSubtractor_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractor(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 	}
 
 	impl std::fmt::Debug for BackgroundSubtractor {
@@ -896,7 +1104,7 @@ pub mod video {
 
 	/// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
 	///
-	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	/// Very efficient if number of foreground pixels is low.
 	pub struct BackgroundSubtractorKNN {
 		ptr: *mut c_void,
@@ -1022,7 +1230,7 @@ pub mod video {
 
 		/// Sets the number of data samples in the background model.
 		///
-		/// The model needs to be reinitalized to reserve memory.
+		/// The model needs to be reinitialized to reserve memory.
 		#[inline]
 		fn set_n_samples(&mut self, _n_n: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1128,8 +1336,8 @@ pub mod video {
 
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 	///
-	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
-	/// and [Zivkovic2006](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
+	/// and [Zivkovic2006](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	pub struct BackgroundSubtractorMOG2 {
 		ptr: *mut c_void,
 	}
@@ -1313,7 +1521,7 @@ pub mod video {
 
 		/// Sets the number of gaussian components in the background model.
 		///
-		/// The model needs to be reinitalized to reserve memory.
+		/// The model needs to be reinitialized to reserve memory.
 		#[inline]
 		fn set_n_mixtures(&mut self, nmixtures: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1468,6 +1676,57 @@ pub mod video {
 			Ok(ret)
 		}
 
+		/// Computes a foreground mask and skips known foreground in evaluation.
+		///
+		/// ## Parameters
+		/// * image: Next video frame. Floating point frame will be used without scaling and should be in range ![inline formula](https://latex.codecogs.com/png.latex?%5B0%2C255%5D).
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * knownForegroundMask: The mask for inputting already known foreground, allows model to ignore pixels.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		/// ## C++ default parameters
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BackgroundSubtractorMOG2_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorMOG2(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Computes a foreground mask and skips known foreground in evaluation.
+		///
+		/// ## Parameters
+		/// * image: Next video frame. Floating point frame will be used without scaling and should be in range ![inline formula](https://latex.codecogs.com/png.latex?%5B0%2C255%5D).
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * knownForegroundMask: The mask for inputting already known foreground, allows model to ignore pixels.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		///
+		/// ## Note
+		/// This alternative version of [BackgroundSubtractorMOG2Trait::apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def_1(&mut self, image: &impl ToInputArray, known_foreground_mask: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(known_foreground_mask);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BackgroundSubtractorMOG2_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorMOG2(), image.as_raw__InputArray(), known_foreground_mask.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 	}
 
 	impl std::fmt::Debug for BackgroundSubtractorMOG2 {
@@ -1515,7 +1774,7 @@ pub mod video {
 	/// DIS optical flow algorithm.
 	///
 	/// This class implements the Dense Inverse Search (DIS) optical flow algorithm. More
-	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
+	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
 	/// parameters to provide reasonable trade-off between speed and quality. However, even the slowest preset is
 	/// still relatively fast, use DeepFlow if you need better quality and don't care about speed.
 	///
@@ -1588,6 +1847,16 @@ pub mod video {
 		fn get_finest_scale(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_getFinestScale_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Gets the coarsest scale
+		#[inline]
+		fn get_coarsest_scale(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DISOpticalFlow_getCoarsestScale_const(self.as_raw_DISOpticalFlow(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1738,6 +2007,19 @@ pub mod video {
 		fn set_finest_scale(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_setFinestScale_int(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets the coarsest scale
+		/// ## Parameters
+		/// * val: Coarsest level of the Gaussian pyramid on which the flow is computed.
+		/// If set to -1, the auto-computed coarsest scale will be used.
+		#[inline]
+		fn set_coarsest_scale(&mut self, val: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DISOpticalFlow_setCoarsestScale_int(self.as_raw_mut_DISOpticalFlow(), val, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2268,7 +2550,7 @@ pub mod video {
 	/// Kalman filter class.
 	///
 	/// The class implements a standard Kalman filter <http://en.wikipedia.org/wiki/Kalman_filter>,
-	/// [Welch95](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
+	/// [Welch95](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
 	/// an extended Kalman filter functionality.
 	///
 	/// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
@@ -3355,7 +3637,7 @@ pub mod video {
 
 	/// the GOTURN (Generic Object Tracking Using Regression Networks) tracker
 	///
-	/// GOTURN ([GOTURN](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
+	/// GOTURN ([GOTURN](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
 	/// GOTURN is much faster due to offline training without online fine-tuning nature.
 	/// GOTURN tracker addresses the problem of single target tracking: given a bounding box label of an object in the first frame of the video,
 	/// we track that object through the rest of the video. NOTE: Current method of GOTURN does not handle occlusions; however, it is fairly
@@ -3572,7 +3854,7 @@ pub mod video {
 	/// background.
 	///
 	/// Multiple Instance Learning avoids the drift problem for a robust tracking. The implementation is
-	/// based on [MIL](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_MIL) .
+	/// based on [MIL](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MIL) .
 	///
 	/// Original code can be found here <http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml>
 	pub struct TrackerMIL {
@@ -4254,7 +4536,7 @@ pub mod video {
 	/// where ![inline formula](https://latex.codecogs.com/png.latex?E%5FI%2CE%5FG%2CE%5FS) are color constancy, gradient constancy and smoothness terms
 	/// respectively. ![inline formula](https://latex.codecogs.com/png.latex?%5CPsi%28s%5E2%29%3D%5Csqrt%7Bs%5E2%2B%5Cepsilon%5E2%7D) is a robust penalizer to limit the
 	/// influence of outliers. A complete formulation and a description of the minimization
-	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Brox2004)
+	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Brox2004)
 	pub struct VariationalRefinement {
 		ptr: *mut c_void,
 	}

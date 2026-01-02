@@ -88,13 +88,13 @@ pub mod ximgproc {
 	pub const ARO_90_135: i32 = 2;
 	pub const ARO_CTR_HOR: i32 = 7;
 	pub const ARO_CTR_VER: i32 = 8;
-	/// Classic Niblack binarization. See [Niblack1985](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Niblack1985) .
+	/// Classic Niblack binarization. See [Niblack1985](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Niblack1985) .
 	pub const BINARIZATION_NIBLACK: i32 = 0;
-	/// NICK technique. See [Khurshid2009](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Khurshid2009) .
+	/// NICK technique. See [Khurshid2009](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Khurshid2009) .
 	pub const BINARIZATION_NICK: i32 = 3;
-	/// Sauvola's technique. See [Sauvola1997](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Sauvola1997) .
+	/// Sauvola's technique. See [Sauvola1997](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Sauvola1997) .
 	pub const BINARIZATION_SAUVOLA: i32 = 1;
-	/// Wolf's technique. See [Wolf2004](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Wolf2004) .
+	/// Wolf's technique. See [Wolf2004](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Wolf2004) .
 	pub const BINARIZATION_WOLF: i32 = 2;
 	pub const DTF_IC: i32 = 1;
 	pub const DTF_NC: i32 = 0;
@@ -212,13 +212,13 @@ pub mod ximgproc {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum LocalBinarizationMethods {
-		/// Classic Niblack binarization. See [Niblack1985](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Niblack1985) .
+		/// Classic Niblack binarization. See [Niblack1985](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Niblack1985) .
 		BINARIZATION_NIBLACK = 0,
-		/// Sauvola's technique. See [Sauvola1997](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Sauvola1997) .
+		/// Sauvola's technique. See [Sauvola1997](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Sauvola1997) .
 		BINARIZATION_SAUVOLA = 1,
-		/// Wolf's technique. See [Wolf2004](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Wolf2004) .
+		/// Wolf's technique. See [Wolf2004](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Wolf2004) .
 		BINARIZATION_WOLF = 2,
-		/// NICK technique. See [Khurshid2009](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Khurshid2009) .
+		/// NICK technique. See [Khurshid2009](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Khurshid2009) .
 		BINARIZATION_NICK = 3,
 	}
 
@@ -413,7 +413,7 @@ pub mod ximgproc {
 
 	/// Applies Paillou filter to an image.
 	///
-	/// For more details about this implementation, please see [paillou1997detecting](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_paillou1997detecting)
+	/// For more details about this implementation, please see [paillou1997detecting](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_paillou1997detecting)
 	///
 	/// ## Parameters
 	/// * op: Source CV_8U(S) or CV_16U(S), 1-channel or 3-channels image.
@@ -713,7 +713,7 @@ pub mod ximgproc {
 	}
 
 	/// Applies the bilateral texture filter to an image. It performs structure-preserving texture filter.
-	/// For more details about this filter see [Cho2014](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Cho2014).
+	/// For more details about this filter see [Cho2014](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Cho2014).
 	///
 	/// ## Parameters
 	/// * src: Source image whose depth is 8-bit UINT or 32-bit FLOAT
@@ -750,7 +750,7 @@ pub mod ximgproc {
 	}
 
 	/// Applies the bilateral texture filter to an image. It performs structure-preserving texture filter.
-	/// For more details about this filter see [Cho2014](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Cho2014).
+	/// For more details about this filter see [Cho2014](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Cho2014).
 	///
 	/// ## Parameters
 	/// * src: Source image whose depth is 8-bit UINT or 32-bit FLOAT
@@ -932,7 +932,7 @@ pub mod ximgproc {
 	/// * adjust_outliers: optional, specify perform outliers adjust operation or not, (Eq. 9) in the
 	/// original paper.
 	///
-	/// For more details about Adaptive Manifold Filter parameters, see the original article [Gastal12](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Gastal12) .
+	/// For more details about Adaptive Manifold Filter parameters, see the original article [Gastal12](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Gastal12) .
 	///
 	///
 	/// Note: Joint images with CV_8U and CV_16U depth converted to images with CV_32F depth and [0; 1]
@@ -963,7 +963,7 @@ pub mod ximgproc {
 	/// * adjust_outliers: optional, specify perform outliers adjust operation or not, (Eq. 9) in the
 	/// original paper.
 	///
-	/// For more details about Adaptive Manifold Filter parameters, see the original article [Gastal12](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Gastal12) .
+	/// For more details about Adaptive Manifold Filter parameters, see the original article [Gastal12](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Gastal12) .
 	///
 	///
 	/// Note: Joint images with CV_8U and CV_16U depth converted to images with CV_32F depth and [0; 1]
@@ -1038,7 +1038,7 @@ pub mod ximgproc {
 	///
 	/// * numIters: optional number of iterations used for filtering, 3 is quite enough.
 	///
-	/// For more details about Domain Transform filter parameters, see the original article [Gastal11](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Gastal11) and
+	/// For more details about Domain Transform filter parameters, see the original article [Gastal11](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Gastal11) and
 	/// [Domain Transform filter homepage](http://www.inf.ufrgs.br/~eslgastal/DomainTransform/).
 	///
 	/// ## Note
@@ -1073,7 +1073,7 @@ pub mod ximgproc {
 	///
 	/// * numIters: optional number of iterations used for filtering, 3 is quite enough.
 	///
-	/// For more details about Domain Transform filter parameters, see the original article [Gastal11](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Gastal11) and
+	/// For more details about Domain Transform filter parameters, see the original article [Gastal11](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Gastal11) and
 	/// [Domain Transform filter homepage](http://www.inf.ufrgs.br/~eslgastal/DomainTransform/).
 	///
 	/// ## C++ default parameters
@@ -1241,7 +1241,7 @@ pub mod ximgproc {
 	///
 	/// * max_tol: convergence tolerance used for solver.
 	///
-	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BarronPoole2016).
+	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BarronPoole2016).
 	///
 	/// ## Note
 	/// This alternative version of [create_fast_bilateral_solver_filter] function uses the following default values for its arguments:
@@ -1276,7 +1276,7 @@ pub mod ximgproc {
 	///
 	/// * max_tol: convergence tolerance used for solver.
 	///
-	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BarronPoole2016).
+	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BarronPoole2016).
 	///
 	/// ## C++ default parameters
 	/// * lambda: 128.0
@@ -1307,7 +1307,7 @@ pub mod ximgproc {
 	///
 	/// * num_iter: number of iterations used for filtering, 3 is usually enough.
 	///
-	/// For more details about Fast Global Smoother parameters, see the original paper [Min2014](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Min2014). However, please note that
+	/// For more details about Fast Global Smoother parameters, see the original paper [Min2014](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Min2014). However, please note that
 	/// there are several differences. Lambda attenuation described in the paper is implemented a bit differently so do not
 	/// expect the results to be identical to those from the paper; sigma_color values from the paper should be multiplied by 255.0 to
 	/// achieve the same effect. Also, in case of image filtering where source and guide image are the same, authors
@@ -1343,7 +1343,7 @@ pub mod ximgproc {
 	///
 	/// * num_iter: number of iterations used for filtering, 3 is usually enough.
 	///
-	/// For more details about Fast Global Smoother parameters, see the original paper [Min2014](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Min2014). However, please note that
+	/// For more details about Fast Global Smoother parameters, see the original paper [Min2014](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Min2014). However, please note that
 	/// there are several differences. Lambda attenuation described in the paper is implemented a bit differently so do not
 	/// expect the results to be identical to those from the paper; sigma_color values from the paper should be multiplied by 255.0 to
 	/// achieve the same effect. Also, in case of image filtering where source and guide image are the same, authors
@@ -1437,7 +1437,7 @@ pub mod ximgproc {
 	/// * scale: subsample factor of Fast Guided Filter, use a scale less than 1 to speeds up computation
 	/// with almost no visible degradation. (e.g. scale==0.5 shrinks the image by 2x inside the filter)
 	///
-	/// For more details about (Fast) Guided Filter parameters, see the original articles [Kaiming10](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Kaiming10) [Kaiming15](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Kaiming15) .
+	/// For more details about (Fast) Guided Filter parameters, see the original articles [Kaiming10](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Kaiming10) [Kaiming15](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Kaiming15) .
 	///
 	/// ## Note
 	/// This alternative version of [create_guided_filter] function uses the following default values for its arguments:
@@ -1467,7 +1467,7 @@ pub mod ximgproc {
 	/// * scale: subsample factor of Fast Guided Filter, use a scale less than 1 to speeds up computation
 	/// with almost no visible degradation. (e.g. scale==0.5 shrinks the image by 2x inside the filter)
 	///
-	/// For more details about (Fast) Guided Filter parameters, see the original articles [Kaiming10](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Kaiming10) [Kaiming15](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Kaiming15) .
+	/// For more details about (Fast) Guided Filter parameters, see the original articles [Kaiming10](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Kaiming10) [Kaiming15](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Kaiming15) .
 	///
 	/// ## C++ default parameters
 	/// * scale: 1.0
@@ -1653,7 +1653,7 @@ pub mod ximgproc {
 	/// For enanched results it is recommended for color images to preprocess image with little gaussian blur
 	/// with a small 3 x 3 kernel and additional conversion into CieLAB color space.
 	///
-	/// ![image](https://docs.opencv.org/4.12.0/superpixels_lsc.png)
+	/// ![image](https://docs.opencv.org/4.13.0/superpixels_lsc.png)
 	///
 	/// ## Note
 	/// This alternative version of [create_superpixel_lsc] function uses the following default values for its arguments:
@@ -1683,7 +1683,7 @@ pub mod ximgproc {
 	/// For enanched results it is recommended for color images to preprocess image with little gaussian blur
 	/// with a small 3 x 3 kernel and additional conversion into CieLAB color space.
 	///
-	/// ![image](https://docs.opencv.org/4.12.0/superpixels_lsc.png)
+	/// ![image](https://docs.opencv.org/4.13.0/superpixels_lsc.png)
 	///
 	/// ## C++ default parameters
 	/// * region_size: 10
@@ -1727,7 +1727,7 @@ pub mod ximgproc {
 	/// recursively until the smaller block level. An example of initialization of 4 block levels is
 	/// illustrated in the following figure.
 	///
-	/// ![image](https://docs.opencv.org/4.12.0/superpixels_blocks.png)
+	/// ![image](https://docs.opencv.org/4.13.0/superpixels_blocks.png)
 	///
 	/// ## Note
 	/// This alternative version of [create_superpixel_seeds] function uses the following default values for its arguments:
@@ -1772,7 +1772,7 @@ pub mod ximgproc {
 	/// recursively until the smaller block level. An example of initialization of 4 block levels is
 	/// illustrated in the following figure.
 	///
-	/// ![image](https://docs.opencv.org/4.12.0/superpixels_blocks.png)
+	/// ![image](https://docs.opencv.org/4.13.0/superpixels_blocks.png)
 	///
 	/// ## C++ default parameters
 	/// * prior: 2
@@ -1804,7 +1804,7 @@ pub mod ximgproc {
 	/// preprocess image with little gaussian blur using a small 3 x 3 kernel and additional conversion into
 	/// CieLAB color space. An example of SLIC versus SLICO and MSLIC is ilustrated in the following picture.
 	///
-	/// ![image](https://docs.opencv.org/4.12.0/superpixels_slic.png)
+	/// ![image](https://docs.opencv.org/4.13.0/superpixels_slic.png)
 	///
 	/// ## Note
 	/// This alternative version of [create_superpixel_slic] function uses the following default values for its arguments:
@@ -1838,7 +1838,7 @@ pub mod ximgproc {
 	/// preprocess image with little gaussian blur using a small 3 x 3 kernel and additional conversion into
 	/// CieLAB color space. An example of SLIC versus SLICO and MSLIC is ilustrated in the following picture.
 	///
-	/// ![image](https://docs.opencv.org/4.12.0/superpixels_slic.png)
+	/// ![image](https://docs.opencv.org/4.13.0/superpixels_slic.png)
 	///
 	/// ## C++ default parameters
 	/// * algorithm: SLICO
@@ -1968,7 +1968,7 @@ pub mod ximgproc {
 	///
 	/// * max_tol: convergence tolerance used for solver.
 	///
-	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BarronPoole2016).
+	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BarronPoole2016).
 	///
 	///
 	/// Note: Confidence images with CV_8U depth are expected to in [0, 255] and CV_32F in [0, 1] range.
@@ -2018,7 +2018,7 @@ pub mod ximgproc {
 	///
 	/// * max_tol: convergence tolerance used for solver.
 	///
-	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BarronPoole2016).
+	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BarronPoole2016).
 	///
 	///
 	/// Note: Confidence images with CV_8U depth are expected to in [0, 255] and CV_32F in [0, 1] range.
@@ -2115,7 +2115,7 @@ pub mod ximgproc {
 	/// Finds ellipses fastly in an image using projective invariant pruning.
 	/// *
 	/// * The function detects ellipses in images using projective invariant pruning.
-	/// * For more details about this implementation, please see [jia2017fast](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_jia2017fast)
+	/// * For more details about this implementation, please see [jia2017fast](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_jia2017fast)
 	/// * Jia, Qi et al, (2017).
 	/// * A Fast Ellipse Detector using Projective Invariant Pruning. IEEE Transactions on Image Processing.
 	/// *
@@ -2145,7 +2145,7 @@ pub mod ximgproc {
 	/// Finds ellipses fastly in an image using projective invariant pruning.
 	/// *
 	/// * The function detects ellipses in images using projective invariant pruning.
-	/// * For more details about this implementation, please see [jia2017fast](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_jia2017fast)
+	/// * For more details about this implementation, please see [jia2017fast](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_jia2017fast)
 	/// * Jia, Qi et al, (2017).
 	/// * A Fast Ellipse Detector using Projective Invariant Pruning. IEEE Transactions on Image Processing.
 	/// *
@@ -2173,7 +2173,7 @@ pub mod ximgproc {
 
 	/// Fourier descriptors for planed closed curves
 	///
-	/// For more details about this implementation, please see [PersoonFu1977](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_PersoonFu1977)
+	/// For more details about this implementation, please see [PersoonFu1977](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_PersoonFu1977)
 	///
 	/// ## Parameters
 	/// * src: contour type vector<Point> , vector<Point2f>  or vector<Point2d>
@@ -2198,7 +2198,7 @@ pub mod ximgproc {
 
 	/// Fourier descriptors for planed closed curves
 	///
-	/// For more details about this implementation, please see [PersoonFu1977](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_PersoonFu1977)
+	/// For more details about this implementation, please see [PersoonFu1977](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_PersoonFu1977)
 	///
 	/// ## Parameters
 	/// * src: contour type vector<Point> , vector<Point2f>  or vector<Point2d>
@@ -2444,7 +2444,7 @@ pub mod ximgproc {
 	///
 	/// * kappa: parameter defining the increasing factor of the weight of the gradient data term.
 	///
-	/// For more details about L0 Smoother, see the original paper [xu2011image](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_xu2011image).
+	/// For more details about L0 Smoother, see the original paper [xu2011image](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_xu2011image).
 	///
 	/// ## Note
 	/// This alternative version of [l0_smooth] function uses the following default values for its arguments:
@@ -2472,7 +2472,7 @@ pub mod ximgproc {
 	///
 	/// * kappa: parameter defining the increasing factor of the weight of the gradient data term.
 	///
-	/// For more details about L0 Smoother, see the original paper [xu2011image](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_xu2011image).
+	/// For more details about L0 Smoother, see the original paper [xu2011image](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_xu2011image).
 	///
 	/// ## C++ default parameters
 	/// * lambda: 0.02
@@ -2945,7 +2945,7 @@ pub mod ximgproc {
 
 	/// Applies the rolling guidance filter to an image.
 	///
-	/// For more details, please see [zhang2014rolling](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_zhang2014rolling)
+	/// For more details, please see [zhang2014rolling](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_zhang2014rolling)
 	///
 	/// ## Parameters
 	/// * src: Source 8-bit or floating-point, 1-channel or 3-channel image.
@@ -2993,7 +2993,7 @@ pub mod ximgproc {
 
 	/// Applies the rolling guidance filter to an image.
 	///
-	/// For more details, please see [zhang2014rolling](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_zhang2014rolling)
+	/// For more details, please see [zhang2014rolling](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_zhang2014rolling)
 	///
 	/// ## Parameters
 	/// * src: Source 8-bit or floating-point, 1-channel or 3-channel image.
@@ -3295,7 +3295,7 @@ pub mod ximgproc {
 
 	/// Applies weighted median filter to an image.
 	///
-	/// For more details about this implementation, please see [zhang2014100](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_zhang2014100)+
+	/// For more details about this implementation, please see [zhang2014100](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_zhang2014100)+
 	///
 	/// ## Parameters
 	/// * joint: Joint 8-bit, 1-channel or 3-channel image.
@@ -3328,7 +3328,7 @@ pub mod ximgproc {
 
 	/// Applies weighted median filter to an image.
 	///
-	/// For more details about this implementation, please see [zhang2014100](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_zhang2014100)+
+	/// For more details about this implementation, please see [zhang2014100](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_zhang2014100)+
 	///
 	/// ## Parameters
 	/// * joint: Joint 8-bit, 1-channel or 3-channel image.
@@ -3361,7 +3361,7 @@ pub mod ximgproc {
 
 	/// Interface for Adaptive Manifold Filter realizations.
 	///
-	/// For more details about this filter see [Gastal12](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Gastal12) and References_.
+	/// For more details about this filter see [Gastal12](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Gastal12) and References_.
 	///
 	/// Below listed optional parameters which may be set up with Algorithm::set function.
 	/// *   member double sigma_s = 16.0
@@ -3664,7 +3664,7 @@ pub mod ximgproc {
 	unsafe impl Send for ContourFitting {}
 
 	impl ContourFitting {
-		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
 		///
 		/// ## Parameters
 		/// * ctr: number of Fourier descriptors equal to number of contour points after resampling.
@@ -3683,7 +3683,7 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 
-		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
 		///
 		/// ## Parameters
 		/// * ctr: number of Fourier descriptors equal to number of contour points after resampling.
@@ -3715,7 +3715,7 @@ pub mod ximgproc {
 	pub trait ContourFittingTrait: core::AlgorithmTrait + crate::ximgproc::ContourFittingTraitConst {
 		fn as_raw_mut_ContourFitting(&mut self) -> *mut c_void;
 
-		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
 		///
 		/// ## Parameters
 		/// * src: Contour defining first shape.
@@ -3739,7 +3739,7 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 
-		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
 		///
 		/// ## Parameters
 		/// * src: Contour defining first shape.
@@ -3764,7 +3764,7 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 
-		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
 		///
 		/// ## Parameters
 		/// * src: Contour defining first shape.
@@ -3787,7 +3787,7 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 
-		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
 		///
 		/// ## Parameters
 		/// * src: Contour defining first shape.
@@ -3893,7 +3893,7 @@ pub mod ximgproc {
 
 	/// Interface for realizations of Domain Transform filter.
 	///
-	/// For more details about this filter see [Gastal11](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Gastal11) .
+	/// For more details about this filter see [Gastal11](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Gastal11) .
 	pub struct DTFilter {
 		ptr: *mut c_void,
 	}
@@ -4318,7 +4318,7 @@ pub mod ximgproc {
 	boxed_ref! { DisparityWLSFilter, crate::ximgproc::DisparityWLSFilterTraitConst, as_raw_DisparityWLSFilter, crate::ximgproc::DisparityWLSFilterTrait, as_raw_mut_DisparityWLSFilter }
 
 	/// Sparse match interpolation algorithm based on modified locally-weighted affine
-	/// estimator from [Revaud2015](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Revaud2015) and Fast Global Smoother as post-processing filter.
+	/// estimator from [Revaud2015](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Revaud2015) and Fast Global Smoother as post-processing filter.
 	pub struct EdgeAwareInterpolator {
 		ptr: *mut c_void,
 	}
@@ -4543,7 +4543,7 @@ pub mod ximgproc {
 
 	boxed_ref! { EdgeAwareInterpolator, crate::ximgproc::EdgeAwareInterpolatorTraitConst, as_raw_EdgeAwareInterpolator, crate::ximgproc::EdgeAwareInterpolatorTrait, as_raw_mut_EdgeAwareInterpolator }
 
-	/// Class implementing EdgeBoxes algorithm from [ZitnickECCV14edgeBoxes](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_ZitnickECCV14edgeBoxes) :
+	/// Class implementing EdgeBoxes algorithm from [ZitnickECCV14edgeBoxes](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_ZitnickECCV14edgeBoxes) :
 	pub struct EdgeBoxes {
 		ptr: *mut c_void,
 	}
@@ -4885,7 +4885,7 @@ pub mod ximgproc {
 
 	boxed_ref! { EdgeBoxes, crate::ximgproc::EdgeBoxesTraitConst, as_raw_EdgeBoxes, crate::ximgproc::EdgeBoxesTrait, as_raw_mut_EdgeBoxes }
 
-	/// Class implementing the ED (EdgeDrawing) [topal2012edge](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_topal2012edge), EDLines [akinlar2011edlines](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_akinlar2011edlines), EDPF [akinlar2012edpf](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_akinlar2012edpf), EDCircles [akinlar2013edcircles](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_akinlar2013edcircles) and ColorED [akinlar201782](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_akinlar201782) algorithms.
+	/// Class implementing the ED (EdgeDrawing) [topal2012edge](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_topal2012edge), EDLines [akinlar2011edlines](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_akinlar2011edlines), EDPF [akinlar2012edpf](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_akinlar2012edpf), EDCircles [akinlar2013edcircles](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_akinlar2013edcircles) and ColorED [akinlar201782](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_akinlar201782) algorithms.
 	pub struct EdgeDrawing {
 		ptr: *mut c_void,
 	}
@@ -5137,7 +5137,7 @@ pub mod ximgproc {
 
 	/// Interface for implementations of Fast Bilateral Solver.
 	///
-	/// For more details about this solver see [BarronPoole2016](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_BarronPoole2016) .
+	/// For more details about this solver see [BarronPoole2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BarronPoole2016) .
 	pub struct FastBilateralSolverFilter {
 		ptr: *mut c_void,
 	}
@@ -5220,7 +5220,7 @@ pub mod ximgproc {
 
 	/// Interface for implementations of Fast Global Smoother filter.
 	///
-	/// For more details about this filter see [Min2014](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Min2014) and [Farbman2008](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Farbman2008) .
+	/// For more details about this filter see [Min2014](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Min2014) and [Farbman2008](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Farbman2008) .
 	pub struct FastGlobalSmootherFilter {
 		ptr: *mut c_void,
 	}
@@ -5328,7 +5328,7 @@ pub mod ximgproc {
 		///       This is the output of the default parameters of the algorithm on the above
 		///       shown image.
 		///
-		///       ![image](https://docs.opencv.org/4.12.0/corridor_fld.jpg)
+		///       ![image](https://docs.opencv.org/4.13.0/corridor_fld.jpg)
 		///
 		/// ## Parameters
 		/// * image: A grayscale (CV_8UC1) input image. If only a roi needs to be
@@ -5432,7 +5432,7 @@ pub mod ximgproc {
 
 	/// Interface for realizations of (Fast) Guided Filter.
 	///
-	/// For more details about this filter see [Kaiming10](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Kaiming10) [Kaiming15](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Kaiming15) .
+	/// For more details about this filter see [Kaiming10](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Kaiming10) [Kaiming15](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Kaiming15) .
 	pub struct GuidedFilter {
 		ptr: *mut c_void,
 	}
@@ -5619,7 +5619,7 @@ pub mod ximgproc {
 	boxed_ref! { RFFeatureGetter, crate::ximgproc::RFFeatureGetterTraitConst, as_raw_RFFeatureGetter, crate::ximgproc::RFFeatureGetterTrait, as_raw_mut_RFFeatureGetter }
 
 	/// Sparse match interpolation algorithm based on modified piecewise locally-weighted affine
-	/// estimator called Robust Interpolation method of Correspondences or RIC from [Hu2017](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Hu2017) and Variational
+	/// estimator called Robust Interpolation method of Correspondences or RIC from [Hu2017](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Hu2017) and Variational
 	/// and Fast Global Smoother as post-processing filter. The RICInterpolator is a extension of the EdgeAwareInterpolator.
 	/// Main concept of this extension is an piece-wise affine model based on over-segmentation via SLIC superpixel estimation.
 	/// The method contains an efficient propagation mechanism to estimate among the pieces-wise models.
@@ -5644,7 +5644,7 @@ pub mod ximgproc {
 
 		/// K is a number of nearest-neighbor matches considered, when fitting a locally affine
 		/// model for a superpixel segment. However, lower values would make the interpolation
-		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
+		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
 		/// ## See also
 		/// setK
 		#[inline]
@@ -5816,7 +5816,7 @@ pub mod ximgproc {
 
 		/// K is a number of nearest-neighbor matches considered, when fitting a locally affine
 		/// model for a superpixel segment. However, lower values would make the interpolation
-		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
+		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
 		///
 		/// ## C++ default parameters
 		/// * k: 32
@@ -5831,7 +5831,7 @@ pub mod ximgproc {
 
 		/// K is a number of nearest-neighbor matches considered, when fitting a locally affine
 		/// model for a superpixel segment. However, lower values would make the interpolation
-		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
+		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
 		///
 		/// ## Note
 		/// This alternative version of [RICInterpolatorTrait::set_k] function uses the following default values for its arguments:
@@ -6256,7 +6256,7 @@ pub mod ximgproc {
 	/// Applies Ridge Detection Filter to an input image.
 	/// Implements Ridge detection similar to the one in [Mathematica](http://reference.wolfram.com/language/ref/RidgeFilter.html)
 	/// using the eigen values from the Hessian Matrix of the input image using Sobel Derivatives.
-	/// Additional refinement can be done using Skeletonization and Binarization. Adapted from [segleafvein](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_segleafvein) and [M_RF](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_M_RF)
+	/// Additional refinement can be done using Skeletonization and Binarization. Adapted from [segleafvein](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_segleafvein) and [M_RF](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_M_RF)
 	pub struct RidgeDetectionFilter {
 		ptr: *mut c_void,
 	}
@@ -6398,7 +6398,7 @@ pub mod ximgproc {
 	boxed_ref! { RidgeDetectionFilter, crate::ximgproc::RidgeDetectionFilterTraitConst, as_raw_RidgeDetectionFilter, crate::ximgproc::RidgeDetectionFilterTrait, as_raw_mut_RidgeDetectionFilter }
 
 	/// Class implementing the F-DBSCAN (Accelerated superpixel image segmentation with a parallelized DBSCAN algorithm) superpixels
-	/// algorithm by Loke SC, et al. [loke2021accelerated](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_loke2021accelerated) for original paper.
+	/// algorithm by Loke SC, et al. [loke2021accelerated](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_loke2021accelerated) for original paper.
 	///
 	/// The algorithm uses a parallelised DBSCAN cluster search that is resistant to noise, competitive in segmentation quality, and faster than
 	/// existing superpixel segmentation methods. When tested on the Berkeley Segmentation Dataset, the average processing speed is 175 frames/s
@@ -6642,7 +6642,7 @@ pub mod ximgproc {
 
 	boxed_ref! { SparseMatchInterpolator, crate::ximgproc::SparseMatchInterpolatorTraitConst, as_raw_SparseMatchInterpolator, crate::ximgproc::SparseMatchInterpolatorTrait, as_raw_mut_SparseMatchInterpolator }
 
-	/// Class implementing edge detection algorithm from [Dollar2013](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Dollar2013) :
+	/// Class implementing edge detection algorithm from [Dollar2013](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Dollar2013) :
 	pub struct StructuredEdgeDetection {
 		ptr: *mut c_void,
 	}
@@ -6794,7 +6794,7 @@ pub mod ximgproc {
 	boxed_ref! { StructuredEdgeDetection, crate::ximgproc::StructuredEdgeDetectionTraitConst, as_raw_StructuredEdgeDetection, crate::ximgproc::StructuredEdgeDetectionTrait, as_raw_mut_StructuredEdgeDetection }
 
 	/// Class implementing the LSC (Linear Spectral Clustering) superpixels
-	/// algorithm described in [LiCVPR2015LSC](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_LiCVPR2015LSC).
+	/// algorithm described in [LiCVPR2015LSC](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LiCVPR2015LSC).
 	///
 	/// LSC (Linear Spectral Clustering) produces compact and uniform superpixels with low
 	/// computational costs. Basically, a normalized cuts formulation of the superpixel
@@ -7031,7 +7031,7 @@ pub mod ximgproc {
 	boxed_ref! { SuperpixelLSC, crate::ximgproc::SuperpixelLSCTraitConst, as_raw_SuperpixelLSC, crate::ximgproc::SuperpixelLSCTrait, as_raw_mut_SuperpixelLSC }
 
 	/// Class implementing the SEEDS (Superpixels Extracted via Energy-Driven Sampling) superpixels
-	/// algorithm described in [VBRV14](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_VBRV14) .
+	/// algorithm described in [VBRV14](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_VBRV14) .
 	///
 	/// The algorithm uses an efficient hill-climbing algorithm to optimize the superpixels' energy
 	/// function that is based on color histograms and a boundary term, which is optional. The energy
@@ -7098,7 +7098,7 @@ pub mod ximgproc {
 		/// from large to smaller size, finalizing with proposing pixel updates. An illustrative example
 		/// can be seen below.
 		///
-		/// ![image](https://docs.opencv.org/4.12.0/superpixels_blocks2.png)
+		/// ![image](https://docs.opencv.org/4.13.0/superpixels_blocks2.png)
 		///
 		/// ## C++ default parameters
 		/// * num_iterations: 4
@@ -7133,7 +7133,7 @@ pub mod ximgproc {
 		/// from large to smaller size, finalizing with proposing pixel updates. An illustrative example
 		/// can be seen below.
 		///
-		/// ![image](https://docs.opencv.org/4.12.0/superpixels_blocks2.png)
+		/// ![image](https://docs.opencv.org/4.13.0/superpixels_blocks2.png)
 		///
 		/// ## Note
 		/// This alternative version of [SuperpixelSEEDSTrait::iterate] function uses the following default values for its arguments:
@@ -7194,7 +7194,7 @@ pub mod ximgproc {
 		///        parameters and set them to the user convenience. In the console the frame-rate of the
 		///        algorithm is indicated.
 		///
-		/// ![image](https://docs.opencv.org/4.12.0/superpixels_demo.png)
+		/// ![image](https://docs.opencv.org/4.13.0/superpixels_demo.png)
 		///
 		/// ## C++ default parameters
 		/// * thick_line: false
@@ -7234,7 +7234,7 @@ pub mod ximgproc {
 		///        parameters and set them to the user convenience. In the console the frame-rate of the
 		///        algorithm is indicated.
 		///
-		/// ![image](https://docs.opencv.org/4.12.0/superpixels_demo.png)
+		/// ![image](https://docs.opencv.org/4.13.0/superpixels_demo.png)
 		///
 		/// ## Note
 		/// This alternative version of [SuperpixelSEEDSTrait::get_label_contour_mask] function uses the following default values for its arguments:
@@ -7282,15 +7282,15 @@ pub mod ximgproc {
 	boxed_ref! { SuperpixelSEEDS, crate::ximgproc::SuperpixelSEEDSTraitConst, as_raw_SuperpixelSEEDS, crate::ximgproc::SuperpixelSEEDSTrait, as_raw_mut_SuperpixelSEEDS }
 
 	/// Class implementing the SLIC (Simple Linear Iterative Clustering) superpixels
-	/// algorithm described in [Achanta2012](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Achanta2012).
+	/// algorithm described in [Achanta2012](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Achanta2012).
 	///
 	/// SLIC (Simple Linear Iterative Clustering) clusters pixels using pixel channels and image plane space
 	/// to efficiently generate compact, nearly uniform superpixels. The simplicity of approach makes it
 	/// extremely easy to use a lone parameter specifies the number of superpixels and the efficiency of
 	/// the algorithm makes it very practical.
 	/// Several optimizations are available for SLIC class:
-	/// SLICO stands for "Zero parameter SLIC" and it is an optimization of baseline SLIC described in [Achanta2012](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Achanta2012).
-	/// MSLIC stands for "Manifold SLIC" and it is an optimization of baseline SLIC described in [Liu_2017_IEEE](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_Liu_2017_IEEE).
+	/// SLICO stands for "Zero parameter SLIC" and it is an optimization of baseline SLIC described in [Achanta2012](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Achanta2012).
+	/// MSLIC stands for "Manifold SLIC" and it is an optimization of baseline SLIC described in [Liu_2017_IEEE](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Liu_2017_IEEE).
 	pub struct SuperpixelSLIC {
 		ptr: *mut c_void,
 	}
@@ -7521,7 +7521,7 @@ pub mod ximgproc {
 	boxed_ref! { SuperpixelSLIC, crate::ximgproc::SuperpixelSLICTraitConst, as_raw_SuperpixelSLIC, crate::ximgproc::SuperpixelSLICTrait, as_raw_mut_SuperpixelSLIC }
 
 	/// Graph Based Segmentation Algorithm.
-	/// The class implements the algorithm described in [PFF2004](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_PFF2004) .
+	/// The class implements the algorithm described in [PFF2004](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_PFF2004) .
 	pub struct GraphSegmentation {
 		ptr: *mut c_void,
 	}
@@ -7649,7 +7649,7 @@ pub mod ximgproc {
 	boxed_ref! { GraphSegmentation, crate::ximgproc::GraphSegmentationTraitConst, as_raw_GraphSegmentation, crate::ximgproc::GraphSegmentationTrait, as_raw_mut_GraphSegmentation }
 
 	/// Selective search segmentation algorithm
-	/// The class implements the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class implements the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentation {
 		ptr: *mut c_void,
 	}
@@ -7688,7 +7688,7 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 
-		/// Initialize the class with the 'Single stragegy' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// Initialize the class with the 'Single stragegy' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 		/// ## Parameters
 		/// * k: The k parameter for the graph segmentation
 		/// * sigma: The sigma parameter for the graph segmentation
@@ -7705,7 +7705,7 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 
-		/// Initialize the class with the 'Single stragegy' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// Initialize the class with the 'Single stragegy' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 		/// ## Parameters
 		/// * k: The k parameter for the graph segmentation
 		/// * sigma: The sigma parameter for the graph segmentation
@@ -7723,7 +7723,7 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 
-		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 		/// ## Parameters
 		/// * base_k: The k parameter for the first graph segmentation
 		/// * inc_k: The increment of the k parameter for all graph segmentations
@@ -7742,7 +7742,7 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 
-		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 		/// ## Parameters
 		/// * base_k: The k parameter for the first graph segmentation
 		/// * inc_k: The increment of the k parameter for all graph segmentations
@@ -7762,7 +7762,7 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 
-		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 		/// ## Parameters
 		/// * base_k: The k parameter for the first graph segmentation
 		/// * inc_k: The increment of the k parameter for all graph segmentations
@@ -7781,7 +7781,7 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 
-		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 		/// ## Parameters
 		/// * base_k: The k parameter for the first graph segmentation
 		/// * inc_k: The increment of the k parameter for all graph segmentations
@@ -7913,7 +7913,7 @@ pub mod ximgproc {
 	boxed_ref! { SelectiveSearchSegmentation, crate::ximgproc::SelectiveSearchSegmentationTraitConst, as_raw_SelectiveSearchSegmentation, crate::ximgproc::SelectiveSearchSegmentationTrait, as_raw_mut_SelectiveSearchSegmentation }
 
 	/// Strategie for the selective search segmentation algorithm
-	/// The class implements a generic stragery for the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class implements a generic stragery for the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategy {
 		ptr: *mut c_void,
 	}
@@ -8051,7 +8051,7 @@ pub mod ximgproc {
 	boxed_ref! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst, as_raw_SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyTrait, as_raw_mut_SelectiveSearchSegmentationStrategy }
 
 	/// Color-based strategy for the selective search segmentation algorithm
-	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategyColor {
 		ptr: *mut c_void,
 	}
@@ -8122,7 +8122,7 @@ pub mod ximgproc {
 	boxed_ref! { SelectiveSearchSegmentationStrategyColor, crate::ximgproc::SelectiveSearchSegmentationStrategyColorTraitConst, as_raw_SelectiveSearchSegmentationStrategyColor, crate::ximgproc::SelectiveSearchSegmentationStrategyColorTrait, as_raw_mut_SelectiveSearchSegmentationStrategyColor }
 
 	/// Fill-based strategy for the selective search segmentation algorithm
-	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategyFill {
 		ptr: *mut c_void,
 	}
@@ -8286,7 +8286,7 @@ pub mod ximgproc {
 	boxed_ref! { SelectiveSearchSegmentationStrategyMultiple, crate::ximgproc::SelectiveSearchSegmentationStrategyMultipleTraitConst, as_raw_SelectiveSearchSegmentationStrategyMultiple, crate::ximgproc::SelectiveSearchSegmentationStrategyMultipleTrait, as_raw_mut_SelectiveSearchSegmentationStrategyMultiple }
 
 	/// Size-based strategy for the selective search segmentation algorithm
-	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategySize {
 		ptr: *mut c_void,
 	}
@@ -8357,7 +8357,7 @@ pub mod ximgproc {
 	boxed_ref! { SelectiveSearchSegmentationStrategySize, crate::ximgproc::SelectiveSearchSegmentationStrategySizeTraitConst, as_raw_SelectiveSearchSegmentationStrategySize, crate::ximgproc::SelectiveSearchSegmentationStrategySizeTrait, as_raw_mut_SelectiveSearchSegmentationStrategySize }
 
 	/// Texture-based strategy for the selective search segmentation algorithm
-	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.12.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategyTexture {
 		ptr: *mut c_void,
 	}

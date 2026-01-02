@@ -9,9 +9,10 @@ pub mod imgcodecs {
 		pub use super::{AnimationTrait, AnimationTraitConst, ImageCollectionTrait, ImageCollectionTraitConst, ImageCollection_iteratorTrait, ImageCollection_iteratorTraitConst};
 	}
 
+	pub const IMAGE_METADATA_CICP: i32 = 3;
 	pub const IMAGE_METADATA_EXIF: i32 = 0;
 	pub const IMAGE_METADATA_ICCP: i32 = 2;
-	pub const IMAGE_METADATA_MAX: i32 = 2;
+	pub const IMAGE_METADATA_MAX: i32 = 3;
 	pub const IMAGE_METADATA_UNKNOWN: i32 = -1;
 	pub const IMAGE_METADATA_XMP: i32 = 1;
 	/// If set, the image is read in any possible color format.
@@ -44,12 +45,18 @@ pub mod imgcodecs {
 	pub const IMREAD_REDUCED_GRAYSCALE_8: i32 = 64;
 	/// If set, return the loaded image as is (with alpha channel, otherwise it gets cropped). Ignore EXIF orientation.
 	pub const IMREAD_UNCHANGED: i32 = -1;
-	/// For AVIF, it can be 8, 10 or 12. If >8, it is stored/read as CV_32F. Default is 8.
+	/// For AVIF, it can be 8, 10 or 12. If >8, it is stored/read as CV_16U. Default is 8.
 	pub const IMWRITE_AVIF_DEPTH: i32 = 513;
 	/// For AVIF, it can be a quality between 0 and 100 (the higher the better). Default is 95.
 	pub const IMWRITE_AVIF_QUALITY: i32 = 512;
-	/// For AVIF, it is between 0 (slowest) and (fastest). Default is 9.
+	/// For AVIF, it is between 0 (slowest) and 10(fastest). Default is 9.
 	pub const IMWRITE_AVIF_SPEED: i32 = 514;
+	/// For BMP, use to specify compress parameter for 32bpp image. Default is IMWRITE_BMP_COMPRESSION_BITFIELDS. See cv::ImwriteBMPCompressionFlags.
+	pub const IMWRITE_BMP_COMPRESSION: i32 = 768;
+	/// Use BI_BITFIELDS. OpenCV v4.13.0 or later can support to encode with this compression. (only for 32 BPP images)
+	pub const IMWRITE_BMP_COMPRESSION_BITFIELDS: i32 = 3;
+	/// Use BI_RGB. OpenCV v4.12.0 or before supports to encode with this compression only.
+	pub const IMWRITE_BMP_COMPRESSION_RGB: i32 = 0;
 	/// override EXR compression type (ZIP_COMPRESSION = 3 is default)
 	pub const IMWRITE_EXR_COMPRESSION: i32 = 49;
 	/// lossy 4-by-4 pixel block compression, fixed compression rate
@@ -148,13 +155,13 @@ pub mod imgcodecs {
 	pub const IMWRITE_PAM_TUPLETYPE: i32 = 128;
 	/// This combines all available filters (NONE, SUB, UP, AVG, and PAETH), which will attempt to apply all of them for the best possible compression.
 	pub const IMWRITE_PNG_ALL_FILTERS: i32 = 248;
-	/// Binary level PNG, 0 or 1, default is 0.
+	/// For PNG, Binary level PNG, 0 or 1, default is 0. For APNG, it is not supported.
 	pub const IMWRITE_PNG_BILEVEL: i32 = 18;
 	/// For PNG, it can be the compression level from 0 to 9. A higher value means a smaller size and longer compression time. If specified, strategy is changed to IMWRITE_PNG_STRATEGY_DEFAULT (Z_DEFAULT_STRATEGY). Default value is 1 (best speed setting).
 	pub const IMWRITE_PNG_COMPRESSION: i32 = 16;
 	/// This is a combination of IMWRITE_PNG_FILTER_NONE, IMWRITE_PNG_FILTER_SUB, and IMWRITE_PNG_FILTER_UP, typically used for faster compression.
 	pub const IMWRITE_PNG_FAST_FILTERS: i32 = 56;
-	/// One of cv::ImwritePNGFilterFlags, default is IMWRITE_PNG_FILTER_SUB.
+	/// For PNG, One of cv::ImwritePNGFilterFlags, default is IMWRITE_PNG_FILTER_SUB. For APNG, it is not supported.
 	pub const IMWRITE_PNG_FILTER: i32 = 19;
 	/// applies the "average" filter, which calculates the average of the byte to the left and the byte above.
 	pub const IMWRITE_PNG_FILTER_AVG: i32 = 64;
@@ -166,7 +173,7 @@ pub mod imgcodecs {
 	pub const IMWRITE_PNG_FILTER_SUB: i32 = 16;
 	/// applies the "up" filter, which calculates the difference between the current byte and the corresponding byte directly above it.
 	pub const IMWRITE_PNG_FILTER_UP: i32 = 32;
-	/// One of cv::ImwritePNGFlags, default is IMWRITE_PNG_STRATEGY_RLE.
+	/// For PNG, One of cv::ImwritePNGFlags, default is IMWRITE_PNG_STRATEGY_RLE.
 	pub const IMWRITE_PNG_STRATEGY: i32 = 17;
 	/// Use this value for normal data.
 	pub const IMWRITE_PNG_STRATEGY_DEFAULT: i32 = 0;
@@ -178,6 +185,8 @@ pub mod imgcodecs {
 	pub const IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY: i32 = 2;
 	/// Use this value to limit match distances to one (run-length encoding).
 	pub const IMWRITE_PNG_STRATEGY_RLE: i32 = 3;
+	/// For PNG with libpng, sets the size of the internal zlib compression buffer in bytes, from 6 to 1048576(1024 KiB). Default is 8192(8 KiB). For normal use, 131072(128 KiB) or 262144(256 KiB) may be sufficient. If WITH_SPNG=ON, it is not supported. For APNG, it is not supported.
+	pub const IMWRITE_PNG_ZLIBBUFFER_SIZE: i32 = 20;
 	/// For PPM, PGM, or PBM, it can be a binary format flag, 0 or 1. Default value is 1.
 	pub const IMWRITE_PXM_BINARY: i32 = 32;
 	/// For TIFF, use to specify the image compression scheme. See cv::ImwriteTiffCompressionFlags. Note, for images whose depth is CV_32F, only libtiff's SGILOG compression scheme is used. For other supported depths, the compression scheme can be specified by this flag; LZW compression is the default.
@@ -248,7 +257,7 @@ pub mod imgcodecs {
 	pub const IMWRITE_TIFF_COMPRESSION_WEBP: i32 = 50001;
 	/// ZSTD: WARNING not registered in Adobe-maintained registry
 	pub const IMWRITE_TIFF_COMPRESSION_ZSTD: i32 = 50000;
-	/// For TIFF, use to specify predictor. See cv::ImwriteTiffPredictorFlags.
+	/// For TIFF, use to specify predictor. See cv::ImwriteTiffPredictorFlags. Default is IMWRITE_TIFF_PREDICTOR_HORIZONTAL .
 	pub const IMWRITE_TIFF_PREDICTOR: i32 = 317;
 	/// floating point predictor
 	pub const IMWRITE_TIFF_PREDICTOR_FLOATINGPOINT: i32 = 3;
@@ -256,7 +265,13 @@ pub mod imgcodecs {
 	pub const IMWRITE_TIFF_PREDICTOR_HORIZONTAL: i32 = 2;
 	/// no prediction scheme used
 	pub const IMWRITE_TIFF_PREDICTOR_NONE: i32 = 1;
-	/// For TIFF, use to specify which DPI resolution unit to set; see libtiff documentation for valid values
+	/// centimeter
+	pub const IMWRITE_TIFF_RESOLUTION_UNIT_CENTIMETER: i32 = 3;
+	/// inch
+	pub const IMWRITE_TIFF_RESOLUTION_UNIT_INCH: i32 = 2;
+	/// no absolute unit of measurement.
+	pub const IMWRITE_TIFF_RESOLUTION_UNIT_NONE: i32 = 1;
+	/// For TIFF, use to specify which DPI resolution unit to set. See ImwriteTiffResolutionUnitFlags. Default is IMWRITE_TIFF_RESOLUTION_UNIT_INCH.
 	pub const IMWRITE_TIFF_RESUNIT: i32 = 256;
 	/// For TIFF, use to specify the number of rows per strip.
 	pub const IMWRITE_TIFF_ROWSPERSTRIP: i32 = 278;
@@ -273,11 +288,12 @@ pub mod imgcodecs {
 		IMAGE_METADATA_EXIF = 0,
 		IMAGE_METADATA_XMP = 1,
 		IMAGE_METADATA_ICCP = 2,
-		// Duplicate, use IMAGE_METADATA_ICCP instead
-		// IMAGE_METADATA_MAX = 2,
+		IMAGE_METADATA_CICP = 3,
+		// Duplicate, use IMAGE_METADATA_CICP instead
+		// IMAGE_METADATA_MAX = 3,
 	}
 
-	opencv_type_enum! { crate::imgcodecs::ImageMetadataType { IMAGE_METADATA_UNKNOWN, IMAGE_METADATA_EXIF, IMAGE_METADATA_XMP, IMAGE_METADATA_ICCP } }
+	opencv_type_enum! { crate::imgcodecs::ImageMetadataType { IMAGE_METADATA_UNKNOWN, IMAGE_METADATA_EXIF, IMAGE_METADATA_XMP, IMAGE_METADATA_ICCP, IMAGE_METADATA_CICP } }
 
 	/// Imread flags
 	///
@@ -319,6 +335,18 @@ pub mod imgcodecs {
 	}
 
 	opencv_type_enum! { crate::imgcodecs::ImreadModes { IMREAD_UNCHANGED, IMREAD_GRAYSCALE, IMREAD_COLOR_BGR, IMREAD_ANYDEPTH, IMREAD_ANYCOLOR, IMREAD_LOAD_GDAL, IMREAD_REDUCED_GRAYSCALE_2, IMREAD_REDUCED_COLOR_2, IMREAD_REDUCED_GRAYSCALE_4, IMREAD_REDUCED_COLOR_4, IMREAD_REDUCED_GRAYSCALE_8, IMREAD_REDUCED_COLOR_8, IMREAD_IGNORE_ORIENTATION, IMREAD_COLOR_RGB } }
+
+	/// Imwrite BMP specific values for IMWRITE_BMP_COMPRESSION parameter key.
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum ImwriteBMPCompressionFlags {
+		/// Use BI_RGB. OpenCV v4.12.0 or before supports to encode with this compression only.
+		IMWRITE_BMP_COMPRESSION_RGB = 0,
+		/// Use BI_BITFIELDS. OpenCV v4.13.0 or later can support to encode with this compression. (only for 32 BPP images)
+		IMWRITE_BMP_COMPRESSION_BITFIELDS = 3,
+	}
+
+	opencv_type_enum! { crate::imgcodecs::ImwriteBMPCompressionFlags { IMWRITE_BMP_COMPRESSION_RGB, IMWRITE_BMP_COMPRESSION_BITFIELDS } }
 
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -378,12 +406,14 @@ pub mod imgcodecs {
 		IMWRITE_JPEG_SAMPLING_FACTOR = 7,
 		/// For PNG, it can be the compression level from 0 to 9. A higher value means a smaller size and longer compression time. If specified, strategy is changed to IMWRITE_PNG_STRATEGY_DEFAULT (Z_DEFAULT_STRATEGY). Default value is 1 (best speed setting).
 		IMWRITE_PNG_COMPRESSION = 16,
-		/// One of cv::ImwritePNGFlags, default is IMWRITE_PNG_STRATEGY_RLE.
+		/// For PNG, One of cv::ImwritePNGFlags, default is IMWRITE_PNG_STRATEGY_RLE.
 		IMWRITE_PNG_STRATEGY = 17,
-		/// Binary level PNG, 0 or 1, default is 0.
+		/// For PNG, Binary level PNG, 0 or 1, default is 0. For APNG, it is not supported.
 		IMWRITE_PNG_BILEVEL = 18,
-		/// One of cv::ImwritePNGFilterFlags, default is IMWRITE_PNG_FILTER_SUB.
+		/// For PNG, One of cv::ImwritePNGFilterFlags, default is IMWRITE_PNG_FILTER_SUB. For APNG, it is not supported.
 		IMWRITE_PNG_FILTER = 19,
+		/// For PNG with libpng, sets the size of the internal zlib compression buffer in bytes, from 6 to 1048576(1024 KiB). Default is 8192(8 KiB). For normal use, 131072(128 KiB) or 262144(256 KiB) may be sufficient. If WITH_SPNG=ON, it is not supported. For APNG, it is not supported.
+		IMWRITE_PNG_ZLIBBUFFER_SIZE = 20,
 		/// For PPM, PGM, or PBM, it can be a binary format flag, 0 or 1. Default value is 1.
 		IMWRITE_PXM_BINARY = 32,
 		/// override EXR storage type (FLOAT (FP32) is default)
@@ -398,7 +428,7 @@ pub mod imgcodecs {
 		IMWRITE_HDR_COMPRESSION = 80,
 		/// For PAM, sets the TUPLETYPE field to the corresponding string value that is defined for the format
 		IMWRITE_PAM_TUPLETYPE = 128,
-		/// For TIFF, use to specify which DPI resolution unit to set; see libtiff documentation for valid values
+		/// For TIFF, use to specify which DPI resolution unit to set. See ImwriteTiffResolutionUnitFlags. Default is IMWRITE_TIFF_RESOLUTION_UNIT_INCH.
 		IMWRITE_TIFF_RESUNIT = 256,
 		/// For TIFF, use to specify the X direction DPI
 		IMWRITE_TIFF_XDPI = 257,
@@ -408,15 +438,15 @@ pub mod imgcodecs {
 		IMWRITE_TIFF_COMPRESSION = 259,
 		/// For TIFF, use to specify the number of rows per strip.
 		IMWRITE_TIFF_ROWSPERSTRIP = 278,
-		/// For TIFF, use to specify predictor. See cv::ImwriteTiffPredictorFlags.
+		/// For TIFF, use to specify predictor. See cv::ImwriteTiffPredictorFlags. Default is IMWRITE_TIFF_PREDICTOR_HORIZONTAL .
 		IMWRITE_TIFF_PREDICTOR = 317,
 		/// For JPEG2000, use to specify the target compression rate (multiplied by 1000). The value can be from 0 to 1000. Default is 1000.
 		IMWRITE_JPEG2000_COMPRESSION_X1000 = 272,
 		/// For AVIF, it can be a quality between 0 and 100 (the higher the better). Default is 95.
 		IMWRITE_AVIF_QUALITY = 512,
-		/// For AVIF, it can be 8, 10 or 12. If >8, it is stored/read as CV_32F. Default is 8.
+		/// For AVIF, it can be 8, 10 or 12. If >8, it is stored/read as CV_16U. Default is 8.
 		IMWRITE_AVIF_DEPTH = 513,
-		/// For AVIF, it is between 0 (slowest) and (fastest). Default is 9.
+		/// For AVIF, it is between 0 (slowest) and 10(fastest). Default is 9.
 		IMWRITE_AVIF_SPEED = 514,
 		/// For JPEG XL, it can be a quality from 0 to 100 (the higher is the better). Default value is 95. If set, distance parameter is re-calicurated from quality level automatically. This parameter request libjxl v0.10 or later.
 		IMWRITE_JPEGXL_QUALITY = 640,
@@ -426,6 +456,8 @@ pub mod imgcodecs {
 		IMWRITE_JPEGXL_DISTANCE = 642,
 		/// For JPEG XL, decoding speed tier for the provided options; minimum is 0 (slowest to decode, best quality/density), and maximum is 4 (fastest to decode, at the cost of some quality/density). Default is 0.
 		IMWRITE_JPEGXL_DECODING_SPEED = 643,
+		/// For BMP, use to specify compress parameter for 32bpp image. Default is IMWRITE_BMP_COMPRESSION_BITFIELDS. See cv::ImwriteBMPCompressionFlags.
+		IMWRITE_BMP_COMPRESSION = 768,
 		/// Not functional since 4.12.0. Replaced by cv::Animation::loop_count.
 		IMWRITE_GIF_LOOP = 1024,
 		/// Not functional since 4.12.0. Replaced by cv::Animation::durations.
@@ -440,7 +472,7 @@ pub mod imgcodecs {
 		IMWRITE_GIF_COLORTABLE = 1029,
 	}
 
-	opencv_type_enum! { crate::imgcodecs::ImwriteFlags { IMWRITE_JPEG_QUALITY, IMWRITE_JPEG_PROGRESSIVE, IMWRITE_JPEG_OPTIMIZE, IMWRITE_JPEG_RST_INTERVAL, IMWRITE_JPEG_LUMA_QUALITY, IMWRITE_JPEG_CHROMA_QUALITY, IMWRITE_JPEG_SAMPLING_FACTOR, IMWRITE_PNG_COMPRESSION, IMWRITE_PNG_STRATEGY, IMWRITE_PNG_BILEVEL, IMWRITE_PNG_FILTER, IMWRITE_PXM_BINARY, IMWRITE_EXR_TYPE, IMWRITE_EXR_COMPRESSION, IMWRITE_EXR_DWA_COMPRESSION_LEVEL, IMWRITE_WEBP_QUALITY, IMWRITE_HDR_COMPRESSION, IMWRITE_PAM_TUPLETYPE, IMWRITE_TIFF_RESUNIT, IMWRITE_TIFF_XDPI, IMWRITE_TIFF_YDPI, IMWRITE_TIFF_COMPRESSION, IMWRITE_TIFF_ROWSPERSTRIP, IMWRITE_TIFF_PREDICTOR, IMWRITE_JPEG2000_COMPRESSION_X1000, IMWRITE_AVIF_QUALITY, IMWRITE_AVIF_DEPTH, IMWRITE_AVIF_SPEED, IMWRITE_JPEGXL_QUALITY, IMWRITE_JPEGXL_EFFORT, IMWRITE_JPEGXL_DISTANCE, IMWRITE_JPEGXL_DECODING_SPEED, IMWRITE_GIF_LOOP, IMWRITE_GIF_SPEED, IMWRITE_GIF_QUALITY, IMWRITE_GIF_DITHER, IMWRITE_GIF_TRANSPARENCY, IMWRITE_GIF_COLORTABLE } }
+	opencv_type_enum! { crate::imgcodecs::ImwriteFlags { IMWRITE_JPEG_QUALITY, IMWRITE_JPEG_PROGRESSIVE, IMWRITE_JPEG_OPTIMIZE, IMWRITE_JPEG_RST_INTERVAL, IMWRITE_JPEG_LUMA_QUALITY, IMWRITE_JPEG_CHROMA_QUALITY, IMWRITE_JPEG_SAMPLING_FACTOR, IMWRITE_PNG_COMPRESSION, IMWRITE_PNG_STRATEGY, IMWRITE_PNG_BILEVEL, IMWRITE_PNG_FILTER, IMWRITE_PNG_ZLIBBUFFER_SIZE, IMWRITE_PXM_BINARY, IMWRITE_EXR_TYPE, IMWRITE_EXR_COMPRESSION, IMWRITE_EXR_DWA_COMPRESSION_LEVEL, IMWRITE_WEBP_QUALITY, IMWRITE_HDR_COMPRESSION, IMWRITE_PAM_TUPLETYPE, IMWRITE_TIFF_RESUNIT, IMWRITE_TIFF_XDPI, IMWRITE_TIFF_YDPI, IMWRITE_TIFF_COMPRESSION, IMWRITE_TIFF_ROWSPERSTRIP, IMWRITE_TIFF_PREDICTOR, IMWRITE_JPEG2000_COMPRESSION_X1000, IMWRITE_AVIF_QUALITY, IMWRITE_AVIF_DEPTH, IMWRITE_AVIF_SPEED, IMWRITE_JPEGXL_QUALITY, IMWRITE_JPEGXL_EFFORT, IMWRITE_JPEGXL_DISTANCE, IMWRITE_JPEGXL_DECODING_SPEED, IMWRITE_BMP_COMPRESSION, IMWRITE_GIF_LOOP, IMWRITE_GIF_SPEED, IMWRITE_GIF_QUALITY, IMWRITE_GIF_DITHER, IMWRITE_GIF_TRANSPARENCY, IMWRITE_GIF_COLORTABLE } }
 
 	/// Imwrite GIF specific values for IMWRITE_GIF_QUALITY parameter key, if larger than 3, then its related to the size of the color table.
 	#[repr(i32)]
@@ -633,6 +665,19 @@ pub mod imgcodecs {
 
 	opencv_type_enum! { crate::imgcodecs::ImwriteTiffPredictorFlags { IMWRITE_TIFF_PREDICTOR_NONE, IMWRITE_TIFF_PREDICTOR_HORIZONTAL, IMWRITE_TIFF_PREDICTOR_FLOATINGPOINT } }
 
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum ImwriteTiffResolutionUnitFlags {
+		/// no absolute unit of measurement.
+		IMWRITE_TIFF_RESOLUTION_UNIT_NONE = 1,
+		/// inch
+		IMWRITE_TIFF_RESOLUTION_UNIT_INCH = 2,
+		/// centimeter
+		IMWRITE_TIFF_RESOLUTION_UNIT_CENTIMETER = 3,
+	}
+
+	opencv_type_enum! { crate::imgcodecs::ImwriteTiffResolutionUnitFlags { IMWRITE_TIFF_RESOLUTION_UNIT_NONE, IMWRITE_TIFF_RESOLUTION_UNIT_INCH, IMWRITE_TIFF_RESOLUTION_UNIT_CENTIMETER } }
+
 	/// Checks if the specified image file can be decoded by OpenCV.
 	///
 	/// The function haveImageReader checks if OpenCV is capable of reading the specified file.
@@ -728,9 +773,9 @@ pub mod imgcodecs {
 		Ok(ret)
 	}
 
-	/// Reads an image from a buffer in memory together with associated metadata.
+	/// Reads an image from a memory buffer and extracts associated metadata.
 	///
-	/// The function imdecode reads an image from the specified buffer in the memory. If the buffer is too short or
+	/// This function decodes an image from the specified memory buffer. If the buffer is too short or
 	/// contains invalid data, the function returns an empty matrix ( Mat::data==NULL ).
 	///
 	/// See cv::imread for the list of supported formats and flags description.
@@ -738,10 +783,13 @@ pub mod imgcodecs {
 	///
 	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
-	/// * buf: Input array or vector of bytes.
-	/// * metadataTypes: Output vector with types of metadata chucks returned in metadata, see ImageMetadataType.
+	/// * buf: Input array or vector of bytes containing the encoded image data.
+	/// * metadataTypes: Output vector with types of metadata chucks returned in metadata, see cv::ImageMetadataType
 	/// * metadata: Output vector of vectors or vector of matrices to store the retrieved metadata
-	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
+	///
+	/// ## Returns
+	/// The decoded image as a cv::Mat object. If decoding fails, the function returns an empty matrix.
 	///
 	/// ## Note
 	/// This alternative version of [imdecode_with_metadata] function uses the following default values for its arguments:
@@ -758,9 +806,9 @@ pub mod imgcodecs {
 		Ok(ret)
 	}
 
-	/// Reads an image from a buffer in memory together with associated metadata.
+	/// Reads an image from a memory buffer and extracts associated metadata.
 	///
-	/// The function imdecode reads an image from the specified buffer in the memory. If the buffer is too short or
+	/// This function decodes an image from the specified memory buffer. If the buffer is too short or
 	/// contains invalid data, the function returns an empty matrix ( Mat::data==NULL ).
 	///
 	/// See cv::imread for the list of supported formats and flags description.
@@ -768,10 +816,13 @@ pub mod imgcodecs {
 	///
 	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
-	/// * buf: Input array or vector of bytes.
-	/// * metadataTypes: Output vector with types of metadata chucks returned in metadata, see ImageMetadataType.
+	/// * buf: Input array or vector of bytes containing the encoded image data.
+	/// * metadataTypes: Output vector with types of metadata chucks returned in metadata, see cv::ImageMetadataType
 	/// * metadata: Output vector of vectors or vector of matrices to store the retrieved metadata
-	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
+	///
+	/// ## Returns
+	/// The decoded image as a cv::Mat object. If decoding fails, the function returns an empty matrix.
 	///
 	/// ## C++ default parameters
 	/// * flags: IMREAD_ANYCOLOR
@@ -798,7 +849,7 @@ pub mod imgcodecs {
 	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
 	/// * buf: Input array or vector of bytes.
-	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+	/// * flags: Flag that can take values of cv::ImreadModes.
 	#[inline]
 	pub fn imdecode(buf: &impl ToInputArray, flags: i32) -> Result<core::Mat> {
 		input_array_arg!(buf);
@@ -821,12 +872,12 @@ pub mod imgcodecs {
 	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
 	/// * buf: Input array or vector of bytes.
-	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+	/// * flags: Flag that can take values of cv::ImreadModes.
 	///
 	/// ## Overloaded parameters
 	///
 	/// * buf: Input array or vector of bytes.
-	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
 	/// * dst: The optional output placeholder for the decoded matrix. It can save the image
 	/// reallocations when the function is called repeatedly for images of the same size. In case of decoder
 	/// failure the function returns empty cv::Mat object, but does not release user-provided dst buffer.
@@ -905,7 +956,7 @@ pub mod imgcodecs {
 	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
 	/// * buf: Input array or vector of bytes.
-	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+	/// * flags: Flag that can take values of cv::ImreadModes.
 	/// * mats: A vector of Mat objects holding each page, if more than one.
 	/// * range: A continuous selection of pages.
 	///
@@ -933,7 +984,7 @@ pub mod imgcodecs {
 	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
 	/// * buf: Input array or vector of bytes.
-	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+	/// * flags: Flag that can take values of cv::ImreadModes.
 	/// * mats: A vector of Mat objects holding each page, if more than one.
 	/// * range: A continuous selection of pages.
 	///
@@ -1167,14 +1218,22 @@ pub mod imgcodecs {
 		Ok(ret)
 	}
 
-	/// Reads an image from a file together with associated metadata.
+	/// Reads an image from a file along with associated metadata.
 	///
-	/// The function imreadWithMetadata reads image from the specified file. It does the same thing as imread, but additionally reads metadata if the corresponding file contains any.
+	/// This function behaves similarly to cv::imread(), loading an image from the specified file.
+	/// In addition to the image pixel data, it also attempts to extract any available metadata
+	/// embedded in the file (such as EXIF, XMP, etc.), depending on file format support.
+	///
+	///
+	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
 	/// * filename: Name of the file to be loaded.
-	/// * metadataTypes: Output vector with types of metadata chucks returned in metadata, see ImageMetadataType.
-	/// * metadata: Output vector of vectors or vector of matrices to store the retrieved metadata
-	/// * flags: Flag that can take values of cv::ImreadModes
+	/// * metadataTypes: Output vector with types of metadata chunks returned in metadata, see ImageMetadataType.
+	/// * metadata: Output vector of vectors or vector of matrices to store the retrieved metadata.
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
+	///
+	/// ## Returns
+	/// The loaded image as a cv::Mat object. If the image cannot be read, the function returns an empty matrix.
 	///
 	/// ## Note
 	/// This alternative version of [imread_with_metadata] function uses the following default values for its arguments:
@@ -1191,14 +1250,22 @@ pub mod imgcodecs {
 		Ok(ret)
 	}
 
-	/// Reads an image from a file together with associated metadata.
+	/// Reads an image from a file along with associated metadata.
 	///
-	/// The function imreadWithMetadata reads image from the specified file. It does the same thing as imread, but additionally reads metadata if the corresponding file contains any.
+	/// This function behaves similarly to cv::imread(), loading an image from the specified file.
+	/// In addition to the image pixel data, it also attempts to extract any available metadata
+	/// embedded in the file (such as EXIF, XMP, etc.), depending on file format support.
+	///
+	///
+	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
 	/// * filename: Name of the file to be loaded.
-	/// * metadataTypes: Output vector with types of metadata chucks returned in metadata, see ImageMetadataType.
-	/// * metadata: Output vector of vectors or vector of matrices to store the retrieved metadata
-	/// * flags: Flag that can take values of cv::ImreadModes
+	/// * metadataTypes: Output vector with types of metadata chunks returned in metadata, see ImageMetadataType.
+	/// * metadata: Output vector of vectors or vector of matrices to store the retrieved metadata.
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
+	///
+	/// ## Returns
+	/// The loaded image as a cv::Mat object. If the image cannot be read, the function returns an empty matrix.
 	///
 	/// ## C++ default parameters
 	/// * flags: IMREAD_ANYCOLOR
@@ -1266,7 +1333,7 @@ pub mod imgcodecs {
 	///
 	/// ## Parameters
 	/// * filename: Name of the file to be loaded.
-	/// * flags: Flag that can take values of `cv::ImreadModes`.
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_COLOR_BGR.
 	///
 	/// ## Note
 	/// This alternative version of [imread] function uses the following default values for its arguments:
@@ -1288,7 +1355,7 @@ pub mod imgcodecs {
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
 	/// * dst: object in which the image will be loaded.
-	/// * flags: Flag that can take values of cv::ImreadModes
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_COLOR_BGR.
 	///
 	/// Note:
 	/// The image passing through the img parameter can be pre-allocated. The memory is reused if the shape and the type match with the load image.
@@ -1313,7 +1380,7 @@ pub mod imgcodecs {
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
 	/// * dst: object in which the image will be loaded.
-	/// * flags: Flag that can take values of cv::ImreadModes
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_COLOR_BGR.
 	///
 	/// Note:
 	/// The image passing through the img parameter can be pre-allocated. The memory is reused if the shape and the type match with the load image.
@@ -1383,7 +1450,7 @@ pub mod imgcodecs {
 	///
 	/// ## Parameters
 	/// * filename: Name of the file to be loaded.
-	/// * flags: Flag that can take values of `cv::ImreadModes`.
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_COLOR_BGR.
 	///
 	/// ## C++ default parameters
 	/// * flags: IMREAD_COLOR_BGR
@@ -1601,7 +1668,12 @@ pub mod imgcodecs {
 	/// single-channel or 3-channel (with 'BGR' channel order) images
 	/// can be saved using this function, with these exceptions:
 	///
-	/// - With OpenEXR encoder, only 32-bit float (CV_32F) images can be saved.
+	/// - With BMP encoder, 8-bit unsigned (CV_8U) images can be saved.
+	///   - BMP images with an alpha channel can be saved using this function.
+	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) BGRA image, ensuring the alpha channel is the last component.
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255.
+	///    OpenCV v4.13.0 or later use BI_BITFIELDS compression as default. See IMWRITE_BMP_COMPRESSION.
+	/// - With OpenEXR encoder, only 32-bit float (CV_32F) images can be saved. More than 4 channels can be saved. (imread can load it then.)
 	///   - 8-bit unsigned (CV_8U) images are not supported.
 	/// - With Radiance HDR encoder, non 64-bit float (CV_64F) images can be saved.
 	///   - All images will be converted to 32-bit float (CV_32F).
@@ -1628,6 +1700,11 @@ pub mod imgcodecs {
 	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) BGRA image, ensuring the alpha channel is the last component.
 	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255.
 	///   - 8-bit single-channel images (CV_8UC1) are not supported due to GIF's limitation to indexed color formats.
+	/// - With AVIF encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
+	///   - CV_16U images can be saved as only 10-bit or 12-bit (not 16-bit). See IMWRITE_AVIF_DEPTH.
+	///   - AVIF images with an alpha channel can be saved using this function.
+	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) / 16-bit 4-channel (CV_16UC4) BGRA image, ensuring the alpha channel is the last component.
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255 (8-bit) / 1023 (10-bit) / 4095 (12-bit) (see the code sample below).
 	///
 	/// If the image format is not supported, the image will be converted to 8-bit unsigned (CV_8U) and saved that way.
 	///
@@ -1642,6 +1719,8 @@ pub mod imgcodecs {
 	/// * filename: Name of the file.
 	/// * img: (Mat or vector of Mat) Image or Images to be saved.
 	/// * params: Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .) see cv::ImwriteFlags
+	/// ## Returns
+	/// true if the image is successfully written to the specified file; false otherwise.
 	///
 	/// ## Note
 	/// This alternative version of [imwrite] function uses the following default values for its arguments:
@@ -1664,7 +1743,12 @@ pub mod imgcodecs {
 	/// single-channel or 3-channel (with 'BGR' channel order) images
 	/// can be saved using this function, with these exceptions:
 	///
-	/// - With OpenEXR encoder, only 32-bit float (CV_32F) images can be saved.
+	/// - With BMP encoder, 8-bit unsigned (CV_8U) images can be saved.
+	///   - BMP images with an alpha channel can be saved using this function.
+	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) BGRA image, ensuring the alpha channel is the last component.
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255.
+	///    OpenCV v4.13.0 or later use BI_BITFIELDS compression as default. See IMWRITE_BMP_COMPRESSION.
+	/// - With OpenEXR encoder, only 32-bit float (CV_32F) images can be saved. More than 4 channels can be saved. (imread can load it then.)
 	///   - 8-bit unsigned (CV_8U) images are not supported.
 	/// - With Radiance HDR encoder, non 64-bit float (CV_64F) images can be saved.
 	///   - All images will be converted to 32-bit float (CV_32F).
@@ -1691,6 +1775,11 @@ pub mod imgcodecs {
 	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) BGRA image, ensuring the alpha channel is the last component.
 	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255.
 	///   - 8-bit single-channel images (CV_8UC1) are not supported due to GIF's limitation to indexed color formats.
+	/// - With AVIF encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
+	///   - CV_16U images can be saved as only 10-bit or 12-bit (not 16-bit). See IMWRITE_AVIF_DEPTH.
+	///   - AVIF images with an alpha channel can be saved using this function.
+	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) / 16-bit 4-channel (CV_16UC4) BGRA image, ensuring the alpha channel is the last component.
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255 (8-bit) / 1023 (10-bit) / 4095 (12-bit) (see the code sample below).
 	///
 	/// If the image format is not supported, the image will be converted to 8-bit unsigned (CV_8U) and saved that way.
 	///
@@ -1705,6 +1794,8 @@ pub mod imgcodecs {
 	/// * filename: Name of the file.
 	/// * img: (Mat or vector of Mat) Image or Images to be saved.
 	/// * params: Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .) see cv::ImwriteFlags
+	/// ## Returns
+	/// true if the image is successfully written to the specified file; false otherwise.
 	///
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
