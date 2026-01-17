@@ -163,7 +163,6 @@ impl<'tu> EntityExt<'tu> for Entity<'tu> {
 	}
 }
 
-#[allow(unused)]
 pub fn dbg_clang_entity<'tu>(entity: impl ToEntity<'tu>) {
 	struct EntityWrapper<'tu>(Entity<'tu>);
 

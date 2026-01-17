@@ -459,15 +459,15 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 				TypeKind::Record | TypeKind::Unexposed => {
 					if let Some(decl) = self.get_declaration() {
 						let cpp_refname = decl.cpp_name(CppNameStyle::Reference);
-						let kind = decl.get_kind();
-						let is_decl = kind == EntityKind::StructDecl || kind == EntityKind::ClassDecl;
 						if cpp_refname.starts_with("std::") && cpp_refname.contains("::vector") {
 							TypeRefKind::StdVector(Vector::new(self, gen_env))
 						} else if cpp_refname.starts_with("std::") && cpp_refname.contains("::tuple") {
 							TypeRefKind::StdTuple(Tuple::new(self, gen_env))
 						} else if cpp_refname.starts_with("std::") && cpp_refname.contains("::pair") {
 							TypeRefKind::StdTuple(Tuple::pair(self, gen_env))
-						} else if is_decl && cpp_refname.starts_with("cv::Ptr") {
+						} else if cpp_refname.starts_with("cv::Ptr")
+							&& matches!(decl.get_kind(), EntityKind::StructDecl | EntityKind::ClassDecl)
+						{
 							TypeRefKind::SmartPtr(SmartPtr::new(decl, gen_env))
 						} else {
 							TypeRefKind::Class(Class::new(decl, gen_env))

@@ -245,7 +245,7 @@ where
 }
 
 fn all_bases<'tu, 'ge>(bases: Vec<Class<'tu, 'ge>>) -> Vec<Class<'tu, 'ge>> {
-	#![allow(clippy::mutable_key_type)]
+	#![expect(clippy::mutable_key_type)]
 	let mut out = bases
 		.into_iter()
 		.flat_map(|b| {

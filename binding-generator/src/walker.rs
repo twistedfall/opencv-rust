@@ -8,7 +8,7 @@ use crate::entity::ControlFlowExt;
 /// Visitor to be used in conjunction with [EntityWalker]
 pub trait EntityWalkerVisitor<'tu>: Sized {
 	/// Check whether the visitor is interested in entities from the specified file
-	#[allow(unused)]
+	#[expect(unused)]
 	fn wants_file(&mut self, path: &Path) -> bool {
 		true
 	}

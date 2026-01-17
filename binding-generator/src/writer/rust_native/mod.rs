@@ -74,7 +74,7 @@ impl<'s> RustNativeBindingWriter<'s> {
 	) -> Self {
 		let out_dir = out_dir.into();
 		let debug_path = out_dir.join(format!("{}.log", module.opencv_name()));
-		#[allow(clippy::collapsible_if)]
+		#[expect(clippy::collapsible_if)]
 		if false {
 			if debug {
 				File::create(&debug_path).expect("Can't create debug log");
@@ -102,7 +102,7 @@ impl<'s> RustNativeBindingWriter<'s> {
 	}
 
 	fn emit_debug_log(&mut self, obj: &impl Debug) {
-		#[allow(clippy::collapsible_if)]
+		#[expect(clippy::collapsible_if)]
 		if false {
 			if self.debug {
 				let mut f = OpenOptions::new()

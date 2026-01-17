@@ -87,7 +87,7 @@ fn string() -> Result<()> {
 
 #[test]
 fn boolean() -> Result<()> {
-	#![allow(clippy::bool_assert_comparison)]
+	#![expect(clippy::bool_assert_comparison)]
 	let mut vec = Vector::<bool>::new();
 	vec.push(true);
 	vec.push(true);
@@ -382,7 +382,7 @@ fn swap() -> Result<()> {
 		assert_eq!("123", vec.get(2)?);
 	}
 
-	#[allow(clippy::bool_assert_comparison)]
+	#[expect(clippy::bool_assert_comparison)]
 	{
 		let mut vec = Vector::<bool>::new();
 		vec.push(true);
@@ -400,7 +400,7 @@ fn swap() -> Result<()> {
 
 #[test]
 fn nth() -> Result<()> {
-	#[allow(clippy::iter_nth_zero)]
+	#[expect(clippy::iter_nth_zero)]
 	{
 		let mut vec = Vector::<i32>::new();
 		assert_eq!(None, vec.iter().nth(0));
@@ -496,7 +496,7 @@ fn iter() -> Result<()> {
 
 	{
 		let vec = Vector::<Mat>::from_iter(vec![]);
-		#[allow(clippy::never_loop)]
+		#[expect(clippy::never_loop)]
 		for _ in vec {
 			panic!("iterator must not yield any elements")
 		}

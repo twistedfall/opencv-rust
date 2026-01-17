@@ -238,9 +238,9 @@ fn make_compiler(opencv: &Library, ffi_export_suffix: &str) -> cc::Build {
 
 	if out.get_compiler().is_like_msvc() {
 		if let Ok(crt) = env::var("OPENCV_MSVC_CRT") {
-			if crt.trim().to_lowercase() == "dynamic" {
+			if crt.trim().eq_ignore_ascii_case("dynamic") {
 				out.static_crt(false);
-			} else if crt.trim().to_lowercase() == "static" {
+			} else if crt.trim().eq_ignore_ascii_case("static") {
 				out.static_crt(true);
 			} else {
 				panic!("Invalid value of OPENCV_MSVC_CRT var, expected \"static\" or \"dynamic\"");

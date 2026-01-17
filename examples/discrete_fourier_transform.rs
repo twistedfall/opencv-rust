@@ -7,7 +7,7 @@ use opencv::prelude::*;
 use opencv::{highgui, imgcodecs};
 
 fn main() -> opencv::Result<()> {
-	#![allow(non_snake_case)]
+	#![expect(non_snake_case)]
 	let filename = env::args().nth(1).expect("Must supply image filename");
 	let I = imgcodecs::imread(&filename, imgcodecs::IMREAD_GRAYSCALE)?;
 	if I.empty() {

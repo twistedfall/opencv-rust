@@ -5,7 +5,7 @@ use crate::ExportConfig;
 
 /// Manual export config adjustments in the form of "cpp_name(Reference)" => tweak function. If the export config is not
 /// detected from the sources, an `ExportConfig::default()` is passed to the function.
-#[allow(clippy::type_complexity)]
+#[expect(clippy::type_complexity)]
 pub static ELEMENT_EXPORT_TWEAK: LazyLock<HashMap<&str, fn(ExportConfig) -> Option<ExportConfig>>> = LazyLock::new(|| {
 	HashMap::from([
 		("VADisplay", ExportConfig::export as _),

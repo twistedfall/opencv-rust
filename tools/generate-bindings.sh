@@ -2,7 +2,7 @@
 
 set -eu
 
-script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
+script_dir="$(dirname "$(readlink -f "$0")")"
 
 . "$script_dir/config.sh"
 

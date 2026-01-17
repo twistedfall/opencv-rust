@@ -529,7 +529,6 @@ fn rust_call(
 	forward_args: &[String],
 	return_kind: ReturnKind,
 ) -> String {
-	#![allow(clippy::too_many_arguments)]
 	static CALL_TPL: LazyLock<CompiledInterpolation> =
 		LazyLock::new(|| "{{ret_receive}}unsafe { sys::{{identifier}}({{call_args}}) };".compile_interpolation());
 

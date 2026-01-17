@@ -79,7 +79,6 @@ impl<T: MatTraitConst + ?Sized> MatMatcher for T {
 	#[inline]
 	fn match_max_dims(&self, max_dims: i32) -> Result<()> {
 		let dims = self.dims();
-		// safe because of the `0 <= idx` check
 		if (0..=max_dims).contains(&dims) {
 			Ok(())
 		} else {

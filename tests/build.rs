@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use build::cmake_probe::CmakeProbe;
 use build::library::{LinkLib, LinkSearch, Linkage};
 
-#[allow(dead_code)]
+#[expect(dead_code)]
 #[path = "../build.rs"]
 mod build;
 

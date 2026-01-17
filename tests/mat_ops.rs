@@ -5,7 +5,7 @@ use opencv::{Error, Result};
 
 #[test]
 fn mat_ops() -> Result<()> {
-	#![allow(non_upper_case_globals)]
+	#![expect(non_upper_case_globals)]
 	// success 2 operands
 	{
 		let lhs = Mat::new_rows_cols_with_default(3, 3, u8::opencv_type(), 3.into())?;

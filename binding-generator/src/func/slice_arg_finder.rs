@@ -101,7 +101,7 @@ impl SliceArgFinder {
 	}
 }
 
-#[allow(clippy::enum_variant_names)]
+#[expect(clippy::enum_variant_names)]
 enum SliceArgFinderState {
 	/// Found a slice argument which doesn't have a pair
 	SliceArgFound(usize),

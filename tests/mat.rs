@@ -828,7 +828,7 @@ fn mat_iterator() -> Result<()> {
 
 	{
 		let mat = Mat::from_slice::<u8>(&[])?;
-		#[allow(clippy::never_loop)]
+		#[expect(clippy::never_loop)]
 		for _ in mat.iter::<u8>()? {
 			panic!("Mat must be empty");
 		}

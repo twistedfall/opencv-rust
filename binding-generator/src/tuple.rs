@@ -37,7 +37,6 @@ impl<'tu, 'ge> Tuple<'tu, 'ge> {
 	}
 
 	pub fn elements(&self) -> Vec<TypeRef<'tu, 'ge>> {
-		#[allow(clippy::unnecessary_to_owned)]
 		self
 			.type_ref()
 			.template_specialization_args()

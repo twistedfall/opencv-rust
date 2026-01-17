@@ -101,7 +101,7 @@ impl ClassExt for Class<'_, '_> {
 		match self {
 			Class::Clang { gen_env, .. } =>
 			{
-				#[allow(clippy::bind_instead_of_map)]
+				#[expect(clippy::bind_instead_of_map)]
 				gen_env
 					.settings
 					.class_tweak

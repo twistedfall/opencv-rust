@@ -3,13 +3,13 @@ use crate::core::{Point3_, Point_, Rect_, Size_, VecN, CV_16S, CV_16U, CV_32F, C
 
 #[inline]
 pub const fn CV_MAT_DEPTH(flags: i32) -> i32 {
-	#![allow(non_snake_case)]
+	#![expect(non_snake_case)]
 	flags & core::CV_MAT_DEPTH_MASK
 }
 
 #[inline]
 pub const fn CV_MAKETYPE(depth: i32, cn: i32) -> i32 {
-	#![allow(non_snake_case)]
+	#![expect(non_snake_case)]
 	CV_MAT_DEPTH(depth) + ((cn - 1) << core::CV_CN_SHIFT)
 }
 
@@ -18,14 +18,14 @@ pub use CV_MAKETYPE as CV_MAKE_TYPE;
 #[cfg(ocvrs_opencv_branch_5)]
 #[inline]
 pub const fn CV_IS_INT_TYPE(flags: i32) -> bool {
-	#![allow(non_snake_case)]
+	#![expect(non_snake_case)]
 	((1 << CV_MAT_DEPTH(flags)) & 0x1e1f) != 0
 }
 
 #[cfg(ocvrs_opencv_branch_5)]
 #[inline]
 pub const fn CV_IS_FLOAT_TYPE(flags: i32) -> bool {
-	#![allow(non_snake_case)]
+	#![expect(non_snake_case)]
 	((1 << CV_MAT_DEPTH(flags)) & 0x1e0) != 0
 }
 
@@ -72,7 +72,7 @@ macro_rules! mchan_fun {
 	($name: ident, $depth: expr) => {
 		#[inline]
 		pub const fn $name(n: i32) -> i32 {
-			#![allow(non_snake_case)]
+			#![expect(non_snake_case)]
 			$crate::core::CV_MAKETYPE($depth, n)
 		}
 	};

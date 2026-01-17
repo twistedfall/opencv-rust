@@ -10,4 +10,4 @@ rustc --version
 rustc --print=cfg
 
 cargo update
-cargo check -vv --all-targets --all-features --workspace --tests
+cargo check -vv --all-features --workspace

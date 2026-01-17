@@ -14,7 +14,7 @@
 // copy-pasted form python generator (may be obsolete):
 // fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
 
-#![allow(clippy::nonminimal_bool)] // pattern `!type_ref.as_vector().is_some()` used for more clarity
+#![expect(clippy::nonminimal_bool)] // pattern `!type_ref.as_vector().is_some()` used for more clarity
 
 use std::borrow::Cow;
 use std::fs::File;
@@ -26,7 +26,7 @@ use clang::Entity;
 pub use class::Class;
 pub use constant::Const;
 pub use element::{is_opencv_path, opencv_module_from_path, DefaultElement, Element, EntityElement};
-#[allow(unused)]
+#[expect(unused)]
 use entity::dbg_clang_entity;
 pub use entity::EntityExt;
 pub use enumeration::Enum;
@@ -41,7 +41,7 @@ use smart_ptr::SmartPtr;
 pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
 pub use supported_module::SupportedModule;
 use tuple::Tuple;
-#[allow(unused)]
+#[expect(unused)]
 use type_ref::dbg_clang_type;
 use type_ref::TypeRef;
 pub use type_ref::{Constness, CppNameStyle, NameStyle};

@@ -49,7 +49,7 @@ where
 	where
 		T: for<'t> OpenCVType<'t>,
 	{
-		#![allow(clippy::should_implement_trait)]
+		#![expect(clippy::should_implement_trait)]
 		let mut out = Self::new();
 		out.extend(s);
 		out

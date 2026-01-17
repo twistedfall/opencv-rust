@@ -411,7 +411,6 @@ impl<'tu, 'ge> TemplateArg<'tu, 'ge> {
 	}
 }
 
-#[allow(unused)]
 pub fn dbg_clang_type(type_ref: Type) {
 	struct TypeWrapper<'tu>(Type<'tu>);
 

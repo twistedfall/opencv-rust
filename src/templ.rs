@@ -84,7 +84,6 @@ macro_rules! string_array_arg {
 	};
 }
 
-#[allow(unused_macros)]
 macro_rules! string_array_arg_mut {
 	($name: ident) => {
 		let $name = $name

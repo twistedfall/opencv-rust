@@ -64,6 +64,8 @@
    You might be running into the issue on the recent macOS versions where this environment variable remains empty after setting,
    please check [this issue](https://github.com/twistedfall/opencv-rust/issues/343) for some workarounds.
 
+   Alternatively enabling the `clang-runtime` feature might help as well.
+
 8. You're getting the ```a `libclang` shared library is not loaded on this thread``` error during crate build.
 
    Enable the `clang-runtime` feature. The reason for the issue is that some `clang-sys` crate can either link to the

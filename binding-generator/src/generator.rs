@@ -42,7 +42,7 @@ impl<'tu, 'ge> TryFrom<TypeRef<'tu, 'ge>> for GeneratedType<'tu, 'ge> {
 }
 
 /// Visitor of the different supported OpenCV entities, used in conjunction with [Generator]
-#[allow(unused)]
+#[expect(unused)]
 pub trait GeneratorVisitor<'tu>: Sized {
 	/// Check whether the visitor is interested in entities from the specified file
 	fn wants_file(&mut self, path: &Path) -> bool {

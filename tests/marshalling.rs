@@ -58,8 +58,8 @@ fn callback() -> Result<()> {
 
 	use opencv::{core, highgui, Error};
 
-	// only run under X11 on linux
-	if cfg!(target_os = "linux") && (option_env!("DISPLAY").is_some() || option_env!("WAYLAND_DISPLAY").is_some()) {
+	// only run when GUI is available on the system
+	if has_gui() {
 		{
 			if let Err(Error {
 				code: core::StsError, ..
@@ -298,4 +298,14 @@ fn field_access_on_ptr() -> Result<()> {
 	assert_eq!(Point2f::new(3., 4.), wrapped_key_point.pt());
 
 	Ok(())
+}
+
+const fn has_gui() -> bool {
+	if cfg!(target_os = "linux") {
+		option_env!("DISPLAY").is_some() || option_env!("WAYLAND_DISPLAY").is_some()
+	} else if cfg!(target_os = "macos") {
+		option_env!("TERM_PROGRAM").is_some()
+	} else {
+		false
+	}
 }

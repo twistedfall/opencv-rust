@@ -61,7 +61,6 @@ where
 
 	#[inline]
 	fn next(&mut self) -> Option<Self::Item> {
-		#![allow(clippy::iter_nth_zero)]
 		self.nth(0)
 	}
 
@@ -149,7 +148,6 @@ where
 
 	#[inline]
 	fn next(&mut self) -> Option<Self::Item> {
-		#![allow(clippy::iter_nth_zero)]
 		self.nth(0)
 	}
 

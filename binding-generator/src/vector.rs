@@ -41,17 +41,12 @@ impl<'tu, 'ge> Vector<'tu, 'ge> {
 
 	pub fn element_type(&self) -> TypeRef<'tu, 'ge> {
 		match self {
-			Vector::Clang { .. } =>
-			{
-				#[allow(clippy::unnecessary_to_owned)]
-				self
-					.type_ref()
-					.template_specialization_args()
-					.into_owned()
-					.into_iter()
-					.find_map(TemplateArg::into_typename)
-					.expect("vector template argument list is empty")
-			}
+			&Vector::Clang { type_ref, gen_env } => TypeRef::new(type_ref, gen_env)
+				.template_specialization_args()
+				.into_owned()
+				.into_iter()
+				.find_map(TemplateArg::into_typename)
+				.expect("vector template argument list is empty"),
 			Vector::Desc(desc) => desc.element_type.clone(),
 		}
 	}

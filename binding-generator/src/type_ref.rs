@@ -409,13 +409,6 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 							// implement workaround for race when type with std::string gets generated first
 							// we only want vector<cv::String> because it's more compatible across OpenCV versions
 							if matches!(str_type, StrType::StdString(_)) {
-								// We need to generate return wrappers for std::vector<cv::String>, but it has several issues:
-								// * we can't use get_canonical_type() because it resolves into compiler dependent inner type like
-								//   std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>
-								// * we can't generate both vector<cv::String> and vector<std::string> because for OpenCV 4
-								//   cv::String is a typedef to std::string, and it would lead to duplicate definition error
-								// That's why we try to resolve both types and check if they are the same, if they are we only generate
-								// vector<std::string> if not - both.
 								out.push(GeneratedType::Vector(VectorDesc::vector_of_cv_string()));
 							} else {
 								out.push(GeneratedType::Vector(vec))
@@ -439,18 +432,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 						out
 					}
 					TypeRefKind::Typedef(typedef) => typedef.generated_types(),
-					_ => {
-						let mut out = vec![];
-						if self.kind().as_abstract_class_ptr().is_some() {
-							out.push(GeneratedType::AbstractRefWrapper(AbstractRefWrapper::new(self.clone())))
-						}
-						out
-					}
+					_ => self
+						.kind()
+						.as_abstract_class_ptr()
+						.into_iter()
+						.map(|_| GeneratedType::AbstractRefWrapper(AbstractRefWrapper::new(self.clone())))
+						.collect(),
 				}
 			}
-			Self::Desc(_) => {
-				vec![]
-			}
+			Self::Desc(_) => vec![],
 		}
 	}
 

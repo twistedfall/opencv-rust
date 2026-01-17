@@ -6,8 +6,8 @@ use std::marker::PhantomData;
 use super::{match_format, DataType, MatMatcher};
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{
-	Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, Point, ToInputArray, ToInputOutputArray, ToOutputArray,
-	_InputArray, _InputOutputArray, _OutputArray,
+	_InputArray, _InputOutputArray, _OutputArray, Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, Point,
+	ToInputArray, ToInputOutputArray, ToOutputArray,
 };
 use crate::traits::Boxed;
 use crate::{Error, Result};
@@ -54,13 +54,13 @@ impl<T: DataType> Mat_<T> {
 
 	#[inline]
 	pub fn as_raw_Mat_(&self) -> *const c_void {
-		#![allow(non_snake_case)]
+		#![expect(non_snake_case)]
 		self.as_raw_Mat()
 	}
 
 	#[inline]
 	pub fn as_raw_mut_Mat_(&mut self) -> *mut c_void {
-		#![allow(non_snake_case)]
+		#![expect(non_snake_case)]
 		self.as_raw_mut_Mat()
 	}
 
