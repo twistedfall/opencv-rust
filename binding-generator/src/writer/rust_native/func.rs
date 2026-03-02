@@ -220,6 +220,10 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		static TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("tpl/func/rust.tpl.rs").compile_interpolation());
 
+		if matches!(self.rust_body(), FuncRustBody::Absent) {
+			return "".to_string();
+		}
+
 		let name = self.rust_leafname(FishStyle::No);
 		let kind = self.kind();
 		let return_kind = self.return_kind();
@@ -540,6 +544,7 @@ fn rust_call(
 	let tpl = match f.rust_body() {
 		FuncRustBody::Auto => Borrowed(&*CALL_TPL),
 		FuncRustBody::ManualCall(body) | FuncRustBody::ManualCallReturn(body) => Owned(body.compile_interpolation()),
+		FuncRustBody::Absent => Owned("".compile_interpolation()),
 	};
 	tpl.interpolate(&HashMap::from([
 		("ret_receive", ret_receive),
@@ -618,7 +623,7 @@ fn rust_return(
 			};
 			(ret_pre, ret_convert.join("\n"), ret_stmt)
 		}
-		FuncRustBody::ManualCallReturn(_) => ("", "".to_string(), ""),
+		FuncRustBody::ManualCallReturn(_) | FuncRustBody::Absent => ("", "".to_string(), ""),
 	}
 }
 

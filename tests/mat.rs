@@ -94,9 +94,6 @@ fn mat_for_rows_and_cols() -> Result<()> {
 	} else {
 		2
 	};
-	assert_eq!(mast_step_len, mat.mat_step().buf().len());
-	assert_eq!(7200, mat.mat_step().buf()[0]);
-	assert_eq!(24, mat.mat_step().buf()[1]);
 	assert_eq!(mast_step_len, mat.mat_step().len());
 	assert_eq!(7200, mat.mat_step()[0]);
 	assert_eq!(24, mat.mat_step()[1]);

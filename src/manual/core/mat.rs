@@ -10,7 +10,8 @@ use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{MatConstIterator, MatExpr, MatSize, MatStep, Point, Rect, Scalar, Size, UMat};
 use crate::manual::core::DataType;
 use crate::prelude::*;
-use crate::{core, input_output_array, input_output_array_vector, Error, Result};
+use crate::traits::OpenCVFromExtern;
+use crate::{core, input_output_array, input_output_array_vector, sys, Error, Result};
 
 mod mat_;
 
@@ -497,6 +498,12 @@ pub(crate) mod mat_forward {
 }
 
 pub trait MatTraitConstManual: MatTraitConst {
+	fn mat_step(&self) -> &[usize] {
+		let dims = usize::try_from(self.dims()).unwrap_or(0);
+		let mat_step = unsafe { MatStep::<'_>::opencv_from_extern(sys::cv_Mat_propStep_const(self.as_raw_Mat())) };
+		unsafe { slice::from_raw_parts(mat_step.p(), dims) }
+	}
+
 	/// Like [Mat::at()] but performs no bounds or type checks
 	///
 	/// # Safety

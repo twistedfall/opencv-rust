@@ -155,6 +155,8 @@ pub enum FuncRustBody {
 	Auto,
 	/// Specify manual call, use the automatic return handling
 	ManualCall(Cow<'static, str>),
-	/// Specify manual call, use the automatic return handling
+	/// Specify manual call and manual return handling
 	ManualCallReturn(Cow<'static, str>),
+	/// Skip generating Rust body of the function, there is probably a manual version utilizing the underlying C++ function
+	Absent,
 }

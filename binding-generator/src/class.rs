@@ -548,6 +548,13 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							.take()
 							.or_else(|| read_mut_yield.take())
 							.or_else(|| write_yield.take())
+							.map(|f| {
+								if let Some(func_fact) = gen_env.settings.func_replace.get(&mut f.matcher()) {
+									func_fact(&f)
+								} else {
+									f
+								}
+							})
 					})
 				};
 				FieldMethodsIter::Clang(fields.iter().flat_map(accessor_generator))
