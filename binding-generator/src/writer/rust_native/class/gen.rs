@@ -48,7 +48,7 @@ pub fn gen_simple_class(c: &Class, opencv_version: &str) -> String {
 	let (const_methods, mut_methods) = all_methods_const_mut(c);
 
 	let mut impls = String::with_capacity(512);
-	impls.add_default_impl(c, &mut_methods, &rust_local);
+	impls.add_default_impl(c, &mut_methods, &rust_local, "");
 	impls.add_explicit_clone(c, &rust_local);
 
 	SIMPLE_TPL.interpolate(&HashMap::from([
@@ -115,11 +115,11 @@ pub fn gen_boxed_class(c: &Class, opencv_version: &str) -> String {
 	let all_bases = all_bases(bases.into_owned());
 
 	let mut impls = String::with_capacity(1024);
-	impls.add_default_impl(c, &mut_methods, &rust_local);
+	impls.add_default_impl(c, &mut_methods, &rust_local, &rust_elided_lt);
 	impls.add_explicit_clone(c, &rust_local);
 	impls.add_implicit_clone(c, &type_ref, &rust_local);
 	if !settings::IMPLEMENTED_MANUAL_DEBUG.contains(c.cpp_name(CppNameStyle::Reference).as_ref()) {
-		impls.add_debug(&all_bases, field_const_methods, &rust_local);
+		impls.add_debug(&all_bases, field_const_methods, &rust_local, &rust_elided_lt);
 	}
 	for b in &all_bases {
 		impls.add_base_cast(c, b, &rust_local);
@@ -389,16 +389,22 @@ fn gen_traits(
 }
 
 trait Impls {
-	fn add_default_impl(&mut self, c: &Class, mut_methods: &[Func], rust_local: &str);
+	fn add_default_impl(&mut self, c: &Class, mut_methods: &[Func], rust_local: &str, rust_elided_lt: &str);
 	fn add_explicit_clone(&mut self, c: &Class, rust_local: &str);
 	fn add_implicit_clone(&mut self, c: &Class, type_ref: &TypeRef, rust_local: &str);
 	fn add_descendant_cast(&mut self, c: &Class, descendant: &Class, rust_local: &str);
 	fn add_base_cast(&mut self, c: &Class, base: &Class, rust_local: &str);
-	fn add_debug<'tu, 'ge>(&mut self, bases: &[Class<'tu, 'ge>], field_const_methods: Vec<Func<'tu, 'ge>>, rust_local: &str);
+	fn add_debug<'tu, 'ge>(
+		&mut self,
+		bases: &[Class<'tu, 'ge>],
+		field_const_methods: Vec<Func<'tu, 'ge>>,
+		rust_local: &str,
+		rust_elided_lt: &str,
+	);
 }
 
 impl Impls for String {
-	fn add_default_impl(&mut self, c: &Class, mut_methods: &[Func], rust_local: &str) {
+	fn add_default_impl(&mut self, c: &Class, mut_methods: &[Func], rust_local: &str, rust_elided_lt: &str) {
 		static IMPL_DEFAULT_TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("../tpl/class/impl_default.tpl.rs").compile_interpolation());
 
@@ -408,7 +414,10 @@ impl Impls for String {
 				.find(|m| m.is_default_constructor())
 				.is_some_and(|def_cons| def_cons.return_kind().is_infallible());
 		if needs_default_impl {
-			IMPL_DEFAULT_TPL.interpolate_into(self, &HashMap::from([("rust_local", rust_local)]));
+			IMPL_DEFAULT_TPL.interpolate_into(
+				self,
+				&HashMap::from([("rust_local", rust_local), ("rust_elided_lt", rust_elided_lt)]),
+			);
 		}
 	}
 
@@ -470,7 +479,13 @@ impl Impls for String {
 		);
 	}
 
-	fn add_debug<'tu, 'ge>(&mut self, bases: &[Class<'tu, 'ge>], mut field_const_methods: Vec<Func<'tu, 'ge>>, rust_local: &str) {
+	fn add_debug<'tu, 'ge>(
+		&mut self,
+		bases: &[Class<'tu, 'ge>],
+		mut field_const_methods: Vec<Func<'tu, 'ge>>,
+		rust_local: &str,
+		rust_elided_lt: &str,
+	) {
 		static IMPL_DEBUG_TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("../tpl/class/impl_debug.rs").compile_interpolation());
 
@@ -480,7 +495,11 @@ impl Impls for String {
 		let debug_fields = rust_generate_debug_fields(field_const_methods);
 		IMPL_DEBUG_TPL.interpolate_into(
 			self,
-			&HashMap::from([("rust_local", rust_local), ("debug_fields", &debug_fields)]),
+			&HashMap::from([
+				("rust_local", rust_local),
+				("rust_elided_lt", rust_elided_lt),
+				("debug_fields", &debug_fields),
+			]),
 		);
 	}
 }

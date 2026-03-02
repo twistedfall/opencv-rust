@@ -12,7 +12,10 @@ pub enum ClassTweak {
 
 pub fn class_tweaks_factory(module: SupportedModule) -> ClassTweaks {
 	match module {
-		SupportedModule::Core => HashMap::from([("cv::MatSize", ClassTweak::Lifetime(Lifetime::Custom("mat")))]),
+		SupportedModule::Core => HashMap::from([
+			("cv::MatSize", ClassTweak::Lifetime(Lifetime::Custom("mat"))),
+			("cv::MatStep", ClassTweak::Lifetime(Lifetime::Custom("mat"))),
+		]),
 		_ => HashMap::default(),
 	}
 }

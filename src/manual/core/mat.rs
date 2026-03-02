@@ -865,7 +865,7 @@ impl fmt::Debug for MatSize<'_> {
 	}
 }
 
-impl Deref for MatStep {
+impl Deref for MatStep<'_> {
 	#[cfg(not(ocvrs_opencv_branch_5))]
 	type Target = [usize; 2];
 	#[cfg(ocvrs_opencv_branch_5)]
@@ -876,7 +876,7 @@ impl Deref for MatStep {
 	}
 }
 
-impl DerefMut for MatStep {
+impl DerefMut for MatStep<'_> {
 	fn deref_mut(&mut self) -> &mut Self::Target {
 		self.buf_mut()
 	}
