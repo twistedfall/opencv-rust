@@ -3,8 +3,406 @@ pub mod cudafeatures2d {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{CUDA_DescriptorMatcherTrait, CUDA_DescriptorMatcherTraitConst, CUDA_FastFeatureDetectorTrait, CUDA_FastFeatureDetectorTraitConst, CUDA_Feature2DAsyncTrait, CUDA_Feature2DAsyncTraitConst, CUDA_ORBTrait, CUDA_ORBTraitConst};
+		pub use super::{CUDA_CornernessCriteriaTrait, CUDA_CornernessCriteriaTraitConst, CUDA_CornersDetectorTrait, CUDA_CornersDetectorTraitConst, CUDA_DescriptorMatcherTrait, CUDA_DescriptorMatcherTraitConst, CUDA_FastFeatureDetectorTrait, CUDA_FastFeatureDetectorTraitConst, CUDA_Feature2DAsyncTrait, CUDA_Feature2DAsyncTraitConst, CUDA_ORBTrait, CUDA_ORBTraitConst};
 	}
+
+	/// Creates implementation for cuda::CornersDetector .
+	///
+	/// ## Parameters
+	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
+	/// * maxCorners: Maximum number of corners to return. If there are more corners than are found,
+	/// the strongest of them is returned.
+	/// * qualityLevel: Parameter characterizing the minimal accepted quality of image corners. The
+	/// parameter value is multiplied by the best corner quality measure, which is the minimal eigenvalue
+	/// (see cornerMinEigenVal ) or the Harris function response (see cornerHarris ). The corners with the
+	/// quality measure less than the product are rejected. For example, if the best corner has the
+	/// quality measure = 1500, and the qualityLevel=0.01 , then all the corners with the quality measure
+	/// less than 15 are rejected.
+	/// * minDistance: Minimum possible Euclidean distance between the returned corners.
+	/// * blockSize: Size of an average block for computing a derivative covariation matrix over each
+	/// pixel neighborhood. See cornerEigenValsAndVecs .
+	/// * useHarrisDetector: Parameter indicating whether to use a Harris detector (see cornerHarris)
+	/// or cornerMinEigenVal.
+	/// * harrisK: Free parameter of the Harris detector.
+	///
+	/// ## Note
+	/// This alternative version of [create_good_features_to_track_detector] function uses the following default values for its arguments:
+	/// * max_corners: 1000
+	/// * quality_level: 0.01
+	/// * min_distance: 0.0
+	/// * block_size: 3
+	/// * use_harris_detector: false
+	/// * harris_k: 0.04
+	#[inline]
+	pub fn create_good_features_to_track_detector_def(src_type: i32) -> Result<core::Ptr<crate::cudafeatures2d::CUDA_CornersDetector>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createGoodFeaturesToTrackDetector_int(src_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_CornersDetector>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Creates implementation for cuda::CornersDetector .
+	///
+	/// ## Parameters
+	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
+	/// * maxCorners: Maximum number of corners to return. If there are more corners than are found,
+	/// the strongest of them is returned.
+	/// * qualityLevel: Parameter characterizing the minimal accepted quality of image corners. The
+	/// parameter value is multiplied by the best corner quality measure, which is the minimal eigenvalue
+	/// (see cornerMinEigenVal ) or the Harris function response (see cornerHarris ). The corners with the
+	/// quality measure less than the product are rejected. For example, if the best corner has the
+	/// quality measure = 1500, and the qualityLevel=0.01 , then all the corners with the quality measure
+	/// less than 15 are rejected.
+	/// * minDistance: Minimum possible Euclidean distance between the returned corners.
+	/// * blockSize: Size of an average block for computing a derivative covariation matrix over each
+	/// pixel neighborhood. See cornerEigenValsAndVecs .
+	/// * useHarrisDetector: Parameter indicating whether to use a Harris detector (see cornerHarris)
+	/// or cornerMinEigenVal.
+	/// * harrisK: Free parameter of the Harris detector.
+	///
+	/// ## C++ default parameters
+	/// * max_corners: 1000
+	/// * quality_level: 0.01
+	/// * min_distance: 0.0
+	/// * block_size: 3
+	/// * use_harris_detector: false
+	/// * harris_k: 0.04
+	#[inline]
+	pub fn create_good_features_to_track_detector(src_type: i32, max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, use_harris_detector: bool, harris_k: f64) -> Result<core::Ptr<crate::cudafeatures2d::CUDA_CornersDetector>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createGoodFeaturesToTrackDetector_int_int_double_double_int_bool_double(src_type, max_corners, quality_level, min_distance, block_size, use_harris_detector, harris_k, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_CornersDetector>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Creates implementation for Harris cornerness criteria.
+	///
+	/// ## Parameters
+	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
+	/// * blockSize: Neighborhood size.
+	/// * ksize: Aperture parameter for the Sobel operator.
+	/// * k: Harris detector free parameter.
+	/// * borderType: Pixel extrapolation method. Only BORDER_REFLECT101 and BORDER_REPLICATE are
+	/// supported for now.
+	/// ## See also
+	/// cornerHarris
+	///
+	/// ## Note
+	/// This alternative version of [create_harris_corner] function uses the following default values for its arguments:
+	/// * border_type: BORDER_REFLECT101
+	#[inline]
+	pub fn create_harris_corner_def(src_type: i32, block_size: i32, ksize: i32, k: f64) -> Result<core::Ptr<crate::cudafeatures2d::CUDA_CornernessCriteria>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createHarrisCorner_int_int_int_double(src_type, block_size, ksize, k, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Creates implementation for Harris cornerness criteria.
+	///
+	/// ## Parameters
+	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
+	/// * blockSize: Neighborhood size.
+	/// * ksize: Aperture parameter for the Sobel operator.
+	/// * k: Harris detector free parameter.
+	/// * borderType: Pixel extrapolation method. Only BORDER_REFLECT101 and BORDER_REPLICATE are
+	/// supported for now.
+	/// ## See also
+	/// cornerHarris
+	///
+	/// ## C++ default parameters
+	/// * border_type: BORDER_REFLECT101
+	#[inline]
+	pub fn create_harris_corner(src_type: i32, block_size: i32, ksize: i32, k: f64, border_type: i32) -> Result<core::Ptr<crate::cudafeatures2d::CUDA_CornernessCriteria>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createHarrisCorner_int_int_int_double_int(src_type, block_size, ksize, k, border_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Creates implementation for the minimum eigen value of a 2x2 derivative covariation matrix (the
+	/// cornerness criteria).
+	///
+	/// ## Parameters
+	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
+	/// * blockSize: Neighborhood size.
+	/// * ksize: Aperture parameter for the Sobel operator.
+	/// * borderType: Pixel extrapolation method. Only BORDER_REFLECT101 and BORDER_REPLICATE are
+	/// supported for now.
+	/// ## See also
+	/// cornerMinEigenVal
+	///
+	/// ## Note
+	/// This alternative version of [create_min_eigen_val_corner] function uses the following default values for its arguments:
+	/// * border_type: BORDER_REFLECT101
+	#[inline]
+	pub fn create_min_eigen_val_corner_def(src_type: i32, block_size: i32, ksize: i32) -> Result<core::Ptr<crate::cudafeatures2d::CUDA_CornernessCriteria>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createMinEigenValCorner_int_int_int(src_type, block_size, ksize, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Creates implementation for the minimum eigen value of a 2x2 derivative covariation matrix (the
+	/// cornerness criteria).
+	///
+	/// ## Parameters
+	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
+	/// * blockSize: Neighborhood size.
+	/// * ksize: Aperture parameter for the Sobel operator.
+	/// * borderType: Pixel extrapolation method. Only BORDER_REFLECT101 and BORDER_REPLICATE are
+	/// supported for now.
+	/// ## See also
+	/// cornerMinEigenVal
+	///
+	/// ## C++ default parameters
+	/// * border_type: BORDER_REFLECT101
+	#[inline]
+	pub fn create_min_eigen_val_corner(src_type: i32, block_size: i32, ksize: i32, border_type: i32) -> Result<core::Ptr<crate::cudafeatures2d::CUDA_CornernessCriteria>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createMinEigenValCorner_int_int_int_int(src_type, block_size, ksize, border_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Base class for Cornerness Criteria computation. :
+	pub struct CUDA_CornernessCriteria {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_CornernessCriteria }
+
+	impl Drop for CUDA_CornernessCriteria {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_CornernessCriteria_delete(self.as_raw_mut_CUDA_CornernessCriteria()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_CornernessCriteria {}
+
+	/// Constant methods for [crate::cudafeatures2d::CUDA_CornernessCriteria]
+	pub trait CUDA_CornernessCriteriaTraitConst: core::AlgorithmTraitConst {
+		fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::cudafeatures2d::CUDA_CornernessCriteria]
+	pub trait CUDA_CornernessCriteriaTrait: core::AlgorithmTrait + crate::cudafeatures2d::CUDA_CornernessCriteriaTraitConst {
+		fn as_raw_mut_CUDA_CornernessCriteria(&mut self) -> *mut c_void;
+
+		/// Computes the cornerness criteria at each image pixel.
+		///
+		/// ## Parameters
+		/// * src: Source image.
+		/// * dst: Destination image containing cornerness values. It will have the same size as src and
+		/// CV_32FC1 type.
+		/// * stream: Stream for the asynchronous version.
+		///
+		/// ## C++ default parameters
+		/// * stream: Stream::Null()
+		#[inline]
+		fn compute(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_CornernessCriteria_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CornernessCriteria(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Computes the cornerness criteria at each image pixel.
+		///
+		/// ## Parameters
+		/// * src: Source image.
+		/// * dst: Destination image containing cornerness values. It will have the same size as src and
+		/// CV_32FC1 type.
+		/// * stream: Stream for the asynchronous version.
+		///
+		/// ## Note
+		/// This alternative version of [CUDA_CornernessCriteriaTrait::compute] function uses the following default values for its arguments:
+		/// * stream: Stream::Null()
+		#[inline]
+		fn compute_def(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_CornernessCriteria_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_CornernessCriteria(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for CUDA_CornernessCriteria {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CornernessCriteria")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { CUDA_CornernessCriteria, core::Algorithm, cv_cuda_CornernessCriteria_to_Algorithm }
+
+	impl core::AlgorithmTraitConst for CUDA_CornernessCriteria {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for CUDA_CornernessCriteria {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CUDA_CornernessCriteria, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::cudafeatures2d::CUDA_CornernessCriteriaTraitConst for CUDA_CornernessCriteria {
+		#[inline] fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::cudafeatures2d::CUDA_CornernessCriteriaTrait for CUDA_CornernessCriteria {
+		#[inline] fn as_raw_mut_CUDA_CornernessCriteria(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CUDA_CornernessCriteria, crate::cudafeatures2d::CUDA_CornernessCriteriaTraitConst, as_raw_CUDA_CornernessCriteria, crate::cudafeatures2d::CUDA_CornernessCriteriaTrait, as_raw_mut_CUDA_CornernessCriteria }
+
+	/// Base class for Corners Detector. :
+	pub struct CUDA_CornersDetector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_CornersDetector }
+
+	impl Drop for CUDA_CornersDetector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_CornersDetector_delete(self.as_raw_mut_CUDA_CornersDetector()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_CornersDetector {}
+
+	/// Constant methods for [crate::cudafeatures2d::CUDA_CornersDetector]
+	pub trait CUDA_CornersDetectorTraitConst: core::AlgorithmTraitConst {
+		fn as_raw_CUDA_CornersDetector(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::cudafeatures2d::CUDA_CornersDetector]
+	pub trait CUDA_CornersDetectorTrait: core::AlgorithmTrait + crate::cudafeatures2d::CUDA_CornersDetectorTraitConst {
+		fn as_raw_mut_CUDA_CornersDetector(&mut self) -> *mut c_void;
+
+		/// Determines strong corners on an image.
+		///
+		/// ## Parameters
+		/// * image: Input 8-bit or floating-point 32-bit, single-channel image.
+		/// * corners: Output vector of detected corners (1-row matrix with CV_32FC2 type with corners
+		/// positions).
+		/// * mask: Optional region of interest. If the image is not empty (it needs to have the type
+		/// CV_8UC1 and the same size as image ), it specifies the region in which the corners are detected.
+		/// * stream: Stream for the asynchronous version.
+		///
+		/// ## C++ default parameters
+		/// * mask: noArray()
+		/// * stream: Stream::Null()
+		#[inline]
+		fn detect(&mut self, image: &impl ToInputArray, corners: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(corners);
+			input_array_arg!(mask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_CornersDetector_detect_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_mut_CUDA_CornersDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Determines strong corners on an image.
+		///
+		/// ## Parameters
+		/// * image: Input 8-bit or floating-point 32-bit, single-channel image.
+		/// * corners: Output vector of detected corners (1-row matrix with CV_32FC2 type with corners
+		/// positions).
+		/// * mask: Optional region of interest. If the image is not empty (it needs to have the type
+		/// CV_8UC1 and the same size as image ), it specifies the region in which the corners are detected.
+		/// * stream: Stream for the asynchronous version.
+		///
+		/// ## Note
+		/// This alternative version of [CUDA_CornersDetectorTrait::detect] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		/// * stream: Stream::Null()
+		#[inline]
+		fn detect_def(&mut self, image: &impl ToInputArray, corners: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(corners);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_CornersDetector_detect_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_CornersDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_max_corners(&mut self, max_corners: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_CornersDetector_setMaxCorners_int(self.as_raw_mut_CUDA_CornersDetector(), max_corners, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_min_distance(&mut self, min_distance: f64) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_CornersDetector_setMinDistance_double(self.as_raw_mut_CUDA_CornersDetector(), min_distance, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for CUDA_CornersDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CornersDetector")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { CUDA_CornersDetector, core::Algorithm, cv_cuda_CornersDetector_to_Algorithm }
+
+	impl core::AlgorithmTraitConst for CUDA_CornersDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for CUDA_CornersDetector {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CUDA_CornersDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::cudafeatures2d::CUDA_CornersDetectorTraitConst for CUDA_CornersDetector {
+		#[inline] fn as_raw_CUDA_CornersDetector(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::cudafeatures2d::CUDA_CornersDetectorTrait for CUDA_CornersDetector {
+		#[inline] fn as_raw_mut_CUDA_CornersDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CUDA_CornersDetector, crate::cudafeatures2d::CUDA_CornersDetectorTraitConst, as_raw_CUDA_CornersDetector, crate::cudafeatures2d::CUDA_CornersDetectorTrait, as_raw_mut_CUDA_CornersDetector }
 
 	/// Abstract base class for matching keypoint descriptors.
 	///
@@ -1230,7 +1628,7 @@ pub mod cudafeatures2d {
 
 	boxed_cast_base! { CUDA_FastFeatureDetector, core::Algorithm, cv_cuda_FastFeatureDetector_to_Algorithm }
 
-	boxed_cast_base! { CUDA_FastFeatureDetector, crate::features2d::Feature2D, cv_cuda_FastFeatureDetector_to_Feature2D }
+	boxed_cast_base! { CUDA_FastFeatureDetector, crate::features::Feature2D, cv_cuda_FastFeatureDetector_to_Feature2D }
 
 	boxed_cast_base! { CUDA_FastFeatureDetector, crate::cudafeatures2d::CUDA_Feature2DAsync, cv_cuda_FastFeatureDetector_to_CUDA_Feature2DAsync }
 
@@ -1244,15 +1642,15 @@ pub mod cudafeatures2d {
 
 	boxed_ref! { CUDA_FastFeatureDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
 
-	impl crate::features2d::Feature2DTraitConst for CUDA_FastFeatureDetector {
+	impl crate::features::Feature2DTraitConst for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl crate::features2d::Feature2DTrait for CUDA_FastFeatureDetector {
+	impl crate::features::Feature2DTrait for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { CUDA_FastFeatureDetector, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	boxed_ref! { CUDA_FastFeatureDetector, crate::features::Feature2DTraitConst, as_raw_Feature2D, crate::features::Feature2DTrait, as_raw_mut_Feature2D }
 
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }
@@ -1291,13 +1689,13 @@ pub mod cudafeatures2d {
 	unsafe impl Send for CUDA_Feature2DAsync {}
 
 	/// Constant methods for [crate::cudafeatures2d::CUDA_Feature2DAsync]
-	pub trait CUDA_Feature2DAsyncTraitConst: crate::features2d::Feature2DTraitConst {
+	pub trait CUDA_Feature2DAsyncTraitConst: crate::features::Feature2DTraitConst {
 		fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void;
 
 	}
 
 	/// Mutable methods for [crate::cudafeatures2d::CUDA_Feature2DAsync]
-	pub trait CUDA_Feature2DAsyncTrait: crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst + crate::features2d::Feature2DTrait {
+	pub trait CUDA_Feature2DAsyncTrait: crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst + crate::features::Feature2DTrait {
 		fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void;
 
 		/// Detects keypoints in an image.
@@ -1453,7 +1851,7 @@ pub mod cudafeatures2d {
 
 	boxed_cast_base! { CUDA_Feature2DAsync, core::Algorithm, cv_cuda_Feature2DAsync_to_Algorithm }
 
-	boxed_cast_base! { CUDA_Feature2DAsync, crate::features2d::Feature2D, cv_cuda_Feature2DAsync_to_Feature2D }
+	boxed_cast_base! { CUDA_Feature2DAsync, crate::features::Feature2D, cv_cuda_Feature2DAsync_to_Feature2D }
 
 	boxed_cast_descendant! { CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_FastFeatureDetector, cv_cuda_Feature2DAsync_to_CUDA_FastFeatureDetector }
 
@@ -1469,15 +1867,15 @@ pub mod cudafeatures2d {
 
 	boxed_ref! { CUDA_Feature2DAsync, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
 
-	impl crate::features2d::Feature2DTraitConst for CUDA_Feature2DAsync {
+	impl crate::features::Feature2DTraitConst for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl crate::features2d::Feature2DTrait for CUDA_Feature2DAsync {
+	impl crate::features::Feature2DTrait for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { CUDA_Feature2DAsync, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	boxed_ref! { CUDA_Feature2DAsync, crate::features::Feature2DTraitConst, as_raw_Feature2D, crate::features::Feature2DTrait, as_raw_mut_Feature2D }
 
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }
@@ -1763,7 +2161,7 @@ pub mod cudafeatures2d {
 
 	boxed_cast_base! { CUDA_ORB, core::Algorithm, cv_cuda_ORB_to_Algorithm }
 
-	boxed_cast_base! { CUDA_ORB, crate::features2d::Feature2D, cv_cuda_ORB_to_Feature2D }
+	boxed_cast_base! { CUDA_ORB, crate::features::Feature2D, cv_cuda_ORB_to_Feature2D }
 
 	boxed_cast_base! { CUDA_ORB, crate::cudafeatures2d::CUDA_Feature2DAsync, cv_cuda_ORB_to_CUDA_Feature2DAsync }
 
@@ -1777,15 +2175,15 @@ pub mod cudafeatures2d {
 
 	boxed_ref! { CUDA_ORB, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
 
-	impl crate::features2d::Feature2DTraitConst for CUDA_ORB {
+	impl crate::features::Feature2DTraitConst for CUDA_ORB {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl crate::features2d::Feature2DTrait for CUDA_ORB {
+	impl crate::features::Feature2DTrait for CUDA_ORB {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { CUDA_ORB, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	boxed_ref! { CUDA_ORB, crate::features::Feature2DTraitConst, as_raw_Feature2D, crate::features::Feature2DTrait, as_raw_mut_Feature2D }
 
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_ORB {
 		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }

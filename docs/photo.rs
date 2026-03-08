@@ -31,14 +31,134 @@ pub mod photo {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{AlignExposuresTrait, AlignExposuresTraitConst, AlignMTBTrait, AlignMTBTraitConst, CalibrateCRFTrait, CalibrateCRFTraitConst, CalibrateDebevecTrait, CalibrateDebevecTraitConst, CalibrateRobertsonTrait, CalibrateRobertsonTraitConst, MergeDebevecTrait, MergeDebevecTraitConst, MergeExposuresTrait, MergeExposuresTraitConst, MergeMertensTrait, MergeMertensTraitConst, MergeRobertsonTrait, MergeRobertsonTraitConst, TonemapDragoTrait, TonemapDragoTraitConst, TonemapMantiukTrait, TonemapMantiukTraitConst, TonemapReinhardTrait, TonemapReinhardTraitConst, TonemapTrait, TonemapTraitConst};
+		pub use super::{AlignExposuresTrait, AlignExposuresTraitConst, AlignMTBTrait, AlignMTBTraitConst, CalibrateCRFTrait, CalibrateCRFTraitConst, CalibrateDebevecTrait, CalibrateDebevecTraitConst, CalibrateRobertsonTrait, CalibrateRobertsonTraitConst, ColorCorrectionModelTrait, ColorCorrectionModelTraitConst, IntelligentScissorsMBTrait, IntelligentScissorsMBTraitConst, MergeDebevecTrait, MergeDebevecTraitConst, MergeExposuresTrait, MergeExposuresTraitConst, MergeMertensTrait, MergeMertensTraitConst, MergeRobertsonTrait, MergeRobertsonTraitConst, TonemapDragoTrait, TonemapDragoTraitConst, TonemapMantiukTrait, TonemapMantiukTraitConst, TonemapReinhardTrait, TonemapReinhardTraitConst, TonemapTrait, TonemapTraitConst};
 	}
 
+	/// Uses a ![inline formula](https://latex.codecogs.com/png.latex?4%5Ctimes3) matrix to affine transform RGB values with both scaling and offset terms.
+	pub const CCM_AFFINE: i32 = 1;
+	/// Uses a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) matrix to linearly transform RGB values without offsets.
+	pub const CCM_LINEAR: i32 = 0;
+	/// DigitalSG ColorChecker with 140 squares
+	pub const COLORCHECKER_DIGITAL_SG: i32 = 2;
+	/// Macbeth ColorChecker
+	pub const COLORCHECKER_MACBETH: i32 = 0;
+	/// DKK ColorChecker
+	pub const COLORCHECKER_VINYL: i32 = 1;
+	/// <https://en.wikipedia.org/wiki/Adobe_RGB_color_space> , RGB color space
+	pub const COLOR_SPACE_ADOBE_RGB: i32 = 2;
+	/// <https://en.wikipedia.org/wiki/Adobe_RGB_color_space> , linear RGB color space
+	pub const COLOR_SPACE_ADOBE_RGBL: i32 = 3;
+	/// <http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html> , RGB color space
+	pub const COLOR_SPACE_APPLE_RGB: i32 = 10;
+	/// <http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html> , linear RGB color space
+	pub const COLOR_SPACE_APPLE_RGBL: i32 = 11;
+	/// <https://en.wikipedia.org/wiki/DCI-P3> , RGB color space
+	pub const COLOR_SPACE_DCI_P3_RGB: i32 = 8;
+	/// <https://en.wikipedia.org/wiki/DCI-P3> , linear RGB color space
+	pub const COLOR_SPACE_DCI_P3_RGBL: i32 = 9;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, A illuminant, 10 degree
+	pub const COLOR_SPACE_LAB_A_10: i32 = 33;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, A illuminant, 2 degree
+	pub const COLOR_SPACE_LAB_A_2: i32 = 32;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D50 illuminant, 10 degree
+	pub const COLOR_SPACE_LAB_D50_10: i32 = 31;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D50 illuminant, 2 degree
+	pub const COLOR_SPACE_LAB_D50_2: i32 = 29;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D55 illuminant, 10 degree
+	pub const COLOR_SPACE_LAB_D55_10: i32 = 35;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D55 illuminant, 2 degree
+	pub const COLOR_SPACE_LAB_D55_2: i32 = 34;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D65 illuminant, 10 degree
+	pub const COLOR_SPACE_LAB_D65_10: i32 = 30;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D65 illuminant, 2 degree
+	pub const COLOR_SPACE_LAB_D65_2: i32 = 28;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D75 illuminant, 10 degree
+	pub const COLOR_SPACE_LAB_D75_10: i32 = 37;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D75 illuminant, 2 degree
+	pub const COLOR_SPACE_LAB_D75_2: i32 = 36;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, E illuminant, 10 degree
+	pub const COLOR_SPACE_LAB_E_10: i32 = 39;
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, E illuminant, 2 degree
+	pub const COLOR_SPACE_LAB_E_2: i32 = 38;
+	/// <https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space> , RGB color space
+	pub const COLOR_SPACE_PRO_PHOTO_RGB: i32 = 6;
+	/// <https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space> , linear RGB color space
+	pub const COLOR_SPACE_PRO_PHOTO_RGBL: i32 = 7;
+	/// <https://en.wikipedia.org/wiki/Rec._2020> , RGB color space
+	pub const COLOR_SPACE_REC_2020_RGB: i32 = 14;
+	/// <https://en.wikipedia.org/wiki/Rec._2020> , linear RGB color space
+	pub const COLOR_SPACE_REC_2020_RGBL: i32 = 15;
+	/// <https://en.wikipedia.org/wiki/Rec._709> , RGB color space
+	pub const COLOR_SPACE_REC_709_RGB: i32 = 12;
+	/// <https://en.wikipedia.org/wiki/Rec._709> , linear RGB color space
+	pub const COLOR_SPACE_REC_709_RGBL: i32 = 13;
+	/// <https://en.wikipedia.org/wiki/SRGB> , RGB color space
+	pub const COLOR_SPACE_SRGB: i32 = 0;
+	/// <https://en.wikipedia.org/wiki/SRGB> , linear RGB color space
+	pub const COLOR_SPACE_SRGBL: i32 = 1;
+	/// <https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space> , RGB color space
+	pub const COLOR_SPACE_WIDE_GAMUT_RGB: i32 = 4;
+	/// <https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space> , linear RGB color space
+	pub const COLOR_SPACE_WIDE_GAMUT_RGBL: i32 = 5;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, A illuminant, 10 degree
+	pub const COLOR_SPACE_XYZ_A_10: i32 = 21;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, A illuminant, 2 degree
+	pub const COLOR_SPACE_XYZ_A_2: i32 = 20;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D50 illuminant, 10 degree
+	pub const COLOR_SPACE_XYZ_D50_10: i32 = 19;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D50 illuminant, 2 degree
+	pub const COLOR_SPACE_XYZ_D50_2: i32 = 17;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D55 illuminant, 10 degree
+	pub const COLOR_SPACE_XYZ_D55_10: i32 = 23;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D55 illuminant, 2 degree
+	pub const COLOR_SPACE_XYZ_D55_2: i32 = 22;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D65 illuminant, 10 degree
+	pub const COLOR_SPACE_XYZ_D65_10: i32 = 18;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D65 illuminant, 2 degree
+	pub const COLOR_SPACE_XYZ_D65_2: i32 = 16;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D75 illuminant, 10 degree
+	pub const COLOR_SPACE_XYZ_D75_10: i32 = 25;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D75 illuminant, 2 degree
+	pub const COLOR_SPACE_XYZ_D75_2: i32 = 24;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, E illuminant, 10 degree
+	pub const COLOR_SPACE_XYZ_E_10: i32 = 27;
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, E illuminant, 2 degree
+	pub const COLOR_SPACE_XYZ_E_2: i32 = 26;
+	pub const DISTANCE_CIE2000: i32 = 3;
+	/// The 1976 formula is the first formula that related a measured color difference to a known set of CIELAB coordinates.
+	pub const DISTANCE_CIE76: i32 = 0;
+	/// The 1976 definition was extended to address perceptual non-uniformities.
+	pub const DISTANCE_CIE94_GRAPHIC_ARTS: i32 = 1;
+	pub const DISTANCE_CIE94_TEXTILES: i32 = 2;
+	/// In 1984, the Colour Measurement Committee of the Society of Dyers and Colourists defined a difference measure, also based on the L*C*h color model.
+	pub const DISTANCE_CMC_1TO1: i32 = 4;
+	pub const DISTANCE_CMC_2TO1: i32 = 5;
+	/// Euclidean distance of rgb color space
+	pub const DISTANCE_RGB: i32 = 6;
+	/// Euclidean distance of rgbl color space
+	pub const DISTANCE_RGBL: i32 = 7;
+	/// The least square method is an optimal solution under the linear RGB distance function
+	pub const INITIAL_METHOD_LEAST_SQUARE: i32 = 1;
+	/// The white balance method. The initial value is:
+	///
+	pub const INITIAL_METHOD_WHITE_BALANCE: i32 = 0;
 	/// Use Navier-Stokes based method
 	pub const INPAINT_NS: i32 = 0;
-	/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Telea04)
+	/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Telea04)
 	pub const INPAINT_TELEA: i32 = 1;
 	pub const LDR_SIZE: i32 = 256;
+	/// logarithmic polynomial fitting channels respectively; Need assign a value to deg simultaneously
+	pub const LINEARIZATION_COLORLOGPOLYFIT: i32 = 3;
+	/// polynomial fitting channels respectively; Need assign a value to deg simultaneously
+	pub const LINEARIZATION_COLORPOLYFIT: i32 = 2;
+	/// gamma correction; Need assign a value to gamma simultaneously
+	pub const LINEARIZATION_GAMMA: i32 = 1;
+	/// grayscale Logarithmic polynomial fitting;  Need assign a value to deg and dst_whites simultaneously
+	pub const LINEARIZATION_GRAYLOGPOLYFIT: i32 = 5;
+	/// grayscale polynomial fitting; Need assign a value to deg and dst_whites simultaneously
+	pub const LINEARIZATION_GRAYPOLYFIT: i32 = 4;
+	/// no change is made
+	pub const LINEARIZATION_IDENTITY: i32 = 0;
 	/// Mixed seamless cloning.
 	/// This method addresses cases where simple color-based selection or alpha masking is time-consuming
 	/// and may result in undesirable halos. By combining structure from the source and texture from the
@@ -72,6 +192,175 @@ pub mod photo {
 	pub const NORMCONV_FILTER: i32 = 2;
 	/// Recursive Filtering
 	pub const RECURS_FILTER: i32 = 1;
+	/// Enum of the possible types of ccm.
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum CcmType {
+		/// Uses a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) matrix to linearly transform RGB values without offsets.
+		CCM_LINEAR = 0,
+		/// Uses a ![inline formula](https://latex.codecogs.com/png.latex?4%5Ctimes3) matrix to affine transform RGB values with both scaling and offset terms.
+		CCM_AFFINE = 1,
+	}
+
+	opencv_type_enum! { crate::photo::CcmType { CCM_LINEAR, CCM_AFFINE } }
+
+	/// Macbeth and Vinyl ColorChecker with 2deg D50
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum ColorCheckerType {
+		/// Macbeth ColorChecker
+		COLORCHECKER_MACBETH = 0,
+		/// DKK ColorChecker
+		COLORCHECKER_VINYL = 1,
+		/// DigitalSG ColorChecker with 140 squares
+		COLORCHECKER_DIGITAL_SG = 2,
+	}
+
+	opencv_type_enum! { crate::photo::ColorCheckerType { COLORCHECKER_MACBETH, COLORCHECKER_VINYL, COLORCHECKER_DIGITAL_SG } }
+
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum ColorSpace {
+		/// <https://en.wikipedia.org/wiki/SRGB> , RGB color space
+		COLOR_SPACE_SRGB = 0,
+		/// <https://en.wikipedia.org/wiki/SRGB> , linear RGB color space
+		COLOR_SPACE_SRGBL = 1,
+		/// <https://en.wikipedia.org/wiki/Adobe_RGB_color_space> , RGB color space
+		COLOR_SPACE_ADOBE_RGB = 2,
+		/// <https://en.wikipedia.org/wiki/Adobe_RGB_color_space> , linear RGB color space
+		COLOR_SPACE_ADOBE_RGBL = 3,
+		/// <https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space> , RGB color space
+		COLOR_SPACE_WIDE_GAMUT_RGB = 4,
+		/// <https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space> , linear RGB color space
+		COLOR_SPACE_WIDE_GAMUT_RGBL = 5,
+		/// <https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space> , RGB color space
+		COLOR_SPACE_PRO_PHOTO_RGB = 6,
+		/// <https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space> , linear RGB color space
+		COLOR_SPACE_PRO_PHOTO_RGBL = 7,
+		/// <https://en.wikipedia.org/wiki/DCI-P3> , RGB color space
+		COLOR_SPACE_DCI_P3_RGB = 8,
+		/// <https://en.wikipedia.org/wiki/DCI-P3> , linear RGB color space
+		COLOR_SPACE_DCI_P3_RGBL = 9,
+		/// <http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html> , RGB color space
+		COLOR_SPACE_APPLE_RGB = 10,
+		/// <http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html> , linear RGB color space
+		COLOR_SPACE_APPLE_RGBL = 11,
+		/// <https://en.wikipedia.org/wiki/Rec._709> , RGB color space
+		COLOR_SPACE_REC_709_RGB = 12,
+		/// <https://en.wikipedia.org/wiki/Rec._709> , linear RGB color space
+		COLOR_SPACE_REC_709_RGBL = 13,
+		/// <https://en.wikipedia.org/wiki/Rec._2020> , RGB color space
+		COLOR_SPACE_REC_2020_RGB = 14,
+		/// <https://en.wikipedia.org/wiki/Rec._2020> , linear RGB color space
+		COLOR_SPACE_REC_2020_RGBL = 15,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D65 illuminant, 2 degree
+		COLOR_SPACE_XYZ_D65_2 = 16,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D50 illuminant, 2 degree
+		COLOR_SPACE_XYZ_D50_2 = 17,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D65 illuminant, 10 degree
+		COLOR_SPACE_XYZ_D65_10 = 18,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D50 illuminant, 10 degree
+		COLOR_SPACE_XYZ_D50_10 = 19,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, A illuminant, 2 degree
+		COLOR_SPACE_XYZ_A_2 = 20,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, A illuminant, 10 degree
+		COLOR_SPACE_XYZ_A_10 = 21,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D55 illuminant, 2 degree
+		COLOR_SPACE_XYZ_D55_2 = 22,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D55 illuminant, 10 degree
+		COLOR_SPACE_XYZ_D55_10 = 23,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D75 illuminant, 2 degree
+		COLOR_SPACE_XYZ_D75_2 = 24,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, D75 illuminant, 10 degree
+		COLOR_SPACE_XYZ_D75_10 = 25,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, E illuminant, 2 degree
+		COLOR_SPACE_XYZ_E_2 = 26,
+		/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , XYZ color space, E illuminant, 10 degree
+		COLOR_SPACE_XYZ_E_10 = 27,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D65 illuminant, 2 degree
+		COLOR_SPACE_LAB_D65_2 = 28,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D50 illuminant, 2 degree
+		COLOR_SPACE_LAB_D50_2 = 29,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D65 illuminant, 10 degree
+		COLOR_SPACE_LAB_D65_10 = 30,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D50 illuminant, 10 degree
+		COLOR_SPACE_LAB_D50_10 = 31,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, A illuminant, 2 degree
+		COLOR_SPACE_LAB_A_2 = 32,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, A illuminant, 10 degree
+		COLOR_SPACE_LAB_A_10 = 33,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D55 illuminant, 2 degree
+		COLOR_SPACE_LAB_D55_2 = 34,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D55 illuminant, 10 degree
+		COLOR_SPACE_LAB_D55_10 = 35,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D75 illuminant, 2 degree
+		COLOR_SPACE_LAB_D75_2 = 36,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, D75 illuminant, 10 degree
+		COLOR_SPACE_LAB_D75_10 = 37,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, E illuminant, 2 degree
+		COLOR_SPACE_LAB_E_2 = 38,
+		/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , Lab color space, E illuminant, 10 degree
+		COLOR_SPACE_LAB_E_10 = 39,
+	}
+
+	opencv_type_enum! { crate::photo::ColorSpace { COLOR_SPACE_SRGB, COLOR_SPACE_SRGBL, COLOR_SPACE_ADOBE_RGB, COLOR_SPACE_ADOBE_RGBL, COLOR_SPACE_WIDE_GAMUT_RGB, COLOR_SPACE_WIDE_GAMUT_RGBL, COLOR_SPACE_PRO_PHOTO_RGB, COLOR_SPACE_PRO_PHOTO_RGBL, COLOR_SPACE_DCI_P3_RGB, COLOR_SPACE_DCI_P3_RGBL, COLOR_SPACE_APPLE_RGB, COLOR_SPACE_APPLE_RGBL, COLOR_SPACE_REC_709_RGB, COLOR_SPACE_REC_709_RGBL, COLOR_SPACE_REC_2020_RGB, COLOR_SPACE_REC_2020_RGBL, COLOR_SPACE_XYZ_D65_2, COLOR_SPACE_XYZ_D50_2, COLOR_SPACE_XYZ_D65_10, COLOR_SPACE_XYZ_D50_10, COLOR_SPACE_XYZ_A_2, COLOR_SPACE_XYZ_A_10, COLOR_SPACE_XYZ_D55_2, COLOR_SPACE_XYZ_D55_10, COLOR_SPACE_XYZ_D75_2, COLOR_SPACE_XYZ_D75_10, COLOR_SPACE_XYZ_E_2, COLOR_SPACE_XYZ_E_10, COLOR_SPACE_LAB_D65_2, COLOR_SPACE_LAB_D50_2, COLOR_SPACE_LAB_D65_10, COLOR_SPACE_LAB_D50_10, COLOR_SPACE_LAB_A_2, COLOR_SPACE_LAB_A_10, COLOR_SPACE_LAB_D55_2, COLOR_SPACE_LAB_D55_10, COLOR_SPACE_LAB_D75_2, COLOR_SPACE_LAB_D75_10, COLOR_SPACE_LAB_E_2, COLOR_SPACE_LAB_E_10 } }
+
+	/// Enum of possible functions to calculate the distance between colors.
+	///
+	/// See <https://en.wikipedia.org/wiki/Color_difference> for details
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum DistanceType {
+		/// The 1976 formula is the first formula that related a measured color difference to a known set of CIELAB coordinates.
+		DISTANCE_CIE76 = 0,
+		/// The 1976 definition was extended to address perceptual non-uniformities.
+		DISTANCE_CIE94_GRAPHIC_ARTS = 1,
+		DISTANCE_CIE94_TEXTILES = 2,
+		DISTANCE_CIE2000 = 3,
+		/// In 1984, the Colour Measurement Committee of the Society of Dyers and Colourists defined a difference measure, also based on the L*C*h color model.
+		DISTANCE_CMC_1TO1 = 4,
+		DISTANCE_CMC_2TO1 = 5,
+		/// Euclidean distance of rgb color space
+		DISTANCE_RGB = 6,
+		/// Euclidean distance of rgbl color space
+		DISTANCE_RGBL = 7,
+	}
+
+	opencv_type_enum! { crate::photo::DistanceType { DISTANCE_CIE76, DISTANCE_CIE94_GRAPHIC_ARTS, DISTANCE_CIE94_TEXTILES, DISTANCE_CIE2000, DISTANCE_CMC_1TO1, DISTANCE_CMC_2TO1, DISTANCE_RGB, DISTANCE_RGBL } }
+
+	/// Enum of the possible types of initial method.
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum InitialMethodType {
+		/// The white balance method. The initial value is:
+		///
+		INITIAL_METHOD_WHITE_BALANCE = 0,
+		/// The least square method is an optimal solution under the linear RGB distance function
+		INITIAL_METHOD_LEAST_SQUARE = 1,
+	}
+
+	opencv_type_enum! { crate::photo::InitialMethodType { INITIAL_METHOD_WHITE_BALANCE, INITIAL_METHOD_LEAST_SQUARE } }
+
+	/// Linearization transformation type
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum LinearizationType {
+		/// no change is made
+		LINEARIZATION_IDENTITY = 0,
+		/// gamma correction; Need assign a value to gamma simultaneously
+		LINEARIZATION_GAMMA = 1,
+		/// polynomial fitting channels respectively; Need assign a value to deg simultaneously
+		LINEARIZATION_COLORPOLYFIT = 2,
+		/// logarithmic polynomial fitting channels respectively; Need assign a value to deg simultaneously
+		LINEARIZATION_COLORLOGPOLYFIT = 3,
+		/// grayscale polynomial fitting; Need assign a value to deg and dst_whites simultaneously
+		LINEARIZATION_GRAYPOLYFIT = 4,
+		/// grayscale Logarithmic polynomial fitting;  Need assign a value to deg and dst_whites simultaneously
+		LINEARIZATION_GRAYLOGPOLYFIT = 5,
+	}
+
+	opencv_type_enum! { crate::photo::LinearizationType { LINEARIZATION_IDENTITY, LINEARIZATION_GAMMA, LINEARIZATION_COLORPOLYFIT, LINEARIZATION_COLORLOGPOLYFIT, LINEARIZATION_GRAYPOLYFIT, LINEARIZATION_GRAYLOGPOLYFIT } }
+
 	/// Flags for the seamlessClone algorithm
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -108,6 +397,55 @@ pub mod photo {
 	}
 
 	opencv_type_enum! { crate::photo::SeamlessCloneFlags { NORMAL_CLONE, MIXED_CLONE, MONOCHROME_TRANSFER, NORMAL_CLONE_WIDE, MIXED_CLONE_WIDE, MONOCHROME_TRANSFER_WIDE } }
+
+	/// Applies gamma correction to the input image.
+	/// ## Parameters
+	/// * src: Input image.
+	/// * dst: Output image.
+	/// * gamma: Gamma correction greater than zero.
+	#[inline]
+	pub fn gamma_correction(src: &impl ToInputArray, dst: &mut impl ToOutputArray, gamma: f64) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ccm_gammaCorrection_const__InputArrayR_const__OutputArrayR_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), gamma, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// ## Note
+	/// This alternative version of [read] function uses the following default values for its arguments:
+	/// * default_value: ColorCorrectionModel()
+	#[inline]
+	pub fn read_def(node: &impl core::FileNodeTraitConst, ccm: &mut impl crate::photo::ColorCorrectionModelTrait) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ccm_read_const_FileNodeR_ColorCorrectionModelR(node.as_raw_FileNode(), ccm.as_raw_mut_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// ## C++ default parameters
+	/// * default_value: ColorCorrectionModel()
+	#[inline]
+	pub fn read(node: &impl core::FileNodeTraitConst, ccm: &mut impl crate::photo::ColorCorrectionModelTrait, default_value: &impl crate::photo::ColorCorrectionModelTraitConst) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ccm_read_const_FileNodeR_ColorCorrectionModelR_const_ColorCorrectionModelR(node.as_raw_FileNode(), ccm.as_raw_mut_ColorCorrectionModel(), default_value.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	#[inline]
+	pub fn write(fs: &mut impl core::FileStorageTrait, unnamed: &str, ccm: &impl crate::photo::ColorCorrectionModelTraitConst) -> Result<()> {
+		extern_container_arg!(unnamed);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ccm_write_FileStorageR_const_stringR_const_ColorCorrectionModelR(fs.as_raw_mut_FileStorage(), unnamed.opencv_as_extern(), ccm.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
 
 	/// Given an original color image, two differently colored versions of this image can be mixed
 	/// seamlessly.
@@ -163,6 +501,103 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_colorChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), red_mul, green_mul, blue_mul, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// @example samples/cpp/snippets/chromatic_aberration_correction.cpp
+	/// An example correcting chromatic aberration with C++
+	///
+	/// @example samples/python/snippets/chromatic_aberration_correction.py
+	///  * An example correcting chromatic aberration with Python
+	///
+	/// Corrects lateral chromatic aberration in an image using polynomial distortion model.
+	///
+	/// This function loads polynomial calibration data from the specified file and applies
+	/// a channel‐specific warp to remove chromatic aberration.
+	/// If @p input_image has one channel, it is assumed to be a raw Bayer image and is
+	/// first demosaiced using @p bayer_pattern. If it has three channels, it is treated
+	/// as a BGR image and @p bayer_pattern is ignored.
+	///
+	/// Firstly, calibration needs to be done using apps/chromatic-aberration-calibration/ca_calibration.py on a photo of
+	/// a pattern of black discs on white background, included in opencv_extra/testdata/cv/cameracalibration/chromatic_aberration/chromatic_aberration_pattern_a3.png
+	///
+	/// Calibration and correction are based on the algorithm described in [rudakova2013precise](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_rudakova2013precise).
+	/// The chromatic aberration is modeled as a polynomial of some degree in red and blue channels compared to green.
+	/// In calibration, a photo of many black discs on white background is used, and the displacements
+	/// between the centres of discs in red and blue channels compared to green are minimized. The coefficients
+	/// are then saved in a yaml file which can be used with this function to correct lateral chromatic aberration.
+	///
+	/// ## Parameters
+	/// * input_image: Input BGR image to correct
+	/// * coefficients: Coefficient model
+	/// * output_image: Corrected BGR image
+	/// * image_size: Size of images for the calibration coefficient model
+	/// * calib_degree: Degree of the calibration coefficient model
+	/// * bayer_pattern: Bayer pattern code (e.g. cv::COLOR_BayerBG2BGR) used for
+	/// demosaicing when @p input_image has one channel; ignored otherwise.
+	/// ## See also
+	/// loadChromaticAberrationParams, demosaicing
+	///
+	/// ## Note
+	/// This alternative version of [correct_chromatic_aberration] function uses the following default values for its arguments:
+	/// * bayer_pattern: -1
+	#[inline]
+	pub fn correct_chromatic_aberration_def(input_image: &impl ToInputArray, coefficients: &impl ToInputArray, output_image: &mut impl ToOutputArray, image_size: core::Size, calib_degree: i32) -> Result<()> {
+		input_array_arg!(input_image);
+		input_array_arg!(coefficients);
+		output_array_arg!(output_image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_correctChromaticAberration_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_SizeR_int(input_image.as_raw__InputArray(), coefficients.as_raw__InputArray(), output_image.as_raw__OutputArray(), &image_size, calib_degree, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// @example samples/cpp/snippets/chromatic_aberration_correction.cpp
+	/// An example correcting chromatic aberration with C++
+	///
+	/// @example samples/python/snippets/chromatic_aberration_correction.py
+	///  * An example correcting chromatic aberration with Python
+	///
+	/// Corrects lateral chromatic aberration in an image using polynomial distortion model.
+	///
+	/// This function loads polynomial calibration data from the specified file and applies
+	/// a channel‐specific warp to remove chromatic aberration.
+	/// If @p input_image has one channel, it is assumed to be a raw Bayer image and is
+	/// first demosaiced using @p bayer_pattern. If it has three channels, it is treated
+	/// as a BGR image and @p bayer_pattern is ignored.
+	///
+	/// Firstly, calibration needs to be done using apps/chromatic-aberration-calibration/ca_calibration.py on a photo of
+	/// a pattern of black discs on white background, included in opencv_extra/testdata/cv/cameracalibration/chromatic_aberration/chromatic_aberration_pattern_a3.png
+	///
+	/// Calibration and correction are based on the algorithm described in [rudakova2013precise](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_rudakova2013precise).
+	/// The chromatic aberration is modeled as a polynomial of some degree in red and blue channels compared to green.
+	/// In calibration, a photo of many black discs on white background is used, and the displacements
+	/// between the centres of discs in red and blue channels compared to green are minimized. The coefficients
+	/// are then saved in a yaml file which can be used with this function to correct lateral chromatic aberration.
+	///
+	/// ## Parameters
+	/// * input_image: Input BGR image to correct
+	/// * coefficients: Coefficient model
+	/// * output_image: Corrected BGR image
+	/// * image_size: Size of images for the calibration coefficient model
+	/// * calib_degree: Degree of the calibration coefficient model
+	/// * bayer_pattern: Bayer pattern code (e.g. cv::COLOR_BayerBG2BGR) used for
+	/// demosaicing when @p input_image has one channel; ignored otherwise.
+	/// ## See also
+	/// loadChromaticAberrationParams, demosaicing
+	///
+	/// ## C++ default parameters
+	/// * bayer_pattern: -1
+	#[inline]
+	pub fn correct_chromatic_aberration(input_image: &impl ToInputArray, coefficients: &impl ToInputArray, output_image: &mut impl ToOutputArray, image_size: core::Size, calib_degree: i32, bayer_pattern: i32) -> Result<()> {
+		input_array_arg!(input_image);
+		input_array_arg!(coefficients);
+		output_array_arg!(output_image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_correctChromaticAberration_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_SizeR_int_int(input_image.as_raw__InputArray(), coefficients.as_raw__InputArray(), output_image.as_raw__OutputArray(), &image_size, calib_degree, bayer_pattern, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -840,7 +1275,7 @@ pub mod photo {
 
 	/// Transforms a color image to a grayscale image. It is a basic tool in digital printing, stylized
 	/// black-and-white photograph rendering, and in many single channel image processing applications
-	/// [CL12](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_CL12) .
+	/// [CL12](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_CL12) .
 	///
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -866,12 +1301,12 @@ pub mod photo {
 	/// exactly what is implemented.
 	///
 	/// It should be noted, that this implementation was taken from the July 2013 blog entry
-	/// [MA13](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
+	/// [MA13](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
 	/// Subsequently, that code was rewritten on C++ with the usage of openCV by Vadim Pisarevsky at the end
 	/// of July 2013 and finally it was slightly adapted by later authors.
 	///
 	/// Although the thorough discussion and justification of the algorithm involved may be found in
-	/// [ChambolleEtAl](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
+	/// [ChambolleEtAl](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
 	/// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
 	/// pixels (it may be seen as set
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7B%28x%2Cy%29%5Cin%5Cmathbb%7BN%7D%5Ctimes%5Cmathbb%7BN%7D%5Cmid%201%5Cleq%20x%5Cleq%20n%2C%5C%3B1%5Cleq%20y%5Cleq%20m%5Cright%5C%7D) for some
@@ -917,12 +1352,12 @@ pub mod photo {
 	/// exactly what is implemented.
 	///
 	/// It should be noted, that this implementation was taken from the July 2013 blog entry
-	/// [MA13](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
+	/// [MA13](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
 	/// Subsequently, that code was rewritten on C++ with the usage of openCV by Vadim Pisarevsky at the end
 	/// of July 2013 and finally it was slightly adapted by later authors.
 	///
 	/// Although the thorough discussion and justification of the algorithm involved may be found in
-	/// [ChambolleEtAl](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
+	/// [ChambolleEtAl](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
 	/// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
 	/// pixels (it may be seen as set
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7B%28x%2Cy%29%5Cin%5Cmathbb%7BN%7D%5Ctimes%5Cmathbb%7BN%7D%5Cmid%201%5Cleq%20x%5Cleq%20n%2C%5C%3B1%5Cleq%20y%5Cleq%20m%5Cright%5C%7D) for some
@@ -1007,7 +1442,7 @@ pub mod photo {
 	}
 
 	/// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
-	/// filters are used in many different applications [EM11](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EM11) .
+	/// filters are used in many different applications [EM11](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EM11) .
 	///
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -1033,7 +1468,7 @@ pub mod photo {
 	}
 
 	/// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
-	/// filters are used in many different applications [EM11](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EM11) .
+	/// filters are used in many different applications [EM11](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EM11) .
 	///
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -1211,7 +1646,7 @@ pub mod photo {
 
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
 	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	///
 	/// ## Parameters
@@ -1251,7 +1686,7 @@ pub mod photo {
 
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
 	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	///
 	/// ## Parameters
@@ -1293,7 +1728,7 @@ pub mod photo {
 
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
 	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	///
 	/// ## Parameters
@@ -1334,7 +1769,7 @@ pub mod photo {
 
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
 	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	///
 	/// ## Parameters
@@ -1613,6 +2048,32 @@ pub mod photo {
 		Ok(ret)
 	}
 
+	/// Load chromatic-aberration calibration parameters from opened FileStorage.
+	///
+	/// R e*ads the red and blue polynomial coefficients from the specified file and
+	/// packs them into a 4×N CV_32F matrix:
+	/// row 0 = blue dx coefficients
+	/// row 1 = blue dy coefficients
+	/// row 2 = red  dx coefficients
+	/// row 3 = red  dy coefficients
+	///
+	/// ## Parameters
+	/// * node: Node of opened cv::FileStorage object.
+	/// * coeffMat: Output 4xN coefficient matrix (CV_32F).
+	/// * degree: Polynomial degree inferred from N.
+	/// * calib_size: Calibration image size read from file.
+	/// ## See also
+	/// correctChromaticAberration
+	#[inline]
+	pub fn load_chromatic_aberration_params(node: &impl core::FileNodeTraitConst, coeff_mat: &mut impl ToOutputArray, calib_size: &mut core::Size, degree: &mut i32) -> Result<()> {
+		output_array_arg!(coeff_mat);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_loadChromaticAberrationParams_const_FileNodeR_const__OutputArrayR_SizeR_intR(node.as_raw_FileNode(), coeff_mat.as_raw__OutputArray(), calib_size, degree, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// @example samples/cpp/tutorial_code/photo/non_photorealistic_rendering/npr_demo.cpp
 	/// An example using non-photorealistic line drawing functions
 	///
@@ -1675,10 +2136,13 @@ pub mod photo {
 	/// @example samples/cpp/tutorial_code/photo/seamless_cloning/cloning_demo.cpp
 	/// An example using seamlessClone function
 	///
+	/// @example samples/cpp/snippets/cloning_demo.cpp
+	/// An example using illuminationChange, colorChange, seamlessClone, textureFlattening functions
+	///
 	/// Performs seamless cloning to blend a region from a source image into a destination image.
 	/// This function is designed for local image editing, allowing changes restricted to a region
 	/// (manually selected as the ROI) to be applied effortlessly and seamlessly. These changes can
-	/// range from slight distortions to complete replacement by novel content [PM03](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_PM03).
+	/// range from slight distortions to complete replacement by novel content [PM03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_PM03).
 	///
 	/// ## Parameters
 	/// * src: The source image (8-bit 3-channel), from which a region will be blended into the destination.
@@ -1905,7 +2369,7 @@ pub mod photo {
 	///
 	/// In this implementation new image regions are filled with zeros.
 	///
-	/// For more information see [GW03](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_GW03) .
+	/// For more information see [GW03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_GW03) .
 	pub struct AlignMTB {
 		ptr: *mut c_void,
 	}
@@ -2192,7 +2656,7 @@ pub mod photo {
 	/// function as linear system. Objective function is constructed using pixel values on the same position
 	/// in all images, extra term is added to make the result smoother.
 	///
-	/// For more information see [DM97](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_DM97) .
+	/// For more information see [DM97](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_DM97) .
 	pub struct CalibrateDebevec {
 		ptr: *mut c_void,
 	}
@@ -2319,7 +2783,7 @@ pub mod photo {
 	/// Inverse camera response function is extracted for each brightness value by minimizing an objective
 	/// function as linear system. This algorithm uses all image pixels.
 	///
-	/// For more information see [RB99](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_RB99) .
+	/// For more information see [RB99](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_RB99) .
 	pub struct CalibrateRobertson {
 		ptr: *mut c_void,
 	}
@@ -2438,7 +2902,7 @@ pub mod photo {
 	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 	/// values and camera response.
 	///
-	/// For more information see [DM97](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_DM97) .
+	/// For more information see [DM97](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_DM97) .
 	pub struct MergeDebevec {
 		ptr: *mut c_void,
 	}
@@ -2627,7 +3091,7 @@ pub mod photo {
 	/// The resulting image doesn't require tonemapping and can be converted to 8-bit image by multiplying
 	/// by 255, but it's recommended to apply gamma correction and/or linear tonemapping.
 	///
-	/// For more information see [MK07](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MK07) .
+	/// For more information see [MK07](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MK07) .
 	pub struct MergeMertens {
 		ptr: *mut c_void,
 	}
@@ -2783,7 +3247,7 @@ pub mod photo {
 	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 	/// values and camera response.
 	///
-	/// For more information see [RB99](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_RB99) .
+	/// For more information see [RB99](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_RB99) .
 	pub struct MergeRobertson {
 		ptr: *mut c_void,
 	}
@@ -2982,9 +3446,9 @@ pub mod photo {
 	/// Since it's a global operator the same function is applied to all the pixels, it is controlled by the
 	/// bias parameter.
 	///
-	/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_FL02) .
+	/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_FL02) .
 	///
-	/// For more information see [DM03](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_DM03) .
+	/// For more information see [DM03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_DM03) .
 	pub struct TonemapDrago {
 		ptr: *mut c_void,
 	}
@@ -3094,7 +3558,7 @@ pub mod photo {
 	/// transforms contrast values to HVS response and scales the response. After this the image is
 	/// reconstructed from new contrast values.
 	///
-	/// For more information see [MM06](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MM06) .
+	/// For more information see [MM06](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MM06) .
 	pub struct TonemapMantiuk {
 		ptr: *mut c_void,
 	}
@@ -3205,7 +3669,7 @@ pub mod photo {
 	/// Mapping function is controlled by adaptation parameter, that is computed using light adaptation and
 	/// color adaptation.
 	///
-	/// For more information see [RD05](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_RD05) .
+	/// For more information see [RD05](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_RD05) .
 	pub struct TonemapReinhard {
 		ptr: *mut c_void,
 	}
@@ -3328,5 +3792,830 @@ pub mod photo {
 	}
 
 	boxed_ref! { TonemapReinhard, crate::photo::TonemapReinhardTraitConst, as_raw_TonemapReinhard, crate::photo::TonemapReinhardTrait, as_raw_mut_TonemapReinhard }
+
+	/// Core class of ccm model
+	///
+	/// Produce a ColorCorrectionModel instance for inference
+	pub struct ColorCorrectionModel {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { ColorCorrectionModel }
+
+	impl Drop for ColorCorrectionModel {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ccm_ColorCorrectionModel_delete(self.as_raw_mut_ColorCorrectionModel()) };
+		}
+	}
+
+	unsafe impl Send for ColorCorrectionModel {}
+
+	impl ColorCorrectionModel {
+		#[inline]
+		pub fn default() -> Result<crate::photo::ColorCorrectionModel> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::ColorCorrectionModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Color Correction Model
+		///
+		/// Supported list of color cards:
+		/// - [COLORCHECKER_MACBETH], the Macbeth ColorChecker
+		/// - [COLORCHECKER_VINYL], the DKK ColorChecker
+		/// - [COLORCHECKER_DIGITAL_SG], the DigitalSG ColorChecker with 140 squares
+		///
+		/// ## Parameters
+		/// * src: detected colors of ColorChecker patches;
+		///            the color type is RGB not BGR, and the color values are in [0, 1];
+		/// * constColor: the Built-in color card
+		#[inline]
+		pub fn new(src: &impl ToInputArray, const_color: i32) -> Result<crate::photo::ColorCorrectionModel> {
+			input_array_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const__InputArrayR_int(src.as_raw__InputArray(), const_color, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::ColorCorrectionModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Color Correction Model
+		/// ## Parameters
+		/// * src: detected colors of ColorChecker patches;
+		///        the color type is RGB not BGR, and the color values are in [0, 1];
+		/// * colors: the reference color values, the color values are in [0, 1].
+		/// * refColorSpace: the corresponding color space
+		///        If the color type is some RGB, the format is RGB not BGR;
+		#[inline]
+		pub fn new_1(src: &impl ToInputArray, colors: &impl ToInputArray, ref_color_space: crate::photo::ColorSpace) -> Result<crate::photo::ColorCorrectionModel> {
+			input_array_arg!(src);
+			input_array_arg!(colors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const__InputArrayR_const__InputArrayR_ColorSpace(src.as_raw__InputArray(), colors.as_raw__InputArray(), ref_color_space, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::ColorCorrectionModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Color Correction Model
+		/// ## Parameters
+		/// * src: detected colors of ColorChecker patches;
+		///            the color type is RGB not BGR, and the color values are in [0, 1];
+		/// * colors: the reference color values, the color values are in [0, 1].
+		/// * refColorSpace: the corresponding color space
+		///            If the color type is some RGB, the format is RGB not BGR;
+		/// * coloredPatchesMask: binary mask indicating which patches are colored (non-gray) patches
+		#[inline]
+		pub fn new_2(src: &impl ToInputArray, colors: &impl ToInputArray, ref_color_space: crate::photo::ColorSpace, colored_patches_mask: &impl ToInputArray) -> Result<crate::photo::ColorCorrectionModel> {
+			input_array_arg!(src);
+			input_array_arg!(colors);
+			input_array_arg!(colored_patches_mask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const__InputArrayR_const__InputArrayR_ColorSpace_const__InputArrayR(src.as_raw__InputArray(), colors.as_raw__InputArray(), ref_color_space, colored_patches_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::ColorCorrectionModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::photo::ColorCorrectionModel]
+	pub trait ColorCorrectionModelTraitConst {
+		fn as_raw_ColorCorrectionModel(&self) -> *const c_void;
+
+		#[inline]
+		fn get_color_correction_matrix(&self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_getColorCorrectionMatrix_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_loss(&self) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_getLoss_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_src_linear_rgb(&self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_getSrcLinearRGB_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_ref_linear_rgb(&self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_getRefLinearRGB_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_mask(&self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_getMask_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_weights(&self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_getWeights_const(self.as_raw_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_write_const_FileStorageR(self.as_raw_ColorCorrectionModel(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::photo::ColorCorrectionModel]
+	pub trait ColorCorrectionModelTrait: crate::photo::ColorCorrectionModelTraitConst {
+		fn as_raw_mut_ColorCorrectionModel(&mut self) -> *mut c_void;
+
+		/// set ColorSpace
+		///
+		/// Note: It should be some RGB color space;
+		/// Supported list of color cards:
+		/// - [COLOR_SPACE_SRGB]
+		/// - [COLOR_SPACE_ADOBE_RGB]
+		/// - [COLOR_SPACE_WIDE_GAMUT_RGB]
+		/// - [COLOR_SPACE_PRO_PHOTO_RGB]
+		/// - [COLOR_SPACE_DCI_P3_RGB]
+		/// - [COLOR_SPACE_APPLE_RGB]
+		/// - [COLOR_SPACE_REC_709_RGB]
+		/// - [COLOR_SPACE_REC_2020_RGB]
+		/// ## Parameters
+		/// * cs: the absolute color space that detected colors convert to;
+		///       default: [COLOR_SPACE_SRGB]
+		#[inline]
+		fn set_color_space(&mut self, cs: crate::photo::ColorSpace) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setColorSpace_ColorSpace(self.as_raw_mut_ColorCorrectionModel(), cs, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// set ccmType
+		/// ## Parameters
+		/// * ccmType: the shape of color correction matrix(CCM);
+		///                default: [CCM_LINEAR]
+		#[inline]
+		fn set_ccm_type(&mut self, ccm_type: crate::photo::CcmType) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setCcmType_CcmType(self.as_raw_mut_ColorCorrectionModel(), ccm_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// set Distance
+		/// ## Parameters
+		/// * distance: the type of color distance;
+		///                default: [DISTANCE_CIE2000]
+		#[inline]
+		fn set_distance(&mut self, distance: crate::photo::DistanceType) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setDistance_DistanceType(self.as_raw_mut_ColorCorrectionModel(), distance, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// set Linear
+		/// ## Parameters
+		/// * linearizationType: the method of linearization;
+		///                    default: [LINEARIZATION_GAMMA]
+		#[inline]
+		fn set_linearization(&mut self, linearization_type: crate::photo::LinearizationType) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setLinearization_LinearizationType(self.as_raw_mut_ColorCorrectionModel(), linearization_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// set Gamma
+		///
+		///
+		/// Note: only valid when linear is set to "gamma";
+		///
+		/// ## Parameters
+		/// * gamma: the gamma value of gamma correction;
+		///              default: 2.2;
+		#[inline]
+		fn set_linearization_gamma(&mut self, gamma: f64) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setLinearizationGamma_double(self.as_raw_mut_ColorCorrectionModel(), gamma, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// set degree
+		///
+		/// Note: only valid when linear is set to
+		/// - [LINEARIZATION_COLORPOLYFIT]
+		/// - [LINEARIZATION_GRAYPOLYFIT]
+		/// - [LINEARIZATION_COLORLOGPOLYFIT]
+		/// - [LINEARIZATION_GRAYLOGPOLYFIT]
+		///
+		/// ## Parameters
+		/// * deg: the degree of linearization polynomial
+		///    default: 3
+		#[inline]
+		fn set_linearization_degree(&mut self, deg: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setLinearizationDegree_int(self.as_raw_mut_ColorCorrectionModel(), deg, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// set SaturatedThreshold.
+		///        The colors in the closed interval [lower, upper] are reserved to participate
+		///        in the calculation of the loss function and initialization parameters
+		/// ## Parameters
+		/// * lower: the lower threshold to determine saturation;
+		///        default: 0;
+		/// * upper: the upper threshold to determine saturation;
+		///        default: 0
+		#[inline]
+		fn set_saturated_threshold(&mut self, lower: f64, upper: f64) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setSaturatedThreshold_double_double(self.as_raw_mut_ColorCorrectionModel(), lower, upper, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// set WeightsList
+		/// ## Parameters
+		/// * weightsList: the list of weight of each color;
+		///                    default: empty array
+		#[inline]
+		fn set_weights_list(&mut self, weights_list: &impl core::MatTraitConst) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setWeightsList_const_MatR(self.as_raw_mut_ColorCorrectionModel(), weights_list.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// set WeightCoeff
+		/// ## Parameters
+		/// * weightsCoeff: the exponent number of L* component of the reference color in CIE Lab color space;
+		///                      default: 0
+		#[inline]
+		fn set_weight_coeff(&mut self, weights_coeff: f64) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setWeightCoeff_double(self.as_raw_mut_ColorCorrectionModel(), weights_coeff, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// set InitialMethod
+		/// ## Parameters
+		/// * initialMethodType: the method of calculating CCM initial value;
+		///        default: INITIAL_METHOD_LEAST_SQUARE
+		#[inline]
+		fn set_initial_method(&mut self, initial_method_type: crate::photo::InitialMethodType) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setInitialMethod_InitialMethodType(self.as_raw_mut_ColorCorrectionModel(), initial_method_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// set MaxCount
+		/// ## Parameters
+		/// * maxCount: used in MinProblemSolver-DownhillSolver;
+		///    Terminal criteria to the algorithm;
+		///                  default: 5000;
+		#[inline]
+		fn set_max_count(&mut self, max_count: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setMaxCount_int(self.as_raw_mut_ColorCorrectionModel(), max_count, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// set Epsilon
+		/// ## Parameters
+		/// * epsilon: used in MinProblemSolver-DownhillSolver;
+		///    Terminal criteria to the algorithm;
+		///                default: 1e-4;
+		#[inline]
+		fn set_epsilon(&mut self, epsilon: f64) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setEpsilon_double(self.as_raw_mut_ColorCorrectionModel(), epsilon, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Set whether the input image is in RGB color space
+		/// ## Parameters
+		/// * rgb: If true, the model expects input images in RGB format.
+		///              If false, input is assumed to be in BGR (default).
+		#[inline]
+		fn set_rgb(&mut self, rgb: bool) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_setRGB_bool(self.as_raw_mut_ColorCorrectionModel(), rgb, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// make color correction
+		#[inline]
+		fn compute(&mut self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_compute(self.as_raw_mut_ColorCorrectionModel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Applies color correction to the input image using a fitted color correction matrix.
+		///
+		/// The conventional ranges for R, G, and B channel values are:
+		///   *   0 to 255 for CV_8U images
+		///   *   0 to 65535 for CV_16U images
+		///   *   0 to 1 for CV_32F images
+		/// ## Parameters
+		/// * src: Input 8-bit, 16-bit unsigned or 32-bit float 3-channel image..
+		/// * dst: Output image of the same size and datatype as src.
+		/// * islinear: default false.
+		///
+		/// ## C++ default parameters
+		/// * islinear: false
+		#[inline]
+		fn correct_image(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, islinear: bool) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_correctImage_const__InputArrayR_const__OutputArrayR_bool(self.as_raw_mut_ColorCorrectionModel(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), islinear, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Applies color correction to the input image using a fitted color correction matrix.
+		///
+		/// The conventional ranges for R, G, and B channel values are:
+		///   *   0 to 255 for CV_8U images
+		///   *   0 to 65535 for CV_16U images
+		///   *   0 to 1 for CV_32F images
+		/// ## Parameters
+		/// * src: Input 8-bit, 16-bit unsigned or 32-bit float 3-channel image..
+		/// * dst: Output image of the same size and datatype as src.
+		/// * islinear: default false.
+		///
+		/// ## Note
+		/// This alternative version of [ColorCorrectionModelTrait::correct_image] function uses the following default values for its arguments:
+		/// * islinear: false
+		#[inline]
+		fn correct_image_def(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_correctImage_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ColorCorrectionModel(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn read(&mut self, node: &impl core::FileNodeTraitConst) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_read_const_FileNodeR(self.as_raw_mut_ColorCorrectionModel(), node.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for ColorCorrectionModel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ColorCorrectionModel")
+				.finish()
+		}
+	}
+
+	impl crate::photo::ColorCorrectionModelTraitConst for ColorCorrectionModel {
+		#[inline] fn as_raw_ColorCorrectionModel(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::photo::ColorCorrectionModelTrait for ColorCorrectionModel {
+		#[inline] fn as_raw_mut_ColorCorrectionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { ColorCorrectionModel, crate::photo::ColorCorrectionModelTraitConst, as_raw_ColorCorrectionModel, crate::photo::ColorCorrectionModelTrait, as_raw_mut_ColorCorrectionModel }
+
+	/// Intelligent Scissors image segmentation
+	///
+	/// This class is used to find the path (contour) between two points
+	/// which can be used for image segmentation.
+	///
+	/// Usage example:
+	/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/photo_segmentation.cpp#L1)
+	///
+	/// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
+	/// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
+	/// [Mortensen95intelligentscissors](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
+	pub struct IntelligentScissorsMB {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { IntelligentScissorsMB }
+
+	impl Drop for IntelligentScissorsMB {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_delete(self.as_raw_mut_IntelligentScissorsMB()) };
+		}
+	}
+
+	unsafe impl Send for IntelligentScissorsMB {}
+
+	impl IntelligentScissorsMB {
+		#[inline]
+		pub fn default() -> Result<crate::photo::IntelligentScissorsMB> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_IntelligentScissorsMB(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::photo::IntelligentScissorsMB]
+	pub trait IntelligentScissorsMBTraitConst {
+		fn as_raw_IntelligentScissorsMB(&self) -> *const c_void;
+
+		/// Extracts optimal contour for the given target point on the image
+		///
+		///
+		/// Note: buildMap() must be called before this call
+		///
+		/// ## Parameters
+		/// * targetPt: The target point
+		/// * contour:[out] The list of pixels which contains optimal path between the source and the target points of the image. Type is CV_32SC2 (compatible with `std::vector<Point>`)
+		/// * backward: Flag to indicate reverse order of retrieved pixels (use "true" value to fetch points from the target to the source point)
+		///
+		/// ## C++ default parameters
+		/// * backward: false
+		#[inline]
+		fn get_contour(&self, target_pt: core::Point, contour: &mut impl ToOutputArray, backward: bool) -> Result<()> {
+			output_array_arg!(contour);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_getContour_const_const_PointR_const__OutputArrayR_bool(self.as_raw_IntelligentScissorsMB(), &target_pt, contour.as_raw__OutputArray(), backward, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Extracts optimal contour for the given target point on the image
+		///
+		///
+		/// Note: buildMap() must be called before this call
+		///
+		/// ## Parameters
+		/// * targetPt: The target point
+		/// * contour:[out] The list of pixels which contains optimal path between the source and the target points of the image. Type is CV_32SC2 (compatible with `std::vector<Point>`)
+		/// * backward: Flag to indicate reverse order of retrieved pixels (use "true" value to fetch points from the target to the source point)
+		///
+		/// ## Note
+		/// This alternative version of [IntelligentScissorsMBTraitConst::get_contour] function uses the following default values for its arguments:
+		/// * backward: false
+		#[inline]
+		fn get_contour_def(&self, target_pt: core::Point, contour: &mut impl ToOutputArray) -> Result<()> {
+			output_array_arg!(contour);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_getContour_const_const_PointR_const__OutputArrayR(self.as_raw_IntelligentScissorsMB(), &target_pt, contour.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::photo::IntelligentScissorsMB]
+	pub trait IntelligentScissorsMBTrait: crate::photo::IntelligentScissorsMBTraitConst {
+		fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void;
+
+		/// Specify weights of feature functions
+		///
+		/// Consider keeping weights normalized (sum of weights equals to 1.0)
+		/// Discrete dynamic programming (DP) goal is minimization of costs between pixels.
+		///
+		/// ## Parameters
+		/// * weight_non_edge: Specify cost of non-edge pixels (default: 0.43f)
+		/// * weight_gradient_direction: Specify cost of gradient direction function (default: 0.43f)
+		/// * weight_gradient_magnitude: Specify cost of gradient magnitude function (default: 0.14f)
+		#[inline]
+		fn set_weights(&mut self, weight_non_edge: f32, weight_gradient_direction: f32, weight_gradient_magnitude: f32) -> Result<crate::photo::IntelligentScissorsMB> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setWeights_float_float_float(self.as_raw_mut_IntelligentScissorsMB(), weight_non_edge, weight_gradient_direction, weight_gradient_magnitude, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Specify gradient magnitude max value threshold
+		///
+		/// Zero limit value is used to disable gradient magnitude thresholding (default behavior, as described in original article).
+		/// Otherwize pixels with `gradient magnitude >= threshold` have zero cost.
+		///
+		///
+		/// Note: Thresholding should be used for images with irregular regions (to avoid stuck on parameters from high-contract areas, like embedded logos).
+		///
+		/// ## Parameters
+		/// * gradient_magnitude_threshold_max: Specify gradient magnitude max value threshold (default: 0, disabled)
+		///
+		/// ## C++ default parameters
+		/// * gradient_magnitude_threshold_max: 0.0f
+		#[inline]
+		fn set_gradient_magnitude_max_limit(&mut self, gradient_magnitude_threshold_max: f32) -> Result<crate::photo::IntelligentScissorsMB> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setGradientMagnitudeMaxLimit_float(self.as_raw_mut_IntelligentScissorsMB(), gradient_magnitude_threshold_max, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Specify gradient magnitude max value threshold
+		///
+		/// Zero limit value is used to disable gradient magnitude thresholding (default behavior, as described in original article).
+		/// Otherwize pixels with `gradient magnitude >= threshold` have zero cost.
+		///
+		///
+		/// Note: Thresholding should be used for images with irregular regions (to avoid stuck on parameters from high-contract areas, like embedded logos).
+		///
+		/// ## Parameters
+		/// * gradient_magnitude_threshold_max: Specify gradient magnitude max value threshold (default: 0, disabled)
+		///
+		/// ## Note
+		/// This alternative version of [IntelligentScissorsMBTrait::set_gradient_magnitude_max_limit] function uses the following default values for its arguments:
+		/// * gradient_magnitude_threshold_max: 0.0f
+		#[inline]
+		fn set_gradient_magnitude_max_limit_def(&mut self) -> Result<crate::photo::IntelligentScissorsMB> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setGradientMagnitudeMaxLimit(self.as_raw_mut_IntelligentScissorsMB(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Switch to "Laplacian Zero-Crossing" edge feature extractor and specify its parameters
+		///
+		/// This feature extractor is used by default according to article.
+		///
+		/// Implementation has additional filtering for regions with low-amplitude noise.
+		/// This filtering is enabled through parameter of minimal gradient amplitude (use some small value 4, 8, 16).
+		///
+		///
+		/// Note: Current implementation of this feature extractor is based on processing of grayscale images (color image is converted to grayscale image first).
+		///
+		///
+		/// Note: Canny edge detector is a bit slower, but provides better results (especially on color images): use setEdgeFeatureCannyParameters().
+		///
+		/// ## Parameters
+		/// * gradient_magnitude_min_value: Minimal gradient magnitude value for edge pixels (default: 0, check is disabled)
+		///
+		/// ## C++ default parameters
+		/// * gradient_magnitude_min_value: 0.0f
+		#[inline]
+		fn set_edge_feature_zero_crossing_parameters(&mut self, gradient_magnitude_min_value: f32) -> Result<crate::photo::IntelligentScissorsMB> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureZeroCrossingParameters_float(self.as_raw_mut_IntelligentScissorsMB(), gradient_magnitude_min_value, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Switch to "Laplacian Zero-Crossing" edge feature extractor and specify its parameters
+		///
+		/// This feature extractor is used by default according to article.
+		///
+		/// Implementation has additional filtering for regions with low-amplitude noise.
+		/// This filtering is enabled through parameter of minimal gradient amplitude (use some small value 4, 8, 16).
+		///
+		///
+		/// Note: Current implementation of this feature extractor is based on processing of grayscale images (color image is converted to grayscale image first).
+		///
+		///
+		/// Note: Canny edge detector is a bit slower, but provides better results (especially on color images): use setEdgeFeatureCannyParameters().
+		///
+		/// ## Parameters
+		/// * gradient_magnitude_min_value: Minimal gradient magnitude value for edge pixels (default: 0, check is disabled)
+		///
+		/// ## Note
+		/// This alternative version of [IntelligentScissorsMBTrait::set_edge_feature_zero_crossing_parameters] function uses the following default values for its arguments:
+		/// * gradient_magnitude_min_value: 0.0f
+		#[inline]
+		fn set_edge_feature_zero_crossing_parameters_def(&mut self) -> Result<crate::photo::IntelligentScissorsMB> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureZeroCrossingParameters(self.as_raw_mut_IntelligentScissorsMB(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Switch edge feature extractor to use Canny edge detector
+		///
+		///
+		/// Note: "Laplacian Zero-Crossing" feature extractor is used by default (following to original article)
+		/// ## See also
+		/// Canny
+		///
+		/// ## C++ default parameters
+		/// * aperture_size: 3
+		/// * l2gradient: false
+		#[inline]
+		fn set_edge_feature_canny_parameters(&mut self, threshold1: f64, threshold2: f64, aperture_size: i32, l2gradient: bool) -> Result<crate::photo::IntelligentScissorsMB> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureCannyParameters_double_double_int_bool(self.as_raw_mut_IntelligentScissorsMB(), threshold1, threshold2, aperture_size, l2gradient, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Switch edge feature extractor to use Canny edge detector
+		///
+		///
+		/// Note: "Laplacian Zero-Crossing" feature extractor is used by default (following to original article)
+		/// ## See also
+		/// Canny
+		///
+		/// ## Note
+		/// This alternative version of [IntelligentScissorsMBTrait::set_edge_feature_canny_parameters] function uses the following default values for its arguments:
+		/// * aperture_size: 3
+		/// * l2gradient: false
+		#[inline]
+		fn set_edge_feature_canny_parameters_def(&mut self, threshold1: f64, threshold2: f64) -> Result<crate::photo::IntelligentScissorsMB> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureCannyParameters_double_double(self.as_raw_mut_IntelligentScissorsMB(), threshold1, threshold2, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Specify input image and extract image features
+		///
+		/// ## Parameters
+		/// * image: input image. Type is [CV_8UC1] / #CV_8UC3
+		#[inline]
+		fn apply_image(&mut self, image: &impl ToInputArray) -> Result<crate::photo::IntelligentScissorsMB> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImage_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Specify custom features of input image
+		///
+		/// Customized advanced variant of applyImage() call.
+		///
+		/// ## Parameters
+		/// * non_edge: Specify cost of non-edge pixels. Type is CV_8UC1. Expected values are `{0, 1}`.
+		/// * gradient_direction: Specify gradient direction feature. Type is CV_32FC2. Values are expected to be normalized: `x^2 + y^2 == 1`
+		/// * gradient_magnitude: Specify cost of gradient magnitude function: Type is CV_32FC1. Values should be in range `[0, 1]`.
+		/// * image: **Optional parameter**. Must be specified if subset of features is specified (non-specified features are calculated internally)
+		///
+		/// ## C++ default parameters
+		/// * image: noArray()
+		#[inline]
+		fn apply_image_features(&mut self, non_edge: &impl ToInputArray, gradient_direction: &impl ToInputArray, gradient_magnitude: &impl ToInputArray, image: &impl ToInputArray) -> Result<crate::photo::IntelligentScissorsMB> {
+			input_array_arg!(non_edge);
+			input_array_arg!(gradient_direction);
+			input_array_arg!(gradient_magnitude);
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImageFeatures_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), non_edge.as_raw__InputArray(), gradient_direction.as_raw__InputArray(), gradient_magnitude.as_raw__InputArray(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Specify custom features of input image
+		///
+		/// Customized advanced variant of applyImage() call.
+		///
+		/// ## Parameters
+		/// * non_edge: Specify cost of non-edge pixels. Type is CV_8UC1. Expected values are `{0, 1}`.
+		/// * gradient_direction: Specify gradient direction feature. Type is CV_32FC2. Values are expected to be normalized: `x^2 + y^2 == 1`
+		/// * gradient_magnitude: Specify cost of gradient magnitude function: Type is CV_32FC1. Values should be in range `[0, 1]`.
+		/// * image: **Optional parameter**. Must be specified if subset of features is specified (non-specified features are calculated internally)
+		///
+		/// ## Note
+		/// This alternative version of [IntelligentScissorsMBTrait::apply_image_features] function uses the following default values for its arguments:
+		/// * image: noArray()
+		#[inline]
+		fn apply_image_features_def(&mut self, non_edge: &impl ToInputArray, gradient_direction: &impl ToInputArray, gradient_magnitude: &impl ToInputArray) -> Result<crate::photo::IntelligentScissorsMB> {
+			input_array_arg!(non_edge);
+			input_array_arg!(gradient_direction);
+			input_array_arg!(gradient_magnitude);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImageFeatures_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), non_edge.as_raw__InputArray(), gradient_direction.as_raw__InputArray(), gradient_magnitude.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::photo::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Prepares a map of optimal paths for the given source point on the image
+		///
+		///
+		/// Note: applyImage() / applyImageFeatures() must be called before this call
+		///
+		/// ## Parameters
+		/// * sourcePt: The source point used to find the paths
+		#[inline]
+		fn build_map(&mut self, source_pt: core::Point) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_buildMap_const_PointR(self.as_raw_mut_IntelligentScissorsMB(), &source_pt, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl Clone for IntelligentScissorsMB {
+		#[inline]
+		fn clone(&self) -> Self {
+			unsafe { Self::from_raw(sys::cv_segmentation_IntelligentScissorsMB_implicitClone_const(self.as_raw_IntelligentScissorsMB())) }
+		}
+	}
+
+	impl std::fmt::Debug for IntelligentScissorsMB {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("IntelligentScissorsMB")
+				.finish()
+		}
+	}
+
+	impl crate::photo::IntelligentScissorsMBTraitConst for IntelligentScissorsMB {
+		#[inline] fn as_raw_IntelligentScissorsMB(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::photo::IntelligentScissorsMBTrait for IntelligentScissorsMB {
+		#[inline] fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { IntelligentScissorsMB, crate::photo::IntelligentScissorsMBTraitConst, as_raw_IntelligentScissorsMB, crate::photo::IntelligentScissorsMBTrait, as_raw_mut_IntelligentScissorsMB }
 
 }

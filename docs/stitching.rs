@@ -6,9 +6,9 @@ pub mod stitching {
 	//! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 	//! one can combine and use them separately.
 	//!
-	//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BL07) .
+	//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BL07) .
 	//!
-	//! ![stitching pipeline](https://docs.opencv.org/4.13.0/StitchingPipeline.jpg)
+	//! ![stitching pipeline](https://docs.opencv.org/5.0.0/StitchingPipeline.jpg)
 	//!
 	//! Camera models
 	//! -------------
@@ -42,7 +42,7 @@ pub mod stitching {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{AffineWarperTrait, AffineWarperTraitConst, CompressedRectilinearPortraitWarperTrait, CompressedRectilinearPortraitWarperTraitConst, CompressedRectilinearWarperTrait, CompressedRectilinearWarperTraitConst, CylindricalWarperGpuTrait, CylindricalWarperGpuTraitConst, CylindricalWarperTrait, CylindricalWarperTraitConst, Detail_AffineBasedEstimatorTrait, Detail_AffineBasedEstimatorTraitConst, Detail_AffineBestOf2NearestMatcherTrait, Detail_AffineBestOf2NearestMatcherTraitConst, Detail_AffineWarperTrait, Detail_AffineWarperTraitConst, Detail_BestOf2NearestMatcherTrait, Detail_BestOf2NearestMatcherTraitConst, Detail_BestOf2NearestRangeMatcherTrait, Detail_BestOf2NearestRangeMatcherTraitConst, Detail_BlenderTrait, Detail_BlenderTraitConst, Detail_BlocksChannelsCompensatorTrait, Detail_BlocksChannelsCompensatorTraitConst, Detail_BlocksCompensatorTrait, Detail_BlocksCompensatorTraitConst, Detail_BlocksGainCompensatorTrait, Detail_BlocksGainCompensatorTraitConst, Detail_BundleAdjusterAffinePartialTrait, Detail_BundleAdjusterAffinePartialTraitConst, Detail_BundleAdjusterAffineTrait, Detail_BundleAdjusterAffineTraitConst, Detail_BundleAdjusterBaseTrait, Detail_BundleAdjusterBaseTraitConst, Detail_BundleAdjusterRayTrait, Detail_BundleAdjusterRayTraitConst, Detail_BundleAdjusterReprojTrait, Detail_BundleAdjusterReprojTraitConst, Detail_CameraParamsTrait, Detail_CameraParamsTraitConst, Detail_ChannelsCompensatorTrait, Detail_ChannelsCompensatorTraitConst, Detail_CompressedRectilinearPortraitProjectorTrait, Detail_CompressedRectilinearPortraitProjectorTraitConst, Detail_CompressedRectilinearPortraitWarperTrait, Detail_CompressedRectilinearPortraitWarperTraitConst, Detail_CompressedRectilinearProjectorTrait, Detail_CompressedRectilinearProjectorTraitConst, Detail_CompressedRectilinearWarperTrait, Detail_CompressedRectilinearWarperTraitConst, Detail_CylindricalPortraitProjectorTrait, Detail_CylindricalPortraitProjectorTraitConst, Detail_CylindricalPortraitWarperTrait, Detail_CylindricalPortraitWarperTraitConst, Detail_CylindricalProjectorTrait, Detail_CylindricalProjectorTraitConst, Detail_CylindricalWarperGpuTrait, Detail_CylindricalWarperGpuTraitConst, Detail_CylindricalWarperTrait, Detail_CylindricalWarperTraitConst, Detail_DisjointSetsTrait, Detail_DisjointSetsTraitConst, Detail_DpSeamFinderTrait, Detail_DpSeamFinderTraitConst, Detail_EstimatorTrait, Detail_EstimatorTraitConst, Detail_ExposureCompensatorTrait, Detail_ExposureCompensatorTraitConst, Detail_FeatherBlenderTrait, Detail_FeatherBlenderTraitConst, Detail_FeaturesMatcherTrait, Detail_FeaturesMatcherTraitConst, Detail_FisheyeProjectorTrait, Detail_FisheyeProjectorTraitConst, Detail_FisheyeWarperTrait, Detail_FisheyeWarperTraitConst, Detail_GainCompensatorTrait, Detail_GainCompensatorTraitConst, Detail_GraphCutSeamFinderBaseTrait, Detail_GraphCutSeamFinderBaseTraitConst, Detail_GraphCutSeamFinderGpuTrait, Detail_GraphCutSeamFinderGpuTraitConst, Detail_GraphCutSeamFinderTrait, Detail_GraphCutSeamFinderTraitConst, Detail_GraphEdgeTrait, Detail_GraphEdgeTraitConst, Detail_GraphTrait, Detail_GraphTraitConst, Detail_HomographyBasedEstimatorTrait, Detail_HomographyBasedEstimatorTraitConst, Detail_ImageFeaturesTrait, Detail_ImageFeaturesTraitConst, Detail_MatchesInfoTrait, Detail_MatchesInfoTraitConst, Detail_MercatorProjectorTrait, Detail_MercatorProjectorTraitConst, Detail_MercatorWarperTrait, Detail_MercatorWarperTraitConst, Detail_MultiBandBlenderTrait, Detail_MultiBandBlenderTraitConst, Detail_NoBundleAdjusterTrait, Detail_NoBundleAdjusterTraitConst, Detail_NoExposureCompensatorTrait, Detail_NoExposureCompensatorTraitConst, Detail_NoSeamFinderTrait, Detail_NoSeamFinderTraitConst, Detail_PairwiseSeamFinderTrait, Detail_PairwiseSeamFinderTraitConst, Detail_PaniniPortraitProjectorTrait, Detail_PaniniPortraitProjectorTraitConst, Detail_PaniniPortraitWarperTrait, Detail_PaniniPortraitWarperTraitConst, Detail_PaniniProjectorTrait, Detail_PaniniProjectorTraitConst, Detail_PaniniWarperTrait, Detail_PaniniWarperTraitConst, Detail_PlanePortraitProjectorTrait, Detail_PlanePortraitProjectorTraitConst, Detail_PlanePortraitWarperTrait, Detail_PlanePortraitWarperTraitConst, Detail_PlaneProjectorTrait, Detail_PlaneProjectorTraitConst, Detail_PlaneWarperGpuTrait, Detail_PlaneWarperGpuTraitConst, Detail_PlaneWarperTrait, Detail_PlaneWarperTraitConst, Detail_ProjectorBaseTrait, Detail_ProjectorBaseTraitConst, Detail_RotationWarperTrait, Detail_RotationWarperTraitConst, Detail_SeamFinderTrait, Detail_SeamFinderTraitConst, Detail_SphericalPortraitProjectorTrait, Detail_SphericalPortraitProjectorTraitConst, Detail_SphericalPortraitWarperTrait, Detail_SphericalPortraitWarperTraitConst, Detail_SphericalProjectorTrait, Detail_SphericalProjectorTraitConst, Detail_SphericalWarperGpuTrait, Detail_SphericalWarperGpuTraitConst, Detail_SphericalWarperTrait, Detail_SphericalWarperTraitConst, Detail_StereographicProjectorTrait, Detail_StereographicProjectorTraitConst, Detail_StereographicWarperTrait, Detail_StereographicWarperTraitConst, Detail_TransverseMercatorProjectorTrait, Detail_TransverseMercatorProjectorTraitConst, Detail_TransverseMercatorWarperTrait, Detail_TransverseMercatorWarperTraitConst, Detail_VoronoiSeamFinderTrait, Detail_VoronoiSeamFinderTraitConst, FisheyeWarperTrait, FisheyeWarperTraitConst, MercatorWarperTrait, MercatorWarperTraitConst, PaniniPortraitWarperTrait, PaniniPortraitWarperTraitConst, PaniniWarperTrait, PaniniWarperTraitConst, PlaneWarperGpuTrait, PlaneWarperGpuTraitConst, PlaneWarperTrait, PlaneWarperTraitConst, PyRotationWarperTrait, PyRotationWarperTraitConst, SphericalWarperGpuTrait, SphericalWarperGpuTraitConst, SphericalWarperTrait, SphericalWarperTraitConst, StereographicWarperTrait, StereographicWarperTraitConst, StitcherTrait, StitcherTraitConst, TransverseMercatorWarperTrait, TransverseMercatorWarperTraitConst, WarperCreatorTrait, WarperCreatorTraitConst};
+		pub use super::{AffineWarperTrait, AffineWarperTraitConst, CompressedRectilinearPortraitWarperTrait, CompressedRectilinearPortraitWarperTraitConst, CompressedRectilinearWarperTrait, CompressedRectilinearWarperTraitConst, CylindricalWarperGpuTrait, CylindricalWarperGpuTraitConst, CylindricalWarperTrait, CylindricalWarperTraitConst, Detail_AffineBasedEstimatorTrait, Detail_AffineBasedEstimatorTraitConst, Detail_AffineBestOf2NearestMatcherTrait, Detail_AffineBestOf2NearestMatcherTraitConst, Detail_AffineWarperTrait, Detail_AffineWarperTraitConst, Detail_BestOf2NearestMatcherTrait, Detail_BestOf2NearestMatcherTraitConst, Detail_BestOf2NearestRangeMatcherTrait, Detail_BestOf2NearestRangeMatcherTraitConst, Detail_BlenderTrait, Detail_BlenderTraitConst, Detail_BlocksChannelsCompensatorTrait, Detail_BlocksChannelsCompensatorTraitConst, Detail_BlocksCompensatorTrait, Detail_BlocksCompensatorTraitConst, Detail_BlocksGainCompensatorTrait, Detail_BlocksGainCompensatorTraitConst, Detail_BundleAdjusterAffinePartialTrait, Detail_BundleAdjusterAffinePartialTraitConst, Detail_BundleAdjusterAffineTrait, Detail_BundleAdjusterAffineTraitConst, Detail_BundleAdjusterBaseTrait, Detail_BundleAdjusterBaseTraitConst, Detail_BundleAdjusterRayTrait, Detail_BundleAdjusterRayTraitConst, Detail_BundleAdjusterReprojTrait, Detail_BundleAdjusterReprojTraitConst, Detail_CameraParamsTrait, Detail_CameraParamsTraitConst, Detail_ChannelsCompensatorTrait, Detail_ChannelsCompensatorTraitConst, Detail_CompressedRectilinearPortraitProjectorTrait, Detail_CompressedRectilinearPortraitProjectorTraitConst, Detail_CompressedRectilinearPortraitWarperTrait, Detail_CompressedRectilinearPortraitWarperTraitConst, Detail_CompressedRectilinearProjectorTrait, Detail_CompressedRectilinearProjectorTraitConst, Detail_CompressedRectilinearWarperTrait, Detail_CompressedRectilinearWarperTraitConst, Detail_CylindricalPortraitProjectorTrait, Detail_CylindricalPortraitProjectorTraitConst, Detail_CylindricalPortraitWarperTrait, Detail_CylindricalPortraitWarperTraitConst, Detail_CylindricalProjectorTrait, Detail_CylindricalProjectorTraitConst, Detail_CylindricalWarperGpuTrait, Detail_CylindricalWarperGpuTraitConst, Detail_CylindricalWarperTrait, Detail_CylindricalWarperTraitConst, Detail_DisjointSetsTrait, Detail_DisjointSetsTraitConst, Detail_DpSeamFinderTrait, Detail_DpSeamFinderTraitConst, Detail_EstimatorTrait, Detail_EstimatorTraitConst, Detail_ExposureCompensatorTrait, Detail_ExposureCompensatorTraitConst, Detail_FeatherBlenderTrait, Detail_FeatherBlenderTraitConst, Detail_FeaturesMatcherTrait, Detail_FeaturesMatcherTraitConst, Detail_FisheyeProjectorTrait, Detail_FisheyeProjectorTraitConst, Detail_FisheyeWarperTrait, Detail_FisheyeWarperTraitConst, Detail_GainCompensatorTrait, Detail_GainCompensatorTraitConst, Detail_GraphCutSeamFinderBaseTrait, Detail_GraphCutSeamFinderBaseTraitConst, Detail_GraphCutSeamFinderGpuTrait, Detail_GraphCutSeamFinderGpuTraitConst, Detail_GraphCutSeamFinderTrait, Detail_GraphCutSeamFinderTraitConst, Detail_GraphEdgeTrait, Detail_GraphEdgeTraitConst, Detail_GraphTrait, Detail_GraphTraitConst, Detail_HomographyBasedEstimatorTrait, Detail_HomographyBasedEstimatorTraitConst, Detail_ImageFeaturesTrait, Detail_ImageFeaturesTraitConst, Detail_LightGlueFeaturesMatcherTrait, Detail_LightGlueFeaturesMatcherTraitConst, Detail_MatchesInfoTrait, Detail_MatchesInfoTraitConst, Detail_MercatorProjectorTrait, Detail_MercatorProjectorTraitConst, Detail_MercatorWarperTrait, Detail_MercatorWarperTraitConst, Detail_MultiBandBlenderTrait, Detail_MultiBandBlenderTraitConst, Detail_NoBundleAdjusterTrait, Detail_NoBundleAdjusterTraitConst, Detail_NoExposureCompensatorTrait, Detail_NoExposureCompensatorTraitConst, Detail_NoSeamFinderTrait, Detail_NoSeamFinderTraitConst, Detail_PairwiseSeamFinderTrait, Detail_PairwiseSeamFinderTraitConst, Detail_PaniniPortraitProjectorTrait, Detail_PaniniPortraitProjectorTraitConst, Detail_PaniniPortraitWarperTrait, Detail_PaniniPortraitWarperTraitConst, Detail_PaniniProjectorTrait, Detail_PaniniProjectorTraitConst, Detail_PaniniWarperTrait, Detail_PaniniWarperTraitConst, Detail_PlanePortraitProjectorTrait, Detail_PlanePortraitProjectorTraitConst, Detail_PlanePortraitWarperTrait, Detail_PlanePortraitWarperTraitConst, Detail_PlaneProjectorTrait, Detail_PlaneProjectorTraitConst, Detail_PlaneWarperGpuTrait, Detail_PlaneWarperGpuTraitConst, Detail_PlaneWarperTrait, Detail_PlaneWarperTraitConst, Detail_ProjectorBaseTrait, Detail_ProjectorBaseTraitConst, Detail_RotationWarperTrait, Detail_RotationWarperTraitConst, Detail_SeamFinderTrait, Detail_SeamFinderTraitConst, Detail_SphericalPortraitProjectorTrait, Detail_SphericalPortraitProjectorTraitConst, Detail_SphericalPortraitWarperTrait, Detail_SphericalPortraitWarperTraitConst, Detail_SphericalProjectorTrait, Detail_SphericalProjectorTraitConst, Detail_SphericalWarperGpuTrait, Detail_SphericalWarperGpuTraitConst, Detail_SphericalWarperTrait, Detail_SphericalWarperTraitConst, Detail_StereographicProjectorTrait, Detail_StereographicProjectorTraitConst, Detail_StereographicWarperTrait, Detail_StereographicWarperTraitConst, Detail_TransverseMercatorProjectorTrait, Detail_TransverseMercatorProjectorTraitConst, Detail_TransverseMercatorWarperTrait, Detail_TransverseMercatorWarperTraitConst, Detail_VoronoiSeamFinderTrait, Detail_VoronoiSeamFinderTraitConst, FisheyeWarperTrait, FisheyeWarperTraitConst, MercatorWarperTrait, MercatorWarperTraitConst, PaniniPortraitWarperTrait, PaniniPortraitWarperTraitConst, PaniniWarperTrait, PaniniWarperTraitConst, PlaneWarperGpuTrait, PlaneWarperGpuTraitConst, PlaneWarperTrait, PlaneWarperTraitConst, PyRotationWarperTrait, PyRotationWarperTraitConst, SphericalWarperGpuTrait, SphericalWarperGpuTraitConst, SphericalWarperTrait, SphericalWarperTraitConst, StereographicWarperTrait, StereographicWarperTraitConst, StitcherTrait, StitcherTraitConst, TransverseMercatorWarperTrait, TransverseMercatorWarperTraitConst, WarperCreatorTrait, WarperCreatorTraitConst};
 	}
 
 	pub const Detail_Blender_FEATHER: i32 = 1;
@@ -161,7 +161,7 @@ pub mod stitching {
 	/// This alternative version of [compute_image_features2] function uses the following default values for its arguments:
 	/// * mask: noArray()
 	#[inline]
-	pub fn compute_image_features2_def(features_finder: &core::Ptr<crate::features2d::Feature2D>, image: &impl ToInputArray, features: &mut impl crate::stitching::Detail_ImageFeaturesTrait) -> Result<()> {
+	pub fn compute_image_features2_def(features_finder: &core::Ptr<crate::features::Feature2D>, image: &impl ToInputArray, features: &mut impl crate::stitching::Detail_ImageFeaturesTrait) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_computeImageFeatures_const_PtrLFeature2DGR_const__InputArrayR_ImageFeaturesR(features_finder.as_raw_PtrOfFeature2D(), image.as_raw__InputArray(), features.as_raw_mut_Detail_ImageFeatures(), ocvrs_return.as_mut_ptr()) };
@@ -181,7 +181,7 @@ pub mod stitching {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn compute_image_features2(features_finder: &core::Ptr<crate::features2d::Feature2D>, image: &impl ToInputArray, features: &mut impl crate::stitching::Detail_ImageFeaturesTrait, mask: &impl ToInputArray) -> Result<()> {
+	pub fn compute_image_features2(features_finder: &core::Ptr<crate::features::Feature2D>, image: &impl ToInputArray, features: &mut impl crate::stitching::Detail_ImageFeaturesTrait, mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
@@ -203,7 +203,7 @@ pub mod stitching {
 	/// This alternative version of [compute_image_features] function uses the following default values for its arguments:
 	/// * masks: noArray()
 	#[inline]
-	pub fn compute_image_features_def(features_finder: &core::Ptr<crate::features2d::Feature2D>, images: &impl ToInputArray, features: &mut core::Vector<crate::stitching::Detail_ImageFeatures>) -> Result<()> {
+	pub fn compute_image_features_def(features_finder: &core::Ptr<crate::features::Feature2D>, images: &impl ToInputArray, features: &mut core::Vector<crate::stitching::Detail_ImageFeatures>) -> Result<()> {
 		input_array_arg!(images);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_computeImageFeatures_const_PtrLFeature2DGR_const__InputArrayR_vectorLImageFeaturesGR(features_finder.as_raw_PtrOfFeature2D(), images.as_raw__InputArray(), features.as_raw_mut_VectorOfDetail_ImageFeatures(), ocvrs_return.as_mut_ptr()) };
@@ -223,7 +223,7 @@ pub mod stitching {
 	/// ## C++ default parameters
 	/// * masks: noArray()
 	#[inline]
-	pub fn compute_image_features(features_finder: &core::Ptr<crate::features2d::Feature2D>, images: &impl ToInputArray, features: &mut core::Vector<crate::stitching::Detail_ImageFeatures>, masks: &impl ToInputArray) -> Result<()> {
+	pub fn compute_image_features(features_finder: &core::Ptr<crate::features::Feature2D>, images: &impl ToInputArray, features: &mut core::Vector<crate::stitching::Detail_ImageFeatures>, masks: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(images);
 		input_array_arg!(masks);
 		return_send!(via ocvrs_return);
@@ -1478,6 +1478,14 @@ pub mod stitching {
 			Ok(ret)
 		}
 
+		/// Projects the image point backward.
+		///
+		/// ## Parameters
+		/// * pt: Projected point
+		/// * K: Camera intrinsic parameters
+		/// * R: Camera rotation matrix
+		/// ## Returns
+		/// Backward-projected point
 		#[inline]
 		fn warp_point_backward(&mut self, pt: core::Point2f, k: &impl ToInputArray, r: &impl ToInputArray) -> Result<core::Point2f> {
 			input_array_arg!(k);
@@ -1894,6 +1902,8 @@ pub mod stitching {
 	unsafe impl Send for Stitcher {}
 
 	impl Stitcher {
+		/// When setting a resolution for stitching, this values is a placeholder
+		/// for preserving the original resolution.
 		pub const ORIG_RESOL: f64 = -1.;
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
@@ -2016,12 +2026,12 @@ pub mod stitching {
 		}
 
 		#[inline]
-		fn features_finder(&self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
+		fn features_finder(&self) -> Result<core::Ptr<crate::features::Feature2D>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Stitcher_featuresFinder_const(self.as_raw_Stitcher(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::features::Feature2D>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -2105,7 +2115,7 @@ pub mod stitching {
 			Ok(ret)
 		}
 
-		/// Returns indeces of input images used in panorama stitching
+		/// Returns indices of input images used in panorama stitching
 		#[inline]
 		fn component(&self) -> Result<core::Vector<i32>> {
 			return_send!(via ocvrs_return);
@@ -2223,17 +2233,17 @@ pub mod stitching {
 		}
 
 		#[inline]
-		fn features_finder_1(&mut self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
+		fn features_finder_1(&mut self) -> Result<core::Ptr<crate::features::Feature2D>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Stitcher_featuresFinder(self.as_raw_mut_Stitcher(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::features::Feature2D>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
 		#[inline]
-		fn set_features_finder(&mut self, mut features_finder: core::Ptr<crate::features2d::Feature2D>) -> Result<()> {
+		fn set_features_finder(&mut self, mut features_finder: core::Ptr<crate::features::Feature2D>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Stitcher_setFeaturesFinder_PtrLFeature2DG(self.as_raw_mut_Stitcher(), features_finder.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -3218,7 +3228,7 @@ pub mod stitching {
 		/// estimation used in the inliers classification step
 		/// * num_matches_thresh2: Minimum number of matches required for the 2D projective transform
 		/// re-estimation on inliers
-		/// * matches_confindece_thresh: Matching confidence threshold to take the match into account.
+		/// * matches_confidence_thresh: Matching confidence threshold to take the match into account.
 		/// The threshold was determined experimentally and set to 3 by default.
 		///
 		/// ## C++ default parameters
@@ -3226,11 +3236,11 @@ pub mod stitching {
 		/// * match_conf: 0.3f
 		/// * num_matches_thresh1: 6
 		/// * num_matches_thresh2: 6
-		/// * matches_confindece_thresh: 3.
+		/// * matches_confidence_thresh: 3.
 		#[inline]
-		pub fn new(try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32, matches_confindece_thresh: f64) -> Result<crate::stitching::Detail_BestOf2NearestMatcher> {
+		pub fn new(try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32, matches_confidence_thresh: f64) -> Result<crate::stitching::Detail_BestOf2NearestMatcher> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_BestOf2NearestMatcher_BestOf2NearestMatcher_bool_float_int_int_double(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2, matches_confindece_thresh, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_BestOf2NearestMatcher_BestOf2NearestMatcher_bool_float_int_int_double(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2, matches_confidence_thresh, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_BestOf2NearestMatcher::opencv_from_extern(ret) };
@@ -3246,7 +3256,7 @@ pub mod stitching {
 		/// estimation used in the inliers classification step
 		/// * num_matches_thresh2: Minimum number of matches required for the 2D projective transform
 		/// re-estimation on inliers
-		/// * matches_confindece_thresh: Matching confidence threshold to take the match into account.
+		/// * matches_confidence_thresh: Matching confidence threshold to take the match into account.
 		/// The threshold was determined experimentally and set to 3 by default.
 		///
 		/// ## Note
@@ -3255,7 +3265,7 @@ pub mod stitching {
 		/// * match_conf: 0.3f
 		/// * num_matches_thresh1: 6
 		/// * num_matches_thresh2: 6
-		/// * matches_confindece_thresh: 3.
+		/// * matches_confidence_thresh: 3.
 		#[inline]
 		pub fn new_def() -> Result<crate::stitching::Detail_BestOf2NearestMatcher> {
 			return_send!(via ocvrs_return);
@@ -3271,11 +3281,11 @@ pub mod stitching {
 		/// * match_conf: 0.3f
 		/// * num_matches_thresh1: 6
 		/// * num_matches_thresh2: 6
-		/// * matches_confindece_thresh: 3.
+		/// * matches_confidence_thresh: 3.
 		#[inline]
-		pub fn create(try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32, matches_confindece_thresh: f64) -> Result<core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>> {
+		pub fn create(try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32, matches_confidence_thresh: f64) -> Result<core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_BestOf2NearestMatcher_create_bool_float_int_int_double(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2, matches_confindece_thresh, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_BestOf2NearestMatcher_create_bool_float_int_int_double(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2, matches_confidence_thresh, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::stitching::Detail_BestOf2NearestMatcher>::opencv_from_extern(ret) };
@@ -3288,7 +3298,7 @@ pub mod stitching {
 		/// * match_conf: 0.3f
 		/// * num_matches_thresh1: 6
 		/// * num_matches_thresh2: 6
-		/// * matches_confindece_thresh: 3.
+		/// * matches_confidence_thresh: 3.
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>> {
 			return_send!(via ocvrs_return);
@@ -3905,7 +3915,7 @@ pub mod stitching {
 	boxed_ref! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksCompensatorTraitConst, as_raw_Detail_BlocksCompensator, crate::stitching::Detail_BlocksCompensatorTrait, as_raw_mut_Detail_BlocksCompensator }
 
 	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-	/// intensities, see [UES01](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_UES01) for details.
+	/// intensities, see [UES01](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_UES01) for details.
 	pub struct Detail_BlocksGainCompensator {
 		ptr: *mut c_void,
 	}
@@ -6588,6 +6598,8 @@ pub mod stitching {
 
 	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcher, cv_detail_FeaturesMatcher_to_Detail_BestOf2NearestRangeMatcher }
 
+	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_LightGlueFeaturesMatcher, cv_detail_FeaturesMatcher_to_Detail_LightGlueFeaturesMatcher }
+
 	impl crate::stitching::Detail_FeaturesMatcherTraitConst for Detail_FeaturesMatcher {
 		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -6769,7 +6781,7 @@ pub mod stitching {
 	boxed_ref! { Detail_FisheyeWarper, crate::stitching::Detail_FisheyeWarperTraitConst, as_raw_Detail_FisheyeWarper, crate::stitching::Detail_FisheyeWarperTrait, as_raw_mut_Detail_FisheyeWarper }
 
 	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-	/// intensities, see [BL07](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
+	/// intensities, see [BL07](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
 	pub struct Detail_GainCompensator {
 		ptr: *mut c_void,
 	}
@@ -7052,7 +7064,7 @@ pub mod stitching {
 
 	boxed_ref! { Detail_Graph, crate::stitching::Detail_GraphTraitConst, as_raw_Detail_Graph, crate::stitching::Detail_GraphTrait, as_raw_mut_Detail_Graph }
 
-	/// Minimum graph cut-based seam estimator. See details in [Kwatra03](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Kwatra03) .
+	/// Minimum graph cut-based seam estimator. See details in [Kwatra03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Kwatra03) .
 	pub struct Detail_GraphCutSeamFinder {
 		ptr: *mut c_void,
 	}
@@ -7727,6 +7739,132 @@ pub mod stitching {
 
 	boxed_ref! { Detail_ImageFeatures, crate::stitching::Detail_ImageFeaturesTraitConst, as_raw_Detail_ImageFeatures, crate::stitching::Detail_ImageFeaturesTrait, as_raw_mut_Detail_ImageFeatures }
 
+	/// Features matcher that adapts LightGlueMatcher (DescriptorMatcher) to the
+	/// stitching pipeline's FeaturesMatcher interface.
+	///
+	/// This matcher uses DNN-based LightGlue for feature matching, requiring ALIKED-style
+	/// keypoints with spatial context for positional encoding.
+	/// ## See also
+	/// cv::detail::FeaturesMatcher cv::LightGlueMatcher
+	pub struct Detail_LightGlueFeaturesMatcher {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_LightGlueFeaturesMatcher }
+
+	impl Drop for Detail_LightGlueFeaturesMatcher {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_LightGlueFeaturesMatcher_delete(self.as_raw_mut_Detail_LightGlueFeaturesMatcher()) };
+		}
+	}
+
+	unsafe impl Send for Detail_LightGlueFeaturesMatcher {}
+
+	impl Detail_LightGlueFeaturesMatcher {
+		/// Constructs a LightGlue features matcher.
+		///
+		/// ## Parameters
+		/// * lgMatcher: LightGlueMatcher instance for DNN-based matching
+		/// * num_matches_thresh1: Minimum number of matches required for the 2D projective transform
+		/// estimation used in the inliers classification step
+		/// * num_matches_thresh2: Minimum number of matches required for the 2D projective transform
+		/// re-estimation on inliers
+		/// * matches_confidence_thresh: Matching confidence threshold to take the match into account.
+		///
+		/// ## C++ default parameters
+		/// * num_matches_thresh1: 6
+		/// * num_matches_thresh2: 6
+		/// * matches_confidence_thresh: 3.0
+		#[inline]
+		pub fn new(mut lg_matcher: core::Ptr<crate::features::LightGlueMatcher>, num_matches_thresh1: i32, num_matches_thresh2: i32, matches_confidence_thresh: f64) -> Result<crate::stitching::Detail_LightGlueFeaturesMatcher> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_LightGlueFeaturesMatcher_LightGlueFeaturesMatcher_PtrLLightGlueMatcherG_int_int_double(lg_matcher.as_raw_mut_PtrOfLightGlueMatcher(), num_matches_thresh1, num_matches_thresh2, matches_confidence_thresh, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_LightGlueFeaturesMatcher::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructs a LightGlue features matcher.
+		///
+		/// ## Parameters
+		/// * lgMatcher: LightGlueMatcher instance for DNN-based matching
+		/// * num_matches_thresh1: Minimum number of matches required for the 2D projective transform
+		/// estimation used in the inliers classification step
+		/// * num_matches_thresh2: Minimum number of matches required for the 2D projective transform
+		/// re-estimation on inliers
+		/// * matches_confidence_thresh: Matching confidence threshold to take the match into account.
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * num_matches_thresh1: 6
+		/// * num_matches_thresh2: 6
+		/// * matches_confidence_thresh: 3.0
+		#[inline]
+		pub fn new_def(mut lg_matcher: core::Ptr<crate::features::LightGlueMatcher>) -> Result<crate::stitching::Detail_LightGlueFeaturesMatcher> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_LightGlueFeaturesMatcher_LightGlueFeaturesMatcher_PtrLLightGlueMatcherG(lg_matcher.as_raw_mut_PtrOfLightGlueMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_LightGlueFeaturesMatcher::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_LightGlueFeaturesMatcher]
+	pub trait Detail_LightGlueFeaturesMatcherTraitConst: crate::stitching::Detail_FeaturesMatcherTraitConst {
+		fn as_raw_Detail_LightGlueFeaturesMatcher(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_LightGlueFeaturesMatcher]
+	pub trait Detail_LightGlueFeaturesMatcherTrait: crate::stitching::Detail_FeaturesMatcherTrait + crate::stitching::Detail_LightGlueFeaturesMatcherTraitConst {
+		fn as_raw_mut_Detail_LightGlueFeaturesMatcher(&mut self) -> *mut c_void;
+
+		/// Sets the LightGlue confidence threshold for filtering matches.
+		#[inline]
+		fn set_score_threshold(&mut self, thresh: f32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_LightGlueFeaturesMatcher_setScoreThreshold_float(self.as_raw_mut_Detail_LightGlueFeaturesMatcher(), thresh, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for Detail_LightGlueFeaturesMatcher {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_LightGlueFeaturesMatcher")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_LightGlueFeaturesMatcher, crate::stitching::Detail_FeaturesMatcher, cv_detail_LightGlueFeaturesMatcher_to_Detail_FeaturesMatcher }
+
+	impl crate::stitching::Detail_FeaturesMatcherTraitConst for Detail_LightGlueFeaturesMatcher {
+		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_FeaturesMatcherTrait for Detail_LightGlueFeaturesMatcher {
+		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_LightGlueFeaturesMatcher, crate::stitching::Detail_FeaturesMatcherTraitConst, as_raw_Detail_FeaturesMatcher, crate::stitching::Detail_FeaturesMatcherTrait, as_raw_mut_Detail_FeaturesMatcher }
+
+	impl crate::stitching::Detail_LightGlueFeaturesMatcherTraitConst for Detail_LightGlueFeaturesMatcher {
+		#[inline] fn as_raw_Detail_LightGlueFeaturesMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_LightGlueFeaturesMatcherTrait for Detail_LightGlueFeaturesMatcher {
+		#[inline] fn as_raw_mut_Detail_LightGlueFeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_LightGlueFeaturesMatcher, crate::stitching::Detail_LightGlueFeaturesMatcherTraitConst, as_raw_Detail_LightGlueFeaturesMatcher, crate::stitching::Detail_LightGlueFeaturesMatcherTrait, as_raw_mut_Detail_LightGlueFeaturesMatcher }
+
 	/// Structure containing information about matches between two images.
 	///
 	/// It's assumed that there is a transformation between those images. Transformation may be
@@ -8111,7 +8249,7 @@ pub mod stitching {
 
 	boxed_ref! { Detail_MercatorWarper, crate::stitching::Detail_MercatorWarperTraitConst, as_raw_Detail_MercatorWarper, crate::stitching::Detail_MercatorWarperTrait, as_raw_mut_Detail_MercatorWarper }
 
-	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BA83)).
+	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BA83)).
 	pub struct Detail_MultiBandBlender {
 		ptr: *mut c_void,
 	}
@@ -9965,6 +10103,14 @@ pub mod stitching {
 			Ok(ret)
 		}
 
+		/// Projects the image point backward.
+		///
+		/// ## Parameters
+		/// * pt: Projected point
+		/// * K: Camera intrinsic parameters
+		/// * R: Camera rotation matrix
+		/// ## Returns
+		/// Backward-projected point
 		#[inline]
 		fn warp_point_backward(&mut self, pt: core::Point2f, k: &impl ToInputArray, r: &impl ToInputArray) -> Result<core::Point2f> {
 			input_array_arg!(k);

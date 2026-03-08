@@ -15,7 +15,7 @@ pub mod highgui {
 	//!    # OpenGL support
 	//!    # Qt New Functions
 	//!
-	//!    ![image](https://docs.opencv.org/4.13.0/qtgui.png)
+	//!    ![image](https://docs.opencv.org/5.0.0/qtgui.png)
 	//!
 	//!    This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 	//!    a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.
@@ -32,45 +32,6 @@ pub mod highgui {
 	//!    See below the example used to generate the figure:
 	//!
 	//!    @include highgui_qt.cpp
-	//!
-	//!    # WinRT support
-	//!
-	//!    This figure explains new functionality implemented with WinRT GUI. The new GUI provides an Image control,
-	//!    and a slider panel. Slider panel holds trackbars attached to it.
-	//!
-	//!    Sliders are attached below the image control. Every new slider is added below the previous one.
-	//!
-	//!    See below the example used to generate the figure:
-	//!    ```C++
-	//!    void sample_app::MainPage::ShowWindow()
-	//!    {
-	//!        static cv::String windowName("sample");
-	//!        cv::winrt_initContainer(this->cvContainer);
-	//!        cv::namedWindow(windowName); // not required
-	//!
-	//!        cv::Mat image = cv::imread("Assets/sample.jpg");
-	//!        cv::Mat converted = cv::Mat(image.rows, image.cols, CV_8UC4);
-	//!        cv::cvtColor(image, converted, COLOR_BGR2BGRA);
-	//!        cv::imshow(windowName, converted); // this will create window if it hasn't been created before
-	//!
-	//!        int state = 42;
-	//!        cv::TrackbarCallback callback = [](int pos, void* userdata)
-	//!        {
-	//!            if (pos == 0) {
-	//!                cv::destroyWindow(windowName);
-	//!            }
-	//!        };
-	//!        cv::TrackbarCallback callbackTwin = [](int pos, void* userdata)
-	//!        {
-	//!            if (pos >= 70) {
-	//!                cv::destroyAllWindows();
-	//!            }
-	//!        };
-	//!        cv::createTrackbar("Sample trackbar", windowName, &state, 100, callback);
-	//!        cv::createTrackbar("Twin brother", windowName, &state, 100, callbackTwin);
-	//!    }
-	//!    ```
-	//!
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
@@ -656,7 +617,7 @@ pub mod highgui {
 	///
 	/// The function displayStatusBar displays useful information/tips on top of the window for a certain
 	/// amount of time *delayms* . This information is displayed on the window statusbar (the window must be
-	/// created with the CV_GUI_EXPANDED flags).
+	/// created with the cv::WINDOW_GUI_EXPANDED flags).
 	///
 	/// ## Parameters
 	/// * winname: Name of the window.
@@ -683,7 +644,7 @@ pub mod highgui {
 	///
 	/// The function displayStatusBar displays useful information/tips on top of the window for a certain
 	/// amount of time *delayms* . This information is displayed on the window statusbar (the window must be
-	/// created with the CV_GUI_EXPANDED flags).
+	/// created with the cv::WINDOW_GUI_EXPANDED flags).
 	///
 	/// ## Parameters
 	/// * winname: Name of the window.
@@ -1334,9 +1295,6 @@ pub mod highgui {
 		Ok(ret)
 	}
 
-	/// @example samples/cpp/create_mask.cpp
-	/// This program demonstrates using mouse events and how to make and use a mask image (black and white) .
-	///
 	/// Sets mouse handler for the specified window
 	///
 	/// ## Parameters

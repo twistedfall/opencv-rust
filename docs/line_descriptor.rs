@@ -18,8 +18,8 @@ pub mod line_descriptor {
 	//! ---------------------------------
 	//!
 	//! To obtatin a binary descriptor representing a certain line detected from a certain octave of an
-	//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
-	//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
+	//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
+	//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
 	//! rectangular region centered at it and called *line support region (LSR)*. Such region is divided
 	//! into a set of bands ![inline formula](https://latex.codecogs.com/png.latex?%5C%7BB%5F1%2C%20B%5F2%2C%20%2E%2E%2E%2C%20B%5Fm%5C%7D), whose length equals the one of line.
 	//!
@@ -224,7 +224,7 @@ pub mod line_descriptor {
 	/// binary descriptor.
 	///
 	/// Class' interface is mainly based on the ones of classical detectors and extractors, such as
-	/// Feature2d's [features2d_main] and [features2d_match]. Retrieved information about lines is
+	/// Feature2d's [features_main] and [features_match]. Retrieved information about lines is
 	/// stored in line_descriptor::KeyLine objects.
 	pub struct BinaryDescriptor {
 		ptr: *mut c_void,
@@ -848,7 +848,7 @@ pub mod line_descriptor {
 	boxed_ref! { BinaryDescriptor_Params, crate::line_descriptor::BinaryDescriptor_ParamsTraitConst, as_raw_BinaryDescriptor_Params, crate::line_descriptor::BinaryDescriptor_ParamsTrait, as_raw_mut_BinaryDescriptor_Params }
 
 	/// furnishes all functionalities for querying a dataset provided by user or internal to
-	/// class (that user must, anyway, populate) on the model of [features2d_match]
+	/// class (that user must, anyway, populate) on the model of [features_match]
 	///
 	///
 	/// Once descriptors have been extracted from an image (both they represent lines and points), it
@@ -861,7 +861,7 @@ pub mod line_descriptor {
 	/// Multi-Index Hashing
 	/// -------------------
 	///
-	/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
+	/// The theory described in this section is based on [MIH](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
 	/// codes, each code is indexed *m* times into *m* different hash tables, according to *m* substrings it
 	/// has been divided into. Thus, given a query code, all the entries close to it at least in one
 	/// substring are returned by search as *neighbor candidates*. Returned entries are then checked for
@@ -1658,7 +1658,7 @@ pub mod line_descriptor {
 	/// Lines extraction methodology
 	/// ----------------------------
 	///
-	/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EDL) . The
+	/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EDL) . The
 	/// extraction starts with a Gaussian pyramid generated from an original image, downsampled N-1 times,
 	/// blurred N times, to obtain N layers (one for each octave), with layer 0 corresponding to input
 	/// image. Then, from each layer (octave) in the pyramid, lines are extracted using LSD algorithm.

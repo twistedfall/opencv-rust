@@ -11,7 +11,7 @@ pub mod cudaobjdetect {
 	///
 	/// Note:
 	///    *   A cascade classifier example can be found at
-	///        opencv_source_code/samples/gpu/cascadeclassifier.cpp
+	///        xobjdetect_module/samples/gpu/cascadeclassifier.cpp
 	///    *   A Nvidea API specific cascade classifier example can be found at
 	///        opencv_source_code/samples/gpu/cascadeclassifier_nvidia_api.cpp
 	pub struct CUDA_CascadeClassifier {
@@ -332,16 +332,16 @@ pub mod cudaobjdetect {
 
 	boxed_ref! { CUDA_CascadeClassifier, crate::cudaobjdetect::CUDA_CascadeClassifierTraitConst, as_raw_CUDA_CascadeClassifier, crate::cudaobjdetect::CUDA_CascadeClassifierTrait, as_raw_mut_CUDA_CascadeClassifier }
 
-	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
+	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
 	///
 	///
 	/// Note:
 	///    *   An example applying the HOG descriptor for people detection can be found at
-	///        opencv_source_code/samples/cpp/peopledetect.cpp
+	///        xobjdetect_module/samples/peopledetect.cpp
 	///    *   A CUDA example applying the HOG descriptor for people detection can be found at
-	///        opencv_source_code/samples/gpu/hog.cpp
+	///        xobjdetect_module/samples/gpu/hog.cpp
 	///    *   (Python) An example applying the HOG descriptor for people detection can be found at
-	///        opencv_source_code/samples/python/peopledetect.py
+	///        xobjdetect_module/samples/python/peopledetect.py
 	pub struct CUDA_HOG {
 		ptr: *mut c_void,
 	}
@@ -488,7 +488,7 @@ pub mod cudaobjdetect {
 		}
 
 		#[inline]
-		fn get_descriptor_format(&self) -> Result<crate::objdetect::HOGDescriptor_DescriptorStorageFormat> {
+		fn get_descriptor_format(&self) -> Result<crate::xobjdetect::HOGDescriptor_DescriptorStorageFormat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_getDescriptorFormat_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -622,7 +622,7 @@ pub mod cudaobjdetect {
 		/// - **DESCR_FORMAT_ROW_BY_ROW** - Row-major order.
 		/// - **DESCR_FORMAT_COL_BY_COL** - Column-major order.
 		#[inline]
-		fn set_descriptor_format(&mut self, descr_format: crate::objdetect::HOGDescriptor_DescriptorStorageFormat) -> Result<()> {
+		fn set_descriptor_format(&mut self, descr_format: crate::xobjdetect::HOGDescriptor_DescriptorStorageFormat) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_setDescriptorFormat_DescriptorStorageFormat(self.as_raw_mut_CUDA_HOG(), descr_format, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);

@@ -3,7 +3,7 @@ pub mod videostab {
 	//!
 	//! The video stabilization module contains a set of functions and classes that can be used to solve the
 	//! problem of video stabilization. There are a few methods implemented, most of them are described in
-	//! the papers [OF06](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
+	//! the papers [OF06](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
 	//! paper methods.
 	//!
 	//! ### References
@@ -21,7 +21,7 @@ pub mod videostab {
 	//!
 	//!    # Fast Marching Method
 	//!
-	//!    The Fast Marching Method [Telea04](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
+	//!    The Fast Marching Method [Telea04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
 	//!    color inpainting. The method is implemented is a flexible way and it's made public for other users.
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
@@ -1923,12 +1923,12 @@ pub mod videostab {
 		}
 
 		#[inline]
-		fn detector(&self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
+		fn detector(&self) -> Result<core::Ptr<crate::features::Feature2D>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_detector_const(self.as_raw_KeypointBasedMotionEstimator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::features::Feature2D>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -1968,7 +1968,7 @@ pub mod videostab {
 		}
 
 		#[inline]
-		fn set_detector(&mut self, mut val: core::Ptr<crate::features2d::Feature2D>) -> Result<()> {
+		fn set_detector(&mut self, mut val: core::Ptr<crate::features::Feature2D>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_setDetector_PtrLFeature2DG(self.as_raw_mut_KeypointBasedMotionEstimator(), val.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);

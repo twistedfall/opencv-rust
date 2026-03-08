@@ -402,7 +402,7 @@ pub mod cudastereo {
 
 	/// Class refining a disparity map using joint bilateral filtering. :
 	///
-	/// The class implements [Yang2010](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Yang2010) algorithm.
+	/// The class implements [Yang2010](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Yang2010) algorithm.
 	pub struct CUDA_DisparityBilateralFilter {
 		ptr: *mut c_void,
 	}
@@ -635,13 +635,13 @@ pub mod cudastereo {
 	unsafe impl Send for CUDA_StereoBM {}
 
 	/// Constant methods for [crate::cudastereo::CUDA_StereoBM]
-	pub trait CUDA_StereoBMTraitConst: crate::calib3d::StereoBMTraitConst {
+	pub trait CUDA_StereoBMTraitConst: crate::stereo::StereoBMTraitConst {
 		fn as_raw_CUDA_StereoBM(&self) -> *const c_void;
 
 	}
 
 	/// Mutable methods for [crate::cudastereo::CUDA_StereoBM]
-	pub trait CUDA_StereoBMTrait: crate::calib3d::StereoBMTrait + crate::cudastereo::CUDA_StereoBMTraitConst {
+	pub trait CUDA_StereoBMTrait: crate::cudastereo::CUDA_StereoBMTraitConst + crate::stereo::StereoBMTrait {
 		fn as_raw_mut_CUDA_StereoBM(&mut self) -> *mut c_void;
 
 		#[inline]
@@ -668,9 +668,9 @@ pub mod cudastereo {
 
 	boxed_cast_base! { CUDA_StereoBM, core::Algorithm, cv_cuda_StereoBM_to_Algorithm }
 
-	boxed_cast_base! { CUDA_StereoBM, crate::calib3d::StereoBM, cv_cuda_StereoBM_to_StereoBM }
+	boxed_cast_base! { CUDA_StereoBM, crate::stereo::StereoBM, cv_cuda_StereoBM_to_StereoBM }
 
-	boxed_cast_base! { CUDA_StereoBM, crate::calib3d::StereoMatcher, cv_cuda_StereoBM_to_StereoMatcher }
+	boxed_cast_base! { CUDA_StereoBM, crate::stereo::StereoMatcher, cv_cuda_StereoBM_to_StereoMatcher }
 
 	impl core::AlgorithmTraitConst for CUDA_StereoBM {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -682,25 +682,25 @@ pub mod cudastereo {
 
 	boxed_ref! { CUDA_StereoBM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
 
-	impl crate::calib3d::StereoBMTraitConst for CUDA_StereoBM {
+	impl crate::stereo::StereoBMTraitConst for CUDA_StereoBM {
 		#[inline] fn as_raw_StereoBM(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl crate::calib3d::StereoBMTrait for CUDA_StereoBM {
+	impl crate::stereo::StereoBMTrait for CUDA_StereoBM {
 		#[inline] fn as_raw_mut_StereoBM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { CUDA_StereoBM, crate::calib3d::StereoBMTraitConst, as_raw_StereoBM, crate::calib3d::StereoBMTrait, as_raw_mut_StereoBM }
+	boxed_ref! { CUDA_StereoBM, crate::stereo::StereoBMTraitConst, as_raw_StereoBM, crate::stereo::StereoBMTrait, as_raw_mut_StereoBM }
 
-	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoBM {
+	impl crate::stereo::StereoMatcherTraitConst for CUDA_StereoBM {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl crate::calib3d::StereoMatcherTrait for CUDA_StereoBM {
+	impl crate::stereo::StereoMatcherTrait for CUDA_StereoBM {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { CUDA_StereoBM, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
+	boxed_ref! { CUDA_StereoBM, crate::stereo::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::stereo::StereoMatcherTrait, as_raw_mut_StereoMatcher }
 
 	impl crate::cudastereo::CUDA_StereoBMTraitConst for CUDA_StereoBM {
 		#[inline] fn as_raw_CUDA_StereoBM(&self) -> *const c_void { self.as_raw() }
@@ -714,7 +714,7 @@ pub mod cudastereo {
 
 	/// Class computing stereo correspondence using the belief propagation algorithm. :
 	///
-	/// The class implements algorithm described in [Felzenszwalb2006](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) . It can compute own data cost
+	/// The class implements algorithm described in [Felzenszwalb2006](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) . It can compute own data cost
 	/// (using a truncated linear model) or use a user-provided data cost.
 	///
 	///
@@ -735,7 +735,7 @@ pub mod cudastereo {
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
 	///
-	/// For more details, see [Felzenszwalb2006](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) .
+	/// For more details, see [Felzenszwalb2006](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) .
 	///
 	/// By default, StereoBeliefPropagation uses floating-point arithmetics and the CV_32FC1 type for
 	/// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
@@ -775,7 +775,7 @@ pub mod cudastereo {
 	}
 
 	/// Constant methods for [crate::cudastereo::CUDA_StereoBeliefPropagation]
-	pub trait CUDA_StereoBeliefPropagationTraitConst: crate::calib3d::StereoMatcherTraitConst {
+	pub trait CUDA_StereoBeliefPropagationTraitConst: crate::stereo::StereoMatcherTraitConst {
 		fn as_raw_CUDA_StereoBeliefPropagation(&self) -> *const c_void;
 
 		/// number of BP iterations on each level
@@ -851,7 +851,7 @@ pub mod cudastereo {
 	}
 
 	/// Mutable methods for [crate::cudastereo::CUDA_StereoBeliefPropagation]
-	pub trait CUDA_StereoBeliefPropagationTrait: crate::calib3d::StereoMatcherTrait + crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst {
+	pub trait CUDA_StereoBeliefPropagationTrait: crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst + crate::stereo::StereoMatcherTrait {
 		fn as_raw_mut_CUDA_StereoBeliefPropagation(&mut self) -> *mut c_void;
 
 		/// Enables the stereo correspondence operator that finds the disparity for the specified data cost.
@@ -999,7 +999,7 @@ pub mod cudastereo {
 
 	boxed_cast_base! { CUDA_StereoBeliefPropagation, core::Algorithm, cv_cuda_StereoBeliefPropagation_to_Algorithm }
 
-	boxed_cast_base! { CUDA_StereoBeliefPropagation, crate::calib3d::StereoMatcher, cv_cuda_StereoBeliefPropagation_to_StereoMatcher }
+	boxed_cast_base! { CUDA_StereoBeliefPropagation, crate::stereo::StereoMatcher, cv_cuda_StereoBeliefPropagation_to_StereoMatcher }
 
 	boxed_cast_descendant! { CUDA_StereoBeliefPropagation, crate::cudastereo::CUDA_StereoConstantSpaceBP, cv_cuda_StereoBeliefPropagation_to_CUDA_StereoConstantSpaceBP }
 
@@ -1013,15 +1013,15 @@ pub mod cudastereo {
 
 	boxed_ref! { CUDA_StereoBeliefPropagation, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
 
-	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoBeliefPropagation {
+	impl crate::stereo::StereoMatcherTraitConst for CUDA_StereoBeliefPropagation {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl crate::calib3d::StereoMatcherTrait for CUDA_StereoBeliefPropagation {
+	impl crate::stereo::StereoMatcherTrait for CUDA_StereoBeliefPropagation {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { CUDA_StereoBeliefPropagation, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
+	boxed_ref! { CUDA_StereoBeliefPropagation, crate::stereo::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::stereo::StereoMatcherTrait, as_raw_mut_StereoMatcher }
 
 	impl crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst for CUDA_StereoBeliefPropagation {
 		#[inline] fn as_raw_CUDA_StereoBeliefPropagation(&self) -> *const c_void { self.as_raw() }
@@ -1035,7 +1035,7 @@ pub mod cudastereo {
 
 	/// Class computing stereo correspondence using the constant space belief propagation algorithm. :
 	///
-	/// The class implements algorithm described in [Yang2010](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Yang2010) . StereoConstantSpaceBP supports both local
+	/// The class implements algorithm described in [Yang2010](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Yang2010) . StereoConstantSpaceBP supports both local
 	/// minimum and global minimum data cost initialization algorithms. For more details, see the paper
 	/// mentioned above. By default, a local algorithm is used. To enable a global algorithm, set
 	/// use_local_init_data_cost to false .
@@ -1046,7 +1046,7 @@ pub mod cudastereo {
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
 	///
-	/// For more details, see [Yang2010](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Yang2010) .
+	/// For more details, see [Yang2010](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Yang2010) .
 	///
 	/// By default, StereoConstantSpaceBP uses floating-point arithmetics and the CV_32FC1 type for
 	/// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
@@ -1144,7 +1144,7 @@ pub mod cudastereo {
 
 	boxed_cast_base! { CUDA_StereoConstantSpaceBP, crate::cudastereo::CUDA_StereoBeliefPropagation, cv_cuda_StereoConstantSpaceBP_to_CUDA_StereoBeliefPropagation }
 
-	boxed_cast_base! { CUDA_StereoConstantSpaceBP, crate::calib3d::StereoMatcher, cv_cuda_StereoConstantSpaceBP_to_StereoMatcher }
+	boxed_cast_base! { CUDA_StereoConstantSpaceBP, crate::stereo::StereoMatcher, cv_cuda_StereoConstantSpaceBP_to_StereoMatcher }
 
 	impl core::AlgorithmTraitConst for CUDA_StereoConstantSpaceBP {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1166,15 +1166,15 @@ pub mod cudastereo {
 
 	boxed_ref! { CUDA_StereoConstantSpaceBP, crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst, as_raw_CUDA_StereoBeliefPropagation, crate::cudastereo::CUDA_StereoBeliefPropagationTrait, as_raw_mut_CUDA_StereoBeliefPropagation }
 
-	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoConstantSpaceBP {
+	impl crate::stereo::StereoMatcherTraitConst for CUDA_StereoConstantSpaceBP {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl crate::calib3d::StereoMatcherTrait for CUDA_StereoConstantSpaceBP {
+	impl crate::stereo::StereoMatcherTrait for CUDA_StereoConstantSpaceBP {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { CUDA_StereoConstantSpaceBP, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
+	boxed_ref! { CUDA_StereoConstantSpaceBP, crate::stereo::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::stereo::StereoMatcherTrait, as_raw_mut_StereoMatcher }
 
 	impl crate::cudastereo::CUDA_StereoConstantSpaceBPTraitConst for CUDA_StereoConstantSpaceBP {
 		#[inline] fn as_raw_CUDA_StereoConstantSpaceBP(&self) -> *const c_void { self.as_raw() }
@@ -1186,13 +1186,13 @@ pub mod cudastereo {
 
 	boxed_ref! { CUDA_StereoConstantSpaceBP, crate::cudastereo::CUDA_StereoConstantSpaceBPTraitConst, as_raw_CUDA_StereoConstantSpaceBP, crate::cudastereo::CUDA_StereoConstantSpaceBPTrait, as_raw_mut_CUDA_StereoConstantSpaceBP }
 
-	/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_HH08).
+	/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_HH08).
 	/// Limitation and difference are as follows:
 	///
 	/// *   By default, the algorithm uses only 4 directions which are horizontal and vertical path instead of 8.
 	/// Set mode=StereoSGM::MODE_HH in createStereoSGM to run the full variant of the algorithm.
 	/// *   Mutual Information cost function is not implemented.
-	/// Instead, Center-Symmetric Census Transform with ![inline formula](https://latex.codecogs.com/png.latex?9%20%5Ctimes%207) window size from [Spangenberg2013](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Spangenberg2013)
+	/// Instead, Center-Symmetric Census Transform with ![inline formula](https://latex.codecogs.com/png.latex?9%20%5Ctimes%207) window size from [Spangenberg2013](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Spangenberg2013)
 	/// is used for robustness.
 	/// ## See also
 	/// cv::StereoSGBM
@@ -1212,13 +1212,13 @@ pub mod cudastereo {
 	unsafe impl Send for CUDA_StereoSGM {}
 
 	/// Constant methods for [crate::cudastereo::CUDA_StereoSGM]
-	pub trait CUDA_StereoSGMTraitConst: crate::calib3d::StereoSGBMTraitConst {
+	pub trait CUDA_StereoSGMTraitConst: crate::stereo::StereoSGBMTraitConst {
 		fn as_raw_CUDA_StereoSGM(&self) -> *const c_void;
 
 	}
 
 	/// Mutable methods for [crate::cudastereo::CUDA_StereoSGM]
-	pub trait CUDA_StereoSGMTrait: crate::calib3d::StereoSGBMTrait + crate::cudastereo::CUDA_StereoSGMTraitConst {
+	pub trait CUDA_StereoSGMTrait: crate::cudastereo::CUDA_StereoSGMTraitConst + crate::stereo::StereoSGBMTrait {
 		fn as_raw_mut_CUDA_StereoSGM(&mut self) -> *mut c_void;
 
 		/// Computes disparity map for the specified stereo pair
@@ -1267,9 +1267,9 @@ pub mod cudastereo {
 
 	boxed_cast_base! { CUDA_StereoSGM, core::Algorithm, cv_cuda_StereoSGM_to_Algorithm }
 
-	boxed_cast_base! { CUDA_StereoSGM, crate::calib3d::StereoMatcher, cv_cuda_StereoSGM_to_StereoMatcher }
+	boxed_cast_base! { CUDA_StereoSGM, crate::stereo::StereoMatcher, cv_cuda_StereoSGM_to_StereoMatcher }
 
-	boxed_cast_base! { CUDA_StereoSGM, crate::calib3d::StereoSGBM, cv_cuda_StereoSGM_to_StereoSGBM }
+	boxed_cast_base! { CUDA_StereoSGM, crate::stereo::StereoSGBM, cv_cuda_StereoSGM_to_StereoSGBM }
 
 	impl core::AlgorithmTraitConst for CUDA_StereoSGM {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1281,25 +1281,25 @@ pub mod cudastereo {
 
 	boxed_ref! { CUDA_StereoSGM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
 
-	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoSGM {
+	impl crate::stereo::StereoMatcherTraitConst for CUDA_StereoSGM {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl crate::calib3d::StereoMatcherTrait for CUDA_StereoSGM {
+	impl crate::stereo::StereoMatcherTrait for CUDA_StereoSGM {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { CUDA_StereoSGM, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
+	boxed_ref! { CUDA_StereoSGM, crate::stereo::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::stereo::StereoMatcherTrait, as_raw_mut_StereoMatcher }
 
-	impl crate::calib3d::StereoSGBMTraitConst for CUDA_StereoSGM {
+	impl crate::stereo::StereoSGBMTraitConst for CUDA_StereoSGM {
 		#[inline] fn as_raw_StereoSGBM(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl crate::calib3d::StereoSGBMTrait for CUDA_StereoSGM {
+	impl crate::stereo::StereoSGBMTrait for CUDA_StereoSGM {
 		#[inline] fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { CUDA_StereoSGM, crate::calib3d::StereoSGBMTraitConst, as_raw_StereoSGBM, crate::calib3d::StereoSGBMTrait, as_raw_mut_StereoSGBM }
+	boxed_ref! { CUDA_StereoSGM, crate::stereo::StereoSGBMTraitConst, as_raw_StereoSGBM, crate::stereo::StereoSGBMTrait, as_raw_mut_StereoSGBM }
 
 	impl crate::cudastereo::CUDA_StereoSGMTraitConst for CUDA_StereoSGM {
 		#[inline] fn as_raw_CUDA_StereoSGM(&self) -> *const c_void { self.as_raw() }

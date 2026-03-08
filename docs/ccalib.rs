@@ -742,7 +742,7 @@ pub mod ccalib {
 		}
 
 		#[inline]
-		fn set_feature_detector(&mut self, mut feature_detector: core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
+		fn set_feature_detector(&mut self, mut feature_detector: core::Ptr<crate::features::Feature2D>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_setFeatureDetector_PtrLFeature2DG(self.as_raw_mut_CustomPattern(), feature_detector.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -751,7 +751,7 @@ pub mod ccalib {
 		}
 
 		#[inline]
-		fn set_descriptor_extractor(&mut self, mut extractor: core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
+		fn set_descriptor_extractor(&mut self, mut extractor: core::Ptr<crate::features::Feature2D>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_setDescriptorExtractor_PtrLFeature2DG(self.as_raw_mut_CustomPattern(), extractor.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -760,7 +760,7 @@ pub mod ccalib {
 		}
 
 		#[inline]
-		fn set_descriptor_matcher(&mut self, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<bool> {
+		fn set_descriptor_matcher(&mut self, mut matcher: core::Ptr<crate::features::DescriptorMatcher>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_setDescriptorMatcher_PtrLDescriptorMatcherG(self.as_raw_mut_CustomPattern(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -769,32 +769,32 @@ pub mod ccalib {
 		}
 
 		#[inline]
-		fn get_feature_detector(&mut self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
+		fn get_feature_detector(&mut self) -> Result<core::Ptr<crate::features::Feature2D>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_getFeatureDetector(self.as_raw_mut_CustomPattern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::features::Feature2D>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
 		#[inline]
-		fn get_descriptor_extractor(&mut self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
+		fn get_descriptor_extractor(&mut self) -> Result<core::Ptr<crate::features::Feature2D>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_getDescriptorExtractor(self.as_raw_mut_CustomPattern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::features::Feature2D>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
 		#[inline]
-		fn get_descriptor_matcher(&mut self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
+		fn get_descriptor_matcher(&mut self) -> Result<core::Ptr<crate::features::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_getDescriptorMatcher(self.as_raw_mut_CustomPattern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::features::DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -1098,11 +1098,11 @@ pub mod ccalib {
 		/// * n_mini_matches: 20
 		/// * flags: 0
 		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,200,1e-7)
-		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
-		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
+		/// * detector: xfeatures2d::AKAZE::create(xfeatures2d::AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
+		/// * descriptor: xfeatures2d::AKAZE::create(xfeatures2d::AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
 		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
 		#[inline]
-		pub fn new(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32, verbose: i32, show_extration: i32, n_mini_matches: i32, flags: i32, criteria: core::TermCriteria, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::MultiCameraCalibration> {
+		pub fn new(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32, verbose: i32, show_extration: i32, n_mini_matches: i32, flags: i32, criteria: core::TermCriteria, mut detector: core::Ptr<crate::features::Feature2D>, mut descriptor: core::Ptr<crate::features::Feature2D>, mut matcher: core::Ptr<crate::features::DescriptorMatcher>) -> Result<crate::ccalib::MultiCameraCalibration> {
 			extern_container_arg!(file_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float_int_int_int_int_TermCriteria_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, verbose, show_extration, n_mini_matches, flags, &criteria, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
@@ -1119,8 +1119,8 @@ pub mod ccalib {
 		/// * n_mini_matches: 20
 		/// * flags: 0
 		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,200,1e-7)
-		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
-		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
+		/// * detector: xfeatures2d::AKAZE::create(xfeatures2d::AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
+		/// * descriptor: xfeatures2d::AKAZE::create(xfeatures2d::AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
 		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
 		#[inline]
 		pub fn new_def(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32) -> Result<crate::ccalib::MultiCameraCalibration> {
@@ -1447,11 +1447,11 @@ pub mod ccalib {
 		/// * depth: CV_32F
 		/// * verbose: 0
 		/// * show_extraction: 0
-		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
-		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
+		/// * detector: xfeatures2d::AKAZE::create(xfeatures2d::AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
+		/// * descriptor: xfeatures2d::AKAZE::create(xfeatures2d::AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
 		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
 		#[inline]
-		pub fn new(pattern_width: f32, pattern_height: f32, nmini_match: i32, depth: i32, verbose: i32, show_extraction: i32, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::RandomPatternCornerFinder> {
+		pub fn new(pattern_width: f32, pattern_height: f32, nmini_match: i32, depth: i32, verbose: i32, show_extraction: i32, mut detector: core::Ptr<crate::features::Feature2D>, mut descriptor: core::Ptr<crate::features::Feature2D>, mut matcher: core::Ptr<crate::features::DescriptorMatcher>) -> Result<crate::ccalib::RandomPatternCornerFinder> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float_int_int_int_int_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(pattern_width, pattern_height, nmini_match, depth, verbose, show_extraction, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -1466,8 +1466,8 @@ pub mod ccalib {
 		/// * depth: CV_32F
 		/// * verbose: 0
 		/// * show_extraction: 0
-		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
-		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
+		/// * detector: xfeatures2d::AKAZE::create(xfeatures2d::AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
+		/// * descriptor: xfeatures2d::AKAZE::create(xfeatures2d::AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
 		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
 		#[inline]
 		pub fn new_def(pattern_width: f32, pattern_height: f32) -> Result<crate::ccalib::RandomPatternCornerFinder> {

@@ -9,7 +9,6 @@ pub mod videoio {
 	//!   # Flags for video I/O
 	//!   # Additional flags for video I/O API backends
 	//!   # Hardware-accelerated video decoding and encoding
-	//!   # C API for video I/O
 	//!   # iOS glue for video I/O
 	//!   # WinRT glue for video I/O
 	//!   # Query I/O API backends registry
@@ -39,8 +38,6 @@ pub mod videoio {
 	pub const CAP_FIREWARE: i32 = 300;
 	/// IEEE 1394 drivers
 	pub const CAP_FIREWIRE: i32 = 300;
-	/// Smartek Giganetix GigEVisionSDK
-	pub const CAP_GIGANETIX: i32 = 1300;
 	/// gPhoto2 connection
 	pub const CAP_GPHOTO2: i32 = 1700;
 	/// GStreamer
@@ -80,16 +77,12 @@ pub mod videoio {
 	pub const CAP_OBSENSOR_IR_IMAGE: i32 = 2;
 	/// Built-in OpenCV MotionJPEG codec
 	pub const CAP_OPENCV_MJPEG: i32 = 2200;
-	/// OpenNI (for Kinect)
-	pub const CAP_OPENNI: i32 = 900;
 	/// OpenNI2 (for Kinect)
 	pub const CAP_OPENNI2: i32 = 1600;
 	/// OpenNI2 (for Orbbec Astra)
 	pub const CAP_OPENNI2_ASTRA: i32 = 1620;
 	/// OpenNI2 (for Asus Xtion and Occipital Structure sensors)
 	pub const CAP_OPENNI2_ASUS: i32 = 1610;
-	/// OpenNI (for Asus Xtion)
-	pub const CAP_OPENNI_ASUS: i32 = 910;
 	/// Data given from RGB image generator
 	pub const CAP_OPENNI_BGR_IMAGE: i32 = 5;
 	pub const CAP_OPENNI_DEPTH_GENERATOR: i32 = -2147483648;
@@ -185,7 +178,7 @@ pub mod videoio {
 	pub const CAP_PROP_EXPOSUREPROGRAM: i32 = 17009;
 	pub const CAP_PROP_FOCUS: i32 = 28;
 	/// Format of the %Mat objects (see Mat::type()) returned by VideoCapture::retrieve().
-	/// Set value -1 to fetch undecoded RAW video streams (as Mat 8UC1).
+	/// Set value -1 to fetch undecoded RAW video streams (as Mat 8UC1). Default is 8UC3. FFmpeg backend supports 8UC4 with alpha, if it's available.
 	pub const CAP_PROP_FORMAT: i32 = 8;
 	/// 4-character code of codec. see VideoWriter::fourcc .
 	pub const CAP_PROP_FOURCC: i32 = 6;
@@ -202,10 +195,10 @@ pub mod videoio {
 	/// Gain of the image (only for those cameras that support).
 	pub const CAP_PROP_GAIN: i32 = 14;
 	pub const CAP_PROP_GAMMA: i32 = 22;
-	pub const CAP_PROP_GIGA_FRAME_HEIGH_MAX: i32 = 10004;
+	pub const CAP_PROP_GIGA_FRAME_HEIGHT_MAX: i32 = 10004;
 	pub const CAP_PROP_GIGA_FRAME_OFFSET_X: i32 = 10001;
 	pub const CAP_PROP_GIGA_FRAME_OFFSET_Y: i32 = 10002;
-	pub const CAP_PROP_GIGA_FRAME_SENS_HEIGH: i32 = 10006;
+	pub const CAP_PROP_GIGA_FRAME_SENS_HEIGHT: i32 = 10006;
 	pub const CAP_PROP_GIGA_FRAME_SENS_WIDTH: i32 = 10005;
 	pub const CAP_PROP_GIGA_FRAME_WIDTH_MAX: i32 = 10003;
 	/// Collect messages with details.
@@ -233,6 +226,8 @@ pub mod videoio {
 	pub const CAP_PROP_HW_DEVICE: i32 = 51;
 	pub const CAP_PROP_IMAGES_BASE: i32 = 18000;
 	pub const CAP_PROP_IMAGES_LAST: i32 = 19000;
+	/// (**open-only**) Start number for image sequences opened with a printf-style pattern (e.g. `frame_%05d.dpx`). Sets the initial frame number and disables automatic first-frame detection. Applicable to \ref CAP_FFMPEG (passed as the image2 demuxer `start_number`) and \ref CAP_IMAGES backends. Default: not set (automatic detection).
+	pub const CAP_PROP_IMAGE_SEQ_START: i32 = 73;
 	pub const CAP_PROP_INTELPERC_DEPTH_CONFIDENCE_THRESHOLD: i32 = 11005;
 	pub const CAP_PROP_INTELPERC_DEPTH_FOCAL_LENGTH_HORZ: i32 = 11006;
 	pub const CAP_PROP_INTELPERC_DEPTH_FOCAL_LENGTH_VERT: i32 = 11007;
@@ -341,6 +336,8 @@ pub mod videoio {
 	pub const CAP_PROP_TILT: i32 = 34;
 	pub const CAP_PROP_TRIGGER: i32 = 24;
 	pub const CAP_PROP_TRIGGER_DELAY: i32 = 25;
+	/// Returned by VideoCapture::get if the requested property is unknown or unsupported
+	pub const CAP_PROP_UNKNOWN: i32 = -1;
 	/// (**open-only**) Specify video stream, 0-based index. Use -1 to disable video stream from file or IP cameras. Default value is 0.
 	pub const CAP_PROP_VIDEO_STREAM: i32 = 57;
 	/// (read-only) Number of video channels
@@ -690,32 +687,30 @@ pub mod videoio {
 	pub const CAP_PVAPI_PIXELFORMAT_RGB24: i32 = 5;
 	/// Rgba32
 	pub const CAP_PVAPI_PIXELFORMAT_RGBA32: i32 = 7;
-	/// QuickTime (obsolete, removed)
-	pub const CAP_QT: i32 = 500;
 	/// Synonym for CAP_INTELPERC
 	pub const CAP_REALSENSE: i32 = 1500;
 	/// uEye Camera API
 	pub const CAP_UEYE: i32 = 2500;
-	/// Unicap drivers (obsolete, removed)
-	pub const CAP_UNICAP: i32 = 600;
 	/// V4L/V4L2 capturing support
 	pub const CAP_V4L: i32 = 200;
 	/// Same as CAP_V4L
 	pub const CAP_V4L2: i32 = 200;
-	/// Video For Windows (obsolete, removed)
-	pub const CAP_VFW: i32 = 200;
 	/// Microsoft Windows Runtime using Media Foundation
 	pub const CAP_WINRT: i32 = 1410;
 	/// XIMEA Camera API
 	pub const CAP_XIAPI: i32 = 1100;
 	/// XINE engine (Linux)
 	pub const CAP_XINE: i32 = 2400;
-	pub const CV__CAP_PROP_LATEST: i32 = 73;
-	pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 14;
+	pub const CV__CAP_PROP_LATEST: i32 = 74;
+	pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 16;
+	/// (**open-only**) GStreamer backend only. Pixel format for the encoding profile. Default is "I420". Other values: "NV12", "BGRx". See GStreamer raw video formats for more options.
+	pub const VIDEOWRITER_PROP_COLOR_SPACE: i32 = 14;
 	/// Defaults to \ref CV_8U.
 	pub const VIDEOWRITER_PROP_DEPTH: i32 = 5;
 	/// Specifies the maximum difference between presentation (pts) and decompression timestamps (dts) using the FPS time base. This property is necessary **only** when encapsulating **externally** encoded video where the decoding order differs from the presentation order, such as in GOP patterns with bi-directional B-frames. The value should be calculated based on the specific GOP pattern used during encoding. For example, in a GOP with presentation order IBP and decoding order IPB, this value would be 1, as the B-frame is the second frame presented but the third to be decoded. It can be queried from the resulting encapsulated video file using VideoCapture::get(\ref CAP_PROP_DTS_DELAY). Non-zero values usually imply the stream is encoded using B-frames. FFmpeg back-end only.
 	pub const VIDEOWRITER_PROP_DTS_DELAY: i32 = 13;
+	/// (**open-only**) FFmpeg backend only. Defines that input frames contain alpha channel.
+	pub const VIDEOWRITER_PROP_ENABLE_ALPHA: i32 = 15;
 	/// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
 	pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
 	/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in VideoWriter constructor / .open() method. Default value is backend-specific.
@@ -739,6 +734,8 @@ pub mod videoio {
 	pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
 	/// (**open-only**) Set to non-zero to enable encapsulation of an encoded raw video stream. Each raw encoded video frame should be passed to VideoWriter::write() as single row or column of a \ref CV_8UC1 Mat. \note If the key frame interval is not 1 then it must be manually specified by the user. This can either be performed during initialization passing \ref VIDEOWRITER_PROP_KEY_INTERVAL as one of the extra encoder params  to \ref VideoWriter::VideoWriter(const String &, int, double, const Size &, const std::vector< int > &params) or afterwards by setting the \ref VIDEOWRITER_PROP_KEY_FLAG with \ref VideoWriter::set() before writing each frame. FFMpeg backend only.
 	pub const VIDEOWRITER_PROP_RAW_VIDEO: i32 = 9;
+	/// Returned by VideoWriter::get if the requested property is unknown or unsupported
+	pub const VIDEOWRITER_PROP_UNKNOWN: i32 = -1;
 	/// Prefer to use H/W acceleration. If no one supported, then fallback to software processing.
 	///
 	/// Note: H/W acceleration may require special configuration of used environment.
@@ -804,11 +801,8 @@ pub mod videoio {
 	pub enum VideoCaptureAPIs {
 		/// Auto detect == 0
 		CAP_ANY = 0,
-		/// Video For Windows (obsolete, removed)
-		CAP_VFW = 200,
-		// V4L/V4L2 capturing support
-		// Duplicate, use CAP_VFW instead
-		// CAP_V4L = 200,
+		/// V4L/V4L2 capturing support
+		CAP_V4L = 200,
 		// Same as CAP_V4L
 		// Duplicate, use CAP_V4L instead
 		// CAP_V4L2 = 200,
@@ -826,26 +820,16 @@ pub mod videoio {
 		// Same value as CAP_FIREWIRE
 		// Duplicate, use CAP_DC1394 instead
 		// CAP_CMU1394 = 300,
-		/// QuickTime (obsolete, removed)
-		CAP_QT = 500,
-		/// Unicap drivers (obsolete, removed)
-		CAP_UNICAP = 600,
 		/// DirectShow (via videoInput)
 		CAP_DSHOW = 700,
 		/// PvAPI, Prosilica GigE SDK
 		CAP_PVAPI = 800,
-		/// OpenNI (for Kinect)
-		CAP_OPENNI = 900,
-		/// OpenNI (for Asus Xtion)
-		CAP_OPENNI_ASUS = 910,
 		/// MediaNDK (API Level 21+) and NDK Camera (API level 24+) for Android
 		CAP_ANDROID = 1000,
 		/// XIMEA Camera API
 		CAP_XIAPI = 1100,
 		/// AVFoundation framework for iOS (OS X Lion will have the same API)
 		CAP_AVFOUNDATION = 1200,
-		/// Smartek Giganetix GigEVisionSDK
-		CAP_GIGANETIX = 1300,
 		/// Microsoft Media Foundation (via videoInput). See platform specific notes above.
 		CAP_MSMF = 1400,
 		/// Microsoft Windows Runtime using Media Foundation
@@ -883,7 +867,7 @@ pub mod videoio {
 		CAP_OBSENSOR = 2600,
 	}
 
-	opencv_type_enum! { crate::videoio::VideoCaptureAPIs { CAP_ANY, CAP_VFW, CAP_FIREWIRE, CAP_QT, CAP_UNICAP, CAP_DSHOW, CAP_PVAPI, CAP_OPENNI, CAP_OPENNI_ASUS, CAP_ANDROID, CAP_XIAPI, CAP_AVFOUNDATION, CAP_GIGANETIX, CAP_MSMF, CAP_WINRT, CAP_INTELPERC, CAP_OPENNI2, CAP_OPENNI2_ASUS, CAP_OPENNI2_ASTRA, CAP_GPHOTO2, CAP_GSTREAMER, CAP_FFMPEG, CAP_IMAGES, CAP_ARAVIS, CAP_OPENCV_MJPEG, CAP_INTEL_MFX, CAP_XINE, CAP_UEYE, CAP_OBSENSOR } }
+	opencv_type_enum! { crate::videoio::VideoCaptureAPIs { CAP_ANY, CAP_V4L, CAP_FIREWIRE, CAP_DSHOW, CAP_PVAPI, CAP_ANDROID, CAP_XIAPI, CAP_AVFOUNDATION, CAP_MSMF, CAP_WINRT, CAP_INTELPERC, CAP_OPENNI2, CAP_OPENNI2_ASUS, CAP_OPENNI2_ASTRA, CAP_GPHOTO2, CAP_GSTREAMER, CAP_FFMPEG, CAP_IMAGES, CAP_ARAVIS, CAP_OPENCV_MJPEG, CAP_INTEL_MFX, CAP_XINE, CAP_UEYE, CAP_OBSENSOR } }
 
 	/// OBSENSOR (for Orbbec 3D-Sensor device/module )
 	///
@@ -947,6 +931,8 @@ pub mod videoio {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum VideoCaptureProperties {
+		/// Returned by VideoCapture::get if the requested property is unknown or unsupported
+		CAP_PROP_UNKNOWN = -1,
 		/// Current position of the video file in milliseconds.
 		CAP_PROP_POS_MSEC = 0,
 		/// 0-based index of the frame to be decoded/captured next. When the index i is set in RAW mode (CAP_PROP_FORMAT == -1) this will seek to the key frame k, where k <= i.
@@ -964,7 +950,7 @@ pub mod videoio {
 		/// Number of frames in the video file.
 		CAP_PROP_FRAME_COUNT = 7,
 		/// Format of the %Mat objects (see Mat::type()) returned by VideoCapture::retrieve().
-		/// Set value -1 to fetch undecoded RAW video streams (as Mat 8UC1).
+		/// Set value -1 to fetch undecoded RAW video streams (as Mat 8UC1). Default is 8UC3. FFmpeg backend supports 8UC4 with alpha, if it's available.
 		CAP_PROP_FORMAT = 8,
 		/// Backend-specific value indicating the current capture mode.
 		CAP_PROP_MODE = 9,
@@ -1076,10 +1062,12 @@ pub mod videoio {
 		CAP_PROP_PTS = 71,
 		/// (read-only) FFmpeg back-end only - maximum difference between presentation (pts) and decompression timestamps (dts) using FPS time base.  e.g. delay is maximum when frame_num = 0, if true, VideoCapture::get(\ref CAP_PROP_PTS) = 0 and VideoCapture::get(\ref CAP_PROP_DTS_DELAY) = 2, dts = -2.  Non zero values usually imply the stream is encoded using B-frames which are not decoded in presentation order.
 		CAP_PROP_DTS_DELAY = 72,
-		CV__CAP_PROP_LATEST = 73,
+		/// (**open-only**) Start number for image sequences opened with a printf-style pattern (e.g. `frame_%05d.dpx`). Sets the initial frame number and disables automatic first-frame detection. Applicable to \ref CAP_FFMPEG (passed as the image2 demuxer `start_number`) and \ref CAP_IMAGES backends. Default: not set (automatic detection).
+		CAP_PROP_IMAGE_SEQ_START = 73,
+		CV__CAP_PROP_LATEST = 74,
 	}
 
-	opencv_type_enum! { crate::videoio::VideoCaptureProperties { CAP_PROP_POS_MSEC, CAP_PROP_POS_FRAMES, CAP_PROP_POS_AVI_RATIO, CAP_PROP_FRAME_WIDTH, CAP_PROP_FRAME_HEIGHT, CAP_PROP_FPS, CAP_PROP_FOURCC, CAP_PROP_FRAME_COUNT, CAP_PROP_FORMAT, CAP_PROP_MODE, CAP_PROP_BRIGHTNESS, CAP_PROP_CONTRAST, CAP_PROP_SATURATION, CAP_PROP_HUE, CAP_PROP_GAIN, CAP_PROP_EXPOSURE, CAP_PROP_CONVERT_RGB, CAP_PROP_WHITE_BALANCE_BLUE_U, CAP_PROP_RECTIFICATION, CAP_PROP_MONOCHROME, CAP_PROP_SHARPNESS, CAP_PROP_AUTO_EXPOSURE, CAP_PROP_GAMMA, CAP_PROP_TEMPERATURE, CAP_PROP_TRIGGER, CAP_PROP_TRIGGER_DELAY, CAP_PROP_WHITE_BALANCE_RED_V, CAP_PROP_ZOOM, CAP_PROP_FOCUS, CAP_PROP_GUID, CAP_PROP_ISO_SPEED, CAP_PROP_BACKLIGHT, CAP_PROP_PAN, CAP_PROP_TILT, CAP_PROP_ROLL, CAP_PROP_IRIS, CAP_PROP_SETTINGS, CAP_PROP_BUFFERSIZE, CAP_PROP_AUTOFOCUS, CAP_PROP_SAR_NUM, CAP_PROP_SAR_DEN, CAP_PROP_BACKEND, CAP_PROP_CHANNEL, CAP_PROP_AUTO_WB, CAP_PROP_WB_TEMPERATURE, CAP_PROP_CODEC_PIXEL_FORMAT, CAP_PROP_BITRATE, CAP_PROP_ORIENTATION_META, CAP_PROP_ORIENTATION_AUTO, CAP_PROP_HW_ACCELERATION, CAP_PROP_HW_DEVICE, CAP_PROP_HW_ACCELERATION_USE_OPENCL, CAP_PROP_OPEN_TIMEOUT_MSEC, CAP_PROP_READ_TIMEOUT_MSEC, CAP_PROP_STREAM_OPEN_TIME_USEC, CAP_PROP_VIDEO_TOTAL_CHANNELS, CAP_PROP_VIDEO_STREAM, CAP_PROP_AUDIO_STREAM, CAP_PROP_AUDIO_POS, CAP_PROP_AUDIO_SHIFT_NSEC, CAP_PROP_AUDIO_DATA_DEPTH, CAP_PROP_AUDIO_SAMPLES_PER_SECOND, CAP_PROP_AUDIO_BASE_INDEX, CAP_PROP_AUDIO_TOTAL_CHANNELS, CAP_PROP_AUDIO_TOTAL_STREAMS, CAP_PROP_AUDIO_SYNCHRONIZE, CAP_PROP_LRF_HAS_KEY_FRAME, CAP_PROP_CODEC_EXTRADATA_INDEX, CAP_PROP_FRAME_TYPE, CAP_PROP_N_THREADS, CAP_PROP_PTS, CAP_PROP_DTS_DELAY, CV__CAP_PROP_LATEST } }
+	opencv_type_enum! { crate::videoio::VideoCaptureProperties { CAP_PROP_UNKNOWN, CAP_PROP_POS_MSEC, CAP_PROP_POS_FRAMES, CAP_PROP_POS_AVI_RATIO, CAP_PROP_FRAME_WIDTH, CAP_PROP_FRAME_HEIGHT, CAP_PROP_FPS, CAP_PROP_FOURCC, CAP_PROP_FRAME_COUNT, CAP_PROP_FORMAT, CAP_PROP_MODE, CAP_PROP_BRIGHTNESS, CAP_PROP_CONTRAST, CAP_PROP_SATURATION, CAP_PROP_HUE, CAP_PROP_GAIN, CAP_PROP_EXPOSURE, CAP_PROP_CONVERT_RGB, CAP_PROP_WHITE_BALANCE_BLUE_U, CAP_PROP_RECTIFICATION, CAP_PROP_MONOCHROME, CAP_PROP_SHARPNESS, CAP_PROP_AUTO_EXPOSURE, CAP_PROP_GAMMA, CAP_PROP_TEMPERATURE, CAP_PROP_TRIGGER, CAP_PROP_TRIGGER_DELAY, CAP_PROP_WHITE_BALANCE_RED_V, CAP_PROP_ZOOM, CAP_PROP_FOCUS, CAP_PROP_GUID, CAP_PROP_ISO_SPEED, CAP_PROP_BACKLIGHT, CAP_PROP_PAN, CAP_PROP_TILT, CAP_PROP_ROLL, CAP_PROP_IRIS, CAP_PROP_SETTINGS, CAP_PROP_BUFFERSIZE, CAP_PROP_AUTOFOCUS, CAP_PROP_SAR_NUM, CAP_PROP_SAR_DEN, CAP_PROP_BACKEND, CAP_PROP_CHANNEL, CAP_PROP_AUTO_WB, CAP_PROP_WB_TEMPERATURE, CAP_PROP_CODEC_PIXEL_FORMAT, CAP_PROP_BITRATE, CAP_PROP_ORIENTATION_META, CAP_PROP_ORIENTATION_AUTO, CAP_PROP_HW_ACCELERATION, CAP_PROP_HW_DEVICE, CAP_PROP_HW_ACCELERATION_USE_OPENCL, CAP_PROP_OPEN_TIMEOUT_MSEC, CAP_PROP_READ_TIMEOUT_MSEC, CAP_PROP_STREAM_OPEN_TIME_USEC, CAP_PROP_VIDEO_TOTAL_CHANNELS, CAP_PROP_VIDEO_STREAM, CAP_PROP_AUDIO_STREAM, CAP_PROP_AUDIO_POS, CAP_PROP_AUDIO_SHIFT_NSEC, CAP_PROP_AUDIO_DATA_DEPTH, CAP_PROP_AUDIO_SAMPLES_PER_SECOND, CAP_PROP_AUDIO_BASE_INDEX, CAP_PROP_AUDIO_TOTAL_CHANNELS, CAP_PROP_AUDIO_TOTAL_STREAMS, CAP_PROP_AUDIO_SYNCHRONIZE, CAP_PROP_LRF_HAS_KEY_FRAME, CAP_PROP_CODEC_EXTRADATA_INDEX, CAP_PROP_FRAME_TYPE, CAP_PROP_N_THREADS, CAP_PROP_PTS, CAP_PROP_DTS_DELAY, CAP_PROP_IMAGE_SEQ_START, CV__CAP_PROP_LATEST } }
 
 	/// cv::VideoWriter generic properties identifier.
 	/// ## See also
@@ -1087,6 +1075,8 @@ pub mod videoio {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum VideoWriterProperties {
+		/// Returned by VideoWriter::get if the requested property is unknown or unsupported
+		VIDEOWRITER_PROP_UNKNOWN = -1,
 		/// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
 		VIDEOWRITER_PROP_QUALITY = 1,
 		/// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
@@ -1114,10 +1104,14 @@ pub mod videoio {
 		VIDEOWRITER_PROP_PTS = 12,
 		/// Specifies the maximum difference between presentation (pts) and decompression timestamps (dts) using the FPS time base. This property is necessary **only** when encapsulating **externally** encoded video where the decoding order differs from the presentation order, such as in GOP patterns with bi-directional B-frames. The value should be calculated based on the specific GOP pattern used during encoding. For example, in a GOP with presentation order IBP and decoding order IPB, this value would be 1, as the B-frame is the second frame presented but the third to be decoded. It can be queried from the resulting encapsulated video file using VideoCapture::get(\ref CAP_PROP_DTS_DELAY). Non-zero values usually imply the stream is encoded using B-frames. FFmpeg back-end only.
 		VIDEOWRITER_PROP_DTS_DELAY = 13,
-		CV__VIDEOWRITER_PROP_LATEST = 14,
+		/// (**open-only**) GStreamer backend only. Pixel format for the encoding profile. Default is "I420". Other values: "NV12", "BGRx". See GStreamer raw video formats for more options.
+		VIDEOWRITER_PROP_COLOR_SPACE = 14,
+		/// (**open-only**) FFmpeg backend only. Defines that input frames contain alpha channel.
+		VIDEOWRITER_PROP_ENABLE_ALPHA = 15,
+		CV__VIDEOWRITER_PROP_LATEST = 16,
 	}
 
-	opencv_type_enum! { crate::videoio::VideoWriterProperties { VIDEOWRITER_PROP_QUALITY, VIDEOWRITER_PROP_FRAMEBYTES, VIDEOWRITER_PROP_NSTRIPES, VIDEOWRITER_PROP_IS_COLOR, VIDEOWRITER_PROP_DEPTH, VIDEOWRITER_PROP_HW_ACCELERATION, VIDEOWRITER_PROP_HW_DEVICE, VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL, VIDEOWRITER_PROP_RAW_VIDEO, VIDEOWRITER_PROP_KEY_INTERVAL, VIDEOWRITER_PROP_KEY_FLAG, VIDEOWRITER_PROP_PTS, VIDEOWRITER_PROP_DTS_DELAY, CV__VIDEOWRITER_PROP_LATEST } }
+	opencv_type_enum! { crate::videoio::VideoWriterProperties { VIDEOWRITER_PROP_UNKNOWN, VIDEOWRITER_PROP_QUALITY, VIDEOWRITER_PROP_FRAMEBYTES, VIDEOWRITER_PROP_NSTRIPES, VIDEOWRITER_PROP_IS_COLOR, VIDEOWRITER_PROP_DEPTH, VIDEOWRITER_PROP_HW_ACCELERATION, VIDEOWRITER_PROP_HW_DEVICE, VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL, VIDEOWRITER_PROP_RAW_VIDEO, VIDEOWRITER_PROP_KEY_INTERVAL, VIDEOWRITER_PROP_KEY_FLAG, VIDEOWRITER_PROP_PTS, VIDEOWRITER_PROP_DTS_DELAY, VIDEOWRITER_PROP_COLOR_SPACE, VIDEOWRITER_PROP_ENABLE_ALPHA, CV__VIDEOWRITER_PROP_LATEST } }
 
 	/// Returns backend API name or "UnknownVideoAPI(xxx)"
 	/// ## Parameters
@@ -1337,14 +1331,12 @@ pub mod videoio {
 	/// The class provides C++ API for capturing video from cameras or for reading video files and image sequences.
 	///
 	/// Here is how the class can be used:
-	/// @include samples/cpp/videocapture_basic.cpp
+	/// @include samples/cpp/snippets/videocapture_basic.cpp
 	///
-	///
-	/// Note: In [videoio_c] "C API" the black-box structure `CvCapture` is used instead of %VideoCapture.
 	///
 	/// Note:
 	/// *   (C++) A basic sample on using the %VideoCapture interface can be found at
-	///    `OPENCV_SOURCE_CODE/samples/cpp/videocapture_starter.cpp`
+	///    `OPENCV_SOURCE_CODE/samples/cpp/videocapture_combined.cpp`
 	/// *   (Python) A basic sample on using the %VideoCapture interface can be found at
 	///    `OPENCV_SOURCE_CODE/samples/python/video.py`
 	/// *   (Python) A multi threaded video processing sample can be found at
@@ -1368,10 +1360,6 @@ pub mod videoio {
 
 	impl VideoCapture {
 		/// Default constructor
-		///
-		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
-		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
-		/// destructor.
 		#[inline]
 		pub fn default() -> Result<crate::videoio::VideoCapture> {
 			return_send!(via ocvrs_return);
@@ -1383,10 +1371,6 @@ pub mod videoio {
 		}
 
 		/// Default constructor
-		///
-		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
-		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
-		/// destructor.
 		///
 		/// ## Overloaded parameters
 		///
@@ -1419,10 +1403,6 @@ pub mod videoio {
 		}
 
 		/// Default constructor
-		///
-		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
-		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
-		/// destructor.
 		///
 		/// ## Overloaded parameters
 		///
@@ -1457,10 +1437,6 @@ pub mod videoio {
 
 		/// Default constructor
 		///
-		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
-		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
-		/// destructor.
-		///
 		/// ## Overloaded parameters
 		///
 		/// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters
@@ -1479,10 +1455,6 @@ pub mod videoio {
 		}
 
 		/// Default constructor
-		///
-		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
-		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
-		/// destructor.
 		///
 		/// ## Overloaded parameters
 		///
@@ -1509,10 +1481,6 @@ pub mod videoio {
 		}
 
 		/// Default constructor
-		///
-		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
-		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
-		/// destructor.
 		///
 		/// ## Overloaded parameters
 		///
@@ -1541,10 +1509,6 @@ pub mod videoio {
 
 		/// Default constructor
 		///
-		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
-		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
-		/// destructor.
-		///
 		/// ## Overloaded parameters
 		///
 		/// Opens a camera for video capturing with API Preference and parameters
@@ -1562,10 +1526,6 @@ pub mod videoio {
 		}
 
 		/// Default constructor
-		///
-		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
-		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
-		/// destructor.
 		///
 		/// ## Overloaded parameters
 		///
@@ -1663,7 +1623,7 @@ pub mod videoio {
 		/// * propId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
 		/// or one from [videoio_flags_others]
 		/// ## Returns
-		/// Value for the specified property. Value 0 is returned when querying a property that is
+		/// Value for the specified property. Value cv::CAP_PROP_UNKNOWN is returned when querying a property that is
 		/// not supported by the backend used by the VideoCapture instance.
 		///
 		///
@@ -1921,11 +1881,6 @@ pub mod videoio {
 		/// ## See also
 		/// read()
 		///
-		///
-		/// Note: In [videoio_c] "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
-		/// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
-		/// cvCloneImage and then do whatever you want with the copy.
-		///
 		/// ## C++ default parameters
 		/// * flag: 0
 		#[inline]
@@ -1952,11 +1907,6 @@ pub mod videoio {
 		/// ## See also
 		/// read()
 		///
-		///
-		/// Note: In [videoio_c] "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
-		/// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
-		/// cvCloneImage and then do whatever you want with the copy.
-		///
 		/// ## Note
 		/// This alternative version of [VideoCaptureTrait::retrieve] function uses the following default values for its arguments:
 		/// * flag: 0
@@ -1981,11 +1931,6 @@ pub mod videoio {
 		/// most convenient method for reading video files or capturing data from decode and returns the just
 		/// grabbed frame. If no frames has been grabbed (camera has been disconnected, or there are no more
 		/// frames in video file), the method returns false and the function returns empty image (with %cv::Mat, test it with Mat::empty()).
-		///
-		///
-		/// Note: In [videoio_c] "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
-		/// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
-		/// cvCloneImage and then do whatever you want with the copy.
 		#[inline]
 		fn read(&mut self, image: &mut impl ToOutputArray) -> Result<bool> {
 			output_array_arg!(image);
@@ -2493,8 +2438,14 @@ pub mod videoio {
 		///
 		/// The function/method writes the specified image to video file. It must have the same size as has
 		/// been specified when opening the video writer.
+		///
+		/// ## Returns
+		/// `true` if the frame was written successfully by the underlying backend,
+		/// `false` otherwise (for example, on network errors when streaming, encoder failures,
+		/// or unsupported input frames). Backends that do not surface per-frame status from
+		/// their native API report `true` on best-effort success.
 		#[inline]
-		fn write(&mut self, image: &impl ToInputArray) -> Result<()> {
+		fn write(&mut self, image: &impl ToInputArray) -> Result<bool> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_write_const__InputArrayR(self.as_raw_mut_VideoWriter(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };

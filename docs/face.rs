@@ -912,9 +912,9 @@ pub mod face {
 		}
 
 		#[inline]
-		fn face_cascade(&self) -> crate::objdetect::CascadeClassifier {
+		fn face_cascade(&self) -> crate::xobjdetect::CascadeClassifier {
 			let ret = unsafe { sys::cv_face_CParams_propFace_cascade_const(self.as_raw_CParams()) };
-			let ret = unsafe { crate::objdetect::CascadeClassifier::opencv_from_extern(ret) };
+			let ret = unsafe { crate::xobjdetect::CascadeClassifier::opencv_from_extern(ret) };
 			ret
 		}
 
@@ -961,7 +961,7 @@ pub mod face {
 		}
 
 		#[inline]
-		fn set_face_cascade(&mut self, val: crate::objdetect::CascadeClassifier) {
+		fn set_face_cascade(&mut self, val: crate::xobjdetect::CascadeClassifier) {
 			let ret = unsafe { sys::cv_face_CParams_propFace_cascade_const_CascadeClassifier(self.as_raw_mut_CParams(), val.as_raw_CascadeClassifier()) };
 			ret
 		}
@@ -4322,7 +4322,7 @@ pub mod face {
 	///    useful for authentication with (cancellable) biometrical features.
 	///    (does not need many positives to train (10-50), and no negatives at all, also robust to noise/salting)
 	///
-	///    see also: [Savvides04](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Savvides04)
+	///    see also: [Savvides04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Savvides04)
 	///
 	///    this implementation is largely based on: <https://code.google.com/archive/p/pam-face-authentication> (GSOC 2009)
 	///

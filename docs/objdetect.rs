@@ -1,57 +1,5 @@
 pub mod objdetect {
 	//! # Object Detection
-	//!    # Cascade Classifier for Object Detection
-	//!
-	//!    The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Viola01) and
-	//!    improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
-	//!
-	//!    First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
-	//!    trained with a few hundred sample views of a particular object (i.e., a face or a car), called
-	//!    positive examples, that are scaled to the same size (say, 20x20), and negative examples - arbitrary
-	//!    images of the same size.
-	//!
-	//!    After a classifier is trained, it can be applied to a region of interest (of the same size as used
-	//!    during the training) in an input image. The classifier outputs a "1" if the region is likely to show
-	//!    the object (i.e., face/car), and "0" otherwise. To search for the object in the whole image one can
-	//!    move the search window across the image and check every location using the classifier. The
-	//!    classifier is designed so that it can be easily "resized" in order to be able to find the objects of
-	//!    interest at different sizes, which is more efficient than resizing the image itself. So, to find an
-	//!    object of an unknown size in the image the scan procedure should be done several times at different
-	//!    scales.
-	//!
-	//!    The word "cascade" in the classifier name means that the resultant classifier consists of several
-	//!    simpler classifiers (*stages*) that are applied subsequently to a region of interest until at some
-	//!    stage the candidate is rejected or all the stages are passed. The word "boosted" means that the
-	//!    classifiers at every stage of the cascade are complex themselves and they are built out of basic
-	//!    classifiers using one of four different boosting techniques (weighted voting). Currently Discrete
-	//!    Adaboost, Real Adaboost, Gentle Adaboost and Logitboost are supported. The basic classifiers are
-	//!    decision-tree classifiers with at least 2 leaves. Haar-like features are the input to the basic
-	//!    classifiers, and are calculated as described below. The current algorithm uses the following
-	//!    Haar-like features:
-	//!
-	//!    ![image](https://docs.opencv.org/4.13.0/haarfeatures.png)
-	//!
-	//!    The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
-	//!    the region of interest and the scale (this scale is not the same as the scale used at the detection
-	//!    stage, though these two scales are multiplied). For example, in the case of the third line feature
-	//!    (2c) the response is calculated as the difference between the sum of image pixels under the
-	//!    rectangle covering the whole feature (including the two white stripes and the black stripe in the
-	//!    middle) and the sum of the image pixels under the black stripe multiplied by 3 in order to
-	//!    compensate for the differences in the size of areas. The sums of pixel values over a rectangular
-	//!    regions are calculated rapidly using integral images (see below and the integral description).
-	//!
-	//!    Check [tutorial_cascade_classifier] "the corresponding tutorial" for more details.
-	//!
-	//!    The following reference is for the detection part only. There is a separate application called
-	//!    opencv_traincascade that can train a cascade of boosted classifiers from a set of samples.
-	//!
-	//!     
-	//! Note: In the new C++ interface it is also possible to use LBP (local binary pattern) features in
-	//!    addition to Haar-like features. .. [Viola01] Paul Viola and Michael J. Jones. Rapid Object Detection
-	//!    using a Boosted Cascade of Simple Features. IEEE CVPR, 2001. The paper is available online at
-	//!    <https://github.com/SvHey/thesis/blob/master/Literature/ObjectDetection/violaJones_CVPR2001.pdf>
-	//!
-	//!    # HOG (Histogram of Oriented Gradients) descriptor and object detector
 	//!    # Barcode detection and decoding
 	//!    # QRCode detection and encoding
 	//!    # DNN-based face detection and recognition
@@ -69,24 +17,94 @@ pub mod objdetect {
 	//!        ArUco markers can also be used for advanced chessboard corner finding. To do this, group the markers in the
 	//!        CharucoBoard and find the corners of the chessboard with the CharucoDetector::detectBoard().
 	//!
-	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Aruco2014).
+	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Aruco2014).
 	//!
-	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial marker detection method.
 	//! ## See also
-	//! [Aruco2014](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Aruco2014)
+	//! [Aruco2014](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Aruco2014)
 	//!        This code has been originally developed by Sergio Garrido-Jurado as a project
 	//!        for Google Summer of Code 2015 (GSoC 15).
+	//!
+	//!        <br>
+	//!
+	//!        @warning In OpenCV, the order of the returned corners locations for the AprilTag family is not aligned with the ArUco one.
+	//!
+	//!        Note that this order is also different from the convention adopted by the official [AprilTag library](https://github.com/AprilRobotics/apriltag/).
+	//!        ![](https://docs.opencv.org/5.0.0/AprilTag_corners_comparison_opencv_april.png) { width=80% }
+	//!
+	//!        <br>
+	//!
+	//!        An overview of the supported ArUco markers family is visible in the following image:
+	//!        ![](https://docs.opencv.org/5.0.0/ArUco_family.png) { width=80% }
+	//!
+	//!        <br>
+	//!
+	//!        An overview of the supported AprilTag markers family is visible in the following image:
+	//!        ![](https://docs.opencv.org/5.0.0/AprilTag_family.png) { width=80% }
+	//!
+	//!         
+	//! Note: The generated images (in the above picture) using [aruco::generateImageMarker] for the AprilTag markers have been
+	//!        rotated by 180 degree in order to match the official AprilTag images.
+	//!        When using the [aruco::generateImageMarker] function, it will output by default a different image from the official AprilTag convention,
+	//!        see the [AprilRobotics/apriltag-imgs](https://github.com/AprilRobotics/apriltag-imgs) repository.
+	//!        This is the reason why you see a different corners order between ArUco and AprilTag in the above image.
+	//!
+	//!        <br>
+	//!
+	//!        For the ArUco marker family, the recommended family is the DICT_ARUCO_MIP_36h12 one, [see](https://stackoverflow.com/a/51511558).
+	//!        In general, a smaller marker family (e.g. `4x4` vs `6x6`) should give you a better detection rate with respect to the camera distance,
+	//!        at the expense of having more probability to have issues with false detection or marker id decoding error.
+	//!        The number of marker ids in a family is also something to take into account with respect to the application use case and the ability
+	//!        to correct wrong bits during the marker id decoding process.
+	//!
+	//!        You can download some pregenerated MIP_36h12 ArUco marker images from:
+	//!           - <https://sourceforge.net/projects/aruco/files/>
+	//!           - or use the `samples/cpp/tutorial_code/objectDetection/create_marker.cpp` sample to generate the marker image for your
+	//!           desired marker family (which uses the [aruco::generateImageMarker] function)
+	//!
+	//!        For the AprilTag family, you can find some pregenerated marker images in the
+	//!        [AprilRobotics/apriltag-imgs](https://github.com/AprilRobotics/apriltag-imgs) repository.
+	//!
+	//!         
+	//! Note: For accurate corners location extraction, a white border (to have a strong gradient between white and black transition) around the marker is important.
+	//!        This is necessary to precisely extract the marker contour in difficult conditions such as bad illumination, confusing color background, etc.
+	//!
+	//!        <br>
+	//!
+	//!        There are multiple parameters which can be tweaked to improve the marker detection rate or to be adapted to your use case (e.g. image resolution).
+	//!        Please refer to the:
+	//!           - [aruco::DetectorParameters]
+	//!           - "Detector Parameters" section in the [tutorial_aruco_detection] tutorial or in the [tutorial_aruco_faq] page
+	//!           - [ArUco Library Documentation](https://drive.google.com/file/d/1OiavRVYVJ-WH88sQg1LUsh8CuJZUQyrX) for additional information from the ArUco library
+	//!
+	//!        The corner refinement method can be changed according to the [aruco::CornerRefineMethod] to improve the corners location accuracy
+	//!        at the expense of more computation time.
+	//!
+	//!        <br>
+	//!
+	//!        To estimate the marker pose with respect to the camera frame, we recommend you to look at the following sources of information:
+	//!           - [tutorial_aruco_detection] for a tutorial about ArUco markers detection
+	//!           - [_3d] for some theoretical background about the pinhole camera model and the [calib3d_solvePnP] page
+	//!           - [solvePnP], [solvePnPGeneric], [solveP3P] for the relevant pose estimation methods
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{ArucoDetectorTrait, ArucoDetectorTraitConst, BarcodeDetectorTrait, BarcodeDetectorTraitConst, BaseCascadeClassifierTrait, BaseCascadeClassifierTraitConst, BaseCascadeClassifier_MaskGeneratorTrait, BaseCascadeClassifier_MaskGeneratorTraitConst, BoardTrait, BoardTraitConst, CascadeClassifierTrait, CascadeClassifierTraitConst, CharucoBoardTrait, CharucoBoardTraitConst, CharucoDetectorTrait, CharucoDetectorTraitConst, CharucoParametersTrait, CharucoParametersTraitConst, DetectionBasedTrackerTrait, DetectionBasedTrackerTraitConst, DetectionBasedTracker_ExtObjectTrait, DetectionBasedTracker_ExtObjectTraitConst, DetectionBasedTracker_IDetectorTrait, DetectionBasedTracker_IDetectorTraitConst, DetectionBasedTracker_ParametersTrait, DetectionBasedTracker_ParametersTraitConst, DetectionROITrait, DetectionROITraitConst, DetectorParametersTrait, DetectorParametersTraitConst, DictionaryTrait, DictionaryTraitConst, FaceDetectorYNTrait, FaceDetectorYNTraitConst, FaceRecognizerSFTrait, FaceRecognizerSFTraitConst, GraphicalCodeDetectorTrait, GraphicalCodeDetectorTraitConst, GridBoardTrait, GridBoardTraitConst, HOGDescriptorTrait, HOGDescriptorTraitConst, QRCodeDetectorArucoTrait, QRCodeDetectorArucoTraitConst, QRCodeDetectorTrait, QRCodeDetectorTraitConst, QRCodeEncoderTrait, QRCodeEncoderTraitConst, SimilarRectsTrait, SimilarRectsTraitConst};
+		pub use super::{ArucoDetectorTrait, ArucoDetectorTraitConst, BarcodeDetectorTrait, BarcodeDetectorTraitConst, BoardTrait, BoardTraitConst, CCheckerDetectorTrait, CCheckerDetectorTraitConst, CCheckerTrait, CCheckerTraitConst, CharucoBoardTrait, CharucoBoardTraitConst, CharucoDetectorTrait, CharucoDetectorTraitConst, CharucoParametersTrait, CharucoParametersTraitConst, DetectorParametersTrait, DetectorParametersTraitConst, DictionaryTrait, DictionaryTraitConst, FaceDetectorYNTrait, FaceDetectorYNTraitConst, FaceRecognizerSFTrait, FaceRecognizerSFTraitConst, GraphicalCodeDetectorTrait, GraphicalCodeDetectorTraitConst, GridBoardTrait, GridBoardTraitConst, QRCodeDetectorArucoTrait, QRCodeDetectorArucoTraitConst, QRCodeDetectorTrait, QRCodeDetectorTraitConst, QRCodeEncoderTrait, QRCodeEncoderTraitConst};
 	}
 
-	pub const CASCADE_DO_CANNY_PRUNING: i32 = 1;
-	pub const CASCADE_DO_ROUGH_SEARCH: i32 = 8;
-	pub const CASCADE_FIND_BIGGEST_OBJECT: i32 = 4;
-	pub const CASCADE_SCALE_IMAGE: i32 = 2;
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+	pub const CALIB_CB_ACCURACY: i32 = 32;
+	pub const CALIB_CB_ADAPTIVE_THRESH: i32 = 1;
+	pub const CALIB_CB_ASYMMETRIC_GRID: i32 = 2;
+	pub const CALIB_CB_CLUSTERING: i32 = 4;
+	pub const CALIB_CB_EXHAUSTIVE: i32 = 16;
+	pub const CALIB_CB_FAST_CHECK: i32 = 8;
+	pub const CALIB_CB_FILTER_QUADS: i32 = 4;
+	pub const CALIB_CB_LARGER: i32 = 64;
+	pub const CALIB_CB_MARKER: i32 = 128;
+	pub const CALIB_CB_NORMALIZE_IMAGE: i32 = 2;
+	pub const CALIB_CB_PLAIN: i32 = 256;
+	pub const CALIB_CB_SYMMETRIC_GRID: i32 = 1;
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 	pub const CORNER_REFINE_APRILTAG: i32 = 3;
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -94,6 +112,9 @@ pub mod objdetect {
 	pub const CORNER_REFINE_NONE: i32 = 0;
 	/// ArUco approach and refine the corners locations using corner subpixel accuracy
 	pub const CORNER_REFINE_SUBPIX: i32 = 1;
+	pub const CirclesGridFinderParameters_ASYMMETRIC_GRID: i32 = 1;
+	pub const CirclesGridFinderParameters_SYMMETRIC_GRID: i32 = 0;
+	pub const DEFAULT_VALID_BIT_ID_THRESHOLD: f64 = 0.49000000953674316;
 	/// 4x4 bits, minimum hamming distance between any two codes = 3, 100 codes
 	pub const DICT_4X4_100: i32 = 1;
 	/// 4x4 bits, minimum hamming distance between any two codes = 2, 1000 codes
@@ -138,18 +159,10 @@ pub mod objdetect {
 	pub const DICT_ARUCO_MIP_36h12: i32 = 21;
 	/// 6x6 bits, minimum hamming distance between any two codes = 3, 1024 codes
 	pub const DICT_ARUCO_ORIGINAL: i32 = 16;
-	pub const DetectionBasedTracker_DETECTED: i32 = 1;
-	pub const DetectionBasedTracker_DETECTED_NOT_SHOWN_YET: i32 = 0;
-	pub const DetectionBasedTracker_DETECTED_TEMPORARY_LOST: i32 = 2;
-	pub const DetectionBasedTracker_WRONG_OBJECT: i32 = 3;
 	pub const FaceRecognizerSF_FR_COSINE: i32 = 0;
 	pub const FaceRecognizerSF_FR_NORM_L2: i32 = 1;
-	/// Default nlevels value.
-	pub const HOGDescriptor_DEFAULT_NLEVELS: i32 = 64;
-	pub const HOGDescriptor_DESCR_FORMAT_COL_BY_COL: i32 = 0;
-	pub const HOGDescriptor_DESCR_FORMAT_ROW_BY_ROW: i32 = 1;
-	/// Default histogramNormType
-	pub const HOGDescriptor_L2Hys: i32 = 0;
+	/// Standard Macbeth Chart with 24 squares
+	pub const MCC24: i32 = 0;
 	pub const QRCodeEncoder_CORRECT_LEVEL_H: i32 = 3;
 	pub const QRCodeEncoder_CORRECT_LEVEL_L: i32 = 0;
 	pub const QRCodeEncoder_CORRECT_LEVEL_M: i32 = 1;
@@ -163,6 +176,35 @@ pub mod objdetect {
 	pub const QRCodeEncoder_MODE_KANJI: i32 = 8;
 	pub const QRCodeEncoder_MODE_NUMERIC: i32 = 1;
 	pub const QRCodeEncoder_MODE_STRUCTURED_APPEND: i32 = 3;
+	/// DigitalSG with 140 squares
+	pub const SG140: i32 = 1;
+	/// DKK color chart with 12 squares and 6 rectangle
+	pub const VINYL18: i32 = 2;
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum CirclesGridFinderParameters_GridType {
+		SYMMETRIC_GRID = 0,
+		ASYMMETRIC_GRID = 1,
+	}
+
+	opencv_type_enum! { crate::objdetect::CirclesGridFinderParameters_GridType { SYMMETRIC_GRID, ASYMMETRIC_GRID } }
+
+	/// ColorChart
+	///
+	/// enum to hold the type of the checker
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum ColorChart {
+		/// Standard Macbeth Chart with 24 squares
+		MCC24 = 0,
+		/// DigitalSG with 140 squares
+		SG140 = 1,
+		/// DKK color chart with 12 squares and 6 rectangle
+		VINYL18 = 2,
+	}
+
+	opencv_type_enum! { crate::objdetect::ColorChart { MCC24, SG140, VINYL18 } }
+
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CornerRefineMethod {
@@ -172,22 +214,11 @@ pub mod objdetect {
 		CORNER_REFINE_SUBPIX = 1,
 		/// ArUco approach and refine the corners locations using the contour-points line fitting
 		CORNER_REFINE_CONTOUR = 2,
-		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 		CORNER_REFINE_APRILTAG = 3,
 	}
 
 	opencv_type_enum! { crate::objdetect::CornerRefineMethod { CORNER_REFINE_NONE, CORNER_REFINE_SUBPIX, CORNER_REFINE_CONTOUR, CORNER_REFINE_APRILTAG } }
-
-	#[repr(i32)]
-	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum DetectionBasedTracker_ObjectStatus {
-		DETECTED_NOT_SHOWN_YET = 0,
-		DETECTED = 1,
-		DETECTED_TEMPORARY_LOST = 2,
-		WRONG_OBJECT = 3,
-	}
-
-	opencv_type_enum! { crate::objdetect::DetectionBasedTracker_ObjectStatus { DETECTED_NOT_SHOWN_YET, DETECTED, DETECTED_TEMPORARY_LOST, WRONG_OBJECT } }
 
 	/// Definition of distance used for calculating the distance between two face features
 	#[repr(i32)]
@@ -198,24 +229,6 @@ pub mod objdetect {
 	}
 
 	opencv_type_enum! { crate::objdetect::FaceRecognizerSF_DisType { FR_COSINE, FR_NORM_L2 } }
-
-	#[repr(i32)]
-	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum HOGDescriptor_DescriptorStorageFormat {
-		DESCR_FORMAT_COL_BY_COL = 0,
-		DESCR_FORMAT_ROW_BY_ROW = 1,
-	}
-
-	opencv_type_enum! { crate::objdetect::HOGDescriptor_DescriptorStorageFormat { DESCR_FORMAT_COL_BY_COL, DESCR_FORMAT_ROW_BY_ROW } }
-
-	#[repr(i32)]
-	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum HOGDescriptor_HistogramNormType {
-		/// Default histogramNormType
-		L2Hys = 0,
-	}
-
-	opencv_type_enum! { crate::objdetect::HOGDescriptor_HistogramNormType { L2Hys } }
 
 	/// Predefined markers dictionaries/sets
 	///
@@ -307,7 +320,6 @@ pub mod objdetect {
 
 	opencv_type_enum! { crate::objdetect::QRCodeEncoder_EncodeMode { MODE_AUTO, MODE_NUMERIC, MODE_ALPHANUMERIC, MODE_BYTE, MODE_ECI, MODE_KANJI, MODE_STRUCTURED_APPEND } }
 
-	pub type DetectionBasedTracker_Object = core::Tuple<(core::Rect, i32)>;
 	/// Draws a set of Charuco corners
 	/// ## Parameters
 	/// * image: input/output image. It must have 1 or 3 channels. The number of channels is not
@@ -610,1506 +622,698 @@ pub mod objdetect {
 		Ok(ret)
 	}
 
+	/// Checks whether the image contains chessboard of the specific size or not.
+	///
+	/// ## Parameters
+	/// * img: Source chessboard view.
+	/// * size: Size of the chessboard.
+	///
+	/// ## Returns
+	/// Whether a chessboard was found.
 	#[inline]
-	pub fn create_face_detection_mask_generator() -> Result<core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
+	pub fn check_chessboard(img: &impl ToInputArray, size: core::Size) -> Result<bool> {
+		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_createFaceDetectionMaskGenerator(ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_checkChessboard_const__InputArrayR_Size(img.as_raw__InputArray(), &size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::objdetect::BaseCascadeClassifier_MaskGenerator>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 
-	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+	/// Renders the detected chessboard corners.
+	///
+	/// ## Parameters
+	/// * image: Destination image. It must be an 8-bit color image.
+	/// * patternSize: Number of inner corners per a chessboard row and column
+	/// (patternSize = cv::Size(points_per_row,points_per_column)).
+	/// * corners: Array of detected corners, the output of #findChessboardCorners.
+	/// * patternWasFound: Parameter indicating whether the complete board was found or not. The
+	/// return value of [find_chessboard_corners] should be passed here.
+	///
+	/// The function draws individual chessboard corners detected either as red circles if the board was not
+	/// found, or as colored corners connected with lines if the board was found.
+	#[inline]
+	pub fn draw_chessboard_corners(image: &mut impl ToInputOutputArray, pattern_size: core::Size, corners: &impl ToInputArray, pattern_was_found: bool) -> Result<()> {
+		input_output_array_arg!(image);
+		input_array_arg!(corners);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_drawChessboardCorners_const__InputOutputArrayR_Size_const__InputArrayR_bool(image.as_raw__InputOutputArray(), &pattern_size, corners.as_raw__InputArray(), pattern_was_found, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Estimates the sharpness of a detected chessboard.
+	///
+	/// Image sharpness, as well as brightness, are a critical parameter for accuracte
+	/// camera calibration. For accessing these parameters for filtering out
+	/// problematic calibraiton images, this method calculates edge profiles by traveling from
+	/// black to white chessboard cell centers. Based on this, the number of pixels is
+	/// calculated required to transit from black to white. This width of the
+	/// transition area is a good indication of how sharp the chessboard is imaged
+	/// and should be below ~3.0 pixels.
+	///
+	/// ## Parameters
+	/// * image: Gray image used to find chessboard corners
+	/// * patternSize: Size of a found chessboard pattern
+	/// * corners: Corners found by [find_chessboard_corners_sb]
+	/// * rise_distance: Rise distance 0.8 means 10% ... 90% of the final signal strength
+	/// * vertical: By default edge responses for horizontal lines are calculated
+	/// * sharpness: Optional output array with a sharpness value for calculated edge responses (see description)
+	///
+	/// The optional sharpness array is of type CV_32FC1 and has for each calculated
+	/// profile one row with the following five entries:
+	/// * 0 = x coordinate of the underlying edge in the image
+	/// * 1 = y coordinate of the underlying edge in the image
+	/// * 2 = width of the transition area (sharpness)
+	/// * 3 = signal strength in the black cell (min brightness)
+	/// * 4 = signal strength in the white cell (max brightness)
+	///
+	/// ## Returns
+	/// Scalar(average sharpness, average min brightness, average max brightness,0)
 	///
 	/// ## Note
-	/// This alternative version of [group_rectangles_meanshift] function uses the following default values for its arguments:
-	/// * detect_threshold: 0.0
-	/// * win_det_size: Size(64,128)
+	/// This alternative version of [estimate_chessboard_sharpness] function uses the following default values for its arguments:
+	/// * rise_distance: 0.8F
+	/// * vertical: false
+	/// * sharpness: noArray()
 	#[inline]
-	pub fn group_rectangles_meanshift_def(rect_list: &mut core::Vector<core::Rect>, found_weights: &mut core::Vector<f64>, found_scales: &mut core::Vector<f64>) -> Result<()> {
+	pub fn estimate_chessboard_sharpness_def(image: &impl ToInputArray, pattern_size: core::Size, corners: &impl ToInputArray) -> Result<core::Scalar> {
+		input_array_arg!(image);
+		input_array_arg!(corners);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_groupRectangles_meanshift_vectorLRectGR_vectorLdoubleGR_vectorLdoubleGR(rect_list.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), found_scales.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_estimateChessboardSharpness_const__InputArrayR_Size_const__InputArrayR(image.as_raw__InputArray(), &pattern_size, corners.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 
-	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+	/// Estimates the sharpness of a detected chessboard.
+	///
+	/// Image sharpness, as well as brightness, are a critical parameter for accuracte
+	/// camera calibration. For accessing these parameters for filtering out
+	/// problematic calibraiton images, this method calculates edge profiles by traveling from
+	/// black to white chessboard cell centers. Based on this, the number of pixels is
+	/// calculated required to transit from black to white. This width of the
+	/// transition area is a good indication of how sharp the chessboard is imaged
+	/// and should be below ~3.0 pixels.
+	///
+	/// ## Parameters
+	/// * image: Gray image used to find chessboard corners
+	/// * patternSize: Size of a found chessboard pattern
+	/// * corners: Corners found by [find_chessboard_corners_sb]
+	/// * rise_distance: Rise distance 0.8 means 10% ... 90% of the final signal strength
+	/// * vertical: By default edge responses for horizontal lines are calculated
+	/// * sharpness: Optional output array with a sharpness value for calculated edge responses (see description)
+	///
+	/// The optional sharpness array is of type CV_32FC1 and has for each calculated
+	/// profile one row with the following five entries:
+	/// * 0 = x coordinate of the underlying edge in the image
+	/// * 1 = y coordinate of the underlying edge in the image
+	/// * 2 = width of the transition area (sharpness)
+	/// * 3 = signal strength in the black cell (min brightness)
+	/// * 4 = signal strength in the white cell (max brightness)
+	///
+	/// ## Returns
+	/// Scalar(average sharpness, average min brightness, average max brightness,0)
 	///
 	/// ## C++ default parameters
-	/// * detect_threshold: 0.0
-	/// * win_det_size: Size(64,128)
+	/// * rise_distance: 0.8F
+	/// * vertical: false
+	/// * sharpness: noArray()
 	#[inline]
-	pub fn group_rectangles_meanshift(rect_list: &mut core::Vector<core::Rect>, found_weights: &mut core::Vector<f64>, found_scales: &mut core::Vector<f64>, detect_threshold: f64, win_det_size: core::Size) -> Result<()> {
+	pub fn estimate_chessboard_sharpness(image: &impl ToInputArray, pattern_size: core::Size, corners: &impl ToInputArray, rise_distance: f32, vertical: bool, sharpness: &mut impl ToOutputArray) -> Result<core::Scalar> {
+		input_array_arg!(image);
+		input_array_arg!(corners);
+		output_array_arg!(sharpness);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_groupRectangles_meanshift_vectorLRectGR_vectorLdoubleGR_vectorLdoubleGR_double_Size(rect_list.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), found_scales.as_raw_mut_VectorOff64(), detect_threshold, &win_det_size, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_estimateChessboardSharpness_const__InputArrayR_Size_const__InputArrayR_float_bool_const__OutputArrayR(image.as_raw__InputArray(), &pattern_size, corners.as_raw__InputArray(), rise_distance, vertical, sharpness.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 
-	/// Groups the object candidate rectangles.
-	///
-	/// ## Parameters
-	/// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
-	/// rectangles. (The Python list is not modified in place.)
-	/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
-	/// group of rectangles to retain it.
-	/// * eps: Relative difference between sides of the rectangles to merge them into a group.
-	///
-	/// The function is a wrapper for the generic function partition . It clusters all the input rectangles
-	/// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
-	/// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
-	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
-	/// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
-	/// cluster, the average rectangle is computed and put into the output rectangle list.
-	///
-	/// ## Note
-	/// This alternative version of [group_rectangles] function uses the following default values for its arguments:
-	/// * eps: 0.2
+	/// finds subpixel-accurate positions of the chessboard corners
 	#[inline]
-	pub fn group_rectangles_def(rect_list: &mut core::Vector<core::Rect>, group_threshold: i32) -> Result<()> {
+	pub fn find4_quad_corner_subpix(img: &impl ToInputArray, corners: &mut impl ToInputOutputArray, region_size: core::Size) -> Result<bool> {
+		input_array_arg!(img);
+		input_output_array_arg!(corners);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_groupRectangles_vectorLRectGR_int(rect_list.as_raw_mut_VectorOfRect(), group_threshold, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_find4QuadCornerSubpix_const__InputArrayR_const__InputOutputArrayR_Size(img.as_raw__InputArray(), corners.as_raw__InputOutputArray(), &region_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 
-	/// Groups the object candidate rectangles.
+	/// Finds the positions of internal corners of the chessboard using a sector based approach.
 	///
 	/// ## Parameters
-	/// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
-	/// rectangles. (The Python list is not modified in place.)
-	/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
-	/// group of rectangles to retain it.
-	/// * eps: Relative difference between sides of the rectangles to merge them into a group.
+	/// * image: Source chessboard view. It must be an 8-bit grayscale or color image.
+	/// * patternSize: Number of inner corners per a chessboard row and column
+	/// ( patternSize = cv::Size(points_per_row,points_per_column) = cv::Size(columns,rows) ).
+	/// * corners: Output array of detected corners.
+	/// * flags: Various operation flags that can be zero or a combination of the following values:
+	/// *   [CALIB_CB_NORMALIZE_IMAGE] Normalize the image gamma with equalizeHist before detection.
+	/// *   [CALIB_CB_EXHAUSTIVE] Run an exhaustive search to improve detection rate.
+	/// *   [CALIB_CB_ACCURACY] Up sample input image to improve sub-pixel accuracy due to aliasing effects.
+	/// *   [CALIB_CB_LARGER] The detected pattern is allowed to be larger than patternSize (see description).
+	/// *   [CALIB_CB_MARKER] The detected pattern must have a marker (see description).
+	/// This should be used if an accurate camera calibration is required.
+	/// * meta: Optional output array of detected corners (CV_8UC1 and size = cv::Size(columns,rows)).
+	/// Each entry stands for one corner of the pattern and can have one of the following values:
+	/// *   0 = no meta data attached
+	/// *   1 = left-top corner of a black cell
+	/// *   2 = left-top corner of a white cell
+	/// *   3 = left-top corner of a black cell with a white marker dot
+	/// *   4 = left-top corner of a white cell with a black marker dot (pattern origin in case of markers otherwise first corner)
 	///
-	/// The function is a wrapper for the generic function partition . It clusters all the input rectangles
-	/// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
-	/// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
-	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
-	/// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
-	/// cluster, the average rectangle is computed and put into the output rectangle list.
+	/// The function is analog to [find_chessboard_corners] but uses a localized radon
+	/// transformation approximated by box filters being more robust to all sort of
+	/// noise, faster on larger images and is able to directly return the sub-pixel
+	/// position of the internal chessboard corners. The Method is based on the paper
+	/// [duda2018](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
+	/// Calibration" demonstrating that the returned sub-pixel positions are more
+	/// accurate than the one returned by cornerSubPix allowing a precise camera
+	/// calibration for demanding applications.
 	///
-	/// ## C++ default parameters
-	/// * eps: 0.2
-	#[inline]
-	pub fn group_rectangles(rect_list: &mut core::Vector<core::Rect>, group_threshold: i32, eps: f64) -> Result<()> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_groupRectangles_vectorLRectGR_int_double(rect_list.as_raw_mut_VectorOfRect(), group_threshold, eps, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Groups the object candidate rectangles.
-	///
-	/// ## Parameters
-	/// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
-	/// rectangles. (The Python list is not modified in place.)
-	/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
-	/// group of rectangles to retain it.
-	/// * eps: Relative difference between sides of the rectangles to merge them into a group.
-	///
-	/// The function is a wrapper for the generic function partition . It clusters all the input rectangles
-	/// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
-	/// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
-	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
-	/// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
-	/// cluster, the average rectangle is computed and put into the output rectangle list.
-	///
-	/// ## Overloaded parameters
-	#[inline]
-	pub fn group_rectangles_levelweights(rect_list: &mut core::Vector<core::Rect>, group_threshold: i32, eps: f64, weights: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>) -> Result<()> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_groupRectangles_vectorLRectGR_int_double_vectorLintGX_vectorLdoubleGX(rect_list.as_raw_mut_VectorOfRect(), group_threshold, eps, weights.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Groups the object candidate rectangles.
-	///
-	/// ## Parameters
-	/// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
-	/// rectangles. (The Python list is not modified in place.)
-	/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
-	/// group of rectangles to retain it.
-	/// * eps: Relative difference between sides of the rectangles to merge them into a group.
-	///
-	/// The function is a wrapper for the generic function partition . It clusters all the input rectangles
-	/// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
-	/// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
-	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
-	/// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
-	/// cluster, the average rectangle is computed and put into the output rectangle list.
-	///
-	/// ## Overloaded parameters
+	/// In the case, the flags [CALIB_CB_LARGER] or [CALIB_CB_MARKER] are given,
+	/// the result can be recovered from the optional meta array. Both flags are
+	/// helpful to use calibration patterns exceeding the field of view of the camera.
+	/// These oversized patterns allow more accurate calibrations as corners can be
+	/// utilized, which are as close as possible to the image borders.  For a
+	/// consistent coordinate system across all images, the optional marker (see image
+	/// below) can be used to move the origin of the board to the location where the
+	/// black circle is located.
 	///
 	///
-	/// ## Note
-	/// This alternative version of [group_rectangles_weights] function uses the following default values for its arguments:
-	/// * eps: 0.2
-	#[inline]
-	pub fn group_rectangles_weights_def(rect_list: &mut core::Vector<core::Rect>, weights: &mut core::Vector<i32>, group_threshold: i32) -> Result<()> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_groupRectangles_vectorLRectGR_vectorLintGR_int(rect_list.as_raw_mut_VectorOfRect(), weights.as_raw_mut_VectorOfi32(), group_threshold, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Groups the object candidate rectangles.
+	/// Note: The function requires a white boarder with roughly the same width as one
+	/// of the checkerboard fields around the whole board to improve the detection in
+	/// various environments. In addition, because of the localized radon
+	/// transformation it is beneficial to use round corners for the field corners
+	/// which are located on the outside of the board. The following figure illustrates
+	/// a sample checkerboard optimized for the detection. However, any other checkerboard
+	/// can be used as well.
 	///
-	/// ## Parameters
-	/// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
-	/// rectangles. (The Python list is not modified in place.)
-	/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
-	/// group of rectangles to retain it.
-	/// * eps: Relative difference between sides of the rectangles to merge them into a group.
-	///
-	/// The function is a wrapper for the generic function partition . It clusters all the input rectangles
-	/// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
-	/// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
-	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
-	/// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
-	/// cluster, the average rectangle is computed and put into the output rectangle list.
-	///
-	/// ## Overloaded parameters
-	///
-	/// ## C++ default parameters
-	/// * eps: 0.2
-	#[inline]
-	pub fn group_rectangles_weights(rect_list: &mut core::Vector<core::Rect>, weights: &mut core::Vector<i32>, group_threshold: i32, eps: f64) -> Result<()> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_groupRectangles_vectorLRectGR_vectorLintGR_int_double(rect_list.as_raw_mut_VectorOfRect(), weights.as_raw_mut_VectorOfi32(), group_threshold, eps, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Groups the object candidate rectangles.
-	///
-	/// ## Parameters
-	/// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
-	/// rectangles. (The Python list is not modified in place.)
-	/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
-	/// group of rectangles to retain it.
-	/// * eps: Relative difference between sides of the rectangles to merge them into a group.
-	///
-	/// The function is a wrapper for the generic function partition . It clusters all the input rectangles
-	/// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
-	/// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
-	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
-	/// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
-	/// cluster, the average rectangle is computed and put into the output rectangle list.
+	/// Use the `generate_pattern.py` Python script ([tutorial_camera_calibration_pattern])
+	/// to create the corresponding checkerboard pattern:
+	/// \image html pics/checkerboard_radon.png width=60%
 	///
 	/// ## Overloaded parameters
 	///
 	///
 	/// ## Note
-	/// This alternative version of [group_rectangles_levels] function uses the following default values for its arguments:
-	/// * eps: 0.2
+	/// This alternative version of [find_chessboard_corners_sb] function uses the following default values for its arguments:
+	/// * flags: 0
 	#[inline]
-	pub fn group_rectangles_levels_def(rect_list: &mut core::Vector<core::Rect>, reject_levels: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>, group_threshold: i32) -> Result<()> {
+	pub fn find_chessboard_corners_sb_def(image: &impl ToInputArray, pattern_size: core::Size, corners: &mut impl ToOutputArray) -> Result<bool> {
+		input_array_arg!(image);
+		output_array_arg!(corners);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_groupRectangles_vectorLRectGR_vectorLintGR_vectorLdoubleGR_int(rect_list.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), group_threshold, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR(image.as_raw__InputArray(), &pattern_size, corners.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 
-	/// Groups the object candidate rectangles.
+	/// Finds the positions of internal corners of the chessboard using a sector based approach.
 	///
 	/// ## Parameters
-	/// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
-	/// rectangles. (The Python list is not modified in place.)
-	/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
-	/// group of rectangles to retain it.
-	/// * eps: Relative difference between sides of the rectangles to merge them into a group.
+	/// * image: Source chessboard view. It must be an 8-bit grayscale or color image.
+	/// * patternSize: Number of inner corners per a chessboard row and column
+	/// ( patternSize = cv::Size(points_per_row,points_per_column) = cv::Size(columns,rows) ).
+	/// * corners: Output array of detected corners.
+	/// * flags: Various operation flags that can be zero or a combination of the following values:
+	/// *   [CALIB_CB_NORMALIZE_IMAGE] Normalize the image gamma with equalizeHist before detection.
+	/// *   [CALIB_CB_EXHAUSTIVE] Run an exhaustive search to improve detection rate.
+	/// *   [CALIB_CB_ACCURACY] Up sample input image to improve sub-pixel accuracy due to aliasing effects.
+	/// *   [CALIB_CB_LARGER] The detected pattern is allowed to be larger than patternSize (see description).
+	/// *   [CALIB_CB_MARKER] The detected pattern must have a marker (see description).
+	/// This should be used if an accurate camera calibration is required.
+	/// * meta: Optional output array of detected corners (CV_8UC1 and size = cv::Size(columns,rows)).
+	/// Each entry stands for one corner of the pattern and can have one of the following values:
+	/// *   0 = no meta data attached
+	/// *   1 = left-top corner of a black cell
+	/// *   2 = left-top corner of a white cell
+	/// *   3 = left-top corner of a black cell with a white marker dot
+	/// *   4 = left-top corner of a white cell with a black marker dot (pattern origin in case of markers otherwise first corner)
 	///
-	/// The function is a wrapper for the generic function partition . It clusters all the input rectangles
-	/// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
-	/// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
-	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
-	/// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
-	/// cluster, the average rectangle is computed and put into the output rectangle list.
+	/// The function is analog to [find_chessboard_corners] but uses a localized radon
+	/// transformation approximated by box filters being more robust to all sort of
+	/// noise, faster on larger images and is able to directly return the sub-pixel
+	/// position of the internal chessboard corners. The Method is based on the paper
+	/// [duda2018](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
+	/// Calibration" demonstrating that the returned sub-pixel positions are more
+	/// accurate than the one returned by cornerSubPix allowing a precise camera
+	/// calibration for demanding applications.
+	///
+	/// In the case, the flags [CALIB_CB_LARGER] or [CALIB_CB_MARKER] are given,
+	/// the result can be recovered from the optional meta array. Both flags are
+	/// helpful to use calibration patterns exceeding the field of view of the camera.
+	/// These oversized patterns allow more accurate calibrations as corners can be
+	/// utilized, which are as close as possible to the image borders.  For a
+	/// consistent coordinate system across all images, the optional marker (see image
+	/// below) can be used to move the origin of the board to the location where the
+	/// black circle is located.
+	///
+	///
+	/// Note: The function requires a white boarder with roughly the same width as one
+	/// of the checkerboard fields around the whole board to improve the detection in
+	/// various environments. In addition, because of the localized radon
+	/// transformation it is beneficial to use round corners for the field corners
+	/// which are located on the outside of the board. The following figure illustrates
+	/// a sample checkerboard optimized for the detection. However, any other checkerboard
+	/// can be used as well.
+	///
+	/// Use the `generate_pattern.py` Python script ([tutorial_camera_calibration_pattern])
+	/// to create the corresponding checkerboard pattern:
+	/// \image html pics/checkerboard_radon.png width=60%
 	///
 	/// ## Overloaded parameters
 	///
 	/// ## C++ default parameters
-	/// * eps: 0.2
+	/// * flags: 0
 	#[inline]
-	pub fn group_rectangles_levels(rect_list: &mut core::Vector<core::Rect>, reject_levels: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>, group_threshold: i32, eps: f64) -> Result<()> {
+	pub fn find_chessboard_corners_sb(image: &impl ToInputArray, pattern_size: core::Size, corners: &mut impl ToOutputArray, flags: i32) -> Result<bool> {
+		input_array_arg!(image);
+		output_array_arg!(corners);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_groupRectangles_vectorLRectGR_vectorLintGR_vectorLdoubleGR_int_double(rect_list.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), group_threshold, eps, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), &pattern_size, corners.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 
-	pub struct BaseCascadeClassifier {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { BaseCascadeClassifier }
-
-	impl Drop for BaseCascadeClassifier {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_BaseCascadeClassifier_delete(self.as_raw_mut_BaseCascadeClassifier()) };
-		}
-	}
-
-	unsafe impl Send for BaseCascadeClassifier {}
-
-	/// Constant methods for [crate::objdetect::BaseCascadeClassifier]
-	pub trait BaseCascadeClassifierTraitConst: core::AlgorithmTraitConst {
-		fn as_raw_BaseCascadeClassifier(&self) -> *const c_void;
-
-		#[inline]
-		fn empty(&self) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_empty_const(self.as_raw_BaseCascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn is_old_format_cascade(&self) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_isOldFormatCascade_const(self.as_raw_BaseCascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_original_window_size(&self) -> Result<core::Size> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_getOriginalWindowSize_const(self.as_raw_BaseCascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_feature_type(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_getFeatureType_const(self.as_raw_BaseCascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::objdetect::BaseCascadeClassifier]
-	pub trait BaseCascadeClassifierTrait: core::AlgorithmTrait + crate::objdetect::BaseCascadeClassifierTraitConst {
-		fn as_raw_mut_BaseCascadeClassifier(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn load(&mut self, filename: &str) -> Result<bool> {
-			extern_container_arg!(filename);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_load_const_StringR(self.as_raw_mut_BaseCascadeClassifier(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn detect_multi_scale(&mut self, image: &impl ToInputArray, objects: &mut core::Vector<core::Rect>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_double_int_int_Size_Size(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), scale_factor, min_neighbors, flags, &min_size, &max_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn detect_multi_scale_num(&mut self, image: &impl ToInputArray, objects: &mut core::Vector<core::Rect>, num_detections: &mut core::Vector<i32>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_double_int_int_Size_Size(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), num_detections.as_raw_mut_VectorOfi32(), scale_factor, min_neighbors, flags, &min_size, &max_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn detect_multi_scale_levels(&mut self, image: &impl ToInputArray, objects: &mut core::Vector<core::Rect>, reject_levels: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR_double_int_int_Size_Size_bool(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), scale_factor, min_neighbors, flags, &min_size, &max_size, output_reject_levels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_old_cascade(&mut self) -> Result<*mut c_void> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_getOldCascade(self.as_raw_mut_BaseCascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_mask_generator(&mut self, mask_generator: &core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_setMaskGenerator_const_PtrLMaskGeneratorGR(self.as_raw_mut_BaseCascadeClassifier(), mask_generator.as_raw_PtrOfBaseCascadeClassifier_MaskGenerator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_mask_generator(&mut self) -> Result<core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_getMaskGenerator(self.as_raw_mut_BaseCascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::objdetect::BaseCascadeClassifier_MaskGenerator>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for BaseCascadeClassifier {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("BaseCascadeClassifier")
-				.finish()
-		}
-	}
-
-	boxed_cast_base! { BaseCascadeClassifier, core::Algorithm, cv_BaseCascadeClassifier_to_Algorithm }
-
-	impl core::AlgorithmTraitConst for BaseCascadeClassifier {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for BaseCascadeClassifier {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BaseCascadeClassifier, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::objdetect::BaseCascadeClassifierTraitConst for BaseCascadeClassifier {
-		#[inline] fn as_raw_BaseCascadeClassifier(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::objdetect::BaseCascadeClassifierTrait for BaseCascadeClassifier {
-		#[inline] fn as_raw_mut_BaseCascadeClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BaseCascadeClassifier, crate::objdetect::BaseCascadeClassifierTraitConst, as_raw_BaseCascadeClassifier, crate::objdetect::BaseCascadeClassifierTrait, as_raw_mut_BaseCascadeClassifier }
-
-	pub struct BaseCascadeClassifier_MaskGenerator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { BaseCascadeClassifier_MaskGenerator }
-
-	impl Drop for BaseCascadeClassifier_MaskGenerator {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_BaseCascadeClassifier_MaskGenerator_delete(self.as_raw_mut_BaseCascadeClassifier_MaskGenerator()) };
-		}
-	}
-
-	unsafe impl Send for BaseCascadeClassifier_MaskGenerator {}
-
-	/// Constant methods for [crate::objdetect::BaseCascadeClassifier_MaskGenerator]
-	pub trait BaseCascadeClassifier_MaskGeneratorTraitConst {
-		fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::objdetect::BaseCascadeClassifier_MaskGenerator]
-	pub trait BaseCascadeClassifier_MaskGeneratorTrait: crate::objdetect::BaseCascadeClassifier_MaskGeneratorTraitConst {
-		fn as_raw_mut_BaseCascadeClassifier_MaskGenerator(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn generate_mask(&mut self, src: &impl core::MatTraitConst) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_MaskGenerator_generateMask_const_MatR(self.as_raw_mut_BaseCascadeClassifier_MaskGenerator(), src.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		fn initialize_mask(&mut self, unnamed: &impl core::MatTraitConst) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BaseCascadeClassifier_MaskGenerator_initializeMask_const_MatR(self.as_raw_mut_BaseCascadeClassifier_MaskGenerator(), unnamed.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for BaseCascadeClassifier_MaskGenerator {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("BaseCascadeClassifier_MaskGenerator")
-				.finish()
-		}
-	}
-
-	impl crate::objdetect::BaseCascadeClassifier_MaskGeneratorTraitConst for BaseCascadeClassifier_MaskGenerator {
-		#[inline] fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::objdetect::BaseCascadeClassifier_MaskGeneratorTrait for BaseCascadeClassifier_MaskGenerator {
-		#[inline] fn as_raw_mut_BaseCascadeClassifier_MaskGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BaseCascadeClassifier_MaskGenerator, crate::objdetect::BaseCascadeClassifier_MaskGeneratorTraitConst, as_raw_BaseCascadeClassifier_MaskGenerator, crate::objdetect::BaseCascadeClassifier_MaskGeneratorTrait, as_raw_mut_BaseCascadeClassifier_MaskGenerator }
-
-	/// @example samples/cpp/facedetect.cpp
-	/// This program demonstrates usage of the Cascade classifier class
-	/// \image html Cascade_Classifier_Tutorial_Result_Haar.jpg "Sample screenshot" width=321 height=254
+	/// Finds the positions of internal corners of the chessboard using a sector based approach.
 	///
-	/// Cascade classifier class for object detection.
-	pub struct CascadeClassifier {
-		ptr: *mut c_void,
+	/// ## Parameters
+	/// * image: Source chessboard view. It must be an 8-bit grayscale or color image.
+	/// * patternSize: Number of inner corners per a chessboard row and column
+	/// ( patternSize = cv::Size(points_per_row,points_per_column) = cv::Size(columns,rows) ).
+	/// * corners: Output array of detected corners.
+	/// * flags: Various operation flags that can be zero or a combination of the following values:
+	/// *   [CALIB_CB_NORMALIZE_IMAGE] Normalize the image gamma with equalizeHist before detection.
+	/// *   [CALIB_CB_EXHAUSTIVE] Run an exhaustive search to improve detection rate.
+	/// *   [CALIB_CB_ACCURACY] Up sample input image to improve sub-pixel accuracy due to aliasing effects.
+	/// *   [CALIB_CB_LARGER] The detected pattern is allowed to be larger than patternSize (see description).
+	/// *   [CALIB_CB_MARKER] The detected pattern must have a marker (see description).
+	/// This should be used if an accurate camera calibration is required.
+	/// * meta: Optional output array of detected corners (CV_8UC1 and size = cv::Size(columns,rows)).
+	/// Each entry stands for one corner of the pattern and can have one of the following values:
+	/// *   0 = no meta data attached
+	/// *   1 = left-top corner of a black cell
+	/// *   2 = left-top corner of a white cell
+	/// *   3 = left-top corner of a black cell with a white marker dot
+	/// *   4 = left-top corner of a white cell with a black marker dot (pattern origin in case of markers otherwise first corner)
+	///
+	/// The function is analog to [find_chessboard_corners] but uses a localized radon
+	/// transformation approximated by box filters being more robust to all sort of
+	/// noise, faster on larger images and is able to directly return the sub-pixel
+	/// position of the internal chessboard corners. The Method is based on the paper
+	/// [duda2018](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
+	/// Calibration" demonstrating that the returned sub-pixel positions are more
+	/// accurate than the one returned by cornerSubPix allowing a precise camera
+	/// calibration for demanding applications.
+	///
+	/// In the case, the flags [CALIB_CB_LARGER] or [CALIB_CB_MARKER] are given,
+	/// the result can be recovered from the optional meta array. Both flags are
+	/// helpful to use calibration patterns exceeding the field of view of the camera.
+	/// These oversized patterns allow more accurate calibrations as corners can be
+	/// utilized, which are as close as possible to the image borders.  For a
+	/// consistent coordinate system across all images, the optional marker (see image
+	/// below) can be used to move the origin of the board to the location where the
+	/// black circle is located.
+	///
+	///
+	/// Note: The function requires a white boarder with roughly the same width as one
+	/// of the checkerboard fields around the whole board to improve the detection in
+	/// various environments. In addition, because of the localized radon
+	/// transformation it is beneficial to use round corners for the field corners
+	/// which are located on the outside of the board. The following figure illustrates
+	/// a sample checkerboard optimized for the detection. However, any other checkerboard
+	/// can be used as well.
+	///
+	/// Use the `generate_pattern.py` Python script ([tutorial_camera_calibration_pattern])
+	/// to create the corresponding checkerboard pattern:
+	/// \image html pics/checkerboard_radon.png width=60%
+	#[inline]
+	pub fn find_chessboard_corners_sb_with_meta(image: &impl ToInputArray, pattern_size: core::Size, corners: &mut impl ToOutputArray, flags: i32, meta: &mut impl ToOutputArray) -> Result<bool> {
+		input_array_arg!(image);
+		output_array_arg!(corners);
+		output_array_arg!(meta);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int_const__OutputArrayR(image.as_raw__InputArray(), &pattern_size, corners.as_raw__OutputArray(), flags, meta.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
 
-	opencv_type_boxed! { CascadeClassifier }
-
-	impl Drop for CascadeClassifier {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_CascadeClassifier_delete(self.as_raw_mut_CascadeClassifier()) };
-		}
+	/// Finds the positions of internal corners of the chessboard.
+	///
+	/// ## Parameters
+	/// * image: Source chessboard view. It must be an 8-bit grayscale or color image.
+	/// * patternSize: Number of inner corners per a chessboard row and column
+	/// ( patternSize = cv::Size(points_per_row,points_per_column) = cv::Size(columns,rows) ).
+	/// * corners: Output array of detected corners.
+	/// * flags: Various operation flags that can be zero or a combination of the following values:
+	/// *   [CALIB_CB_ADAPTIVE_THRESH] Use adaptive thresholding to convert the image to black
+	/// and white, rather than a fixed threshold level (computed from the average image brightness).
+	/// *   [CALIB_CB_NORMALIZE_IMAGE] Normalize the image gamma with equalizeHist before
+	/// applying fixed or adaptive thresholding.
+	/// *   [CALIB_CB_FILTER_QUADS] Use additional criteria (like contour area, perimeter,
+	/// square-like shape) to filter out false quads extracted at the contour retrieval stage.
+	/// *   [CALIB_CB_FAST_CHECK] Run a fast check on the image that looks for chessboard corners,
+	/// and shortcut the call if none is found. This can drastically speed up the call in the
+	/// degenerate condition when no chessboard is observed.
+	/// *   [CALIB_CB_PLAIN] All other flags are ignored. The input image is taken as is.
+	/// No image processing is done to improve to find the checkerboard. This has the effect of speeding up the
+	/// execution of the function but could lead to not recognizing the checkerboard if the image
+	/// is not previously binarized in the appropriate manner.
+	///
+	/// ## Returns
+	/// True if all of the corners are found and placed in a certain order (row by row,
+	/// left to right in every row). Otherwise, if the function fails to find all the corners or reorder them,
+	/// it returns false.
+	///
+	/// The function attempts to determine whether the input image is a view of the chessboard pattern and
+	/// locate the internal chessboard corners. For example, a regular chessboard has 8 x 8 squares and
+	/// 7 x 7 internal corners, that is, points where the black squares touch each other. The detected
+	/// coordinates are approximate, and to determine their positions more accurately, the function
+	/// calls #cornerSubPix. You also may use the function [corner_sub_pix] with different parameters if
+	/// returned coordinates are not accurate enough.
+	///
+	/// Sample usage of detecting and drawing chessboard corners: :
+	/// ```C++
+	///    Size patternsize(8,6); //interior number of corners
+	///    Mat gray = ....; //source image
+	///    vector<Point2f> corners; //this will be filled by the detected corners
+	///
+	///    //CALIB_CB_FAST_CHECK saves a lot of time on images
+	///    //that do not contain any chessboard corners
+	///    bool patternfound = findChessboardCorners(gray, patternsize, corners,
+	///            CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE
+	///            + CALIB_CB_FAST_CHECK);
+	///
+	///    if(patternfound)
+	///       cornerSubPix(gray, corners, Size(11, 11), Size(-1, -1),
+	///        TermCriteria(CV_TERMCRIT_EPS + CV_TERMCRIT_ITER, 30, 0.1));
+	///
+	///    drawChessboardCorners(img, patternsize, Mat(corners), patternfound);
+	/// ```
+	///
+	///
+	/// Note: The function requires white space (like a square-thick border, the wider the better) around
+	/// the board to make the detection more robust in various environments. Otherwise, if there is no
+	/// border and the background is dark, the outer black squares cannot be segmented properly and so the
+	/// square grouping and ordering algorithm fails.
+	///
+	/// Use the `generate_pattern.py` Python script ([tutorial_camera_calibration_pattern])
+	/// to create the desired checkerboard pattern.
+	///
+	/// ## Note
+	/// This alternative version of [find_chessboard_corners] function uses the following default values for its arguments:
+	/// * flags: CALIB_CB_ADAPTIVE_THRESH+CALIB_CB_NORMALIZE_IMAGE
+	#[inline]
+	pub fn find_chessboard_corners_def(image: &impl ToInputArray, pattern_size: core::Size, corners: &mut impl ToOutputArray) -> Result<bool> {
+		input_array_arg!(image);
+		output_array_arg!(corners);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findChessboardCorners_const__InputArrayR_Size_const__OutputArrayR(image.as_raw__InputArray(), &pattern_size, corners.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
 
-	unsafe impl Send for CascadeClassifier {}
-
-	impl CascadeClassifier {
-		#[inline]
-		pub fn default() -> Result<crate::objdetect::CascadeClassifier> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_CascadeClassifier(ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::CascadeClassifier::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Loads a classifier from a file.
-		///
-		/// ## Parameters
-		/// * filename: Name of the file from which the classifier is loaded.
-		#[inline]
-		pub fn new(filename: &str) -> Result<crate::objdetect::CascadeClassifier> {
-			extern_container_arg!(filename);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_CascadeClassifier_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::CascadeClassifier::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn convert(oldcascade: &str, newcascade: &str) -> Result<bool> {
-			extern_container_arg!(oldcascade);
-			extern_container_arg!(newcascade);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_convert_const_StringR_const_StringR(oldcascade.opencv_as_extern(), newcascade.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	/// Finds the positions of internal corners of the chessboard.
+	///
+	/// ## Parameters
+	/// * image: Source chessboard view. It must be an 8-bit grayscale or color image.
+	/// * patternSize: Number of inner corners per a chessboard row and column
+	/// ( patternSize = cv::Size(points_per_row,points_per_column) = cv::Size(columns,rows) ).
+	/// * corners: Output array of detected corners.
+	/// * flags: Various operation flags that can be zero or a combination of the following values:
+	/// *   [CALIB_CB_ADAPTIVE_THRESH] Use adaptive thresholding to convert the image to black
+	/// and white, rather than a fixed threshold level (computed from the average image brightness).
+	/// *   [CALIB_CB_NORMALIZE_IMAGE] Normalize the image gamma with equalizeHist before
+	/// applying fixed or adaptive thresholding.
+	/// *   [CALIB_CB_FILTER_QUADS] Use additional criteria (like contour area, perimeter,
+	/// square-like shape) to filter out false quads extracted at the contour retrieval stage.
+	/// *   [CALIB_CB_FAST_CHECK] Run a fast check on the image that looks for chessboard corners,
+	/// and shortcut the call if none is found. This can drastically speed up the call in the
+	/// degenerate condition when no chessboard is observed.
+	/// *   [CALIB_CB_PLAIN] All other flags are ignored. The input image is taken as is.
+	/// No image processing is done to improve to find the checkerboard. This has the effect of speeding up the
+	/// execution of the function but could lead to not recognizing the checkerboard if the image
+	/// is not previously binarized in the appropriate manner.
+	///
+	/// ## Returns
+	/// True if all of the corners are found and placed in a certain order (row by row,
+	/// left to right in every row). Otherwise, if the function fails to find all the corners or reorder them,
+	/// it returns false.
+	///
+	/// The function attempts to determine whether the input image is a view of the chessboard pattern and
+	/// locate the internal chessboard corners. For example, a regular chessboard has 8 x 8 squares and
+	/// 7 x 7 internal corners, that is, points where the black squares touch each other. The detected
+	/// coordinates are approximate, and to determine their positions more accurately, the function
+	/// calls #cornerSubPix. You also may use the function [corner_sub_pix] with different parameters if
+	/// returned coordinates are not accurate enough.
+	///
+	/// Sample usage of detecting and drawing chessboard corners: :
+	/// ```C++
+	///    Size patternsize(8,6); //interior number of corners
+	///    Mat gray = ....; //source image
+	///    vector<Point2f> corners; //this will be filled by the detected corners
+	///
+	///    //CALIB_CB_FAST_CHECK saves a lot of time on images
+	///    //that do not contain any chessboard corners
+	///    bool patternfound = findChessboardCorners(gray, patternsize, corners,
+	///            CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE
+	///            + CALIB_CB_FAST_CHECK);
+	///
+	///    if(patternfound)
+	///       cornerSubPix(gray, corners, Size(11, 11), Size(-1, -1),
+	///        TermCriteria(CV_TERMCRIT_EPS + CV_TERMCRIT_ITER, 30, 0.1));
+	///
+	///    drawChessboardCorners(img, patternsize, Mat(corners), patternfound);
+	/// ```
+	///
+	///
+	/// Note: The function requires white space (like a square-thick border, the wider the better) around
+	/// the board to make the detection more robust in various environments. Otherwise, if there is no
+	/// border and the background is dark, the outer black squares cannot be segmented properly and so the
+	/// square grouping and ordering algorithm fails.
+	///
+	/// Use the `generate_pattern.py` Python script ([tutorial_camera_calibration_pattern])
+	/// to create the desired checkerboard pattern.
+	///
+	/// ## C++ default parameters
+	/// * flags: CALIB_CB_ADAPTIVE_THRESH+CALIB_CB_NORMALIZE_IMAGE
+	#[inline]
+	pub fn find_chessboard_corners(image: &impl ToInputArray, pattern_size: core::Size, corners: &mut impl ToOutputArray, flags: i32) -> Result<bool> {
+		input_array_arg!(image);
+		output_array_arg!(corners);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findChessboardCorners_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), &pattern_size, corners.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
 
-	/// Constant methods for [crate::objdetect::CascadeClassifier]
-	pub trait CascadeClassifierTraitConst {
-		fn as_raw_CascadeClassifier(&self) -> *const c_void;
-
-		/// Checks whether the classifier has been loaded.
-		#[inline]
-		fn empty(&self) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_empty_const(self.as_raw_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn is_old_format_cascade(&self) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_isOldFormatCascade_const(self.as_raw_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_original_window_size(&self) -> Result<core::Size> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_getOriginalWindowSize_const(self.as_raw_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_feature_type(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_getFeatureType_const(self.as_raw_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	/// Finds centers in the grid of circles.
+	///
+	/// ## Parameters
+	/// * image: grid view of input circles; it must be an 8-bit grayscale or color image.
+	/// * patternSize: number of circles per row and column
+	/// ( patternSize = Size(points_per_row, points_per_column) ).
+	/// * centers: output array of detected centers.
+	/// * flags: various operation flags that can be one of the following values:
+	/// *   [CALIB_CB_SYMMETRIC_GRID] uses symmetric pattern of circles.
+	/// *   [CALIB_CB_ASYMMETRIC_GRID] uses asymmetric pattern of circles.
+	/// *   [CALIB_CB_CLUSTERING] uses a special algorithm for grid detection. It is more robust to
+	/// perspective distortions but much more sensitive to background clutter.
+	/// * blobDetector: feature detector that finds blobs like dark circles on light background.
+	///                    If `blobDetector` is NULL then `image` represents Point2f array of candidates.
+	/// * parameters: struct for finding circles in a grid pattern.
+	///
+	/// return True if all of the centers have been found and they have been placed in a certain order
+	/// (row by row, left to right in every row). Otherwise, if the function fails to find all the corners
+	/// or reorder them, it returns false.
+	///
+	/// The function attempts to determine whether the input image contains a grid of circles. If it is, the
+	/// function locates centers of the circles.
+	///
+	/// Sample usage of detecting and drawing the centers of circles: :
+	/// ```C++
+	///    Size patternsize(7,7); //number of centers
+	///    Mat gray = ...; //source image
+	///    vector<Point2f> centers; //this will be filled by the detected centers
+	///
+	///    bool patternfound = findCirclesGrid(gray, patternsize, centers);
+	///
+	///    drawChessboardCorners(img, patternsize, Mat(centers), patternfound);
+	/// ```
+	///
+	///
+	/// Note: The function requires white space (like a square-thick border, the wider the better) around
+	/// the board to make the detection more robust in various environments.
+	///
+	/// ## Overloaded parameters
+	///
+	///
+	/// ## Note
+	/// This alternative version of [find_circles_grid] function uses the following default values for its arguments:
+	/// * flags: CALIB_CB_SYMMETRIC_GRID
+	/// * blob_detector: cv::SimpleBlobDetector::create()
+	#[inline]
+	pub fn find_circles_grid_def(image: &impl ToInputArray, pattern_size: core::Size, centers: &mut impl ToOutputArray) -> Result<bool> {
+		input_array_arg!(image);
+		output_array_arg!(centers);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
 
-	/// Mutable methods for [crate::objdetect::CascadeClassifier]
-	pub trait CascadeClassifierTrait: crate::objdetect::CascadeClassifierTraitConst {
-		fn as_raw_mut_CascadeClassifier(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn cc(&mut self) -> core::Ptr<crate::objdetect::BaseCascadeClassifier> {
-			let ret = unsafe { sys::cv_CascadeClassifier_propCc(self.as_raw_mut_CascadeClassifier()) };
-			let ret = unsafe { core::Ptr::<crate::objdetect::BaseCascadeClassifier>::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		fn set_cc(&mut self, val: core::Ptr<crate::objdetect::BaseCascadeClassifier>) {
-			let ret = unsafe { sys::cv_CascadeClassifier_propCc_const_PtrLBaseCascadeClassifierG(self.as_raw_mut_CascadeClassifier(), val.as_raw_PtrOfBaseCascadeClassifier()) };
-			ret
-		}
-
-		/// Loads a classifier from a file.
-		///
-		/// ## Parameters
-		/// * filename: Name of the file from which the classifier is loaded. The file may contain an old
-		/// HAAR classifier trained by the haartraining application or a new cascade classifier trained by the
-		/// traincascade application.
-		#[inline]
-		fn load(&mut self, filename: &str) -> Result<bool> {
-			extern_container_arg!(filename);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_load_const_StringR(self.as_raw_mut_CascadeClassifier(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Reads a classifier from a FileStorage node.
-		///
-		///
-		/// Note: The file may contain a new cascade classifier (trained by the traincascade application) only.
-		#[inline]
-		fn read(&mut self, node: &impl core::FileNodeTraitConst) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_read_const_FileNodeR(self.as_raw_mut_CascadeClassifier(), node.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
-		/// of rectangles.
-		///
-		/// ## Parameters
-		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
-		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
-		/// rectangles may be partially outside the original image.
-		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
-		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
-		/// to retain it.
-		/// * flags: Parameter with the same meaning for an old cascade as in the function
-		/// cvHaarDetectObjects. It is not used for a new cascade.
-		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
-		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-		///
-		/// ## C++ default parameters
-		/// * scale_factor: 1.1
-		/// * min_neighbors: 3
-		/// * flags: 0
-		/// * min_size: Size()
-		/// * max_size: Size()
-		#[inline]
-		fn detect_multi_scale(&mut self, image: &impl ToInputArray, objects: &mut core::Vector<core::Rect>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_double_int_int_Size_Size(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), scale_factor, min_neighbors, flags, &min_size, &max_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
-		/// of rectangles.
-		///
-		/// ## Parameters
-		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
-		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
-		/// rectangles may be partially outside the original image.
-		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
-		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
-		/// to retain it.
-		/// * flags: Parameter with the same meaning for an old cascade as in the function
-		/// cvHaarDetectObjects. It is not used for a new cascade.
-		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
-		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-		///
-		/// ## Note
-		/// This alternative version of [CascadeClassifierTrait::detect_multi_scale] function uses the following default values for its arguments:
-		/// * scale_factor: 1.1
-		/// * min_neighbors: 3
-		/// * flags: 0
-		/// * min_size: Size()
-		/// * max_size: Size()
-		#[inline]
-		fn detect_multi_scale_def(&mut self, image: &impl ToInputArray, objects: &mut core::Vector<core::Rect>) -> Result<()> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
-		/// of rectangles.
-		///
-		/// ## Parameters
-		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
-		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
-		/// rectangles may be partially outside the original image.
-		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
-		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
-		/// to retain it.
-		/// * flags: Parameter with the same meaning for an old cascade as in the function
-		/// cvHaarDetectObjects. It is not used for a new cascade.
-		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
-		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-		///
-		/// ## Overloaded parameters
-		///
-		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
-		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
-		/// rectangles may be partially outside the original image.
-		/// * numDetections: Vector of detection numbers for the corresponding objects. An object's number
-		/// of detections is the number of neighboring positively classified rectangles that were joined
-		/// together to form the object.
-		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
-		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
-		/// to retain it.
-		/// * flags: Parameter with the same meaning for an old cascade as in the function
-		/// cvHaarDetectObjects. It is not used for a new cascade.
-		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
-		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-		///
-		/// ## C++ default parameters
-		/// * scale_factor: 1.1
-		/// * min_neighbors: 3
-		/// * flags: 0
-		/// * min_size: Size()
-		/// * max_size: Size()
-		#[inline]
-		fn detect_multi_scale2(&mut self, image: &impl ToInputArray, objects: &mut core::Vector<core::Rect>, num_detections: &mut core::Vector<i32>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_double_int_int_Size_Size(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), num_detections.as_raw_mut_VectorOfi32(), scale_factor, min_neighbors, flags, &min_size, &max_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
-		/// of rectangles.
-		///
-		/// ## Parameters
-		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
-		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
-		/// rectangles may be partially outside the original image.
-		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
-		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
-		/// to retain it.
-		/// * flags: Parameter with the same meaning for an old cascade as in the function
-		/// cvHaarDetectObjects. It is not used for a new cascade.
-		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
-		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-		///
-		/// ## Overloaded parameters
-		///
-		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
-		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
-		/// rectangles may be partially outside the original image.
-		/// * numDetections: Vector of detection numbers for the corresponding objects. An object's number
-		/// of detections is the number of neighboring positively classified rectangles that were joined
-		/// together to form the object.
-		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
-		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
-		/// to retain it.
-		/// * flags: Parameter with the same meaning for an old cascade as in the function
-		/// cvHaarDetectObjects. It is not used for a new cascade.
-		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
-		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-		///
-		/// ## Note
-		/// This alternative version of [CascadeClassifierTrait::detect_multi_scale2] function uses the following default values for its arguments:
-		/// * scale_factor: 1.1
-		/// * min_neighbors: 3
-		/// * flags: 0
-		/// * min_size: Size()
-		/// * max_size: Size()
-		#[inline]
-		fn detect_multi_scale2_def(&mut self, image: &impl ToInputArray, objects: &mut core::Vector<core::Rect>, num_detections: &mut core::Vector<i32>) -> Result<()> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), num_detections.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
-		/// of rectangles.
-		///
-		/// ## Parameters
-		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
-		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
-		/// rectangles may be partially outside the original image.
-		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
-		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
-		/// to retain it.
-		/// * flags: Parameter with the same meaning for an old cascade as in the function
-		/// cvHaarDetectObjects. It is not used for a new cascade.
-		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
-		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-		///
-		/// ## Overloaded parameters
-		///
-		/// This function allows you to retrieve the final stage decision certainty of classification.
-		/// For this, one needs to set `outputRejectLevels` on true and provide the `rejectLevels` and `levelWeights` parameter.
-		/// For each resulting detection, `levelWeights` will then contain the certainty of classification at the final stage.
-		/// This value can then be used to separate strong from weaker classifications.
-		///
-		/// A code sample on how to use it efficiently can be found below:
-		/// ```C++
-		/// Mat img;
-		/// vector<double> weights;
-		/// vector<int> levels;
-		/// vector<Rect> detections;
-		/// CascadeClassifier model("/path/to/your/model.xml");
-		/// model.detectMultiScale(img, detections, levels, weights, 1.1, 3, 0, Size(), Size(), true);
-		/// cerr << "Detection " << detections[0] << " with weight " << weights[0] << endl;
-		/// ```
-		///
-		///
-		/// ## C++ default parameters
-		/// * scale_factor: 1.1
-		/// * min_neighbors: 3
-		/// * flags: 0
-		/// * min_size: Size()
-		/// * max_size: Size()
-		/// * output_reject_levels: false
-		#[inline]
-		fn detect_multi_scale3(&mut self, image: &impl ToInputArray, objects: &mut core::Vector<core::Rect>, reject_levels: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR_double_int_int_Size_Size_bool(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), scale_factor, min_neighbors, flags, &min_size, &max_size, output_reject_levels, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
-		/// of rectangles.
-		///
-		/// ## Parameters
-		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
-		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
-		/// rectangles may be partially outside the original image.
-		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
-		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
-		/// to retain it.
-		/// * flags: Parameter with the same meaning for an old cascade as in the function
-		/// cvHaarDetectObjects. It is not used for a new cascade.
-		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
-		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-		///
-		/// ## Overloaded parameters
-		///
-		/// This function allows you to retrieve the final stage decision certainty of classification.
-		/// For this, one needs to set `outputRejectLevels` on true and provide the `rejectLevels` and `levelWeights` parameter.
-		/// For each resulting detection, `levelWeights` will then contain the certainty of classification at the final stage.
-		/// This value can then be used to separate strong from weaker classifications.
-		///
-		/// A code sample on how to use it efficiently can be found below:
-		/// ```C++
-		/// Mat img;
-		/// vector<double> weights;
-		/// vector<int> levels;
-		/// vector<Rect> detections;
-		/// CascadeClassifier model("/path/to/your/model.xml");
-		/// model.detectMultiScale(img, detections, levels, weights, 1.1, 3, 0, Size(), Size(), true);
-		/// cerr << "Detection " << detections[0] << " with weight " << weights[0] << endl;
-		/// ```
-		///
-		///
-		/// ## Note
-		/// This alternative version of [CascadeClassifierTrait::detect_multi_scale3] function uses the following default values for its arguments:
-		/// * scale_factor: 1.1
-		/// * min_neighbors: 3
-		/// * flags: 0
-		/// * min_size: Size()
-		/// * max_size: Size()
-		/// * output_reject_levels: false
-		#[inline]
-		fn detect_multi_scale3_def(&mut self, image: &impl ToInputArray, objects: &mut core::Vector<core::Rect>, reject_levels: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>) -> Result<()> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_old_cascade(&mut self) -> Result<*mut c_void> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_getOldCascade(self.as_raw_mut_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_mask_generator(&mut self, mask_generator: &core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_setMaskGenerator_const_PtrLMaskGeneratorGR(self.as_raw_mut_CascadeClassifier(), mask_generator.as_raw_PtrOfBaseCascadeClassifier_MaskGenerator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_mask_generator(&mut self) -> Result<core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CascadeClassifier_getMaskGenerator(self.as_raw_mut_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::objdetect::BaseCascadeClassifier_MaskGenerator>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Finds centers in the grid of circles.
+	///
+	/// ## Parameters
+	/// * image: grid view of input circles; it must be an 8-bit grayscale or color image.
+	/// * patternSize: number of circles per row and column
+	/// ( patternSize = Size(points_per_row, points_per_column) ).
+	/// * centers: output array of detected centers.
+	/// * flags: various operation flags that can be one of the following values:
+	/// *   [CALIB_CB_SYMMETRIC_GRID] uses symmetric pattern of circles.
+	/// *   [CALIB_CB_ASYMMETRIC_GRID] uses asymmetric pattern of circles.
+	/// *   [CALIB_CB_CLUSTERING] uses a special algorithm for grid detection. It is more robust to
+	/// perspective distortions but much more sensitive to background clutter.
+	/// * blobDetector: feature detector that finds blobs like dark circles on light background.
+	///                    If `blobDetector` is NULL then `image` represents Point2f array of candidates.
+	/// * parameters: struct for finding circles in a grid pattern.
+	///
+	/// return True if all of the centers have been found and they have been placed in a certain order
+	/// (row by row, left to right in every row). Otherwise, if the function fails to find all the corners
+	/// or reorder them, it returns false.
+	///
+	/// The function attempts to determine whether the input image contains a grid of circles. If it is, the
+	/// function locates centers of the circles.
+	///
+	/// Sample usage of detecting and drawing the centers of circles: :
+	/// ```C++
+	///    Size patternsize(7,7); //number of centers
+	///    Mat gray = ...; //source image
+	///    vector<Point2f> centers; //this will be filled by the detected centers
+	///
+	///    bool patternfound = findCirclesGrid(gray, patternsize, centers);
+	///
+	///    drawChessboardCorners(img, patternsize, Mat(centers), patternfound);
+	/// ```
+	///
+	///
+	/// Note: The function requires white space (like a square-thick border, the wider the better) around
+	/// the board to make the detection more robust in various environments.
+	///
+	/// ## Overloaded parameters
+	///
+	/// ## C++ default parameters
+	/// * flags: CALIB_CB_SYMMETRIC_GRID
+	/// * blob_detector: cv::SimpleBlobDetector::create()
+	#[inline]
+	pub fn find_circles_grid(image: &impl ToInputArray, pattern_size: core::Size, centers: &mut impl ToOutputArray, flags: i32, blob_detector: Option<&core::Ptr<crate::features::Feature2D>>) -> Result<bool> {
+		input_array_arg!(image);
+		output_array_arg!(centers);
+		smart_ptr_option_arg!(ref blob_detector);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
 
-	impl std::fmt::Debug for CascadeClassifier {
+	/// Finds centers in the grid of circles.
+	///
+	/// ## Parameters
+	/// * image: grid view of input circles; it must be an 8-bit grayscale or color image.
+	/// * patternSize: number of circles per row and column
+	/// ( patternSize = Size(points_per_row, points_per_column) ).
+	/// * centers: output array of detected centers.
+	/// * flags: various operation flags that can be one of the following values:
+	/// *   [CALIB_CB_SYMMETRIC_GRID] uses symmetric pattern of circles.
+	/// *   [CALIB_CB_ASYMMETRIC_GRID] uses asymmetric pattern of circles.
+	/// *   [CALIB_CB_CLUSTERING] uses a special algorithm for grid detection. It is more robust to
+	/// perspective distortions but much more sensitive to background clutter.
+	/// * blobDetector: feature detector that finds blobs like dark circles on light background.
+	///                    If `blobDetector` is NULL then `image` represents Point2f array of candidates.
+	/// * parameters: struct for finding circles in a grid pattern.
+	///
+	/// return True if all of the centers have been found and they have been placed in a certain order
+	/// (row by row, left to right in every row). Otherwise, if the function fails to find all the corners
+	/// or reorder them, it returns false.
+	///
+	/// The function attempts to determine whether the input image contains a grid of circles. If it is, the
+	/// function locates centers of the circles.
+	///
+	/// Sample usage of detecting and drawing the centers of circles: :
+	/// ```C++
+	///    Size patternsize(7,7); //number of centers
+	///    Mat gray = ...; //source image
+	///    vector<Point2f> centers; //this will be filled by the detected centers
+	///
+	///    bool patternfound = findCirclesGrid(gray, patternsize, centers);
+	///
+	///    drawChessboardCorners(img, patternsize, Mat(centers), patternfound);
+	/// ```
+	///
+	///
+	/// Note: The function requires white space (like a square-thick border, the wider the better) around
+	/// the board to make the detection more robust in various environments.
+	#[inline]
+	pub fn find_circles_grid_with_params(image: &impl ToInputArray, pattern_size: core::Size, centers: &mut impl ToOutputArray, flags: i32, blob_detector: Option<&core::Ptr<crate::features::Feature2D>>, parameters: crate::objdetect::CirclesGridFinderParameters) -> Result<bool> {
+		input_array_arg!(image);
+		output_array_arg!(centers);
+		smart_ptr_option_arg!(ref blob_detector);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR_const_CirclesGridFinderParametersR(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), &parameters, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq)]
+	pub struct CirclesGridFinderParameters {
+		pub density_neighborhood_size: core::Size2f,
+		pub min_density: f32,
+		pub kmeans_attempts: i32,
+		pub min_distance_to_add_keypoint: i32,
+		pub keypoint_scale: i32,
+		pub min_graph_confidence: f32,
+		pub vertex_gain: f32,
+		pub vertex_penalty: f32,
+		pub existing_vertex_gain: f32,
+		pub edge_gain: f32,
+		pub edge_penalty: f32,
+		pub convex_hull_factor: f32,
+		pub min_rng_edge_switch_dist: f32,
+		pub grid_type: crate::objdetect::CirclesGridFinderParameters_GridType,
+		/// Distance between two adjacent points. Used by CALIB_CB_CLUSTERING.
+		pub square_size: f32,
+		/// Max deviation from prediction. Used by CALIB_CB_CLUSTERING.
+		pub max_rectified_distance: f32,
+	}
+
+	opencv_type_simple! { crate::objdetect::CirclesGridFinderParameters }
+
+	impl CirclesGridFinderParameters {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CascadeClassifier")
-				.finish()
-		}
-	}
-
-	impl crate::objdetect::CascadeClassifierTraitConst for CascadeClassifier {
-		#[inline] fn as_raw_CascadeClassifier(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::objdetect::CascadeClassifierTrait for CascadeClassifier {
-		#[inline] fn as_raw_mut_CascadeClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CascadeClassifier, crate::objdetect::CascadeClassifierTraitConst, as_raw_CascadeClassifier, crate::objdetect::CascadeClassifierTrait, as_raw_mut_CascadeClassifier }
-
-	pub struct DetectionBasedTracker {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DetectionBasedTracker }
-
-	impl Drop for DetectionBasedTracker {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_DetectionBasedTracker_delete(self.as_raw_mut_DetectionBasedTracker()) };
-		}
-	}
-
-	unsafe impl Send for DetectionBasedTracker {}
-
-	impl DetectionBasedTracker {
-		#[inline]
-		pub fn new(mut main_detector: core::Ptr<crate::objdetect::DetectionBasedTracker_IDetector>, mut tracking_detector: core::Ptr<crate::objdetect::DetectionBasedTracker_IDetector>, params: &impl crate::objdetect::DetectionBasedTracker_ParametersTraitConst) -> Result<crate::objdetect::DetectionBasedTracker> {
+		pub fn default() -> Result<crate::objdetect::CirclesGridFinderParameters> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_DetectionBasedTracker_PtrLIDetectorG_PtrLIDetectorG_const_ParametersR(main_detector.as_raw_mut_PtrOfDetectionBasedTracker_IDetector(), tracking_detector.as_raw_mut_PtrOfDetectionBasedTracker_IDetector(), params.as_raw_DetectionBasedTracker_Parameters(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::DetectionBasedTracker::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Constant methods for [crate::objdetect::DetectionBasedTracker]
-	pub trait DetectionBasedTrackerTraitConst {
-		fn as_raw_DetectionBasedTracker(&self) -> *const c_void;
-
-		#[inline]
-		fn get_parameters(&self) -> Result<crate::objdetect::DetectionBasedTracker_Parameters> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_getParameters_const(self.as_raw_DetectionBasedTracker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::DetectionBasedTracker_Parameters::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_objects(&self, result: &mut core::Vector<core::Rect>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_getObjects_const_vectorLRectGR(self.as_raw_DetectionBasedTracker(), result.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_objects_1(&self, result: &mut core::Vector<crate::objdetect::DetectionBasedTracker_Object>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_getObjects_const_vectorLObjectGR(self.as_raw_DetectionBasedTracker(), result.as_raw_mut_VectorOfDetectionBasedTracker_Object(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_objects_2(&self, result: &mut core::Vector<crate::objdetect::DetectionBasedTracker_ExtObject>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_getObjects_const_vectorLExtObjectGR(self.as_raw_DetectionBasedTracker(), result.as_raw_mut_VectorOfDetectionBasedTracker_ExtObject(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_CirclesGridFinderParameters_CirclesGridFinderParameters(ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
 
 	}
-
-	/// Mutable methods for [crate::objdetect::DetectionBasedTracker]
-	pub trait DetectionBasedTrackerTrait: crate::objdetect::DetectionBasedTrackerTraitConst {
-		fn as_raw_mut_DetectionBasedTracker(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn run(&mut self) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_run(self.as_raw_mut_DetectionBasedTracker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn stop(&mut self) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_stop(self.as_raw_mut_DetectionBasedTracker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn reset_tracking(&mut self) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_resetTracking(self.as_raw_mut_DetectionBasedTracker(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn process(&mut self, image_gray: &impl core::MatTraitConst) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_process_const_MatR(self.as_raw_mut_DetectionBasedTracker(), image_gray.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_parameters(&mut self, params: &impl crate::objdetect::DetectionBasedTracker_ParametersTraitConst) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_setParameters_const_ParametersR(self.as_raw_mut_DetectionBasedTracker(), params.as_raw_DetectionBasedTracker_Parameters(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn add_object(&mut self, location: core::Rect) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_addObject_const_RectR(self.as_raw_mut_DetectionBasedTracker(), &location, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for DetectionBasedTracker {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DetectionBasedTracker")
-				.finish()
-		}
-	}
-
-	impl crate::objdetect::DetectionBasedTrackerTraitConst for DetectionBasedTracker {
-		#[inline] fn as_raw_DetectionBasedTracker(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::objdetect::DetectionBasedTrackerTrait for DetectionBasedTracker {
-		#[inline] fn as_raw_mut_DetectionBasedTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { DetectionBasedTracker, crate::objdetect::DetectionBasedTrackerTraitConst, as_raw_DetectionBasedTracker, crate::objdetect::DetectionBasedTrackerTrait, as_raw_mut_DetectionBasedTracker }
-
-	pub struct DetectionBasedTracker_ExtObject {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DetectionBasedTracker_ExtObject }
-
-	impl Drop for DetectionBasedTracker_ExtObject {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_DetectionBasedTracker_ExtObject_delete(self.as_raw_mut_DetectionBasedTracker_ExtObject()) };
-		}
-	}
-
-	unsafe impl Send for DetectionBasedTracker_ExtObject {}
-
-	impl DetectionBasedTracker_ExtObject {
-		#[inline]
-		pub fn new(_id: i32, _location: core::Rect, _status: crate::objdetect::DetectionBasedTracker_ObjectStatus) -> Result<crate::objdetect::DetectionBasedTracker_ExtObject> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_ExtObject_ExtObject_int_Rect_ObjectStatus(_id, &_location, _status, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::DetectionBasedTracker_ExtObject::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Constant methods for [crate::objdetect::DetectionBasedTracker_ExtObject]
-	pub trait DetectionBasedTracker_ExtObjectTraitConst {
-		fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *const c_void;
-
-		#[inline]
-		fn id(&self) -> i32 {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propId_const(self.as_raw_DetectionBasedTracker_ExtObject()) };
-			ret
-		}
-
-		#[inline]
-		fn location(&self) -> core::Rect {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_ExtObject_propLocation_const(self.as_raw_DetectionBasedTracker_ExtObject(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			ret
-		}
-
-		#[inline]
-		fn status(&self) -> crate::objdetect::DetectionBasedTracker_ObjectStatus {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_ExtObject_propStatus_const(self.as_raw_DetectionBasedTracker_ExtObject(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			ret
-		}
-
-	}
-
-	/// Mutable methods for [crate::objdetect::DetectionBasedTracker_ExtObject]
-	pub trait DetectionBasedTracker_ExtObjectTrait: crate::objdetect::DetectionBasedTracker_ExtObjectTraitConst {
-		fn as_raw_mut_DetectionBasedTracker_ExtObject(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propId_const_int(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
-			ret
-		}
-
-		#[inline]
-		fn set_location(&mut self, val: core::Rect) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propLocation_const_Rect(self.as_raw_mut_DetectionBasedTracker_ExtObject(), &val) };
-			ret
-		}
-
-		#[inline]
-		fn set_status(&mut self, val: crate::objdetect::DetectionBasedTracker_ObjectStatus) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propStatus_const_ObjectStatus(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
-			ret
-		}
-
-	}
-
-	impl Clone for DetectionBasedTracker_ExtObject {
-		#[inline]
-		fn clone(&self) -> Self {
-			unsafe { Self::from_raw(sys::cv_DetectionBasedTracker_ExtObject_implicitClone_const(self.as_raw_DetectionBasedTracker_ExtObject())) }
-		}
-	}
-
-	impl std::fmt::Debug for DetectionBasedTracker_ExtObject {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DetectionBasedTracker_ExtObject")
-				.field("id", &crate::objdetect::DetectionBasedTracker_ExtObjectTraitConst::id(self))
-				.field("location", &crate::objdetect::DetectionBasedTracker_ExtObjectTraitConst::location(self))
-				.field("status", &crate::objdetect::DetectionBasedTracker_ExtObjectTraitConst::status(self))
-				.finish()
-		}
-	}
-
-	impl crate::objdetect::DetectionBasedTracker_ExtObjectTraitConst for DetectionBasedTracker_ExtObject {
-		#[inline] fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::objdetect::DetectionBasedTracker_ExtObjectTrait for DetectionBasedTracker_ExtObject {
-		#[inline] fn as_raw_mut_DetectionBasedTracker_ExtObject(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { DetectionBasedTracker_ExtObject, crate::objdetect::DetectionBasedTracker_ExtObjectTraitConst, as_raw_DetectionBasedTracker_ExtObject, crate::objdetect::DetectionBasedTracker_ExtObjectTrait, as_raw_mut_DetectionBasedTracker_ExtObject }
-
-	pub struct DetectionBasedTracker_IDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DetectionBasedTracker_IDetector }
-
-	impl Drop for DetectionBasedTracker_IDetector {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_DetectionBasedTracker_IDetector_delete(self.as_raw_mut_DetectionBasedTracker_IDetector()) };
-		}
-	}
-
-	unsafe impl Send for DetectionBasedTracker_IDetector {}
-
-	/// Constant methods for [crate::objdetect::DetectionBasedTracker_IDetector]
-	pub trait DetectionBasedTracker_IDetectorTraitConst {
-		fn as_raw_DetectionBasedTracker_IDetector(&self) -> *const c_void;
-
-		#[inline]
-		fn get_min_object_size(&self) -> Result<core::Size> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_IDetector_getMinObjectSize_const(self.as_raw_DetectionBasedTracker_IDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_max_object_size(&self) -> Result<core::Size> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_IDetector_getMaxObjectSize_const(self.as_raw_DetectionBasedTracker_IDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::objdetect::DetectionBasedTracker_IDetector]
-	pub trait DetectionBasedTracker_IDetectorTrait: crate::objdetect::DetectionBasedTracker_IDetectorTraitConst {
-		fn as_raw_mut_DetectionBasedTracker_IDetector(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn detect(&mut self, image: &impl core::MatTraitConst, objects: &mut core::Vector<core::Rect>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_IDetector_detect_const_MatR_vectorLRectGR(self.as_raw_mut_DetectionBasedTracker_IDetector(), image.as_raw_Mat(), objects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_min_object_size(&mut self, min: core::Size) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_IDetector_setMinObjectSize_const_SizeR(self.as_raw_mut_DetectionBasedTracker_IDetector(), &min, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_max_object_size(&mut self, max: core::Size) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_IDetector_setMaxObjectSize_const_SizeR(self.as_raw_mut_DetectionBasedTracker_IDetector(), &max, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_scale_factor(&mut self) -> Result<f32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_IDetector_getScaleFactor(self.as_raw_mut_DetectionBasedTracker_IDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_scale_factor(&mut self, value: f32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_IDetector_setScaleFactor_float(self.as_raw_mut_DetectionBasedTracker_IDetector(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_min_neighbours(&mut self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_IDetector_getMinNeighbours(self.as_raw_mut_DetectionBasedTracker_IDetector(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_min_neighbours(&mut self, value: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_IDetector_setMinNeighbours_int(self.as_raw_mut_DetectionBasedTracker_IDetector(), value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for DetectionBasedTracker_IDetector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DetectionBasedTracker_IDetector")
-				.finish()
-		}
-	}
-
-	impl crate::objdetect::DetectionBasedTracker_IDetectorTraitConst for DetectionBasedTracker_IDetector {
-		#[inline] fn as_raw_DetectionBasedTracker_IDetector(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::objdetect::DetectionBasedTracker_IDetectorTrait for DetectionBasedTracker_IDetector {
-		#[inline] fn as_raw_mut_DetectionBasedTracker_IDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { DetectionBasedTracker_IDetector, crate::objdetect::DetectionBasedTracker_IDetectorTraitConst, as_raw_DetectionBasedTracker_IDetector, crate::objdetect::DetectionBasedTracker_IDetectorTrait, as_raw_mut_DetectionBasedTracker_IDetector }
-
-	pub struct DetectionBasedTracker_Parameters {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DetectionBasedTracker_Parameters }
-
-	impl Drop for DetectionBasedTracker_Parameters {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_DetectionBasedTracker_Parameters_delete(self.as_raw_mut_DetectionBasedTracker_Parameters()) };
-		}
-	}
-
-	unsafe impl Send for DetectionBasedTracker_Parameters {}
-
-	impl DetectionBasedTracker_Parameters {
-		#[inline]
-		pub fn default() -> Result<crate::objdetect::DetectionBasedTracker_Parameters> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DetectionBasedTracker_Parameters_Parameters(ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::DetectionBasedTracker_Parameters::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Constant methods for [crate::objdetect::DetectionBasedTracker_Parameters]
-	pub trait DetectionBasedTracker_ParametersTraitConst {
-		fn as_raw_DetectionBasedTracker_Parameters(&self) -> *const c_void;
-
-		#[inline]
-		fn max_track_lifetime(&self) -> i32 {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMaxTrackLifetime_const(self.as_raw_DetectionBasedTracker_Parameters()) };
-			ret
-		}
-
-		#[inline]
-		fn min_detection_period(&self) -> i32 {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMinDetectionPeriod_const(self.as_raw_DetectionBasedTracker_Parameters()) };
-			ret
-		}
-
-	}
-
-	/// Mutable methods for [crate::objdetect::DetectionBasedTracker_Parameters]
-	pub trait DetectionBasedTracker_ParametersTrait: crate::objdetect::DetectionBasedTracker_ParametersTraitConst {
-		fn as_raw_mut_DetectionBasedTracker_Parameters(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set_max_track_lifetime(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMaxTrackLifetime_const_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
-			ret
-		}
-
-		#[inline]
-		fn set_min_detection_period(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMinDetectionPeriod_const_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
-			ret
-		}
-
-	}
-
-	impl std::fmt::Debug for DetectionBasedTracker_Parameters {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DetectionBasedTracker_Parameters")
-				.field("max_track_lifetime", &crate::objdetect::DetectionBasedTracker_ParametersTraitConst::max_track_lifetime(self))
-				.field("min_detection_period", &crate::objdetect::DetectionBasedTracker_ParametersTraitConst::min_detection_period(self))
-				.finish()
-		}
-	}
-
-	impl crate::objdetect::DetectionBasedTracker_ParametersTraitConst for DetectionBasedTracker_Parameters {
-		#[inline] fn as_raw_DetectionBasedTracker_Parameters(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::objdetect::DetectionBasedTracker_ParametersTrait for DetectionBasedTracker_Parameters {
-		#[inline] fn as_raw_mut_DetectionBasedTracker_Parameters(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { DetectionBasedTracker_Parameters, crate::objdetect::DetectionBasedTracker_ParametersTraitConst, as_raw_DetectionBasedTracker_Parameters, crate::objdetect::DetectionBasedTracker_ParametersTrait, as_raw_mut_DetectionBasedTracker_Parameters }
-
-	/// struct for detection region of interest (ROI)
-	pub struct DetectionROI {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DetectionROI }
-
-	impl Drop for DetectionROI {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_DetectionROI_delete(self.as_raw_mut_DetectionROI()) };
-		}
-	}
-
-	unsafe impl Send for DetectionROI {}
-
-	impl DetectionROI {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		pub fn default() -> crate::objdetect::DetectionROI {
-			let ret = unsafe { sys::cv_DetectionROI_defaultNew_const() };
-			let ret = unsafe { crate::objdetect::DetectionROI::opencv_from_extern(ret) };
-			ret
-		}
-
-	}
-
-	/// Constant methods for [crate::objdetect::DetectionROI]
-	pub trait DetectionROITraitConst {
-		fn as_raw_DetectionROI(&self) -> *const c_void;
-
-		/// scale(size) of the bounding box
-		#[inline]
-		fn scale(&self) -> f64 {
-			let ret = unsafe { sys::cv_DetectionROI_propScale_const(self.as_raw_DetectionROI()) };
-			ret
-		}
-
-		/// set of requested locations to be evaluated
-		#[inline]
-		fn locations(&self) -> core::Vector<core::Point> {
-			let ret = unsafe { sys::cv_DetectionROI_propLocations_const(self.as_raw_DetectionROI()) };
-			let ret = unsafe { core::Vector::<core::Point>::opencv_from_extern(ret) };
-			ret
-		}
-
-		/// vector that will contain confidence values for each location
-		#[inline]
-		fn confidences(&self) -> core::Vector<f64> {
-			let ret = unsafe { sys::cv_DetectionROI_propConfidences_const(self.as_raw_DetectionROI()) };
-			let ret = unsafe { core::Vector::<f64>::opencv_from_extern(ret) };
-			ret
-		}
-
-	}
-
-	/// Mutable methods for [crate::objdetect::DetectionROI]
-	pub trait DetectionROITrait: crate::objdetect::DetectionROITraitConst {
-		fn as_raw_mut_DetectionROI(&mut self) -> *mut c_void;
-
-		/// scale(size) of the bounding box
-		#[inline]
-		fn set_scale(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_DetectionROI_propScale_const_double(self.as_raw_mut_DetectionROI(), val) };
-			ret
-		}
-
-		/// set of requested locations to be evaluated
-		#[inline]
-		fn set_locations(&mut self, val: core::Vector<core::Point>) {
-			let ret = unsafe { sys::cv_DetectionROI_propLocations_const_vectorLPointG(self.as_raw_mut_DetectionROI(), val.as_raw_VectorOfPoint()) };
-			ret
-		}
-
-		/// vector that will contain confidence values for each location
-		#[inline]
-		fn set_confidences(&mut self, val: core::Vector<f64>) {
-			let ret = unsafe { sys::cv_DetectionROI_propConfidences_const_vectorLdoubleG(self.as_raw_mut_DetectionROI(), val.as_raw_VectorOff64()) };
-			ret
-		}
-
-	}
-
-	impl Default for DetectionROI {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	impl std::fmt::Debug for DetectionROI {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DetectionROI")
-				.field("scale", &crate::objdetect::DetectionROITraitConst::scale(self))
-				.field("locations", &crate::objdetect::DetectionROITraitConst::locations(self))
-				.field("confidences", &crate::objdetect::DetectionROITraitConst::confidences(self))
-				.finish()
-		}
-	}
-
-	impl crate::objdetect::DetectionROITraitConst for DetectionROI {
-		#[inline] fn as_raw_DetectionROI(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::objdetect::DetectionROITrait for DetectionROI {
-		#[inline] fn as_raw_mut_DetectionROI(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { DetectionROI, crate::objdetect::DetectionROITraitConst, as_raw_DetectionROI, crate::objdetect::DetectionROITrait, as_raw_mut_DetectionROI }
 
 	/// DNN-based face detector
 	///
@@ -2134,7 +1338,7 @@ pub mod objdetect {
 		///
 		/// ## Parameters
 		/// * model: the path to the requested model
-		/// * config: the path to the config file for compability, which is not requested for ONNX models
+		/// * config: the path to the config file for compatibility, which is not requested for ONNX models
 		/// * input_size: the size of the input image
 		/// * score_threshold: the threshold to filter out bounding boxes of score smaller than the given value
 		/// * nms_threshold: the threshold to suppress bounding boxes of IoU bigger than the given value
@@ -2164,7 +1368,7 @@ pub mod objdetect {
 		///
 		/// ## Parameters
 		/// * model: the path to the requested model
-		/// * config: the path to the config file for compability, which is not requested for ONNX models
+		/// * config: the path to the config file for compatibility, which is not requested for ONNX models
 		/// * input_size: the size of the input image
 		/// * score_threshold: the threshold to filter out bounding boxes of score smaller than the given value
 		/// * nms_threshold: the threshold to suppress bounding boxes of IoU bigger than the given value
@@ -2195,7 +1399,7 @@ pub mod objdetect {
 		///
 		/// ## Parameters
 		/// * model: the path to the requested model
-		/// * config: the path to the config file for compability, which is not requested for ONNX models
+		/// * config: the path to the config file for compatibility, which is not requested for ONNX models
 		/// * input_size: the size of the input image
 		/// * score_threshold: the threshold to filter out bounding boxes of score smaller than the given value
 		/// * nms_threshold: the threshold to suppress bounding boxes of IoU bigger than the given value
@@ -2237,7 +1441,7 @@ pub mod objdetect {
 		///
 		/// ## Parameters
 		/// * model: the path to the requested model
-		/// * config: the path to the config file for compability, which is not requested for ONNX models
+		/// * config: the path to the config file for compatibility, which is not requested for ONNX models
 		/// * input_size: the size of the input image
 		/// * score_threshold: the threshold to filter out bounding boxes of score smaller than the given value
 		/// * nms_threshold: the threshold to suppress bounding boxes of IoU bigger than the given value
@@ -2378,7 +1582,7 @@ pub mod objdetect {
 
 		/// Detects faces in the input image. Following is an example output.
 		///
-		/// * ![image](https://docs.opencv.org/4.13.0/lena-face-detection.jpg)
+		/// * ![image](https://docs.opencv.org/5.0.0/lena-face-detection.jpg)
 		///
 		/// ## Parameters
 		/// * image: an image to detect
@@ -2444,7 +1648,7 @@ pub mod objdetect {
 		/// Creates an instance of this class with given parameters
 		/// ## Parameters
 		/// * model: the path of the onnx model used for face recognition
-		/// * config: the path to the config file for compability, which is not requested for ONNX models
+		/// * config: the path to the config file for compatibility, which is not requested for ONNX models
 		/// * backend_id: the id of backend
 		/// * target_id: the id of target device
 		///
@@ -2466,7 +1670,7 @@ pub mod objdetect {
 		/// Creates an instance of this class with given parameters
 		/// ## Parameters
 		/// * model: the path of the onnx model used for face recognition
-		/// * config: the path to the config file for compability, which is not requested for ONNX models
+		/// * config: the path to the config file for compatibility, which is not requested for ONNX models
 		/// * backend_id: the id of backend
 		/// * target_id: the id of target device
 		///
@@ -2945,1063 +2149,7 @@ pub mod objdetect {
 
 	boxed_ref! { GraphicalCodeDetector, crate::objdetect::GraphicalCodeDetectorTraitConst, as_raw_GraphicalCodeDetector, crate::objdetect::GraphicalCodeDetectorTrait, as_raw_mut_GraphicalCodeDetector }
 
-	/// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
-	///
-	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
-	///
-	/// useful links:
-	///
-	/// <https://hal.inria.fr/inria-00548512/document/>
-	///
-	/// <https://en.wikipedia.org/wiki/Histogram_of_oriented_gradients>
-	///
-	/// <https://software.intel.com/en-us/ipp-dev-reference-histogram-of-oriented-gradients-hog-descriptor>
-	///
-	/// <http://www.learnopencv.com/histogram-of-oriented-gradients>
-	///
-	/// <http://www.learnopencv.com/handwritten-digits-classification-an-opencv-c-python-tutorial>
-	pub struct HOGDescriptor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { HOGDescriptor }
-
-	impl Drop for HOGDescriptor {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_HOGDescriptor_delete(self.as_raw_mut_HOGDescriptor()) };
-		}
-	}
-
-	unsafe impl Send for HOGDescriptor {}
-
-	impl HOGDescriptor {
-		/// Creates the HOG descriptor and detector with default parameters.
-		///
-		/// aqual to HOGDescriptor(Size(64,128), Size(16,16), Size(8,8), Size(8,8), 9 )
-		#[inline]
-		pub fn default() -> Result<crate::objdetect::HOGDescriptor> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_HOGDescriptor(ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::HOGDescriptor::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates the HOG descriptor and detector with default parameters.
-		///
-		/// aqual to HOGDescriptor(Size(64,128), Size(16,16), Size(8,8), Size(8,8), 9 )
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * _winSize: sets winSize with given value.
-		/// * _blockSize: sets blockSize with given value.
-		/// * _blockStride: sets blockStride with given value.
-		/// * _cellSize: sets cellSize with given value.
-		/// * _nbins: sets nbins with given value.
-		/// * _derivAperture: sets derivAperture with given value.
-		/// * _winSigma: sets winSigma with given value.
-		/// * _histogramNormType: sets histogramNormType with given value.
-		/// * _L2HysThreshold: sets L2HysThreshold with given value.
-		/// * _gammaCorrection: sets gammaCorrection with given value.
-		/// * _nlevels: sets nlevels with given value.
-		/// * _signedGradient: sets signedGradient with given value.
-		///
-		/// ## C++ default parameters
-		/// * _deriv_aperture: 1
-		/// * _win_sigma: -1
-		/// * _histogram_norm_type: HOGDescriptor::L2Hys
-		/// * _l2_hys_threshold: 0.2
-		/// * _gamma_correction: false
-		/// * _nlevels: HOGDescriptor::DEFAULT_NLEVELS
-		/// * _signed_gradient: false
-		#[inline]
-		pub fn new(_win_size: core::Size, _block_size: core::Size, _block_stride: core::Size, _cell_size: core::Size, _nbins: i32, _deriv_aperture: i32, _win_sigma: f64, _histogram_norm_type: crate::objdetect::HOGDescriptor_HistogramNormType, _l2_hys_threshold: f64, _gamma_correction: bool, _nlevels: i32, _signed_gradient: bool) -> Result<crate::objdetect::HOGDescriptor> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_HOGDescriptor_Size_Size_Size_Size_int_int_double_HistogramNormType_double_bool_int_bool(&_win_size, &_block_size, &_block_stride, &_cell_size, _nbins, _deriv_aperture, _win_sigma, _histogram_norm_type, _l2_hys_threshold, _gamma_correction, _nlevels, _signed_gradient, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::HOGDescriptor::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates the HOG descriptor and detector with default parameters.
-		///
-		/// aqual to HOGDescriptor(Size(64,128), Size(16,16), Size(8,8), Size(8,8), 9 )
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * _winSize: sets winSize with given value.
-		/// * _blockSize: sets blockSize with given value.
-		/// * _blockStride: sets blockStride with given value.
-		/// * _cellSize: sets cellSize with given value.
-		/// * _nbins: sets nbins with given value.
-		/// * _derivAperture: sets derivAperture with given value.
-		/// * _winSigma: sets winSigma with given value.
-		/// * _histogramNormType: sets histogramNormType with given value.
-		/// * _L2HysThreshold: sets L2HysThreshold with given value.
-		/// * _gammaCorrection: sets gammaCorrection with given value.
-		/// * _nlevels: sets nlevels with given value.
-		/// * _signedGradient: sets signedGradient with given value.
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * _deriv_aperture: 1
-		/// * _win_sigma: -1
-		/// * _histogram_norm_type: HOGDescriptor::L2Hys
-		/// * _l2_hys_threshold: 0.2
-		/// * _gamma_correction: false
-		/// * _nlevels: HOGDescriptor::DEFAULT_NLEVELS
-		/// * _signed_gradient: false
-		#[inline]
-		pub fn new_def(_win_size: core::Size, _block_size: core::Size, _block_stride: core::Size, _cell_size: core::Size, _nbins: i32) -> Result<crate::objdetect::HOGDescriptor> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_HOGDescriptor_Size_Size_Size_Size_int(&_win_size, &_block_size, &_block_stride, &_cell_size, _nbins, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::HOGDescriptor::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates the HOG descriptor and detector with default parameters.
-		///
-		/// aqual to HOGDescriptor(Size(64,128), Size(16,16), Size(8,8), Size(8,8), 9 )
-		///
-		/// ## Overloaded parameters
-		///
-		///
-		/// Creates the HOG descriptor and detector and loads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file.
-		/// ## Parameters
-		/// * filename: The file name containing HOGDescriptor properties and coefficients for the linear SVM classifier.
-		#[inline]
-		pub fn new_from_file(filename: &str) -> Result<crate::objdetect::HOGDescriptor> {
-			extern_container_arg!(filename);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_HOGDescriptor_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::HOGDescriptor::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates the HOG descriptor and detector with default parameters.
-		///
-		/// aqual to HOGDescriptor(Size(64,128), Size(16,16), Size(8,8), Size(8,8), 9 )
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * d: the HOGDescriptor which cloned to create a new one.
-		#[inline]
-		pub fn copy(d: &impl crate::objdetect::HOGDescriptorTraitConst) -> Result<crate::objdetect::HOGDescriptor> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_HOGDescriptor_const_HOGDescriptorR(d.as_raw_HOGDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::HOGDescriptor::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Returns coefficients of the classifier trained for people detection (for 64x128 windows).
-		#[inline]
-		pub fn get_default_people_detector() -> Result<core::Vector<f32>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_getDefaultPeopleDetector(ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Vector::<f32>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @example samples/tapi/hog.cpp
-		/// /
-		/// Returns coefficients of the classifier trained for people detection (for 48x96 windows).
-		#[inline]
-		pub fn get_daimler_people_detector() -> Result<core::Vector<f32>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_getDaimlerPeopleDetector(ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Vector::<f32>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Constant methods for [crate::objdetect::HOGDescriptor]
-	pub trait HOGDescriptorTraitConst {
-		fn as_raw_HOGDescriptor(&self) -> *const c_void;
-
-		/// Detection window size. Align to block size and block stride. Default value is Size(64,128).
-		#[inline]
-		fn win_size(&self) -> core::Size {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_propWinSize_const(self.as_raw_HOGDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			ret
-		}
-
-		/// Block size in pixels. Align to cell size. Default value is Size(16,16).
-		#[inline]
-		fn block_size(&self) -> core::Size {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_propBlockSize_const(self.as_raw_HOGDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			ret
-		}
-
-		/// Block stride. It must be a multiple of cell size. Default value is Size(8,8).
-		#[inline]
-		fn block_stride(&self) -> core::Size {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_propBlockStride_const(self.as_raw_HOGDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			ret
-		}
-
-		/// Cell size. Default value is Size(8,8).
-		#[inline]
-		fn cell_size(&self) -> core::Size {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_propCellSize_const(self.as_raw_HOGDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			ret
-		}
-
-		/// Number of bins used in the calculation of histogram of gradients. Default value is 9.
-		#[inline]
-		fn nbins(&self) -> i32 {
-			let ret = unsafe { sys::cv_HOGDescriptor_propNbins_const(self.as_raw_HOGDescriptor()) };
-			ret
-		}
-
-		/// not documented
-		#[inline]
-		fn deriv_aperture(&self) -> i32 {
-			let ret = unsafe { sys::cv_HOGDescriptor_propDerivAperture_const(self.as_raw_HOGDescriptor()) };
-			ret
-		}
-
-		/// Gaussian smoothing window parameter.
-		#[inline]
-		fn win_sigma(&self) -> f64 {
-			let ret = unsafe { sys::cv_HOGDescriptor_propWinSigma_const(self.as_raw_HOGDescriptor()) };
-			ret
-		}
-
-		/// histogramNormType
-		#[inline]
-		fn histogram_norm_type(&self) -> crate::objdetect::HOGDescriptor_HistogramNormType {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_propHistogramNormType_const(self.as_raw_HOGDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			ret
-		}
-
-		/// L2-Hys normalization method shrinkage.
-		#[inline]
-		fn l2_hys_threshold(&self) -> f64 {
-			let ret = unsafe { sys::cv_HOGDescriptor_propL2HysThreshold_const(self.as_raw_HOGDescriptor()) };
-			ret
-		}
-
-		/// Flag to specify whether the gamma correction preprocessing is required or not.
-		#[inline]
-		fn gamma_correction(&self) -> bool {
-			let ret = unsafe { sys::cv_HOGDescriptor_propGammaCorrection_const(self.as_raw_HOGDescriptor()) };
-			ret
-		}
-
-		/// coefficients for the linear SVM classifier.
-		#[inline]
-		fn svm_detector(&self) -> core::Vector<f32> {
-			let ret = unsafe { sys::cv_HOGDescriptor_propSvmDetector_const(self.as_raw_HOGDescriptor()) };
-			let ret = unsafe { core::Vector::<f32>::opencv_from_extern(ret) };
-			ret
-		}
-
-		/// coefficients for the linear SVM classifier used when OpenCL is enabled
-		#[inline]
-		fn ocl_svm_detector(&self) -> core::UMat {
-			let ret = unsafe { sys::cv_HOGDescriptor_propOclSvmDetector_const(self.as_raw_HOGDescriptor()) };
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			ret
-		}
-
-		/// not documented
-		#[inline]
-		fn free_coef(&self) -> f32 {
-			let ret = unsafe { sys::cv_HOGDescriptor_propFree_coef_const(self.as_raw_HOGDescriptor()) };
-			ret
-		}
-
-		/// Maximum number of detection window increases. Default value is 64
-		#[inline]
-		fn nlevels(&self) -> i32 {
-			let ret = unsafe { sys::cv_HOGDescriptor_propNlevels_const(self.as_raw_HOGDescriptor()) };
-			ret
-		}
-
-		/// Indicates signed gradient will be used or not
-		#[inline]
-		fn signed_gradient(&self) -> bool {
-			let ret = unsafe { sys::cv_HOGDescriptor_propSignedGradient_const(self.as_raw_HOGDescriptor()) };
-			ret
-		}
-
-		/// Returns the number of coefficients required for the classification.
-		#[inline]
-		fn get_descriptor_size(&self) -> Result<size_t> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_getDescriptorSize_const(self.as_raw_HOGDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Checks if detector size equal to descriptor size.
-		#[inline]
-		fn check_detector_size(&self) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_checkDetectorSize_const(self.as_raw_HOGDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns winSigma value
-		#[inline]
-		fn get_win_sigma(&self) -> Result<f64> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_getWinSigma_const(self.as_raw_HOGDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Stores HOGDescriptor parameters and coefficients for the linear SVM classifier in a file storage.
-		/// ## Parameters
-		/// * fs: File storage
-		/// * objname: Object name
-		#[inline]
-		fn write(&self, fs: &mut impl core::FileStorageTrait, objname: &str) -> Result<()> {
-			extern_container_arg!(objname);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_write_const_FileStorageR_const_StringR(self.as_raw_HOGDescriptor(), fs.as_raw_mut_FileStorage(), objname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// saves HOGDescriptor parameters and coefficients for the linear SVM classifier to a file
-		/// ## Parameters
-		/// * filename: File name
-		/// * objname: Object name
-		///
-		/// ## C++ default parameters
-		/// * objname: String()
-		#[inline]
-		fn save(&self, filename: &str, objname: &str) -> Result<()> {
-			extern_container_arg!(filename);
-			extern_container_arg!(objname);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_save_const_const_StringR_const_StringR(self.as_raw_HOGDescriptor(), filename.opencv_as_extern(), objname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// saves HOGDescriptor parameters and coefficients for the linear SVM classifier to a file
-		/// ## Parameters
-		/// * filename: File name
-		/// * objname: Object name
-		///
-		/// ## Note
-		/// This alternative version of [HOGDescriptorTraitConst::save] function uses the following default values for its arguments:
-		/// * objname: String()
-		#[inline]
-		fn save_def(&self, filename: &str) -> Result<()> {
-			extern_container_arg!(filename);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_save_const_const_StringR(self.as_raw_HOGDescriptor(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// clones the HOGDescriptor
-		/// ## Parameters
-		/// * c: cloned HOGDescriptor
-		#[inline]
-		fn copy_to(&self, c: &mut impl crate::objdetect::HOGDescriptorTrait) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_copyTo_const_HOGDescriptorR(self.as_raw_HOGDescriptor(), c.as_raw_mut_HOGDescriptor(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// @example samples/cpp/train_HOG.cpp
-		/// /
-		/// Computes HOG descriptors of given image.
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U containing an image where HOG features will be calculated.
-		/// * descriptors: Matrix of the type CV_32F
-		/// * winStride: Window stride. It must be a multiple of block stride.
-		/// * padding: Padding
-		/// * locations: Vector of Point
-		///
-		/// ## C++ default parameters
-		/// * win_stride: Size()
-		/// * padding: Size()
-		/// * locations: std::vector<Point>()
-		#[inline]
-		fn compute(&self, img: &impl ToInputArray, descriptors: &mut core::Vector<f32>, win_stride: core::Size, padding: core::Size, locations: &core::Vector<core::Point>) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_compute_const_const__InputArrayR_vectorLfloatGR_Size_Size_const_vectorLPointGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), descriptors.as_raw_mut_VectorOff32(), &win_stride, &padding, locations.as_raw_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// @example samples/cpp/train_HOG.cpp
-		/// /
-		/// Computes HOG descriptors of given image.
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U containing an image where HOG features will be calculated.
-		/// * descriptors: Matrix of the type CV_32F
-		/// * winStride: Window stride. It must be a multiple of block stride.
-		/// * padding: Padding
-		/// * locations: Vector of Point
-		///
-		/// ## Note
-		/// This alternative version of [HOGDescriptorTraitConst::compute] function uses the following default values for its arguments:
-		/// * win_stride: Size()
-		/// * padding: Size()
-		/// * locations: std::vector<Point>()
-		#[inline]
-		fn compute_def(&self, img: &impl ToInputArray, descriptors: &mut core::Vector<f32>) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_compute_const_const__InputArrayR_vectorLfloatGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), descriptors.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Performs object detection without a multi-scale window.
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * foundLocations: Vector of point where each point contains left-top corner point of detected object boundaries.
-		/// * weights: Vector that will contain confidence values for each detected object.
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
-		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
-		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
-		/// * winStride: Window stride. It must be a multiple of block stride.
-		/// * padding: Padding
-		/// * searchLocations: Vector of Point includes set of requested locations to be evaluated.
-		///
-		/// ## C++ default parameters
-		/// * hit_threshold: 0
-		/// * win_stride: Size()
-		/// * padding: Size()
-		/// * search_locations: std::vector<Point>()
-		#[inline]
-		fn detect_weights(&self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Point>, weights: &mut core::Vector<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &core::Vector<core::Point>) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), weights.as_raw_mut_VectorOff64(), hit_threshold, &win_stride, &padding, search_locations.as_raw_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Performs object detection without a multi-scale window.
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * foundLocations: Vector of point where each point contains left-top corner point of detected object boundaries.
-		/// * weights: Vector that will contain confidence values for each detected object.
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
-		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
-		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
-		/// * winStride: Window stride. It must be a multiple of block stride.
-		/// * padding: Padding
-		/// * searchLocations: Vector of Point includes set of requested locations to be evaluated.
-		///
-		/// ## Note
-		/// This alternative version of [HOGDescriptorTraitConst::detect_weights] function uses the following default values for its arguments:
-		/// * hit_threshold: 0
-		/// * win_stride: Size()
-		/// * padding: Size()
-		/// * search_locations: std::vector<Point>()
-		#[inline]
-		fn detect_weights_def(&self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Point>, weights: &mut core::Vector<f64>) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), weights.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Performs object detection without a multi-scale window.
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * foundLocations: Vector of point where each point contains left-top corner point of detected object boundaries.
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
-		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
-		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
-		/// * winStride: Window stride. It must be a multiple of block stride.
-		/// * padding: Padding
-		/// * searchLocations: Vector of Point includes locations to search.
-		///
-		/// ## C++ default parameters
-		/// * hit_threshold: 0
-		/// * win_stride: Size()
-		/// * padding: Size()
-		/// * search_locations: std::vector<Point>()
-		#[inline]
-		fn detect(&self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Point>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &core::Vector<core::Point>) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_double_Size_Size_const_vectorLPointGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), hit_threshold, &win_stride, &padding, search_locations.as_raw_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Performs object detection without a multi-scale window.
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * foundLocations: Vector of point where each point contains left-top corner point of detected object boundaries.
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
-		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
-		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
-		/// * winStride: Window stride. It must be a multiple of block stride.
-		/// * padding: Padding
-		/// * searchLocations: Vector of Point includes locations to search.
-		///
-		/// ## Note
-		/// This alternative version of [HOGDescriptorTraitConst::detect] function uses the following default values for its arguments:
-		/// * hit_threshold: 0
-		/// * win_stride: Size()
-		/// * padding: Size()
-		/// * search_locations: std::vector<Point>()
-		#[inline]
-		fn detect_def(&self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Point>) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
-		/// of rectangles.
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * foundLocations: Vector of rectangles where each rectangle contains the detected object.
-		/// * foundWeights: Vector that will contain confidence values for each detected object.
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
-		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
-		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
-		/// * winStride: Window stride. It must be a multiple of block stride.
-		/// * padding: Padding
-		/// * scale: Coefficient of the detection window increase.
-		/// * groupThreshold: Coefficient to regulate the similarity threshold. When detected, some objects can be covered
-		/// by many rectangles. 0 means not to perform grouping.
-		/// * useMeanshiftGrouping: indicates grouping algorithm
-		///
-		/// ## C++ default parameters
-		/// * hit_threshold: 0
-		/// * win_stride: Size()
-		/// * padding: Size()
-		/// * scale: 1.05
-		/// * group_threshold: 2.0
-		/// * use_meanshift_grouping: false
-		#[inline]
-		fn detect_multi_scale_weights(&self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Rect>, found_weights: &mut core::Vector<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, group_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), hit_threshold, &win_stride, &padding, scale, group_threshold, use_meanshift_grouping, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
-		/// of rectangles.
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * foundLocations: Vector of rectangles where each rectangle contains the detected object.
-		/// * foundWeights: Vector that will contain confidence values for each detected object.
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
-		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
-		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
-		/// * winStride: Window stride. It must be a multiple of block stride.
-		/// * padding: Padding
-		/// * scale: Coefficient of the detection window increase.
-		/// * groupThreshold: Coefficient to regulate the similarity threshold. When detected, some objects can be covered
-		/// by many rectangles. 0 means not to perform grouping.
-		/// * useMeanshiftGrouping: indicates grouping algorithm
-		///
-		/// ## Note
-		/// This alternative version of [HOGDescriptorTraitConst::detect_multi_scale_weights] function uses the following default values for its arguments:
-		/// * hit_threshold: 0
-		/// * win_stride: Size()
-		/// * padding: Size()
-		/// * scale: 1.05
-		/// * group_threshold: 2.0
-		/// * use_meanshift_grouping: false
-		#[inline]
-		fn detect_multi_scale_weights_def(&self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Rect>, found_weights: &mut core::Vector<f64>) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
-		/// of rectangles.
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * foundLocations: Vector of rectangles where each rectangle contains the detected object.
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
-		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
-		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
-		/// * winStride: Window stride. It must be a multiple of block stride.
-		/// * padding: Padding
-		/// * scale: Coefficient of the detection window increase.
-		/// * groupThreshold: Coefficient to regulate the similarity threshold. When detected, some objects can be covered
-		/// by many rectangles. 0 means not to perform grouping.
-		/// * useMeanshiftGrouping: indicates grouping algorithm
-		///
-		/// ## C++ default parameters
-		/// * hit_threshold: 0
-		/// * win_stride: Size()
-		/// * padding: Size()
-		/// * scale: 1.05
-		/// * group_threshold: 2.0
-		/// * use_meanshift_grouping: false
-		#[inline]
-		fn detect_multi_scale(&self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Rect>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, group_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), hit_threshold, &win_stride, &padding, scale, group_threshold, use_meanshift_grouping, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
-		/// of rectangles.
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * foundLocations: Vector of rectangles where each rectangle contains the detected object.
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
-		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
-		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
-		/// * winStride: Window stride. It must be a multiple of block stride.
-		/// * padding: Padding
-		/// * scale: Coefficient of the detection window increase.
-		/// * groupThreshold: Coefficient to regulate the similarity threshold. When detected, some objects can be covered
-		/// by many rectangles. 0 means not to perform grouping.
-		/// * useMeanshiftGrouping: indicates grouping algorithm
-		///
-		/// ## Note
-		/// This alternative version of [HOGDescriptorTraitConst::detect_multi_scale] function uses the following default values for its arguments:
-		/// * hit_threshold: 0
-		/// * win_stride: Size()
-		/// * padding: Size()
-		/// * scale: 1.05
-		/// * group_threshold: 2.0
-		/// * use_meanshift_grouping: false
-		#[inline]
-		fn detect_multi_scale_def(&self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Rect>) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Computes gradients and quantized gradient orientations.
-		/// ## Parameters
-		/// * img: Matrix contains the image to be computed
-		/// * grad: Matrix of type CV_32FC2 contains computed gradients
-		/// * angleOfs: Matrix of type CV_8UC2 contains quantized gradient orientations
-		/// * paddingTL: Padding from top-left
-		/// * paddingBR: Padding from bottom-right
-		///
-		/// ## C++ default parameters
-		/// * padding_tl: Size()
-		/// * padding_br: Size()
-		#[inline]
-		fn compute_gradient(&self, img: &impl ToInputArray, grad: &mut impl ToInputOutputArray, angle_ofs: &mut impl ToInputOutputArray, padding_tl: core::Size, padding_br: core::Size) -> Result<()> {
-			input_array_arg!(img);
-			input_output_array_arg!(grad);
-			input_output_array_arg!(angle_ofs);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_computeGradient_const_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_Size(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), grad.as_raw__InputOutputArray(), angle_ofs.as_raw__InputOutputArray(), &padding_tl, &padding_br, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Computes gradients and quantized gradient orientations.
-		/// ## Parameters
-		/// * img: Matrix contains the image to be computed
-		/// * grad: Matrix of type CV_32FC2 contains computed gradients
-		/// * angleOfs: Matrix of type CV_8UC2 contains quantized gradient orientations
-		/// * paddingTL: Padding from top-left
-		/// * paddingBR: Padding from bottom-right
-		///
-		/// ## Note
-		/// This alternative version of [HOGDescriptorTraitConst::compute_gradient] function uses the following default values for its arguments:
-		/// * padding_tl: Size()
-		/// * padding_br: Size()
-		#[inline]
-		fn compute_gradient_def(&self, img: &impl ToInputArray, grad: &mut impl ToInputOutputArray, angle_ofs: &mut impl ToInputOutputArray) -> Result<()> {
-			input_array_arg!(img);
-			input_output_array_arg!(grad);
-			input_output_array_arg!(angle_ofs);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_computeGradient_const_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), grad.as_raw__InputOutputArray(), angle_ofs.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// evaluate specified ROI and return confidence value for each location
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * locations: Vector of Point
-		/// * foundLocations: Vector of Point where each Point is detected object's top-left point.
-		/// * confidences: confidences
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane. Usually
-		/// it is 0 and should be specified in the detector coefficients (as the last free coefficient). But if
-		/// the free coefficient is omitted (which is allowed), you can specify it manually here
-		/// * winStride: winStride
-		/// * padding: padding
-		///
-		/// ## C++ default parameters
-		/// * hit_threshold: 0
-		/// * win_stride: Size()
-		/// * padding: Size()
-		#[inline]
-		fn detect_roi(&self, img: &impl ToInputArray, locations: &core::Vector<core::Point>, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detectROI_const_const__InputArrayR_const_vectorLPointGR_vectorLPointGR_vectorLdoubleGR_double_Size_Size(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), locations.as_raw_VectorOfPoint(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), hit_threshold, &win_stride, &padding, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// evaluate specified ROI and return confidence value for each location
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * locations: Vector of Point
-		/// * foundLocations: Vector of Point where each Point is detected object's top-left point.
-		/// * confidences: confidences
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane. Usually
-		/// it is 0 and should be specified in the detector coefficients (as the last free coefficient). But if
-		/// the free coefficient is omitted (which is allowed), you can specify it manually here
-		/// * winStride: winStride
-		/// * padding: padding
-		///
-		/// ## Note
-		/// This alternative version of [HOGDescriptorTraitConst::detect_roi] function uses the following default values for its arguments:
-		/// * hit_threshold: 0
-		/// * win_stride: Size()
-		/// * padding: Size()
-		#[inline]
-		fn detect_roi_def(&self, img: &impl ToInputArray, locations: &core::Vector<core::Point>, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detectROI_const_const__InputArrayR_const_vectorLPointGR_vectorLPointGR_vectorLdoubleGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), locations.as_raw_VectorOfPoint(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// evaluate specified ROI and return confidence value for each location in multiple scales
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * foundLocations: Vector of rectangles where each rectangle contains the detected object.
-		/// * locations: Vector of DetectionROI
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane. Usually it is 0 and should be specified
-		/// in the detector coefficients (as the last free coefficient). But if the free coefficient is omitted (which is allowed), you can specify it manually here.
-		/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a group of rectangles to retain it.
-		///
-		/// ## C++ default parameters
-		/// * hit_threshold: 0
-		/// * group_threshold: 0
-		#[inline]
-		fn detect_multi_scale_roi(&self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Rect>, locations: &mut core::Vector<crate::objdetect::DetectionROI>, hit_threshold: f64, group_threshold: i32) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detectMultiScaleROI_const_const__InputArrayR_vectorLRectGR_vectorLDetectionROIGR_double_int(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), locations.as_raw_mut_VectorOfDetectionROI(), hit_threshold, group_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// evaluate specified ROI and return confidence value for each location in multiple scales
-		/// ## Parameters
-		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
-		/// * foundLocations: Vector of rectangles where each rectangle contains the detected object.
-		/// * locations: Vector of DetectionROI
-		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane. Usually it is 0 and should be specified
-		/// in the detector coefficients (as the last free coefficient). But if the free coefficient is omitted (which is allowed), you can specify it manually here.
-		/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a group of rectangles to retain it.
-		///
-		/// ## Note
-		/// This alternative version of [HOGDescriptorTraitConst::detect_multi_scale_roi] function uses the following default values for its arguments:
-		/// * hit_threshold: 0
-		/// * group_threshold: 0
-		#[inline]
-		fn detect_multi_scale_roi_def(&self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Rect>, locations: &mut core::Vector<crate::objdetect::DetectionROI>) -> Result<()> {
-			input_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_detectMultiScaleROI_const_const__InputArrayR_vectorLRectGR_vectorLDetectionROIGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), locations.as_raw_mut_VectorOfDetectionROI(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Groups the object candidate rectangles.
-		/// ## Parameters
-		/// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped rectangles. (The Python list is not modified in place.)
-		/// * weights: Input/output vector of weights of rectangles. Output vector includes weights of retained and grouped rectangles. (The Python list is not modified in place.)
-		/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a group of rectangles to retain it.
-		/// * eps: Relative difference between sides of the rectangles to merge them into a group.
-		#[inline]
-		fn group_rectangles(&self, rect_list: &mut core::Vector<core::Rect>, weights: &mut core::Vector<f64>, group_threshold: i32, eps: f64) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_groupRectangles_const_vectorLRectGR_vectorLdoubleGR_int_double(self.as_raw_HOGDescriptor(), rect_list.as_raw_mut_VectorOfRect(), weights.as_raw_mut_VectorOff64(), group_threshold, eps, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::objdetect::HOGDescriptor]
-	pub trait HOGDescriptorTrait: crate::objdetect::HOGDescriptorTraitConst {
-		fn as_raw_mut_HOGDescriptor(&mut self) -> *mut c_void;
-
-		/// Detection window size. Align to block size and block stride. Default value is Size(64,128).
-		#[inline]
-		fn set_win_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propWinSize_const_Size(self.as_raw_mut_HOGDescriptor(), &val) };
-			ret
-		}
-
-		/// Block size in pixels. Align to cell size. Default value is Size(16,16).
-		#[inline]
-		fn set_block_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propBlockSize_const_Size(self.as_raw_mut_HOGDescriptor(), &val) };
-			ret
-		}
-
-		/// Block stride. It must be a multiple of cell size. Default value is Size(8,8).
-		#[inline]
-		fn set_block_stride(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propBlockStride_const_Size(self.as_raw_mut_HOGDescriptor(), &val) };
-			ret
-		}
-
-		/// Cell size. Default value is Size(8,8).
-		#[inline]
-		fn set_cell_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propCellSize_const_Size(self.as_raw_mut_HOGDescriptor(), &val) };
-			ret
-		}
-
-		/// Number of bins used in the calculation of histogram of gradients. Default value is 9.
-		#[inline]
-		fn set_nbins(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propNbins_const_int(self.as_raw_mut_HOGDescriptor(), val) };
-			ret
-		}
-
-		/// not documented
-		#[inline]
-		fn set_deriv_aperture(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propDerivAperture_const_int(self.as_raw_mut_HOGDescriptor(), val) };
-			ret
-		}
-
-		/// Gaussian smoothing window parameter.
-		#[inline]
-		fn set_win_sigma(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propWinSigma_const_double(self.as_raw_mut_HOGDescriptor(), val) };
-			ret
-		}
-
-		/// histogramNormType
-		#[inline]
-		fn set_histogram_norm_type(&mut self, val: crate::objdetect::HOGDescriptor_HistogramNormType) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propHistogramNormType_const_HistogramNormType(self.as_raw_mut_HOGDescriptor(), val) };
-			ret
-		}
-
-		/// L2-Hys normalization method shrinkage.
-		#[inline]
-		fn set_l2_hys_threshold(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propL2HysThreshold_const_double(self.as_raw_mut_HOGDescriptor(), val) };
-			ret
-		}
-
-		/// Flag to specify whether the gamma correction preprocessing is required or not.
-		#[inline]
-		fn set_gamma_correction(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propGammaCorrection_const_bool(self.as_raw_mut_HOGDescriptor(), val) };
-			ret
-		}
-
-		/// coefficients for the linear SVM classifier.
-		#[inline]
-		fn set_svm_detector(&mut self, val: core::Vector<f32>) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propSvmDetector_const_vectorLfloatG(self.as_raw_mut_HOGDescriptor(), val.as_raw_VectorOff32()) };
-			ret
-		}
-
-		/// coefficients for the linear SVM classifier used when OpenCL is enabled
-		#[inline]
-		fn set_ocl_svm_detector(&mut self, val: core::UMat) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propOclSvmDetector_const_UMat(self.as_raw_mut_HOGDescriptor(), val.as_raw_UMat()) };
-			ret
-		}
-
-		/// not documented
-		#[inline]
-		fn set_free_coef(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propFree_coef_const_float(self.as_raw_mut_HOGDescriptor(), val) };
-			ret
-		}
-
-		/// Maximum number of detection window increases. Default value is 64
-		#[inline]
-		fn set_nlevels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propNlevels_const_int(self.as_raw_mut_HOGDescriptor(), val) };
-			ret
-		}
-
-		/// Indicates signed gradient will be used or not
-		#[inline]
-		fn set_signed_gradient(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propSignedGradient_const_bool(self.as_raw_mut_HOGDescriptor(), val) };
-			ret
-		}
-
-		/// @example samples/cpp/peopledetect.cpp
-		/// /
-		/// Sets coefficients for the linear SVM classifier.
-		/// ## Parameters
-		/// * svmdetector: coefficients for the linear SVM classifier.
-		#[inline]
-		fn set_svm_detector_input_array(&mut self, svmdetector: &impl ToInputArray) -> Result<()> {
-			input_array_arg!(svmdetector);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_setSVMDetector_const__InputArrayR(self.as_raw_mut_HOGDescriptor(), svmdetector.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Reads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file node.
-		/// ## Parameters
-		/// * fn: File node
-		#[inline]
-		fn read(&mut self, fn_: &mut impl core::FileNodeTrait) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_read_FileNodeR(self.as_raw_mut_HOGDescriptor(), fn_.as_raw_mut_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// loads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file
-		/// ## Parameters
-		/// * filename: Name of the file to read.
-		/// * objname: The optional name of the node to read (if empty, the first top-level node will be used).
-		///
-		/// ## C++ default parameters
-		/// * objname: String()
-		#[inline]
-		fn load(&mut self, filename: &str, objname: &str) -> Result<bool> {
-			extern_container_arg!(filename);
-			extern_container_arg!(objname);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_load_const_StringR_const_StringR(self.as_raw_mut_HOGDescriptor(), filename.opencv_as_extern(), objname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// loads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file
-		/// ## Parameters
-		/// * filename: Name of the file to read.
-		/// * objname: The optional name of the node to read (if empty, the first top-level node will be used).
-		///
-		/// ## Note
-		/// This alternative version of [HOGDescriptorTrait::load] function uses the following default values for its arguments:
-		/// * objname: String()
-		#[inline]
-		fn load_def(&mut self, filename: &str) -> Result<bool> {
-			extern_container_arg!(filename);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_HOGDescriptor_load_const_StringR(self.as_raw_mut_HOGDescriptor(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for HOGDescriptor {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("HOGDescriptor")
-				.field("win_size", &crate::objdetect::HOGDescriptorTraitConst::win_size(self))
-				.field("block_size", &crate::objdetect::HOGDescriptorTraitConst::block_size(self))
-				.field("block_stride", &crate::objdetect::HOGDescriptorTraitConst::block_stride(self))
-				.field("cell_size", &crate::objdetect::HOGDescriptorTraitConst::cell_size(self))
-				.field("nbins", &crate::objdetect::HOGDescriptorTraitConst::nbins(self))
-				.field("deriv_aperture", &crate::objdetect::HOGDescriptorTraitConst::deriv_aperture(self))
-				.field("win_sigma", &crate::objdetect::HOGDescriptorTraitConst::win_sigma(self))
-				.field("histogram_norm_type", &crate::objdetect::HOGDescriptorTraitConst::histogram_norm_type(self))
-				.field("l2_hys_threshold", &crate::objdetect::HOGDescriptorTraitConst::l2_hys_threshold(self))
-				.field("gamma_correction", &crate::objdetect::HOGDescriptorTraitConst::gamma_correction(self))
-				.field("svm_detector", &crate::objdetect::HOGDescriptorTraitConst::svm_detector(self))
-				.field("ocl_svm_detector", &crate::objdetect::HOGDescriptorTraitConst::ocl_svm_detector(self))
-				.field("free_coef", &crate::objdetect::HOGDescriptorTraitConst::free_coef(self))
-				.field("nlevels", &crate::objdetect::HOGDescriptorTraitConst::nlevels(self))
-				.field("signed_gradient", &crate::objdetect::HOGDescriptorTraitConst::signed_gradient(self))
-				.finish()
-		}
-	}
-
-	impl crate::objdetect::HOGDescriptorTraitConst for HOGDescriptor {
-		#[inline] fn as_raw_HOGDescriptor(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::objdetect::HOGDescriptorTrait for HOGDescriptor {
-		#[inline] fn as_raw_mut_HOGDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { HOGDescriptor, crate::objdetect::HOGDescriptorTraitConst, as_raw_HOGDescriptor, crate::objdetect::HOGDescriptorTrait, as_raw_mut_HOGDescriptor }
-
+	/// QR code detector.
 	pub struct QRCodeDetector {
 		ptr: *mut c_void,
 	}
@@ -4246,6 +2394,7 @@ pub mod objdetect {
 
 	boxed_ref! { QRCodeDetector, crate::objdetect::QRCodeDetectorTraitConst, as_raw_QRCodeDetector, crate::objdetect::QRCodeDetectorTrait, as_raw_mut_QRCodeDetector }
 
+	/// QR code detector based on Aruco markers detection code.
 	pub struct QRCodeDetectorAruco {
 		ptr: *mut c_void,
 	}
@@ -4416,6 +2565,7 @@ pub mod objdetect {
 
 	}
 
+	/// QR code encoder.
 	pub struct QRCodeEncoder {
 		ptr: *mut c_void,
 	}
@@ -4554,89 +2704,6 @@ pub mod objdetect {
 		}
 
 	}
-
-	/// This class is used for grouping object candidates detected by Cascade Classifier, HOG etc.
-	///
-	/// instance of the class is to be passed to cv::partition
-	pub struct SimilarRects {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SimilarRects }
-
-	impl Drop for SimilarRects {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_SimilarRects_delete(self.as_raw_mut_SimilarRects()) };
-		}
-	}
-
-	unsafe impl Send for SimilarRects {}
-
-	impl SimilarRects {
-		#[inline]
-		pub fn new(_eps: f64) -> Result<crate::objdetect::SimilarRects> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SimilarRects_SimilarRects_double(_eps, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::SimilarRects::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Constant methods for [crate::objdetect::SimilarRects]
-	pub trait SimilarRectsTraitConst {
-		fn as_raw_SimilarRects(&self) -> *const c_void;
-
-		#[inline]
-		fn eps(&self) -> f64 {
-			let ret = unsafe { sys::cv_SimilarRects_propEps_const(self.as_raw_SimilarRects()) };
-			ret
-		}
-
-		#[inline]
-		fn apply(&self, r1: core::Rect, r2: core::Rect) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SimilarRects_operator___const_const_RectR_const_RectR(self.as_raw_SimilarRects(), &r1, &r2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::objdetect::SimilarRects]
-	pub trait SimilarRectsTrait: crate::objdetect::SimilarRectsTraitConst {
-		fn as_raw_mut_SimilarRects(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set_eps(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_SimilarRects_propEps_const_double(self.as_raw_mut_SimilarRects(), val) };
-			ret
-		}
-
-	}
-
-	impl std::fmt::Debug for SimilarRects {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SimilarRects")
-				.field("eps", &crate::objdetect::SimilarRectsTraitConst::eps(self))
-				.finish()
-		}
-	}
-
-	impl crate::objdetect::SimilarRectsTraitConst for SimilarRects {
-		#[inline] fn as_raw_SimilarRects(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::objdetect::SimilarRectsTrait for SimilarRects {
-		#[inline] fn as_raw_mut_SimilarRects(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { SimilarRects, crate::objdetect::SimilarRectsTraitConst, as_raw_SimilarRects, crate::objdetect::SimilarRectsTrait, as_raw_mut_SimilarRects }
 
 	/// The main functionality of ArucoDetector class is detection of markers in an image with detectMarkers() method.
 	///
@@ -6399,7 +4466,7 @@ pub mod objdetect {
 			ret
 		}
 
-		/// minimun standard deviation in pixels values during the decodification step to apply Otsu
+		/// minimum standard deviation in pixels values during the decodification step to apply Otsu
 		/// thresholding (otherwise, all the bits are set to 0 or 1 depending on mean higher than 128 or not) (default 5.0)
 		#[inline]
 		fn min_otsu_std_dev(&self) -> f64 {
@@ -6407,7 +4474,7 @@ pub mod objdetect {
 			ret
 		}
 
-		/// error correction rate respect to the maximun error correction capability for each dictionary (default 0.6).
+		/// error correction rate respect to the maximum error correction capability for each dictionary (default 0.6).
 		#[inline]
 		fn error_correction_rate(&self) -> f64 {
 			let ret = unsafe { sys::cv_aruco_DetectorParameters_propErrorCorrectionRate_const(self.as_raw_DetectorParameters()) };
@@ -6509,6 +4576,13 @@ pub mod objdetect {
 		#[inline]
 		fn min_marker_length_ratio_original_img(&self) -> f32 {
 			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerLengthRatioOriginalImg_const(self.as_raw_DetectorParameters()) };
+			ret
+		}
+
+		/// range [0,1], define the acceptable threshold when comparing the detected marker to the dictionary during marker identification.
+		#[inline]
+		fn valid_bit_id_threshold(&self) -> f32 {
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propValidBitIdThreshold_const(self.as_raw_DetectorParameters()) };
 			ret
 		}
 
@@ -6696,7 +4770,7 @@ pub mod objdetect {
 			ret
 		}
 
-		/// minimun standard deviation in pixels values during the decodification step to apply Otsu
+		/// minimum standard deviation in pixels values during the decodification step to apply Otsu
 		/// thresholding (otherwise, all the bits are set to 0 or 1 depending on mean higher than 128 or not) (default 5.0)
 		#[inline]
 		fn set_min_otsu_std_dev(&mut self, val: f64) {
@@ -6704,7 +4778,7 @@ pub mod objdetect {
 			ret
 		}
 
-		/// error correction rate respect to the maximun error correction capability for each dictionary (default 0.6).
+		/// error correction rate respect to the maximum error correction capability for each dictionary (default 0.6).
 		#[inline]
 		fn set_error_correction_rate(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_aruco_DetectorParameters_propErrorCorrectionRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
@@ -6809,6 +4883,13 @@ pub mod objdetect {
 			ret
 		}
 
+		/// range [0,1], define the acceptable threshold when comparing the detected marker to the dictionary during marker identification.
+		#[inline]
+		fn set_valid_bit_id_threshold(&mut self, val: f32) {
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propValidBitIdThreshold_const_float(self.as_raw_mut_DetectorParameters(), val) };
+			ret
+		}
+
 		/// Read a new set of DetectorParameters from FileNode (use FileStorage.root()).
 		#[inline]
 		fn read_detector_parameters(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<bool> {
@@ -6894,6 +4975,7 @@ pub mod objdetect {
 				.field("use_aruco3_detection", &crate::objdetect::DetectorParametersTraitConst::use_aruco3_detection(self))
 				.field("min_side_length_canonical_img", &crate::objdetect::DetectorParametersTraitConst::min_side_length_canonical_img(self))
 				.field("min_marker_length_ratio_original_img", &crate::objdetect::DetectorParametersTraitConst::min_marker_length_ratio_original_img(self))
+				.field("valid_bit_id_threshold", &crate::objdetect::DetectorParametersTraitConst::valid_bit_id_threshold(self))
 				.finish()
 		}
 	}
@@ -7066,9 +5148,21 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
+		/// Given a matrix of pixel ratio raging from 0 to 1. Returns whether if marker is identified or not.
+		///
+		/// Returns reference to the marker id in the dictionary (if any) and its rotation.
+		#[inline]
+		fn identify_1(&self, only_cell_pixel_ratio: &impl core::MatTraitConst, idx: &mut i32, rotation: &mut i32, max_correction_rate: f64, valid_bit_id_threshold: f32) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_Dictionary_identify_const_const_MatR_intR_intR_double_float(self.as_raw_Dictionary(), only_cell_pixel_ratio.as_raw_Mat(), idx, rotation, max_correction_rate, valid_bit_id_threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 		/// Returns Hamming distance of the input bits to the specific id.
 		///
-		/// If `allRotations` flag is set, the four posible marker rotations are considered
+		/// If `allRotations` flag is set, the four possible marker rotations are considered
 		///
 		/// ## C++ default parameters
 		/// * all_rotations: true
@@ -7084,7 +5178,7 @@ pub mod objdetect {
 
 		/// Returns Hamming distance of the input bits to the specific id.
 		///
-		/// If `allRotations` flag is set, the four posible marker rotations are considered
+		/// If `allRotations` flag is set, the four possible marker rotations are considered
 		///
 		/// ## Note
 		/// This alternative version of [DictionaryTraitConst::get_distance_to_id] function uses the following default values for its arguments:
@@ -7125,6 +5219,35 @@ pub mod objdetect {
 			unsafe { sys::cv_aruco_Dictionary_generateImageMarker_const_int_int_const__OutputArrayR(self.as_raw_Dictionary(), id, side_pixels, _img.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Get ground truth bits float
+		///
+		/// ## C++ default parameters
+		/// * rotation_id: 0
+		#[inline]
+		fn get_marker_bits(&self, marker_id: i32, rotation_id: i32) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_Dictionary_getMarkerBits_const_int_int(self.as_raw_Dictionary(), marker_id, rotation_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Get ground truth bits float
+		///
+		/// ## Note
+		/// This alternative version of [DictionaryTraitConst::get_marker_bits] function uses the following default values for its arguments:
+		/// * rotation_id: 0
+		#[inline]
+		fn get_marker_bits_def(&self, marker_id: i32) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_Dictionary_getMarkerBits_const_int(self.as_raw_Dictionary(), marker_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -7400,7 +5523,7 @@ pub mod objdetect {
 		///
 		/// -1 ignores the error correction step.
 		pub error_correction_rate: f32,
-		/// checkAllOrders consider the four posible corner orders in the rejectedCorners array.
+		/// checkAllOrders consider the four possible corner orders in the rejectedCorners array.
 		///
 		/// If it set to false, only the provided corner order is considered (default true).
 		pub check_all_orders: bool,
@@ -7492,7 +5615,7 @@ pub mod objdetect {
 	unsafe impl Send for BarcodeDetector {}
 
 	impl BarcodeDetector {
-		/// Initialize the BarcodeDetector.
+		/// Initialize the BarcodeDetector. Super resolution is disabled.
 		#[inline]
 		pub fn default() -> Result<crate::objdetect::BarcodeDetector> {
 			return_send!(via ocvrs_return);
@@ -7503,18 +5626,23 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
-		/// Initialize the BarcodeDetector.
+		/// Initialize the BarcodeDetector with a Super Resolution model.
 		///
-		/// Parameters allow to load _optional_ Super Resolution DNN model for better quality.
+		/// Loads a Super Resolution DNN model in ONNX format, used to upscale small/low-quality
+		/// barcode crops before decoding for better quality.
+		///
+		///
+		/// Note: Caffe models (`sr.prototxt` / `sr.caffemodel`) are no longer supported; convert
+		/// the model to ONNX (a converted `sr.onnx` is available from
+		/// <https://github.com/WeChatCV/opencv_3rdparty/tree/wechat_qrcode>).
+		///
 		/// ## Parameters
-		/// * prototxt_path: prototxt file path for the super resolution model
-		/// * model_path: model file path for the super resolution model
+		/// * super_resolution_model_path: path to a single-file ONNX Super Resolution model.
 		#[inline]
-		pub fn new(prototxt_path: &str, model_path: &str) -> Result<crate::objdetect::BarcodeDetector> {
-			extern_container_arg!(prototxt_path);
-			extern_container_arg!(model_path);
+		pub fn new(super_resolution_model_path: &str) -> Result<crate::objdetect::BarcodeDetector> {
+			extern_container_arg!(super_resolution_model_path);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_barcode_BarcodeDetector_BarcodeDetector_const_stringR_const_stringR(prototxt_path.opencv_as_extern(), model_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_barcode_BarcodeDetector_BarcodeDetector_const_stringR(super_resolution_model_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::objdetect::BarcodeDetector::opencv_from_extern(ret) };
@@ -7731,5 +5859,637 @@ pub mod objdetect {
 	}
 
 	boxed_ref! { BarcodeDetector, crate::objdetect::BarcodeDetectorTraitConst, as_raw_BarcodeDetector, crate::objdetect::BarcodeDetectorTrait, as_raw_mut_BarcodeDetector }
+
+	/// CChecker
+	///
+	/// checker object
+	///
+	///    This class contains the information about the detected checkers,i.e, their
+	///    type, the corners of the chart, the color profile, the cost, centers chart,
+	///    etc.
+	pub struct CChecker {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CChecker }
+
+	impl Drop for CChecker {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_mcc_CChecker_delete(self.as_raw_mut_CChecker()) };
+		}
+	}
+
+	unsafe impl Send for CChecker {}
+
+	impl CChecker {
+		/// Create a new CChecker object.
+		///
+		/// ## Returns
+		/// A pointer to the implementation of the CChecker
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::objdetect::CChecker>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::objdetect::CChecker>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::objdetect::CChecker]
+	pub trait CCheckerTraitConst: core::AlgorithmTraitConst {
+		fn as_raw_CChecker(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::objdetect::CChecker]
+	pub trait CCheckerTrait: core::AlgorithmTrait + crate::objdetect::CCheckerTraitConst {
+		fn as_raw_mut_CChecker(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn set_target(&mut self, _target: crate::objdetect::ColorChart) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_setTarget_ColorChart(self.as_raw_mut_CChecker(), _target, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_box(&mut self, mut _box: core::Vector<core::Point2f>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_setBox_vectorLPoint2fG(self.as_raw_mut_CChecker(), _box.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_charts_rgb(&mut self, mut _charts_rgb: impl core::MatTrait) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_setChartsRGB_Mat(self.as_raw_mut_CChecker(), _charts_rgb.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_charts_y_cb_cr(&mut self, mut _charts_y_cb_cr: impl core::MatTrait) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_setChartsYCbCr_Mat(self.as_raw_mut_CChecker(), _charts_y_cb_cr.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_cost(&mut self, _cost: f32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_setCost_float(self.as_raw_mut_CChecker(), _cost, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_center(&mut self, _center: core::Point2f) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_setCenter_Point2f(self.as_raw_mut_CChecker(), &_center, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_target(&mut self) -> Result<crate::objdetect::ColorChart> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_getTarget(self.as_raw_mut_CChecker(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_box(&mut self) -> Result<core::Vector<core::Point2f>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_getBox(self.as_raw_mut_CChecker(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Computes and returns the coordinates of the central parts of the charts modules.
+		///
+		/// This method computes transformation matrix from the checkers's coordinates (`CChecker::getBox()`)
+		/// and find by this the coordinates of the central parts of the charts modules.
+		/// It is used in `CCheckerDetector::draw()` and in `ChartsRGB` calculation.
+		#[inline]
+		fn get_color_charts(&mut self) -> Result<core::Vector<core::Point2f>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_getColorCharts(self.as_raw_mut_CChecker(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * get_stats: true
+		#[inline]
+		fn get_charts_rgb(&mut self, get_stats: bool) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_getChartsRGB_bool(self.as_raw_mut_CChecker(), get_stats, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [CCheckerTrait::get_charts_rgb] function uses the following default values for its arguments:
+		/// * get_stats: true
+		#[inline]
+		fn get_charts_rgb_def(&mut self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_getChartsRGB(self.as_raw_mut_CChecker(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_charts_y_cb_cr(&mut self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_getChartsYCbCr(self.as_raw_mut_CChecker(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_cost(&mut self) -> Result<f32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_getCost(self.as_raw_mut_CChecker(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_center(&mut self) -> Result<core::Point2f> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_getCenter(self.as_raw_mut_CChecker(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for CChecker {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CChecker")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { CChecker, core::Algorithm, cv_mcc_CChecker_to_Algorithm }
+
+	impl core::AlgorithmTraitConst for CChecker {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for CChecker {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CChecker, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::objdetect::CCheckerTraitConst for CChecker {
+		#[inline] fn as_raw_CChecker(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::objdetect::CCheckerTrait for CChecker {
+		#[inline] fn as_raw_mut_CChecker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CChecker, crate::objdetect::CCheckerTraitConst, as_raw_CChecker, crate::objdetect::CCheckerTrait, as_raw_mut_CChecker }
+
+	/// A class to find the positions of the ColorCharts in the image.
+	pub struct CCheckerDetector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CCheckerDetector }
+
+	impl Drop for CCheckerDetector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_mcc_CCheckerDetector_delete(self.as_raw_mut_CCheckerDetector()) };
+		}
+	}
+
+	unsafe impl Send for CCheckerDetector {}
+
+	impl CCheckerDetector {
+		/// Returns the implementation of the CCheckerDetector.
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::objdetect::CCheckerDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::objdetect::CCheckerDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Set the net which will be used to find the approximate
+		///        bounding boxes for the color charts. And returns the implementation of the CCheckerDetector.
+		///
+		/// It is not necessary to use this, but this usually results in
+		/// better detection rate.
+		///
+		/// ## Parameters
+		/// * net: the neural network, if the network in empty, then
+		///            the function will return false.
+		#[inline]
+		pub fn create_1(net: &impl crate::dnn::NetTraitConst) -> Result<core::Ptr<crate::objdetect::CCheckerDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_create_const_NetR(net.as_raw_Net(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::objdetect::CCheckerDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::objdetect::CCheckerDetector]
+	pub trait CCheckerDetectorTraitConst: core::AlgorithmTraitConst {
+		fn as_raw_CCheckerDetector(&self) -> *const c_void;
+
+		#[inline]
+		fn get_use_dnn_model(&self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_getUseDnnModel_const(self.as_raw_CCheckerDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_detection_params(&self) -> Result<crate::objdetect::DetectorParametersMCC> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_getDetectionParams_const(self.as_raw_CCheckerDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_color_chart_type(&self) -> Result<crate::objdetect::ColorChart> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_getColorChartType_const(self.as_raw_CCheckerDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::objdetect::CCheckerDetector]
+	pub trait CCheckerDetectorTrait: core::AlgorithmTrait + crate::objdetect::CCheckerDetectorTraitConst {
+		fn as_raw_mut_CCheckerDetector(&mut self) -> *mut c_void;
+
+		/// Find the ColorCharts in the given image.
+		///
+		/// The found charts are not returned but instead stored in the
+		/// detector, these can be accessed later on using getBestColorChecker()
+		/// and getListColorChecker()
+		/// ## Parameters
+		/// * image: image in color space BGR
+		/// * regionsOfInterest: regions of image to look for the chart, if
+		///                          it is empty, charts are looked for in the
+		///                          entire image
+		/// * nc: number of charts in the image, if you don't know the exact
+		///           then keeping this number high helps.
+		/// ## Returns
+		/// true if atleast one chart is detected otherwise false
+		///
+		/// ## C++ default parameters
+		/// * nc: 1
+		#[inline]
+		fn process_with_roi(&mut self, image: &impl ToInputArray, regions_of_interest: &core::Vector<core::Rect>, nc: i32) -> Result<bool> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_vectorLRectGR_const_int(self.as_raw_mut_CCheckerDetector(), image.as_raw__InputArray(), regions_of_interest.as_raw_VectorOfRect(), nc, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Find the ColorCharts in the given image.
+		///
+		/// The found charts are not returned but instead stored in the
+		/// detector, these can be accessed later on using getBestColorChecker()
+		/// and getListColorChecker()
+		/// ## Parameters
+		/// * image: image in color space BGR
+		/// * regionsOfInterest: regions of image to look for the chart, if
+		///                          it is empty, charts are looked for in the
+		///                          entire image
+		/// * nc: number of charts in the image, if you don't know the exact
+		///           then keeping this number high helps.
+		/// ## Returns
+		/// true if atleast one chart is detected otherwise false
+		///
+		/// ## Note
+		/// This alternative version of [CCheckerDetectorTrait::process_with_roi] function uses the following default values for its arguments:
+		/// * nc: 1
+		#[inline]
+		fn process_with_roi_def(&mut self, image: &impl ToInputArray, regions_of_interest: &core::Vector<core::Rect>) -> Result<bool> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_vectorLRectGR(self.as_raw_mut_CCheckerDetector(), image.as_raw__InputArray(), regions_of_interest.as_raw_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Find the ColorCharts in the given image.
+		///
+		/// Differs from the above one only in the arguments.
+		///
+		/// This version searches for the chart in the full image.
+		///
+		/// The found charts are not returned but instead stored in the
+		/// detector, these can be accessed later on using getBestColorChecker()
+		/// and getListColorChecker()
+		/// ## Parameters
+		/// * image: image in color space BGR
+		/// * nc: number of charts in the image, if you don't know the exact
+		///           then keeping this number high helps.
+		/// ## Returns
+		/// true if atleast one chart is detected otherwise false
+		///
+		/// ## C++ default parameters
+		/// * nc: 1
+		#[inline]
+		fn process(&mut self, image: &impl ToInputArray, nc: i32) -> Result<bool> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_int(self.as_raw_mut_CCheckerDetector(), image.as_raw__InputArray(), nc, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Find the ColorCharts in the given image.
+		///
+		/// Differs from the above one only in the arguments.
+		///
+		/// This version searches for the chart in the full image.
+		///
+		/// The found charts are not returned but instead stored in the
+		/// detector, these can be accessed later on using getBestColorChecker()
+		/// and getListColorChecker()
+		/// ## Parameters
+		/// * image: image in color space BGR
+		/// * nc: number of charts in the image, if you don't know the exact
+		///           then keeping this number high helps.
+		/// ## Returns
+		/// true if atleast one chart is detected otherwise false
+		///
+		/// ## Note
+		/// This alternative version of [CCheckerDetectorTrait::process] function uses the following default values for its arguments:
+		/// * nc: 1
+		#[inline]
+		fn process_def(&mut self, image: &impl ToInputArray) -> Result<bool> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR(self.as_raw_mut_CCheckerDetector(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Get the best color checker. By the best it means the one
+		///        detected with the highest confidence.
+		/// ## Returns
+		/// checker A single colorchecker, if atleast one colorchecker
+		///                was detected, 'nullptr' otherwise.
+		#[inline]
+		fn get_best_color_checker(&mut self) -> Result<core::Ptr<crate::objdetect::CChecker>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_getBestColorChecker(self.as_raw_mut_CCheckerDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::objdetect::CChecker>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Get the list of all detected colorcheckers
+		/// ## Returns
+		/// checkers vector of colorcheckers
+		#[inline]
+		fn get_list_color_checker(&mut self) -> Result<core::Vector<core::Ptr<crate::objdetect::CChecker>>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_getListColorChecker(self.as_raw_mut_CCheckerDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<core::Ptr<crate::objdetect::CChecker>>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Draws the checker to the given image.
+		/// ## Parameters
+		/// * img: image in color space BGR
+		/// * checkers: The checkers which will be drawn by this object.
+		/// * color: The color by with which the squares of the checker
+		///        will be drawn
+		/// * thickness: The thickness with which the sqaures will be
+		///        drawn
+		///
+		/// ## C++ default parameters
+		/// * color: CV_RGB(0,250,0)
+		/// * thickness: 2
+		#[inline]
+		fn draw(&mut self, checkers: &mut core::Vector<core::Ptr<crate::objdetect::CChecker>>, img: &mut impl ToInputOutputArray, color: core::Scalar, thickness: i32) -> Result<()> {
+			input_output_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_draw_vectorLPtrLCCheckerGGR_const__InputOutputArrayR_const_Scalar_const_int(self.as_raw_mut_CCheckerDetector(), checkers.as_raw_mut_VectorOfPtrOfCChecker(), img.as_raw__InputOutputArray(), &color, thickness, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Draws the checker to the given image.
+		/// ## Parameters
+		/// * img: image in color space BGR
+		/// * checkers: The checkers which will be drawn by this object.
+		/// * color: The color by with which the squares of the checker
+		///        will be drawn
+		/// * thickness: The thickness with which the sqaures will be
+		///        drawn
+		///
+		/// ## Note
+		/// This alternative version of [CCheckerDetectorTrait::draw] function uses the following default values for its arguments:
+		/// * color: CV_RGB(0,250,0)
+		/// * thickness: 2
+		#[inline]
+		fn draw_def(&mut self, checkers: &mut core::Vector<core::Ptr<crate::objdetect::CChecker>>, img: &mut impl ToInputOutputArray) -> Result<()> {
+			input_output_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_draw_vectorLPtrLCCheckerGGR_const__InputOutputArrayR(self.as_raw_mut_CCheckerDetector(), checkers.as_raw_mut_VectorOfPtrOfCChecker(), img.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Gets the reference color for chart.
+		#[inline]
+		fn get_ref_colors(&mut self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_getRefColors(self.as_raw_mut_CCheckerDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Sets the detection paramaters for mcc.
+		/// ## Parameters
+		/// * params: DetectorParametersMCC structure containing detection configuration parameters.
+		#[inline]
+		fn set_detection_params(&mut self, params: crate::objdetect::DetectorParametersMCC) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_setDetectionParams_const_DetectorParametersMCCR(self.as_raw_mut_CCheckerDetector(), &params, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets the color chart type for MCC detection.
+		/// ## Parameters
+		/// * chartType: ColorChart enum specifying the type of color chart to detect.
+		#[inline]
+		fn set_color_chart_type(&mut self, chart_type: crate::objdetect::ColorChart) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_setColorChartType_ColorChart(self.as_raw_mut_CCheckerDetector(), chart_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Enables or disables the use of the neural network for detection.
+		/// ## Parameters
+		/// * useDnn: Boolean flag to indicate whether to use neural network (true) or not (false).
+		#[inline]
+		fn set_use_dnn_model(&mut self, use_dnn: bool) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_setUseDnnModel_bool(self.as_raw_mut_CCheckerDetector(), use_dnn, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl std::fmt::Debug for CCheckerDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CCheckerDetector")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { CCheckerDetector, core::Algorithm, cv_mcc_CCheckerDetector_to_Algorithm }
+
+	impl core::AlgorithmTraitConst for CCheckerDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for CCheckerDetector {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CCheckerDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::objdetect::CCheckerDetectorTraitConst for CCheckerDetector {
+		#[inline] fn as_raw_CCheckerDetector(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::objdetect::CCheckerDetectorTrait for CCheckerDetector {
+		#[inline] fn as_raw_mut_CCheckerDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CCheckerDetector, crate::objdetect::CCheckerDetectorTraitConst, as_raw_CCheckerDetector, crate::objdetect::CCheckerDetectorTrait, as_raw_mut_CCheckerDetector }
+
+	/// struct DetectorParametersMCC is used by CCheckerDetector
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq)]
+	pub struct DetectorParametersMCC {
+		/// minimum window size for adaptive thresholding before finding contours (default 23).
+		pub adaptive_thresh_win_size_min: i32,
+		/// maximum window size for adaptive thresholding before finding contours (default 153).
+		pub adaptive_thresh_win_size_max: i32,
+		/// increments from adaptiveThreshWinSizeMin to adaptiveThreshWinSizeMax during the thresholding (default 16).
+		pub adaptive_thresh_win_size_step: i32,
+		/// constant for adaptive thresholding before finding contours (default 7)
+		pub adaptive_thresh_constant: f64,
+		/// determine minimum area for marker contour to be detected
+		///
+		/// This is defined as a rate respect to the area of the input image. Used only if neural network is used (default 0.03).
+		pub min_contours_area_rate: f64,
+		/// determine minimum area for marker contour to be detected
+		///
+		/// This is defined as the actual area. Used only if neural network is used (default 100).
+		pub min_contours_area: f64,
+		/// minimum confidence for a bounding box detected by neural network to classify as detection.(default 0.5) (0<=confidenceThreshold<=1)
+		pub confidence_threshold: f64,
+		/// minimum solidity of a contour for it be detected as a square in the chart. (default 0.9).
+		pub min_contour_solidity: f64,
+		/// multipler to be used in ApproxPolyDP function (default 0.05)
+		pub find_candidates_approx_poly_dp_eps_multiplier: f64,
+		/// width of the padding used to pass the inital neural network detection in the succeeding system.(default 0)
+		pub border_width: i32,
+		/// distance between two neighboring squares of the same chart as a ratio of the large dimension of a square (default 1.25).
+		pub b0factor: f32,
+		/// maximum allowed error in the detection of a chart (default 0.1).
+		pub max_error: f32,
+		/// minimum points in a detected contour (default 4).
+		pub min_contour_points_allowed: i32,
+		/// minimum length of a contour (default 100).
+		pub min_contour_length_allowed: i32,
+		/// minimum distance between two contours (default 100).
+		pub min_inter_contour_distance: i32,
+		/// minimum distance between two checkers (default 10000).
+		pub min_inter_checker_distance: i32,
+		/// minimum size of the smaller dimension of the image (default 1000).
+		pub min_image_size: i32,
+		/// minimum number of squares in a chart that must be detected (default 4).
+		pub min_group_size: i32,
+	}
+
+	opencv_type_simple! { crate::objdetect::DetectorParametersMCC }
+
+	impl DetectorParametersMCC {
+		#[inline]
+		pub fn default() -> Result<crate::objdetect::DetectorParametersMCC> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_DetectorParametersMCC_DetectorParametersMCC(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 }

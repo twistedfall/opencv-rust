@@ -132,7 +132,7 @@ pub mod imgproc {
 	//!    In the figure below, the Delaunay's triangulation is marked with black lines and the Voronoi
 	//!    diagram with red lines.
 	//!
-	//!    ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/4.13.0/delaunay_voronoi.png)
+	//!    ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/5.0.0/delaunay_voronoi.png)
 	//!
 	//!    The subdivisions can be used for the 3D piece-wise transformation of a plane, morphing, fast
 	//!    location of points on the plane, building special graphs (such as NNG,RNG), and so forth.
@@ -149,7 +149,7 @@ pub mod imgproc {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{CLAHETrait, CLAHETraitConst, GeneralizedHoughBallardTrait, GeneralizedHoughBallardTraitConst, GeneralizedHoughGuilTrait, GeneralizedHoughGuilTraitConst, GeneralizedHoughTrait, GeneralizedHoughTraitConst, IntelligentScissorsMBTrait, IntelligentScissorsMBTraitConst, LineIteratorTrait, LineIteratorTraitConst, LineSegmentDetectorTrait, LineSegmentDetectorTraitConst, Subdiv2DTrait, Subdiv2DTraitConst};
+		pub use super::{CLAHETrait, CLAHETraitConst, FontFaceTrait, FontFaceTraitConst, GeneralizedHoughBallardTrait, GeneralizedHoughBallardTraitConst, GeneralizedHoughGuilTrait, GeneralizedHoughGuilTraitConst, GeneralizedHoughTrait, GeneralizedHoughTraitConst, LineIteratorTrait, LineIteratorTraitConst, LineSegmentDetectorTrait, LineSegmentDetectorTraitConst};
 	}
 
 	/// the threshold value ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2C%20y%29) is a weighted sum (cross-correlation with a Gaussian
@@ -161,17 +161,17 @@ pub mod imgproc {
 	pub const ADAPTIVE_THRESH_MEAN_C: i32 = 0;
 	/// Same as CCL_GRANA. It is preferable to use the flag with the name of the algorithm (CCL_BBDT) rather than the one with the name of the first author (CCL_GRANA).
 	pub const CCL_BBDT: i32 = 4;
-	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
+	/// Spaghetti [Bolelli2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
 	pub const CCL_BOLELLI: i32 = 2;
-	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
+	/// Spaghetti [Bolelli2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
 	pub const CCL_DEFAULT: i32 = -1;
-	/// BBDT [Grana2010](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
+	/// BBDT [Grana2010](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 	pub const CCL_GRANA: i32 = 1;
 	/// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
 	pub const CCL_SAUF: i32 = 3;
 	/// Same as CCL_BOLELLI. It is preferable to use the flag with the name of the algorithm (CCL_SPAGHETTI) rather than the one with the name of the first author (CCL_BOLELLI).
 	pub const CCL_SPAGHETTI: i32 = 5;
-	/// SAUF [Wu2009](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
+	/// SAUF [Wu2009](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
 	pub const CCL_WU: i32 = 0;
 	/// The total area (in pixels) of the connected component
 	pub const CC_STAT_AREA: i32 = 4;
@@ -194,53 +194,55 @@ pub mod imgproc {
 	/// compresses horizontal, vertical, and diagonal segments and leaves only their end points.
 	/// For example, an up-right rectangular contour is encoded with 4 points.
 	pub const CHAIN_APPROX_SIMPLE: i32 = 2;
-	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_TehChin89)
+	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_TehChin89)
 	pub const CHAIN_APPROX_TC89_KCOS: i32 = 4;
-	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_TehChin89)
+	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_TehChin89)
 	pub const CHAIN_APPROX_TC89_L1: i32 = 3;
-	/// ![autumn](https://docs.opencv.org/4.13.0/colorscale_autumn.jpg)
+	/// TBD
+	pub const CHAIN_CODE: i32 = 0;
+	/// ![autumn](https://docs.opencv.org/5.0.0/colorscale_autumn.jpg)
 	pub const COLORMAP_AUTUMN: i32 = 0;
-	/// ![bone](https://docs.opencv.org/4.13.0/colorscale_bone.jpg)
+	/// ![bone](https://docs.opencv.org/5.0.0/colorscale_bone.jpg)
 	pub const COLORMAP_BONE: i32 = 1;
-	/// ![cividis](https://docs.opencv.org/4.13.0/colorscale_cividis.jpg)
+	/// ![cividis](https://docs.opencv.org/5.0.0/colorscale_cividis.jpg)
 	pub const COLORMAP_CIVIDIS: i32 = 17;
-	/// ![cool](https://docs.opencv.org/4.13.0/colorscale_cool.jpg)
+	/// ![cool](https://docs.opencv.org/5.0.0/colorscale_cool.jpg)
 	pub const COLORMAP_COOL: i32 = 8;
-	/// ![deepgreen](https://docs.opencv.org/4.13.0/colorscale_deepgreen.jpg)
+	/// ![deepgreen](https://docs.opencv.org/5.0.0/colorscale_deepgreen.jpg)
 	pub const COLORMAP_DEEPGREEN: i32 = 21;
-	/// ![hot](https://docs.opencv.org/4.13.0/colorscale_hot.jpg)
+	/// ![hot](https://docs.opencv.org/5.0.0/colorscale_hot.jpg)
 	pub const COLORMAP_HOT: i32 = 11;
-	/// ![HSV](https://docs.opencv.org/4.13.0/colorscale_hsv.jpg)
+	/// ![HSV](https://docs.opencv.org/5.0.0/colorscale_hsv.jpg)
 	pub const COLORMAP_HSV: i32 = 9;
-	/// ![inferno](https://docs.opencv.org/4.13.0/colorscale_inferno.jpg)
+	/// ![inferno](https://docs.opencv.org/5.0.0/colorscale_inferno.jpg)
 	pub const COLORMAP_INFERNO: i32 = 14;
-	/// ![jet](https://docs.opencv.org/4.13.0/colorscale_jet.jpg)
+	/// ![jet](https://docs.opencv.org/5.0.0/colorscale_jet.jpg)
 	pub const COLORMAP_JET: i32 = 2;
-	/// ![magma](https://docs.opencv.org/4.13.0/colorscale_magma.jpg)
+	/// ![magma](https://docs.opencv.org/5.0.0/colorscale_magma.jpg)
 	pub const COLORMAP_MAGMA: i32 = 13;
-	/// ![ocean](https://docs.opencv.org/4.13.0/colorscale_ocean.jpg)
+	/// ![ocean](https://docs.opencv.org/5.0.0/colorscale_ocean.jpg)
 	pub const COLORMAP_OCEAN: i32 = 5;
-	/// ![parula](https://docs.opencv.org/4.13.0/colorscale_parula.jpg)
+	/// ![parula](https://docs.opencv.org/5.0.0/colorscale_parula.jpg)
 	pub const COLORMAP_PARULA: i32 = 12;
-	/// ![pink](https://docs.opencv.org/4.13.0/colorscale_pink.jpg)
+	/// ![pink](https://docs.opencv.org/5.0.0/colorscale_pink.jpg)
 	pub const COLORMAP_PINK: i32 = 10;
-	/// ![plasma](https://docs.opencv.org/4.13.0/colorscale_plasma.jpg)
+	/// ![plasma](https://docs.opencv.org/5.0.0/colorscale_plasma.jpg)
 	pub const COLORMAP_PLASMA: i32 = 15;
-	/// ![rainbow](https://docs.opencv.org/4.13.0/colorscale_rainbow.jpg)
+	/// ![rainbow](https://docs.opencv.org/5.0.0/colorscale_rainbow.jpg)
 	pub const COLORMAP_RAINBOW: i32 = 4;
-	/// ![spring](https://docs.opencv.org/4.13.0/colorscale_spring.jpg)
+	/// ![spring](https://docs.opencv.org/5.0.0/colorscale_spring.jpg)
 	pub const COLORMAP_SPRING: i32 = 7;
-	/// ![summer](https://docs.opencv.org/4.13.0/colorscale_summer.jpg)
+	/// ![summer](https://docs.opencv.org/5.0.0/colorscale_summer.jpg)
 	pub const COLORMAP_SUMMER: i32 = 6;
-	/// ![turbo](https://docs.opencv.org/4.13.0/colorscale_turbo.jpg)
+	/// ![turbo](https://docs.opencv.org/5.0.0/colorscale_turbo.jpg)
 	pub const COLORMAP_TURBO: i32 = 20;
-	/// ![twilight](https://docs.opencv.org/4.13.0/colorscale_twilight.jpg)
+	/// ![twilight](https://docs.opencv.org/5.0.0/colorscale_twilight.jpg)
 	pub const COLORMAP_TWILIGHT: i32 = 18;
-	/// ![twilight shifted](https://docs.opencv.org/4.13.0/colorscale_twilight_shifted.jpg)
+	/// ![twilight shifted](https://docs.opencv.org/5.0.0/colorscale_twilight_shifted.jpg)
 	pub const COLORMAP_TWILIGHT_SHIFTED: i32 = 19;
-	/// ![viridis](https://docs.opencv.org/4.13.0/colorscale_viridis.jpg)
+	/// ![viridis](https://docs.opencv.org/5.0.0/colorscale_viridis.jpg)
 	pub const COLORMAP_VIRIDIS: i32 = 16;
-	/// ![winter](https://docs.opencv.org/4.13.0/colorscale_winter.jpg)
+	/// ![winter](https://docs.opencv.org/5.0.0/colorscale_winter.jpg)
 	pub const COLORMAP_WINTER: i32 = 3;
 	/// [8U] convert between RGB/BGR and BGR555 (16-bit images)
 	pub const COLOR_BGR2BGR555: i32 = 22;
@@ -787,18 +789,6 @@ pub mod imgproc {
 	pub const CONTOURS_MATCH_I2: i32 = 2;
 	/// ![block formula](https://latex.codecogs.com/png.latex?I%5F3%28A%2CB%29%20%3D%20%20%5Cmax%20%5F%7Bi%3D1%2E%2E%2E7%7D%20%20%5Cfrac%7B%20%5Cleft%7C%20m%5EA%5Fi%20%2D%20m%5EB%5Fi%20%5Cright%7C%20%7D%7B%20%5Cleft%7C%20m%5EA%5Fi%20%5Cright%7C%20%7D)
 	pub const CONTOURS_MATCH_I3: i32 = 3;
-	/// distance = max(|x1-x2|,|y1-y2|)
-	pub const DIST_C: i32 = 3;
-	/// distance = c^2(|x|/c-log(1+|x|/c)), c = 1.3998
-	pub const DIST_FAIR: i32 = 5;
-	/// distance = |x|<c ? x^2/2 : c(|x|-c/2), c=1.345
-	pub const DIST_HUBER: i32 = 7;
-	/// distance = |x1-x2| + |y1-y2|
-	pub const DIST_L1: i32 = 1;
-	/// L1-L2 metric: distance = 2(sqrt(1+x*x/2) - 1))
-	pub const DIST_L12: i32 = 4;
-	/// the simple euclidean distance
-	pub const DIST_L2: i32 = 2;
 	/// each connected component of zeros in src (as well as all the non-zero pixels closest to the
 	/// connected component) will be assigned the same label
 	pub const DIST_LABEL_CCOMP: i32 = 0;
@@ -809,10 +799,6 @@ pub mod imgproc {
 	/// mask=5
 	pub const DIST_MASK_5: i32 = 5;
 	pub const DIST_MASK_PRECISE: i32 = 0;
-	/// User defined distance
-	pub const DIST_USER: i32 = -1;
-	/// distance = c^2/2(1-exp(-(x/c)^2)), c = 2.9846
-	pub const DIST_WELSCH: i32 = 6;
 	pub const FILLED: i32 = -1;
 	pub const FILTER_SCHARR: i32 = -1;
 	/// If set, the difference between the current pixel and seed pixel is considered. Otherwise,
@@ -868,7 +854,7 @@ pub mod imgproc {
 	pub const HISTCMP_CHISQR: i32 = 1;
 	/// Alternative Chi-Square
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%202%20%2A%20%5Csum%20%5FI%20%20%5Cfrac%7B%5Cleft%28H%5F1%28I%29%2DH%5F2%28I%29%5Cright%29%5E2%7D%7BH%5F1%28I%29%2BH%5F2%28I%29%7D)
-	/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
+	/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
 	pub const HISTCMP_CHISQR_ALT: i32 = 4;
 	/// Correlation
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%20%5Cfrac%7B%5Csum%5FI%20%28H%5F1%28I%29%20%2D%20%5Cbar%7BH%5F1%7D%29%20%28H%5F2%28I%29%20%2D%20%5Cbar%7BH%5F2%7D%29%7D%7B%5Csqrt%7B%5Csum%5FI%28H%5F1%28I%29%20%2D%20%5Cbar%7BH%5F1%7D%29%5E2%20%5Csum%5FI%28H%5F2%28I%29%20%2D%20%5Cbar%7BH%5F2%7D%29%5E2%7D%7D)
@@ -884,7 +870,7 @@ pub mod imgproc {
 	/// Kullback-Leibler divergence
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%5Csum%20%5FI%20H%5F1%28I%29%20%5Clog%20%5Cleft%28%5Cfrac%7BH%5F1%28I%29%7D%7BH%5F2%28I%29%7D%5Cright%29)
 	pub const HISTCMP_KL_DIV: i32 = 5;
-	/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Yuen90)
+	/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Yuen90)
 	pub const HOUGH_GRADIENT: i32 = 3;
 	/// variation of HOUGH_GRADIENT to get better accuracy
 	pub const HOUGH_GRADIENT_ALT: i32 = 4;
@@ -901,12 +887,6 @@ pub mod imgproc {
 	/// and ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta) is the angle between x-axis and the normal to the line. Thus, the matrix must
 	/// be (the created sequence will be) of CV_32FC2 type
 	pub const HOUGH_STANDARD: i32 = 0;
-	/// One of the rectangle is fully enclosed in the other
-	pub const INTERSECT_FULL: i32 = 2;
-	/// No intersection
-	pub const INTERSECT_NONE: i32 = 0;
-	/// There is a partial intersection
-	pub const INTERSECT_PARTIAL: i32 = 1;
 	/// resampling using pixel area relation. It may be a preferred method for image decimation, as
 	/// it gives moire'-free results. But when the image is zoomed, it is similar to the INTER_NEAREST
 	/// method.
@@ -936,6 +916,8 @@ pub mod imgproc {
 	pub const LINE_8: i32 = 8;
 	/// antialiased line
 	pub const LINE_AA: i32 = 16;
+	/// TBD
+	pub const LINK_RUNS: i32 = 5;
 	/// Advanced refinement. Number of false alarms is calculated, lines are
 	/// refined through increase of precision, decrement in size, etc.
 	pub const LSD_REFINE_ADV: i32 = 2;
@@ -958,10 +940,10 @@ pub mod imgproc {
 	/// An upwards pointing triangle marker shape
 	pub const MARKER_TRIANGLE_UP: i32 = 5;
 	/// "black hat"
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bblackhat%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%2D%20%5Ctexttt%7Bsrc%7D)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bblackhat%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%2D%20%5Ctexttt%7Bsrc%7D)
 	pub const MORPH_BLACKHAT: i32 = 6;
 	/// a closing operation
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Berode%7D%20%28%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%29)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%3D%20%5Cmathrm%7Berode%7D%20%28%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%29)
 	pub const MORPH_CLOSE: i32 = 3;
 	/// a cross-shaped structuring element:
 	/// ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%20%3D%20%5Cbegin%7Bcases%7D%201%20%26%20%5Ctexttt%7Bif%20%7D%20%7Bi%3D%5Ctexttt%7Banchor%2Ey%20%7D%20%7Bor%20%7D%20%7Bj%3D%5Ctexttt%7Banchor%2Ex%7D%7D%7D%20%5C%5C0%20%26%20%5Ctexttt%7Botherwise%7D%20%5Cend%7Bcases%7D)
@@ -976,19 +958,28 @@ pub mod imgproc {
 	/// see #erode
 	pub const MORPH_ERODE: i32 = 0;
 	/// a morphological gradient
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bmorph%5C%5Fgrad%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%2D%20%5Cmathrm%7Berode%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bmorph%5C%5Fgrad%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%3D%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%2D%20%5Cmathrm%7Berode%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29)
 	pub const MORPH_GRADIENT: i32 = 4;
 	/// "hit or miss"
 	/// .- Only supported for CV_8UC1 binary images. A tutorial can be found in the documentation
 	pub const MORPH_HITMISS: i32 = 7;
 	/// an opening operation
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bopen%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Bdilate%7D%20%28%20%5Cmathrm%7Berode%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%29)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bopen%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%3D%20%5Cmathrm%7Bdilate%7D%20%28%20%5Cmathrm%7Berode%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%29)
 	pub const MORPH_OPEN: i32 = 2;
 	/// a rectangular structuring element:  ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%3D1)
 	pub const MORPH_RECT: i32 = 0;
 	/// "top hat"
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Btophat%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Cmathrm%7Bopen%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Btophat%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%3D%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Cmathrm%7Bopen%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29)
 	pub const MORPH_TOPHAT: i32 = 5;
+	pub const PROJ_SPHERICAL_EQRECT: i32 = 1;
+	pub const PROJ_SPHERICAL_ORTHO: i32 = 0;
+	pub const PUT_TEXT_ALIGN_CENTER: i32 = 1;
+	pub const PUT_TEXT_ALIGN_LEFT: i32 = 0;
+	pub const PUT_TEXT_ALIGN_MASK: i32 = 3;
+	pub const PUT_TEXT_ALIGN_RIGHT: i32 = 2;
+	pub const PUT_TEXT_ORIGIN_BL: i32 = 32;
+	pub const PUT_TEXT_ORIGIN_TL: i32 = 0;
+	pub const PUT_TEXT_WRAP: i32 = 128;
 	/// retrieves all of the contours and organizes them into a two-level hierarchy. At the top
 	/// level, there are external boundaries of the components. At the second level, there are
 	/// boundaries of the holes. If there is another contour inside a hole of a connected component, it
@@ -1002,24 +993,6 @@ pub mod imgproc {
 	pub const RETR_LIST: i32 = 1;
 	/// retrieves all of the contours and reconstructs a full hierarchy of nested contours.
 	pub const RETR_TREE: i32 = 3;
-	pub const Subdiv2D_NEXT_AROUND_DST: i32 = 34;
-	pub const Subdiv2D_NEXT_AROUND_LEFT: i32 = 19;
-	pub const Subdiv2D_NEXT_AROUND_ORG: i32 = 0;
-	pub const Subdiv2D_NEXT_AROUND_RIGHT: i32 = 49;
-	pub const Subdiv2D_PREV_AROUND_DST: i32 = 51;
-	pub const Subdiv2D_PREV_AROUND_LEFT: i32 = 32;
-	pub const Subdiv2D_PREV_AROUND_ORG: i32 = 17;
-	pub const Subdiv2D_PREV_AROUND_RIGHT: i32 = 2;
-	/// Point location error
-	pub const Subdiv2D_PTLOC_ERROR: i32 = -2;
-	/// Point inside some facet
-	pub const Subdiv2D_PTLOC_INSIDE: i32 = 0;
-	/// Point on some edge
-	pub const Subdiv2D_PTLOC_ON_EDGE: i32 = 2;
-	/// Point outside the subdivision bounding rect
-	pub const Subdiv2D_PTLOC_OUTSIDE_RECT: i32 = -1;
-	/// Point coincides with one of the subdivision vertices
-	pub const Subdiv2D_PTLOC_VERTEX: i32 = 1;
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bmaxval%7D%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B0%7D%7Botherwise%7D)
 	pub const THRESH_BINARY: i32 = 0;
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B0%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B%5Ctexttt%7Bmaxval%7D%7D%7Botherwise%7D)
@@ -1065,20 +1038,12 @@ pub mod imgproc {
 	/// source image, they are set to zero
 	pub const WARP_FILL_OUTLIERS: i32 = 8;
 	/// flag, inverse transformation
-	///
-	/// For example, [linear_polar] or [log_polar] transforms:
-	/// - flag is __not__ set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29)
-	/// - flag is set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20src%28%20%5Crho%20%2C%20%5Cphi%20%29)
 	pub const WARP_INVERSE_MAP: i32 = 16;
 	/// Remaps an image to/from polar space.
 	pub const WARP_POLAR_LINEAR: i32 = 0;
 	/// Remaps an image to/from semilog-polar space.
 	pub const WARP_POLAR_LOG: i32 = 256;
 	/// flag, inverse transformation
-	///
-	/// For example, [linear_polar] or [log_polar] transforms:
-	/// - flag is __not__ set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29)
-	/// - flag is set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20src%28%20%5Crho%20%2C%20%5Cphi%20%29)
 	pub const WARP_RELATIVE_MAP: i32 = 32;
 	/// adaptive threshold algorithm
 	/// ## See also
@@ -1776,49 +1741,49 @@ pub mod imgproc {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ColormapTypes {
-		/// ![autumn](https://docs.opencv.org/4.13.0/colorscale_autumn.jpg)
+		/// ![autumn](https://docs.opencv.org/5.0.0/colorscale_autumn.jpg)
 		COLORMAP_AUTUMN = 0,
-		/// ![bone](https://docs.opencv.org/4.13.0/colorscale_bone.jpg)
+		/// ![bone](https://docs.opencv.org/5.0.0/colorscale_bone.jpg)
 		COLORMAP_BONE = 1,
-		/// ![jet](https://docs.opencv.org/4.13.0/colorscale_jet.jpg)
+		/// ![jet](https://docs.opencv.org/5.0.0/colorscale_jet.jpg)
 		COLORMAP_JET = 2,
-		/// ![winter](https://docs.opencv.org/4.13.0/colorscale_winter.jpg)
+		/// ![winter](https://docs.opencv.org/5.0.0/colorscale_winter.jpg)
 		COLORMAP_WINTER = 3,
-		/// ![rainbow](https://docs.opencv.org/4.13.0/colorscale_rainbow.jpg)
+		/// ![rainbow](https://docs.opencv.org/5.0.0/colorscale_rainbow.jpg)
 		COLORMAP_RAINBOW = 4,
-		/// ![ocean](https://docs.opencv.org/4.13.0/colorscale_ocean.jpg)
+		/// ![ocean](https://docs.opencv.org/5.0.0/colorscale_ocean.jpg)
 		COLORMAP_OCEAN = 5,
-		/// ![summer](https://docs.opencv.org/4.13.0/colorscale_summer.jpg)
+		/// ![summer](https://docs.opencv.org/5.0.0/colorscale_summer.jpg)
 		COLORMAP_SUMMER = 6,
-		/// ![spring](https://docs.opencv.org/4.13.0/colorscale_spring.jpg)
+		/// ![spring](https://docs.opencv.org/5.0.0/colorscale_spring.jpg)
 		COLORMAP_SPRING = 7,
-		/// ![cool](https://docs.opencv.org/4.13.0/colorscale_cool.jpg)
+		/// ![cool](https://docs.opencv.org/5.0.0/colorscale_cool.jpg)
 		COLORMAP_COOL = 8,
-		/// ![HSV](https://docs.opencv.org/4.13.0/colorscale_hsv.jpg)
+		/// ![HSV](https://docs.opencv.org/5.0.0/colorscale_hsv.jpg)
 		COLORMAP_HSV = 9,
-		/// ![pink](https://docs.opencv.org/4.13.0/colorscale_pink.jpg)
+		/// ![pink](https://docs.opencv.org/5.0.0/colorscale_pink.jpg)
 		COLORMAP_PINK = 10,
-		/// ![hot](https://docs.opencv.org/4.13.0/colorscale_hot.jpg)
+		/// ![hot](https://docs.opencv.org/5.0.0/colorscale_hot.jpg)
 		COLORMAP_HOT = 11,
-		/// ![parula](https://docs.opencv.org/4.13.0/colorscale_parula.jpg)
+		/// ![parula](https://docs.opencv.org/5.0.0/colorscale_parula.jpg)
 		COLORMAP_PARULA = 12,
-		/// ![magma](https://docs.opencv.org/4.13.0/colorscale_magma.jpg)
+		/// ![magma](https://docs.opencv.org/5.0.0/colorscale_magma.jpg)
 		COLORMAP_MAGMA = 13,
-		/// ![inferno](https://docs.opencv.org/4.13.0/colorscale_inferno.jpg)
+		/// ![inferno](https://docs.opencv.org/5.0.0/colorscale_inferno.jpg)
 		COLORMAP_INFERNO = 14,
-		/// ![plasma](https://docs.opencv.org/4.13.0/colorscale_plasma.jpg)
+		/// ![plasma](https://docs.opencv.org/5.0.0/colorscale_plasma.jpg)
 		COLORMAP_PLASMA = 15,
-		/// ![viridis](https://docs.opencv.org/4.13.0/colorscale_viridis.jpg)
+		/// ![viridis](https://docs.opencv.org/5.0.0/colorscale_viridis.jpg)
 		COLORMAP_VIRIDIS = 16,
-		/// ![cividis](https://docs.opencv.org/4.13.0/colorscale_cividis.jpg)
+		/// ![cividis](https://docs.opencv.org/5.0.0/colorscale_cividis.jpg)
 		COLORMAP_CIVIDIS = 17,
-		/// ![twilight](https://docs.opencv.org/4.13.0/colorscale_twilight.jpg)
+		/// ![twilight](https://docs.opencv.org/5.0.0/colorscale_twilight.jpg)
 		COLORMAP_TWILIGHT = 18,
-		/// ![twilight shifted](https://docs.opencv.org/4.13.0/colorscale_twilight_shifted.jpg)
+		/// ![twilight shifted](https://docs.opencv.org/5.0.0/colorscale_twilight_shifted.jpg)
 		COLORMAP_TWILIGHT_SHIFTED = 19,
-		/// ![turbo](https://docs.opencv.org/4.13.0/colorscale_turbo.jpg)
+		/// ![turbo](https://docs.opencv.org/5.0.0/colorscale_turbo.jpg)
 		COLORMAP_TURBO = 20,
-		/// ![deepgreen](https://docs.opencv.org/4.13.0/colorscale_deepgreen.jpg)
+		/// ![deepgreen](https://docs.opencv.org/5.0.0/colorscale_deepgreen.jpg)
 		COLORMAP_DEEPGREEN = 21,
 	}
 
@@ -1828,13 +1793,13 @@ pub mod imgproc {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ConnectedComponentsAlgorithmsTypes {
-		/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
+		/// Spaghetti [Bolelli2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
 		CCL_DEFAULT = -1,
-		/// SAUF [Wu2009](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
+		/// SAUF [Wu2009](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
 		CCL_WU = 0,
-		/// BBDT [Grana2010](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
+		/// BBDT [Grana2010](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 		CCL_GRANA = 1,
-		/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
+		/// Spaghetti [Bolelli2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
 		CCL_BOLELLI = 2,
 		/// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
 		CCL_SAUF = 3,
@@ -1872,6 +1837,8 @@ pub mod imgproc {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ContourApproximationModes {
+		/// TBD
+		CHAIN_CODE = 0,
 		/// stores absolutely all the contour points. That is, any 2 subsequent points (x1,y1) and
 		/// (x2,y2) of the contour will be either horizontal, vertical or diagonal neighbors, that is,
 		/// max(abs(x1-x2),abs(y2-y1))==1.
@@ -1879,13 +1846,15 @@ pub mod imgproc {
 		/// compresses horizontal, vertical, and diagonal segments and leaves only their end points.
 		/// For example, an up-right rectangular contour is encoded with 4 points.
 		CHAIN_APPROX_SIMPLE = 2,
-		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_TehChin89)
+		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_TehChin89)
 		CHAIN_APPROX_TC89_L1 = 3,
-		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_TehChin89)
+		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_TehChin89)
 		CHAIN_APPROX_TC89_KCOS = 4,
+		/// TBD
+		LINK_RUNS = 5,
 	}
 
-	opencv_type_enum! { crate::imgproc::ContourApproximationModes { CHAIN_APPROX_NONE, CHAIN_APPROX_SIMPLE, CHAIN_APPROX_TC89_L1, CHAIN_APPROX_TC89_KCOS } }
+	opencv_type_enum! { crate::imgproc::ContourApproximationModes { CHAIN_CODE, CHAIN_APPROX_NONE, CHAIN_APPROX_SIMPLE, CHAIN_APPROX_TC89_L1, CHAIN_APPROX_TC89_KCOS, LINK_RUNS } }
 
 	/// distanceTransform algorithm flags
 	#[repr(i32)]
@@ -1912,32 +1881,6 @@ pub mod imgproc {
 	}
 
 	opencv_type_enum! { crate::imgproc::DistanceTransformMasks { DIST_MASK_3, DIST_MASK_5, DIST_MASK_PRECISE } }
-
-	/// Distance types for Distance Transform and M-estimators
-	/// ## See also
-	/// distanceTransform, fitLine
-	#[repr(i32)]
-	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum DistanceTypes {
-		/// User defined distance
-		DIST_USER = -1,
-		/// distance = |x1-x2| + |y1-y2|
-		DIST_L1 = 1,
-		/// the simple euclidean distance
-		DIST_L2 = 2,
-		/// distance = max(|x1-x2|,|y1-y2|)
-		DIST_C = 3,
-		/// L1-L2 metric: distance = 2(sqrt(1+x*x/2) - 1))
-		DIST_L12 = 4,
-		/// distance = c^2(|x|/c-log(1+|x|/c)), c = 1.3998
-		DIST_FAIR = 5,
-		/// distance = c^2/2(1-exp(-(x/c)^2)), c = 2.9846
-		DIST_WELSCH = 6,
-		/// distance = |x|<c ? x^2/2 : c(|x|-c/2), c=1.345
-		DIST_HUBER = 7,
-	}
-
-	opencv_type_enum! { crate::imgproc::DistanceTypes { DIST_USER, DIST_L1, DIST_L2, DIST_C, DIST_L12, DIST_FAIR, DIST_WELSCH, DIST_HUBER } }
 
 	/// floodfill algorithm flags
 	#[repr(transparent)]
@@ -2046,7 +1989,7 @@ pub mod imgproc {
 		// HISTCMP_HELLINGER = 3,
 		/// Alternative Chi-Square
 		/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%202%20%2A%20%5Csum%20%5FI%20%20%5Cfrac%7B%5Cleft%28H%5F1%28I%29%2DH%5F2%28I%29%5Cright%29%5E2%7D%7BH%5F1%28I%29%2BH%5F2%28I%29%7D)
-		/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
+		/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
 		HISTCMP_CHISQR_ALT = 4,
 		/// Kullback-Leibler divergence
 		/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%5Csum%20%5FI%20H%5F1%28I%29%20%5Clog%20%5Cleft%28%5Cfrac%7BH%5F1%28I%29%7D%7BH%5F2%28I%29%7D%5Cright%29)
@@ -2072,7 +2015,7 @@ pub mod imgproc {
 		/// multi-scale variant of the classical Hough transform. The lines are encoded the same way as
 		/// HOUGH_STANDARD.
 		HOUGH_MULTI_SCALE = 2,
-		/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Yuen90)
+		/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Yuen90)
 		HOUGH_GRADIENT = 3,
 		/// variation of HOUGH_GRADIENT to get better accuracy
 		HOUGH_GRADIENT_ALT = 4,
@@ -2107,16 +2050,8 @@ pub mod imgproc {
 		/// source image, they are set to zero
 		WARP_FILL_OUTLIERS = 8,
 		/// flag, inverse transformation
-		///
-		/// For example, [linear_polar] or [log_polar] transforms:
-		/// - flag is __not__ set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29)
-		/// - flag is set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20src%28%20%5Crho%20%2C%20%5Cphi%20%29)
 		WARP_INVERSE_MAP = 16,
 		/// flag, inverse transformation
-		///
-		/// For example, [linear_polar] or [log_polar] transforms:
-		/// - flag is __not__ set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29)
-		/// - flag is set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20src%28%20%5Crho%20%2C%20%5Cphi%20%29)
 		WARP_RELATIVE_MAP = 32,
 	}
 
@@ -2214,19 +2149,19 @@ pub mod imgproc {
 		/// see #dilate
 		MORPH_DILATE = 1,
 		/// an opening operation
-		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bopen%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Bdilate%7D%20%28%20%5Cmathrm%7Berode%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%29)
+		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bopen%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%3D%20%5Cmathrm%7Bdilate%7D%20%28%20%5Cmathrm%7Berode%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%29)
 		MORPH_OPEN = 2,
 		/// a closing operation
-		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Berode%7D%20%28%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%29)
+		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%3D%20%5Cmathrm%7Berode%7D%20%28%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%29)
 		MORPH_CLOSE = 3,
 		/// a morphological gradient
-		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bmorph%5C%5Fgrad%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%2D%20%5Cmathrm%7Berode%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29)
+		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bmorph%5C%5Fgrad%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%3D%20%5Cmathrm%7Bdilate%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%2D%20%5Cmathrm%7Berode%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29)
 		MORPH_GRADIENT = 4,
 		/// "top hat"
-		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Btophat%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Cmathrm%7Bopen%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29)
+		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Btophat%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%3D%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Cmathrm%7Bopen%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29)
 		MORPH_TOPHAT = 5,
 		/// "black hat"
-		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bblackhat%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Belement%7D%20%29%2D%20%5Ctexttt%7Bsrc%7D)
+		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Cmathrm%7Bblackhat%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%3D%20%5Cmathrm%7Bclose%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2C%20%5Ctexttt%7Bkernel%7D%20%29%2D%20%5Ctexttt%7Bsrc%7D)
 		MORPH_BLACKHAT = 6,
 		/// "hit or miss"
 		/// .- Only supported for CV_8UC1 binary images. A tutorial can be found in the documentation
@@ -2235,19 +2170,21 @@ pub mod imgproc {
 
 	opencv_type_enum! { crate::imgproc::MorphTypes { MORPH_ERODE, MORPH_DILATE, MORPH_OPEN, MORPH_CLOSE, MORPH_GRADIENT, MORPH_TOPHAT, MORPH_BLACKHAT, MORPH_HITMISS } }
 
-	/// types of intersection between rectangles
+	/// Defines various put text flags
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum RectanglesIntersectTypes {
-		/// No intersection
-		INTERSECT_NONE = 0,
-		/// There is a partial intersection
-		INTERSECT_PARTIAL = 1,
-		/// One of the rectangle is fully enclosed in the other
-		INTERSECT_FULL = 2,
+	pub enum PutTextFlags {
+		PUT_TEXT_ALIGN_LEFT = 0,
+		PUT_TEXT_ALIGN_CENTER = 1,
+		PUT_TEXT_ALIGN_RIGHT = 2,
+		PUT_TEXT_ALIGN_MASK = 3,
+		// Duplicate, use PUT_TEXT_ALIGN_LEFT instead
+		// PUT_TEXT_ORIGIN_TL = 0,
+		PUT_TEXT_ORIGIN_BL = 32,
+		PUT_TEXT_WRAP = 128,
 	}
 
-	opencv_type_enum! { crate::imgproc::RectanglesIntersectTypes { INTERSECT_NONE, INTERSECT_PARTIAL, INTERSECT_FULL } }
+	opencv_type_enum! { crate::imgproc::PutTextFlags { PUT_TEXT_ALIGN_LEFT, PUT_TEXT_ALIGN_CENTER, PUT_TEXT_ALIGN_RIGHT, PUT_TEXT_ALIGN_MASK, PUT_TEXT_ORIGIN_BL, PUT_TEXT_WRAP } }
 
 	/// mode of the contour retrieval algorithm
 	#[repr(i32)]
@@ -2331,7 +2268,7 @@ pub mod imgproc {
 	opencv_type_enum! { crate::imgproc::TemplateMatchModes { TM_SQDIFF, TM_SQDIFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_CCOEFF, TM_CCOEFF_NORMED } }
 
 	/// type of the threshold operation
-	/// ![threshold types](https://docs.opencv.org/4.13.0/threshold.png)
+	/// ![threshold types](https://docs.opencv.org/5.0.0/threshold.png)
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ThresholdTypes {
@@ -2355,6 +2292,16 @@ pub mod imgproc {
 	}
 
 	opencv_type_enum! { crate::imgproc::ThresholdTypes { THRESH_BINARY, THRESH_BINARY_INV, THRESH_TRUNC, THRESH_TOZERO, THRESH_TOZERO_INV, THRESH_MASK, THRESH_OTSU, THRESH_TRIANGLE, THRESH_DRYRUN } }
+
+	/// cv::undistort mode
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum UndistortTypes {
+		PROJ_SPHERICAL_ORTHO = 0,
+		PROJ_SPHERICAL_EQRECT = 1,
+	}
+
+	opencv_type_enum! { crate::imgproc::UndistortTypes { PROJ_SPHERICAL_ORTHO, PROJ_SPHERICAL_EQRECT } }
 
 	/// \brief Specify the polar mapping mode
 	/// ## See also
@@ -2429,7 +2376,7 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Canny86) .
+	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Canny86) .
 	///
 	/// The function finds edges in the input image and marks them in the output map edges using the
 	/// Canny algorithm. The smallest value between threshold1 and threshold2 is used for edge linking. The
@@ -2462,7 +2409,7 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Canny86) .
+	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Canny86) .
 	///
 	/// The function finds edges in the input image and marks them in the output map edges using the
 	/// Canny algorithm. The smallest value between threshold1 and threshold2 is used for edge linking. The
@@ -2497,8 +2444,8 @@ pub mod imgproc {
 	/// Computes the "minimal work" distance between two weighted point configurations.
 	///
 	/// The function computes the earth mover distance and/or a lower boundary of the distance between the
-	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
-	/// [Rubner2000](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
+	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
+	/// [Rubner2000](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
 	/// problem that is solved using some modification of a simplex algorithm, thus the complexity is
 	/// exponential in the worst case, though, on average it is much faster. In the case of a real metric
 	/// the lower boundary can be calculated even faster (using linear-time algorithm) and it can be used
@@ -2548,8 +2495,8 @@ pub mod imgproc {
 	/// Computes the "minimal work" distance between two weighted point configurations.
 	///
 	/// The function computes the earth mover distance and/or a lower boundary of the distance between the
-	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
-	/// [Rubner2000](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
+	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
+	/// [Rubner2000](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
 	/// problem that is solved using some modification of a simplex algorithm, thus the complexity is
 	/// exponential in the worst case, though, on average it is much faster. In the case of a real metric
 	/// the lower boundary can be calculated even faster (using linear-time algorithm) and it can be used
@@ -2615,7 +2562,7 @@ pub mod imgproc {
 	/// possible future modifications of all this semantics, it is recommended to specify all of ksize,
 	/// sigmaX, and sigmaY.
 	/// * borderType: pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not supported.
-	/// * hint: Implementation modfication flags. See [algorithm_hint]
+	/// * hint: Implementation modification flags. See [algorithm_hint]
 	/// ## See also
 	/// sepFilter2D, filter2D, blur, boxFilter, bilateralFilter, medianBlur
 	///
@@ -2653,7 +2600,7 @@ pub mod imgproc {
 	/// possible future modifications of all this semantics, it is recommended to specify all of ksize,
 	/// sigmaX, and sigmaY.
 	/// * borderType: pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not supported.
-	/// * hint: Implementation modfication flags. See [algorithm_hint]
+	/// * hint: Implementation modification flags. See [algorithm_hint]
 	/// ## See also
 	/// sepFilter2D, filter2D, blur, boxFilter, bilateralFilter, medianBlur
 	///
@@ -2798,17 +2745,17 @@ pub mod imgproc {
 	/// Finds line segments in a binary image using the probabilistic Hough transform.
 	///
 	/// The function implements the probabilistic Hough transform algorithm for line detection, described
-	/// in [Matas00](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Matas00)
+	/// in [Matas00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Matas00)
 	///
 	/// See the line detection example below:
 	/// @include snippets/imgproc_HoughLinesP.cpp
 	/// This is a sample picture the function parameters have been tuned for:
 	///
-	/// ![image](https://docs.opencv.org/4.13.0/building.jpg)
+	/// ![image](https://docs.opencv.org/5.0.0/building.jpg)
 	///
 	/// And this is the output of the above program in case of the probabilistic Hough transform:
 	///
-	/// ![image](https://docs.opencv.org/4.13.0/houghp.png)
+	/// ![image](https://docs.opencv.org/5.0.0/houghp.png)
 	///
 	/// ## Parameters
 	/// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
@@ -2842,17 +2789,17 @@ pub mod imgproc {
 	/// Finds line segments in a binary image using the probabilistic Hough transform.
 	///
 	/// The function implements the probabilistic Hough transform algorithm for line detection, described
-	/// in [Matas00](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Matas00)
+	/// in [Matas00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Matas00)
 	///
 	/// See the line detection example below:
 	/// @include snippets/imgproc_HoughLinesP.cpp
 	/// This is a sample picture the function parameters have been tuned for:
 	///
-	/// ![image](https://docs.opencv.org/4.13.0/building.jpg)
+	/// ![image](https://docs.opencv.org/5.0.0/building.jpg)
 	///
 	/// And this is the output of the above program in case of the probabilistic Hough transform:
 	///
-	/// ![image](https://docs.opencv.org/4.13.0/houghp.png)
+	/// ![image](https://docs.opencv.org/5.0.0/houghp.png)
 	///
 	/// ## Parameters
 	/// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
@@ -2999,65 +2946,6 @@ pub mod imgproc {
 		output_array_arg!(lines);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_HoughLines_const__InputArrayR_const__OutputArrayR_double_double_int_double_double_double_double_bool(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, srn, stn, min_theta, max_theta, use_edgeval, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Calculates seven Hu invariants.
-	///
-	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Hu62); see also
-	/// <https://en.wikipedia.org/wiki/Image_moment>) defined as:
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20hu%5B0%5D%3D%20%5Ceta%20%5F%7B20%7D%2B%20%5Ceta%20%5F%7B02%7D%20%5C%5C%20hu%5B1%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5E%7B2%7D%2B4%20%5Ceta%20%5F%7B11%7D%5E%7B2%7D%20%5C%5C%20hu%5B2%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B3%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B4%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D3%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20hu%5B5%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B4%20%5Ceta%20%5F%7B11%7D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%20%5C%5C%20hu%5B6%5D%3D%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20%5Cend%7Barray%7D)
-	///
-	/// where ![inline formula](https://latex.codecogs.com/png.latex?%5Ceta%5F%7Bji%7D) stands for ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BMoments%3A%3Anu%7D%5F%7Bji%7D) .
-	///
-	/// These values are proved to be invariants to the image scale, rotation, and reflection except the
-	/// seventh one, whose sign is changed by reflection. This invariance is proved with the assumption of
-	/// infinite image resolution. In case of raster images, the computed Hu invariants for the original and
-	/// transformed images are a bit different.
-	///
-	/// ## Parameters
-	/// * moments: Input moments computed with moments .
-	/// * hu: Output Hu invariants.
-	/// ## See also
-	/// matchShapes
-	///
-	/// ## Overloaded parameters
-	#[inline]
-	pub fn hu_moments_1(m: core::Moments, hu: &mut impl ToOutputArray) -> Result<()> {
-		output_array_arg!(hu);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_HuMoments_const_MomentsR_const__OutputArrayR(&m, hu.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Calculates seven Hu invariants.
-	///
-	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Hu62); see also
-	/// <https://en.wikipedia.org/wiki/Image_moment>) defined as:
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20hu%5B0%5D%3D%20%5Ceta%20%5F%7B20%7D%2B%20%5Ceta%20%5F%7B02%7D%20%5C%5C%20hu%5B1%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5E%7B2%7D%2B4%20%5Ceta%20%5F%7B11%7D%5E%7B2%7D%20%5C%5C%20hu%5B2%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B3%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B4%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D3%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20hu%5B5%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B4%20%5Ceta%20%5F%7B11%7D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%20%5C%5C%20hu%5B6%5D%3D%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20%5Cend%7Barray%7D)
-	///
-	/// where ![inline formula](https://latex.codecogs.com/png.latex?%5Ceta%5F%7Bji%7D) stands for ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BMoments%3A%3Anu%7D%5F%7Bji%7D) .
-	///
-	/// These values are proved to be invariants to the image scale, rotation, and reflection except the
-	/// seventh one, whose sign is changed by reflection. This invariance is proved with the assumption of
-	/// infinite image resolution. In case of raster images, the computed Hu invariants for the original and
-	/// transformed images are a bit different.
-	///
-	/// ## Parameters
-	/// * moments: Input moments computed with moments .
-	/// * hu: Output Hu invariants.
-	/// ## See also
-	/// matchShapes
-	#[inline]
-	pub fn hu_moments(moments: core::Moments, hu: &mut [f64; 7]) -> Result<()> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_HuMoments_const_MomentsR_doubleXX(&moments, hu, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3673,114 +3561,6 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// Approximates a polygonal curve(s) with the specified precision.
-	///
-	/// The function cv::approxPolyDP approximates a curve or a polygon with another curve/polygon with less
-	/// vertices so that the distance between them is less or equal to the specified precision. It uses the
-	/// Douglas-Peucker algorithm <https://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm>
-	///
-	/// ## Parameters
-	/// * curve: Input vector of a 2D point stored in std::vector or Mat
-	/// * approxCurve: Result of the approximation. The type should match the type of the input curve.
-	/// * epsilon: Parameter specifying the approximation accuracy. This is the maximum distance
-	/// between the original curve and its approximation.
-	/// * closed: If true, the approximated curve is closed (its first and last vertices are
-	/// connected). Otherwise, it is not closed.
-	#[inline]
-	pub fn approx_poly_dp(curve: &impl ToInputArray, approx_curve: &mut impl ToOutputArray, epsilon: f64, closed: bool) -> Result<()> {
-		input_array_arg!(curve);
-		output_array_arg!(approx_curve);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_approxPolyDP_const__InputArrayR_const__OutputArrayR_double_bool(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), epsilon, closed, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Approximates a polygon with a convex hull with a specified accuracy and number of sides.
-	///
-	/// The cv::approxPolyN function approximates a polygon with a convex hull
-	/// so that the difference between the contour area of the original contour and the new polygon is minimal.
-	/// It uses a greedy algorithm for contracting two vertices into one in such a way that the additional area is minimal.
-	/// Straight lines formed by each edge of the convex contour are drawn and the areas of the resulting triangles are considered.
-	/// Each vertex will lie either on the original contour or outside it.
-	///
-	/// The algorithm based on the paper [LowIlie2003](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LowIlie2003) .
-	///
-	/// ## Parameters
-	/// * curve: Input vector of a 2D points stored in std::vector or Mat, points must be float or integer.
-	/// * approxCurve: Result of the approximation. The type is vector of a 2D point (Point2f or Point) in std::vector or Mat.
-	/// * nsides: The parameter defines the number of sides of the result polygon.
-	/// * epsilon_percentage: defines the percentage of the maximum of additional area.
-	/// If it equals -1, it is not used. Otherwise algorithm stops if additional area is greater than contourArea(_curve) * percentage.
-	/// If additional area exceeds the limit, algorithm returns as many vertices as there were at the moment the limit was exceeded.
-	/// * ensure_convex: If it is true, algorithm creates a convex hull of input contour. Otherwise input vector should be convex.
-	///
-	/// ## Note
-	/// This alternative version of [approx_poly_n] function uses the following default values for its arguments:
-	/// * epsilon_percentage: -1.0
-	/// * ensure_convex: true
-	#[inline]
-	pub fn approx_poly_n_def(curve: &impl ToInputArray, approx_curve: &mut impl ToOutputArray, nsides: i32) -> Result<()> {
-		input_array_arg!(curve);
-		output_array_arg!(approx_curve);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_approxPolyN_const__InputArrayR_const__OutputArrayR_int(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), nsides, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Approximates a polygon with a convex hull with a specified accuracy and number of sides.
-	///
-	/// The cv::approxPolyN function approximates a polygon with a convex hull
-	/// so that the difference between the contour area of the original contour and the new polygon is minimal.
-	/// It uses a greedy algorithm for contracting two vertices into one in such a way that the additional area is minimal.
-	/// Straight lines formed by each edge of the convex contour are drawn and the areas of the resulting triangles are considered.
-	/// Each vertex will lie either on the original contour or outside it.
-	///
-	/// The algorithm based on the paper [LowIlie2003](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_LowIlie2003) .
-	///
-	/// ## Parameters
-	/// * curve: Input vector of a 2D points stored in std::vector or Mat, points must be float or integer.
-	/// * approxCurve: Result of the approximation. The type is vector of a 2D point (Point2f or Point) in std::vector or Mat.
-	/// * nsides: The parameter defines the number of sides of the result polygon.
-	/// * epsilon_percentage: defines the percentage of the maximum of additional area.
-	/// If it equals -1, it is not used. Otherwise algorithm stops if additional area is greater than contourArea(_curve) * percentage.
-	/// If additional area exceeds the limit, algorithm returns as many vertices as there were at the moment the limit was exceeded.
-	/// * ensure_convex: If it is true, algorithm creates a convex hull of input contour. Otherwise input vector should be convex.
-	///
-	/// ## C++ default parameters
-	/// * epsilon_percentage: -1.0
-	/// * ensure_convex: true
-	#[inline]
-	pub fn approx_poly_n(curve: &impl ToInputArray, approx_curve: &mut impl ToOutputArray, nsides: i32, epsilon_percentage: f32, ensure_convex: bool) -> Result<()> {
-		input_array_arg!(curve);
-		output_array_arg!(approx_curve);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_approxPolyN_const__InputArrayR_const__OutputArrayR_int_float_bool(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), nsides, epsilon_percentage, ensure_convex, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Calculates a contour perimeter or a curve length.
-	///
-	/// The function computes a curve length or a closed contour perimeter.
-	///
-	/// ## Parameters
-	/// * curve: Input vector of 2D points, stored in std::vector or Mat.
-	/// * closed: Flag indicating whether the curve is closed or not.
-	#[inline]
-	pub fn arc_length(curve: &impl ToInputArray, closed: bool) -> Result<f64> {
-		input_array_arg!(curve);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_arcLength_const__InputArrayR_bool(curve.as_raw__InputArray(), closed, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
 	/// Draws an arrow segment pointing from the first point to the second one.
 	///
 	/// The function cv::arrowedLine draws an arrow between pt1 and pt2 points in the image. See also #line.
@@ -4016,23 +3796,6 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// Calculates the up-right bounding rectangle of a point set or non-zero pixels of gray-scale image.
-	///
-	/// The function calculates and returns the minimal up-right bounding rectangle for the specified point set or
-	/// non-zero pixels of gray-scale image.
-	///
-	/// ## Parameters
-	/// * array: Input gray-scale image or 2D point set, stored in std::vector or Mat.
-	#[inline]
-	pub fn bounding_rect(array: &impl ToInputArray) -> Result<core::Rect> {
-		input_array_arg!(array);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_boundingRect_const__InputArrayR(array.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
 	/// Blurs an image using the box filter.
 	///
 	/// The function smooths an image using the kernel:
@@ -4111,28 +3874,6 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_boxFilter_const__InputArrayR_const__OutputArrayR_int_Size_Point_bool_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, &ksize, &anchor, normalize, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Finds the four vertices of a rotated rect. Useful to draw the rotated rectangle.
-	///
-	/// The function finds the four vertices of a rotated rectangle. The four vertices are returned
-	/// in clockwise order starting from the point with greatest ![inline formula](https://latex.codecogs.com/png.latex?y). If two points have the
-	/// same ![inline formula](https://latex.codecogs.com/png.latex?y) coordinate the rightmost is the starting point. This function is useful to draw the
-	/// rectangle. In C++, instead of using this function, you can directly use RotatedRect::points method. Please
-	/// visit the [tutorial_bounding_rotated_ellipses] "tutorial on Creating Bounding rotated boxes and ellipses
-	/// for contours" for more information.
-	///
-	/// ## Parameters
-	/// * box: The input rotated rectangle. It may be the output of [minAreaRect].
-	/// * points: The output array of four vertices of rectangles.
-	#[inline]
-	pub fn box_points(box_: core::RotatedRect, points: &mut impl ToOutputArray) -> Result<()> {
-		output_array_arg!(points);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_boxPoints_RotatedRect_const__OutputArrayR(&box_, points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4536,7 +4277,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms (statistics included) if at least one allowed
@@ -4589,7 +4330,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms (statistics included) if at least one allowed
@@ -4641,7 +4382,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms (statistics included) if at least one allowed
@@ -4677,7 +4418,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms if at least one allowed
@@ -4719,7 +4460,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms if at least one allowed
@@ -4760,7 +4501,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms if at least one allowed
@@ -4778,95 +4519,6 @@ pub mod imgproc {
 		output_array_arg!(labels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_connectedComponents_const__InputArrayR_const__OutputArrayR_int_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), connectivity, ltype, ccltype, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Calculates a contour area.
-	///
-	/// The function computes a contour area. Similarly to moments , the area is computed using the Green
-	/// formula. Thus, the returned area and the number of non-zero pixels, if you draw the contour using
-	/// [draw_contours] or [fill_poly] , can be different. Also, the function will most certainly give a wrong
-	/// results for contours with self-intersections.
-	///
-	/// Example:
-	/// ```C++
-	///    vector<Point> contour;
-	///    contour.push_back(Point2f(0, 0));
-	///    contour.push_back(Point2f(10, 0));
-	///    contour.push_back(Point2f(10, 10));
-	///    contour.push_back(Point2f(5, 4));
-	///
-	///    double area0 = contourArea(contour);
-	///    vector<Point> approx;
-	///    approxPolyDP(contour, approx, 5, true);
-	///    double area1 = contourArea(approx);
-	///
-	///    cout << "area0 =" << area0 << endl <<
-	///            "area1 =" << area1 << endl <<
-	///            "approx poly vertices" << approx.size() << endl;
-	/// ```
-	///
-	/// ## Parameters
-	/// * contour: Input vector of 2D points (contour vertices), stored in std::vector or Mat.
-	/// * oriented: Oriented area flag. If it is true, the function returns a signed area value,
-	/// depending on the contour orientation (clockwise or counter-clockwise). Using this feature you can
-	/// determine orientation of a contour by taking the sign of an area. By default, the parameter is
-	/// false, which means that the absolute value is returned.
-	///
-	/// ## Note
-	/// This alternative version of [contour_area] function uses the following default values for its arguments:
-	/// * oriented: false
-	#[inline]
-	pub fn contour_area_def(contour: &impl ToInputArray) -> Result<f64> {
-		input_array_arg!(contour);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_contourArea_const__InputArrayR(contour.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Calculates a contour area.
-	///
-	/// The function computes a contour area. Similarly to moments , the area is computed using the Green
-	/// formula. Thus, the returned area and the number of non-zero pixels, if you draw the contour using
-	/// [draw_contours] or [fill_poly] , can be different. Also, the function will most certainly give a wrong
-	/// results for contours with self-intersections.
-	///
-	/// Example:
-	/// ```C++
-	///    vector<Point> contour;
-	///    contour.push_back(Point2f(0, 0));
-	///    contour.push_back(Point2f(10, 0));
-	///    contour.push_back(Point2f(10, 10));
-	///    contour.push_back(Point2f(5, 4));
-	///
-	///    double area0 = contourArea(contour);
-	///    vector<Point> approx;
-	///    approxPolyDP(contour, approx, 5, true);
-	///    double area1 = contourArea(approx);
-	///
-	///    cout << "area0 =" << area0 << endl <<
-	///            "area1 =" << area1 << endl <<
-	///            "approx poly vertices" << approx.size() << endl;
-	/// ```
-	///
-	/// ## Parameters
-	/// * contour: Input vector of 2D points (contour vertices), stored in std::vector or Mat.
-	/// * oriented: Oriented area flag. If it is true, the function returns a signed area value,
-	/// depending on the contour orientation (clockwise or counter-clockwise). Using this feature you can
-	/// determine orientation of a contour by taking the sign of an area. By default, the parameter is
-	/// false, which means that the absolute value is returned.
-	///
-	/// ## C++ default parameters
-	/// * oriented: false
-	#[inline]
-	pub fn contour_area(contour: &impl ToInputArray, oriented: bool) -> Result<f64> {
-		input_array_arg!(contour);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_contourArea_const__InputArrayR_bool(contour.as_raw__InputArray(), oriented, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4960,122 +4612,6 @@ pub mod imgproc {
 		output_array_arg!(dstmap2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convertMaps_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_bool(map1.as_raw__InputArray(), map2.as_raw__InputArray(), dstmap1.as_raw__OutputArray(), dstmap2.as_raw__OutputArray(), dstmap1type, nninterpolation, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Finds the convex hull of a point set.
-	///
-	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Sklansky82)
-	/// that has *O(N logN)* complexity in the current implementation.
-	///
-	/// ## Parameters
-	/// * points: Input 2D point set, stored in std::vector or Mat.
-	/// * hull: Output convex hull. It is either an integer vector of indices or vector of points. In
-	/// the first case, the hull elements are 0-based indices of the convex hull points in the original
-	/// array (since the set of convex hull points is a subset of the original point set). In the second
-	/// case, hull elements are the convex hull points themselves.
-	/// * clockwise: Orientation flag. If it is true, the output convex hull is oriented clockwise.
-	/// Otherwise, it is oriented counter-clockwise. The assumed coordinate system has its X axis pointing
-	/// to the right, and its Y axis pointing upwards.
-	/// * returnPoints: Operation flag. In case of a matrix, when the flag is true, the function
-	/// returns convex hull points. Otherwise, it returns indices of the convex hull points. When the
-	/// output array is std::vector, the flag is ignored, and the output depends on the type of the
-	/// vector: std::vector\<int\> implies returnPoints=false, std::vector\<Point\> implies
-	/// returnPoints=true.
-	///
-	///
-	/// Note: `points` and `hull` should be different arrays, inplace processing isn't supported.
-	///
-	/// Check [tutorial_hull] "the corresponding tutorial" for more details.
-	///
-	/// useful links:
-	///
-	/// <https://www.learnopencv.com/convex-hull-using-opencv-in-python-and-c/>
-	///
-	/// ## Note
-	/// This alternative version of [convex_hull] function uses the following default values for its arguments:
-	/// * clockwise: false
-	/// * return_points: true
-	#[inline]
-	pub fn convex_hull_def(points: &impl ToInputArray, hull: &mut impl ToOutputArray) -> Result<()> {
-		input_array_arg!(points);
-		output_array_arg!(hull);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_convexHull_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), hull.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Finds the convex hull of a point set.
-	///
-	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Sklansky82)
-	/// that has *O(N logN)* complexity in the current implementation.
-	///
-	/// ## Parameters
-	/// * points: Input 2D point set, stored in std::vector or Mat.
-	/// * hull: Output convex hull. It is either an integer vector of indices or vector of points. In
-	/// the first case, the hull elements are 0-based indices of the convex hull points in the original
-	/// array (since the set of convex hull points is a subset of the original point set). In the second
-	/// case, hull elements are the convex hull points themselves.
-	/// * clockwise: Orientation flag. If it is true, the output convex hull is oriented clockwise.
-	/// Otherwise, it is oriented counter-clockwise. The assumed coordinate system has its X axis pointing
-	/// to the right, and its Y axis pointing upwards.
-	/// * returnPoints: Operation flag. In case of a matrix, when the flag is true, the function
-	/// returns convex hull points. Otherwise, it returns indices of the convex hull points. When the
-	/// output array is std::vector, the flag is ignored, and the output depends on the type of the
-	/// vector: std::vector\<int\> implies returnPoints=false, std::vector\<Point\> implies
-	/// returnPoints=true.
-	///
-	///
-	/// Note: `points` and `hull` should be different arrays, inplace processing isn't supported.
-	///
-	/// Check [tutorial_hull] "the corresponding tutorial" for more details.
-	///
-	/// useful links:
-	///
-	/// <https://www.learnopencv.com/convex-hull-using-opencv-in-python-and-c/>
-	///
-	/// ## C++ default parameters
-	/// * clockwise: false
-	/// * return_points: true
-	#[inline]
-	pub fn convex_hull(points: &impl ToInputArray, hull: &mut impl ToOutputArray, clockwise: bool, return_points: bool) -> Result<()> {
-		input_array_arg!(points);
-		output_array_arg!(hull);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_convexHull_const__InputArrayR_const__OutputArrayR_bool_bool(points.as_raw__InputArray(), hull.as_raw__OutputArray(), clockwise, return_points, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Finds the convexity defects of a contour.
-	///
-	/// The figure below displays convexity defects of a hand contour:
-	///
-	/// ![image](https://docs.opencv.org/4.13.0/defects.png)
-	///
-	/// ## Parameters
-	/// * contour: Input contour.
-	/// * convexhull: Convex hull obtained using convexHull that should contain indices of the contour
-	/// points that make the hull.
-	/// * convexityDefects: The output vector of convexity defects. In C++ and the new Python/Java
-	/// interface each convexity defect is represented as 4-element integer vector (a.k.a. #Vec4i):
-	/// (start_index, end_index, farthest_pt_index, fixpt_depth), where indices are 0-based indices
-	/// in the original contour of the convexity defect beginning, end and the farthest point, and
-	/// fixpt_depth is fixed-point approximation (with 8 fractional bits) of the distance between the
-	/// farthest contour point and the hull. That is, to get the floating-point value of the depth will be
-	/// fixpt_depth/256.0.
-	#[inline]
-	pub fn convexity_defects(contour: &impl ToInputArray, convexhull: &impl ToInputArray, convexity_defects: &mut impl ToOutputArray) -> Result<()> {
-		input_array_arg!(contour);
-		input_array_arg!(convexhull);
-		output_array_arg!(convexity_defects);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_convexityDefects_const__InputArrayR_const__InputArrayR_const__OutputArrayR(contour.as_raw__InputArray(), convexhull.as_raw__InputArray(), convexity_defects.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5289,9 +4825,9 @@ pub mod imgproc {
 	/// Refines the corner locations.
 	///
 	/// The function iterates to find the sub-pixel accurate location of corners or radial saddle
-	/// points as described in [forstner1987fast](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_forstner1987fast), and as shown on the figure below.
+	/// points as described in [forstner1987fast](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_forstner1987fast), and as shown on the figure below.
 	///
-	/// ![image](https://docs.opencv.org/4.13.0/cornersubpix.png)
+	/// ![image](https://docs.opencv.org/5.0.0/cornersubpix.png)
 	///
 	/// Sub-pixel accurate corner locator is based on the observation that every vector from the center ![inline formula](https://latex.codecogs.com/png.latex?q)
 	/// to a point ![inline formula](https://latex.codecogs.com/png.latex?p) located within a neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?q) is orthogonal to the image gradient at ![inline formula](https://latex.codecogs.com/png.latex?p)
@@ -5486,9 +5022,9 @@ pub mod imgproc {
 	/// * density_th: 0.7
 	/// * n_bins: 1024
 	#[inline]
-	pub fn create_line_segment_detector(refine: i32, scale: f64, sigma_scale: f64, quant: f64, ang_th: f64, log_eps: f64, density_th: f64, n_bins: i32) -> Result<core::Ptr<crate::imgproc::LineSegmentDetector>> {
+	pub fn create_line_segment_detector(refine: crate::imgproc::LineSegmentDetectorModes, scale: f64, sigma_scale: f64, quant: f64, ang_th: f64, log_eps: f64, density_th: f64, n_bins: i32) -> Result<core::Ptr<crate::imgproc::LineSegmentDetector>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_createLineSegmentDetector_int_double_double_double_double_double_double_int(refine, scale, sigma_scale, quant, ang_th, log_eps, density_th, n_bins, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_createLineSegmentDetector_LineSegmentDetectorModes_double_double_double_double_double_double_int(refine, scale, sigma_scale, quant, ang_th, log_eps, density_th, n_bins, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::imgproc::LineSegmentDetector>::opencv_from_extern(ret) };
@@ -5513,7 +5049,7 @@ pub mod imgproc {
 	/// - [COLOR_YUV2RGB_NV21]
 	/// - [COLOR_YUV2BGRA_NV21]
 	/// - [COLOR_YUV2RGBA_NV21]
-	/// * hint: Implementation modfication flags. See [algorithm_hint]
+	/// * hint: Implementation modification flags. See [algorithm_hint]
 	///
 	/// ## Note
 	/// This alternative version of [cvt_color_two_plane] function uses the following default values for its arguments:
@@ -5548,7 +5084,7 @@ pub mod imgproc {
 	/// - [COLOR_YUV2RGB_NV21]
 	/// - [COLOR_YUV2BGRA_NV21]
 	/// - [COLOR_YUV2RGBA_NV21]
-	/// * hint: Implementation modfication flags. See #AlgorithmHint
+	/// * hint: Implementation modification flags. See #AlgorithmHint
 	///
 	/// ## C++ default parameters
 	/// * hint: cv::ALGO_HINT_DEFAULT
@@ -5604,7 +5140,7 @@ pub mod imgproc {
 	/// * code: color space conversion code (see #ColorConversionCodes).
 	/// * dstCn: number of channels in the destination image; if the parameter is 0, the number of the
 	/// channels is derived automatically from src and code.
-	/// * hint: Implementation modfication flags. See [algorithm_hint]
+	/// * hint: Implementation modification flags. See [algorithm_hint]
 	///
 	///
 	/// Note: The source image (src) must be of an appropriate type for the desired color conversion. see ColorConversionCodes
@@ -5666,7 +5202,7 @@ pub mod imgproc {
 	/// * code: color space conversion code (see #ColorConversionCodes).
 	/// * dstCn: number of channels in the destination image; if the parameter is 0, the number of the
 	/// channels is derived automatically from src and code.
-	/// * hint: Implementation modfication flags. See [algorithm_hint]
+	/// * hint: Implementation modification flags. See [algorithm_hint]
 	///
 	///
 	/// Note: The source image (src) must be of an appropriate type for the desired color conversion. see ColorConversionCodes
@@ -5786,7 +5322,7 @@ pub mod imgproc {
 	///
 	/// The function dilates the source image using the specified structuring element that determines the
 	/// shape of a pixel neighborhood over which the maximum is taken:
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmax%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmax%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Bkernel%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
 	///
 	/// The function supports the in-place mode. Dilation can be applied several ( iterations ) times. In
 	/// case of multi-channel images, each channel is processed independently.
@@ -5795,12 +5331,12 @@ pub mod imgproc {
 	/// * src: input image; the number of channels can be arbitrary, but the depth should be one of
 	/// CV_8U, CV_16U, CV_16S, CV_32F or CV_64F.
 	/// * dst: output image of the same size and type as src.
-	/// * kernel: structuring element used for dilation; if element=Mat(), a 3 x 3 rectangular
+	/// * kernel: structuring element used for dilation; if `kernel=Mat()`, a `3 x 3` rectangular
 	/// structuring element is used. Kernel can be created using [get_structuring_element]
 	/// * anchor: position of the anchor within the element; default value (-1, -1) means that the
 	/// anchor is at the element center.
 	/// * iterations: number of times dilation is applied.
-	/// * borderType: pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not suported.
+	/// * borderType: pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not supported.
 	/// * borderValue: border value in case of a constant border
 	/// ## See also
 	/// erode, morphologyEx, getStructuringElement
@@ -5827,7 +5363,7 @@ pub mod imgproc {
 	///
 	/// The function dilates the source image using the specified structuring element that determines the
 	/// shape of a pixel neighborhood over which the maximum is taken:
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmax%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmax%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Bkernel%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
 	///
 	/// The function supports the in-place mode. Dilation can be applied several ( iterations ) times. In
 	/// case of multi-channel images, each channel is processed independently.
@@ -5836,12 +5372,12 @@ pub mod imgproc {
 	/// * src: input image; the number of channels can be arbitrary, but the depth should be one of
 	/// CV_8U, CV_16U, CV_16S, CV_32F or CV_64F.
 	/// * dst: output image of the same size and type as src.
-	/// * kernel: structuring element used for dilation; if element=Mat(), a 3 x 3 rectangular
+	/// * kernel: structuring element used for dilation; if `kernel=Mat()`, a `3 x 3` rectangular
 	/// structuring element is used. Kernel can be created using [get_structuring_element]
 	/// * anchor: position of the anchor within the element; default value (-1, -1) means that the
 	/// anchor is at the element center.
 	/// * iterations: number of times dilation is applied.
-	/// * borderType: pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not suported.
+	/// * borderType: pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not supported.
 	/// * borderValue: border value in case of a constant border
 	/// ## See also
 	/// erode, morphologyEx, getStructuringElement
@@ -5869,9 +5405,9 @@ pub mod imgproc {
 	/// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 	///
 	/// When maskSize == [DIST_MASK_PRECISE] and distanceType == [DIST_L2] , the function runs the
-	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 	///
-	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 	/// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 	/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 	/// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -5937,9 +5473,9 @@ pub mod imgproc {
 	/// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 	///
 	/// When maskSize == [DIST_MASK_PRECISE] and distanceType == [DIST_L2] , the function runs the
-	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 	///
-	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 	/// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 	/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 	/// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -6004,9 +5540,9 @@ pub mod imgproc {
 	/// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 	///
 	/// When maskSize == [DIST_MASK_PRECISE] and distanceType == [DIST_L2] , the function runs the
-	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 	///
-	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 	/// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 	/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 	/// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -6083,9 +5619,9 @@ pub mod imgproc {
 	/// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 	///
 	/// When maskSize == [DIST_MASK_PRECISE] and distanceType == [DIST_L2] , the function runs the
-	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 	///
-	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 	/// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 	/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 	/// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -6150,63 +5686,6 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_distanceTransform_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), distance_type, mask_size, dst_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Performs the per-element division of the first Fourier spectrum by the second Fourier spectrum.
-	///
-	/// The function cv::divSpectrums performs the per-element division of the first array by the second array.
-	/// The arrays are CCS-packed or complex matrices that are results of a real or complex Fourier transform.
-	///
-	/// ## Parameters
-	/// * a: first input array.
-	/// * b: second input array of the same size and type as src1 .
-	/// * c: output array of the same size and type as src1 .
-	/// * flags: operation flags; currently, the only supported flag is cv::DFT_ROWS, which indicates that
-	/// each row of src1 and src2 is an independent 1D Fourier spectrum. If you do not want to use this flag, then simply add a `0` as value.
-	/// * conjB: optional flag that conjugates the second input array before the multiplication (true)
-	/// or not (false).
-	///
-	/// ## Note
-	/// This alternative version of [div_spectrums] function uses the following default values for its arguments:
-	/// * conj_b: false
-	#[inline]
-	pub fn div_spectrums_def(a: &impl ToInputArray, b: &impl ToInputArray, c: &mut impl ToOutputArray, flags: i32) -> Result<()> {
-		input_array_arg!(a);
-		input_array_arg!(b);
-		output_array_arg!(c);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_divSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Performs the per-element division of the first Fourier spectrum by the second Fourier spectrum.
-	///
-	/// The function cv::divSpectrums performs the per-element division of the first array by the second array.
-	/// The arrays are CCS-packed or complex matrices that are results of a real or complex Fourier transform.
-	///
-	/// ## Parameters
-	/// * a: first input array.
-	/// * b: second input array of the same size and type as src1 .
-	/// * c: output array of the same size and type as src1 .
-	/// * flags: operation flags; currently, the only supported flag is cv::DFT_ROWS, which indicates that
-	/// each row of src1 and src2 is an independent 1D Fourier spectrum. If you do not want to use this flag, then simply add a `0` as value.
-	/// * conjB: optional flag that conjugates the second input array before the multiplication (true)
-	/// or not (false).
-	///
-	/// ## C++ default parameters
-	/// * conj_b: false
-	#[inline]
-	pub fn div_spectrums(a: &impl ToInputArray, b: &impl ToInputArray, c: &mut impl ToOutputArray, flags: i32, conj_b: bool) -> Result<()> {
-		input_array_arg!(a);
-		input_array_arg!(b);
-		output_array_arg!(c);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_divSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, conj_b, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6303,6 +5782,73 @@ pub mod imgproc {
 		input_array_arg!(hierarchy);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawContours_const__InputOutputArrayR_const__InputArrayR_int_const_ScalarR_int_int_const__InputArrayR_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__InputArray(), contour_idx, &color, thickness, line_type, hierarchy.as_raw__InputArray(), max_level, &offset, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Draw axes of the world/object coordinate system from pose estimation. see also: solvePnP
+	///
+	/// ## Parameters
+	/// * image: Input/output image. It must have 1 or 3 channels. The number of channels is not altered.
+	/// * cameraMatrix: Input 3x3 floating-point matrix of camera intrinsic parameters.
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D)
+	/// * distCoeffs: Input vector of distortion coefficients
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is empty, the zero distortion coefficients are assumed.
+	/// * rvec: Rotation vector (see [Rodrigues] ) that, together with tvec, brings points from
+	/// the model coordinate system to the camera coordinate system.
+	/// * tvec: Translation vector.
+	/// * length: Length of the painted axes in the same unit than tvec (usually in meters).
+	/// * thickness: Line thickness of the painted axes.
+	///
+	/// This function draws the axes of the world/object coordinate system w.r.t. to the camera frame.
+	/// OX is drawn in red, OY in green and OZ in blue.
+	///
+	/// ## Note
+	/// This alternative version of [draw_frame_axes] function uses the following default values for its arguments:
+	/// * thickness: 3
+	#[inline]
+	pub fn draw_frame_axes_def(image: &mut impl ToInputOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, length: f32) -> Result<()> {
+		input_output_array_arg!(image);
+		input_array_arg!(camera_matrix);
+		input_array_arg!(dist_coeffs);
+		input_array_arg!(rvec);
+		input_array_arg!(tvec);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_drawFrameAxes_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_float(image.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), length, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Draw axes of the world/object coordinate system from pose estimation. see also: solvePnP
+	///
+	/// ## Parameters
+	/// * image: Input/output image. It must have 1 or 3 channels. The number of channels is not altered.
+	/// * cameraMatrix: Input 3x3 floating-point matrix of camera intrinsic parameters.
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D)
+	/// * distCoeffs: Input vector of distortion coefficients
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is empty, the zero distortion coefficients are assumed.
+	/// * rvec: Rotation vector (see [Rodrigues] ) that, together with tvec, brings points from
+	/// the model coordinate system to the camera coordinate system.
+	/// * tvec: Translation vector.
+	/// * length: Length of the painted axes in the same unit than tvec (usually in meters).
+	/// * thickness: Line thickness of the painted axes.
+	///
+	/// This function draws the axes of the world/object coordinate system w.r.t. to the camera frame.
+	/// OX is drawn in red, OY in green and OZ in blue.
+	///
+	/// ## C++ default parameters
+	/// * thickness: 3
+	#[inline]
+	pub fn draw_frame_axes(image: &mut impl ToInputOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, length: f32, thickness: i32) -> Result<()> {
+		input_output_array_arg!(image);
+		input_array_arg!(camera_matrix);
+		input_array_arg!(dist_coeffs);
+		input_array_arg!(rvec);
+		input_array_arg!(tvec);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_drawFrameAxes_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_float_int(image.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), length, thickness, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6434,7 +5980,7 @@ pub mod imgproc {
 	/// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 	/// the meaning of the parameters to draw the blue arc.
 	///
-	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.13.0/ellipse.svg)
+	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/5.0.0/ellipse.svg)
 	///
 	/// ## Parameters
 	/// * img: Image.
@@ -6475,7 +6021,7 @@ pub mod imgproc {
 	/// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 	/// the meaning of the parameters to draw the blue arc.
 	///
-	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.13.0/ellipse.svg)
+	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/5.0.0/ellipse.svg)
 	///
 	/// ## Parameters
 	/// * img: Image.
@@ -6515,7 +6061,7 @@ pub mod imgproc {
 	/// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 	/// the meaning of the parameters to draw the blue arc.
 	///
-	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.13.0/ellipse.svg)
+	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/5.0.0/ellipse.svg)
 	///
 	/// ## Parameters
 	/// * img: Image.
@@ -6565,7 +6111,7 @@ pub mod imgproc {
 	/// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 	/// the meaning of the parameters to draw the blue arc.
 	///
-	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.13.0/ellipse.svg)
+	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/5.0.0/ellipse.svg)
 	///
 	/// ## Parameters
 	/// * img: Image.
@@ -6634,7 +6180,7 @@ pub mod imgproc {
 	/// The function erodes the source image using the specified structuring element that determines the
 	/// shape of a pixel neighborhood over which the minimum is taken:
 	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmin%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmin%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Bkernel%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
 	///
 	/// The function supports the in-place mode. Erosion can be applied several ( iterations ) times. In
 	/// case of multi-channel images, each channel is processed independently.
@@ -6643,7 +6189,7 @@ pub mod imgproc {
 	/// * src: input image; the number of channels can be arbitrary, but the depth should be one of
 	/// CV_8U, CV_16U, CV_16S, CV_32F or CV_64F.
 	/// * dst: output image of the same size and type as src.
-	/// * kernel: structuring element used for erosion; if `element=Mat()`, a `3 x 3` rectangular
+	/// * kernel: structuring element used for erosion; if `kernel=Mat()`, a `3 x 3` rectangular
 	/// structuring element is used. Kernel can be created using #getStructuringElement.
 	/// * anchor: position of the anchor within the element; default value (-1, -1) means that the
 	/// anchor is at the element center.
@@ -6676,7 +6222,7 @@ pub mod imgproc {
 	/// The function erodes the source image using the specified structuring element that determines the
 	/// shape of a pixel neighborhood over which the minimum is taken:
 	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmin%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmin%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Bkernel%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
 	///
 	/// The function supports the in-place mode. Erosion can be applied several ( iterations ) times. In
 	/// case of multi-channel images, each channel is processed independently.
@@ -6685,7 +6231,7 @@ pub mod imgproc {
 	/// * src: input image; the number of channels can be arbitrary, but the depth should be one of
 	/// CV_8U, CV_16U, CV_16S, CV_32F or CV_64F.
 	/// * dst: output image of the same size and type as src.
-	/// * kernel: structuring element used for erosion; if `element=Mat()`, a `3 x 3` rectangular
+	/// * kernel: structuring element used for erosion; if `kernel=Mat()`, a `3 x 3` rectangular
 	/// structuring element is used. Kernel can be created using #getStructuringElement.
 	/// * anchor: position of the anchor within the element; default value (-1, -1) means that the
 	/// anchor is at the element center.
@@ -6823,6 +6369,35 @@ pub mod imgproc {
 		input_array_arg!(pts);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fillPoly_const__InputOutputArrayR_const__InputArrayR_const_ScalarR_int_int_Point(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), &color, line_type, shift, &offset, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// ## Note
+	/// This alternative version of [filter_2dp] function uses the following default values for its arguments:
+	/// * params: Filter2DParams()
+	#[inline]
+	pub fn filter_2dp_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, kernel: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(kernel);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_filter2D_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// ## C++ default parameters
+	/// * params: Filter2DParams()
+	#[inline]
+	pub fn filter_2dp(src: &impl ToInputArray, dst: &mut impl ToOutputArray, kernel: &impl ToInputArray, params: crate::imgproc::Filter2DParams) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(kernel);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_filter2D_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const_Filter2DParamsR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), &params, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6968,9 +6543,15 @@ pub mod imgproc {
 
 	/// Finds contours in a binary image.
 	///
-	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+	/// The function retrieves contours from the binary image. The contours
 	/// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 	/// OpenCV sample directory.
+	///
+	///
+	/// Note: Since OpenCV 4.14, when mode is [RETR_LIST] and no hierarchy is requested, this function
+	/// automatically uses the TRUCO parallel algorithm [TRUCO2026](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_TRUCO2026), a scalable lock-free method for
+	/// contour extraction. In all other cases, the sequential [Suzuki85](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Suzuki85) algorithm is used.
+	///
 	///
 	/// Note: Since opencv 3.2 source image is not modified by this function.
 	///
@@ -7012,9 +6593,15 @@ pub mod imgproc {
 
 	/// Finds contours in a binary image.
 	///
-	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+	/// The function retrieves contours from the binary image. The contours
 	/// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 	/// OpenCV sample directory.
+	///
+	///
+	/// Note: Since OpenCV 4.14, when mode is [RETR_LIST] and no hierarchy is requested, this function
+	/// automatically uses the TRUCO parallel algorithm [TRUCO2026](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_TRUCO2026), a scalable lock-free method for
+	/// contour extraction. In all other cases, the sequential [Suzuki85](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Suzuki85) algorithm is used.
+	///
 	///
 	/// Note: Since opencv 3.2 source image is not modified by this function.
 	///
@@ -7055,9 +6642,15 @@ pub mod imgproc {
 
 	/// Finds contours in a binary image.
 	///
-	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+	/// The function retrieves contours from the binary image. The contours
 	/// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 	/// OpenCV sample directory.
+	///
+	///
+	/// Note: Since OpenCV 4.14, when mode is [RETR_LIST] and no hierarchy is requested, this function
+	/// automatically uses the TRUCO parallel algorithm [TRUCO2026](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_TRUCO2026), a scalable lock-free method for
+	/// contour extraction. In all other cases, the sequential [Suzuki85](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Suzuki85) algorithm is used.
+	///
 	///
 	/// Note: Since opencv 3.2 source image is not modified by this function.
 	///
@@ -7101,9 +6694,15 @@ pub mod imgproc {
 
 	/// Finds contours in a binary image.
 	///
-	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+	/// The function retrieves contours from the binary image. The contours
 	/// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 	/// OpenCV sample directory.
+	///
+	///
+	/// Note: Since OpenCV 4.14, when mode is [RETR_LIST] and no hierarchy is requested, this function
+	/// automatically uses the TRUCO parallel algorithm [TRUCO2026](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_TRUCO2026), a scalable lock-free method for
+	/// contour extraction. In all other cases, the sequential [Suzuki85](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Suzuki85) algorithm is used.
+	///
 	///
 	/// Note: Since opencv 3.2 source image is not modified by this function.
 	///
@@ -7143,178 +6742,122 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// Fits an ellipse around a set of 2D points.
-	///
-	/// The function calculates the ellipse that fits a set of 2D points.
-	/// It returns the rotated rectangle in which the ellipse is inscribed.
-	/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
-	///
-	/// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
-	/// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA%5F%7B%5Ctext%7Bxx%7D%7D%2CA%5F%7B%5Ctext%7Bxy%7D%7D%2CA%5F%7B%5Ctext%7Byy%7D%7D%2CA%5Fx%2CA%5Fy%2CA%5F0%5Cright%5C%7D%20).
-	/// However, to specify an ellipse, all that is needed is five numbers; the major and minor axes lengths ![inline formula](https://latex.codecogs.com/png.latex?%20%28a%2Cb%29%20),
-	/// the position ![inline formula](https://latex.codecogs.com/png.latex?%20%28x%5F0%2Cy%5F0%29%20), and the orientation ![inline formula](https://latex.codecogs.com/png.latex?%20%5Ctheta%20). This is because the basis set includes lines,
-	/// quadratics, parabolic and hyperbolic functions as well as elliptical functions as possible fits.
-	/// If the fit is found to be a parabolic or hyperbolic function then the standard [fit_ellipse] method is used.
-	/// The AMS method restricts the fit to parabolic, hyperbolic and elliptical curves
-	/// by imposing the condition that ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%20%28%20D%5Fx%5ET%20D%5Fx%20%20%2B%20%20%20D%5Fy%5ET%20D%5Fy%29%20A%20%3D%201%20) where
-	/// the matrices ![inline formula](https://latex.codecogs.com/png.latex?%20Dx%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20Dy%20) are the partial derivatives of the design matrix ![inline formula](https://latex.codecogs.com/png.latex?%20D%20) with
-	/// respect to x and y. The matrices are formed row by row applying the following to
-	/// each of the points in the set:
-	/// \f{align*}{
-	/// D(i,:)&=\left\{x_i^2, x_i y_i, y_i^2, x_i, y_i, 1\right\} &
-	/// D_x(i,:)&=\left\{2 x_i,y_i,0,1,0,0\right\} &
-	/// D_y(i,:)&=\left\{0,x_i,2 y_i,0,1,0\right\}
-	/// \f}
-	/// The AMS method minimizes the cost function
-	/// \f{equation*}{
-	/// \epsilon ^2=\frac{ A^T D^T D A }{ A^T (D_x^T D_x +  D_y^T D_y) A^T }
-	/// \f}
-	///
-	/// The minimum cost is found by solving the generalized eigenvalue problem.
-	///
-	/// \f{equation*}{
-	/// D^T D A = \lambda  \left( D_x^T D_x +  D_y^T D_y\right) A
-	/// \f}
+	/// Computes undistortion and rectification maps for image transform by cv::remap(). If D is empty zero
+	/// distortion is used, if R or P is empty identity matrixes are used.
 	///
 	/// ## Parameters
-	/// * points: Input 2D point set, stored in std::vector\<\> or Mat
-	///
-	///
-	/// Note: Input point types are [Point2i] or [Point2f] and at least 5 points are required.
-	///
-	/// Note: [getClosestEllipsePoints] function can be used to compute the ellipse fitting error.
+	/// * K: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?cameramatrix%7BK%7D).
+	/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
+	/// * R: Rectification transformation in the object space: 3x3 1-channel, or vector: 3x1/1x3
+	/// 1-channel or 1x1 3-channel
+	/// * P: New camera intrinsic matrix (3x3) or new projection matrix (3x4)
+	/// * size: Undistorted image size.
+	/// * m1type: Type of the first output map that can be CV_32FC1 or CV_16SC2 . See convertMaps()
+	/// for details.
+	/// * map1: The first output map.
+	/// * map2: The second output map.
 	#[inline]
-	pub fn fit_ellipse_ams(points: &impl ToInputArray) -> Result<core::RotatedRect> {
-		input_array_arg!(points);
+	pub fn init_undistort_rectify_map_1(k: &impl ToInputArray, d: &impl ToInputArray, r: &impl ToInputArray, p: &impl ToInputArray, size: core::Size, m1type: i32, map1: &mut impl ToOutputArray, map2: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(k);
+		input_array_arg!(d);
+		input_array_arg!(r);
+		input_array_arg!(p);
+		output_array_arg!(map1);
+		output_array_arg!(map2);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_fitEllipseAMS_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_fisheye_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR(k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 
-	/// Fits an ellipse around a set of 2D points.
-	///
-	/// The function calculates the ellipse that fits a set of 2D points.
-	/// It returns the rotated rectangle in which the ellipse is inscribed.
-	/// The Direct least square (Direct) method by [oy1998NumericallySD](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_oy1998NumericallySD) is used.
-	///
-	/// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
-	/// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA%5F%7B%5Ctext%7Bxx%7D%7D%2CA%5F%7B%5Ctext%7Bxy%7D%7D%2CA%5F%7B%5Ctext%7Byy%7D%7D%2CA%5Fx%2CA%5Fy%2CA%5F0%5Cright%5C%7D%20).
-	/// However, to specify an ellipse, all that is needed is five numbers; the major and minor axes lengths ![inline formula](https://latex.codecogs.com/png.latex?%20%28a%2Cb%29%20),
-	/// the position ![inline formula](https://latex.codecogs.com/png.latex?%20%28x%5F0%2Cy%5F0%29%20), and the orientation ![inline formula](https://latex.codecogs.com/png.latex?%20%5Ctheta%20). This is because the basis set includes lines,
-	/// quadratics, parabolic and hyperbolic functions as well as elliptical functions as possible fits.
-	/// The Direct method confines the fit to ellipses by ensuring that ![inline formula](https://latex.codecogs.com/png.latex?%204%20A%5F%7Bxx%7D%20A%5F%7Byy%7D%2D%20A%5F%7Bxy%7D%5E2%20%3E%200%20).
-	/// The condition imposed is that ![inline formula](https://latex.codecogs.com/png.latex?%204%20A%5F%7Bxx%7D%20A%5F%7Byy%7D%2D%20A%5F%7Bxy%7D%5E2%3D1%20) which satisfies the inequality
-	/// and as the coefficients can be arbitrarily scaled is not overly restrictive.
-	///
-	/// \f{equation*}{
-	/// \epsilon ^2= A^T D^T D A \quad \text{with} \quad A^T C A =1 \quad \text{and} \quad C=\left(\begin{matrix}
-	/// 0 & 0  & 2  & 0  & 0  &  0  \\
-	/// 0 & -1  & 0  & 0  & 0  &  0 \\
-	/// 2 & 0  & 0  & 0  & 0  &  0 \\
-	/// 0 & 0  & 0  & 0  & 0  &  0 \\
-	/// 0 & 0  & 0  & 0  & 0  &  0 \\
-	/// 0 & 0  & 0  & 0  & 0  &  0
-	/// \end{matrix} \right)
-	/// \f}
-	///
-	/// The minimum cost is found by solving the generalized eigenvalue problem.
-	///
-	/// \f{equation*}{
-	/// D^T D A = \lambda  \left( C\right) A
-	/// \f}
-	///
-	/// The system produces only one positive eigenvalue ![inline formula](https://latex.codecogs.com/png.latex?%20%5Clambda) which is chosen as the solution
-	/// with its eigenvector ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D). These are used to find the coefficients
-	///
-	/// \f{equation*}{
-	/// A = \sqrt{\frac{1}{\mathbf{u}^T C \mathbf{u}}}  \mathbf{u}
-	/// \f}
-	/// The scaling factor guarantees that  ![inline formula](https://latex.codecogs.com/png.latex?A%5ET%20C%20A%20%3D1).
+	/// Transforms an image to compensate for fisheye lens distortion.
 	///
 	/// ## Parameters
-	/// * points: Input 2D point set, stored in std::vector\<\> or Mat
+	/// * distorted: image with fisheye lens distortion.
+	/// * undistorted: Output image with compensated fisheye lens distortion.
+	/// * K: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?cameramatrix%7BK%7D).
+	/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
+	/// * Knew: Camera intrinsic matrix of the distorted image. By default, it is the identity matrix but you
+	/// may additionally scale and shift the result by using a different matrix.
+	/// * new_size: the new size
 	///
+	/// The function transforms an image to compensate radial and tangential lens distortion.
 	///
-	/// Note: Input point types are [Point2i] or [Point2f] and at least 5 points are required.
+	/// The function is simply a combination of #cv::fisheye::initUndistortRectifyMap (with unity R ) and remap
+	/// (with bilinear interpolation). See the former function for details of the transformation being
+	/// performed.
 	///
-	/// Note: [getClosestEllipsePoints] function can be used to compute the ellipse fitting error.
+	/// See below the results of undistortImage.
+	///    *   a\) result of undistort of perspective camera model (all possible coefficients (k_1, k_2, k_3,
+	///        k_4, k_5, k_6) of distortion were optimized under calibration)
+	///    *   b\) result of #cv::fisheye::undistortImage of fisheye camera model (all possible coefficients (k_1, k_2,
+	///        k_3, k_4) of fisheye distortion were optimized under calibration)
+	///    *   c\) original image was captured with fisheye lens
+	///
+	/// Pictures a) and b) almost the same. But if we consider points of image located far from the center
+	/// of image, we can notice that on image a) these points are distorted.
+	///
+	/// ![image](https://docs.opencv.org/5.0.0/fisheye_undistorted.jpg)
+	///
+	/// ## Note
+	/// This alternative version of [undistort_image] function uses the following default values for its arguments:
+	/// * knew: cv::noArray()
+	/// * new_size: Size()
 	#[inline]
-	pub fn fit_ellipse_direct(points: &impl ToInputArray) -> Result<core::RotatedRect> {
-		input_array_arg!(points);
+	pub fn undistort_image_def(distorted: &impl ToInputArray, undistorted: &mut impl ToOutputArray, k: &impl ToInputArray, d: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(distorted);
+		output_array_arg!(undistorted);
+		input_array_arg!(k);
+		input_array_arg!(d);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_fitEllipseDirect_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_fisheye_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 
-	/// Fits an ellipse around a set of 2D points.
-	///
-	/// The function calculates the ellipse that fits (in a least-squares sense) a set of 2D points best of
-	/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
-	/// is used. Developer should keep in mind that it is possible that the returned
-	/// ellipse/rotatedRect data contains negative indices, due to the data points being close to the
-	/// border of the containing Mat element.
+	/// Transforms an image to compensate for fisheye lens distortion.
 	///
 	/// ## Parameters
-	/// * points: Input 2D point set, stored in std::vector\<\> or Mat
+	/// * distorted: image with fisheye lens distortion.
+	/// * undistorted: Output image with compensated fisheye lens distortion.
+	/// * K: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?cameramatrix%7BK%7D).
+	/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
+	/// * Knew: Camera intrinsic matrix of the distorted image. By default, it is the identity matrix but you
+	/// may additionally scale and shift the result by using a different matrix.
+	/// * new_size: the new size
 	///
+	/// The function transforms an image to compensate radial and tangential lens distortion.
 	///
-	/// Note: Input point types are [Point2i] or [Point2f] and at least 5 points are required.
+	/// The function is simply a combination of #cv::fisheye::initUndistortRectifyMap (with unity R ) and remap
+	/// (with bilinear interpolation). See the former function for details of the transformation being
+	/// performed.
 	///
-	/// Note: [getClosestEllipsePoints] function can be used to compute the ellipse fitting error.
+	/// See below the results of undistortImage.
+	///    *   a\) result of undistort of perspective camera model (all possible coefficients (k_1, k_2, k_3,
+	///        k_4, k_5, k_6) of distortion were optimized under calibration)
+	///    *   b\) result of #cv::fisheye::undistortImage of fisheye camera model (all possible coefficients (k_1, k_2,
+	///        k_3, k_4) of fisheye distortion were optimized under calibration)
+	///    *   c\) original image was captured with fisheye lens
+	///
+	/// Pictures a) and b) almost the same. But if we consider points of image located far from the center
+	/// of image, we can notice that on image a) these points are distorted.
+	///
+	/// ![image](https://docs.opencv.org/5.0.0/fisheye_undistorted.jpg)
+	///
+	/// ## C++ default parameters
+	/// * knew: cv::noArray()
+	/// * new_size: Size()
 	#[inline]
-	pub fn fit_ellipse(points: &impl ToInputArray) -> Result<core::RotatedRect> {
-		input_array_arg!(points);
+	pub fn undistort_image(distorted: &impl ToInputArray, undistorted: &mut impl ToOutputArray, k: &impl ToInputArray, d: &impl ToInputArray, knew: &impl ToInputArray, new_size: core::Size) -> Result<()> {
+		input_array_arg!(distorted);
+		output_array_arg!(undistorted);
+		input_array_arg!(k);
+		input_array_arg!(d);
+		input_array_arg!(knew);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_fitEllipse_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Fits a line to a 2D or 3D point set.
-	///
-	/// The function fitLine fits a line to a 2D or 3D point set by minimizing ![inline formula](https://latex.codecogs.com/png.latex?%5Csum%5Fi%20%5Crho%28r%5Fi%29) where
-	/// ![inline formula](https://latex.codecogs.com/png.latex?r%5Fi) is a distance between the ![inline formula](https://latex.codecogs.com/png.latex?i%5E%7Bth%7D) point, the line and ![inline formula](https://latex.codecogs.com/png.latex?%5Crho%28r%29) is a distance function, one
-	/// of the following:
-	/// *  DIST_L2
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%28r%29%20%3D%20r%5E2%2F2%20%20%5Cquad%20%5Ctext%7B%28the%20simplest%20and%20the%20fastest%20least%2Dsquares%20method%29%7D)
-	/// - DIST_L1
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%28r%29%20%3D%20r)
-	/// - DIST_L12
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%28r%29%20%3D%202%20%20%5Ccdot%20%28%20%5Csqrt%7B1%20%2B%20%5Cfrac%7Br%5E2%7D%7B2%7D%7D%20%2D%201%29)
-	/// - DIST_FAIR
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%5Cleft%20%28r%20%5Cright%20%29%20%3D%20C%5E2%20%20%5Ccdot%20%5Cleft%20%28%20%20%5Cfrac%7Br%7D%7BC%7D%20%2D%20%20%5Clog%7B%5Cleft%281%20%2B%20%5Cfrac%7Br%7D%7BC%7D%5Cright%29%7D%20%5Cright%20%29%20%20%5Cquad%20%5Ctext%7Bwhere%7D%20%5Cquad%20C%3D1%2E3998)
-	/// - DIST_WELSCH
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%5Cleft%20%28r%20%5Cright%20%29%20%3D%20%20%5Cfrac%7BC%5E2%7D%7B2%7D%20%5Ccdot%20%5Cleft%20%28%201%20%2D%20%20%5Cexp%7B%5Cleft%28%2D%5Cleft%28%5Cfrac%7Br%7D%7BC%7D%5Cright%29%5E2%5Cright%29%7D%20%5Cright%20%29%20%20%5Cquad%20%5Ctext%7Bwhere%7D%20%5Cquad%20C%3D2%2E9846)
-	/// - DIST_HUBER
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%28r%29%20%3D%20%20%5Cleft%5C%7B%20%5Cbegin%7Barray%7D%7Bl%20l%7D%20r%5E2%2F2%20%26%20%5Cmbox%7Bif%20%5C%28r%20%3C%20C%5C%29%7D%5C%5C%20C%20%5Ccdot%20%28r%2DC%2F2%29%20%26%20%5Cmbox%7Botherwise%7D%5C%5C%20%5Cend%7Barray%7D%20%5Cright%2E%20%5Cquad%20%5Ctext%7Bwhere%7D%20%5Cquad%20C%3D1%2E345)
-	///
-	/// The algorithm is based on the M-estimator ( <https://en.wikipedia.org/wiki/M-estimator> ) technique
-	/// that iteratively fits the line using the weighted least-squares algorithm. After each iteration the
-	/// weights ![inline formula](https://latex.codecogs.com/png.latex?w%5Fi) are adjusted to be inversely proportional to ![inline formula](https://latex.codecogs.com/png.latex?%5Crho%28r%5Fi%29) .
-	///
-	/// ## Parameters
-	/// * points: Input vector of 2D or 3D points, stored in std::vector\<\> or Mat.
-	/// * line: Output line parameters. In case of 2D fitting, it should be a vector of 4 elements
-	/// (like Vec4f) - (vx, vy, x0, y0), where (vx, vy) is a normalized vector collinear to the line and
-	/// (x0, y0) is a point on the line. In case of 3D fitting, it should be a vector of 6 elements (like
-	/// Vec6f) - (vx, vy, vz, x0, y0, z0), where (vx, vy, vz) is a normalized vector collinear to the line
-	/// and (x0, y0, z0) is a point on the line.
-	/// * distType: Distance used by the M-estimator, see [distance_types]
-	/// * param: Numerical parameter ( C ) for some types of distances. If it is 0, an optimal value
-	/// is chosen.
-	/// * reps: Sufficient accuracy for the radius (distance between the coordinate origin and the line).
-	/// * aeps: Sufficient accuracy for the angle. 0.01 would be a good default value for reps and aeps.
-	#[inline]
-	pub fn fit_line(points: &impl ToInputArray, line: &mut impl ToOutputArray, dist_type: i32, param: f64, reps: f64, aeps: f64) -> Result<()> {
-		input_array_arg!(points);
-		output_array_arg!(line);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_fitLine_const__InputArrayR_const__OutputArrayR_int_double_double_double(points.as_raw__InputArray(), line.as_raw__OutputArray(), dist_type, param, reps, aeps, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_fisheye_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), knew.as_raw__InputArray(), &new_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7690,68 +7233,6 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// Calculates an affine transform from three pairs of the corresponding points.
-	///
-	/// The function calculates the ![inline formula](https://latex.codecogs.com/png.latex?2%20%5Ctimes%203) matrix of an affine transform so that:
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20x%27%5Fi%20%5C%5C%20y%27%5Fi%20%5Cend%7Bbmatrix%7D%20%3D%20%5Ctexttt%7Bmap%5Fmatrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%5Fi%20%5C%5C%20y%5Fi%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
-	///
-	/// where
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?dst%28i%29%3D%28x%27%5Fi%2Cy%27%5Fi%29%2C%20src%28i%29%3D%28x%5Fi%2C%20y%5Fi%29%2C%20i%3D0%2C1%2C2)
-	///
-	/// ## Parameters
-	/// * src: Coordinates of triangle vertices in the source image.
-	/// * dst: Coordinates of the corresponding triangle vertices in the destination image.
-	/// ## See also
-	/// warpAffine, transform
-	#[inline]
-	pub fn get_affine_transform_slice(src: &[core::Point2f; 3], dst: &[core::Point2f; 3]) -> Result<core::Mat> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getAffineTransform_const_Point2fXX_const_Point2fXX(src, dst, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
-	#[inline]
-	pub fn get_affine_transform(src: &impl ToInputArray, dst: &impl ToInputArray) -> Result<core::Mat> {
-		input_array_arg!(src);
-		input_array_arg!(dst);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getAffineTransform_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
-	/// Compute for each 2d point the nearest 2d point located on a given ellipse.
-	///
-	/// The function computes the nearest 2d location on a given ellipse for a vector of 2d points and is based on [Chatfield2017](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Chatfield2017) code.
-	/// This function can be used to compute for instance the ellipse fitting error.
-	///
-	/// ## Parameters
-	/// * ellipse_params: Ellipse parameters
-	/// * points: Input 2d points
-	/// * closest_pts: For each 2d point, their corresponding closest 2d point located on a given ellipse
-	///
-	///
-	/// Note: Input point types are [Point2i] or [Point2f]
-	/// ## See also
-	/// fitEllipse, fitEllipseAMS, fitEllipseDirect
-	#[inline]
-	pub fn get_closest_ellipse_points(ellipse_params: core::RotatedRect, points: &impl ToInputArray, closest_pts: &mut impl ToOutputArray) -> Result<()> {
-		input_array_arg!(points);
-		output_array_arg!(closest_pts);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getClosestEllipsePoints_const_RotatedRectR_const__InputArrayR_const__OutputArrayR(&ellipse_params, points.as_raw__InputArray(), closest_pts.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
 	/// Returns filter coefficients for computing spatial image derivatives.
 	///
 	/// The function computes and returns the filter coefficients for spatial image derivatives. When
@@ -7984,133 +7465,6 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// Calculates a perspective transform from four pairs of the corresponding points.
-	///
-	/// The function calculates the ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) matrix of a perspective transform so that:
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20t%5Fi%20x%27%5Fi%20%5C%5C%20t%5Fi%20y%27%5Fi%20%5C%5C%20t%5Fi%20%5Cend%7Bbmatrix%7D%20%3D%20%5Ctexttt%7Bmap%5Fmatrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%5Fi%20%5C%5C%20y%5Fi%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
-	///
-	/// where
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?dst%28i%29%3D%28x%27%5Fi%2Cy%27%5Fi%29%2C%20src%28i%29%3D%28x%5Fi%2C%20y%5Fi%29%2C%20i%3D0%2C1%2C2%2C3)
-	///
-	/// ## Parameters
-	/// * src: Coordinates of quadrangle vertices in the source image.
-	/// * dst: Coordinates of the corresponding quadrangle vertices in the destination image.
-	/// * solveMethod: method passed to cv::solve (#DecompTypes)
-	/// ## See also
-	/// findHomography, warpPerspective, perspectiveTransform
-	///
-	/// ## Overloaded parameters
-	///
-	///
-	/// ## Note
-	/// This alternative version of [get_perspective_transform_slice] function uses the following default values for its arguments:
-	/// * solve_method: DECOMP_LU
-	#[inline]
-	pub fn get_perspective_transform_slice_def(src: &[core::Point2f; 4], dst: &[core::Point2f; 4]) -> Result<core::Mat> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX(src, dst, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
-	/// Calculates a perspective transform from four pairs of the corresponding points.
-	///
-	/// The function calculates the ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) matrix of a perspective transform so that:
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20t%5Fi%20x%27%5Fi%20%5C%5C%20t%5Fi%20y%27%5Fi%20%5C%5C%20t%5Fi%20%5Cend%7Bbmatrix%7D%20%3D%20%5Ctexttt%7Bmap%5Fmatrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%5Fi%20%5C%5C%20y%5Fi%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
-	///
-	/// where
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?dst%28i%29%3D%28x%27%5Fi%2Cy%27%5Fi%29%2C%20src%28i%29%3D%28x%5Fi%2C%20y%5Fi%29%2C%20i%3D0%2C1%2C2%2C3)
-	///
-	/// ## Parameters
-	/// * src: Coordinates of quadrangle vertices in the source image.
-	/// * dst: Coordinates of the corresponding quadrangle vertices in the destination image.
-	/// * solveMethod: method passed to cv::solve (#DecompTypes)
-	/// ## See also
-	/// findHomography, warpPerspective, perspectiveTransform
-	///
-	/// ## Overloaded parameters
-	///
-	/// ## C++ default parameters
-	/// * solve_method: DECOMP_LU
-	#[inline]
-	pub fn get_perspective_transform_slice(src: &[core::Point2f; 4], dst: &[core::Point2f; 4], solve_method: i32) -> Result<core::Mat> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX_int(src, dst, solve_method, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
-	/// Calculates a perspective transform from four pairs of the corresponding points.
-	///
-	/// The function calculates the ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) matrix of a perspective transform so that:
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20t%5Fi%20x%27%5Fi%20%5C%5C%20t%5Fi%20y%27%5Fi%20%5C%5C%20t%5Fi%20%5Cend%7Bbmatrix%7D%20%3D%20%5Ctexttt%7Bmap%5Fmatrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%5Fi%20%5C%5C%20y%5Fi%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
-	///
-	/// where
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?dst%28i%29%3D%28x%27%5Fi%2Cy%27%5Fi%29%2C%20src%28i%29%3D%28x%5Fi%2C%20y%5Fi%29%2C%20i%3D0%2C1%2C2%2C3)
-	///
-	/// ## Parameters
-	/// * src: Coordinates of quadrangle vertices in the source image.
-	/// * dst: Coordinates of the corresponding quadrangle vertices in the destination image.
-	/// * solveMethod: method passed to cv::solve (#DecompTypes)
-	/// ## See also
-	/// findHomography, warpPerspective, perspectiveTransform
-	///
-	/// ## Note
-	/// This alternative version of [get_perspective_transform] function uses the following default values for its arguments:
-	/// * solve_method: DECOMP_LU
-	#[inline]
-	pub fn get_perspective_transform_def(src: &impl ToInputArray, dst: &impl ToInputArray) -> Result<core::Mat> {
-		input_array_arg!(src);
-		input_array_arg!(dst);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getPerspectiveTransform_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
-	/// Calculates a perspective transform from four pairs of the corresponding points.
-	///
-	/// The function calculates the ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) matrix of a perspective transform so that:
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20t%5Fi%20x%27%5Fi%20%5C%5C%20t%5Fi%20y%27%5Fi%20%5C%5C%20t%5Fi%20%5Cend%7Bbmatrix%7D%20%3D%20%5Ctexttt%7Bmap%5Fmatrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%5Fi%20%5C%5C%20y%5Fi%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
-	///
-	/// where
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?dst%28i%29%3D%28x%27%5Fi%2Cy%27%5Fi%29%2C%20src%28i%29%3D%28x%5Fi%2C%20y%5Fi%29%2C%20i%3D0%2C1%2C2%2C3)
-	///
-	/// ## Parameters
-	/// * src: Coordinates of quadrangle vertices in the source image.
-	/// * dst: Coordinates of the corresponding quadrangle vertices in the destination image.
-	/// * solveMethod: method passed to cv::solve (#DecompTypes)
-	/// ## See also
-	/// findHomography, warpPerspective, perspectiveTransform
-	///
-	/// ## C++ default parameters
-	/// * solve_method: DECOMP_LU
-	#[inline]
-	pub fn get_perspective_transform(src: &impl ToInputArray, dst: &impl ToInputArray, solve_method: i32) -> Result<core::Mat> {
-		input_array_arg!(src);
-		input_array_arg!(dst);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getPerspectiveTransform_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), solve_method, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
 	/// Retrieves a pixel rectangle from an image with sub-pixel accuracy.
 	///
 	/// The function getRectSubPix extracts pixels from src:
@@ -8180,47 +7534,6 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// Calculates an affine matrix of 2D rotation.
-	///
-	/// The function calculates the following matrix:
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20%5Calpha%20%26%20%20%5Cbeta%20%26%20%281%2D%20%5Calpha%20%29%20%20%5Ccdot%20%5Ctexttt%7Bcenter%2Ex%7D%20%2D%20%20%5Cbeta%20%5Ccdot%20%5Ctexttt%7Bcenter%2Ey%7D%20%5C%5C%20%2D%20%5Cbeta%20%26%20%20%5Calpha%20%26%20%20%5Cbeta%20%5Ccdot%20%5Ctexttt%7Bcenter%2Ex%7D%20%2B%20%281%2D%20%5Calpha%20%29%20%20%5Ccdot%20%5Ctexttt%7Bcenter%2Ey%7D%20%5Cend%7Bbmatrix%7D)
-	///
-	/// where
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20%5Calpha%20%3D%20%20%5Ctexttt%7Bscale%7D%20%5Ccdot%20%5Ccos%20%5Ctexttt%7Bangle%7D%20%2C%20%5C%5C%20%5Cbeta%20%3D%20%20%5Ctexttt%7Bscale%7D%20%5Ccdot%20%5Csin%20%5Ctexttt%7Bangle%7D%20%5Cend%7Barray%7D)
-	///
-	/// The transformation maps the rotation center to itself. If this is not the target, adjust the shift.
-	///
-	/// ## Parameters
-	/// * center: Center of the rotation in the source image.
-	/// * angle: Rotation angle in degrees. Positive values mean counter-clockwise rotation (the
-	/// coordinate origin is assumed to be the top-left corner).
-	/// * scale: Isotropic scale factor.
-	/// ## See also
-	/// getAffineTransform, warpAffine, transform
-	#[inline]
-	pub fn get_rotation_matrix_2d(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Mat> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getRotationMatrix2D_Point2f_double_double(&center, angle, scale, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
-	/// ## See also
-	/// getRotationMatrix2D
-	#[inline]
-	#[cfg(not(target_os = "windows"))]
-	pub fn get_rotation_matrix_2d_matx(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Matx23d> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getRotationMatrix2D__Point2f_double_double(&center, angle, scale, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
 	/// Returns a structuring element of the specified size and shape for morphological operations.
 	///
 	/// The function constructs and returns the structuring element that can be further passed to #erode,
@@ -8271,6 +7584,75 @@ pub mod imgproc {
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Calculates the bounding rect for the text
+	///
+	/// The function cv::getTextSize calculates and returns the size of a box that contains the specified text.
+	/// That is, the following code renders some text, the tight box surrounding it, and the baseline: :
+	///
+	/// ## Parameters
+	/// * imgsize: Size of the target image, can be empty
+	/// * text: Text string to be drawn.
+	/// * org: Bottom-left corner of the first character of the printed text
+	///            (see PUT_TEXT_ALIGN_... though)
+	/// * fface: The font to use for the text
+	/// * size: Font size in pixels (by default) or pts
+	/// * weight: Font weight, 100..1000,
+	///        where 100 is "thin" font, 400 is "regular",
+	///        600 is "semibold", 800 is "bold" and beyond that is "black".
+	///        The default weight means "400" for variable-weight fonts or
+	///        whatever "default" weight the used font provides.
+	/// * flags: Various flags, see PUT_TEXT_...
+	/// * wrap: The optional text wrapping range; see #putText.
+	///
+	/// ## Note
+	/// This alternative version of [get_text_size_1] function uses the following default values for its arguments:
+	/// * weight: 0
+	/// * flags: PUT_TEXT_ALIGN_LEFT
+	/// * wrap: Range()
+	#[inline]
+	pub fn get_text_size_1_def(imgsize: core::Size, text: &str, org: core::Point, fface: &mut impl crate::imgproc::FontFaceTrait, size: i32) -> Result<core::Rect> {
+		extern_container_arg!(text);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_getTextSize_Size_const_StringR_Point_FontFaceR_int(&imgsize, text.opencv_as_extern(), &org, fface.as_raw_mut_FontFace(), size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Calculates the bounding rect for the text
+	///
+	/// The function cv::getTextSize calculates and returns the size of a box that contains the specified text.
+	/// That is, the following code renders some text, the tight box surrounding it, and the baseline: :
+	///
+	/// ## Parameters
+	/// * imgsize: Size of the target image, can be empty
+	/// * text: Text string to be drawn.
+	/// * org: Bottom-left corner of the first character of the printed text
+	///            (see PUT_TEXT_ALIGN_... though)
+	/// * fface: The font to use for the text
+	/// * size: Font size in pixels (by default) or pts
+	/// * weight: Font weight, 100..1000,
+	///        where 100 is "thin" font, 400 is "regular",
+	///        600 is "semibold", 800 is "bold" and beyond that is "black".
+	///        The default weight means "400" for variable-weight fonts or
+	///        whatever "default" weight the used font provides.
+	/// * flags: Various flags, see PUT_TEXT_...
+	/// * wrap: The optional text wrapping range; see #putText.
+	///
+	/// ## C++ default parameters
+	/// * weight: 0
+	/// * flags: PUT_TEXT_ALIGN_LEFT
+	/// * wrap: Range()
+	#[inline]
+	pub fn get_text_size_1(imgsize: core::Size, text: &str, org: core::Point, fface: &mut impl crate::imgproc::FontFaceTrait, size: i32, weight: i32, flags: crate::imgproc::PutTextFlags, mut wrap: impl core::RangeTrait) -> Result<core::Rect> {
+		extern_container_arg!(text);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_getTextSize_Size_const_StringR_Point_FontFaceR_int_int_PutTextFlags_Range(&imgsize, text.opencv_as_extern(), &org, fface.as_raw_mut_FontFace(), size, weight, flags, wrap.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 
@@ -8326,250 +7708,6 @@ pub mod imgproc {
 		extern_container_arg!(text);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getTextSize_const_StringR_int_double_int_intX(text.opencv_as_extern(), font_face, font_scale, thickness, base_line, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Determines strong corners on an image.
-	///
-	/// The function finds the most prominent corners in the image or in the specified image region, as
-	/// described in [Shi94](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Shi94)
-	///
-	/// *   Function calculates the corner quality measure at every source image pixel using the
-	///    [corner_min_eigen_val] or [corner_harris] .
-	/// *   Function performs a non-maximum suppression (the local maximums in *3 x 3* neighborhood are
-	///    retained).
-	/// *   The corners with the minimal eigenvalue less than
-	///    ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BqualityLevel%7D%20%5Ccdot%20%5Cmax%5F%7Bx%2Cy%7D%20qualityMeasureMap%28x%2Cy%29) are rejected.
-	/// *   The remaining corners are sorted by the quality measure in the descending order.
-	/// *   Function throws away each corner for which there is a stronger corner at a distance less than
-	///    maxDistance.
-	///
-	/// The function can be used to initialize a point-based tracker of an object.
-	///
-	///
-	/// Note: If the function is called with different values A and B of the parameter qualityLevel , and
-	/// A \> B, the vector of returned corners with qualityLevel=A will be the prefix of the output vector
-	/// with qualityLevel=B .
-	///
-	/// ## Parameters
-	/// * image: Input 8-bit or floating-point 32-bit, single-channel image.
-	/// * corners: Output vector of detected corners.
-	/// * maxCorners: Maximum number of corners to return. If there are more corners than are found,
-	/// the strongest of them is returned. `maxCorners <= 0` implies that no limit on the maximum is set
-	/// and all detected corners are returned.
-	/// * qualityLevel: Parameter characterizing the minimal accepted quality of image corners. The
-	/// parameter value is multiplied by the best corner quality measure, which is the minimal eigenvalue
-	/// (see [corner_min_eigen_val] ) or the Harris function response (see [corner_harris] ). The corners with the
-	/// quality measure less than the product are rejected. For example, if the best corner has the
-	/// quality measure = 1500, and the qualityLevel=0.01 , then all the corners with the quality measure
-	/// less than 15 are rejected.
-	/// * minDistance: Minimum possible Euclidean distance between the returned corners.
-	/// * mask: Optional region of interest. If the image is not empty (it needs to have the type
-	/// CV_8UC1 and the same size as image ), it specifies the region in which the corners are detected.
-	/// * blockSize: Size of an average block for computing a derivative covariation matrix over each
-	/// pixel neighborhood. See cornerEigenValsAndVecs .
-	/// * useHarrisDetector: Parameter indicating whether to use a Harris detector (see #cornerHarris)
-	/// or #cornerMinEigenVal.
-	/// * k: Free parameter of the Harris detector.
-	/// ## See also
-	/// cornerMinEigenVal, cornerHarris, calcOpticalFlowPyrLK, estimateRigidTransform,
-	///
-	/// ## Note
-	/// This alternative version of [good_features_to_track] function uses the following default values for its arguments:
-	/// * mask: noArray()
-	/// * block_size: 3
-	/// * use_harris_detector: false
-	/// * k: 0.04
-	#[inline]
-	pub fn good_features_to_track_def(image: &impl ToInputArray, corners: &mut impl ToOutputArray, max_corners: i32, quality_level: f64, min_distance: f64) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(corners);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Same as above, but returns also quality measure of the detected corners.
-	///
-	/// ## Parameters
-	/// * image: Input 8-bit or floating-point 32-bit, single-channel image.
-	/// * corners: Output vector of detected corners.
-	/// * maxCorners: Maximum number of corners to return. If there are more corners than are found,
-	/// the strongest of them is returned. `maxCorners <= 0` implies that no limit on the maximum is set
-	/// and all detected corners are returned.
-	/// * qualityLevel: Parameter characterizing the minimal accepted quality of image corners. The
-	/// parameter value is multiplied by the best corner quality measure, which is the minimal eigenvalue
-	/// (see [corner_min_eigen_val] ) or the Harris function response (see [corner_harris] ). The corners with the
-	/// quality measure less than the product are rejected. For example, if the best corner has the
-	/// quality measure = 1500, and the qualityLevel=0.01 , then all the corners with the quality measure
-	/// less than 15 are rejected.
-	/// * minDistance: Minimum possible Euclidean distance between the returned corners.
-	/// * mask: Region of interest. If the image is not empty (it needs to have the type
-	/// CV_8UC1 and the same size as image ), it specifies the region in which the corners are detected.
-	/// * cornersQuality: Output vector of quality measure of the detected corners.
-	/// * blockSize: Size of an average block for computing a derivative covariation matrix over each
-	/// pixel neighborhood. See cornerEigenValsAndVecs .
-	/// * gradientSize: Aperture parameter for the Sobel operator used for derivatives computation.
-	/// See cornerEigenValsAndVecs .
-	/// * useHarrisDetector: Parameter indicating whether to use a Harris detector (see #cornerHarris)
-	/// or #cornerMinEigenVal.
-	/// * k: Free parameter of the Harris detector.
-	///
-	/// ## Note
-	/// This alternative version of [good_features_to_track_with_quality] function uses the following default values for its arguments:
-	/// * block_size: 3
-	/// * gradient_size: 3
-	/// * use_harris_detector: false
-	/// * k: 0.04
-	#[inline]
-	pub fn good_features_to_track_with_quality_def(image: &impl ToInputArray, corners: &mut impl ToOutputArray, max_corners: i32, quality_level: f64, min_distance: f64, mask: &impl ToInputArray, corners_quality: &mut impl ToOutputArray) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(corners);
-		input_array_arg!(mask);
-		output_array_arg!(corners_quality);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), corners_quality.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Same as above, but returns also quality measure of the detected corners.
-	///
-	/// ## Parameters
-	/// * image: Input 8-bit or floating-point 32-bit, single-channel image.
-	/// * corners: Output vector of detected corners.
-	/// * maxCorners: Maximum number of corners to return. If there are more corners than are found,
-	/// the strongest of them is returned. `maxCorners <= 0` implies that no limit on the maximum is set
-	/// and all detected corners are returned.
-	/// * qualityLevel: Parameter characterizing the minimal accepted quality of image corners. The
-	/// parameter value is multiplied by the best corner quality measure, which is the minimal eigenvalue
-	/// (see [corner_min_eigen_val] ) or the Harris function response (see [corner_harris] ). The corners with the
-	/// quality measure less than the product are rejected. For example, if the best corner has the
-	/// quality measure = 1500, and the qualityLevel=0.01 , then all the corners with the quality measure
-	/// less than 15 are rejected.
-	/// * minDistance: Minimum possible Euclidean distance between the returned corners.
-	/// * mask: Region of interest. If the image is not empty (it needs to have the type
-	/// CV_8UC1 and the same size as image ), it specifies the region in which the corners are detected.
-	/// * cornersQuality: Output vector of quality measure of the detected corners.
-	/// * blockSize: Size of an average block for computing a derivative covariation matrix over each
-	/// pixel neighborhood. See cornerEigenValsAndVecs .
-	/// * gradientSize: Aperture parameter for the Sobel operator used for derivatives computation.
-	/// See cornerEigenValsAndVecs .
-	/// * useHarrisDetector: Parameter indicating whether to use a Harris detector (see #cornerHarris)
-	/// or #cornerMinEigenVal.
-	/// * k: Free parameter of the Harris detector.
-	///
-	/// ## C++ default parameters
-	/// * block_size: 3
-	/// * gradient_size: 3
-	/// * use_harris_detector: false
-	/// * k: 0.04
-	#[inline]
-	pub fn good_features_to_track_with_quality(image: &impl ToInputArray, corners: &mut impl ToOutputArray, max_corners: i32, quality_level: f64, min_distance: f64, mask: &impl ToInputArray, corners_quality: &mut impl ToOutputArray, block_size: i32, gradient_size: i32, use_harris_detector: bool, k: f64) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(corners);
-		input_array_arg!(mask);
-		output_array_arg!(corners_quality);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_const__OutputArrayR_int_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), corners_quality.as_raw__OutputArray(), block_size, gradient_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Determines strong corners on an image.
-	///
-	/// The function finds the most prominent corners in the image or in the specified image region, as
-	/// described in [Shi94](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Shi94)
-	///
-	/// *   Function calculates the corner quality measure at every source image pixel using the
-	///    [corner_min_eigen_val] or [corner_harris] .
-	/// *   Function performs a non-maximum suppression (the local maximums in *3 x 3* neighborhood are
-	///    retained).
-	/// *   The corners with the minimal eigenvalue less than
-	///    ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BqualityLevel%7D%20%5Ccdot%20%5Cmax%5F%7Bx%2Cy%7D%20qualityMeasureMap%28x%2Cy%29) are rejected.
-	/// *   The remaining corners are sorted by the quality measure in the descending order.
-	/// *   Function throws away each corner for which there is a stronger corner at a distance less than
-	///    maxDistance.
-	///
-	/// The function can be used to initialize a point-based tracker of an object.
-	///
-	///
-	/// Note: If the function is called with different values A and B of the parameter qualityLevel , and
-	/// A \> B, the vector of returned corners with qualityLevel=A will be the prefix of the output vector
-	/// with qualityLevel=B .
-	///
-	/// ## Parameters
-	/// * image: Input 8-bit or floating-point 32-bit, single-channel image.
-	/// * corners: Output vector of detected corners.
-	/// * maxCorners: Maximum number of corners to return. If there are more corners than are found,
-	/// the strongest of them is returned. `maxCorners <= 0` implies that no limit on the maximum is set
-	/// and all detected corners are returned.
-	/// * qualityLevel: Parameter characterizing the minimal accepted quality of image corners. The
-	/// parameter value is multiplied by the best corner quality measure, which is the minimal eigenvalue
-	/// (see [corner_min_eigen_val] ) or the Harris function response (see [corner_harris] ). The corners with the
-	/// quality measure less than the product are rejected. For example, if the best corner has the
-	/// quality measure = 1500, and the qualityLevel=0.01 , then all the corners with the quality measure
-	/// less than 15 are rejected.
-	/// * minDistance: Minimum possible Euclidean distance between the returned corners.
-	/// * mask: Optional region of interest. If the image is not empty (it needs to have the type
-	/// CV_8UC1 and the same size as image ), it specifies the region in which the corners are detected.
-	/// * blockSize: Size of an average block for computing a derivative covariation matrix over each
-	/// pixel neighborhood. See cornerEigenValsAndVecs .
-	/// * useHarrisDetector: Parameter indicating whether to use a Harris detector (see #cornerHarris)
-	/// or #cornerMinEigenVal.
-	/// * k: Free parameter of the Harris detector.
-	/// ## See also
-	/// cornerMinEigenVal, cornerHarris, calcOpticalFlowPyrLK, estimateRigidTransform,
-	///
-	/// ## C++ default parameters
-	/// * mask: noArray()
-	/// * block_size: 3
-	/// * use_harris_detector: false
-	/// * k: 0.04
-	#[inline]
-	pub fn good_features_to_track(image: &impl ToInputArray, corners: &mut impl ToOutputArray, max_corners: i32, quality_level: f64, min_distance: f64, mask: &impl ToInputArray, block_size: i32, use_harris_detector: bool, k: f64) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(corners);
-		input_array_arg!(mask);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// ## Note
-	/// This alternative version of [good_features_to_track_with_gradient] function uses the following default values for its arguments:
-	/// * use_harris_detector: false
-	/// * k: 0.04
-	#[inline]
-	pub fn good_features_to_track_with_gradient_def(image: &impl ToInputArray, corners: &mut impl ToOutputArray, max_corners: i32, quality_level: f64, min_distance: f64, mask: &impl ToInputArray, block_size: i32, gradient_size: i32) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(corners);
-		input_array_arg!(mask);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_int(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, gradient_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// ## C++ default parameters
-	/// * use_harris_detector: false
-	/// * k: 0.04
-	#[inline]
-	pub fn good_features_to_track_with_gradient(image: &impl ToInputArray, corners: &mut impl ToOutputArray, max_corners: i32, quality_level: f64, min_distance: f64, mask: &impl ToInputArray, block_size: i32, gradient_size: i32, use_harris_detector: bool, k: f64) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(corners);
-		input_array_arg!(mask);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, gradient_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8644,6 +7782,160 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
+	/// Computes the projection and inverse-rectification transformation map. In essense, this is the inverse of
+	/// [init_undistort_rectify_map] to accomodate stereo-rectification of projectors ('inverse-cameras') in projector-camera pairs.
+	///
+	/// The function computes the joint projection and inverse rectification transformation and represents the
+	/// result in the form of maps for #remap. The projected image looks like a distorted version of the original which,
+	/// once projected by a projector, should visually match the original. In case of a monocular camera, newCameraMatrix
+	/// is usually equal to cameraMatrix, or it can be computed by
+	/// [get_optimal_new_camera_matrix] for a better control over scaling. In case of a projector-camera pair,
+	/// newCameraMatrix is normally set to P1 or P2 computed by [stereo_rectify] .
+	///
+	/// The projector is oriented differently in the coordinate space, according to R. In case of projector-camera pairs,
+	/// this helps align the projector (in the same manner as [init_undistort_rectify_map] for the camera) to create a stereo-rectified pair. This
+	/// allows epipolar lines on both images to become horizontal and have the same y-coordinate (in case of a horizontally aligned projector-camera pair).
+	///
+	/// The function builds the maps for the inverse mapping algorithm that is used by #remap. That
+	/// is, for each pixel ![inline formula](https://latex.codecogs.com/png.latex?%28u%2C%20v%29) in the destination (projected and inverse-rectified) image, the function
+	/// computes the corresponding coordinates in the source image (that is, in the original digital image). The following process is applied:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Barray%7D%7Bl%7D%0A%5Ctext%7BnewCameraMatrix%7D%5C%5C%0Ax%20%20%5Cleftarrow%20%28u%20%2D%20%7Bc%27%7D%5Fx%29%2F%7Bf%27%7D%5Fx%20%20%5C%5C%0Ay%20%20%5Cleftarrow%20%28v%20%2D%20%7Bc%27%7D%5Fy%29%2F%7Bf%27%7D%5Fy%20%20%5C%5C%0A%0A%5C%5C%5Ctext%7BUndistortion%7D%0A%5C%5C%5Cscriptsize%7B%5Ctextit%7Bthough%20equation%20shown%20is%20for%20radial%20undistortion%2C%20function%20implements%20cv%3A%3AundistortPoints%28%29%7D%7D%5C%5C%0Ar%5E2%20%20%5Cleftarrow%20x%5E2%20%2B%20y%5E2%20%5C%5C%0A%5Ctheta%20%5Cleftarrow%20%5Cfrac%7B1%20%2B%20k%5F1%20r%5E2%20%2B%20k%5F2%20r%5E4%20%2B%20k%5F3%20r%5E6%7D%7B1%20%2B%20k%5F4%20r%5E2%20%2B%20k%5F5%20r%5E4%20%2B%20k%5F6%20r%5E6%7D%5C%5C%0Ax%27%20%5Cleftarrow%20%5Cfrac%7Bx%7D%7B%5Ctheta%7D%20%5C%5C%0Ay%27%20%20%5Cleftarrow%20%5Cfrac%7By%7D%7B%5Ctheta%7D%20%5C%5C%0A%0A%5C%5C%5Ctext%7BRectification%7D%5C%5C%0A%7B%5BX%5C%2CY%5C%2CW%5D%7D%20%5ET%20%20%5Cleftarrow%20R%2A%5Bx%27%20%5C%2C%20y%27%20%5C%2C%201%5D%5ET%20%20%5C%5C%0Ax%27%27%20%20%5Cleftarrow%20X%2FW%20%20%5C%5C%0Ay%27%27%20%20%5Cleftarrow%20Y%2FW%20%20%5C%5C%0A%0A%5C%5C%5Ctext%7BcameraMatrix%7D%5C%5C%0Amap%5Fx%28u%2Cv%29%20%20%5Cleftarrow%20x%27%27%20f%5Fx%20%2B%20c%5Fx%20%20%5C%5C%0Amap%5Fy%28u%2Cv%29%20%20%5Cleftarrow%20y%27%27%20f%5Fy%20%2B%20c%5Fy%0A%5Cend%7Barray%7D%0A)
+	/// where ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
+	/// are the distortion coefficients vector distCoeffs.
+	///
+	/// In case of a stereo-rectified projector-camera pair, this function is called for the projector while [init_undistort_rectify_map] is called for the camera head.
+	/// This is done after #stereoRectify, which in turn is called after #stereoCalibrate. If the projector-camera pair
+	/// is not calibrated, it is still possible to compute the rectification transformations directly from
+	/// the fundamental matrix using #stereoRectifyUncalibrated. For the projector and camera, the function computes
+	/// homography H as the rectification transformation in a pixel domain, not a rotation matrix R in 3D
+	/// space. R can be computed from H as
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BR%7D%20%3D%20%5Ctexttt%7BcameraMatrix%7D%20%5E%7B%2D1%7D%20%5Ccdot%20%5Ctexttt%7BH%7D%20%5Ccdot%20%5Ctexttt%7BcameraMatrix%7D)
+	/// where cameraMatrix can be chosen arbitrarily.
+	///
+	/// ## Parameters
+	/// * cameraMatrix: Input camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%3D%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+	/// * distCoeffs: Input vector of distortion coefficients
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
+	/// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
+	/// * R: Optional rectification transformation in the object space (3x3 matrix). R1 or R2,
+	/// computed by [stereo_rectify] can be passed here. If the matrix is empty, the identity transformation
+	/// is assumed.
+	/// * newCameraMatrix: New camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%27%3D%5Cbegin%7Bbmatrix%7D%20f%5Fx%27%20%26%200%20%26%20c%5Fx%27%5C%5C%200%20%26%20f%5Fy%27%20%26%20c%5Fy%27%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D).
+	/// * size: Distorted image size.
+	/// * m1type: Type of the first output map. Can be CV_32FC1, CV_32FC2 or CV_16SC2, see [convert_maps]
+	/// * map1: The first output map for #remap.
+	/// * map2: The second output map for #remap.
+	#[inline]
+	pub fn init_inverse_rectification_map(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, r: &impl ToInputArray, new_camera_matrix: &impl ToInputArray, size: core::Size, m1type: i32, map1: &mut impl ToOutputArray, map2: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(camera_matrix);
+		input_array_arg!(dist_coeffs);
+		input_array_arg!(r);
+		input_array_arg!(new_camera_matrix);
+		output_array_arg!(map1);
+		output_array_arg!(map2);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_initInverseRectificationMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes the undistortion and rectification transformation map.
+	///
+	/// The function computes the joint undistortion and rectification transformation and represents the
+	/// result in the form of maps for #remap. The undistorted image looks like original, as if it is
+	/// captured with a camera using the camera matrix =newCameraMatrix and zero distortion. In case of a
+	/// monocular camera, newCameraMatrix is usually equal to cameraMatrix, or it can be computed by
+	/// [get_optimal_new_camera_matrix] for a better control over scaling. In case of a stereo camera,
+	/// newCameraMatrix is normally set to P1 or P2 computed by [stereo_rectify] .
+	///
+	/// Also, this new camera is oriented differently in the coordinate space, according to R. That, for
+	/// example, helps to align two heads of a stereo camera so that the epipolar lines on both images
+	/// become horizontal and have the same y- coordinate (in case of a horizontally aligned stereo camera).
+	///
+	/// The function actually builds the maps for the inverse mapping algorithm that is used by #remap. That
+	/// is, for each pixel ![inline formula](https://latex.codecogs.com/png.latex?%28u%2C%20v%29) in the destination (corrected and rectified) image, the function
+	/// computes the corresponding coordinates in the source image (that is, in the original image from
+	/// camera). The following process is applied:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Barray%7D%7Bl%7D%0Ax%20%20%5Cleftarrow%20%28u%20%2D%20%7Bc%27%7D%5Fx%29%2F%7Bf%27%7D%5Fx%20%20%5C%5C%0Ay%20%20%5Cleftarrow%20%28v%20%2D%20%7Bc%27%7D%5Fy%29%2F%7Bf%27%7D%5Fy%20%20%5C%5C%0A%7B%5BX%5C%2CY%5C%2CW%5D%7D%20%5ET%20%20%5Cleftarrow%20R%5E%7B%2D1%7D%2A%5Bx%20%5C%2C%20y%20%5C%2C%201%5D%5ET%20%20%5C%5C%0Ax%27%20%20%5Cleftarrow%20X%2FW%20%20%5C%5C%0Ay%27%20%20%5Cleftarrow%20Y%2FW%20%20%5C%5C%0Ar%5E2%20%20%5Cleftarrow%20x%27%5E2%20%2B%20y%27%5E2%20%5C%5C%0Ax%27%27%20%20%5Cleftarrow%20x%27%20%5Cfrac%7B1%20%2B%20k%5F1%20r%5E2%20%2B%20k%5F2%20r%5E4%20%2B%20k%5F3%20r%5E6%7D%7B1%20%2B%20k%5F4%20r%5E2%20%2B%20k%5F5%20r%5E4%20%2B%20k%5F6%20r%5E6%7D%0A%2B%202p%5F1%20x%27%20y%27%20%2B%20p%5F2%28r%5E2%20%2B%202%20x%27%5E2%29%20%20%2B%20s%5F1%20r%5E2%20%2B%20s%5F2%20r%5E4%5C%5C%0Ay%27%27%20%20%5Cleftarrow%20y%27%20%5Cfrac%7B1%20%2B%20k%5F1%20r%5E2%20%2B%20k%5F2%20r%5E4%20%2B%20k%5F3%20r%5E6%7D%7B1%20%2B%20k%5F4%20r%5E2%20%2B%20k%5F5%20r%5E4%20%2B%20k%5F6%20r%5E6%7D%0A%2B%20p%5F1%20%28r%5E2%20%2B%202%20y%27%5E2%29%20%2B%202%20p%5F2%20x%27%20y%27%20%2B%20s%5F3%20r%5E2%20%2B%20s%5F4%20r%5E4%20%5C%5C%0As%5Cbegin%7Bbmatrix%7D%20x%27%27%27%5C%5C%20y%27%27%27%5C%5C%201%20%5Cend%7Bbmatrix%7D%20%3D%0A%5Cvecthreethree%7BR%5F%7B33%7D%28%5Ctau%5Fx%2C%20%5Ctau%5Fy%29%7D%7B0%7D%7B%2DR%5F%7B13%7D%28%28%5Ctau%5Fx%2C%20%5Ctau%5Fy%29%7D%0A%7B0%7D%7BR%5F%7B33%7D%28%5Ctau%5Fx%2C%20%5Ctau%5Fy%29%7D%7B%2DR%5F%7B23%7D%28%5Ctau%5Fx%2C%20%5Ctau%5Fy%29%7D%0A%7B0%7D%7B0%7D%7B1%7D%20R%28%5Ctau%5Fx%2C%20%5Ctau%5Fy%29%20%5Cbegin%7Bbmatrix%7D%20x%27%27%5C%5C%20y%27%27%5C%5C%201%20%5Cend%7Bbmatrix%7D%5C%5C%0Amap%5Fx%28u%2Cv%29%20%20%5Cleftarrow%20x%27%27%27%20f%5Fx%20%2B%20c%5Fx%20%20%5C%5C%0Amap%5Fy%28u%2Cv%29%20%20%5Cleftarrow%20y%27%27%27%20f%5Fy%20%2B%20c%5Fy%0A%5Cend%7Barray%7D%0A)
+	/// where ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
+	/// are the distortion coefficients.
+	///
+	/// In case of a stereo camera, this function is called twice: once for each camera head, after
+	/// #stereoRectify, which in its turn is called after #stereoCalibrate. But if the stereo camera
+	/// was not calibrated, it is still possible to compute the rectification transformations directly from
+	/// the fundamental matrix using #stereoRectifyUncalibrated. For each camera, the function computes
+	/// homography H as the rectification transformation in a pixel domain, not a rotation matrix R in 3D
+	/// space. R can be computed from H as
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BR%7D%20%3D%20%5Ctexttt%7BcameraMatrix%7D%20%5E%7B%2D1%7D%20%5Ccdot%20%5Ctexttt%7BH%7D%20%5Ccdot%20%5Ctexttt%7BcameraMatrix%7D)
+	/// where cameraMatrix can be chosen arbitrarily.
+	///
+	/// ## Parameters
+	/// * cameraMatrix: Input camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%3D%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+	/// * distCoeffs: Input vector of distortion coefficients
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
+	/// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
+	/// * R: Optional rectification transformation in the object space (3x3 matrix). R1 or R2 ,
+	/// computed by [stereo_rectify] can be passed here. If the matrix is empty, the identity transformation
+	/// is assumed. In [init_undistort_rectify_map] R assumed to be an identity matrix.
+	/// * newCameraMatrix: New camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%27%3D%5Cbegin%7Bbmatrix%7D%20f%5Fx%27%20%26%200%20%26%20c%5Fx%27%5C%5C%200%20%26%20f%5Fy%27%20%26%20c%5Fy%27%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D).
+	/// * size: Undistorted image size.
+	/// * m1type: Type of the first output map that can be CV_32FC1, CV_32FC2 or CV_16SC2, see [convert_maps]
+	/// * map1: The first output map.
+	/// * map2: The second output map.
+	#[inline]
+	pub fn init_undistort_rectify_map(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, r: &impl ToInputArray, new_camera_matrix: &impl ToInputArray, size: core::Size, m1type: i32, map1: &mut impl ToOutputArray, map2: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(camera_matrix);
+		input_array_arg!(dist_coeffs);
+		input_array_arg!(r);
+		input_array_arg!(new_camera_matrix);
+		output_array_arg!(map1);
+		output_array_arg!(map2);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// initializes maps for [remap] for wide-angle
+	///
+	/// ## Note
+	/// This alternative version of [init_wide_angle_proj_map] function uses the following default values for its arguments:
+	/// * proj_type: PROJ_SPHERICAL_EQRECT
+	/// * alpha: 0
+	#[inline]
+	pub fn init_wide_angle_proj_map_def(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, image_size: core::Size, dest_image_width: i32, m1type: i32, map1: &mut impl ToOutputArray, map2: &mut impl ToOutputArray) -> Result<f32> {
+		input_array_arg!(camera_matrix);
+		input_array_arg!(dist_coeffs);
+		output_array_arg!(map1);
+		output_array_arg!(map2);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &image_size, dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// initializes maps for [remap] for wide-angle
+	///
+	/// ## C++ default parameters
+	/// * proj_type: PROJ_SPHERICAL_EQRECT
+	/// * alpha: 0
+	#[inline]
+	pub fn init_wide_angle_proj_map(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, image_size: core::Size, dest_image_width: i32, m1type: i32, map1: &mut impl ToOutputArray, map2: &mut impl ToOutputArray, proj_type: crate::imgproc::UndistortTypes, alpha: f64) -> Result<f32> {
+		input_array_arg!(camera_matrix);
+		input_array_arg!(dist_coeffs);
+		output_array_arg!(map1);
+		output_array_arg!(map2);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR_UndistortTypes_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &image_size, dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), proj_type, alpha, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Calculates the integral of an image.
 	///
 	/// The function calculates one or more integral images for the source image as follows:
@@ -8666,7 +7958,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	///
-	/// ![integral calculation example](https://docs.opencv.org/4.13.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/5.0.0/integral.png)
 	///
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -8718,7 +8010,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	///
-	/// ![integral calculation example](https://docs.opencv.org/4.13.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/5.0.0/integral.png)
 	///
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -8772,7 +8064,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	///
-	/// ![integral calculation example](https://docs.opencv.org/4.13.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/5.0.0/integral.png)
 	///
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -8824,7 +8116,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	///
-	/// ![integral calculation example](https://docs.opencv.org/4.13.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/5.0.0/integral.png)
 	///
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -8875,7 +8167,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	///
-	/// ![integral calculation example](https://docs.opencv.org/4.13.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/5.0.0/integral.png)
 	///
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -8927,7 +8219,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	///
-	/// ![integral calculation example](https://docs.opencv.org/4.13.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/5.0.0/integral.png)
 	///
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -8950,106 +8242,6 @@ pub mod imgproc {
 		output_array_arg!(sum);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sdepth, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Finds intersection of two convex polygons
-	///
-	/// ## Parameters
-	/// * p1: First polygon
-	/// * p2: Second polygon
-	/// * p12: Output polygon describing the intersecting area
-	/// * handleNested: When true, an intersection is found if one of the polygons is fully enclosed in the other.
-	/// When false, no intersection is found. If the polygons share a side or the vertex of one polygon lies on an edge
-	/// of the other, they are not considered nested and an intersection will be found regardless of the value of handleNested.
-	///
-	/// ## Returns
-	/// Area of intersecting polygon. May be negative, if algorithm has not converged, e.g. non-convex input.
-	///
-	///
-	/// Note: intersectConvexConvex doesn't confirm that both polygons are convex and will return invalid results if they aren't.
-	///
-	/// ## Note
-	/// This alternative version of [intersect_convex_convex] function uses the following default values for its arguments:
-	/// * handle_nested: true
-	#[inline]
-	pub fn intersect_convex_convex_def(p1: &impl ToInputArray, p2: &impl ToInputArray, p12: &mut impl ToOutputArray) -> Result<f32> {
-		input_array_arg!(p1);
-		input_array_arg!(p2);
-		output_array_arg!(p12);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_intersectConvexConvex_const__InputArrayR_const__InputArrayR_const__OutputArrayR(p1.as_raw__InputArray(), p2.as_raw__InputArray(), p12.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Finds intersection of two convex polygons
-	///
-	/// ## Parameters
-	/// * p1: First polygon
-	/// * p2: Second polygon
-	/// * p12: Output polygon describing the intersecting area
-	/// * handleNested: When true, an intersection is found if one of the polygons is fully enclosed in the other.
-	/// When false, no intersection is found. If the polygons share a side or the vertex of one polygon lies on an edge
-	/// of the other, they are not considered nested and an intersection will be found regardless of the value of handleNested.
-	///
-	/// ## Returns
-	/// Area of intersecting polygon. May be negative, if algorithm has not converged, e.g. non-convex input.
-	///
-	///
-	/// Note: intersectConvexConvex doesn't confirm that both polygons are convex and will return invalid results if they aren't.
-	///
-	/// ## C++ default parameters
-	/// * handle_nested: true
-	#[inline]
-	pub fn intersect_convex_convex(p1: &impl ToInputArray, p2: &impl ToInputArray, p12: &mut impl ToOutputArray, handle_nested: bool) -> Result<f32> {
-		input_array_arg!(p1);
-		input_array_arg!(p2);
-		output_array_arg!(p12);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_intersectConvexConvex_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(p1.as_raw__InputArray(), p2.as_raw__InputArray(), p12.as_raw__OutputArray(), handle_nested, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Inverts an affine transformation.
-	///
-	/// The function computes an inverse affine transformation represented by ![inline formula](https://latex.codecogs.com/png.latex?2%20%5Ctimes%203) matrix M:
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20a%5F%7B11%7D%20%26%20a%5F%7B12%7D%20%26%20b%5F1%20%20%5C%5C%20a%5F%7B21%7D%20%26%20a%5F%7B22%7D%20%26%20b%5F2%20%5Cend%7Bbmatrix%7D)
-	///
-	/// The result is also a ![inline formula](https://latex.codecogs.com/png.latex?2%20%5Ctimes%203) matrix of the same type as M.
-	///
-	/// ## Parameters
-	/// * M: Original affine transformation.
-	/// * iM: Output reverse affine transformation.
-	#[inline]
-	pub fn invert_affine_transform(m: &impl ToInputArray, i_m: &mut impl ToOutputArray) -> Result<()> {
-		input_array_arg!(m);
-		output_array_arg!(i_m);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_invertAffineTransform_const__InputArrayR_const__OutputArrayR(m.as_raw__InputArray(), i_m.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Tests a contour convexity.
-	///
-	/// The function tests whether the input contour is convex or not. The contour must be simple, that is,
-	/// without self-intersections. Otherwise, the function output is undefined.
-	///
-	/// ## Parameters
-	/// * contour: Input vector of 2D points, stored in std::vector\<\> or Mat
-	#[inline]
-	pub fn is_contour_convex(contour: &impl ToInputArray) -> Result<bool> {
-		input_array_arg!(contour);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_isContourConvex_const__InputArrayR(contour.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -9111,111 +8303,6 @@ pub mod imgproc {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_line_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), &pt1, &pt2, &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Remaps an image to polar coordinates space.
-	///
-	///
-	/// **Deprecated**: This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags)
-	///
-	/// @internal
-	/// Transform the source image using the following transformation (See [polar_remaps_reference_image] "Polar remaps reference image c)"):
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0A%20%20dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%20%5C%5C%0A%20%20dst%2Esize%28%29%20%5Cleftarrow%20src%2Esize%28%29%0A%5Cend%7Barray%7D)
-	///
-	/// where
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0A%20%20I%20%3D%20%28dx%2Cdy%29%20%3D%20%28x%20%2D%20center%2Ex%2Cy%20%2D%20center%2Ey%29%20%5C%5C%0A%20%20%5Crho%20%3D%20Kmag%20%5Ccdot%20%5Ctexttt%7Bmagnitude%7D%20%28I%29%20%2C%5C%5C%0A%20%20%5Cphi%20%3D%20angle%20%5Ccdot%20%5Ctexttt%7Bangle%7D%20%28I%29%0A%5Cend%7Barray%7D)
-	///
-	/// and
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0A%20%20Kx%20%3D%20src%2Ecols%20%2F%20maxRadius%20%5C%5C%0A%20%20Ky%20%3D%20src%2Erows%20%2F%202%5CPi%0A%5Cend%7Barray%7D)
-	///
-	///
-	/// ## Parameters
-	/// * src: Source image
-	/// * dst: Destination image. It will have same size and type as src.
-	/// * center: The transformation center;
-	/// * maxRadius: The radius of the bounding circle to transform. It determines the inverse magnitude scale parameter too.
-	/// * flags: A combination of interpolation methods, see [interpolation_flags]
-	///
-	///
-	/// Note:
-	/// *   The function can not operate in-place.
-	/// *   To calculate magnitude and angle in degrees [cart_to_polar] is used internally thus angles are measured from 0 to 360 with accuracy about 0.3 degrees.
-	/// ## See also
-	/// cv::logPolar
-	/// @endinternal
-	#[deprecated = "This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags)"]
-	#[inline]
-	pub fn linear_polar(src: &impl ToInputArray, dst: &mut impl ToOutputArray, center: core::Point2f, max_radius: f64, flags: i32) -> Result<()> {
-		input_array_arg!(src);
-		output_array_arg!(dst);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_linearPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &center, max_radius, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Remaps an image to semilog-polar coordinates space.
-	///
-	///
-	/// **Deprecated**: This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags+WARP_POLAR_LOG);
-	///
-	/// @internal
-	/// Transform the source image using the following transformation (See [polar_remaps_reference_image] "Polar remaps reference image d)"):
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0A%20%20dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%20%5C%5C%0A%20%20dst%2Esize%28%29%20%5Cleftarrow%20src%2Esize%28%29%0A%5Cend%7Barray%7D)
-	///
-	/// where
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0A%20%20I%20%3D%20%28dx%2Cdy%29%20%3D%20%28x%20%2D%20center%2Ex%2Cy%20%2D%20center%2Ey%29%20%5C%5C%0A%20%20%5Crho%20%3D%20M%20%5Ccdot%20log%5Fe%28%5Ctexttt%7Bmagnitude%7D%20%28I%29%29%20%2C%5C%5C%0A%20%20%5Cphi%20%3D%20Kangle%20%5Ccdot%20%5Ctexttt%7Bangle%7D%20%28I%29%20%5C%5C%0A%5Cend%7Barray%7D)
-	///
-	/// and
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0A%20%20M%20%3D%20src%2Ecols%20%2F%20log%5Fe%28maxRadius%29%20%5C%5C%0A%20%20Kangle%20%3D%20src%2Erows%20%2F%202%5CPi%20%5C%5C%0A%5Cend%7Barray%7D)
-	///
-	/// The function emulates the human "foveal" vision and can be used for fast scale and
-	/// rotation-invariant template matching, for object tracking and so forth.
-	/// ## Parameters
-	/// * src: Source image
-	/// * dst: Destination image. It will have same size and type as src.
-	/// * center: The transformation center; where the output precision is maximal
-	/// * M: Magnitude scale parameter. It determines the radius of the bounding circle to transform too.
-	/// * flags: A combination of interpolation methods, see [interpolation_flags]
-	///
-	///
-	/// Note:
-	/// *   The function can not operate in-place.
-	/// *   To calculate magnitude and angle in degrees [cart_to_polar] is used internally thus angles are measured from 0 to 360 with accuracy about 0.3 degrees.
-	/// ## See also
-	/// cv::linearPolar
-	/// @endinternal
-	#[deprecated = "This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags+WARP_POLAR_LOG);"]
-	#[inline]
-	pub fn log_polar(src: &impl ToInputArray, dst: &mut impl ToOutputArray, center: core::Point2f, m: f64, flags: i32) -> Result<()> {
-		input_array_arg!(src);
-		output_array_arg!(dst);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_logPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &center, m, flags, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Compares two shapes.
-	///
-	/// The function compares two shapes. All three implemented methods use the Hu invariants (see #HuMoments)
-	///
-	/// ## Parameters
-	/// * contour1: First contour or grayscale image.
-	/// * contour2: Second contour or grayscale image.
-	/// * method: Comparison method, see [shape_match_modes]
-	/// * parameter: Method-specific parameter (not supported now).
-	#[inline]
-	pub fn match_shapes(contour1: &impl ToInputArray, contour2: &impl ToInputArray, method: i32, parameter: f64) -> Result<f64> {
-		input_array_arg!(contour1);
-		input_array_arg!(contour2);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_matchShapes_const__InputArrayR_const__InputArrayR_int_double(contour1.as_raw__InputArray(), contour2.as_raw__InputArray(), method, parameter, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -9335,194 +8422,6 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// Finds a rotated rectangle of the minimum area enclosing the input 2D point set.
-	///
-	/// The function calculates and returns the minimum-area bounding rectangle (possibly rotated) for a
-	/// specified point set. The angle of rotation represents the angle between the line connecting the starting
-	/// and ending points (based on the clockwise order with greatest index for the corner with greatest ![inline formula](https://latex.codecogs.com/png.latex?y))
-	/// and the horizontal axis. This angle always falls between ![inline formula](https://latex.codecogs.com/png.latex?%5B%2D90%2C%200%29) because, if the object
-	/// rotates more than a rect angle, the next edge is used to measure the angle. The starting and ending points change
-	/// as the object rotates.Developer should keep in mind that the returned RotatedRect can contain negative
-	/// indices when data is close to the containing Mat element boundary.
-	///
-	/// ## Parameters
-	/// * points: Input vector of 2D points, stored in std::vector\<\> or Mat
-	#[inline]
-	pub fn min_area_rect(points: &impl ToInputArray) -> Result<core::RotatedRect> {
-		input_array_arg!(points);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_minAreaRect_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Finds a circle of the minimum area enclosing a 2D point set.
-	///
-	/// The function finds the minimal enclosing circle of a 2D point set using an iterative algorithm.
-	///
-	/// ## Parameters
-	/// * points: Input vector of 2D points, stored in std::vector\<\> or Mat
-	/// * center: Output center of the circle.
-	/// * radius: Output radius of the circle.
-	#[inline]
-	pub fn min_enclosing_circle(points: &impl ToInputArray, center: &mut core::Point2f, radius: &mut f32) -> Result<()> {
-		input_array_arg!(points);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_minEnclosingCircle_const__InputArrayR_Point2fR_floatR(points.as_raw__InputArray(), center, radius, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Finds a convex polygon of minimum area enclosing a 2D point set and returns its area.
-	///
-	/// This function takes a given set of 2D points and finds the enclosing polygon with k vertices and minimal
-	/// area. It takes the set of points and the parameter k as input and returns the area of the minimal
-	/// enclosing polygon.
-	///
-	/// The Implementation is based on a paper by Aggarwal, Chang and Yap [Aggarwal1985](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Aggarwal1985). They
-	/// provide a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%C2%B2log%28n%29log%28k%29%29) algorithm for finding the minimal convex polygon with k
-	/// vertices enclosing a 2D convex polygon with n vertices (k < n). Since the [min_enclosing_convex_polygon]
-	/// function takes a 2D point set as input, an additional preprocessing step of computing the convex hull
-	/// of the 2D point set is required. The complexity of the [convex_hull] function is ![inline formula](https://latex.codecogs.com/png.latex?O%28n%20log%28n%29%29) which
-	/// is lower than ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%C2%B2log%28n%29log%28k%29%29). Thus the overall complexity of the function is
-	/// ![inline formula](https://latex.codecogs.com/png.latex?O%28n%C2%B2log%28n%29log%28k%29%29).
-	///
-	/// ## Parameters
-	/// * points: Input vector of 2D points, stored in std::vector\<\> or Mat
-	/// * polygon: Output vector of 2D points defining the vertices of the enclosing polygon
-	/// * k: Number of vertices of the output polygon
-	#[inline]
-	pub fn min_enclosing_convex_polygon(points: &impl ToInputArray, polygon: &mut impl ToOutputArray, k: i32) -> Result<f64> {
-		input_array_arg!(points);
-		output_array_arg!(polygon);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_minEnclosingConvexPolygon_const__InputArrayR_const__OutputArrayR_int(points.as_raw__InputArray(), polygon.as_raw__OutputArray(), k, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Finds a triangle of minimum area enclosing a 2D point set and returns its area.
-	///
-	/// The function finds a triangle of minimum area enclosing the given set of 2D points and returns its
-	/// area. The output for a given 2D point set is shown in the image below. 2D points are depicted in
-	/// *red* and the enclosing triangle in *yellow*.
-	///
-	/// ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/4.13.0/minenclosingtriangle.png)
-	///
-	/// The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
-	/// [KleeLaskowski85](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
-	/// enclosing triangle of a 2D convex polygon with n vertices. Since the [min_enclosing_triangle] function
-	/// takes a 2D point set as input an additional preprocessing step of computing the convex hull of the
-	/// 2D point set is required. The complexity of the [convex_hull] function is ![inline formula](https://latex.codecogs.com/png.latex?O%28n%20log%28n%29%29) which is higher
-	/// than ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29). Thus the overall complexity of the function is ![inline formula](https://latex.codecogs.com/png.latex?O%28n%20log%28n%29%29).
-	///
-	/// ## Parameters
-	/// * points: Input vector of 2D points with depth CV_32S or CV_32F, stored in std::vector\<\> or Mat
-	/// * triangle: Output vector of three 2D points defining the vertices of the triangle. The depth
-	/// of the OutputArray must be CV_32F.
-	#[inline]
-	pub fn min_enclosing_triangle(points: &impl ToInputArray, triangle: &mut impl ToOutputArray) -> Result<f64> {
-		input_array_arg!(points);
-		output_array_arg!(triangle);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_minEnclosingTriangle_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), triangle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Calculates all of the moments up to the third order of a polygon or rasterized shape.
-	///
-	/// The function computes moments, up to the 3rd order, of a vector shape or a rasterized shape. The
-	/// results are returned in the structure cv::Moments.
-	///
-	/// ## Parameters
-	/// * array: Single chanel raster image (CV_8U, CV_16U, CV_16S, CV_32F, CV_64F) or an array (
-	/// ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20N) or ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Ctimes%201) ) of 2D points (Point or Point2f).
-	/// * binaryImage: If it is true, all non-zero image pixels are treated as 1's. The parameter is
-	/// used for images only.
-	/// ## Returns
-	/// moments.
-	///
-	///
-	/// Note: Only applicable to contour moments calculations from Python bindings: Note that the numpy
-	/// type for the input array should be either np.int32 or np.float32.
-	///
-	///
-	/// Note: For contour-based moments, the zeroth-order moment \c m00 represents
-	/// the contour area.
-	///
-	/// If the input contour is degenerate (for example, a single point or all points
-	/// are collinear), the area is zero and therefore \c m00 == 0.
-	///
-	/// In this case, the centroid coordinates (\c m10/m00, \c m01/m00) are undefined
-	/// and must be handled explicitly by the caller.
-	///
-	/// A common workaround is to compute the center using cv::boundingRect() or by
-	/// averaging the input points.
-	/// ## See also
-	/// contourArea, arcLength
-	///
-	/// ## Note
-	/// This alternative version of [moments] function uses the following default values for its arguments:
-	/// * binary_image: false
-	#[inline]
-	pub fn moments_def(array: &impl ToInputArray) -> Result<core::Moments> {
-		input_array_arg!(array);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_moments_const__InputArrayR(array.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Calculates all of the moments up to the third order of a polygon or rasterized shape.
-	///
-	/// The function computes moments, up to the 3rd order, of a vector shape or a rasterized shape. The
-	/// results are returned in the structure cv::Moments.
-	///
-	/// ## Parameters
-	/// * array: Single chanel raster image (CV_8U, CV_16U, CV_16S, CV_32F, CV_64F) or an array (
-	/// ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20N) or ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Ctimes%201) ) of 2D points (Point or Point2f).
-	/// * binaryImage: If it is true, all non-zero image pixels are treated as 1's. The parameter is
-	/// used for images only.
-	/// ## Returns
-	/// moments.
-	///
-	///
-	/// Note: Only applicable to contour moments calculations from Python bindings: Note that the numpy
-	/// type for the input array should be either np.int32 or np.float32.
-	///
-	///
-	/// Note: For contour-based moments, the zeroth-order moment \c m00 represents
-	/// the contour area.
-	///
-	/// If the input contour is degenerate (for example, a single point or all points
-	/// are collinear), the area is zero and therefore \c m00 == 0.
-	///
-	/// In this case, the centroid coordinates (\c m10/m00, \c m01/m00) are undefined
-	/// and must be handled explicitly by the caller.
-	///
-	/// A common workaround is to compute the center using cv::boundingRect() or by
-	/// averaging the input points.
-	/// ## See also
-	/// contourArea, arcLength
-	///
-	/// ## C++ default parameters
-	/// * binary_image: false
-	#[inline]
-	pub fn moments(array: &impl ToInputArray, binary_image: bool) -> Result<core::Moments> {
-		input_array_arg!(array);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_moments_const__InputArrayR_bool(array.as_raw__InputArray(), binary_image, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
 	/// returns "magic" border value for erosion and dilation. It is automatically transformed to Scalar::all(-DBL_MAX) for dilation.
 	#[inline]
 	pub fn morphology_default_border_value() -> Result<core::Scalar> {
@@ -9626,7 +8525,7 @@ pub mod imgproc {
 	///
 	/// This function extends the standard [phaseCorrelate] method by improving sub-pixel accuracy
 	/// through iterative shift refinement in the phase-correlation space, as described in
-	/// [hrazdira2020iterative](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_hrazdira2020iterative).
+	/// [hrazdira2020iterative](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_hrazdira2020iterative).
 	///
 	/// ## Parameters
 	/// * src1: Source floating point array (CV_32FC1 or CV_64FC1)
@@ -9657,7 +8556,7 @@ pub mod imgproc {
 	///
 	/// This function extends the standard [phaseCorrelate] method by improving sub-pixel accuracy
 	/// through iterative shift refinement in the phase-correlation space, as described in
-	/// [hrazdira2020iterative](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_hrazdira2020iterative).
+	/// [hrazdira2020iterative](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_hrazdira2020iterative).
 	///
 	/// ## Parameters
 	/// * src1: Source floating point array (CV_32FC1 or CV_64FC1)
@@ -9683,6 +8582,9 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
+	/// @example samples/cpp/snippets/phase_corr.cpp
+	/// An example using the phaseCorrelate function
+	///
 	/// The function is used to detect translational shifts that occur between two images.
 	///
 	/// The operation takes advantage of the Fourier shift theorem for detecting the translational shift in
@@ -9735,6 +8637,9 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
+	/// @example samples/cpp/snippets/phase_corr.cpp
+	/// An example using the phaseCorrelate function
+	///
 	/// The function is used to detect translational shifts that occur between two images.
 	///
 	/// The operation takes advantage of the Fourier shift theorem for detecting the translational shift in
@@ -9782,32 +8687,6 @@ pub mod imgproc {
 		input_array_arg!(window);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_phaseCorrelate_const__InputArrayR_const__InputArrayR_const__InputArrayR_doubleX(src1.as_raw__InputArray(), src2.as_raw__InputArray(), window.as_raw__InputArray(), response, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Performs a point-in-contour test.
-	///
-	/// The function determines whether the point is inside a contour, outside, or lies on an edge (or
-	/// coincides with a vertex). It returns positive (inside), negative (outside), or zero (on an edge)
-	/// value, correspondingly. When measureDist=false , the return value is +1, -1, and 0, respectively.
-	/// Otherwise, the return value is a signed distance between the point and the nearest contour edge.
-	///
-	/// See below a sample output of the function where each image pixel is tested against the contour:
-	///
-	/// ![sample output](https://docs.opencv.org/4.13.0/pointpolygon.png)
-	///
-	/// ## Parameters
-	/// * contour: Input contour.
-	/// * pt: Point tested against the contour.
-	/// * measureDist: If true, the function estimates the signed distance from the point to the
-	/// nearest contour edge. Otherwise, the function only checks if the point is inside a contour or not.
-	#[inline]
-	pub fn point_polygon_test(contour: &impl ToInputArray, pt: core::Point2f, measure_dist: bool) -> Result<f64> {
-		input_array_arg!(contour);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_pointPolygonTest_const__InputArrayR_Point2f_bool(contour.as_raw__InputArray(), &pt, measure_dist, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -9944,6 +8823,93 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_preCornerDetect_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize, border_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Draws a text string using specified font.
+	///
+	/// The function cv::putText renders the specified text string in the image. Symbols that cannot be rendered
+	/// using the specified font are replaced by question marks. See [get_text_size] for a text rendering code
+	/// example. The function returns the coordinates in pixels from where the text can be continued.
+	///
+	/// ## Parameters
+	/// * img: Image.
+	/// * text: Text string to be drawn.
+	/// * org: Bottom-left corner of the first character of the printed text
+	///            (see PUT_TEXT_ALIGN_... though)
+	/// * color: Text color.
+	/// * fface: The font to use for the text
+	/// * size: Font size in pixels (by default) or pts
+	/// * weight: Font weight, 100..1000,
+	///        where 100 is "thin" font, 400 is "regular",
+	///        600 is "semibold", 800 is "bold" and beyond that is "black".
+	///        The parameter is ignored if the font is not a variable font or if it does not provide variation along 'wght' axis.
+	///        If the weight is 0, then the weight, currently set via setInstance(), is used.
+	/// * flags: Various flags, see PUT_TEXT_...
+	/// * wrap: The optional text wrapping range:
+	///        In the case of left-to-right (LTR) text if the printed character would cross wrap.end boundary,
+	///        the "cursor" is set to wrap.start.
+	///        In the case of right-to-left (RTL) text it's vice versa.
+	///        If the parameters is not set,
+	///        [org.x, img.cols] is used for LTR text and
+	///        [0, org.x] is for RTL one.
+	///
+	/// ## Note
+	/// This alternative version of [put_text_1] function uses the following default values for its arguments:
+	/// * weight: 0
+	/// * flags: PUT_TEXT_ALIGN_LEFT
+	/// * wrap: Range()
+	#[inline]
+	pub fn put_text_1_def(img: &mut impl ToInputOutputArray, text: &str, org: core::Point, color: core::Scalar, fface: &mut impl crate::imgproc::FontFaceTrait, size: i32) -> Result<core::Point> {
+		input_output_array_arg!(img);
+		extern_container_arg!(text);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_putText_const__InputOutputArrayR_const_StringR_Point_Scalar_FontFaceR_int(img.as_raw__InputOutputArray(), text.opencv_as_extern(), &org, &color, fface.as_raw_mut_FontFace(), size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Draws a text string using specified font.
+	///
+	/// The function cv::putText renders the specified text string in the image. Symbols that cannot be rendered
+	/// using the specified font are replaced by question marks. See [get_text_size] for a text rendering code
+	/// example. The function returns the coordinates in pixels from where the text can be continued.
+	///
+	/// ## Parameters
+	/// * img: Image.
+	/// * text: Text string to be drawn.
+	/// * org: Bottom-left corner of the first character of the printed text
+	///            (see PUT_TEXT_ALIGN_... though)
+	/// * color: Text color.
+	/// * fface: The font to use for the text
+	/// * size: Font size in pixels (by default) or pts
+	/// * weight: Font weight, 100..1000,
+	///        where 100 is "thin" font, 400 is "regular",
+	///        600 is "semibold", 800 is "bold" and beyond that is "black".
+	///        The parameter is ignored if the font is not a variable font or if it does not provide variation along 'wght' axis.
+	///        If the weight is 0, then the weight, currently set via setInstance(), is used.
+	/// * flags: Various flags, see PUT_TEXT_...
+	/// * wrap: The optional text wrapping range:
+	///        In the case of left-to-right (LTR) text if the printed character would cross wrap.end boundary,
+	///        the "cursor" is set to wrap.start.
+	///        In the case of right-to-left (RTL) text it's vice versa.
+	///        If the parameters is not set,
+	///        [org.x, img.cols] is used for LTR text and
+	///        [0, org.x] is for RTL one.
+	///
+	/// ## C++ default parameters
+	/// * weight: 0
+	/// * flags: PUT_TEXT_ALIGN_LEFT
+	/// * wrap: Range()
+	#[inline]
+	pub fn put_text_1(img: &mut impl ToInputOutputArray, text: &str, org: core::Point, color: core::Scalar, fface: &mut impl crate::imgproc::FontFaceTrait, size: i32, weight: i32, flags: crate::imgproc::PutTextFlags, mut wrap: impl core::RangeTrait) -> Result<core::Point> {
+		input_output_array_arg!(img);
+		extern_container_arg!(text);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_putText_const__InputOutputArrayR_const_StringR_Point_Scalar_FontFaceR_int_int_PutTextFlags_Range(img.as_raw__InputOutputArray(), text.opencv_as_extern(), &org, &color, fface.as_raw_mut_FontFace(), size, weight, flags, wrap.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -10429,6 +9395,8 @@ pub mod imgproc {
 	/// borderMode=#BORDER_TRANSPARENT, it means that the pixels in the destination image that
 	/// corresponds to the "outliers" in the source image are not modified by the function.
 	/// * borderValue: Value used in case of a constant border. By default, it is 0.
+	/// * hint: Implementation modification flags. Set [ALGO_HINT_APPROX] to use FP16 precision (if available)
+	/// for linear calculation for faster speed. See #AlgorithmHint.
 	///
 	/// Note:
 	/// Due to current implementation limitations the size of an input and output images should be less than 32767x32767.
@@ -10437,6 +9405,7 @@ pub mod imgproc {
 	/// This alternative version of [remap] function uses the following default values for its arguments:
 	/// * border_mode: BORDER_CONSTANT
 	/// * border_value: Scalar()
+	/// * hint: cv::ALGO_HINT_DEFAULT
 	#[inline]
 	pub fn remap_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, map1: &impl ToInputArray, map2: &impl ToInputArray, interpolation: i32) -> Result<()> {
 		input_array_arg!(src);
@@ -10486,6 +9455,8 @@ pub mod imgproc {
 	/// borderMode=#BORDER_TRANSPARENT, it means that the pixels in the destination image that
 	/// corresponds to the "outliers" in the source image are not modified by the function.
 	/// * borderValue: Value used in case of a constant border. By default, it is 0.
+	/// * hint: Implementation modification flags. Set [ALGO_HINT_APPROX] to use FP16 precision (if available)
+	/// for linear calculation for faster speed. See #AlgorithmHint.
 	///
 	/// Note:
 	/// Due to current implementation limitations the size of an input and output images should be less than 32767x32767.
@@ -10493,14 +9464,15 @@ pub mod imgproc {
 	/// ## C++ default parameters
 	/// * border_mode: BORDER_CONSTANT
 	/// * border_value: Scalar()
+	/// * hint: cv::ALGO_HINT_DEFAULT
 	#[inline]
-	pub fn remap(src: &impl ToInputArray, dst: &mut impl ToOutputArray, map1: &impl ToInputArray, map2: &impl ToInputArray, interpolation: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
+	pub fn remap(src: &impl ToInputArray, dst: &mut impl ToOutputArray, map1: &impl ToInputArray, map2: &impl ToInputArray, interpolation: i32, border_mode: i32, border_value: core::Scalar, hint: core::AlgorithmHint) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(map1);
 		input_array_arg!(map2);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_remap_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), map1.as_raw__InputArray(), map2.as_raw__InputArray(), interpolation, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_remap_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int_int_const_ScalarR_AlgorithmHint(src.as_raw__InputArray(), dst.as_raw__OutputArray(), map1.as_raw__InputArray(), map2.as_raw__InputArray(), interpolation, border_mode, &border_value, hint, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -10606,32 +9578,6 @@ pub mod imgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_resize_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dsize, fx, fy, interpolation, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-
-	/// Finds out if there is any intersection between two rotated rectangles.
-	///
-	/// If there is then the vertices of the intersecting region are returned as well.
-	///
-	/// Below are some examples of intersection configurations. The hatched pattern indicates the
-	/// intersecting region and the red vertices are returned by the function.
-	///
-	/// ![intersection examples](https://docs.opencv.org/4.13.0/intersection.png)
-	///
-	/// ## Parameters
-	/// * rect1: First rectangle
-	/// * rect2: Second rectangle
-	/// * intersectingRegion: The output array of the vertices of the intersecting region. It returns
-	/// at most 8 vertices. Stored as std::vector\<cv::Point2f\> or cv::Mat as Mx1 of type CV_32FC2.
-	/// ## Returns
-	/// One of #RectanglesIntersectTypes
-	#[inline]
-	pub fn rotated_rectangle_intersection(rect1: core::RotatedRect, rect2: core::RotatedRect, intersecting_region: &mut impl ToOutputArray) -> Result<i32> {
-		output_array_arg!(intersecting_region);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rotatedRectangleIntersection_const_RotatedRectR_const_RotatedRectR_const__OutputArrayR(&rect1, &rect2, intersecting_region.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -10947,6 +9893,96 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
+	/// Transforms an image to compensate for lens distortion.
+	///
+	/// The function transforms an image to compensate radial and tangential lens distortion.
+	///
+	/// The function is simply a combination of [init_undistort_rectify_map] (with unity R ) and [remap]
+	/// (with bilinear interpolation). See the former function for details of the transformation being
+	/// performed.
+	///
+	/// Those pixels in the destination image, for which there is no correspondent pixels in the source
+	/// image, are filled with zeros (black color).
+	///
+	/// A particular subset of the source image that will be visible in the corrected image can be regulated
+	/// by newCameraMatrix. You can use [get_optimal_new_camera_matrix] to compute the appropriate
+	/// newCameraMatrix depending on your requirements.
+	///
+	/// The camera matrix and the distortion parameters can be determined using #calibrateCamera. If
+	/// the resolution of images is different from the resolution used at the calibration stage, ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%2C%0Af%5Fy%2C%20c%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?c%5Fy) need to be scaled accordingly, while the distortion coefficients remain
+	/// the same.
+	///
+	/// ## Parameters
+	/// * src: Input (distorted) image.
+	/// * dst: Output (corrected) image that has the same size and type as src .
+	/// * cameraMatrix: Input camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+	/// * distCoeffs: Input vector of distortion coefficients
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
+	/// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
+	/// * newCameraMatrix: Camera matrix of the distorted image. By default, it is the same as
+	/// cameraMatrix but you may additionally scale and shift the result by using a different matrix.
+	///
+	/// ## Note
+	/// This alternative version of [undistort] function uses the following default values for its arguments:
+	/// * new_camera_matrix: noArray()
+	#[inline]
+	pub fn undistort_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(camera_matrix);
+		input_array_arg!(dist_coeffs);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_undistort_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Transforms an image to compensate for lens distortion.
+	///
+	/// The function transforms an image to compensate radial and tangential lens distortion.
+	///
+	/// The function is simply a combination of [init_undistort_rectify_map] (with unity R ) and [remap]
+	/// (with bilinear interpolation). See the former function for details of the transformation being
+	/// performed.
+	///
+	/// Those pixels in the destination image, for which there is no correspondent pixels in the source
+	/// image, are filled with zeros (black color).
+	///
+	/// A particular subset of the source image that will be visible in the corrected image can be regulated
+	/// by newCameraMatrix. You can use [get_optimal_new_camera_matrix] to compute the appropriate
+	/// newCameraMatrix depending on your requirements.
+	///
+	/// The camera matrix and the distortion parameters can be determined using #calibrateCamera. If
+	/// the resolution of images is different from the resolution used at the calibration stage, ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%2C%0Af%5Fy%2C%20c%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?c%5Fy) need to be scaled accordingly, while the distortion coefficients remain
+	/// the same.
+	///
+	/// ## Parameters
+	/// * src: Input (distorted) image.
+	/// * dst: Output (corrected) image that has the same size and type as src .
+	/// * cameraMatrix: Input camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+	/// * distCoeffs: Input vector of distortion coefficients
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
+	/// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
+	/// * newCameraMatrix: Camera matrix of the distorted image. By default, it is the same as
+	/// cameraMatrix but you may additionally scale and shift the result by using a different matrix.
+	///
+	/// ## C++ default parameters
+	/// * new_camera_matrix: noArray()
+	#[inline]
+	pub fn undistort(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, new_camera_matrix: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(camera_matrix);
+		input_array_arg!(dist_coeffs);
+		input_array_arg!(new_camera_matrix);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_undistort_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Applies an affine transformation to an image.
 	///
 	/// The function warpAffine transforms the source image using the specified matrix:
@@ -10969,6 +10005,8 @@ pub mod imgproc {
 	/// borderMode=#BORDER_TRANSPARENT, it means that the pixels in the destination image corresponding to
 	/// the "outliers" in the source image are not modified by the function.
 	/// * borderValue: value used in case of a constant border; by default, it is 0.
+	/// * hint: Implementation modification flags. Set [ALGO_HINT_APPROX] to use FP16 precision (if available)
+	/// for linear calculation for faster speed. See #AlgorithmHint.
 	/// ## See also
 	/// warpPerspective, resize, remap, getRectSubPix, transform
 	///
@@ -10977,6 +10015,7 @@ pub mod imgproc {
 	/// * flags: INTER_LINEAR
 	/// * border_mode: BORDER_CONSTANT
 	/// * border_value: Scalar()
+	/// * hint: cv::ALGO_HINT_DEFAULT
 	#[inline]
 	pub fn warp_affine_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, m: &impl ToInputArray, dsize: core::Size) -> Result<()> {
 		input_array_arg!(src);
@@ -11011,6 +10050,8 @@ pub mod imgproc {
 	/// borderMode=#BORDER_TRANSPARENT, it means that the pixels in the destination image corresponding to
 	/// the "outliers" in the source image are not modified by the function.
 	/// * borderValue: value used in case of a constant border; by default, it is 0.
+	/// * hint: Implementation modification flags. Set [ALGO_HINT_APPROX] to use FP16 precision (if available)
+	/// for linear calculation for faster speed. See #AlgorithmHint.
 	/// ## See also
 	/// warpPerspective, resize, remap, getRectSubPix, transform
 	///
@@ -11018,13 +10059,14 @@ pub mod imgproc {
 	/// * flags: INTER_LINEAR
 	/// * border_mode: BORDER_CONSTANT
 	/// * border_value: Scalar()
+	/// * hint: cv::ALGO_HINT_DEFAULT
 	#[inline]
-	pub fn warp_affine(src: &impl ToInputArray, dst: &mut impl ToOutputArray, m: &impl ToInputArray, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
+	pub fn warp_affine(src: &impl ToInputArray, dst: &mut impl ToOutputArray, m: &impl ToInputArray, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar, hint: core::AlgorithmHint) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, flags, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR_AlgorithmHint(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, flags, border_mode, &border_value, hint, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -11049,6 +10091,8 @@ pub mod imgproc {
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%5Crightarrow%5Ctexttt%7Bsrc%7D) ).
 	/// * borderMode: pixel extrapolation method ([BORDER_CONSTANT] or #BORDER_REPLICATE).
 	/// * borderValue: value used in case of a constant border; by default, it equals 0.
+	/// * hint: Implementation modification flags. Set [ALGO_HINT_APPROX] to use FP16 precision (if available)
+	/// for linear calculation for faster speed. See #AlgorithmHint.
 	/// ## See also
 	/// warpAffine, resize, remap, getRectSubPix, perspectiveTransform
 	///
@@ -11057,6 +10101,7 @@ pub mod imgproc {
 	/// * flags: INTER_LINEAR
 	/// * border_mode: BORDER_CONSTANT
 	/// * border_value: Scalar()
+	/// * hint: cv::ALGO_HINT_DEFAULT
 	#[inline]
 	pub fn warp_perspective_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, m: &impl ToInputArray, dsize: core::Size) -> Result<()> {
 		input_array_arg!(src);
@@ -11088,6 +10133,8 @@ pub mod imgproc {
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%5Crightarrow%5Ctexttt%7Bsrc%7D) ).
 	/// * borderMode: pixel extrapolation method ([BORDER_CONSTANT] or #BORDER_REPLICATE).
 	/// * borderValue: value used in case of a constant border; by default, it equals 0.
+	/// * hint: Implementation modification flags. Set [ALGO_HINT_APPROX] to use FP16 precision (if available)
+	/// for linear calculation for faster speed. See #AlgorithmHint.
 	/// ## See also
 	/// warpAffine, resize, remap, getRectSubPix, perspectiveTransform
 	///
@@ -11095,13 +10142,14 @@ pub mod imgproc {
 	/// * flags: INTER_LINEAR
 	/// * border_mode: BORDER_CONSTANT
 	/// * border_value: Scalar()
+	/// * hint: cv::ALGO_HINT_DEFAULT
 	#[inline]
-	pub fn warp_perspective(src: &impl ToInputArray, dst: &mut impl ToOutputArray, m: &impl ToInputArray, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
+	pub fn warp_perspective(src: &impl ToInputArray, dst: &mut impl ToOutputArray, m: &impl ToInputArray, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar, hint: core::AlgorithmHint) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(m);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, flags, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR_AlgorithmHint(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), &dsize, flags, border_mode, &border_value, hint, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -11110,7 +10158,7 @@ pub mod imgproc {
 	/// \brief Remaps an image to polar or semilog-polar coordinates space
 	///
 	/// @anchor polar_remaps_reference_image
-	/// ![Polar remaps reference](https://docs.opencv.org/4.13.0/polar_remap_doc.png)
+	/// ![Polar remaps reference](https://docs.opencv.org/5.0.0/polar_remap_doc.png)
 	///
 	/// Transform the source image using the following transformation:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Adst%28%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%0A)
@@ -11151,7 +10199,7 @@ pub mod imgproc {
 	/// You can get reverse mapping adding [WARP_INVERSE_MAP] to `flags`
 	/// \snippet polar_transforms.cpp InverseMap
 	///
-	/// In addiction, to calculate the original coordinate from a polar mapped coordinate ![inline formula](https://latex.codecogs.com/png.latex?%28rho%2C%20phi%29%2D%3E%28x%2C%20y%29):
+	/// In addition, to calculate the original coordinate from a polar mapped coordinate ![inline formula](https://latex.codecogs.com/png.latex?%28rho%2C%20phi%29%2D%3E%28x%2C%20y%29):
 	/// \snippet polar_transforms.cpp InverseCoordinate
 	///
 	/// ## Parameters
@@ -11185,7 +10233,7 @@ pub mod imgproc {
 	/// Performs a marker-based image segmentation using the watershed algorithm.
 	///
 	/// The function implements one of the variants of watershed, non-parametric marker-based segmentation
-	/// algorithm, described in [Meyer92](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Meyer92) .
+	/// algorithm, described in [Meyer92](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Meyer92) .
 	///
 	/// Before passing the image to the function, you have to roughly outline the desired regions in the
 	/// image markers with positive (\>0) indices. So, every region is represented as one or more connected
@@ -11406,6 +10454,161 @@ pub mod imgproc {
 	}
 
 	boxed_ref! { CLAHE, crate::imgproc::CLAHETraitConst, as_raw_CLAHE, crate::imgproc::CLAHETrait, as_raw_mut_CLAHE }
+
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq)]
+	pub struct Filter2DParams {
+		pub anchor_x: i32,
+		pub anchor_y: i32,
+		pub border_type: i32,
+		pub border_value: core::Scalar,
+		pub ddepth: i32,
+		pub scale: f64,
+		pub shift: f64,
+	}
+
+	opencv_type_simple! { crate::imgproc::Filter2DParams }
+
+	/// Wrapper on top of a truetype/opentype/etc font, i.e. Freetype's FT_Face.
+	///
+	/// The class is used to store the loaded fonts;
+	/// the font can then be passed to the functions
+	/// putText and getTextSize.
+	pub struct FontFace {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { FontFace }
+
+	impl Drop for FontFace {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_FontFace_delete(self.as_raw_mut_FontFace()) };
+		}
+	}
+
+	unsafe impl Send for FontFace {}
+
+	impl FontFace {
+		/// loads default font
+		#[inline]
+		pub fn default() -> Result<crate::imgproc::FontFace> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FontFace_FontFace(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::FontFace::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// loads font at the specified path or with specified name.
+		/// ## Parameters
+		/// * fontPathOrName: either path to the custom font or the name of embedded font: "sans", "italic" or "uni".
+		///    Empty fontPathOrName means the default embedded font.
+		#[inline]
+		pub fn new(font_path_or_name: &str) -> Result<crate::imgproc::FontFace> {
+			extern_container_arg!(font_path_or_name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FontFace_FontFace_const_StringR(font_path_or_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::FontFace::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn get_builtin_font_data(font_name: &str, data: &mut *const u8, datasize: &mut size_t) -> Result<bool> {
+			extern_container_arg!(font_name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FontFace_getBuiltinFontData_const_StringR_const_unsigned_charXR_size_tR(font_name.opencv_as_extern(), data, datasize, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::imgproc::FontFace]
+	pub trait FontFaceTraitConst {
+		fn as_raw_FontFace(&self) -> *const c_void;
+
+		#[inline]
+		fn get_name(&self) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FontFace_getName_const(self.as_raw_FontFace(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_instance(&self, params: &mut core::Vector<i32>) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FontFace_getInstance_const_vectorLintGR(self.as_raw_FontFace(), params.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::imgproc::FontFace]
+	pub trait FontFaceTrait: crate::imgproc::FontFaceTraitConst {
+		fn as_raw_mut_FontFace(&mut self) -> *mut c_void;
+
+		/// loads new font face
+		#[inline]
+		fn set(&mut self, font_path_or_name: &str) -> Result<bool> {
+			extern_container_arg!(font_path_or_name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FontFace_set_const_StringR(self.as_raw_mut_FontFace(), font_path_or_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// sets the current variable font instance.
+		/// ## Parameters
+		/// * params: The list of pairs key1, value1, key2, value2, ..., e.g.
+		///      `myfont.setInstance({CV_FOURCC('w','g','h','t'), 400<<16, CV_FOURCC('s','l','n','t'), -(15<<16)});`
+		/// Note that the parameter values are specified in 16.16 fixed-point format, that is, integer values
+		/// need to be shifted by 16 (or multiplied by 65536).
+		#[inline]
+		fn set_instance(&mut self, params: &core::Vector<i32>) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FontFace_setInstance_const_vectorLintGR(self.as_raw_mut_FontFace(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl Clone for FontFace {
+		#[inline]
+		fn clone(&self) -> Self {
+			unsafe { Self::from_raw(sys::cv_FontFace_implicitClone_const(self.as_raw_FontFace())) }
+		}
+	}
+
+	impl std::fmt::Debug for FontFace {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FontFace")
+				.finish()
+		}
+	}
+
+	impl crate::imgproc::FontFaceTraitConst for FontFace {
+		#[inline] fn as_raw_FontFace(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::imgproc::FontFaceTrait for FontFace {
+		#[inline] fn as_raw_mut_FontFace(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { FontFace, crate::imgproc::FontFaceTraitConst, as_raw_FontFace, crate::imgproc::FontFaceTrait, as_raw_mut_FontFace }
 
 	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
 	pub struct GeneralizedHough {
@@ -11688,7 +10891,7 @@ pub mod imgproc {
 
 	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
 	///
-	/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
+	/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 	pub struct GeneralizedHoughBallard {
 		ptr: *mut c_void,
 	}
@@ -11798,7 +11001,7 @@ pub mod imgproc {
 
 	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
 	///
-	/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Guil1999) .
+	/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 	pub struct GeneralizedHoughGuil {
 		ptr: *mut c_void,
 	}
@@ -12540,7 +11743,7 @@ pub mod imgproc {
 
 	/// Line segment detector class
 	///
-	/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Rafael12) .
+	/// following the algorithm described at [Rafael12](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Rafael12) .
 	///
 	///
 	/// Note: Implementation has been removed from OpenCV version 3.4.6 to 3.4.15 and version 4.1.0 to 4.5.3 due original code license conflict.
@@ -12574,7 +11777,7 @@ pub mod imgproc {
 		///
 		/// This is the output of the default parameters of the algorithm on the above shown image.
 		///
-		/// ![image](https://docs.opencv.org/4.13.0/building_lsd.png)
+		/// ![image](https://docs.opencv.org/5.0.0/building_lsd.png)
 		///
 		/// ## Parameters
 		/// * image: A grayscale (CV_8UC1) input image. If only a roi needs to be selected, use:
@@ -12613,7 +11816,7 @@ pub mod imgproc {
 		///
 		/// This is the output of the default parameters of the algorithm on the above shown image.
 		///
-		/// ![image](https://docs.opencv.org/4.13.0/building_lsd.png)
+		/// ![image](https://docs.opencv.org/5.0.0/building_lsd.png)
 		///
 		/// ## Parameters
 		/// * image: A grayscale (CV_8UC1) input image. If only a roi needs to be selected, use:
@@ -12739,876 +11942,5 @@ pub mod imgproc {
 	}
 
 	boxed_ref! { LineSegmentDetector, crate::imgproc::LineSegmentDetectorTraitConst, as_raw_LineSegmentDetector, crate::imgproc::LineSegmentDetectorTrait, as_raw_mut_LineSegmentDetector }
-
-	pub struct Subdiv2D {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Subdiv2D }
-
-	impl Drop for Subdiv2D {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Subdiv2D_delete(self.as_raw_mut_Subdiv2D()) };
-		}
-	}
-
-	unsafe impl Send for Subdiv2D {}
-
-	impl Subdiv2D {
-		/// creates an empty Subdiv2D object.
-		/// To create a new empty Delaunay subdivision you need to use the [init_delaunay] function.
-		#[inline]
-		pub fn default() -> Result<crate::imgproc::Subdiv2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_Subdiv2D(ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates an empty Subdiv2D object.
-		/// To create a new empty Delaunay subdivision you need to use the [init_delaunay] function.
-		///
-		/// ## Overloaded parameters
-		///
-		///
-		/// ## Parameters
-		/// * rect: Rectangle that includes all of the 2D points that are to be added to the subdivision.
-		///
-		/// The function creates an empty Delaunay subdivision where 2D points can be added using the function
-		/// insert() . All of the points to be added must be within the specified rectangle, otherwise a runtime
-		/// error is raised.
-		#[inline]
-		pub fn new(rect: core::Rect) -> Result<crate::imgproc::Subdiv2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_Subdiv2D_Rect(&rect, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates an empty Subdiv2D object.
-		/// To create a new empty Delaunay subdivision you need to use the [init_delaunay] function.
-		///
-		/// ## Overloaded parameters
-		#[inline]
-		pub fn new_1(rect2f: core::Rect2f) -> Result<crate::imgproc::Subdiv2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_Subdiv2D_Rect2f(&rect2f, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Constant methods for [crate::imgproc::Subdiv2D]
-	pub trait Subdiv2DTraitConst {
-		fn as_raw_Subdiv2D(&self) -> *const c_void;
-
-		/// Returns a list of all edges.
-		///
-		/// ## Parameters
-		/// * edgeList: Output vector.
-		///
-		/// The function gives each edge as a 4 numbers vector, where each two are one of the edge
-		/// vertices. i.e. org_x = v[0], org_y = v[1], dst_x = v[2], dst_y = v[3].
-		#[inline]
-		fn get_edge_list(&self, edge_list: &mut core::Vector<core::Vec4f>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_getEdgeList_const_vectorLVec4fGR(self.as_raw_Subdiv2D(), edge_list.as_raw_mut_VectorOfVec4f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns a list of the leading edge ID connected to each triangle.
-		///
-		/// ## Parameters
-		/// * leadingEdgeList: Output vector.
-		///
-		/// The function gives one edge ID for each triangle.
-		#[inline]
-		fn get_leading_edge_list(&self, leading_edge_list: &mut core::Vector<i32>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_getLeadingEdgeList_const_vectorLintGR(self.as_raw_Subdiv2D(), leading_edge_list.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns a list of all triangles.
-		///
-		/// ## Parameters
-		/// * triangleList: Output vector.
-		///
-		/// The function gives each triangle as a 6 numbers vector, where each two are one of the triangle
-		/// vertices. i.e. p1_x = v[0], p1_y = v[1], p2_x = v[2], p2_y = v[3], p3_x = v[4], p3_y = v[5].
-		#[inline]
-		fn get_triangle_list(&self, triangle_list: &mut core::Vector<core::Vec6f>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_getTriangleList_const_vectorLVec6fGR(self.as_raw_Subdiv2D(), triangle_list.as_raw_mut_VectorOfVec6f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns vertex location from vertex ID.
-		///
-		/// ## Parameters
-		/// * vertex: vertex ID.
-		/// * firstEdge: Optional. The first edge ID which is connected to the vertex.
-		/// ## Returns
-		/// vertex (x,y)
-		///
-		/// ## C++ default parameters
-		/// * first_edge: 0
-		#[inline]
-		fn get_vertex(&self, vertex: i32, first_edge: &mut i32) -> Result<core::Point2f> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_getVertex_const_int_intX(self.as_raw_Subdiv2D(), vertex, first_edge, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns vertex location from vertex ID.
-		///
-		/// ## Parameters
-		/// * vertex: vertex ID.
-		/// * firstEdge: Optional. The first edge ID which is connected to the vertex.
-		/// ## Returns
-		/// vertex (x,y)
-		///
-		/// ## Note
-		/// This alternative version of [Subdiv2DTraitConst::get_vertex] function uses the following default values for its arguments:
-		/// * first_edge: 0
-		#[inline]
-		fn get_vertex_def(&self, vertex: i32) -> Result<core::Point2f> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_getVertex_const_int(self.as_raw_Subdiv2D(), vertex, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns one of the edges related to the given edge.
-		///
-		/// ## Parameters
-		/// * edge: Subdivision edge ID.
-		/// * nextEdgeType: Parameter specifying which of the related edges to return.
-		/// The following values are possible:
-		/// *   NEXT_AROUND_ORG next around the edge origin ( eOnext on the picture below if e is the input edge)
-		/// *   NEXT_AROUND_DST next around the edge vertex ( eDnext )
-		/// *   PREV_AROUND_ORG previous around the edge origin (reversed eRnext )
-		/// *   PREV_AROUND_DST previous around the edge destination (reversed eLnext )
-		/// *   NEXT_AROUND_LEFT next around the left facet ( eLnext )
-		/// *   NEXT_AROUND_RIGHT next around the right facet ( eRnext )
-		/// *   PREV_AROUND_LEFT previous around the left facet (reversed eOnext )
-		/// *   PREV_AROUND_RIGHT previous around the right facet (reversed eDnext )
-		///
-		/// ![sample output](https://docs.opencv.org/4.13.0/quadedge.png)
-		///
-		/// ## Returns
-		/// edge ID related to the input edge.
-		#[inline]
-		fn get_edge(&self, edge: i32, next_edge_type: i32) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_getEdge_const_int_int(self.as_raw_Subdiv2D(), edge, next_edge_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns next edge around the edge origin.
-		///
-		/// ## Parameters
-		/// * edge: Subdivision edge ID.
-		///
-		/// ## Returns
-		/// an integer which is next edge ID around the edge origin: eOnext on the
-		/// picture above if e is the input edge).
-		#[inline]
-		fn next_edge(&self, edge: i32) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_nextEdge_const_int(self.as_raw_Subdiv2D(), edge, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns another edge of the same quad-edge.
-		///
-		/// ## Parameters
-		/// * edge: Subdivision edge ID.
-		/// * rotate: Parameter specifying which of the edges of the same quad-edge as the input
-		/// one to return. The following values are possible:
-		/// *   0 - the input edge ( e on the picture below if e is the input edge)
-		/// *   1 - the rotated edge ( eRot )
-		/// *   2 - the reversed edge (reversed e (in green))
-		/// *   3 - the reversed rotated edge (reversed eRot (in green))
-		///
-		/// ## Returns
-		/// one of the edges ID of the same quad-edge as the input edge.
-		#[inline]
-		fn rotate_edge(&self, edge: i32, rotate: i32) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_rotateEdge_const_int_int(self.as_raw_Subdiv2D(), edge, rotate, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn sym_edge(&self, edge: i32) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_symEdge_const_int(self.as_raw_Subdiv2D(), edge, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns the edge origin.
-		///
-		/// ## Parameters
-		/// * edge: Subdivision edge ID.
-		/// * orgpt: Output vertex location.
-		///
-		/// ## Returns
-		/// vertex ID.
-		///
-		/// ## C++ default parameters
-		/// * orgpt: 0
-		#[inline]
-		fn edge_org(&self, edge: i32, orgpt: &mut core::Point2f) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_edgeOrg_const_int_Point2fX(self.as_raw_Subdiv2D(), edge, orgpt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns the edge origin.
-		///
-		/// ## Parameters
-		/// * edge: Subdivision edge ID.
-		/// * orgpt: Output vertex location.
-		///
-		/// ## Returns
-		/// vertex ID.
-		///
-		/// ## Note
-		/// This alternative version of [Subdiv2DTraitConst::edge_org] function uses the following default values for its arguments:
-		/// * orgpt: 0
-		#[inline]
-		fn edge_org_def(&self, edge: i32) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_edgeOrg_const_int(self.as_raw_Subdiv2D(), edge, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns the edge destination.
-		///
-		/// ## Parameters
-		/// * edge: Subdivision edge ID.
-		/// * dstpt: Output vertex location.
-		///
-		/// ## Returns
-		/// vertex ID.
-		///
-		/// ## C++ default parameters
-		/// * dstpt: 0
-		#[inline]
-		fn edge_dst(&self, edge: i32, dstpt: &mut core::Point2f) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_edgeDst_const_int_Point2fX(self.as_raw_Subdiv2D(), edge, dstpt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns the edge destination.
-		///
-		/// ## Parameters
-		/// * edge: Subdivision edge ID.
-		/// * dstpt: Output vertex location.
-		///
-		/// ## Returns
-		/// vertex ID.
-		///
-		/// ## Note
-		/// This alternative version of [Subdiv2DTraitConst::edge_dst] function uses the following default values for its arguments:
-		/// * dstpt: 0
-		#[inline]
-		fn edge_dst_def(&self, edge: i32) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_edgeDst_const_int(self.as_raw_Subdiv2D(), edge, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::imgproc::Subdiv2D]
-	pub trait Subdiv2DTrait: crate::imgproc::Subdiv2DTraitConst {
-		fn as_raw_mut_Subdiv2D(&mut self) -> *mut c_void;
-
-		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-		///
-		/// Creates a new empty Delaunay subdivision
-		///
-		/// ## Parameters
-		/// * rect: Rectangle that includes all of the 2D points that are to be added to the subdivision.
-		#[inline]
-		fn init_delaunay(&mut self, rect: core::Rect) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_initDelaunay_Rect(self.as_raw_mut_Subdiv2D(), &rect, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-		///
-		/// Creates a new empty Delaunay subdivision
-		///
-		/// ## Parameters
-		/// * rect: Rectangle that includes all of the 2d points that are to be added to the subdivision.
-		#[inline]
-		fn init_delaunay2f(&mut self, rect: core::Rect2f) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_initDelaunay_Rect2f(self.as_raw_mut_Subdiv2D(), &rect, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Insert a single point into a Delaunay triangulation.
-		///
-		/// ## Parameters
-		/// * pt: Point to insert.
-		///
-		/// The function inserts a single point into a subdivision and modifies the subdivision topology
-		/// appropriately. If a point with the same coordinates exists already, no new point is added.
-		/// ## Returns
-		/// the ID of the point.
-		///
-		///
-		/// Note: If the point is outside of the triangulation specified rect a runtime error is raised.
-		#[inline]
-		fn insert(&mut self, pt: core::Point2f) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_insert_Point2f(self.as_raw_mut_Subdiv2D(), &pt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Insert multiple points into a Delaunay triangulation.
-		///
-		/// ## Parameters
-		/// * ptvec: Points to insert.
-		///
-		/// The function inserts a vector of points into a subdivision and modifies the subdivision topology
-		/// appropriately.
-		#[inline]
-		fn insert_multiple(&mut self, ptvec: &core::Vector<core::Point2f>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_insert_const_vectorLPoint2fGR(self.as_raw_mut_Subdiv2D(), ptvec.as_raw_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns the location of a point within a Delaunay triangulation.
-		///
-		/// ## Parameters
-		/// * pt: Point to locate.
-		/// * edge: Output edge that the point belongs to or is located to the right of it.
-		/// * vertex: Optional output vertex the input point coincides with.
-		///
-		/// The function locates the input point within the subdivision and gives one of the triangle edges
-		/// or vertices.
-		///
-		/// ## Returns
-		/// an integer which specify one of the following five cases for point location:
-		/// *  The point falls into some facet. The function returns [PTLOC_INSIDE] and edge will contain one of
-		///    edges of the facet.
-		/// *  The point falls onto the edge. The function returns [PTLOC_ON_EDGE] and edge will contain this edge.
-		/// *  The point coincides with one of the subdivision vertices. The function returns [PTLOC_VERTEX] and
-		///    vertex will contain a pointer to the vertex.
-		/// *  The point is outside the subdivision reference rectangle. The function returns [PTLOC_OUTSIDE_RECT]
-		///    and no pointers are filled.
-		/// *  One of input arguments is invalid. A runtime error is raised or, if silent or "parent" error
-		///    processing mode is selected, [PTLOC_ERROR] is returned.
-		#[inline]
-		fn locate(&mut self, pt: core::Point2f, edge: &mut i32, vertex: &mut i32) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_locate_Point2f_intR_intR(self.as_raw_mut_Subdiv2D(), &pt, edge, vertex, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Finds the subdivision vertex closest to the given point.
-		///
-		/// ## Parameters
-		/// * pt: Input point.
-		/// * nearestPt: Output subdivision vertex point.
-		///
-		/// The function is another function that locates the input point within the subdivision. It finds the
-		/// subdivision vertex that is the closest to the input point. It is not necessarily one of vertices
-		/// of the facet containing the input point, though the facet (located using locate() ) is used as a
-		/// starting point.
-		///
-		/// ## Returns
-		/// vertex ID.
-		///
-		/// ## C++ default parameters
-		/// * nearest_pt: 0
-		#[inline]
-		fn find_nearest(&mut self, pt: core::Point2f, nearest_pt: &mut core::Point2f) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_findNearest_Point2f_Point2fX(self.as_raw_mut_Subdiv2D(), &pt, nearest_pt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Finds the subdivision vertex closest to the given point.
-		///
-		/// ## Parameters
-		/// * pt: Input point.
-		/// * nearestPt: Output subdivision vertex point.
-		///
-		/// The function is another function that locates the input point within the subdivision. It finds the
-		/// subdivision vertex that is the closest to the input point. It is not necessarily one of vertices
-		/// of the facet containing the input point, though the facet (located using locate() ) is used as a
-		/// starting point.
-		///
-		/// ## Returns
-		/// vertex ID.
-		///
-		/// ## Note
-		/// This alternative version of [Subdiv2DTrait::find_nearest] function uses the following default values for its arguments:
-		/// * nearest_pt: 0
-		#[inline]
-		fn find_nearest_def(&mut self, pt: core::Point2f) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_findNearest_Point2f(self.as_raw_mut_Subdiv2D(), &pt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Returns a list of all Voronoi facets.
-		///
-		/// ## Parameters
-		/// * idx: Vector of vertices IDs to consider. For all vertices you can pass empty vector.
-		/// * facetList: Output vector of the Voronoi facets.
-		/// * facetCenters: Output vector of the Voronoi facets center points.
-		#[inline]
-		fn get_voronoi_facet_list(&mut self, idx: &core::Vector<i32>, facet_list: &mut core::Vector<core::Vector<core::Point2f>>, facet_centers: &mut core::Vector<core::Point2f>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_getVoronoiFacetList_const_vectorLintGR_vectorLvectorLPoint2fGGR_vectorLPoint2fGR(self.as_raw_mut_Subdiv2D(), idx.as_raw_VectorOfi32(), facet_list.as_raw_mut_VectorOfVectorOfPoint2f(), facet_centers.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for Subdiv2D {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Subdiv2D")
-				.finish()
-		}
-	}
-
-	impl crate::imgproc::Subdiv2DTraitConst for Subdiv2D {
-		#[inline] fn as_raw_Subdiv2D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::imgproc::Subdiv2DTrait for Subdiv2D {
-		#[inline] fn as_raw_mut_Subdiv2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Subdiv2D, crate::imgproc::Subdiv2DTraitConst, as_raw_Subdiv2D, crate::imgproc::Subdiv2DTrait, as_raw_mut_Subdiv2D }
-
-	/// Intelligent Scissors image segmentation
-	///
-	/// This class is used to find the path (contour) between two points
-	/// which can be used for image segmentation.
-	///
-	/// Usage example:
-	/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.13.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
-	///
-	/// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
-	/// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
-	/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
-	pub struct IntelligentScissorsMB {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { IntelligentScissorsMB }
-
-	impl Drop for IntelligentScissorsMB {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_delete(self.as_raw_mut_IntelligentScissorsMB()) };
-		}
-	}
-
-	unsafe impl Send for IntelligentScissorsMB {}
-
-	impl IntelligentScissorsMB {
-		#[inline]
-		pub fn default() -> Result<crate::imgproc::IntelligentScissorsMB> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_IntelligentScissorsMB(ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Constant methods for [crate::imgproc::IntelligentScissorsMB]
-	pub trait IntelligentScissorsMBTraitConst {
-		fn as_raw_IntelligentScissorsMB(&self) -> *const c_void;
-
-		/// Extracts optimal contour for the given target point on the image
-		///
-		///
-		/// Note: buildMap() must be called before this call
-		///
-		/// ## Parameters
-		/// * targetPt: The target point
-		/// * contour:[out] The list of pixels which contains optimal path between the source and the target points of the image. Type is CV_32SC2 (compatible with `std::vector<Point>`)
-		/// * backward: Flag to indicate reverse order of retrieved pixels (use "true" value to fetch points from the target to the source point)
-		///
-		/// ## C++ default parameters
-		/// * backward: false
-		#[inline]
-		fn get_contour(&self, target_pt: core::Point, contour: &mut impl ToOutputArray, backward: bool) -> Result<()> {
-			output_array_arg!(contour);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_getContour_const_const_PointR_const__OutputArrayR_bool(self.as_raw_IntelligentScissorsMB(), &target_pt, contour.as_raw__OutputArray(), backward, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Extracts optimal contour for the given target point on the image
-		///
-		///
-		/// Note: buildMap() must be called before this call
-		///
-		/// ## Parameters
-		/// * targetPt: The target point
-		/// * contour:[out] The list of pixels which contains optimal path between the source and the target points of the image. Type is CV_32SC2 (compatible with `std::vector<Point>`)
-		/// * backward: Flag to indicate reverse order of retrieved pixels (use "true" value to fetch points from the target to the source point)
-		///
-		/// ## Note
-		/// This alternative version of [IntelligentScissorsMBTraitConst::get_contour] function uses the following default values for its arguments:
-		/// * backward: false
-		#[inline]
-		fn get_contour_def(&self, target_pt: core::Point, contour: &mut impl ToOutputArray) -> Result<()> {
-			output_array_arg!(contour);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_getContour_const_const_PointR_const__OutputArrayR(self.as_raw_IntelligentScissorsMB(), &target_pt, contour.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::imgproc::IntelligentScissorsMB]
-	pub trait IntelligentScissorsMBTrait: crate::imgproc::IntelligentScissorsMBTraitConst {
-		fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void;
-
-		/// Specify weights of feature functions
-		///
-		/// Consider keeping weights normalized (sum of weights equals to 1.0)
-		/// Discrete dynamic programming (DP) goal is minimization of costs between pixels.
-		///
-		/// ## Parameters
-		/// * weight_non_edge: Specify cost of non-edge pixels (default: 0.43f)
-		/// * weight_gradient_direction: Specify cost of gradient direction function (default: 0.43f)
-		/// * weight_gradient_magnitude: Specify cost of gradient magnitude function (default: 0.14f)
-		#[inline]
-		fn set_weights(&mut self, weight_non_edge: f32, weight_gradient_direction: f32, weight_gradient_magnitude: f32) -> Result<crate::imgproc::IntelligentScissorsMB> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setWeights_float_float_float(self.as_raw_mut_IntelligentScissorsMB(), weight_non_edge, weight_gradient_direction, weight_gradient_magnitude, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Specify gradient magnitude max value threshold
-		///
-		/// Zero limit value is used to disable gradient magnitude thresholding (default behavior, as described in original article).
-		/// Otherwize pixels with `gradient magnitude >= threshold` have zero cost.
-		///
-		///
-		/// Note: Thresholding should be used for images with irregular regions (to avoid stuck on parameters from high-contract areas, like embedded logos).
-		///
-		/// ## Parameters
-		/// * gradient_magnitude_threshold_max: Specify gradient magnitude max value threshold (default: 0, disabled)
-		///
-		/// ## C++ default parameters
-		/// * gradient_magnitude_threshold_max: 0.0f
-		#[inline]
-		fn set_gradient_magnitude_max_limit(&mut self, gradient_magnitude_threshold_max: f32) -> Result<crate::imgproc::IntelligentScissorsMB> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setGradientMagnitudeMaxLimit_float(self.as_raw_mut_IntelligentScissorsMB(), gradient_magnitude_threshold_max, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Specify gradient magnitude max value threshold
-		///
-		/// Zero limit value is used to disable gradient magnitude thresholding (default behavior, as described in original article).
-		/// Otherwize pixels with `gradient magnitude >= threshold` have zero cost.
-		///
-		///
-		/// Note: Thresholding should be used for images with irregular regions (to avoid stuck on parameters from high-contract areas, like embedded logos).
-		///
-		/// ## Parameters
-		/// * gradient_magnitude_threshold_max: Specify gradient magnitude max value threshold (default: 0, disabled)
-		///
-		/// ## Note
-		/// This alternative version of [IntelligentScissorsMBTrait::set_gradient_magnitude_max_limit] function uses the following default values for its arguments:
-		/// * gradient_magnitude_threshold_max: 0.0f
-		#[inline]
-		fn set_gradient_magnitude_max_limit_def(&mut self) -> Result<crate::imgproc::IntelligentScissorsMB> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setGradientMagnitudeMaxLimit(self.as_raw_mut_IntelligentScissorsMB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Switch to "Laplacian Zero-Crossing" edge feature extractor and specify its parameters
-		///
-		/// This feature extractor is used by default according to article.
-		///
-		/// Implementation has additional filtering for regions with low-amplitude noise.
-		/// This filtering is enabled through parameter of minimal gradient amplitude (use some small value 4, 8, 16).
-		///
-		///
-		/// Note: Current implementation of this feature extractor is based on processing of grayscale images (color image is converted to grayscale image first).
-		///
-		///
-		/// Note: Canny edge detector is a bit slower, but provides better results (especially on color images): use setEdgeFeatureCannyParameters().
-		///
-		/// ## Parameters
-		/// * gradient_magnitude_min_value: Minimal gradient magnitude value for edge pixels (default: 0, check is disabled)
-		///
-		/// ## C++ default parameters
-		/// * gradient_magnitude_min_value: 0.0f
-		#[inline]
-		fn set_edge_feature_zero_crossing_parameters(&mut self, gradient_magnitude_min_value: f32) -> Result<crate::imgproc::IntelligentScissorsMB> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureZeroCrossingParameters_float(self.as_raw_mut_IntelligentScissorsMB(), gradient_magnitude_min_value, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Switch to "Laplacian Zero-Crossing" edge feature extractor and specify its parameters
-		///
-		/// This feature extractor is used by default according to article.
-		///
-		/// Implementation has additional filtering for regions with low-amplitude noise.
-		/// This filtering is enabled through parameter of minimal gradient amplitude (use some small value 4, 8, 16).
-		///
-		///
-		/// Note: Current implementation of this feature extractor is based on processing of grayscale images (color image is converted to grayscale image first).
-		///
-		///
-		/// Note: Canny edge detector is a bit slower, but provides better results (especially on color images): use setEdgeFeatureCannyParameters().
-		///
-		/// ## Parameters
-		/// * gradient_magnitude_min_value: Minimal gradient magnitude value for edge pixels (default: 0, check is disabled)
-		///
-		/// ## Note
-		/// This alternative version of [IntelligentScissorsMBTrait::set_edge_feature_zero_crossing_parameters] function uses the following default values for its arguments:
-		/// * gradient_magnitude_min_value: 0.0f
-		#[inline]
-		fn set_edge_feature_zero_crossing_parameters_def(&mut self) -> Result<crate::imgproc::IntelligentScissorsMB> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureZeroCrossingParameters(self.as_raw_mut_IntelligentScissorsMB(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Switch edge feature extractor to use Canny edge detector
-		///
-		///
-		/// Note: "Laplacian Zero-Crossing" feature extractor is used by default (following to original article)
-		/// ## See also
-		/// Canny
-		///
-		/// ## C++ default parameters
-		/// * aperture_size: 3
-		/// * l2gradient: false
-		#[inline]
-		fn set_edge_feature_canny_parameters(&mut self, threshold1: f64, threshold2: f64, aperture_size: i32, l2gradient: bool) -> Result<crate::imgproc::IntelligentScissorsMB> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureCannyParameters_double_double_int_bool(self.as_raw_mut_IntelligentScissorsMB(), threshold1, threshold2, aperture_size, l2gradient, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Switch edge feature extractor to use Canny edge detector
-		///
-		///
-		/// Note: "Laplacian Zero-Crossing" feature extractor is used by default (following to original article)
-		/// ## See also
-		/// Canny
-		///
-		/// ## Note
-		/// This alternative version of [IntelligentScissorsMBTrait::set_edge_feature_canny_parameters] function uses the following default values for its arguments:
-		/// * aperture_size: 3
-		/// * l2gradient: false
-		#[inline]
-		fn set_edge_feature_canny_parameters_def(&mut self, threshold1: f64, threshold2: f64) -> Result<crate::imgproc::IntelligentScissorsMB> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_setEdgeFeatureCannyParameters_double_double(self.as_raw_mut_IntelligentScissorsMB(), threshold1, threshold2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Specify input image and extract image features
-		///
-		/// ## Parameters
-		/// * image: input image. Type is [CV_8UC1] / #CV_8UC3
-		#[inline]
-		fn apply_image(&mut self, image: &impl ToInputArray) -> Result<crate::imgproc::IntelligentScissorsMB> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImage_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Specify custom features of input image
-		///
-		/// Customized advanced variant of applyImage() call.
-		///
-		/// ## Parameters
-		/// * non_edge: Specify cost of non-edge pixels. Type is CV_8UC1. Expected values are `{0, 1}`.
-		/// * gradient_direction: Specify gradient direction feature. Type is CV_32FC2. Values are expected to be normalized: `x^2 + y^2 == 1`
-		/// * gradient_magnitude: Specify cost of gradient magnitude function: Type is CV_32FC1. Values should be in range `[0, 1]`.
-		/// * image: **Optional parameter**. Must be specified if subset of features is specified (non-specified features are calculated internally)
-		///
-		/// ## C++ default parameters
-		/// * image: noArray()
-		#[inline]
-		fn apply_image_features(&mut self, non_edge: &impl ToInputArray, gradient_direction: &impl ToInputArray, gradient_magnitude: &impl ToInputArray, image: &impl ToInputArray) -> Result<crate::imgproc::IntelligentScissorsMB> {
-			input_array_arg!(non_edge);
-			input_array_arg!(gradient_direction);
-			input_array_arg!(gradient_magnitude);
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImageFeatures_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), non_edge.as_raw__InputArray(), gradient_direction.as_raw__InputArray(), gradient_magnitude.as_raw__InputArray(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Specify custom features of input image
-		///
-		/// Customized advanced variant of applyImage() call.
-		///
-		/// ## Parameters
-		/// * non_edge: Specify cost of non-edge pixels. Type is CV_8UC1. Expected values are `{0, 1}`.
-		/// * gradient_direction: Specify gradient direction feature. Type is CV_32FC2. Values are expected to be normalized: `x^2 + y^2 == 1`
-		/// * gradient_magnitude: Specify cost of gradient magnitude function: Type is CV_32FC1. Values should be in range `[0, 1]`.
-		/// * image: **Optional parameter**. Must be specified if subset of features is specified (non-specified features are calculated internally)
-		///
-		/// ## Note
-		/// This alternative version of [IntelligentScissorsMBTrait::apply_image_features] function uses the following default values for its arguments:
-		/// * image: noArray()
-		#[inline]
-		fn apply_image_features_def(&mut self, non_edge: &impl ToInputArray, gradient_direction: &impl ToInputArray, gradient_magnitude: &impl ToInputArray) -> Result<crate::imgproc::IntelligentScissorsMB> {
-			input_array_arg!(non_edge);
-			input_array_arg!(gradient_direction);
-			input_array_arg!(gradient_magnitude);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImageFeatures_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), non_edge.as_raw__InputArray(), gradient_direction.as_raw__InputArray(), gradient_magnitude.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Prepares a map of optimal paths for the given source point on the image
-		///
-		///
-		/// Note: applyImage() / applyImageFeatures() must be called before this call
-		///
-		/// ## Parameters
-		/// * sourcePt: The source point used to find the paths
-		#[inline]
-		fn build_map(&mut self, source_pt: core::Point) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_buildMap_const_PointR(self.as_raw_mut_IntelligentScissorsMB(), &source_pt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	impl Clone for IntelligentScissorsMB {
-		#[inline]
-		fn clone(&self) -> Self {
-			unsafe { Self::from_raw(sys::cv_segmentation_IntelligentScissorsMB_implicitClone_const(self.as_raw_IntelligentScissorsMB())) }
-		}
-	}
-
-	impl std::fmt::Debug for IntelligentScissorsMB {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("IntelligentScissorsMB")
-				.finish()
-		}
-	}
-
-	impl crate::imgproc::IntelligentScissorsMBTraitConst for IntelligentScissorsMB {
-		#[inline] fn as_raw_IntelligentScissorsMB(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::imgproc::IntelligentScissorsMBTrait for IntelligentScissorsMB {
-		#[inline] fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { IntelligentScissorsMB, crate::imgproc::IntelligentScissorsMBTraitConst, as_raw_IntelligentScissorsMB, crate::imgproc::IntelligentScissorsMBTrait, as_raw_mut_IntelligentScissorsMB }
 
 }

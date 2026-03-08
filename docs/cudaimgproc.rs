@@ -8,7 +8,7 @@ pub mod cudaimgproc {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{CUDA_CLAHETrait, CUDA_CLAHETraitConst, CUDA_CannyEdgeDetectorTrait, CUDA_CannyEdgeDetectorTraitConst, CUDA_CornernessCriteriaTrait, CUDA_CornernessCriteriaTraitConst, CUDA_CornersDetectorTrait, CUDA_CornersDetectorTraitConst, CUDA_HoughCirclesDetectorTrait, CUDA_HoughCirclesDetectorTraitConst, CUDA_HoughLinesDetectorTrait, CUDA_HoughLinesDetectorTraitConst, CUDA_HoughSegmentDetectorTrait, CUDA_HoughSegmentDetectorTraitConst, CUDA_TemplateMatchingTrait, CUDA_TemplateMatchingTraitConst};
+		pub use super::{CUDA_CLAHETrait, CUDA_CLAHETraitConst, CUDA_CannyEdgeDetectorTrait, CUDA_CannyEdgeDetectorTraitConst, CUDA_HoughCirclesDetectorTrait, CUDA_HoughCirclesDetectorTraitConst, CUDA_HoughLinesDetectorTrait, CUDA_HoughLinesDetectorTraitConst, CUDA_HoughSegmentDetectorTrait, CUDA_HoughSegmentDetectorTraitConst, CUDA_TemplateMatchingTrait, CUDA_TemplateMatchingTraitConst};
 	}
 
 	pub const CUDA_ALPHA_ATOP: i32 = 3;
@@ -24,9 +24,9 @@ pub mod cudaimgproc {
 	pub const CUDA_ALPHA_PREMUL: i32 = 12;
 	pub const CUDA_ALPHA_XOR: i32 = 4;
 	pub const CUDA_ALPHA_XOR_PREMUL: i32 = 10;
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+	/// BKE [Allegretti2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 	pub const CUDA_CCL_BKE: i32 = 0;
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+	/// BKE [Allegretti2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 	pub const CUDA_CCL_DEFAULT: i32 = -1;
 	/// Bayer Demosaicing (Malvar, He, and Cutler)
 	pub const CUDA_COLOR_BayerBG2BGR_MHT: i32 = 256;
@@ -79,9 +79,9 @@ pub mod cudaimgproc {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_ConnectedComponentsAlgorithmsTypes {
-		/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+		/// BKE [Allegretti2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 		CCL_DEFAULT = -1,
-		/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+		/// BKE [Allegretti2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 		CCL_BKE = 0,
 	}
 
@@ -429,7 +429,7 @@ pub mod cudaimgproc {
 	/// ltype specifies the output label image type, an important consideration based on the total
 	/// number of labels or alternatively the total number of pixels in the source image.
 	/// ccltype specifies the connected components labeling algorithm to use, currently
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
+	/// BKE [Allegretti2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
 	/// for details. Note that labels in the output are not required to be sequential.
 	///
 	/// ## Parameters
@@ -474,7 +474,7 @@ pub mod cudaimgproc {
 	/// ltype specifies the output label image type, an important consideration based on the total
 	/// number of labels or alternatively the total number of pixels in the source image.
 	/// ccltype specifies the connected components labeling algorithm to use, currently
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
+	/// BKE [Allegretti2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
 	/// for details. Note that labels in the output are not required to be sequential.
 	///
 	/// ## Parameters
@@ -518,7 +518,7 @@ pub mod cudaimgproc {
 	/// ltype specifies the output label image type, an important consideration based on the total
 	/// number of labels or alternatively the total number of pixels in the source image.
 	/// ccltype specifies the connected components labeling algorithm to use, currently
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
+	/// BKE [Allegretti2019](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
 	/// for details. Note that labels in the output are not required to be sequential.
 	///
 	/// ## Parameters
@@ -652,7 +652,7 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 
-	/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
+	/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 	#[inline]
 	pub fn create_generalized_hough_ballard() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughBallard>> {
 		return_send!(via ocvrs_return);
@@ -663,7 +663,7 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 
-	/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Guil1999) .
+	/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 	#[inline]
 	pub fn create_generalized_hough_guil() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughGuil>> {
 		return_send!(via ocvrs_return);
@@ -671,128 +671,6 @@ pub mod cudaimgproc {
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
-	/// Creates implementation for cuda::CornersDetector .
-	///
-	/// ## Parameters
-	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
-	/// * maxCorners: Maximum number of corners to return. If there are more corners than are found,
-	/// the strongest of them is returned.
-	/// * qualityLevel: Parameter characterizing the minimal accepted quality of image corners. The
-	/// parameter value is multiplied by the best corner quality measure, which is the minimal eigenvalue
-	/// (see cornerMinEigenVal ) or the Harris function response (see cornerHarris ). The corners with the
-	/// quality measure less than the product are rejected. For example, if the best corner has the
-	/// quality measure = 1500, and the qualityLevel=0.01 , then all the corners with the quality measure
-	/// less than 15 are rejected.
-	/// * minDistance: Minimum possible Euclidean distance between the returned corners.
-	/// * blockSize: Size of an average block for computing a derivative covariation matrix over each
-	/// pixel neighborhood. See cornerEigenValsAndVecs .
-	/// * useHarrisDetector: Parameter indicating whether to use a Harris detector (see cornerHarris)
-	/// or cornerMinEigenVal.
-	/// * harrisK: Free parameter of the Harris detector.
-	///
-	/// ## Note
-	/// This alternative version of [create_good_features_to_track_detector] function uses the following default values for its arguments:
-	/// * max_corners: 1000
-	/// * quality_level: 0.01
-	/// * min_distance: 0.0
-	/// * block_size: 3
-	/// * use_harris_detector: false
-	/// * harris_k: 0.04
-	#[inline]
-	pub fn create_good_features_to_track_detector_def(src_type: i32) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CornersDetector>> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createGoodFeaturesToTrackDetector_int(src_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornersDetector>::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
-	/// Creates implementation for cuda::CornersDetector .
-	///
-	/// ## Parameters
-	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
-	/// * maxCorners: Maximum number of corners to return. If there are more corners than are found,
-	/// the strongest of them is returned.
-	/// * qualityLevel: Parameter characterizing the minimal accepted quality of image corners. The
-	/// parameter value is multiplied by the best corner quality measure, which is the minimal eigenvalue
-	/// (see cornerMinEigenVal ) or the Harris function response (see cornerHarris ). The corners with the
-	/// quality measure less than the product are rejected. For example, if the best corner has the
-	/// quality measure = 1500, and the qualityLevel=0.01 , then all the corners with the quality measure
-	/// less than 15 are rejected.
-	/// * minDistance: Minimum possible Euclidean distance between the returned corners.
-	/// * blockSize: Size of an average block for computing a derivative covariation matrix over each
-	/// pixel neighborhood. See cornerEigenValsAndVecs .
-	/// * useHarrisDetector: Parameter indicating whether to use a Harris detector (see cornerHarris)
-	/// or cornerMinEigenVal.
-	/// * harrisK: Free parameter of the Harris detector.
-	///
-	/// ## C++ default parameters
-	/// * max_corners: 1000
-	/// * quality_level: 0.01
-	/// * min_distance: 0.0
-	/// * block_size: 3
-	/// * use_harris_detector: false
-	/// * harris_k: 0.04
-	#[inline]
-	pub fn create_good_features_to_track_detector(src_type: i32, max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, use_harris_detector: bool, harris_k: f64) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CornersDetector>> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createGoodFeaturesToTrackDetector_int_int_double_double_int_bool_double(src_type, max_corners, quality_level, min_distance, block_size, use_harris_detector, harris_k, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornersDetector>::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
-	/// Creates implementation for Harris cornerness criteria.
-	///
-	/// ## Parameters
-	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
-	/// * blockSize: Neighborhood size.
-	/// * ksize: Aperture parameter for the Sobel operator.
-	/// * k: Harris detector free parameter.
-	/// * borderType: Pixel extrapolation method. Only BORDER_REFLECT101 and BORDER_REPLICATE are
-	/// supported for now.
-	/// ## See also
-	/// cornerHarris
-	///
-	/// ## Note
-	/// This alternative version of [create_harris_corner] function uses the following default values for its arguments:
-	/// * border_type: BORDER_REFLECT101
-	#[inline]
-	pub fn create_harris_corner_def(src_type: i32, block_size: i32, ksize: i32, k: f64) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria>> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createHarrisCorner_int_int_int_double(src_type, block_size, ksize, k, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
-	/// Creates implementation for Harris cornerness criteria.
-	///
-	/// ## Parameters
-	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
-	/// * blockSize: Neighborhood size.
-	/// * ksize: Aperture parameter for the Sobel operator.
-	/// * k: Harris detector free parameter.
-	/// * borderType: Pixel extrapolation method. Only BORDER_REFLECT101 and BORDER_REPLICATE are
-	/// supported for now.
-	/// ## See also
-	/// cornerHarris
-	///
-	/// ## C++ default parameters
-	/// * border_type: BORDER_REFLECT101
-	#[inline]
-	pub fn create_harris_corner(src_type: i32, block_size: i32, ksize: i32, k: f64, border_type: i32) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria>> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createHarrisCorner_int_int_int_double_int(src_type, block_size, ksize, k, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 
@@ -951,55 +829,6 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 
-	/// Creates implementation for the minimum eigen value of a 2x2 derivative covariation matrix (the
-	/// cornerness criteria).
-	///
-	/// ## Parameters
-	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
-	/// * blockSize: Neighborhood size.
-	/// * ksize: Aperture parameter for the Sobel operator.
-	/// * borderType: Pixel extrapolation method. Only BORDER_REFLECT101 and BORDER_REPLICATE are
-	/// supported for now.
-	/// ## See also
-	/// cornerMinEigenVal
-	///
-	/// ## Note
-	/// This alternative version of [create_min_eigen_val_corner] function uses the following default values for its arguments:
-	/// * border_type: BORDER_REFLECT101
-	#[inline]
-	pub fn create_min_eigen_val_corner_def(src_type: i32, block_size: i32, ksize: i32) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria>> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createMinEigenValCorner_int_int_int(src_type, block_size, ksize, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
-	/// Creates implementation for the minimum eigen value of a 2x2 derivative covariation matrix (the
-	/// cornerness criteria).
-	///
-	/// ## Parameters
-	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
-	/// * blockSize: Neighborhood size.
-	/// * ksize: Aperture parameter for the Sobel operator.
-	/// * borderType: Pixel extrapolation method. Only BORDER_REFLECT101 and BORDER_REPLICATE are
-	/// supported for now.
-	/// ## See also
-	/// cornerMinEigenVal
-	///
-	/// ## C++ default parameters
-	/// * border_type: BORDER_REFLECT101
-	#[inline]
-	pub fn create_min_eigen_val_corner(src_type: i32, block_size: i32, ksize: i32, border_type: i32) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria>> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createMinEigenValCorner_int_int_int_int(src_type, block_size, ksize, border_type, ocvrs_return.as_mut_ptr()) };
-		return_receive!(ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-
 	/// Creates implementation for cuda::TemplateMatching .
 	///
 	/// ## Parameters
@@ -1155,7 +984,7 @@ pub mod cudaimgproc {
 	///    > -   COLOR_BayerBG2GRAY , COLOR_BayerGB2GRAY , COLOR_BayerRG2GRAY , COLOR_BayerGR2GRAY
 	///    > -   COLOR_BayerBG2BGR , COLOR_BayerGB2BGR , COLOR_BayerRG2BGR , COLOR_BayerGR2BGR
 	///
-	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MHT2011))
+	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MHT2011))
 	///
 	///    > -   COLOR_BayerBG2GRAY_MHT , COLOR_BayerGB2GRAY_MHT , COLOR_BayerRG2GRAY_MHT ,
 	///    >     COLOR_BayerGR2GRAY_MHT
@@ -1196,7 +1025,7 @@ pub mod cudaimgproc {
 	///    > -   COLOR_BayerBG2GRAY , COLOR_BayerGB2GRAY , COLOR_BayerRG2GRAY , COLOR_BayerGR2GRAY
 	///    > -   COLOR_BayerBG2BGR , COLOR_BayerGB2BGR , COLOR_BayerRG2BGR , COLOR_BayerGR2BGR
 	///
-	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MHT2011))
+	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MHT2011))
 	///
 	///    > -   COLOR_BayerBG2GRAY_MHT , COLOR_BayerGB2GRAY_MHT , COLOR_BayerRG2GRAY_MHT ,
 	///    >     COLOR_BayerGR2GRAY_MHT
@@ -1315,7 +1144,7 @@ pub mod cudaimgproc {
 	/// * forward: true for forward gamma correction or false for inverse gamma correction.
 	/// * stream: Stream for the asynchronous version.
 	///
-	/// Gamma correction is conformant to BT.709 [BT](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BT).709 with &gamma;=0.45.
+	/// Gamma correction is conformant to BT.709 [BT](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BT).709 with &gamma;=0.45.
 	///
 	/// For the forward transform, RGB values are normalised to fit in the range L=[0..1], then:
 	/// - For L < 0.018
@@ -1325,7 +1154,7 @@ pub mod cudaimgproc {
 	///
 	/// With V then being scaled back to [0..255].
 	///
-	/// ![image](https://docs.opencv.org/4.13.0/gammacorrection.png)
+	/// ![image](https://docs.opencv.org/5.0.0/gammacorrection.png)
 	///
 	/// ## Note
 	/// This alternative version of [gamma_correction] function uses the following default values for its arguments:
@@ -1350,7 +1179,7 @@ pub mod cudaimgproc {
 	/// * forward: true for forward gamma correction or false for inverse gamma correction.
 	/// * stream: Stream for the asynchronous version.
 	///
-	/// Gamma correction is conformant to BT.709 [BT](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_BT).709 with &gamma;=0.45.
+	/// Gamma correction is conformant to BT.709 [BT](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BT).709 with &gamma;=0.45.
 	///
 	/// For the forward transform, RGB values are normalised to fit in the range L=[0..1], then:
 	/// - For L < 0.018
@@ -1360,7 +1189,7 @@ pub mod cudaimgproc {
 	///
 	/// With V then being scaled back to [0..255].
 	///
-	/// ![image](https://docs.opencv.org/4.13.0/gammacorrection.png)
+	/// ![image](https://docs.opencv.org/5.0.0/gammacorrection.png)
 	///
 	/// ## C++ default parameters
 	/// * forward: true
@@ -1846,10 +1675,10 @@ pub mod cudaimgproc {
 	/// This alternative version of [swap_channels] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn swap_channels_def(image: &mut impl ToInputOutputArray, dst_order: &[i32; 4]) -> Result<()> {
+	pub fn swap_channels_def(image: &mut impl ToInputOutputArray, dst_order: [i32; 4]) -> Result<()> {
 		input_output_array_arg!(image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_swapChannels_const__InputOutputArrayR_const_intXX(image.as_raw__InputOutputArray(), dst_order, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_swapChannels_const__InputOutputArrayR_const_intXX(image.as_raw__InputOutputArray(), &dst_order, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1869,10 +1698,10 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn swap_channels(image: &mut impl ToInputOutputArray, dst_order: &[i32; 4], stream: &mut impl core::StreamTrait) -> Result<()> {
+	pub fn swap_channels(image: &mut impl ToInputOutputArray, dst_order: [i32; 4], stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_output_array_arg!(image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_swapChannels_const__InputOutputArrayR_const_intXX_StreamR(image.as_raw__InputOutputArray(), dst_order, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_swapChannels_const__InputOutputArrayR_const_intXX_StreamR(image.as_raw__InputOutputArray(), &dst_order, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2027,7 +1856,7 @@ pub mod cudaimgproc {
 	pub trait CUDA_CannyEdgeDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst {
 		fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void;
 
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		///
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
@@ -2047,7 +1876,7 @@ pub mod cudaimgproc {
 			Ok(ret)
 		}
 
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		///
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
@@ -2068,7 +1897,7 @@ pub mod cudaimgproc {
 			Ok(ret)
 		}
 
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		///
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
@@ -2096,7 +1925,7 @@ pub mod cudaimgproc {
 			Ok(ret)
 		}
 
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		///
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
@@ -2192,233 +2021,6 @@ pub mod cudaimgproc {
 	}
 
 	boxed_ref! { CUDA_CannyEdgeDetector, crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst, as_raw_CUDA_CannyEdgeDetector, crate::cudaimgproc::CUDA_CannyEdgeDetectorTrait, as_raw_mut_CUDA_CannyEdgeDetector }
-
-	/// Base class for Cornerness Criteria computation. :
-	pub struct CUDA_CornernessCriteria {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_CornernessCriteria }
-
-	impl Drop for CUDA_CornernessCriteria {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_CornernessCriteria_delete(self.as_raw_mut_CUDA_CornernessCriteria()) };
-		}
-	}
-
-	unsafe impl Send for CUDA_CornernessCriteria {}
-
-	/// Constant methods for [crate::cudaimgproc::CUDA_CornernessCriteria]
-	pub trait CUDA_CornernessCriteriaTraitConst: core::AlgorithmTraitConst {
-		fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::cudaimgproc::CUDA_CornernessCriteria]
-	pub trait CUDA_CornernessCriteriaTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CornernessCriteriaTraitConst {
-		fn as_raw_mut_CUDA_CornernessCriteria(&mut self) -> *mut c_void;
-
-		/// Computes the cornerness criteria at each image pixel.
-		///
-		/// ## Parameters
-		/// * src: Source image.
-		/// * dst: Destination image containing cornerness values. It will have the same size as src and
-		/// CV_32FC1 type.
-		/// * stream: Stream for the asynchronous version.
-		///
-		/// ## C++ default parameters
-		/// * stream: Stream::Null()
-		#[inline]
-		fn compute(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
-			input_array_arg!(src);
-			output_array_arg!(dst);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CornernessCriteria_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CornernessCriteria(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Computes the cornerness criteria at each image pixel.
-		///
-		/// ## Parameters
-		/// * src: Source image.
-		/// * dst: Destination image containing cornerness values. It will have the same size as src and
-		/// CV_32FC1 type.
-		/// * stream: Stream for the asynchronous version.
-		///
-		/// ## Note
-		/// This alternative version of [CUDA_CornernessCriteriaTrait::compute] function uses the following default values for its arguments:
-		/// * stream: Stream::Null()
-		#[inline]
-		fn compute_def(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
-			input_array_arg!(src);
-			output_array_arg!(dst);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CornernessCriteria_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_CornernessCriteria(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for CUDA_CornernessCriteria {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_CornernessCriteria")
-				.finish()
-		}
-	}
-
-	boxed_cast_base! { CUDA_CornernessCriteria, core::Algorithm, cv_cuda_CornernessCriteria_to_Algorithm }
-
-	impl core::AlgorithmTraitConst for CUDA_CornernessCriteria {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for CUDA_CornernessCriteria {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CUDA_CornernessCriteria, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::cudaimgproc::CUDA_CornernessCriteriaTraitConst for CUDA_CornernessCriteria {
-		#[inline] fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::cudaimgproc::CUDA_CornernessCriteriaTrait for CUDA_CornernessCriteria {
-		#[inline] fn as_raw_mut_CUDA_CornernessCriteria(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CUDA_CornernessCriteria, crate::cudaimgproc::CUDA_CornernessCriteriaTraitConst, as_raw_CUDA_CornernessCriteria, crate::cudaimgproc::CUDA_CornernessCriteriaTrait, as_raw_mut_CUDA_CornernessCriteria }
-
-	/// Base class for Corners Detector. :
-	pub struct CUDA_CornersDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_CornersDetector }
-
-	impl Drop for CUDA_CornersDetector {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_CornersDetector_delete(self.as_raw_mut_CUDA_CornersDetector()) };
-		}
-	}
-
-	unsafe impl Send for CUDA_CornersDetector {}
-
-	/// Constant methods for [crate::cudaimgproc::CUDA_CornersDetector]
-	pub trait CUDA_CornersDetectorTraitConst: core::AlgorithmTraitConst {
-		fn as_raw_CUDA_CornersDetector(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::cudaimgproc::CUDA_CornersDetector]
-	pub trait CUDA_CornersDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CornersDetectorTraitConst {
-		fn as_raw_mut_CUDA_CornersDetector(&mut self) -> *mut c_void;
-
-		/// Determines strong corners on an image.
-		///
-		/// ## Parameters
-		/// * image: Input 8-bit or floating-point 32-bit, single-channel image.
-		/// * corners: Output vector of detected corners (1-row matrix with CV_32FC2 type with corners
-		/// positions).
-		/// * mask: Optional region of interest. If the image is not empty (it needs to have the type
-		/// CV_8UC1 and the same size as image ), it specifies the region in which the corners are detected.
-		/// * stream: Stream for the asynchronous version.
-		///
-		/// ## C++ default parameters
-		/// * mask: noArray()
-		/// * stream: Stream::Null()
-		#[inline]
-		fn detect(&mut self, image: &impl ToInputArray, corners: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
-			input_array_arg!(image);
-			output_array_arg!(corners);
-			input_array_arg!(mask);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CornersDetector_detect_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_mut_CUDA_CornersDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Determines strong corners on an image.
-		///
-		/// ## Parameters
-		/// * image: Input 8-bit or floating-point 32-bit, single-channel image.
-		/// * corners: Output vector of detected corners (1-row matrix with CV_32FC2 type with corners
-		/// positions).
-		/// * mask: Optional region of interest. If the image is not empty (it needs to have the type
-		/// CV_8UC1 and the same size as image ), it specifies the region in which the corners are detected.
-		/// * stream: Stream for the asynchronous version.
-		///
-		/// ## Note
-		/// This alternative version of [CUDA_CornersDetectorTrait::detect] function uses the following default values for its arguments:
-		/// * mask: noArray()
-		/// * stream: Stream::Null()
-		#[inline]
-		fn detect_def(&mut self, image: &impl ToInputArray, corners: &mut impl ToOutputArray) -> Result<()> {
-			input_array_arg!(image);
-			output_array_arg!(corners);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CornersDetector_detect_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_CornersDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_max_corners(&mut self, max_corners: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CornersDetector_setMaxCorners_int(self.as_raw_mut_CUDA_CornersDetector(), max_corners, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_min_distance(&mut self, min_distance: f64) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CornersDetector_setMinDistance_double(self.as_raw_mut_CUDA_CornersDetector(), min_distance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for CUDA_CornersDetector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_CornersDetector")
-				.finish()
-		}
-	}
-
-	boxed_cast_base! { CUDA_CornersDetector, core::Algorithm, cv_cuda_CornersDetector_to_Algorithm }
-
-	impl core::AlgorithmTraitConst for CUDA_CornersDetector {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for CUDA_CornersDetector {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CUDA_CornersDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::cudaimgproc::CUDA_CornersDetectorTraitConst for CUDA_CornersDetector {
-		#[inline] fn as_raw_CUDA_CornersDetector(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::cudaimgproc::CUDA_CornersDetectorTrait for CUDA_CornersDetector {
-		#[inline] fn as_raw_mut_CUDA_CornersDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CUDA_CornersDetector, crate::cudaimgproc::CUDA_CornersDetectorTraitConst, as_raw_CUDA_CornersDetector, crate::cudaimgproc::CUDA_CornersDetectorTrait, as_raw_mut_CUDA_CornersDetector }
 
 	/// Base class for circles detector algorithm. :
 	pub struct CUDA_HoughCirclesDetector {

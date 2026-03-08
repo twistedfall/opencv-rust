@@ -27,7 +27,6 @@
 /// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(ocvrs_opencv_branch_34)]
 #[macro_export]
-#[deprecated(note = "OpenCV 3.4 support is deprecated. Please migrate to OpenCV 4.x or 5.x.")]
 macro_rules! opencv_branch_34 {
 	($bl_pos:block else $bl_neg:block) => { $bl_pos };
 	($($tt:tt)*) => { $($tt)* }
@@ -51,7 +50,6 @@ macro_rules! opencv_branch_34 {
 /// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(ocvrs_opencv_branch_34)]
 #[macro_export]
-#[deprecated(note = "OpenCV 3.4 support is deprecated. Please migrate to OpenCV 4.x or 5.x.")]
 macro_rules! not_opencv_branch_34 {
 	($($tt:tt)*) => {  }
 }
@@ -85,7 +83,6 @@ macro_rules! not_opencv_branch_34 {
 /// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(not(ocvrs_opencv_branch_34))]
 #[macro_export]
-#[deprecated(note = "OpenCV 3.4 support is deprecated. Please migrate to OpenCV 4.x or 5.x.")]
 macro_rules! opencv_branch_34 {
 	($bl_pos:block else $bl_neg:block) => { $bl_neg };
 	($($tt:tt)*) => {  }
@@ -109,7 +106,6 @@ macro_rules! opencv_branch_34 {
 /// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(not(ocvrs_opencv_branch_34))]
 #[macro_export]
-#[deprecated(note = "OpenCV 3.4 support is deprecated. Please migrate to OpenCV 4.x or 5.x.")]
 macro_rules! not_opencv_branch_34 {
 	($($tt:tt)*) => { $($tt)* }
 }
@@ -138,6 +134,9 @@ macro_rules! not_opencv_branch_34 {
 ///     }
 /// };
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(ocvrs_opencv_branch_4)]
 #[macro_export]
 macro_rules! opencv_branch_4 {
@@ -158,6 +157,9 @@ macro_rules! opencv_branch_4 {
 ///     use opencv::core::LINE_8;
 /// }
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(ocvrs_opencv_branch_4)]
 #[macro_export]
 macro_rules! not_opencv_branch_4 {
@@ -188,6 +190,9 @@ macro_rules! not_opencv_branch_4 {
 ///     }
 /// };
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(not(ocvrs_opencv_branch_4))]
 #[macro_export]
 macro_rules! opencv_branch_4 {
@@ -208,6 +213,9 @@ macro_rules! opencv_branch_4 {
 ///     use opencv::core::LINE_8;
 /// }
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(not(ocvrs_opencv_branch_4))]
 #[macro_export]
 macro_rules! not_opencv_branch_4 {
@@ -238,6 +246,9 @@ macro_rules! not_opencv_branch_4 {
 ///     }
 /// };
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(ocvrs_opencv_branch_5)]
 #[macro_export]
 macro_rules! opencv_branch_5 {
@@ -258,6 +269,9 @@ macro_rules! opencv_branch_5 {
 ///     use opencv::core::LINE_8;
 /// }
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(ocvrs_opencv_branch_5)]
 #[macro_export]
 macro_rules! not_opencv_branch_5 {
@@ -288,6 +302,9 @@ macro_rules! not_opencv_branch_5 {
 ///     }
 /// };
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(not(ocvrs_opencv_branch_5))]
 #[macro_export]
 macro_rules! opencv_branch_5 {
@@ -308,90 +325,13 @@ macro_rules! opencv_branch_5 {
 ///     use opencv::core::LINE_8;
 /// }
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(not(ocvrs_opencv_branch_5))]
 #[macro_export]
 macro_rules! not_opencv_branch_5 {
 	($($tt:tt)*) => { $($tt)* }
-}
-
-/// Conditional compilation macro based on whether the 3d OpenCV module is enabled
-///
-/// The macro has two forms:
-/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
-///    one — if it's not. Note that both blocks must have the same return type.
-/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
-///    feature is enabled and completely skipped if it's not.
-///
-/// # Examples
-///
-/// Two blocks with `else`:
-/// ```
-/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
-///     {
-///         let mut input = Mat::default();
-///         let rect = opencv::core::Rect::default();
-///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
-///         true
-///     } else {
-///         false
-///     }
-/// };
-/// if !imgproc_enabled {
-///     panic!("imgproc module is required");
-/// }
-/// ```
-///
-/// Plain token tree:
-/// ```
-/// opencv::opencv_has_module_imgproc! {
-///    use opencv::imgproc::rectangle_def;
-/// }
-/// ```
-#[cfg(ocvrs_has_module_3d)]
-#[macro_export]
-macro_rules! opencv_has_module_3d {
-	($bl_pos:block else $bl_neg:block) => { $bl_pos };
-	($($tt:tt)*) => { $($tt)* };
-}
-
-/// Conditional compilation macro based on whether the 3d OpenCV module is enabled
-///
-/// The macro has two forms:
-/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
-///    one — if it's not. Note that both blocks must have the same return type.
-/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
-///    feature is enabled and completely skipped if it's not.
-///
-/// # Examples
-///
-/// Two blocks with `else`:
-/// ```
-/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
-///     {
-///         let mut input = Mat::default();
-///         let rect = opencv::core::Rect::default();
-///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
-///         true
-///     } else {
-///         false
-///     }
-/// };
-/// if !imgproc_enabled {
-///     panic!("imgproc module is required");
-/// }
-/// ```
-///
-/// Plain token tree:
-/// ```
-/// opencv::opencv_has_module_imgproc! {
-///    use opencv::imgproc::rectangle_def;
-/// }
-/// ```
-#[cfg(not(ocvrs_has_module_3d))]
-#[macro_export]
-macro_rules! opencv_has_module_3d {
-	($bl_pos:block else $bl_neg:block) => { $bl_neg };
-	($($tt:tt)*) => {  };
 }
 
 /// Conditional compilation macro based on whether the alphamat OpenCV module is enabled
@@ -874,6 +814,86 @@ macro_rules! opencv_has_module_bioinspired {
 	($($tt:tt)*) => {  };
 }
 
+/// Conditional compilation macro based on whether the ccalib OpenCV module is enabled
+///
+/// The macro has two forms:
+/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
+///    one — if it's not. Note that both blocks must have the same return type.
+/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
+///    feature is enabled and completely skipped if it's not.
+///
+/// # Examples
+///
+/// Two blocks with `else`:
+/// ```
+/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
+///     {
+///         let mut input = Mat::default();
+///         let rect = opencv::core::Rect::default();
+///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
+///         true
+///     } else {
+///         false
+///     }
+/// };
+/// if !imgproc_enabled {
+///     panic!("imgproc module is required");
+/// }
+/// ```
+///
+/// Plain token tree:
+/// ```
+/// opencv::opencv_has_module_imgproc! {
+///    use opencv::imgproc::rectangle_def;
+/// }
+/// ```
+#[cfg(ocvrs_has_module_ccalib)]
+#[macro_export]
+macro_rules! opencv_has_module_ccalib {
+	($bl_pos:block else $bl_neg:block) => { $bl_pos };
+	($($tt:tt)*) => { $($tt)* };
+}
+
+/// Conditional compilation macro based on whether the ccalib OpenCV module is enabled
+///
+/// The macro has two forms:
+/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
+///    one — if it's not. Note that both blocks must have the same return type.
+/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
+///    feature is enabled and completely skipped if it's not.
+///
+/// # Examples
+///
+/// Two blocks with `else`:
+/// ```
+/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
+///     {
+///         let mut input = Mat::default();
+///         let rect = opencv::core::Rect::default();
+///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
+///         true
+///     } else {
+///         false
+///     }
+/// };
+/// if !imgproc_enabled {
+///     panic!("imgproc module is required");
+/// }
+/// ```
+///
+/// Plain token tree:
+/// ```
+/// opencv::opencv_has_module_imgproc! {
+///    use opencv::imgproc::rectangle_def;
+/// }
+/// ```
+#[cfg(not(ocvrs_has_module_ccalib))]
+#[macro_export]
+macro_rules! opencv_has_module_ccalib {
+	($bl_pos:block else $bl_neg:block) => { $bl_neg };
+	($($tt:tt)*) => {  };
+}
+
 /// Conditional compilation macro based on whether the calib OpenCV module is enabled
 ///
 /// The macro has two forms:
@@ -1030,86 +1050,6 @@ macro_rules! opencv_has_module_calib3d {
 #[cfg(not(ocvrs_has_module_calib3d))]
 #[macro_export]
 macro_rules! opencv_has_module_calib3d {
-	($bl_pos:block else $bl_neg:block) => { $bl_neg };
-	($($tt:tt)*) => {  };
-}
-
-/// Conditional compilation macro based on whether the ccalib OpenCV module is enabled
-///
-/// The macro has two forms:
-/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
-///    one — if it's not. Note that both blocks must have the same return type.
-/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
-///    feature is enabled and completely skipped if it's not.
-///
-/// # Examples
-///
-/// Two blocks with `else`:
-/// ```
-/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
-///     {
-///         let mut input = Mat::default();
-///         let rect = opencv::core::Rect::default();
-///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
-///         true
-///     } else {
-///         false
-///     }
-/// };
-/// if !imgproc_enabled {
-///     panic!("imgproc module is required");
-/// }
-/// ```
-///
-/// Plain token tree:
-/// ```
-/// opencv::opencv_has_module_imgproc! {
-///    use opencv::imgproc::rectangle_def;
-/// }
-/// ```
-#[cfg(ocvrs_has_module_ccalib)]
-#[macro_export]
-macro_rules! opencv_has_module_ccalib {
-	($bl_pos:block else $bl_neg:block) => { $bl_pos };
-	($($tt:tt)*) => { $($tt)* };
-}
-
-/// Conditional compilation macro based on whether the ccalib OpenCV module is enabled
-///
-/// The macro has two forms:
-/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
-///    one — if it's not. Note that both blocks must have the same return type.
-/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
-///    feature is enabled and completely skipped if it's not.
-///
-/// # Examples
-///
-/// Two blocks with `else`:
-/// ```
-/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
-///     {
-///         let mut input = Mat::default();
-///         let rect = opencv::core::Rect::default();
-///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
-///         true
-///     } else {
-///         false
-///     }
-/// };
-/// if !imgproc_enabled {
-///     panic!("imgproc module is required");
-/// }
-/// ```
-///
-/// Plain token tree:
-/// ```
-/// opencv::opencv_has_module_imgproc! {
-///    use opencv::imgproc::rectangle_def;
-/// }
-/// ```
-#[cfg(not(ocvrs_has_module_ccalib))]
-#[macro_export]
-macro_rules! opencv_has_module_ccalib {
 	($bl_pos:block else $bl_neg:block) => { $bl_neg };
 	($($tt:tt)*) => {  };
 }
@@ -2954,6 +2894,86 @@ macro_rules! opencv_has_module_gapi {
 	($($tt:tt)*) => {  };
 }
 
+/// Conditional compilation macro based on whether the geometry OpenCV module is enabled
+///
+/// The macro has two forms:
+/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
+///    one — if it's not. Note that both blocks must have the same return type.
+/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
+///    feature is enabled and completely skipped if it's not.
+///
+/// # Examples
+///
+/// Two blocks with `else`:
+/// ```
+/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
+///     {
+///         let mut input = Mat::default();
+///         let rect = opencv::core::Rect::default();
+///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
+///         true
+///     } else {
+///         false
+///     }
+/// };
+/// if !imgproc_enabled {
+///     panic!("imgproc module is required");
+/// }
+/// ```
+///
+/// Plain token tree:
+/// ```
+/// opencv::opencv_has_module_imgproc! {
+///    use opencv::imgproc::rectangle_def;
+/// }
+/// ```
+#[cfg(ocvrs_has_module_geometry)]
+#[macro_export]
+macro_rules! opencv_has_module_geometry {
+	($bl_pos:block else $bl_neg:block) => { $bl_pos };
+	($($tt:tt)*) => { $($tt)* };
+}
+
+/// Conditional compilation macro based on whether the geometry OpenCV module is enabled
+///
+/// The macro has two forms:
+/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
+///    one — if it's not. Note that both blocks must have the same return type.
+/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
+///    feature is enabled and completely skipped if it's not.
+///
+/// # Examples
+///
+/// Two blocks with `else`:
+/// ```
+/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
+///     {
+///         let mut input = Mat::default();
+///         let rect = opencv::core::Rect::default();
+///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
+///         true
+///     } else {
+///         false
+///     }
+/// };
+/// if !imgproc_enabled {
+///     panic!("imgproc module is required");
+/// }
+/// ```
+///
+/// Plain token tree:
+/// ```
+/// opencv::opencv_has_module_imgproc! {
+///    use opencv::imgproc::rectangle_def;
+/// }
+/// ```
+#[cfg(not(ocvrs_has_module_geometry))]
+#[macro_export]
+macro_rules! opencv_has_module_geometry {
+	($bl_pos:block else $bl_neg:block) => { $bl_neg };
+	($($tt:tt)*) => {  };
+}
+
 /// Conditional compilation macro based on whether the hdf OpenCV module is enabled
 ///
 /// The macro has two forms:
@@ -3194,86 +3214,6 @@ macro_rules! opencv_has_module_highgui {
 	($($tt:tt)*) => {  };
 }
 
-/// Conditional compilation macro based on whether the img_hash OpenCV module is enabled
-///
-/// The macro has two forms:
-/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
-///    one — if it's not. Note that both blocks must have the same return type.
-/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
-///    feature is enabled and completely skipped if it's not.
-///
-/// # Examples
-///
-/// Two blocks with `else`:
-/// ```
-/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
-///     {
-///         let mut input = Mat::default();
-///         let rect = opencv::core::Rect::default();
-///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
-///         true
-///     } else {
-///         false
-///     }
-/// };
-/// if !imgproc_enabled {
-///     panic!("imgproc module is required");
-/// }
-/// ```
-///
-/// Plain token tree:
-/// ```
-/// opencv::opencv_has_module_imgproc! {
-///    use opencv::imgproc::rectangle_def;
-/// }
-/// ```
-#[cfg(ocvrs_has_module_img_hash)]
-#[macro_export]
-macro_rules! opencv_has_module_img_hash {
-	($bl_pos:block else $bl_neg:block) => { $bl_pos };
-	($($tt:tt)*) => { $($tt)* };
-}
-
-/// Conditional compilation macro based on whether the img_hash OpenCV module is enabled
-///
-/// The macro has two forms:
-/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
-///    one — if it's not. Note that both blocks must have the same return type.
-/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
-///    feature is enabled and completely skipped if it's not.
-///
-/// # Examples
-///
-/// Two blocks with `else`:
-/// ```
-/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
-///     {
-///         let mut input = Mat::default();
-///         let rect = opencv::core::Rect::default();
-///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
-///         true
-///     } else {
-///         false
-///     }
-/// };
-/// if !imgproc_enabled {
-///     panic!("imgproc module is required");
-/// }
-/// ```
-///
-/// Plain token tree:
-/// ```
-/// opencv::opencv_has_module_imgproc! {
-///    use opencv::imgproc::rectangle_def;
-/// }
-/// ```
-#[cfg(not(ocvrs_has_module_img_hash))]
-#[macro_export]
-macro_rules! opencv_has_module_img_hash {
-	($bl_pos:block else $bl_neg:block) => { $bl_neg };
-	($($tt:tt)*) => {  };
-}
-
 /// Conditional compilation macro based on whether the imgcodecs OpenCV module is enabled
 ///
 /// The macro has two forms:
@@ -3350,6 +3290,86 @@ macro_rules! opencv_has_module_imgcodecs {
 #[cfg(not(ocvrs_has_module_imgcodecs))]
 #[macro_export]
 macro_rules! opencv_has_module_imgcodecs {
+	($bl_pos:block else $bl_neg:block) => { $bl_neg };
+	($($tt:tt)*) => {  };
+}
+
+/// Conditional compilation macro based on whether the img_hash OpenCV module is enabled
+///
+/// The macro has two forms:
+/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
+///    one — if it's not. Note that both blocks must have the same return type.
+/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
+///    feature is enabled and completely skipped if it's not.
+///
+/// # Examples
+///
+/// Two blocks with `else`:
+/// ```
+/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
+///     {
+///         let mut input = Mat::default();
+///         let rect = opencv::core::Rect::default();
+///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
+///         true
+///     } else {
+///         false
+///     }
+/// };
+/// if !imgproc_enabled {
+///     panic!("imgproc module is required");
+/// }
+/// ```
+///
+/// Plain token tree:
+/// ```
+/// opencv::opencv_has_module_imgproc! {
+///    use opencv::imgproc::rectangle_def;
+/// }
+/// ```
+#[cfg(ocvrs_has_module_img_hash)]
+#[macro_export]
+macro_rules! opencv_has_module_img_hash {
+	($bl_pos:block else $bl_neg:block) => { $bl_pos };
+	($($tt:tt)*) => { $($tt)* };
+}
+
+/// Conditional compilation macro based on whether the img_hash OpenCV module is enabled
+///
+/// The macro has two forms:
+/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
+///    one — if it's not. Note that both blocks must have the same return type.
+/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
+///    feature is enabled and completely skipped if it's not.
+///
+/// # Examples
+///
+/// Two blocks with `else`:
+/// ```
+/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
+///     {
+///         let mut input = Mat::default();
+///         let rect = opencv::core::Rect::default();
+///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
+///         true
+///     } else {
+///         false
+///     }
+/// };
+/// if !imgproc_enabled {
+///     panic!("imgproc module is required");
+/// }
+/// ```
+///
+/// Plain token tree:
+/// ```
+/// opencv::opencv_has_module_imgproc! {
+///    use opencv::imgproc::rectangle_def;
+/// }
+/// ```
+#[cfg(not(ocvrs_has_module_img_hash))]
+#[macro_export]
+macro_rules! opencv_has_module_img_hash {
 	($bl_pos:block else $bl_neg:block) => { $bl_neg };
 	($($tt:tt)*) => {  };
 }
@@ -4230,6 +4250,86 @@ macro_rules! opencv_has_module_plot {
 #[cfg(not(ocvrs_has_module_plot))]
 #[macro_export]
 macro_rules! opencv_has_module_plot {
+	($bl_pos:block else $bl_neg:block) => { $bl_neg };
+	($($tt:tt)*) => {  };
+}
+
+/// Conditional compilation macro based on whether the ptcloud OpenCV module is enabled
+///
+/// The macro has two forms:
+/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
+///    one — if it's not. Note that both blocks must have the same return type.
+/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
+///    feature is enabled and completely skipped if it's not.
+///
+/// # Examples
+///
+/// Two blocks with `else`:
+/// ```
+/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
+///     {
+///         let mut input = Mat::default();
+///         let rect = opencv::core::Rect::default();
+///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
+///         true
+///     } else {
+///         false
+///     }
+/// };
+/// if !imgproc_enabled {
+///     panic!("imgproc module is required");
+/// }
+/// ```
+///
+/// Plain token tree:
+/// ```
+/// opencv::opencv_has_module_imgproc! {
+///    use opencv::imgproc::rectangle_def;
+/// }
+/// ```
+#[cfg(ocvrs_has_module_ptcloud)]
+#[macro_export]
+macro_rules! opencv_has_module_ptcloud {
+	($bl_pos:block else $bl_neg:block) => { $bl_pos };
+	($($tt:tt)*) => { $($tt)* };
+}
+
+/// Conditional compilation macro based on whether the ptcloud OpenCV module is enabled
+///
+/// The macro has two forms:
+/// 1. Two blocks, separated by the `else` keyword. The first block will be compiled if the OpenCV feature is enabled, the second
+///    one — if it's not. Note that both blocks must have the same return type.
+/// 2. Plain token tree, for usage on the item level, e.g., for `use` imports. The code inside will be compiled if the OpenCV
+///    feature is enabled and completely skipped if it's not.
+///
+/// # Examples
+///
+/// Two blocks with `else`:
+/// ```
+/// let mut imgproc_enabled = opencv::opencv_has_module_imgproc! {
+///     {
+///         let mut input = Mat::default();
+///         let rect = opencv::core::Rect::default();
+///         opencv::imgproc::rectangle_def(&mut input, rect, (255., 0., 0.).into());
+///         true
+///     } else {
+///         false
+///     }
+/// };
+/// if !imgproc_enabled {
+///     panic!("imgproc module is required");
+/// }
+/// ```
+///
+/// Plain token tree:
+/// ```
+/// opencv::opencv_has_module_imgproc! {
+///    use opencv::imgproc::rectangle_def;
+/// }
+/// ```
+#[cfg(not(ocvrs_has_module_ptcloud))]
+#[macro_export]
+macro_rules! opencv_has_module_ptcloud {
 	($bl_pos:block else $bl_neg:block) => { $bl_neg };
 	($($tt:tt)*) => {  };
 }

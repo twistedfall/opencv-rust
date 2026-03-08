@@ -5,7 +5,7 @@ pub mod video {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{BackgroundSubtractorKNNTrait, BackgroundSubtractorKNNTraitConst, BackgroundSubtractorMOG2Trait, BackgroundSubtractorMOG2TraitConst, BackgroundSubtractorTrait, BackgroundSubtractorTraitConst, DISOpticalFlowTrait, DISOpticalFlowTraitConst, DenseOpticalFlowTrait, DenseOpticalFlowTraitConst, FarnebackOpticalFlowTrait, FarnebackOpticalFlowTraitConst, KalmanFilterTrait, KalmanFilterTraitConst, SparseOpticalFlowTrait, SparseOpticalFlowTraitConst, SparsePyrLKOpticalFlowTrait, SparsePyrLKOpticalFlowTraitConst, TrackerDaSiamRPNTrait, TrackerDaSiamRPNTraitConst, TrackerDaSiamRPN_ParamsTrait, TrackerDaSiamRPN_ParamsTraitConst, TrackerGOTURNTrait, TrackerGOTURNTraitConst, TrackerGOTURN_ParamsTrait, TrackerGOTURN_ParamsTraitConst, TrackerMILTrait, TrackerMILTraitConst, TrackerNanoTrait, TrackerNanoTraitConst, TrackerNano_ParamsTrait, TrackerNano_ParamsTraitConst, TrackerTrait, TrackerTraitConst, TrackerVitTrait, TrackerVitTraitConst, TrackerVit_ParamsTrait, TrackerVit_ParamsTraitConst, VariationalRefinementTrait, VariationalRefinementTraitConst};
+		pub use super::{BackgroundSubtractorKNNTrait, BackgroundSubtractorKNNTraitConst, BackgroundSubtractorMOG2Trait, BackgroundSubtractorMOG2TraitConst, BackgroundSubtractorTrait, BackgroundSubtractorTraitConst, DISOpticalFlowTrait, DISOpticalFlowTraitConst, DenseOpticalFlowTrait, DenseOpticalFlowTraitConst, ECCParametersTrait, ECCParametersTraitConst, FarnebackOpticalFlowTrait, FarnebackOpticalFlowTraitConst, KalmanFilterTrait, KalmanFilterTraitConst, SparseOpticalFlowTrait, SparseOpticalFlowTraitConst, SparsePyrLKOpticalFlowTrait, SparsePyrLKOpticalFlowTraitConst, TrackerDaSiamRPNTrait, TrackerDaSiamRPNTraitConst, TrackerDaSiamRPN_ParamsTrait, TrackerDaSiamRPN_ParamsTraitConst, TrackerMILTrait, TrackerMILTraitConst, TrackerNanoTrait, TrackerNanoTraitConst, TrackerNano_ParamsTrait, TrackerNano_ParamsTraitConst, TrackerTrait, TrackerTraitConst, TrackerVitTrait, TrackerVitTraitConst, TrackerVit_ParamsTrait, TrackerVit_ParamsTraitConst, VariationalRefinementTrait, VariationalRefinementTraitConst};
 	}
 
 	pub const DISOpticalFlow_PRESET_FAST: i32 = 1;
@@ -26,7 +26,7 @@ pub mod video {
 	/// * criteria: Stop criteria for the underlying meanShift.
 	/// returns
 	/// (in old interfaces) Number of iterations CAMSHIFT took to converge
-	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
+	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
 	/// object center using meanShift and then adjusts the window size and finds the optimal rotation. The
 	/// function returns the rotated rectangle structure that includes the object position, size, and
 	/// orientation. The next position of the search window can be obtained with RotatedRect::boundingRect()
@@ -36,7 +36,7 @@ pub mod video {
 	///
 	/// Note:
 	/// *   (Python) A sample explaining the camshift tracking algorithm can be found at
-	///    opencv_source_code/samples/python/camshift.py
+	///    opencv_source_code/samples/python/snippets/camshift.py
 	#[inline]
 	pub fn cam_shift(prob_image: &impl ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<core::RotatedRect> {
 		input_array_arg!(prob_image);
@@ -142,7 +142,7 @@ pub mod video {
 	///      normally, winsize for a Gaussian window should be set to a larger value to achieve the same
 	///      level of robustness.
 	///
-	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
+	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bprev%7D%20%28y%2Cx%29%20%20%5Csim%20%5Ctexttt%7Bnext%7D%20%28%20y%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B1%5D%2C%20%20x%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B0%5D%29)
 	///
@@ -196,13 +196,13 @@ pub mod video {
 	///      around the original and a moved point, divided by number of pixels in a window, is used as a
 	///      error measure.
 	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 	/// performance boost.
 	///
 	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-	/// [Bouguet00](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// [Bouguet00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 	///
 	///
 	/// Note: Some examples:
@@ -267,13 +267,13 @@ pub mod video {
 	///      around the original and a moved point, divided by number of pixels in a window, is used as a
 	///      error measure.
 	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 	/// performance boost.
 	///
 	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-	/// [Bouguet00](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// [Bouguet00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 	///
 	///
 	/// Note: Some examples:
@@ -308,7 +308,7 @@ pub mod video {
 
 	/// Computes the Enhanced Correlation Coefficient (ECC) value between two images
 	///
-	/// The Enhanced Correlation Coefficient (ECC) is a normalized measure of similarity between two images [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08).
+	/// The Enhanced Correlation Coefficient (ECC) is a normalized measure of similarity between two images [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08).
 	/// The result lies in the range [-1, 1], where 1 corresponds to perfect similarity (modulo affine shift and scale),
 	/// 0 indicates no correlation, and -1 indicates perfect negative correlation.
 	///
@@ -352,7 +352,7 @@ pub mod video {
 
 	/// Computes the Enhanced Correlation Coefficient (ECC) value between two images
 	///
-	/// The Enhanced Correlation Coefficient (ECC) is a normalized measure of similarity between two images [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08).
+	/// The Enhanced Correlation Coefficient (ECC) is a normalized measure of similarity between two images [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08).
 	/// The result lies in the range [-1, 1], where 1 corresponds to perfect similarity (modulo affine shift and scale),
 	/// 0 indicates no correlation, and -1 indicates perfect negative correlation.
 	///
@@ -533,7 +533,122 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08)
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08). Uses pyramids.
+	///
+	/// ## Parameters
+	/// * reference: Single channel reference image; CV_8U, CV_16U, CV_32F, CV_64F type.
+	/// * sample: sample image which should be warped with the final warpMatrix in
+	/// order to provide an image similar to reference, same type as reference.
+	/// * warpMatrix: floating-point ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) or ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mapping matrix (warp).
+	/// * eccParams: List of the algorithm parameters. See ECCParameters for details.
+	/// * referenceMask: An optional single channel mask to indicate valid values of reference.
+	/// * sampleMask: An optional single channel mask to indicate valid values of sample.
+	///
+	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
+	/// ([EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
+	///
+	/// where
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20x%27%20%5C%5C%20y%27%20%5Cend%7Bbmatrix%7D%20%3D%20W%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%20%5C%5C%20y%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
+	///
+	/// (the equation holds with homogeneous coordinates for homography). It returns the final enhanced
+	/// correlation coefficient, that is the correlation coefficient between the template image and the
+	/// final warped input image. When a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) matrix is given with motionType =0, 1 or 2, the third
+	/// row is ignored.
+	///
+	/// Unlike findHomography and estimateRigidTransform, the function findTransformECCMultiScale implements
+	/// an area-based alignment that builds on intensity similarities. In essence, the function updates the
+	/// initial transformation that roughly aligns the images. If this information is missing, the identity
+	/// warp (unity matrix) is used as an initialization. Note that if images undergo strong
+	/// displacements/rotations, an initial transformation that roughly aligns the images is necessary
+	/// (e.g., a simple euclidean/similarity transform that allows for the images showing the same image
+	/// content approximately). Use inverse warping in the second image to take an image close to the first
+	/// one, i.e. use the flag WARP_INVERSE_MAP with warpAffine or warpPerspective. See also the OpenCV
+	/// sample image_alignment.cpp that demonstrates the use of the function. Note that the function throws
+	/// an exception if algorithm does not converges.
+	/// Unlike findTransformECC, the findTransformECCMultiScale uses pyramids, making function more stable
+	/// and able to handle correctly more sophisticated cases.
+	/// ## See also
+	/// computeECC, estimateAffine2D, estimateAffinePartial2D, findHomography
+	///
+	/// ## Note
+	/// This alternative version of [find_transform_ecc_multi_scale] function uses the following default values for its arguments:
+	/// * ecc_params: ECCParameters()
+	/// * reference_mask: noArray()
+	/// * sample_mask: noArray()
+	#[inline]
+	pub fn find_transform_ecc_multi_scale_def(reference: &impl ToInputArray, sample: &impl ToInputArray, warp_matrix: &mut impl ToInputOutputArray) -> Result<f64> {
+		input_array_arg!(reference);
+		input_array_arg!(sample);
+		input_output_array_arg!(warp_matrix);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findTransformECCMultiScale_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(reference.as_raw__InputArray(), sample.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08). Uses pyramids.
+	///
+	/// ## Parameters
+	/// * reference: Single channel reference image; CV_8U, CV_16U, CV_32F, CV_64F type.
+	/// * sample: sample image which should be warped with the final warpMatrix in
+	/// order to provide an image similar to reference, same type as reference.
+	/// * warpMatrix: floating-point ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) or ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mapping matrix (warp).
+	/// * eccParams: List of the algorithm parameters. See ECCParameters for details.
+	/// * referenceMask: An optional single channel mask to indicate valid values of reference.
+	/// * sampleMask: An optional single channel mask to indicate valid values of sample.
+	///
+	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
+	/// ([EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
+	///
+	/// where
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20x%27%20%5C%5C%20y%27%20%5Cend%7Bbmatrix%7D%20%3D%20W%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%20%5C%5C%20y%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
+	///
+	/// (the equation holds with homogeneous coordinates for homography). It returns the final enhanced
+	/// correlation coefficient, that is the correlation coefficient between the template image and the
+	/// final warped input image. When a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) matrix is given with motionType =0, 1 or 2, the third
+	/// row is ignored.
+	///
+	/// Unlike findHomography and estimateRigidTransform, the function findTransformECCMultiScale implements
+	/// an area-based alignment that builds on intensity similarities. In essence, the function updates the
+	/// initial transformation that roughly aligns the images. If this information is missing, the identity
+	/// warp (unity matrix) is used as an initialization. Note that if images undergo strong
+	/// displacements/rotations, an initial transformation that roughly aligns the images is necessary
+	/// (e.g., a simple euclidean/similarity transform that allows for the images showing the same image
+	/// content approximately). Use inverse warping in the second image to take an image close to the first
+	/// one, i.e. use the flag WARP_INVERSE_MAP with warpAffine or warpPerspective. See also the OpenCV
+	/// sample image_alignment.cpp that demonstrates the use of the function. Note that the function throws
+	/// an exception if algorithm does not converges.
+	/// Unlike findTransformECC, the findTransformECCMultiScale uses pyramids, making function more stable
+	/// and able to handle correctly more sophisticated cases.
+	/// ## See also
+	/// computeECC, estimateAffine2D, estimateAffinePartial2D, findHomography
+	///
+	/// ## C++ default parameters
+	/// * ecc_params: ECCParameters()
+	/// * reference_mask: noArray()
+	/// * sample_mask: noArray()
+	#[inline]
+	pub fn find_transform_ecc_multi_scale(reference: &impl ToInputArray, sample: &impl ToInputArray, warp_matrix: &mut impl ToInputOutputArray, ecc_params: &impl crate::video::ECCParametersTraitConst, reference_mask: &impl ToInputArray, sample_mask: &impl ToInputArray) -> Result<f64> {
+		input_array_arg!(reference);
+		input_array_arg!(sample);
+		input_output_array_arg!(warp_matrix);
+		input_array_arg!(reference_mask);
+		input_array_arg!(sample_mask);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findTransformECCMultiScale_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const_ECCParametersR_const__InputArrayR_const__InputArrayR(reference.as_raw__InputArray(), sample.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), ecc_params.as_raw_ECCParameters(), reference_mask.as_raw__InputArray(), sample_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)
 	/// using validity masks for both the template and the input images.
 	///
 	/// This function extends findTransformECC() by adding a mask for the template image.
@@ -588,7 +703,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08)
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)
 	/// using validity masks for both the template and the input images.
 	///
 	/// This function extends findTransformECC() by adding a mask for the template image.
@@ -642,7 +757,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
 	/// * templateImage: 1 or 3 channel template image; CV_8U, CV_16U, CV_32F, CV_64F type.
@@ -667,7 +782,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -713,7 +828,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
 	/// * templateImage: 1 or 3 channel template image; CV_8U, CV_16U, CV_32F, CV_64F type.
@@ -738,7 +853,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -783,7 +898,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
 	/// * templateImage: 1 or 3 channel template image; CV_8U, CV_16U, CV_32F, CV_64F type.
@@ -808,7 +923,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -1104,7 +1219,7 @@ pub mod video {
 
 	/// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
 	///
-	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	/// Very efficient if number of foreground pixels is low.
 	pub struct BackgroundSubtractorKNN {
 		ptr: *mut c_void,
@@ -1336,8 +1451,8 @@ pub mod video {
 
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 	///
-	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
-	/// and [Zivkovic2006](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
+	/// and [Zivkovic2006](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	pub struct BackgroundSubtractorMOG2 {
 		ptr: *mut c_void,
 	}
@@ -1774,7 +1889,7 @@ pub mod video {
 	/// DIS optical flow algorithm.
 	///
 	/// This class implements the Dense Inverse Search (DIS) optical flow algorithm. More
-	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
+	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
 	/// parameters to provide reasonable trade-off between speed and quality. However, even the slowest preset is
 	/// still relatively fast, use DeepFlow if you need better quality and don't care about speed.
 	///
@@ -2291,6 +2406,183 @@ pub mod video {
 
 	boxed_ref! { DenseOpticalFlow, crate::video::DenseOpticalFlowTraitConst, as_raw_DenseOpticalFlow, crate::video::DenseOpticalFlowTrait, as_raw_mut_DenseOpticalFlow }
 
+	/// struct ECCParameters is used by findTransformECCMultiScale
+	///
+	/// ## Parameters
+	/// * motionType: parameter, specifying the type of motion:
+	///  *   **MOTION_TRANSLATION** sets a translational motion model; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) with
+	///      the first ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%202) part being the unity matrix and the rest two parameters being
+	///      estimated.
+	///  *   **MOTION_EUCLIDEAN** sets a Euclidean (rigid) transformation as motion model; three
+	///      parameters are estimated; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
+	///  *   **MOTION_AFFINE** sets an affine motion model (DEFAULT); six parameters are estimated;
+	///      warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
+	///  *   **MOTION_HOMOGRAPHY** sets a homography as a motion model; eight parameters are
+	///      estimated;\`warpMatrix\` is ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203).
+	/// * criteria: parameter, specifying the termination criteria of the ECC algorithm;
+	/// criteria.epsilon defines the threshold of the increment in the correlation coefficient between two
+	/// iterations (a negative criteria.epsilon makes criteria.maxcount the only termination criterion).
+	/// Default values are shown in the declaration above.
+	/// * itersPerLevel: Criterion extension: distribution of iterations limit over pyramid levels.
+	/// Can be empty, in this case, this algorithm will use criteria.maxCount on each level.
+	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
+	/// * nlevels: An optional value indicating amount of levels in the pyramid; (DEFAULT: 4)
+	/// * interpolation: Type of warp interpolation. Possible values are INTER_NEAREST and INTER_LINEAR.
+	/// Affects accuracy, especially when motionType == MOTION_TRANSLATION. (DEFAULT: INTER_LINEAR)
+	pub struct ECCParameters {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { ECCParameters }
+
+	impl Drop for ECCParameters {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ECCParameters_delete(self.as_raw_mut_ECCParameters()) };
+		}
+	}
+
+	unsafe impl Send for ECCParameters {}
+
+	impl ECCParameters {
+		#[inline]
+		pub fn default() -> Result<crate::video::ECCParameters> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ECCParameters_ECCParameters(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::ECCParameters::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::video::ECCParameters]
+	pub trait ECCParametersTraitConst {
+		fn as_raw_ECCParameters(&self) -> *const c_void;
+
+		#[inline]
+		fn motion_type(&self) -> i32 {
+			let ret = unsafe { sys::cv_ECCParameters_propMotionType_const(self.as_raw_ECCParameters()) };
+			ret
+		}
+
+		#[inline]
+		fn criteria(&self) -> core::TermCriteria {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ECCParameters_propCriteria_const(self.as_raw_ECCParameters(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			ret
+		}
+
+		#[inline]
+		fn iters_per_level(&self) -> core::Vector<i32> {
+			let ret = unsafe { sys::cv_ECCParameters_propItersPerLevel_const(self.as_raw_ECCParameters()) };
+			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		fn gauss_filt_size(&self) -> i32 {
+			let ret = unsafe { sys::cv_ECCParameters_propGaussFiltSize_const(self.as_raw_ECCParameters()) };
+			ret
+		}
+
+		#[inline]
+		fn nlevels(&self) -> i32 {
+			let ret = unsafe { sys::cv_ECCParameters_propNlevels_const(self.as_raw_ECCParameters()) };
+			ret
+		}
+
+		#[inline]
+		fn interpolation(&self) -> i32 {
+			let ret = unsafe { sys::cv_ECCParameters_propInterpolation_const(self.as_raw_ECCParameters()) };
+			ret
+		}
+
+	}
+
+	/// Mutable methods for [crate::video::ECCParameters]
+	pub trait ECCParametersTrait: crate::video::ECCParametersTraitConst {
+		fn as_raw_mut_ECCParameters(&mut self) -> *mut c_void;
+
+		/// ## C++ default parameters
+		/// * val: MOTION_AFFINE
+		#[inline]
+		fn set_motion_type(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_ECCParameters_propMotionType_const_int(self.as_raw_mut_ECCParameters(), val) };
+			ret
+		}
+
+		#[inline]
+		fn set_criteria(&mut self, val: core::TermCriteria) {
+			let ret = unsafe { sys::cv_ECCParameters_propCriteria_const_TermCriteria(self.as_raw_mut_ECCParameters(), &val) };
+			ret
+		}
+
+		#[inline]
+		fn set_iters_per_level(&mut self, val: core::Vector<i32>) {
+			let ret = unsafe { sys::cv_ECCParameters_propItersPerLevel_const_vectorLintG(self.as_raw_mut_ECCParameters(), val.as_raw_VectorOfi32()) };
+			ret
+		}
+
+		/// ## C++ default parameters
+		/// * val: 5
+		#[inline]
+		fn set_gauss_filt_size(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_ECCParameters_propGaussFiltSize_const_int(self.as_raw_mut_ECCParameters(), val) };
+			ret
+		}
+
+		/// ## C++ default parameters
+		/// * val: 4
+		#[inline]
+		fn set_nlevels(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_ECCParameters_propNlevels_const_int(self.as_raw_mut_ECCParameters(), val) };
+			ret
+		}
+
+		/// ## C++ default parameters
+		/// * val: INTER_LINEAR
+		#[inline]
+		fn set_interpolation(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_ECCParameters_propInterpolation_const_int(self.as_raw_mut_ECCParameters(), val) };
+			ret
+		}
+
+	}
+
+	impl Clone for ECCParameters {
+		#[inline]
+		fn clone(&self) -> Self {
+			unsafe { Self::from_raw(sys::cv_ECCParameters_implicitClone_const(self.as_raw_ECCParameters())) }
+		}
+	}
+
+	impl std::fmt::Debug for ECCParameters {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ECCParameters")
+				.field("motion_type", &crate::video::ECCParametersTraitConst::motion_type(self))
+				.field("criteria", &crate::video::ECCParametersTraitConst::criteria(self))
+				.field("iters_per_level", &crate::video::ECCParametersTraitConst::iters_per_level(self))
+				.field("gauss_filt_size", &crate::video::ECCParametersTraitConst::gauss_filt_size(self))
+				.field("nlevels", &crate::video::ECCParametersTraitConst::nlevels(self))
+				.field("interpolation", &crate::video::ECCParametersTraitConst::interpolation(self))
+				.finish()
+		}
+	}
+
+	impl crate::video::ECCParametersTraitConst for ECCParameters {
+		#[inline] fn as_raw_ECCParameters(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::ECCParametersTrait for ECCParameters {
+		#[inline] fn as_raw_mut_ECCParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { ECCParameters, crate::video::ECCParametersTraitConst, as_raw_ECCParameters, crate::video::ECCParametersTrait, as_raw_mut_ECCParameters }
+
 	/// Class computing a dense optical flow using the Gunnar Farneback's algorithm.
 	pub struct FarnebackOpticalFlow {
 		ptr: *mut c_void,
@@ -2550,7 +2842,7 @@ pub mod video {
 	/// Kalman filter class.
 	///
 	/// The class implements a standard Kalman filter <http://en.wikipedia.org/wiki/Kalman_filter>,
-	/// [Welch95](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
+	/// [Welch95](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
 	/// an extended Kalman filter functionality.
 	///
 	/// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
@@ -3351,6 +3643,16 @@ pub mod video {
 			Ok(ret)
 		}
 
+		/// Return tracking score
+		#[inline]
+		fn get_tracking_score(&mut self) -> Result<f32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Tracker_getTrackingScore(self.as_raw_mut_Tracker(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 	}
 
 	impl std::fmt::Debug for Tracker {
@@ -3362,8 +3664,6 @@ pub mod video {
 	}
 
 	boxed_cast_descendant! { Tracker, crate::video::TrackerDaSiamRPN, cv_Tracker_to_TrackerDaSiamRPN }
-
-	boxed_cast_descendant! { Tracker, crate::video::TrackerGOTURN, cv_Tracker_to_TrackerGOTURN }
 
 	boxed_cast_descendant! { Tracker, crate::video::TrackerMIL, cv_Tracker_to_TrackerMIL }
 
@@ -3456,16 +3756,6 @@ pub mod video {
 	/// Mutable methods for [crate::video::TrackerDaSiamRPN]
 	pub trait TrackerDaSiamRPNTrait: crate::video::TrackerDaSiamRPNTraitConst + crate::video::TrackerTrait {
 		fn as_raw_mut_TrackerDaSiamRPN(&mut self) -> *mut c_void;
-
-		/// Return tracking score
-		#[inline]
-		fn get_tracking_score(&mut self) -> Result<f32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerDaSiamRPN_getTrackingScore(self.as_raw_mut_TrackerDaSiamRPN(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
 
 	}
 
@@ -3635,226 +3925,11 @@ pub mod video {
 
 	boxed_ref! { TrackerDaSiamRPN_Params, crate::video::TrackerDaSiamRPN_ParamsTraitConst, as_raw_TrackerDaSiamRPN_Params, crate::video::TrackerDaSiamRPN_ParamsTrait, as_raw_mut_TrackerDaSiamRPN_Params }
 
-	/// the GOTURN (Generic Object Tracking Using Regression Networks) tracker
-	///
-	/// GOTURN ([GOTURN](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
-	/// GOTURN is much faster due to offline training without online fine-tuning nature.
-	/// GOTURN tracker addresses the problem of single target tracking: given a bounding box label of an object in the first frame of the video,
-	/// we track that object through the rest of the video. NOTE: Current method of GOTURN does not handle occlusions; however, it is fairly
-	/// robust to viewpoint changes, lighting changes, and deformations.
-	/// Inputs of GOTURN are two RGB patches representing Target and Search patches resized to 227x227.
-	/// Outputs of GOTURN are predicted bounding box coordinates, relative to Search patch coordinate system, in format X1,Y1,X2,Y2.
-	/// Original paper is here: <http://davheld.github.io/GOTURN/GOTURN.pdf>
-	/// As long as original authors implementation: <https://github.com/davheld/GOTURN#train-the-tracker>
-	/// Implementation of training algorithm is placed in separately here due to 3d-party dependencies:
-	/// <https://github.com/Auron-X/GOTURN_Training_Toolkit>
-	/// GOTURN architecture goturn.prototxt and trained model goturn.caffemodel are accessible on opencv_extra GitHub repository.
-	pub struct TrackerGOTURN {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TrackerGOTURN }
-
-	impl Drop for TrackerGOTURN {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_TrackerGOTURN_delete(self.as_raw_mut_TrackerGOTURN()) };
-		}
-	}
-
-	unsafe impl Send for TrackerGOTURN {}
-
-	impl TrackerGOTURN {
-		/// Constructor
-		/// ## Parameters
-		/// * parameters: GOTURN parameters TrackerGOTURN::Params
-		///
-		/// ## C++ default parameters
-		/// * parameters: TrackerGOTURN::Params()
-		#[inline]
-		pub fn create(parameters: &impl crate::video::TrackerGOTURN_ParamsTraitConst) -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerGOTURN_create_const_ParamsR(parameters.as_raw_TrackerGOTURN_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::video::TrackerGOTURN>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Constructor
-		/// ## Parameters
-		/// * parameters: GOTURN parameters TrackerGOTURN::Params
-		///
-		/// ## Note
-		/// This alternative version of [TrackerGOTURN::create] function uses the following default values for its arguments:
-		/// * parameters: TrackerGOTURN::Params()
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerGOTURN_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::video::TrackerGOTURN>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Constructor
-		/// ## Parameters
-		/// * model: pre-loaded GOTURN model
-		#[inline]
-		pub fn create_1(model: &impl crate::dnn::NetTraitConst) -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerGOTURN_create_const_NetR(model.as_raw_Net(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::video::TrackerGOTURN>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Constant methods for [crate::video::TrackerGOTURN]
-	pub trait TrackerGOTURNTraitConst: crate::video::TrackerTraitConst {
-		fn as_raw_TrackerGOTURN(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::video::TrackerGOTURN]
-	pub trait TrackerGOTURNTrait: crate::video::TrackerGOTURNTraitConst + crate::video::TrackerTrait {
-		fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void;
-
-	}
-
-	impl std::fmt::Debug for TrackerGOTURN {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TrackerGOTURN")
-				.finish()
-		}
-	}
-
-	boxed_cast_base! { TrackerGOTURN, crate::video::Tracker, cv_TrackerGOTURN_to_Tracker }
-
-	impl crate::video::TrackerTraitConst for TrackerGOTURN {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerTrait for TrackerGOTURN {
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerGOTURN, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
-
-	impl crate::video::TrackerGOTURNTraitConst for TrackerGOTURN {
-		#[inline] fn as_raw_TrackerGOTURN(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerGOTURNTrait for TrackerGOTURN {
-		#[inline] fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerGOTURN, crate::video::TrackerGOTURNTraitConst, as_raw_TrackerGOTURN, crate::video::TrackerGOTURNTrait, as_raw_mut_TrackerGOTURN }
-
-	pub struct TrackerGOTURN_Params {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TrackerGOTURN_Params }
-
-	impl Drop for TrackerGOTURN_Params {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_TrackerGOTURN_Params_delete(self.as_raw_mut_TrackerGOTURN_Params()) };
-		}
-	}
-
-	unsafe impl Send for TrackerGOTURN_Params {}
-
-	impl TrackerGOTURN_Params {
-		#[inline]
-		pub fn default() -> Result<crate::video::TrackerGOTURN_Params> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerGOTURN_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::video::TrackerGOTURN_Params::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Constant methods for [crate::video::TrackerGOTURN_Params]
-	pub trait TrackerGOTURN_ParamsTraitConst {
-		fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void;
-
-		#[inline]
-		fn model_txt(&self) -> String {
-			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelTxt_const(self.as_raw_TrackerGOTURN_Params()) };
-			let ret = unsafe { String::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		fn model_bin(&self) -> String {
-			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelBin_const(self.as_raw_TrackerGOTURN_Params()) };
-			let ret = unsafe { String::opencv_from_extern(ret) };
-			ret
-		}
-
-	}
-
-	/// Mutable methods for [crate::video::TrackerGOTURN_Params]
-	pub trait TrackerGOTURN_ParamsTrait: crate::video::TrackerGOTURN_ParamsTraitConst {
-		fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set_model_txt(&mut self, val: &str) {
-			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelTxt_const_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern()) };
-			ret
-		}
-
-		#[inline]
-		fn set_model_bin(&mut self, val: &str) {
-			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelBin_const_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern()) };
-			ret
-		}
-
-	}
-
-	impl Clone for TrackerGOTURN_Params {
-		#[inline]
-		fn clone(&self) -> Self {
-			unsafe { Self::from_raw(sys::cv_TrackerGOTURN_Params_implicitClone_const(self.as_raw_TrackerGOTURN_Params())) }
-		}
-	}
-
-	impl std::fmt::Debug for TrackerGOTURN_Params {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TrackerGOTURN_Params")
-				.field("model_txt", &crate::video::TrackerGOTURN_ParamsTraitConst::model_txt(self))
-				.field("model_bin", &crate::video::TrackerGOTURN_ParamsTraitConst::model_bin(self))
-				.finish()
-		}
-	}
-
-	impl crate::video::TrackerGOTURN_ParamsTraitConst for TrackerGOTURN_Params {
-		#[inline] fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerGOTURN_ParamsTrait for TrackerGOTURN_Params {
-		#[inline] fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerGOTURN_Params, crate::video::TrackerGOTURN_ParamsTraitConst, as_raw_TrackerGOTURN_Params, crate::video::TrackerGOTURN_ParamsTrait, as_raw_mut_TrackerGOTURN_Params }
-
 	/// The MIL algorithm trains a classifier in an online manner to separate the object from the
 	/// background.
 	///
 	/// Multiple Instance Learning avoids the drift problem for a robust tracking. The implementation is
-	/// based on [MIL](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_MIL) .
+	/// based on [MIL](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MIL) .
 	///
 	/// Original code can be found here <http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml>
 	pub struct TrackerMIL {
@@ -4064,16 +4139,6 @@ pub mod video {
 	/// Mutable methods for [crate::video::TrackerNano]
 	pub trait TrackerNanoTrait: crate::video::TrackerNanoTraitConst + crate::video::TrackerTrait {
 		fn as_raw_mut_TrackerNano(&mut self) -> *mut c_void;
-
-		/// Return tracking score
-		#[inline]
-		fn get_tracking_score(&mut self) -> Result<f32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerNano_getTrackingScore(self.as_raw_mut_TrackerNano(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
 
 	}
 
@@ -4337,16 +4402,6 @@ pub mod video {
 	pub trait TrackerVitTrait: crate::video::TrackerTrait + crate::video::TrackerVitTraitConst {
 		fn as_raw_mut_TrackerVit(&mut self) -> *mut c_void;
 
-		/// Return tracking score
-		#[inline]
-		fn get_tracking_score(&mut self) -> Result<f32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerVit_getTrackingScore(self.as_raw_mut_TrackerVit(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
 	}
 
 	impl std::fmt::Debug for TrackerVit {
@@ -4536,7 +4591,7 @@ pub mod video {
 	/// where ![inline formula](https://latex.codecogs.com/png.latex?E%5FI%2CE%5FG%2CE%5FS) are color constancy, gradient constancy and smoothness terms
 	/// respectively. ![inline formula](https://latex.codecogs.com/png.latex?%5CPsi%28s%5E2%29%3D%5Csqrt%7Bs%5E2%2B%5Cepsilon%5E2%7D) is a robust penalizer to limit the
 	/// influence of outliers. A complete formulation and a description of the minimization
-	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.13.0/d0/de3/citelist.html#CITEREF_Brox2004)
+	/// procedure can be found in [Brox2004](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Brox2004)
 	pub struct VariationalRefinement {
 		ptr: *mut c_void,
 	}

@@ -1,7 +1,7 @@
 include!(concat!(env!("OUT_DIR"), "/opencv/alphamat.rs"));
-include!(concat!(env!("OUT_DIR"), "/opencv/aruco.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/bgsegm.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/bioinspired.rs"));
+include!(concat!(env!("OUT_DIR"), "/opencv/calib.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/calib3d.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/ccalib.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/core.rs"));
@@ -16,16 +16,17 @@ include!(concat!(env!("OUT_DIR"), "/opencv/cudaobjdetect.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/cudaoptflow.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/cudastereo.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/cudawarping.rs"));
-include!(concat!(env!("OUT_DIR"), "/opencv/cvv.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/dnn.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/dnn_superres.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/dpm.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/face.rs"));
-include!(concat!(env!("OUT_DIR"), "/opencv/features2d.rs"));
+include!(concat!(env!("OUT_DIR"), "/opencv/features.rs"));
+pub use features as features2d;
 include!(concat!(env!("OUT_DIR"), "/opencv/flann.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/freetype.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/fuzzy.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/gapi.rs"));
+include!(concat!(env!("OUT_DIR"), "/opencv/geometry.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/hdf.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/hfs.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/highgui.rs"));
@@ -34,14 +35,13 @@ include!(concat!(env!("OUT_DIR"), "/opencv/imgcodecs.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/imgproc.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/intensity_transform.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/line_descriptor.rs"));
-include!(concat!(env!("OUT_DIR"), "/opencv/mcc.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/ml.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/objdetect.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/optflow.rs"));
-include!(concat!(env!("OUT_DIR"), "/opencv/ovis.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/phase_unwrapping.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/photo.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/plot.rs"));
+include!(concat!(env!("OUT_DIR"), "/opencv/ptcloud.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/quality.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/rapid.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/rgbd.rs"));
@@ -65,6 +65,7 @@ include!(concat!(env!("OUT_DIR"), "/opencv/xfeatures2d.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/ximgproc.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/xobjdetect.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/xphoto.rs"));
+include!(concat!(env!("OUT_DIR"), "/opencv/xstereo.rs"));
 pub mod types {
 	include!(concat!(env!("OUT_DIR"), "/opencv/types.rs"));
 }
@@ -74,9 +75,9 @@ pub mod sys {
 }
 pub mod hub_prelude {
 	pub use super::alphamat::prelude::*;
-	pub use super::aruco::prelude::*;
 	pub use super::bgsegm::prelude::*;
 	pub use super::bioinspired::prelude::*;
+	pub use super::calib::prelude::*;
 	pub use super::calib3d::prelude::*;
 	pub use super::ccalib::prelude::*;
 	pub use super::core::prelude::*;
@@ -91,16 +92,17 @@ pub mod hub_prelude {
 	pub use super::cudaoptflow::prelude::*;
 	pub use super::cudastereo::prelude::*;
 	pub use super::cudawarping::prelude::*;
-	pub use super::cvv::prelude::*;
 	pub use super::dnn::prelude::*;
 	pub use super::dnn_superres::prelude::*;
 	pub use super::dpm::prelude::*;
 	pub use super::face::prelude::*;
+	pub use super::features::prelude::*;
 	pub use super::features2d::prelude::*;
 	pub use super::flann::prelude::*;
 	pub use super::freetype::prelude::*;
 	pub use super::fuzzy::prelude::*;
 	pub use super::gapi::prelude::*;
+	pub use super::geometry::prelude::*;
 	pub use super::hdf::prelude::*;
 	pub use super::hfs::prelude::*;
 	pub use super::highgui::prelude::*;
@@ -109,14 +111,13 @@ pub mod hub_prelude {
 	pub use super::imgproc::prelude::*;
 	pub use super::intensity_transform::prelude::*;
 	pub use super::line_descriptor::prelude::*;
-	pub use super::mcc::prelude::*;
 	pub use super::ml::prelude::*;
 	pub use super::objdetect::prelude::*;
 	pub use super::optflow::prelude::*;
-	pub use super::ovis::prelude::*;
 	pub use super::phase_unwrapping::prelude::*;
 	pub use super::photo::prelude::*;
 	pub use super::plot::prelude::*;
+	pub use super::ptcloud::prelude::*;
 	pub use super::quality::prelude::*;
 	pub use super::rapid::prelude::*;
 	pub use super::rgbd::prelude::*;
@@ -140,6 +141,7 @@ pub mod hub_prelude {
 	pub use super::ximgproc::prelude::*;
 	pub use super::xobjdetect::prelude::*;
 	pub use super::xphoto::prelude::*;
+	pub use super::xstereo::prelude::*;
 }
 
 mod ffi_exports {

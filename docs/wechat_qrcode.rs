@@ -28,28 +28,22 @@ pub mod wechat_qrcode {
 
 	impl WeChatQRCode {
 		/// Initialize the WeChatQRCode.
-		/// It includes two models, which are packaged with caffe format.
-		/// Therefore, there are prototxt and caffe models (In total, four paramenters).
+		/// It includes two CNN-based models in ONNX format:
+		/// a detector model and a super resolution model.
 		///
 		/// ## Parameters
-		/// * detector_prototxt_path: prototxt file path for the detector
-		/// * detector_caffe_model_path: caffe model file path for the detector
-		/// * super_resolution_prototxt_path: prototxt file path for the super resolution model
-		/// * super_resolution_caffe_model_path: caffe file path for the super resolution model
+		/// * detector_model_path: onnx model file path for the detector
+		/// * super_resolution_model_path: onnx model file path for the super resolution model
 		///
 		/// ## C++ default parameters
-		/// * detector_prototxt_path: ""
-		/// * detector_caffe_model_path: ""
-		/// * super_resolution_prototxt_path: ""
-		/// * super_resolution_caffe_model_path: ""
+		/// * detector_model_path: ""
+		/// * super_resolution_model_path: ""
 		#[inline]
-		pub fn new(detector_prototxt_path: &str, detector_caffe_model_path: &str, super_resolution_prototxt_path: &str, super_resolution_caffe_model_path: &str) -> Result<crate::wechat_qrcode::WeChatQRCode> {
-			extern_container_arg!(detector_prototxt_path);
-			extern_container_arg!(detector_caffe_model_path);
-			extern_container_arg!(super_resolution_prototxt_path);
-			extern_container_arg!(super_resolution_caffe_model_path);
+		pub fn new(detector_model_path: &str, super_resolution_model_path: &str) -> Result<crate::wechat_qrcode::WeChatQRCode> {
+			extern_container_arg!(detector_model_path);
+			extern_container_arg!(super_resolution_model_path);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode_const_stringR_const_stringR_const_stringR_const_stringR(detector_prototxt_path.opencv_as_extern(), detector_caffe_model_path.opencv_as_extern(), super_resolution_prototxt_path.opencv_as_extern(), super_resolution_caffe_model_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode_const_stringR_const_stringR(detector_model_path.opencv_as_extern(), super_resolution_model_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(ret) };
@@ -57,21 +51,17 @@ pub mod wechat_qrcode {
 		}
 
 		/// Initialize the WeChatQRCode.
-		/// It includes two models, which are packaged with caffe format.
-		/// Therefore, there are prototxt and caffe models (In total, four paramenters).
+		/// It includes two CNN-based models in ONNX format:
+		/// a detector model and a super resolution model.
 		///
 		/// ## Parameters
-		/// * detector_prototxt_path: prototxt file path for the detector
-		/// * detector_caffe_model_path: caffe model file path for the detector
-		/// * super_resolution_prototxt_path: prototxt file path for the super resolution model
-		/// * super_resolution_caffe_model_path: caffe file path for the super resolution model
+		/// * detector_model_path: onnx model file path for the detector
+		/// * super_resolution_model_path: onnx model file path for the super resolution model
 		///
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * detector_prototxt_path: ""
-		/// * detector_caffe_model_path: ""
-		/// * super_resolution_prototxt_path: ""
-		/// * super_resolution_caffe_model_path: ""
+		/// * detector_model_path: ""
+		/// * super_resolution_model_path: ""
 		#[inline]
 		pub fn new_def() -> Result<crate::wechat_qrcode::WeChatQRCode> {
 			return_send!(via ocvrs_return);
