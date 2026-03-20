@@ -447,8 +447,8 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					if matches!(out, TypeRefKind::Class(..)) {
 						let mut elaborate_name = self.get_display_name();
 						elaborate_name.replace_in_place("const ", "");
-						if let Some(decl) = self.get_declaration() {
-							if elaborate_name.starts_with("std::") {
+						if elaborate_name.starts_with("std::") {
+							if let Some(decl) = self.get_declaration().map(|decl| decl.get_definition().unwrap_or(decl)) {
 								return TypeRefKind::Class(Class::new_ext(decl, elaborate_name, gen_env));
 							}
 						}
@@ -457,7 +457,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 				}
 
 				TypeKind::Record | TypeKind::Unexposed => {
-					if let Some(decl) = self.get_declaration() {
+					if let Some(decl) = self.get_declaration().map(|decl| decl.get_definition().unwrap_or(decl)) {
 						let cpp_refname = decl.cpp_name(CppNameStyle::Reference);
 						if cpp_refname.starts_with("std::") && cpp_refname.contains("::vector") {
 							TypeRefKind::StdVector(Vector::new(self, gen_env))
@@ -481,18 +481,23 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 							} else {
 								TypeRefKind::Ignored
 							}
-						} else if let Some(&(rust, cpp)) = settings::PRIMITIVE_TYPEDEFS.get(generic_type.as_str()) {
-							// uint64_t in gapi module ends here for some reason
-							TypeRefKind::Primitive(rust, cpp)
 						} else {
 							generic_type.replace_in_place("const ", "");
-							TypeRefKind::Generic(generic_type)
+							if let Some(&(rust, cpp)) = settings::PRIMITIVE_TYPEDEFS.get(generic_type.as_str()) {
+								// uint64_t in gapi module ends here for some reason
+								TypeRefKind::Primitive(rust, cpp)
+							} else {
+								TypeRefKind::Generic(generic_type)
+							}
 						}
 					}
 				}
 
 				TypeKind::Typedef => {
-					let decl = self.get_declaration().expect("Can't get typedef declaration");
+					let decl = self
+						.get_declaration()
+						.map(|decl| decl.get_definition().unwrap_or(decl))
+						.expect("Can't get typedef declaration");
 					let decl_name = decl.cpp_name(CppNameStyle::Reference);
 					if let Some(&(rust, cpp)) = settings::PRIMITIVE_TYPEDEFS.get(decl_name.as_ref()) {
 						TypeRefKind::Primitive(rust, cpp)
@@ -511,10 +516,13 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					}
 				}
 
-				TypeKind::Enum => TypeRefKind::Enum(Enum::new(
-					self.get_declaration().expect("Can't get enum declaration"),
-					gen_env,
-				)),
+				TypeKind::Enum => {
+					let decl = self
+						.get_declaration()
+						.map(|decl| decl.get_definition().unwrap_or(decl))
+						.expect("Can't get typedef declaration");
+					TypeRefKind::Enum(Enum::new(decl, gen_env))
+				}
 
 				TypeKind::FunctionPrototype => {
 					if let Some(parent) = parent_entity {

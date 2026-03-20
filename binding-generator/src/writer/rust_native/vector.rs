@@ -71,11 +71,9 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		static OUTPUT_ARRAY_TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("tpl/vector/rust_output_array.tpl.rs").compile_interpolation());
 
-		let vec_type_ref = self.type_ref();
-		if vec_type_ref.constness().is_const() {
-			// todo we should generate smth like VectorRef in this case
-			return "".to_string();
-		}
+		// even if a vector is const qualified in a function argument, the user needs to be able to create and modify it to pass
+		// the parameter
+		let vec_type_ref = self.type_ref().with_inherent_constness(Constness::Mut);
 
 		let rust_localalias = self.rust_localalias();
 		let element_type = self.element_type();
@@ -212,21 +210,12 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 	}
 
 	fn gen_rust_externs(&self) -> String {
-		if self.type_ref().constness().is_const() {
-			// todo we should generate smth like VectorRef in this case
-			return "".to_string();
-		}
 		extern_functions(self).iter().map(Func::gen_rust_externs).join("")
 	}
 
 	fn gen_cpp(&self) -> String {
 		static COMMON_TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("tpl/vector/cpp.tpl.cpp").compile_interpolation());
-
-		if self.type_ref().constness().is_const() {
-			// todo we should generate smth like VectorRef in this case
-			return "".to_string();
-		}
 
 		COMMON_TPL.interpolate(&HashMap::from([(
 			"methods",
@@ -241,7 +230,7 @@ fn extern_functions<'tu, 'ge>(vec: &Vector<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	if !element_type.base().kind().is_char() {
 		let element_kind = element_type.kind();
 		let element_is_bool = element_kind.is_bool();
-		let vec_type_ref = vec.type_ref();
+		let vec_type_ref = vec.type_ref().with_inherent_constness(Constness::Mut);
 		let vector_class = vector_class(&vec_type_ref);
 		out.extend([
 			method_new(vector_class.clone(), vec_type_ref.clone()),

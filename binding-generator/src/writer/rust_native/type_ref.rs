@@ -127,7 +127,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 									indirection,
 								))
 							} else {
-								unreachable!("Any other kind of class shouldn't be generated")
+								unreachable!("Class shouldn't be generated, kind: {cls_kind:?}, class: {cls:?}")
 							}
 						}
 						TypeRefKind::Enum(enm) => RenderLane::Enum(EnumRenderLane::from_non_canonical_enum_indirection(

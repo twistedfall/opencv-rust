@@ -475,7 +475,7 @@ impl Generator {
 			.detailed_preprocessing_record(true)
 			.skip_function_bodies(true)
 			.parse()
-			.unwrap_or_else(|_| panic!("Cannot parse module: {module}"));
+			.unwrap_or_else(|e| panic!("Cannot parse module: {module}, error: {e}"));
 		Self::handle_diags(&root_tu.get_diagnostics(), panic_on_error);
 		entity_processor(root_tu.get_entity());
 	}

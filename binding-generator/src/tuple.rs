@@ -53,7 +53,11 @@ impl<'tu, 'ge> Tuple<'tu, 'ge> {
 
 impl<'tu> EntityElement<'tu> for Tuple<'tu, '_> {
 	fn entity(&self) -> Entity<'tu> {
-		self.type_ref.get_declaration().expect("Can't get declaration")
+		self
+			.type_ref
+			.get_declaration()
+			.map(|decl| decl.get_definition().unwrap_or(decl))
+			.expect("Can't get declaration")
 	}
 }
 

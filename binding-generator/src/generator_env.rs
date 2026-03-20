@@ -237,6 +237,8 @@ impl<'tu> GeneratorEnv<'tu> {
 			(l, line_offset)
 		} else {
 			let loc = entity
+				.get_definition()
+				.unwrap_or(entity)
 				.get_range()
 				.map_or_else(
 					// for some reason Apple libclang on macos has problems with get_range() on FacemarkLBF::Params::pupils
