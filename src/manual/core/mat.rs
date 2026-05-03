@@ -92,7 +92,7 @@ impl<T: MatTraitConst + ?Sized> MatMatcher for T {
 
 	#[inline]
 	fn match_is_continuous(&self) -> Result<()> {
-		if self.is_continuous() {
+		if self.is_physically_contiguous()? {
 			Ok(())
 		} else {
 			Err(Error::new(
@@ -143,6 +143,13 @@ fn match_length(sizes: &[i32], slice_len: usize, size_mul: usize) -> Result<()> 
 		return Err(Error::new(core::StsUnmatchedSizes, msg));
 	}
 	Ok(())
+}
+
+#[inline]
+fn mat_byte_len(mat: &(impl MatTraitConst + ?Sized)) -> Result<usize> {
+	mat.total()
+		.checked_mul(mat.elem_size()?)
+		.ok_or_else(|| Error::new(core::StsOutOfRange, "Mat byte size overflows usize"))
 }
 
 /// Port of the algo from `Mat::at(int i0)`, includes OpenCV 5 specifics
@@ -574,6 +581,48 @@ pub trait MatTraitConstManual: MatTraitConst {
 		!self.data().is_null()
 	}
 
+	/// Returns whether the matrix elements are packed without gaps in memory.
+	///
+	/// The existing [MatTraitConst::is_continuous] can return `false` even if the [Mat] is contiguous in the memory due to the
+	/// legacy need to keep total byte length within `int` range, but there is no such requirement for the [Mat::data_typed] family
+	/// of functions.
+	#[inline]
+	fn is_physically_contiguous(&self) -> Result<bool> {
+		// OpenCV clears CONTINUOUS_FLAG for huge Mats whose flattened element count
+		// does not fit into C++ int, even when the underlying memory is still
+		// physically contiguous. For Rust slice exposure we only need packed byte
+		// strides and a total byte length that fits into usize.
+		//
+		// The code below checks for conditions when `is_continuous` can lie, and only then run calculations
+
+		// if `isContinuous` flag is already pre-calculated as true, just return it
+		let is_continuous = self.is_continuous();
+		if is_continuous {
+			return Ok(true);
+		}
+
+		// if `Mat` size doesn't actually overflow i32 then we can trust `isContinuous` flag
+		let mat_byte_len = mat_byte_len(self)?;
+		if i32::try_from(mat_byte_len).is_ok() {
+			return Ok(is_continuous);
+		}
+
+		let sizes = self.mat_size();
+		let mut expected_stride = self.elem_size()?;
+		let steps = self.mat_step();
+		for (&actual_stride, &size) in steps.iter().zip(&*sizes).rev() {
+			if size > 1 && actual_stride != expected_stride {
+				return Ok(false);
+			}
+			let size = usize::try_from(size).map_err(|_| Error::new(core::StsOutOfRange, "Mat must have no negative dimensions"))?;
+			expected_stride = expected_stride
+				.checked_mul(size)
+				.ok_or_else(|| Error::new(core::StsOutOfRange, "Mat stride overflows usize"))?;
+		}
+
+		Ok(true)
+	}
+
 	/// Returns the underlying data array as a byte slice, [Mat] must be continuous
 	#[inline]
 	fn data_bytes(&self) -> Result<&[u8]> {
@@ -582,7 +631,8 @@ pub trait MatTraitConstManual: MatTraitConst {
 			Ok(if data.is_null() {
 				&[]
 			} else {
-				unsafe { slice::from_raw_parts(data, self.total() * self.elem_size()?) }
+				let byte_len = mat_byte_len(self)?;
+				unsafe { slice::from_raw_parts(data, byte_len) }
 			})
 		})
 	}
@@ -744,7 +794,8 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 			Ok(if data.is_null() {
 				&mut []
 			} else {
-				unsafe { slice::from_raw_parts_mut(self.data_mut(), self.total() * self.elem_size()?) }
+				let byte_len = mat_byte_len(self)?;
+				unsafe { slice::from_raw_parts_mut(data, byte_len) }
 			})
 		})
 	}

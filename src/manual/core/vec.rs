@@ -4,7 +4,7 @@ use std::ops::{Deref, DerefMut, MulAssign};
 use num_traits::{Float, NumCast, ToPrimitive};
 
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
-use crate::core::{ToInputArray, ToInputOutputArray, ToOutputArray, _InputArray, _InputOutputArray, _OutputArray};
+use crate::core::{_InputArray, _InputOutputArray, _OutputArray, ToInputArray, ToInputOutputArray, ToOutputArray};
 use crate::traits::{Boxed, OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
 use crate::{extern_receive, extern_send, sys, Result};
 

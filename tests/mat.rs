@@ -3,7 +3,8 @@ use std::{mem, thread};
 
 use matches::assert_matches;
 use opencv::core::{
-	MatConstIterator, MatIter, Point, Point2d, Point2f, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec3s, Vec4w, Vector,
+	MatConstIterator, MatIter, Point, Point2d, Point2f, Rect, Scalar, Size, Vec2b, Vec2s, Vec3b, Vec3d, Vec3f, Vec3s, Vec4d,
+	Vec4f, Vec4w, Vector,
 };
 use opencv::prelude::*;
 use opencv::{core, imgproc, Error, Result};
@@ -575,6 +576,22 @@ fn mat_continuous() -> Result<()> {
 			})
 		);
 	}
+
+	Ok(())
+}
+
+#[test]
+fn huge_physically_contiguous_mat_can_be_sliced() -> Result<()> {
+	let mat = Mat::new_rows_cols_with_default(30076, 39979, Vec3b::opencv_type(), Scalar::all(0.))?;
+
+	assert!(!mat.is_continuous());
+	assert!(mat.is_physically_contiguous()?);
+
+	let data = mat.data_typed::<Vec3b>()?;
+	assert_eq!(30076usize * 39979, data.len());
+
+	let bytes = mat.data_bytes()?;
+	assert_eq!(30076usize * 39979 * 3, bytes.len());
 
 	Ok(())
 }
@@ -1290,36 +1307,6 @@ fn mat_set_matexpr() -> Result<()> {
 
 #[test]
 fn mat_dims_size() -> Result<()> {
-	// 1D Mat
-	{
-		let mat = Mat::new_nd_with_data(&[10], &[0, 1, 2, 3, 4, 5, 6, 7, 8, 9])?;
-		let expected_dims = if cfg!(ocvrs_opencv_branch_5) {
-			1
-		} else {
-			2
-		};
-		assert_eq!(expected_dims, mat.dims());
-		let expected_rows = if cfg!(ocvrs_opencv_branch_5) {
-			1
-		} else {
-			10
-		};
-		assert_eq!(expected_rows, mat.rows());
-		let expected_cols = if cfg!(ocvrs_opencv_branch_5) {
-			10
-		} else {
-			1
-		};
-		assert_eq!(expected_cols, mat.cols());
-		assert_eq!(10, mat.total());
-		let expected_size = if cfg!(ocvrs_opencv_branch_5) {
-			Size::new(10, 1)
-		} else {
-			Size::new(1, 10)
-		};
-		assert_eq!(expected_size, mat.size()?);
-	}
-
 	// 0D Mat (Scalar)
 	if cfg!(ocvrs_opencv_branch_5) {
 		let mat = Mat::new_nd_with_data(&[], &[100])?;
@@ -1328,6 +1315,151 @@ fn mat_dims_size() -> Result<()> {
 		assert_eq!(1, mat.cols());
 		assert_eq!(1, mat.total());
 		assert_eq!(Size::new(1, 1), mat.size()?);
+	}
+
+	// 1D mat
+	{
+		let mat = Mat::new_nd_with_default(&[100], Vec4f::opencv_type(), 0.into())?;
+		let expected_dims = if cfg!(ocvrs_opencv_branch_5) {
+			1
+		} else {
+			2
+		};
+		assert_eq!(expected_dims, mat.dims());
+		assert_eq!(&[100], &*mat.mat_size());
+		let (expected_rows, expected_cols) = if cfg!(ocvrs_opencv_branch_5) {
+			(1, 100)
+		} else {
+			(100, 1)
+		};
+		assert_eq!(expected_rows, mat.rows());
+		assert_eq!(expected_cols, mat.cols());
+		assert_eq!(Size::new(expected_cols, expected_rows), mat.size()?);
+		assert_eq!(100, mat.total());
+		assert_eq!(4, mat.channels());
+		assert_eq!(size_of::<f32>(), mat.elem_size1());
+		assert_eq!(size_of::<f32>() * 4, mat.elem_size()?);
+		assert_eq!([16].as_slice(), &mat.mat_step());
+	}
+
+	// 2D mat
+	{
+		let mat = Mat::new_nd_with_default(&[3, 7], Vec3d::opencv_type(), 0.into())?;
+		assert_eq!(2, mat.dims());
+		assert_eq!(&[3, 7], &*mat.mat_size());
+		assert_eq!(3, mat.rows());
+		assert_eq!(7, mat.cols());
+		assert_eq!(Size::new(7, 3), mat.size()?);
+		assert_eq!(3 * 7, mat.total());
+		assert_eq!(3, mat.channels());
+		assert_eq!(size_of::<f64>(), mat.elem_size1());
+		assert_eq!(size_of::<f64>() * 3, mat.elem_size()?);
+		assert_eq!([168, 24].as_slice(), &mat.mat_step());
+
+		let roi = Mat::roi(&mat, Rect::new(1, 0, 2, 3))?;
+		assert_eq!(2, roi.dims());
+		assert_eq!(&[3, 2], &*roi.mat_size());
+		assert_eq!(3, roi.rows());
+		assert_eq!(2, roi.cols());
+		assert_eq!(Size::new(2, 3), roi.size()?);
+		assert_eq!(2 * 3, roi.total());
+		assert_eq!(3, roi.channels());
+		assert_eq!(size_of::<f64>(), roi.elem_size1());
+		assert_eq!(size_of::<f64>() * 3, roi.elem_size()?);
+		assert_eq!([168, 24].as_slice(), &roi.mat_step());
+	}
+
+	// ND mat
+	{
+		let mat = Mat::new_nd_with_default(&[1, 2, 3, 4], Vec4d::opencv_type(), 0.into())?;
+		assert_eq!(4, mat.dims());
+		assert_eq!(&[1, 2, 3, 4], &*mat.mat_size());
+		assert_eq!(-1, mat.rows());
+		assert_eq!(-1, mat.cols());
+		assert!(mat.size().is_err());
+		assert_eq!(1 * 2 * 3 * 4, mat.total());
+		assert_eq!(4, mat.channels());
+		assert_eq!(size_of::<f64>(), mat.elem_size1());
+		assert_eq!(size_of::<f64>() * 4, mat.elem_size()?);
+		assert_eq!([768, 384, 128, 32].as_slice(), &mat.mat_step());
+		assert_eq!(
+			[
+				2 * 3 * 4 * mat.elem_size()?,
+				3 * 4 * mat.elem_size()?,
+				4 * mat.elem_size()?,
+				mat.elem_size()?,
+			]
+			.as_slice(),
+			&mat.mat_step()
+		);
+	}
+
+	Ok(())
+}
+
+#[test]
+fn is_physically_contiguous_custom_step() -> Result<()> {
+	{
+		// Create a Mat with a step larger than the row width (simulates padding).
+		// 5 cols of u8, but step=8 per row (3 bytes padding per row) — NOT contiguous.
+		let mut buf = vec![0u8; 8 * 4]; // 4 rows, 8 bytes per row
+		let mat = unsafe { Mat::new_rows_cols_with_data_unsafe(4, 5, u8::opencv_type(), buf.as_mut_ptr().cast::<c_void>(), 8)? };
+		assert!(!mat.is_continuous());
+		assert!(!mat.is_physically_contiguous()?);
+	}
+
+	{
+		// Step exactly equals row width: step = 5 * 1 = 5 for 5 cols of u8.
+		// This IS contiguous.
+		let mut buf = vec![0u8; 5 * 4];
+		let mat = unsafe { Mat::new_rows_cols_with_data_unsafe(4, 5, u8::opencv_type(), buf.as_mut_ptr().cast::<c_void>(), 5)? };
+		assert!(mat.is_continuous());
+		assert!(mat.is_physically_contiguous()?);
+	}
+
+	{
+		// 3D Mat [2, 3, 4] of u8 with custom steps that introduce a gap in dimension 1
+		// Packed steps would be: [12, 4, 1] — we use [16, 4, 1] to add a 4-byte gap
+		let mut buf = vec![0u8; 2 * 16]; // 2 * 16 = 32 bytes
+		let steps: [usize; 3] = [16, 4, 1];
+		let mat =
+			unsafe { Mat::new_nd_with_data_unsafe(&[2, 3, 4], u8::opencv_type(), buf.as_mut_ptr().cast::<c_void>(), Some(&steps))? };
+		assert!(!mat.is_continuous());
+		assert!(!mat.is_physically_contiguous()?);
+	}
+
+	{
+		// 3D Mat [2, 3, 4] of u8 with exact packed steps [12, 4, 1]
+		let mut buf = vec![0u8; 2 * 3 * 4];
+		let steps: [usize; 3] = [12, 4, 1];
+		let mat =
+			unsafe { Mat::new_nd_with_data_unsafe(&[2, 3, 4], u8::opencv_type(), buf.as_mut_ptr().cast::<c_void>(), Some(&steps))? };
+		assert!(mat.is_continuous());
+		assert!(mat.is_physically_contiguous()?);
+	}
+
+	Ok(())
+}
+
+#[test]
+fn is_physically_contiguous_huge_mat() -> Result<()> {
+	{
+		// This is the key edge case: a Mat whose total element count * elem_size overflows i32.
+		// OpenCV's updateContinuityFlag clears CONTINUOUS_FLAG when `t` doesn't fit `int`,
+		// but the memory IS physically contiguous. is_physically_contiguous should return true.
+		// 30076 * 39979 * 3 = ~3.6 billion bytes > i32::MAX
+		let mat = Mat::new_rows_cols_with_default(30076, 39979, Vec3b::opencv_type(), Scalar::all(0.))?;
+		assert!(!mat.is_continuous()); // OpenCV says not continuous (overflow)
+		assert!(mat.is_physically_contiguous()?); // but it IS physically contiguous
+	}
+
+	{
+		// Huge Mat ROI that spans full width — should be contiguous despite i32 overflow.
+		let mat = Mat::new_rows_cols_with_default(30076, 39979, Vec3b::opencv_type(), Scalar::all(0.))?;
+		let roi = Mat::roi(&mat, Rect::new(0, 100, 39979, 29000))?;
+		// Full width, so the stride matches. Still overflows i32 in total.
+		assert!(!roi.is_continuous());
+		assert!(roi.is_physically_contiguous()?);
 	}
 	Ok(())
 }
