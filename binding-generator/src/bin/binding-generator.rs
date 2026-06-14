@@ -74,7 +74,7 @@ fn main() {
 	let module = module
 		.to_str()
 		.and_then(SupportedModule::try_from_opencv_name)
-		.expect("Not a valid module name");
+		.unwrap_or_else(|| panic!("Not a valid module name: {module:?}"));
 	let version = get_version_from_headers(&opencv_header_dir).expect("Can't find the version in the headers");
 	let arg_additional_include_dirs = args.next();
 	let additional_include_dirs = arg_additional_include_dirs

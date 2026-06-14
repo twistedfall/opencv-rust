@@ -46,6 +46,7 @@ shlex = { version = "2", default-features = false }
 vcpkg = "0.2.9"
 
 [dev-dependencies]
+# Switch to std's assert_matches when MSRV is 1.96
 matches = "0.1"
 # copy of build-dependencies because we need to test methods of the build script
 opencv-binding-generator = { version = "0.101.0", path = "binding-generator" }

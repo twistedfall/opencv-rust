@@ -106,10 +106,7 @@ fn reserved_rename(val: Cow<str>) -> Cow<str> {
 pub fn line_reader(mut b: impl BufRead, mut cb: impl FnMut(&str) -> ControlFlow<()>) {
 	let mut line = String::with_capacity(256);
 	while let Ok(bytes_read) = b.read_line(&mut line) {
-		if bytes_read == 0 {
-			break;
-		}
-		if cb(&line).is_break() {
+		if bytes_read == 0 || cb(&line).is_break() {
 			break;
 		}
 		line.clear();

@@ -30,7 +30,7 @@ pub fn run(mut args: impl Iterator<Item = OsString>) -> Result<()> {
 	let module = module
 		.to_str()
 		.and_then(SupportedModule::try_from_opencv_name)
-		.ok_or("Not a valid module name")?;
+		.ok_or_else(|| format!("Not a valid module name: {module:?}"))?;
 	let version = opencv_header_dir
 		.find_version()
 		.ok_or("Can't find the version in the headers")?

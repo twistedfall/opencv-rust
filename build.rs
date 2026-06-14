@@ -116,11 +116,14 @@ fn make_modules_and_alises(
 
 	let mut modules = files_with_extension(opencv_dir, "hpp")?
 		.filter_map(|entry| {
-			entry
-				.file_stem()
-				.and_then(OsStr::to_str)
-				.and_then(SupportedModule::try_from_opencv_name)
-				.filter(|m| enable_modules.contains(m))
+			let file_stem = entry.file_stem().and_then(OsStr::to_str);
+			let module = file_stem.and_then(SupportedModule::try_from_opencv_name);
+			if let Some(file_stem) = file_stem {
+				if module.is_none() {
+					eprintln!("=== Skipping unsupported module: {file_stem}")
+				}
+			}
+			module.filter(|m| enable_modules.contains(m))
 		})
 		.collect::<Vec<_>>();
 
