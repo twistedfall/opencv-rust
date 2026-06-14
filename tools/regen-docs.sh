@@ -2,7 +2,7 @@
 
 set -eu
 
-branch="${1:-4}"
+branch="${1:-5}"
 
 script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 

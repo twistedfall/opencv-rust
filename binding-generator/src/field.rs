@@ -9,7 +9,7 @@ use crate::debug::{DefinitionLocation, LocationName, NameDebug};
 use crate::element::ExcludeKind;
 use crate::settings::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
 use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefKind, TypeRefTypeHint};
-use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
+use crate::{DefaultElement, Element, GeneratorEnv, StrExt, constant};
 
 /// Represents a field of a struct or a class or a function argument. Basically a name + type.
 #[derive(Clone)]
@@ -163,15 +163,13 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 					_ => EntityVisitResult::Continue,
 				});
 
-				if has_literal_children {
-					if let Some(range) = entity.get_range() {
-						let tokens = range.tokenize();
-						let default_value_tokens = tokens
-							.splitn(2, |t| t.get_kind() == TokenKind::Punctuation && t.get_spelling() == "=")
-							.nth(1);
-						if let Some(default_value_tokens) = default_value_tokens {
-							return Some(constant::render_constant_cpp(default_value_tokens).into());
-						}
+				if has_literal_children && let Some(range) = entity.get_range() {
+					let tokens = range.tokenize();
+					let default_value_tokens = tokens
+						.splitn(2, |t| t.get_kind() == TokenKind::Punctuation && t.get_spelling() == "=")
+						.nth(1);
+					if let Some(default_value_tokens) = default_value_tokens {
+						return Some(constant::render_constant_cpp(default_value_tokens).into());
 					}
 				}
 				None

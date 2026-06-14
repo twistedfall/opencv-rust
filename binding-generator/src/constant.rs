@@ -9,7 +9,7 @@ pub use desc::ConstDesc;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::type_ref::CppNameStyle;
-use crate::{settings, DefaultElement, Element, NameDebug, StrExt};
+use crate::{DefaultElement, Element, NameDebug, StrExt, settings};
 
 mod desc;
 
@@ -180,12 +180,12 @@ impl Value {
 				}
 				TokenKind::Identifier => {
 					let spelling = t.get_spelling();
-					if let Some(entity) = t.get_location().get_entity() {
-						if let EntityKind::MacroExpansion = entity.get_kind() {
-							let cnst = Const::new(entity);
-							if cnst.exclude_kind().is_excluded() {
-								return None;
-							}
+					if let Some(entity) = t.get_location().get_entity()
+						&& let EntityKind::MacroExpansion = entity.get_kind()
+					{
+						let cnst = Const::new(entity);
+						if cnst.exclude_kind().is_excluded() {
+							return None;
 						}
 					}
 					if spelling.starts_with("CV_") {

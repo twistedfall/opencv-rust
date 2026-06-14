@@ -1,4 +1,4 @@
-use std::ffi::{c_char, CStr};
+use std::ffi::{CStr, c_char};
 use std::slice;
 
 use crate::platform_types::size_t;

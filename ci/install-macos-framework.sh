@@ -23,20 +23,23 @@ if [ ! -d "$opencv_contrib_src" ]; then
 	curl -L "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" | tar -xz -C "$dist_dir"
 fi
 
-if [[ "$OPENCV_VERSION" == "3.4.20" ]]; then
-	# old OpenCV doesn't support choosing archs, patch hardcoded value to be arm64
-	arch_arg=
-	script_dir="$(dirname "$(readlink -f "$0")")"
-	patch -p1 -d"$opencv_src" < "$script_dir/opencv-3.4-macos-arm64-build.patch"
-	# old OpenCV CMake min version requirement is too old for the newer CMake
-	export CMAKE_POLICY_VERSION_MINIMUM=3.5
-	# old OpenCV requires too old SDK for macOS 10.14
-	export MACOSX_DEPLOYMENT_TARGET=10.13
-else
-	arch_arg="--macos_archs $(uname -m)"
+if [[ "$OPENCV_VERSION" == "5.0.0" ]]; then
+	# upstream fixes
+	patch -p1 -d "$opencv_src" < "$(dirname "$0")/patches/swift_name-attr.patch"
+	patch -p1 -d "$opencv_src" < "$(dirname "$0")/patches/enum-redefinition.patch"
+	# handling of the `doc_hosting_base_path` is properly broken in 5.0.0:
+	# 1. it's a store_true flag, so it can't be set to a string value
+	# 2. it is used in a path.join() so, yeah, that can't work
+	# 3. if it's not supplied then the script tries to get the current git branch which we don't have in a release tarball
+	# so the patch hackily disabled building docs so that we don't run into 2. and the argument below is used to avoid 3.
+	patch -p1 -d "$opencv_src" < "$(dirname "$0")/patches/no-build-docs.patch"
 fi
+
+# see the patches section above for why this --doc_hosting_base_path is needed
 python "$opencv_src/platforms/osx/build_framework.py" \
 	--contrib "$opencv_contrib_src" \
 	--enable_nonfree \
-	$arch_arg \
+	--macos_archs $(uname -m) \
+	--macosx_deployment_target 10.13 \
+	--doc_hosting_base_path \
 	"$build_dir"

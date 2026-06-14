@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
-use crate::func::FuncMatcher;
 use crate::SupportedModule;
+use crate::func::FuncMatcher;
 
 pub type FuncCompanionTweak = FuncMatcher<'static, CompanionTweak>;
 

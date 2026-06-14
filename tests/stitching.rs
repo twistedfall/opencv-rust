@@ -1,9 +1,9 @@
 #![cfg(ocvrs_has_module_stitching)]
 
+use opencv::Result;
 use opencv::core::Size;
 use opencv::prelude::*;
 use opencv::stitching::Detail_ImageFeatures;
-use opencv::Result;
 
 #[test]
 fn default_ctor() -> Result<()> {

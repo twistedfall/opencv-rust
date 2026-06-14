@@ -7,7 +7,7 @@ use opencv::core::{
 	Vec4f, Vec4w, Vector,
 };
 use opencv::prelude::*;
-use opencv::{core, imgproc, Error, Result};
+use opencv::{Error, Result, core, imgproc};
 
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 
@@ -90,12 +90,7 @@ fn mat_for_rows_and_cols() -> Result<()> {
 	assert_eq!(400, mat.mat_size()[0]);
 	assert_eq!(300, mat.mat_size()[1]);
 	assert_eq!(2, mat.dims());
-	let mast_step_len = if cfg!(ocvrs_opencv_branch_5) {
-		3
-	} else {
-		2
-	};
-	assert_eq!(mast_step_len, mat.mat_step().len());
+	assert_eq!(2, mat.mat_step().len());
 	assert_eq!(7200, mat.mat_step()[0]);
 	assert_eq!(24, mat.mat_step()[1]);
 	assert_eq!(24, mat.elem_size()?);
@@ -1326,7 +1321,12 @@ fn mat_dims_size() -> Result<()> {
 			2
 		};
 		assert_eq!(expected_dims, mat.dims());
-		assert_eq!(&[100], &*mat.mat_size());
+		let expected_mat_size = if cfg!(ocvrs_opencv_branch_5) {
+			[100].as_slice()
+		} else {
+			&[100, 1]
+		};
+		assert_eq!(expected_mat_size, &*mat.mat_size());
 		let (expected_rows, expected_cols) = if cfg!(ocvrs_opencv_branch_5) {
 			(1, 100)
 		} else {
@@ -1339,7 +1339,12 @@ fn mat_dims_size() -> Result<()> {
 		assert_eq!(4, mat.channels());
 		assert_eq!(size_of::<f32>(), mat.elem_size1());
 		assert_eq!(size_of::<f32>() * 4, mat.elem_size()?);
-		assert_eq!([16].as_slice(), &mat.mat_step());
+		let expected_mat_step = if cfg!(ocvrs_opencv_branch_5) {
+			[16].as_slice()
+		} else {
+			&[16, 16]
+		};
+		assert_eq!(expected_mat_step, mat.mat_step());
 	}
 
 	// 2D mat
@@ -1354,7 +1359,7 @@ fn mat_dims_size() -> Result<()> {
 		assert_eq!(3, mat.channels());
 		assert_eq!(size_of::<f64>(), mat.elem_size1());
 		assert_eq!(size_of::<f64>() * 3, mat.elem_size()?);
-		assert_eq!([168, 24].as_slice(), &mat.mat_step());
+		assert_eq!([168, 24].as_slice(), mat.mat_step());
 
 		let roi = Mat::roi(&mat, Rect::new(1, 0, 2, 3))?;
 		assert_eq!(2, roi.dims());
@@ -1366,7 +1371,7 @@ fn mat_dims_size() -> Result<()> {
 		assert_eq!(3, roi.channels());
 		assert_eq!(size_of::<f64>(), roi.elem_size1());
 		assert_eq!(size_of::<f64>() * 3, roi.elem_size()?);
-		assert_eq!([168, 24].as_slice(), &roi.mat_step());
+		assert_eq!([168, 24].as_slice(), roi.mat_step());
 	}
 
 	// ND mat
@@ -1376,12 +1381,16 @@ fn mat_dims_size() -> Result<()> {
 		assert_eq!(&[1, 2, 3, 4], &*mat.mat_size());
 		assert_eq!(-1, mat.rows());
 		assert_eq!(-1, mat.cols());
-		assert!(mat.size().is_err());
+		if cfg!(ocvrs_opencv_branch_5) {
+			assert!(mat.size().is_err());
+		} else {
+			// this gives different results in different 4.x versions, so let's skip it
+		}
 		assert_eq!(1 * 2 * 3 * 4, mat.total());
 		assert_eq!(4, mat.channels());
 		assert_eq!(size_of::<f64>(), mat.elem_size1());
 		assert_eq!(size_of::<f64>() * 4, mat.elem_size()?);
-		assert_eq!([768, 384, 128, 32].as_slice(), &mat.mat_step());
+		assert_eq!([768, 384, 128, 32].as_slice(), mat.mat_step());
 		assert_eq!(
 			[
 				2 * 3 * 4 * mat.elem_size()?,
@@ -1390,7 +1399,7 @@ fn mat_dims_size() -> Result<()> {
 				mat.elem_size()?,
 			]
 			.as_slice(),
-			&mat.mat_step()
+			mat.mat_step()
 		);
 	}
 

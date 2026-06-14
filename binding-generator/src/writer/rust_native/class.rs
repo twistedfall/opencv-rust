@@ -1,9 +1,11 @@
-mod gen;
+mod generate;
 
 use std::borrow::Cow;
 
-use super::element::{DefaultRustNativeElement, RustElement};
+use semver::Version;
+
 use super::RustNativeGeneratedElement;
+use super::element::{DefaultRustNativeElement, RustElement};
 use crate::class::ClassKind;
 use crate::settings::ClassTweak;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
@@ -52,20 +54,20 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 		format!("{}-{}", self.rust_module().opencv_name(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &Version) -> String {
 		match self.kind() {
-			ClassKind::Simple => gen::gen_simple_class(self, opencv_version),
-			ClassKind::Boxed | ClassKind::BoxedForced => gen::gen_boxed_class(self, opencv_version),
+			ClassKind::Simple => generate::gen_simple_class(self, opencv_version),
+			ClassKind::Boxed | ClassKind::BoxedForced => generate::gen_boxed_class(self, opencv_version),
 			ClassKind::System | ClassKind::Other => "".to_string(),
 		}
 	}
 
 	fn gen_rust_externs(&self) -> String {
-		gen::extern_functions(self).iter().map(Func::gen_rust_externs).join("")
+		generate::extern_functions(self).iter().map(Func::gen_rust_externs).join("")
 	}
 
 	fn gen_cpp(&self) -> String {
-		gen::extern_functions(self).iter().map(Func::gen_cpp).join("")
+		generate::extern_functions(self).iter().map(Func::gen_cpp).join("")
 	}
 }
 

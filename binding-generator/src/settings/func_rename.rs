@@ -9,10 +9,11 @@ pub fn func_rename_factory(module: SupportedModule) -> FuncRename {
 	match module {
 		SupportedModule::Aruco => aruco_factory(),
 		SupportedModule::Bioinspired => bioinspired_factory(),
-		SupportedModule::Calib3d | SupportedModule::Calib | SupportedModule::ThreeD => calib3d_factory(),
+		SupportedModule::Calib3d | SupportedModule::Calib => calib3d_factory(),
 		SupportedModule::Core => core_factory(),
 		SupportedModule::Dnn => dnn_factory(),
 		SupportedModule::Features2d | SupportedModule::Features => features2d_factory(),
+		SupportedModule::Geometry => geometry_factory(),
 		SupportedModule::Hdf => hdf_factory(),
 		SupportedModule::HighGui => highgui_factory(),
 		SupportedModule::ImgCodecs => imgcodecs_factory(),
@@ -26,6 +27,7 @@ pub fn func_rename_factory(module: SupportedModule) -> FuncRename {
 		SupportedModule::Text => text_factory(),
 		SupportedModule::VideoIo => videoio_factory(),
 		SupportedModule::VideoStab => videostab_factory(),
+		SupportedModule::XObjDetect => xobjdetect_factory(),
 		_ => FuncRename::default(),
 	}
 }
@@ -63,21 +65,70 @@ fn bioinspired_factory() -> HashMap<&'static str, &'static str> {
 fn calib3d_factory() -> HashMap<&'static str, &'static str> {
 	HashMap::from([
 		("cv_LMSolver_create_const_PtrLCallbackGR_int_double", "+_ext"),
-		("cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR", "+_matrix"),
-		("cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double", "+_mask"),
-		("cv_findHomography_const__InputArrayR_const__InputArrayR_int_double_const__OutputArrayR_const_int_const_double", "+_ext"),
-		("cv_fisheye_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR", "fisheye_+"),
-		("cv_fisheye_projectPoints_const__InputArrayR_const__OutputArrayR_const_Affine3dR_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR", "fisheye_+"),
-		("cv_fisheye_projectPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR", "fisheye_+_vec"),
-		("cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_int_TermCriteria", "fisheye_+"),
-		("cv_fisheye_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_SizeR_double_double", "fisheye_+"),
-		("cv_fisheye_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR", "fisheye_+"),
-		("cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR", "fisheye_+"),
-		("cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria", "fisheye_+"),
-		("cv_fisheye_distortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_double", "fisheye_+"),
-		("cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR", "+_estimated"),
-		("cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_const__InputOutputArrayR_const__OutputArrayR", "+_triangulated"),
-		("cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_double_const__InputOutputArrayR", "+_2_cameras"),
+		(
+			"cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR_const_CirclesGridFinderParametersR",
+			"+_with_params",
+		),
+		(
+			"cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR",
+			"+_matrix",
+		),
+		(
+			"cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double",
+			"+_mask",
+		),
+		(
+			"cv_findHomography_const__InputArrayR_const__InputArrayR_int_double_const__OutputArrayR_const_int_const_double",
+			"+_ext",
+		),
+		(
+			"cv_fisheye_distortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_double",
+			"fisheye_+",
+		),
+		(
+			"cv_fisheye_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR",
+			"fisheye_+",
+		),
+		(
+			"cv_fisheye_projectPoints_const__InputArrayR_const__OutputArrayR_const_Affine3dR_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR",
+			"fisheye_+",
+		),
+		(
+			"cv_fisheye_projectPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR",
+			"fisheye_+_vec",
+		),
+		(
+			"cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_int_TermCriteria",
+			"fisheye_+",
+		),
+		(
+			"cv_fisheye_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_SizeR_double_double",
+			"fisheye_+",
+		),
+		(
+			"cv_fisheye_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR",
+			"fisheye_+",
+		),
+		(
+			"cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR",
+			"fisheye_+",
+		),
+		(
+			"cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria",
+			"fisheye_+",
+		),
+		(
+			"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_double_const__InputOutputArrayR",
+			"+_2_cameras",
+		),
+		(
+			"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR",
+			"+_estimated",
+		),
+		(
+			"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_const__InputOutputArrayR_const__OutputArrayR",
+			"+_triangulated",
+		),
 	])
 }
 
@@ -304,6 +355,7 @@ fn core_factory() -> HashMap<&'static str, &'static str> {
 		("cv__OutputArray_move_const_MatR", "+mat"),
 		("cv__OutputArray_move_const_UMatR", "+umat"),
 		("cv_abs_const_MatExprR", "+_matexpr"),
+		("cv_cuda_GpuMatND_clone_const_StreamR", "try_clone_async"),
 		("cv_cuda_GpuMatND_operator___const_IndexArray_Range_Range", "rowscols"),
 		("cv_cuda_GpuMatND_operator___const_const_vectorLRangeGR", "ranges"),
 		("cv_cuda_GpuMat_GpuMat_Size_int_AllocatorX", "+_size"),
@@ -480,38 +532,107 @@ fn dnn_factory() -> HashMap<&'static str, &'static str> {
 
 fn features2d_factory() -> HashMap<&'static str, &'static str> {
 	HashMap::from([
-		("cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType", "+_with_type"),
+		(
+			"cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType",
+			"+_with_type",
+		),
 		("cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_int", "+_with_type"), // 3.x only
-		("cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_PtrLFeature2DGR_const_PtrLDescriptorMatcherGR", "+_with_extractor"),
-		("cv_BOWImgDescriptorExtractor_compute2_const_MatR_vectorLKeyPointGR_MatR", "compute2"),
-		("cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_vectorLvectorLintGGX_MatX", "+_desc"),
+		(
+			"cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_PtrLFeature2DGR_const_PtrLDescriptorMatcherGR",
+			"+_with_extractor",
+		),
+		(
+			"cv_BOWImgDescriptorExtractor_compute2_const_MatR_vectorLKeyPointGR_MatR",
+			"compute2",
+		),
+		(
+			"cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_vectorLvectorLintGGX_MatX",
+			"+_desc",
+		),
 		("cv_BOWKMeansTrainer_cluster_const_const_MatR", "+_with_descriptor"),
 		("cv_BOWTrainer_cluster_const_const_MatR", "+_with_descriptors"),
-		("cv_BRISK_create_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR", "+_with_pattern"),
-		("cv_BRISK_create_int_int_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR", "+_with_pattern_threshold_octaves"),
+		(
+			"cv_BRISK_create_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR",
+			"+_with_pattern",
+		),
+		(
+			"cv_BRISK_create_int_int_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR",
+			"+_with_pattern_threshold_octaves",
+		),
 		("cv_DescriptorMatcher_create_const_MatcherTypeR", "+_with_matcher_type"),
 		("cv_DescriptorMatcher_create_int", "+_with_matcher_type"), // 3.x only
-		("cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool", "knn_train_match"),
-		("cv_DescriptorMatcher_match_const_const__InputArrayR_const__InputArrayR_vectorLDMatchGR_const__InputArrayR", "train_match"),
-		("cv_DescriptorMatcher_radiusMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool", "radius_train_match"),
+		(
+			"cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool",
+			"knn_train_match",
+		),
+		(
+			"cv_DescriptorMatcher_match_const_const__InputArrayR_const__InputArrayR_vectorLDMatchGR_const__InputArrayR",
+			"train_match",
+		),
+		(
+			"cv_DescriptorMatcher_radiusMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool",
+			"radius_train_match",
+		),
 		("cv_DescriptorMatcher_read_const_FileNodeR", "+_from_node"),
 		("cv_DescriptorMatcher_write_const_FileStorageR", "+_to_storage"),
-		("cv_DescriptorMatcher_write_const_FileStorageR_const_StringR", "+_to_storage_with_name"),
-		("cv_DescriptorMatcher_write_const_const_PtrLFileStorageGR_const_StringR", "+_to_storage_ptr_with_name"),
-		("cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType", "+_with_type"),
+		(
+			"cv_DescriptorMatcher_write_const_FileStorageR_const_StringR",
+			"+_to_storage_with_name",
+		),
+		(
+			"cv_DescriptorMatcher_write_const_const_PtrLFileStorageGR_const_StringR",
+			"+_to_storage_ptr_with_name",
+		),
+		(
+			"cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType",
+			"+_with_type",
+		),
 		("cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool_int", "+_with_type"), // 3.x only
-		("cv_Feature2D_compute_const__InputArrayR_vectorLvectorLKeyPointGGR_const__OutputArrayR", "+_multiple"),
-		("cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR_const__InputArrayR", "+_multiple"),
+		(
+			"cv_Feature2D_compute_const__InputArrayR_vectorLvectorLKeyPointGGR_const__OutputArrayR",
+			"+_multiple",
+		),
+		(
+			"cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR_const__InputArrayR",
+			"+_multiple",
+		),
 		("cv_Feature2D_read_const_FileNodeR", "+_from_node"),
 		("cv_Feature2D_write_const_FileStorageR", "+_to_storage"),
-		("cv_Feature2D_write_const_FileStorageR_const_StringR", "+_to_storage_with_name"),
-		("cv_Feature2D_write_const_const_PtrLFileStorageGR_const_StringR", "+_to_storage_ptr_with_name"),
-		("cv_GFTTDetector_create_int_double_double_int_int_bool_double", "+_with_gradient"),
+		(
+			"cv_Feature2D_write_const_FileStorageR_const_StringR",
+			"+_to_storage_with_name",
+		),
+		(
+			"cv_Feature2D_write_const_const_PtrLFileStorageGR_const_StringR",
+			"+_to_storage_ptr_with_name",
+		),
+		(
+			"cv_GFTTDetector_create_int_double_double_int_int_bool_double",
+			"+_with_gradient",
+		),
 		("cv_SIFT_create_int_int_double_double_double_int", "+_with_descriptor_type"),
-		("cv_SIFT_create_int_int_double_double_double_int_bool", "+_with_descriptor_type"),
-		("cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags", "+_with_thickness"),
-		("cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vectorLcharGR_int", "+_with_thickness"),
+		(
+			"cv_SIFT_create_int_int_double_double_double_int_bool",
+			"+_with_descriptor_type",
+		),
+		(
+			"cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags",
+			"+_with_thickness",
+		),
+		(
+			"cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vectorLcharGR_int",
+			"+_with_thickness",
+		),
+	])
+}
 
+fn geometry_factory() -> HashMap<&'static str, &'static str> {
+	HashMap::from([
+		("cv_Subdiv2D_insert_const_vectorLPoint2fGR", "+_multiple"),
+		("cv_getAffineTransform_const_Point2fX_const_Point2fX", "+_slice"),
+		("cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX", "+_slice"), // 3.4
+		("cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX_int", "+_slice"), // 4.x
+		("cv_getRotationMatrix2D__Point2f_double_double", "+matx"),
 	])
 }
 
@@ -586,24 +707,54 @@ fn imgcodecs_factory() -> HashMap<&'static str, &'static str> {
 
 fn imgproc_factory() -> HashMap<&'static str, &'static str> {
 	HashMap::from([
-		("cv_Canny_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool", "+_derivative"),
-		("cv_GeneralizedHough_detect_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR", "+_with_edges"),
+		(
+			"cv_Canny_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool",
+			"+_derivative",
+		),
+		(
+			"cv_GeneralizedHough_detect_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR",
+			"+_with_edges",
+		),
 		("cv_Subdiv2D_insert_const_vectorLPoint2fGR", "+_multiple"),
-		("cv_applyColorMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR", "+_user"),
+		(
+			"cv_applyColorMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR",
+			"+_user",
+		),
 		("cv_clipLine_Size2l_Point2lR_Point2lR", "+_size_i64"),
 		("cv_clipLine_Size_PointR_PointR", "clip_line_size"),
-		("cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vectorLPoint2dGR", "ellipse_2_poly_f64"),
+		(
+			"cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vectorLPoint2dGR",
+			"ellipse_2_poly_f64",
+		),
 		("cv_ellipse2Poly_Point_Size_int_int_int_int_vectorLPointGR", "ellipse_2_poly"),
-		("cv_ellipse_const__InputOutputArrayR_const_RotatedRectR_const_ScalarR_int_int", "ellipse_rotated_rect"),
-		("cv_findContours_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point", "+_with_hierarchy"), // 4.x
-		("cv_findContours_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point", "+_with_hierarchy"), // 3.4
-		("cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int", "+_mask"),
+		(
+			"cv_ellipse_const__InputOutputArrayR_const_RotatedRectR_const_ScalarR_int_int",
+			"ellipse_rotated_rect",
+		),
+		(
+			"cv_findContours_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point",
+			"+_with_hierarchy",
+		), // 4.x
+		(
+			"cv_findContours_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point",
+			"+_with_hierarchy",
+		), // 3.4
+		(
+			"cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int",
+			"+_mask",
+		),
 		("cv_getAffineTransform_const_Point2fXX_const_Point2fXX", "+_slice"),
 		("cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX", "+_slice"), // 3.4
 		("cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX_int", "+_slice"), // 4.x
-		("cv_getRotationMatrix2D__Point2f_double_double", "get_rotation_matrix_2d_matx"),
-		("cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_int_bool_double", "+_with_gradient"),
-		("cv_rectangle_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int", "+_points"),
+		("cv_getRotationMatrix2D__Point2f_double_double", "+matx"),
+		(
+			"cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_int_bool_double",
+			"+_with_gradient",
+		),
+		(
+			"cv_rectangle_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int",
+			"+_points",
+		),
 	])
 }
 
@@ -617,25 +768,52 @@ fn line_descriptor_factory() -> HashMap<&'static str, &'static str> {
 fn ml_factory() -> HashMap<&'static str, &'static str> {
 	HashMap::from([
 		("cv_ml_ParamGrid_ParamGrid_double_double_double", "for_range"),
-		("cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR_int_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_bool", "+_with_data"),
+		(
+			"cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR_int_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_bool",
+			"+_with_data",
+		),
 		("cv_ml_StatModel_train_const_PtrLTrainDataGR_int", "+_with_data"),
-
 	])
 }
 
 fn objdetect_factory() -> HashMap<&'static str, &'static str> {
 	HashMap::from([
-		("cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_double_int_int_Size_Size", "+_num"),
-		("cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR_double_int_int_Size_Size_bool", "+_levels"),
+		(
+			"cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_double_int_int_Size_Size",
+			"+_num",
+		),
+		(
+			"cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR_double_int_int_Size_Size_bool",
+			"+_levels",
+		),
 		("cv_HOGDescriptor_HOGDescriptor_const_StringR", "+_from_file"),
-		("cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR_double_Size_Size_double_double_bool", "+_weights"),
-		("cv_HOGDescriptor_detect_const_const_MatR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR", "+_weights"), // 3.4
-		("cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR", "+_weights"), // 4.x
+		(
+			"cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR_double_Size_Size_double_double_bool",
+			"+_weights",
+		),
+		(
+			"cv_HOGDescriptor_detect_const_const_MatR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR",
+			"+_weights",
+		), // 3.4
+		(
+			"cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR",
+			"+_weights",
+		), // 4.x
 		("cv_HOGDescriptor_setSVMDetector_const__InputArrayR", "+_input_array"),
 		("cv_aruco_getPredefinedDictionary_int", "+_i32"),
-		("cv_groupRectangles_vectorLRectGR_int_double_vectorLintGX_vectorLdoubleGX", "+_levelweights"),
+		(
+			"cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR_const_CirclesGridFinderParametersR",
+			"+_with_params",
+		),
+		(
+			"cv_groupRectangles_vectorLRectGR_int_double_vectorLintGX_vectorLdoubleGX",
+			"+_levelweights",
+		),
 		("cv_groupRectangles_vectorLRectGR_vectorLintGR_int_double", "+_weights"),
-		("cv_groupRectangles_vectorLRectGR_vectorLintGR_vectorLdoubleGR_int_double", "+_levels"),
+		(
+			"cv_groupRectangles_vectorLRectGR_vectorLintGR_vectorLdoubleGR_int_double",
+			"+_levels",
+		),
 	])
 }
 
@@ -698,24 +876,71 @@ fn surface_matching_factory() -> HashMap<&'static str, &'static str> {
 
 fn text_factory() -> HashMap<&'static str, &'static str> {
 	HashMap::from([
-		("cv_text_BaseOCR_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int", "+_mask"),
-		("cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int", "+_from_file"),
-		("cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int", "+_multiple_mask"),
-		("cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int", "+_multiple"),
-		("cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_const__InputArrayR_int_int", "+_mask"),
-		("cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int", "+_from_file"),
-		("cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int", "+_multiple_mask"),
-		("cv_text_OCRHMMDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int", "+_multiple"),
-		("cv_text_OCRHMMDecoder_run_const__InputArrayR_const__InputArrayR_int_int", "+_mask"),
-		("cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int", "+_mask"),
-		("cv_text_OCRTesseract_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int", "+_multiple_mask"),
-		("cv_text_OCRTesseract_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int", "+_multiple"),
-		("cv_text_OCRTesseract_run_const__InputArrayR_const__InputArrayR_int_int", "+_mask"),
-		("cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vectorLSizeG", "+_with_sizes"),
-		("cv_text_createERFilterNM1_const_StringR_int_float_float_float_bool_float", "+_from_file"),
+		(
+			"cv_text_BaseOCR_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int",
+			"+_mask",
+		),
+		(
+			"cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int",
+			"+_from_file",
+		),
+		(
+			"cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int",
+			"+_multiple_mask",
+		),
+		(
+			"cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int",
+			"+_multiple",
+		),
+		(
+			"cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_const__InputArrayR_int_int",
+			"+_mask",
+		),
+		(
+			"cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int",
+			"+_from_file",
+		),
+		(
+			"cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int",
+			"+_multiple_mask",
+		),
+		(
+			"cv_text_OCRHMMDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int",
+			"+_multiple",
+		),
+		(
+			"cv_text_OCRHMMDecoder_run_const__InputArrayR_const__InputArrayR_int_int",
+			"+_mask",
+		),
+		(
+			"cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int",
+			"+_mask",
+		),
+		(
+			"cv_text_OCRTesseract_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int",
+			"+_multiple_mask",
+		),
+		(
+			"cv_text_OCRTesseract_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int",
+			"+_multiple",
+		),
+		(
+			"cv_text_OCRTesseract_run_const__InputArrayR_const__InputArrayR_int_int",
+			"+_mask",
+		),
+		(
+			"cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vectorLSizeG",
+			"+_with_sizes",
+		),
+		(
+			"cv_text_createERFilterNM1_const_StringR_int_float_float_float_bool_float",
+			"+_from_file",
+		),
 		("cv_text_createERFilterNM2_const_StringR_float", "+_from_file"),
-		("cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLRectGR_int_const_StringR_float", "+_from_file"),
-
+		(
+			"cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLRectGR_int_const_StringR_float",
+			"+_from_file",
+		),
 	])
 }
 
@@ -751,3 +976,39 @@ fn videostab_factory() -> HashMap<&'static str, &'static str> {
 		"+_mat",
 	)])
 }
+
+fn xobjdetect_factory() -> HashMap<&'static str, &'static str> {
+	// In OpenCV 5 the HOGDescriptor, CascadeClassifier and groupRectangles APIs were moved
+	// from the `objdetect` module into the `xobjdetect` module, so their custom names have to
+	// be configured here as well (cf. objdetect_factory which keeps them for OpenCV 4).
+	HashMap::from([
+		(
+			"cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_double_int_int_Size_Size",
+			"+_num",
+		),
+		(
+			"cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR_double_int_int_Size_Size_bool",
+			"+_levels",
+		),
+		("cv_HOGDescriptor_HOGDescriptor_const_StringR", "+_from_file"),
+		(
+			"cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR_double_Size_Size_double_double_bool",
+			"+_weights",
+		),
+		(
+			"cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR",
+			"+_weights",
+		),
+		("cv_HOGDescriptor_setSVMDetector_const__InputArrayR", "+_input_array"),
+		(
+			"cv_groupRectangles_vectorLRectGR_int_double_vectorLintGX_vectorLdoubleGX",
+			"+_levelweights",
+		),
+		("cv_groupRectangles_vectorLRectGR_vectorLintGR_int_double", "+_weights"),
+		(
+			"cv_groupRectangles_vectorLRectGR_vectorLintGR_vectorLdoubleGR_int_double",
+			"+_levels",
+		),
+	])
+}
+

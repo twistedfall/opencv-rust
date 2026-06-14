@@ -4,83 +4,19 @@ use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-use semver::Version;
+use opencv_binding_generator::version::OpenCVHeaderVersionExt;
 
 pub trait IncludePath {
-	fn get_module_header_dir(&self) -> Option<PathBuf>;
-	fn get_version_header(&self) -> Option<PathBuf>;
 	fn get_config_header(&self) -> Option<PathBuf>;
-	fn find_version(&self) -> Option<Version>;
 	fn find_inherent_features(&self) -> Option<Vec<String>>;
 }
 
 impl IncludePath for Path {
-	fn get_module_header_dir(&self) -> Option<PathBuf> {
-		let mut out = self.join("opencv2.framework/Headers");
-		if out.is_dir() {
-			return Some(out);
-		}
-		out = self.join("opencv2");
-		if out.is_dir() {
-			return Some(out);
-		}
-		None
-	}
-
-	fn get_version_header(&self) -> Option<PathBuf> {
-		self
-			.get_module_header_dir()
-			.map(|dir| dir.join("core/version.hpp"))
-			.filter(|hdr| hdr.is_file())
-	}
-
 	fn get_config_header(&self) -> Option<PathBuf> {
 		self
-			.get_module_header_dir()
+			.opencv_find_module_header_dir()
 			.map(|dir| dir.join("cvconfig.h"))
 			.filter(|hdr| hdr.is_file())
-	}
-
-	fn find_version(&self) -> Option<Version> {
-		let version_hpp = self.get_version_header()?;
-		let mut major = None;
-		let mut minor = None;
-		let mut revision = None;
-		let mut line = String::with_capacity(256);
-		let mut reader = BufReader::new(File::open(version_hpp).ok()?);
-		while let Ok(bytes_read) = reader.read_line(&mut line) {
-			if bytes_read == 0 {
-				break;
-			}
-			if let Some(line) = line.strip_prefix("#define CV_VERSION_") {
-				let mut parts = line.split_whitespace();
-				// todo: MSRV 1.88 use let chains
-				if let (Some(ver_spec), Some(version)) = (parts.next(), parts.next()) {
-					match ver_spec {
-						"MAJOR" => {
-							major = Some(version.parse().ok()?);
-						}
-						"MINOR" => {
-							minor = Some(version.parse().ok()?);
-						}
-						"REVISION" => {
-							revision = Some(version.parse().ok()?);
-						}
-						_ => {}
-					}
-				}
-				if major.is_some() && minor.is_some() && revision.is_some() {
-					break;
-				}
-			}
-			line.clear();
-		}
-		// todo: MSRV 1.88 use let chains
-		if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
-			Some(Version::new(major, minor, revision))
-		} else {
-			None
-		}
 	}
 
 	fn find_inherent_features(&self) -> Option<Vec<String>> {
@@ -179,6 +115,7 @@ pub fn get_multiarch_header_dirs(non_multiarch_include_dirs: &[PathBuf]) -> Vec<
 	let mut out = Vec::with_capacity(non_multiarch_include_dirs.len());
 	for multiarch in try_multiarches {
 		for non_multiarch_include_dir in non_multiarch_include_dirs {
+			#[expect(clippy::collapsible_if)]
 			if let Some(multiarch_include_dir) = add_multiarch_dir_before_opencv4(non_multiarch_include_dir, &multiarch) {
 				if multiarch_include_dir.is_dir() {
 					out.push(multiarch_include_dir);

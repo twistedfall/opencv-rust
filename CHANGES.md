@@ -1,3 +1,17 @@
+* 0.99.0
+  * Add support for OpenCV 5 (new modules: geometry and ptcloud).
+  * Add the `Mat::is_physically_contiguous()` function that returns `true` for very large matrices where `Mat::is_continuous()`
+    returns `false` due to the OpenCV workaround (fixes https://github.com/twistedfall/opencv-rust/issues/706).
+  * Add `UMat::mat_step()` and fancier `Debug` impl for `UMat`. `Mat::mat_step()` and `UMat::mat_step()` now return a slice
+    (`&[usize]`) instead of the `MatStep` type. With OpenCV 5 they return `Vec<usize>` instead of a slice due to the internal
+    structure changes.
+  * `MatStep` now carries a lifetime in OpenCV 4.x because it borrows the data from a `Mat` on creation.
+  * Input arguments accepting fixed-size arrays now take them by value instead of by reference.
+  * Minimum supported Rust version is bumped to 1.88, edition is bumped to 2024.
+  * Minor function renames.
+  * Deprecate OpenCV 3.4 support. The functionality remains but is no longer tested in CI. The `opencv_branch_34!` and
+    `not_opencv_branch_34!` macros are deprecated. OpenCV 3.4 support will be removed in one of the future releases.
+
 * 0.98.1
   * Regenerated docs with OpenCV 4.13
 

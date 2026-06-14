@@ -1,4 +1,4 @@
-use opencv::{opencv_has_inherent_feature_opencl, Result};
+use opencv::{Result, opencv_has_inherent_feature_opencl};
 
 fn main() -> Result<()> {
 	use std::{env, time};

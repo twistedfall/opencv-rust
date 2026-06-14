@@ -10,7 +10,7 @@ use std::io::{BufRead, BufReader};
 use dnn::{TextDetectionModel_EAST, TextRecognitionModel};
 use opencv::core::{CommandLineParser, Point, Point2f, Scalar, Size, Vector};
 use opencv::prelude::*;
-use opencv::{core, dnn, highgui, imgproc, not_opencv_branch_34, opencv_branch_34, videoio};
+use opencv::{dnn, highgui, imgproc, videoio};
 use videoio::VideoCapture;
 
 not_opencv_branch_34! {
@@ -148,6 +148,10 @@ pub fn main() -> Result<()> {
 }
 
 fn four_points_transform(frame: &Mat, vertices: &[Point2f; 4]) -> Result<Mat> {
+	#[cfg(ocvrs_opencv_branch_5)]
+	use opencv::geometry::get_perspective_transform_slice_def;
+	#[cfg(not(ocvrs_opencv_branch_5))]
+	use opencv::imgproc::get_perspective_transform_slice_def;
 	let output_size = Size::new(100, 32);
 	let target_vertices = [
 		Point2f::new(0., (output_size.height - 1) as f32),
@@ -155,7 +159,7 @@ fn four_points_transform(frame: &Mat, vertices: &[Point2f; 4]) -> Result<Mat> {
 		Point2f::new((output_size.width - 1) as f32, 0.),
 		Point2f::new((output_size.width - 1) as f32, (output_size.height - 1) as f32),
 	];
-	let rotation_matrix = imgproc::get_perspective_transform_slice(vertices, &target_vertices, core::DECOMP_LU)?;
+	let rotation_matrix = get_perspective_transform_slice_def(*vertices, target_vertices)?;
 	let mut out = Mat::default();
 	imgproc::warp_perspective_def(frame, &mut out, &rotation_matrix, output_size)?;
 	Ok(out)

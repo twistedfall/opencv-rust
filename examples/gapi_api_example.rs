@@ -3,8 +3,8 @@
 use std::env;
 
 use opencv::prelude::*;
-use opencv::videoio::{VideoCapture, CAP_ANY};
-use opencv::{opencv_has_module_gapi, Result};
+use opencv::videoio::{CAP_ANY, VideoCapture};
+use opencv::{Result, opencv_has_module_gapi};
 
 fn main() -> Result<()> {
 	let mut cap = VideoCapture::default()?;

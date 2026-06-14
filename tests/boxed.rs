@@ -1,12 +1,12 @@
 use std::ffi::c_void;
-use std::mem::{transmute, ManuallyDrop};
+use std::mem::{ManuallyDrop, transmute};
 
+use opencv::Result;
 use opencv::core::{
 	Algorithm, ConjGradSolver, KeyPoint, MinProblemSolver, Ptr, Scalar, TermCriteria, TermCriteria_COUNT, Vec4f, Vector,
 };
 use opencv::features2d::Feature2D;
 use opencv::prelude::*;
-use opencv::Result;
 
 #[test]
 fn layout() -> Result<()> {
@@ -139,7 +139,7 @@ fn cast_descendant_fail() -> Result<()> {
 	use std::convert::TryFrom;
 
 	use opencv::stitching::{Detail_Blender, Detail_FeatherBlender, Detail_MultiBandBlender};
-	use opencv::{core, Error};
+	use opencv::{Error, core};
 
 	let child = Detail_FeatherBlender::new(43.)?;
 	assert_eq!(43., child.sharpness()?);

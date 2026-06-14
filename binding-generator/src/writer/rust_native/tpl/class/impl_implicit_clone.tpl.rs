@@ -1,4 +1,4 @@
-impl Clone for {{rust_local}} {
+impl Clone for {{rust_local}}{{rust_elided_lt}} {
 	#[inline]
 	fn clone(&self) -> Self {
 		unsafe { Self::from_raw(sys::{{extern_implicit_clone}}(self.{{rust_as_raw_const}}())) }

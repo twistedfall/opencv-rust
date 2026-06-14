@@ -21,7 +21,7 @@ pub static IMPLEMENTED_SYSTEM_CLASSES: LazyLock<HashSet<&str>> = LazyLock::new(|
 
 /// classes that have a manual `Debug` implementation, element is cpp_name(Reference)
 pub static IMPLEMENTED_MANUAL_DEBUG: LazyLock<HashSet<&str>> =
-	LazyLock::new(|| HashSet::from(["cv::Mat", "cv::MatSize", "cv::dnn::DictValue"]));
+	LazyLock::new(|| HashSet::from(["cv::Mat", "cv::UMat", "cv::MatSize", "cv::dnn::DictValue"]));
 
 /// cpp_name(Reference)
 pub static IMPLEMENTED_CONST_GENERICS: LazyLock<HashSet<&str>> = LazyLock::new(|| HashSet::from(["cv::Vec"]));

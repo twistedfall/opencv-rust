@@ -1,8 +1,10 @@
 use std::collections::HashMap;
 use std::sync::LazyLock;
 
-use super::type_ref::TypeRefExt;
+use semver::Version;
+
 use super::RustNativeGeneratedElement;
+use super::type_ref::TypeRefExt;
 use crate::type_ref::Constness;
 use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::element::RustElement;
@@ -18,7 +20,7 @@ impl RustNativeGeneratedElement for AbstractRefWrapper<'_, '_> {
 		format!("{}-{}", type_ref.rust_module().opencv_name(), type_ref.rust_safe_id(true))
 	}
 
-	fn gen_rust(&self, _opencv_version: &str) -> String {
+	fn gen_rust(&self, _opencv_version: &Version) -> String {
 		static RUST: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("tpl/abstract_ref_wrapper/rust.tpl.rs").compile_interpolation());
 

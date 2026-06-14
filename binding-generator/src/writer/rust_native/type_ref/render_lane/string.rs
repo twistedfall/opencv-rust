@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use super::{rust_arg_func_decl, rust_self_func_decl, FunctionProps, RenderLaneTrait};
+use super::{FunctionProps, RenderLaneTrait, rust_arg_func_decl, rust_self_func_decl};
 use crate::type_ref::{Constness, ExternDir, StrEnc, StrType, TypeRef, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 

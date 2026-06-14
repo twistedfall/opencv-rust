@@ -15,8 +15,7 @@ if ! cargo build --release -p opencv-binding-generator --bin binding-generator; 
 	exit
 fi
 
-all_modules="3d
-	alphamat
+all_modules="alphamat
 	aruco
 	bgsegm
 	bioinspired

@@ -148,10 +148,8 @@ impl<'l, RES> FuncMatcher<'l, RES> {
 				} else {
 					false
 				};
-				if needs_removal {
-					if let Ok(mut usage_tracking) = usage_tracking.write() {
-						usage_tracking.retain(|x| x != &(f.name(), *preds));
-					}
+				if needs_removal && let Ok(mut usage_tracking) = usage_tracking.write() {
+					usage_tracking.retain(|x| x != &(f.name(), *preds));
 				}
 			}
 			Some(res)
@@ -173,12 +171,11 @@ impl<'l, RES> FuncMatcher<'l, RES> {
 	}
 
 	pub fn finish_usage_tracking(&mut self) -> HashSet<UsageTracker<'_>> {
-		if let Some(out) = self.usage_tracking.take() {
-			if let Ok(usage_tracking) = out.into_inner() {
-				if !usage_tracking.is_empty() {
-					return usage_tracking;
-				}
-			}
+		if let Some(out) = self.usage_tracking.take()
+			&& let Ok(usage_tracking) = out.into_inner()
+			&& !usage_tracking.is_empty()
+		{
+			return usage_tracking;
 		}
 		HashSet::new()
 	}

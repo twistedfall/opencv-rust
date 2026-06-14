@@ -214,7 +214,15 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		let kind = self.kind();
 		let maybe_ptr = kind.as_pointer_reference_move();
 		let type_ref = maybe_ptr.as_ref().map_or(self, |cow| cow.as_ref());
-		type_ref.rust_name(NameStyle::Declaration).to_lowercase()
+		let mut out = type_ref.rust_name(NameStyle::Declaration).to_lowercase();
+
+		// declaration can include generic args for classes with lifetimes so quick-n-dirty solution would be to just strip them
+		if out.ends_with('>')
+			&& let Some(generic_start) = out.rfind('<')
+		{
+			out.truncate(generic_start);
+		}
+		out
 	}
 
 	fn rust_name(&self, name_style: NameStyle) -> Cow<'_, str> {

@@ -2,7 +2,7 @@ use std::mem;
 
 use opencv::core::{Moments, Point2f, RotatedRect, Scalar, Size2f, Vec3b, Vector};
 use opencv::prelude::*;
-use opencv::{core, Result};
+use opencv::{Result, core};
 
 #[test]
 fn cv_return_type() {

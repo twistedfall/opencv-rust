@@ -4,14 +4,15 @@ use std::error::Error;
 use std::fs;
 
 use opencv::core::{
-	no_array, Point2f, Point3f, Size, TermCriteria, TermCriteria_EPS, TermCriteria_MAX_ITER, TermCriteria_Type, Vector,
+	Point2f, Point3f, Size, TermCriteria, TermCriteria_EPS, TermCriteria_MAX_ITER, TermCriteria_Type, Vector, no_array,
 };
 use opencv::prelude::*;
-use opencv::{highgui, imgcodecs, imgproc, opencv_branch_34, opencv_branch_4, opencv_branch_5};
+use opencv::{highgui, imgcodecs, imgproc, opencv_branch_4, opencv_branch_5, opencv_branch_34};
 
 opencv_branch_5! {
-	use opencv::calib::{find_chessboard_corners_def, draw_chessboard_corners, calibrate_camera};
-	use opencv::mod_3d::{undistort, init_undistort_rectify_map};
+	use opencv::objdetect::{find_chessboard_corners_def, draw_chessboard_corners};
+	use opencv::calib::calibrate_camera;
+	use opencv::imgproc::{undistort, init_undistort_rectify_map};
 }
 
 opencv_branch_4! {

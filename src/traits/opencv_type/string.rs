@@ -1,4 +1,4 @@
-use std::ffi::{c_char, c_void, CString};
+use std::ffi::{CString, c_char, c_void};
 
 use super::{OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
 use crate::templ::receive_string;

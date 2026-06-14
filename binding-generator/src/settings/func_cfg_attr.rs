@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
-use crate::func::FuncMatcher;
 use crate::SupportedModule;
+use crate::func::FuncMatcher;
 
 pub const CFG_ATTR_NOT_ON_WINDOWS: (&str, &str) = (r#"not(target_os = "windows")"#, r#"(!OCVRS_TARGET_OS_WINDOWS)"#);
 pub const CFG_ATTR_ONLY_OPENCV_5: (&str, &str) = ("ocvrs_opencv_branch_5", "(CV_VERSION_MAJOR == 5)");

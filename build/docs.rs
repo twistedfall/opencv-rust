@@ -2,13 +2,13 @@ use std::ffi::OsStr;
 use std::path::Path;
 use std::{env, fs};
 
-use super::{files_with_extension, GenerateFullBindings, MANIFEST_DIR, OUT_DIR};
+use super::{GenerateFullBindings, MANIFEST_DIR, OUT_DIR, files_with_extension};
 
 pub fn handle_running_in_docsrs() -> GenerateFullBindings {
 	if env::var_os("DOCS_RS").is_some() {
 		let docs_dir = MANIFEST_DIR.join("docs");
 		// fake setup for docs.rs
-		println!("cargo::rustc-cfg=ocvrs_opencv_branch_4");
+		println!("cargo::rustc-cfg=ocvrs_opencv_branch_5");
 		transfer_bindings_from_docs(&docs_dir, &OUT_DIR);
 		for path in files_with_extension(&docs_dir, "rs").expect("Can't read hub dir") {
 			if let Some(module) = path.file_stem().and_then(OsStr::to_str) {

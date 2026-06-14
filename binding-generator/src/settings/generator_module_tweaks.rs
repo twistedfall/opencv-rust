@@ -1,6 +1,6 @@
 use super::TypeRefFactory;
-use crate::type_ref::TypeRefDesc;
 use crate::SupportedModule;
+use crate::type_ref::TypeRefDesc;
 
 #[derive(Debug)]
 pub struct ModuleTweak<'l> {
@@ -39,7 +39,7 @@ pub fn generator_module_tweaks_factory(module: SupportedModule) -> ModuleTweak<'
 				TypeRefDesc::vector_of_vector_of_cv_point2d,
 			],
 		},
-		SupportedModule::Calib3d | SupportedModule::Calib | SupportedModule::ThreeD => ModuleTweak {
+		SupportedModule::Calib3d | SupportedModule::Calib => ModuleTweak {
 			generate_types: &[
 				// for calibrate_camera
 				TypeRefDesc::vector_of_cv_point3i,

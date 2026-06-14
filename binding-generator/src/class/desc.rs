@@ -1,8 +1,8 @@
 use std::rc::Rc;
 
 use super::{Class, ClassKind, TemplateKind};
-use crate::element::ExcludeKind;
 use crate::SupportedModule;
+use crate::element::ExcludeKind;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct ClassDesc<'tu, 'ge> {

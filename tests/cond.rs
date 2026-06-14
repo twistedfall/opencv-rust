@@ -1,13 +1,14 @@
+use opencv::core::{Mat, MatTraitConst, Point2f, RotatedRect, Size2f};
 use opencv::{
-	not_opencv_branch_34, not_opencv_branch_4, not_opencv_branch_5, opencv_branch_34, opencv_branch_4, opencv_branch_5,
-	opencv_has_inherent_feature_cuda, opencv_has_module_core, opencv_has_module_cudalegacy, opencv_has_module_imgproc,
+	not_opencv_branch_4, not_opencv_branch_5, opencv_branch_4, opencv_branch_5, opencv_has_inherent_feature_cuda,
+	opencv_has_module_core, opencv_has_module_cudalegacy, opencv_has_module_imgproc,
 };
 
-not_opencv_branch_34! {
-	use opencv::imgproc::LINE_8;
+not_opencv_branch_5! {
+	use opencv::imgproc::box_points;
 }
-opencv_branch_34! {
-	use opencv::core::LINE_8;
+opencv_branch_5! {
+	use opencv::geometry::box_points;
 }
 opencv_has_module_imgproc! {
 	use opencv::imgproc::line_def;
@@ -27,16 +28,15 @@ fn test_opencv_branch_cond_macros_code() {
 	not_opencv_branch_4! { let cond_macro_branch_4 =  false; }
 	let cfg_branch_4 = cfg!(ocvrs_opencv_branch_4);
 	assert_eq!(cond_macro_branch_4, cfg_branch_4);
-
-	opencv_branch_34! { let cond_macro_branch_34 =  true; }
-	not_opencv_branch_34! { let cond_macro_branch_34 =  false; }
-	let cfg_branch_34 = cfg!(ocvrs_opencv_branch_34);
-	assert_eq!(cond_macro_branch_34, cfg_branch_34);
 }
 
 #[test]
 fn test_opencv_branch_cond_macros_use() {
-	assert_eq!(8, LINE_8);
+	let rect = RotatedRect::new(Point2f::new(100., 100.), Size2f::new(100., 100.), 90.).unwrap();
+
+	let mut pts = Mat::default();
+	box_points(rect, &mut pts).unwrap();
+	assert!(!pts.empty());
 }
 
 #[test]

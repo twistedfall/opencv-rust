@@ -9,7 +9,7 @@ use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::function::FunctionExt;
 use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
-use crate::{settings, CowMapBorrowedExt, Element, IteratorExt};
+use crate::{CowMapBorrowedExt, Element, IteratorExt, settings};
 
 fn render_rust_tpl<'a>(
 	renderer: impl TypeRefRenderer<'a>,
@@ -59,11 +59,10 @@ impl RustRenderer {
 	}
 
 	pub fn format_as_array(constness: Constness, elem_type: &str, size: Option<usize>) -> String {
-		format!(
-			"&{cnst}[{elem_type}{size}]",
-			cnst = constness.rust_qual(),
-			size = size.map_or_else(|| "".to_string(), |s| format!("; {s}"))
-		)
+		match size {
+			Some(size) => format!("[{elem_type}; {size}]"),
+			None => format!("&{cnst}[{elem_type}]", cnst = constness.rust_qual()),
+		}
 	}
 }
 
@@ -276,6 +275,13 @@ impl TypeRefRenderer<'_> for RustReturnRenderer {
 			.into()
 		} else if kind.extern_pass_kind().is_by_void_ptr() {
 			self.recurse().render(&type_ref.source()).into_owned().into()
+		} else if kind.as_fixed_array().is_some() {
+			format!(
+				"&{cnst}{typ}",
+				cnst = type_ref.constness().rust_qual(),
+				typ = self.recurse().render(type_ref)
+			)
+			.into()
 		} else {
 			self.recurse().render(type_ref).into_owned().into()
 		}

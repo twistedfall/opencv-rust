@@ -1,0 +1,43 @@
+From 2803b2d55385006acf45ddceb0b330cd187c69c5 Mon Sep 17 00:00:00 2001
+From: Yang Chao <iyeatse@gmail.com>
+Date: Sun, 7 Jun 2026 15:17:49 +0800
+Subject: [PATCH] features(objc): fix conflicting Swift name for
+ LightGlueMatcher.create
+
+LightGlueMatcher derives from DescriptorMatcher and adds a static factory
+create(const String& modelPath, ...). The Objective-C bindings generator
+emits its 1-argument form as the selector create:, which clashes with the
+inherited DescriptorMatcher::create(MatcherType) selector (also create:)
+that carries a different swift_name, so clang refuses to build the opencv2
+Objective-C module:
+
+  LightGlueMatcher.h: error: 'swift_name' and 'swift_name' attributes are
+  not compatible
+
+This collision exists only in the Objective-C bindings, so fix it there
+instead of in the public header (which would also rename the Python and
+Java bindings). Add a func_arg_fix entry in
+modules/features/misc/objc/gen_dict.json renaming the Objective-C selector
+to createFromFile, mirroring how DescriptorMatcher::create and
+BFMatcher::create are disambiguated. The Swift name stays create(modelPath:)
+and the C++/Python/Java APIs are unchanged.
+
+Fixes #29256
+---
+ modules/features/misc/objc/gen_dict.json | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/modules/features/misc/objc/gen_dict.json b/modules/features/misc/objc/gen_dict.json
+index e88518de2d5b..fd9f7bdaaffc 100644
+--- a/modules/features/misc/objc/gen_dict.json
++++ b/modules/features/misc/objc/gen_dict.json
+@@ -17,6 +17,9 @@
+         "DescriptorMatcher": {
+             "(DescriptorMatcher*)create:(NSString*)descriptorMatcherType" : { "create" : {"name" : "create2"} }
+         },
++        "LightGlueMatcher": {
++            "(LightGlueMatcher*)create:(NSString*)modelPath scoreThreshold:(float)scoreThreshold backend:(int)backend target:(int)target" : { "create" : {"name" : "createFromFile"} }
++        },
+         "FlannBasedMatcher": {
+             "FlannBasedMatcher": { "indexParams" : {"defval" : "cv::makePtr<cv::flann::KDTreeIndexParams>()"}, "searchParams" : {"defval" : "cv::makePtr<cv::flann::SearchParams>()"} }
+         },

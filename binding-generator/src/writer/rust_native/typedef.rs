@@ -2,9 +2,11 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 use std::sync::LazyLock;
 
+use semver::Version;
+
+use super::RustNativeGeneratedElement;
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
-use super::RustNativeGeneratedElement;
 use crate::debug::NameDebug;
 use crate::type_ref::NameStyle;
 use crate::writer::rust_native::type_ref::Lifetime;
@@ -41,7 +43,7 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 		format!("{}-{}", self.rust_module().opencv_name(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &Version) -> String {
 		static TPL: LazyLock<CompiledInterpolation> = LazyLock::new(|| include_str!("tpl/typedef/tpl.rs").compile_interpolation());
 		let underlying_type = self.underlying_type_ref();
 		let lifetimes = Lifetime::automatic()

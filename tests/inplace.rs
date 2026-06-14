@@ -1,6 +1,6 @@
 use opencv::core::Vector;
 use opencv::prelude::*;
-use opencv::{imgproc, Result};
+use opencv::{Result, imgproc};
 
 #[test]
 fn inplace() -> Result<()> {

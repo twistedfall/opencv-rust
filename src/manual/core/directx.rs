@@ -32,10 +32,10 @@ pub trait IDirect3DDevice9Trait {
 
 #[cfg(target_os = "windows")]
 mod types {
-	use windows::core::Interface;
+	use windows::Win32::Graphics::Direct3D9::{IDirect3DDevice9, IDirect3DDevice9Ex, IDirect3DSurface9};
 	use windows::Win32::Graphics::Direct3D10::{ID3D10Device, ID3D10Texture2D};
 	use windows::Win32::Graphics::Direct3D11::{ID3D11Device, ID3D11Texture2D};
-	use windows::Win32::Graphics::Direct3D9::{IDirect3DDevice9, IDirect3DDevice9Ex, IDirect3DSurface9};
+	use windows::core::Interface;
 
 	use super::*;
 

@@ -2,8 +2,9 @@ use std::borrow::Cow;
 use std::fmt::Write;
 use std::sync::LazyLock;
 
-use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
+use percent_encoding::{NON_ALPHANUMERIC, utf8_percent_encode};
 use regex::bytes::Regex;
+use semver::Version;
 
 use crate::field::Field;
 use crate::func::FuncKind;
@@ -19,7 +20,7 @@ pub struct RenderComment {
 }
 
 impl RenderComment {
-	pub fn new(mut doc_comment: String, opencv_version: &str) -> Self {
+	pub fn new(mut doc_comment: String, opencv_version: &Version) -> Self {
 		// todo, simplify/optimize this function, spec is here https://www.doxygen.nl/manual/docblocks.html
 		doc_comment.replace_in_place("\r\n", "\n");
 		// module titles
@@ -202,14 +203,8 @@ fn preprocess_formula(formula: &str) -> String {
 				Regex::new(&format!("\\\\vecthreethree{}", ARG_REGEX.repeat(9))).unwrap(),
 				"\\begin{bmatrix} $1 & $2 & $3\\\\ $4 & $5 & $6\\\\ $7 & $8 & $9 \\end{bmatrix}",
 			),
-			(
-				Regex::new(&format!("\\\\hdotsfor{ARG_REGEX}")).unwrap(),
-				"\\dots",
-			),
-			(
-				Regex::new(&format!("\\\\mathbbm{ARG_REGEX}")).unwrap(),
-				"\\mathbb{$1}",
-			),
+			(Regex::new(&format!("\\\\hdotsfor{ARG_REGEX}")).unwrap(), "\\dots"),
+			(Regex::new(&format!("\\\\mathbbm{ARG_REGEX}")).unwrap(), "\\mathbb{$1}"),
 			(
 				Regex::new(&format!("\\\\bordermatrix{}", ARG_REGEX.repeat(9))).unwrap(),
 				"\\matrix{$1}",
@@ -289,6 +284,8 @@ pub fn render_ref<'r>(referenced: &'r Func, force_cpp_name: Option<&'r str>) -> 
 
 #[cfg(test)]
 mod test {
+	use semver::Version;
+
 	use super::RenderComment;
 	use crate::comment::strip_doxygen_comment_markers;
 
@@ -304,7 +301,10 @@ test"
 					.to_string(),
 				attributes: vec!["#[deprecated = \"test\"]".to_string()],
 			};
-			assert_eq!(res, RenderComment::new(strip_doxygen_comment_markers(comment), "master"));
+			assert_eq!(
+				res,
+				RenderComment::new(strip_doxygen_comment_markers(comment), &Version::new(5, 0, 0))
+			);
 		}
 
 		{
@@ -313,7 +313,7 @@ test"
 				doc_comment: "".to_string(),
 				attributes: vec![],
 			};
-			assert_eq!(res, RenderComment::new(comment.to_string(), "master"))
+			assert_eq!(res, RenderComment::new(comment.to_string(), &Version::new(5, 0, 0)));
 		}
 	}
 

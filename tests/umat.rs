@@ -1,10 +1,10 @@
-#[cfg(not(ocvrs_opencv_branch_34))]
-use opencv::core::AccessFlag::ACCESS_READ;
+use opencv::Result;
 #[cfg(ocvrs_opencv_branch_34)]
 use opencv::core::ACCESS_READ;
-use opencv::core::{Rect, Size, UMat, UMatUsageFlags, Vec3d, Vector};
+#[cfg(not(ocvrs_opencv_branch_34))]
+use opencv::core::AccessFlag::ACCESS_READ;
+use opencv::core::{Rect, Size, UMat, UMatTraitConstManual, UMatUsageFlags, Vec3d, Vector};
 use opencv::prelude::*;
-use opencv::Result;
 
 #[test]
 fn umat_default() -> Result<()> {
@@ -74,14 +74,9 @@ fn umat_for_rows_and_cols() -> Result<()> {
 	assert_eq!(400, mat.mat_size()[0]);
 	assert_eq!(300, mat.mat_size()[1]);
 	assert_eq!(2, mat.dims());
-	let mast_step_len = if cfg!(ocvrs_opencv_branch_5) {
-		3
-	} else {
-		2
-	};
-	assert_eq!(mast_step_len, mat.mat_step().buf().len());
-	assert_eq!(7200, mat.mat_step().buf()[0]);
-	assert_eq!(24, mat.mat_step().buf()[1]);
+	assert_eq!(2, mat.mat_step().len());
+	assert_eq!(7200, mat.mat_step()[0]);
+	assert_eq!(24, mat.mat_step()[1]);
 	assert_eq!(24, mat.elem_size()?);
 	assert_eq!(8, mat.elem_size1());
 	assert_eq!(900, mat.step1(0)?);

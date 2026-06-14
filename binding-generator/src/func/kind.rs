@@ -1,5 +1,5 @@
-use crate::field::Field;
 use crate::Class;
+use crate::field::Field;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ReturnKind {

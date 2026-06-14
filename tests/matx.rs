@@ -1,7 +1,7 @@
 use matches::assert_matches;
 use opencv::core::{Matx22d, Matx23f, Matx32f, Matx33d, Matx66f, Scalar};
 use opencv::prelude::*;
-use opencv::{core, Result};
+use opencv::{Result, core};
 
 #[test]
 fn matx_get() {
@@ -37,9 +37,12 @@ fn matx_set() {
 #[test]
 fn matx_return() -> Result<()> {
 	use opencv::core::Point2f;
-	use opencv::imgproc;
+	#[cfg(ocvrs_opencv_branch_5)]
+	use opencv::geometry::get_rotation_matrix_2d_matx;
+	#[cfg(not(ocvrs_opencv_branch_5))]
+	use opencv::imgproc::get_rotation_matrix_2d_matx;
 
-	let mat = imgproc::get_rotation_matrix_2d_matx(Point2f::new(10., 10.), 90., 2.)?;
+	let mat = get_rotation_matrix_2d_matx(Point2f::new(10., 10.), 90., 2.)?;
 	assert_eq!(2, mat.rows());
 	assert_eq!(3, mat.cols());
 	assert_eq!(mat[(0, 0)], mat[(1, 1)]);

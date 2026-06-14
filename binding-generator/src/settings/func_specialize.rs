@@ -1,9 +1,9 @@
 use std::collections::HashMap;
 
 use super::TypeRefFactory;
+use crate::SupportedModule;
 use crate::func::FuncMatcher;
 use crate::type_ref::TypeRefDesc;
-use crate::SupportedModule;
 
 pub type FuncSpecialize = FuncMatcher<'static, Vec<FuncSpec>>;
 

@@ -1,6 +1,6 @@
+use opencv::Result;
 use opencv::core::SparseMat_Hdr;
 use opencv::prelude::*;
-use opencv::Result;
 
 #[test]
 fn slice_detect() -> Result<()> {

@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
-use crate::func::FuncMatcher;
 use crate::SupportedModule;
+use crate::func::FuncMatcher;
 
 pub type ForceInfallible = FuncMatcher<'static, ()>;
 
@@ -41,6 +41,7 @@ fn core_factory() -> ForceInfallible {
 		("cv::SparseMat::type", vec![(pred!(const, []), ())]),
 		("cv::SparseMat::depth", vec![(pred!(const, []), ())]),
 		("cv::SparseMat::channels", vec![(pred!(const, []), ())]),
+		("cv::hfloat::hfloat", vec![(pred!(mut, [], []), ())]),
 		// marked CV_NOEXCEPT since OpenCV 4.5.2, propagate those changes to earlier versions
 		("cv::Mat::Mat", vec![(pred!(mut, []), ())]),
 		("cv::MatSize::MatSize", vec![(pred!(mut, ["_p"]), ())]),

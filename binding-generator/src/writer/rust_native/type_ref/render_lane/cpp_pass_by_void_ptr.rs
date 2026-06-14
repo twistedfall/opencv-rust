@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 use std::borrow::Cow::{Borrowed, Owned};
 
-use super::{rust_arg_func_decl, rust_self_func_decl, FunctionProps, Indirection, RenderLaneTrait};
+use super::{FunctionProps, Indirection, RenderLaneTrait, rust_arg_func_decl, rust_self_func_decl};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 use crate::{CowMapBorrowedExt, CppNameStyle, NameStyle};

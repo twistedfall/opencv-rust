@@ -11,7 +11,7 @@ use crate::element::ExcludeKind;
 use crate::type_ref::{CppNameStyle, NameStyle, TypeRefDesc, TypeRefKind, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
-	settings, Class, Constness, DefaultElement, Element, EntityExt, Enum, GeneratedType, GeneratorEnv, NameDebug, StrExt, TypeRef,
+	Class, Constness, DefaultElement, Element, EntityExt, Enum, GeneratedType, GeneratorEnv, NameDebug, StrExt, TypeRef, settings,
 };
 
 mod desc;

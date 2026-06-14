@@ -1,6 +1,6 @@
 use opencv::highgui::{MouseEventFlags, WindowFlags};
 use opencv::prelude::*;
-use opencv::{core, Error};
+use opencv::{Error, core};
 
 #[test]
 fn bitfield_enum_try_from() {

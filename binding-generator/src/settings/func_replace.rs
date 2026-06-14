@@ -131,5 +131,16 @@ fn core_factory() -> FuncReplace {
 				}) as FuncInheritFactory,
 			)],
 		),
+		(
+			"cv::UMat::step",
+			vec![(
+				&[],
+				(|f| {
+					let replace_f =
+						Rc::unwrap_or_clone(f.to_desc_with_skip_config(InheritConfig::empty())).rust_body(FuncRustBody::Absent);
+					Func::new_desc(replace_f)
+				}) as FuncInheritFactory,
+			)],
+		),
 	]))
 }

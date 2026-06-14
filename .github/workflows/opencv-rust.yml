@@ -18,15 +18,13 @@ jobs:
           - macos-15
         opencv-version:
           - 4.11.0
+          - 5.0.0
         linkage:
           - dynamic
         include:
           - os-image: ubuntu-24.04
-            opencv-version: 4.11.0
+            opencv-version: 5.0.0
             linkage: static
-          - os-image: ubuntu-24.04
-            opencv-version: 5.0.0-alpha
-            linkage: dynamic
           - os-image: ubuntu-22.04
             opencv-version: 3.4.20
             linkage: dynamic

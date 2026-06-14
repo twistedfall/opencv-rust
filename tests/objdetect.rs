@@ -4,7 +4,7 @@ use std::path::Path;
 
 use opencv::core::{Point, Vector};
 use opencv::prelude::*;
-use opencv::{core, imgcodecs, objdetect, Result};
+use opencv::{Result, core, imgcodecs, objdetect};
 
 #[test]
 fn qr_code() -> Result<()> {

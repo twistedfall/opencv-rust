@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use super::{rust_arg_func_decl, rust_self_func_decl, FunctionProps, RenderLaneTrait};
+use super::{FunctionProps, RenderLaneTrait, rust_arg_func_decl, rust_self_func_decl};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
 use crate::writer::rust_native::renderer::RustRenderer;
 use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
@@ -26,6 +26,13 @@ impl RenderLaneTrait for FixedArrayRenderLane<'_, '_> {
 	fn rust_arg_func_decl(&self, name: &str, lifetime: Lifetime) -> String {
 		let typ = if self.element.kind().as_string(self.element.type_hint()).is_some() {
 			RustRenderer::format_as_array(self.canonical.constness(), "&str", Some(self.len)).into()
+		} else if self.canonical.constness().is_mut() {
+			// output argument
+			format!(
+				"&mut {}",
+				self.canonical.rust_name_ext(NameStyle::Reference(FishStyle::No), lifetime)
+			)
+			.into()
 		} else {
 			self.canonical.rust_name_ext(NameStyle::Reference(FishStyle::No), lifetime)
 		};
@@ -44,7 +51,11 @@ impl RenderLaneTrait for FixedArrayRenderLane<'_, '_> {
 	}
 
 	fn rust_arg_func_call(&self, name: &str) -> String {
-		name.to_string()
+		if self.canonical.constness().is_mut() {
+			name.to_string()
+		} else {
+			format!("&{cnst}{name}", cnst = self.canonical.constness().rust_qual())
+		}
 	}
 
 	fn rust_extern_arg_func_decl(&self, name: &str) -> String {

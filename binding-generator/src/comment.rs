@@ -1,5 +1,5 @@
-use crate::string_ext::Indent;
 use crate::StrExt;
+use crate::string_ext::Indent;
 
 pub fn strip_doxygen_comment_markers(comment: &str) -> String {
 	// todo, simplify/optimize this function, spec is here https://www.doxygen.nl/manual/docblocks.html
@@ -58,12 +58,12 @@ pub fn strip_doxygen_comment_markers(comment: &str) -> String {
 	}
 	trim_last_empty_lines(&mut lines);
 	// trim ending multiline delimiter
-	if let Some(last_line) = lines.last_mut() {
-		if comment_type != CommentType::SingleLineDelimited {
-			*last_line = last_line.trim_end();
-			if let Some(new_line) = last_line.strip_suffix(MULTILINE_SUFFIX) {
-				*last_line = new_line.trim_end();
-			}
+	if let Some(last_line) = lines.last_mut()
+		&& comment_type != CommentType::SingleLineDelimited
+	{
+		*last_line = last_line.trim_end();
+		if let Some(new_line) = last_line.strip_suffix(MULTILINE_SUFFIX) {
+			*last_line = new_line.trim_end();
 		}
 	}
 	trim_last_empty_lines(&mut lines);

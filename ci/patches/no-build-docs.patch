@@ -1,0 +1,9 @@
+diff -ur opencv-5.0.0.orig/platforms/osx/build_framework.py opencv-5.0.0/platforms/osx/build_framework.py
+--- opencv-5.0.0.orig/platforms/osx/build_framework.py	2026-06-19 11:52:23.459356842 +0200
++++ opencv-5.0.0/platforms/osx/build_framework.py	2026-06-19 11:57:53.972772179 +0200
+@@ -129,4 +129,5 @@
+         targets.append((catalyst_archs, "Catalyst")),
+ 
+     b = OSXBuilder(args.opencv, args.contrib, args.dynamic, args.without, args.disable, args.enablenonfree, targets, args.debug, args.debug_info, args.framework_name, args.run_tests, args.hosting_base_path, args.swiftdisabled)
++    b.docs_built = True
+     b.build(args.out)

@@ -3,6 +3,8 @@ use std::collections::HashMap;
 use std::iter;
 use std::sync::LazyLock;
 
+use semver::Version;
+
 use super::rust_generate_debug_fields;
 use crate::debug::NameDebug;
 use crate::func::FuncDesc;
@@ -12,9 +14,9 @@ use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::element::{RustElement, RustNativeGeneratedElement};
 use crate::writer::rust_native::func::FuncExt;
 use crate::writer::rust_native::type_ref::TypeRefExt;
-use crate::{settings, Class, CompiledInterpolation, Constness, CppNameStyle, Element, Func, IteratorExt, NameStyle, StrExt};
+use crate::{Class, CompiledInterpolation, Constness, CppNameStyle, Element, Func, IteratorExt, NameStyle, StrExt, settings};
 
-pub fn gen_simple_class(c: &Class, opencv_version: &str) -> String {
+pub fn gen_simple_class(c: &Class, opencv_version: &Version) -> String {
 	static SIMPLE_TPL: LazyLock<CompiledInterpolation> =
 		LazyLock::new(|| include_str!("../tpl/class/simple.tpl.rs").compile_interpolation());
 
@@ -49,7 +51,7 @@ pub fn gen_simple_class(c: &Class, opencv_version: &str) -> String {
 
 	let mut impls = String::with_capacity(512);
 	impls.add_default_impl(c, &mut_methods, &rust_local, "");
-	impls.add_explicit_clone(c, &rust_local);
+	impls.add_explicit_clone(c, &rust_local, "");
 
 	SIMPLE_TPL.interpolate(&HashMap::from([
 		("doc_comment", c.rust_doc_comment("///", opencv_version).as_str()),
@@ -71,7 +73,7 @@ pub fn gen_simple_class(c: &Class, opencv_version: &str) -> String {
 	]))
 }
 
-pub fn gen_boxed_class(c: &Class, opencv_version: &str) -> String {
+pub fn gen_boxed_class(c: &Class, opencv_version: &Version) -> String {
 	static BOXED_TPL: LazyLock<CompiledInterpolation> =
 		LazyLock::new(|| include_str!("../tpl/class/boxed.tpl.rs").compile_interpolation());
 
@@ -116,8 +118,8 @@ pub fn gen_boxed_class(c: &Class, opencv_version: &str) -> String {
 
 	let mut impls = String::with_capacity(1024);
 	impls.add_default_impl(c, &mut_methods, &rust_local, &rust_elided_lt);
-	impls.add_explicit_clone(c, &rust_local);
-	impls.add_implicit_clone(c, &type_ref, &rust_local);
+	impls.add_explicit_clone(c, &rust_local, &rust_elided_lt);
+	impls.add_implicit_clone(c, &type_ref, &rust_local, &rust_elided_lt);
 	if !settings::IMPLEMENTED_MANUAL_DEBUG.contains(c.cpp_name(CppNameStyle::Reference).as_ref()) {
 		impls.add_debug(&all_bases, field_const_methods, &rust_local, &rust_elided_lt);
 	}
@@ -226,7 +228,7 @@ fn needs_default_ctor(c: &Class, is_boxed: bool) -> bool {
 fn rust_generate_funcs<'f, 'tu, 'ge>(
 	fns: impl Iterator<Item = &'f Func<'tu, 'ge>>,
 	name_pool: &mut NamePool,
-	opencv_version: &str,
+	opencv_version: &Version,
 ) -> String
 where
 	'tu: 'ge,
@@ -300,7 +302,7 @@ fn gen_impl<'f>(
 	methods: impl Iterator<Item = &'f Func<'f, 'f>>,
 	rust_local: &str,
 	rust_decl_lt: &str,
-	opencv_version: &str,
+	opencv_version: &Version,
 ) -> String {
 	static IMPL_TPL: LazyLock<CompiledInterpolation> =
 		LazyLock::new(|| include_str!("../tpl/class/impl.tpl.rs").compile_interpolation());
@@ -329,7 +331,7 @@ fn gen_traits(
 	bases: &[Class],
 	const_methods: &[Func],
 	mut_methods: &[Func],
-	opencv_version: &str,
+	opencv_version: &Version,
 ) -> String {
 	static TRAIT_TPL: LazyLock<CompiledInterpolation> =
 		LazyLock::new(|| include_str!("../tpl/class/trait.tpl.rs").compile_interpolation());
@@ -390,8 +392,8 @@ fn gen_traits(
 
 trait Impls {
 	fn add_default_impl(&mut self, c: &Class, mut_methods: &[Func], rust_local: &str, rust_elided_lt: &str);
-	fn add_explicit_clone(&mut self, c: &Class, rust_local: &str);
-	fn add_implicit_clone(&mut self, c: &Class, type_ref: &TypeRef, rust_local: &str);
+	fn add_explicit_clone(&mut self, c: &Class, rust_local: &str, rust_elided_lt: &str);
+	fn add_implicit_clone(&mut self, c: &Class, type_ref: &TypeRef, rust_local: &str, rust_elided_lt: &str);
 	fn add_descendant_cast(&mut self, c: &Class, descendant: &Class, rust_local: &str);
 	fn add_base_cast(&mut self, c: &Class, base: &Class, rust_local: &str);
 	fn add_debug<'tu, 'ge>(
@@ -421,16 +423,19 @@ impl Impls for String {
 		}
 	}
 
-	fn add_explicit_clone(&mut self, c: &Class, rust_local: &str) {
+	fn add_explicit_clone(&mut self, c: &Class, rust_local: &str, rust_elided_lt: &str) {
 		static IMPL_EXPLICIT_CLONE_TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("../tpl/class/impl_explicit_clone.tpl.rs").compile_interpolation());
 
 		if c.has_explicit_clone() {
-			IMPL_EXPLICIT_CLONE_TPL.interpolate_into(self, &HashMap::from([("rust_local", rust_local)]));
+			IMPL_EXPLICIT_CLONE_TPL.interpolate_into(
+				self,
+				&HashMap::from([("rust_local", rust_local), ("rust_elided_lt", rust_elided_lt)]),
+			);
 		}
 	}
 
-	fn add_implicit_clone(&mut self, c: &Class, type_ref: &TypeRef, rust_local: &str) {
+	fn add_implicit_clone(&mut self, c: &Class, type_ref: &TypeRef, rust_local: &str, rust_elided_lt: &str) {
 		static IMPL_IMPLICIT_CLONE_TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("../tpl/class/impl_implicit_clone.tpl.rs").compile_interpolation());
 
@@ -440,6 +445,7 @@ impl Impls for String {
 				self,
 				&HashMap::from([
 					("rust_local", rust_local),
+					("rust_elided_lt", rust_elided_lt),
 					("rust_as_raw_const", &c.rust_as_raw_name(Constness::Const)),
 					("extern_implicit_clone", &extern_implicit_clone),
 				]),
@@ -515,11 +521,11 @@ fn make_const_mut<'tu, 'ge>(type_ref: TypeRef<'tu, 'ge>) -> (TypeRef<'tu, 'ge>, 
 }
 
 mod method {
+	use crate::Constness::{Const, Mut};
 	use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 	use crate::type_ref::TypeRef;
 	use crate::writer::rust_native::element::RustElement;
 	use crate::writer::rust_native::func::cpp_return_map;
-	use crate::Constness::{Const, Mut};
 	use crate::{Class, Func, NameStyle, SupportedModule};
 
 	pub fn default_new<'tu, 'ge>(class: Class<'tu, 'ge>, type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {

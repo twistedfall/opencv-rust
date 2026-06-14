@@ -2,7 +2,7 @@
 
 use opencv::core::{Scalar, Size};
 use opencv::prelude::*;
-use opencv::{ml, Result};
+use opencv::{Result, ml};
 
 #[test]
 fn knn() -> Result<()> {

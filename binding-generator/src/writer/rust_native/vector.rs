@@ -2,15 +2,17 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 use std::sync::LazyLock;
 
+use semver::Version;
+
+use super::RustNativeGeneratedElement;
 use super::element::RustElement;
 use super::type_ref::{Lifetime, TypeRefExt};
-use super::RustNativeGeneratedElement;
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 use crate::settings::{ARG_OVERRIDE_SELF, CFG_ATTR_ONLY_OPENCV_5};
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
-use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, StringExt, SupportedModule, TypeRef, Vector};
+use crate::{Class, CompiledInterpolation, Func, IteratorExt, StrExt, StringExt, SupportedModule, TypeRef, Vector, settings};
 
 impl RustElement for Vector<'_, '_> {
 	fn rust_module(&self) -> SupportedModule {
@@ -49,7 +51,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		format!("{}-{}", self.rust_element_module().opencv_name(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &Version) -> String {
 		static RUST_TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("tpl/vector/rust.tpl.rs").compile_interpolation());
 

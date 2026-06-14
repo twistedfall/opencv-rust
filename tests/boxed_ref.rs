@@ -1,7 +1,7 @@
 use opencv::boxed_ref::{BoxedRef, BoxedRefMut};
-use opencv::core::{no_array, Rect, Vec2i, Vector};
+use opencv::core::{Rect, Vec2i, Vector, no_array};
 use opencv::prelude::*;
-use opencv::{core, Result};
+use opencv::{Result, core};
 
 #[test]
 fn boxed_ref_from_roi() -> Result<()> {

@@ -8,7 +8,7 @@ use std::{fs, io};
 
 use opencv_binding_generator::SupportedModule;
 
-use super::super::{files_with_extension, Result};
+use super::super::{Result, files_with_extension};
 
 pub struct Collector<'r> {
 	modules: &'r [SupportedModule],
@@ -69,12 +69,7 @@ impl<'r> Collector<'r> {
 		for module in self.modules {
 			// add module entry to hub.rs
 			if let Some(alias) = self.module_aliases.get(module) {
-				writeln!(
-					&mut hub_rs,
-					"pub use {} as {};",
-					alias.rust_safe_name(),
-					module.rust_safe_name()
-				)?
+				writeln!(&mut hub_rs, "pub use {} as {};", alias.rust_name(), module.rust_name())?
 			} else {
 				write_module_include(&mut hub_rs, module.opencv_name())?;
 				self.collect_module(*module, &mut sys_rs, &mut types_rs)?
@@ -97,7 +92,7 @@ impl<'r> Collector<'r> {
 		// write hub_prelude that imports all module-specific preludes
 		writeln!(hub_rs, "pub mod hub_prelude {{")?;
 		for module in self.modules {
-			writeln!(hub_rs, "\tpub use super::{}::prelude::*;", module.rust_safe_name())?;
+			writeln!(hub_rs, "\tpub use super::{}::prelude::*;", module.rust_name())?;
 		}
 		writeln!(hub_rs, "}}")?;
 		self.inject_ffi_exports(&mut hub_rs)?;
@@ -107,7 +102,7 @@ impl<'r> Collector<'r> {
 
 	fn collect_module(&self, module: SupportedModule, sys_rs: &mut impl Write, types_rs: &mut impl Write) -> Result<()> {
 		let module_opencv_name = module.opencv_name();
-		let module_rust_safe_name = module.rust_safe_name();
+		let module_rust_name = module.rust_name();
 		// merge multiple *-type.cpp files into a single module_types.hpp
 		let module_cpp = self.out_dir.join(format!("{module_opencv_name}.cpp"));
 		if module_cpp.is_file() {
@@ -136,7 +131,7 @@ impl<'r> Collector<'r> {
 		// Need to wrap modules inside `mod { }` because they have top-level comments (//!) and those don't play well when
 		// module file is include!d (as opposed to connecting the module with `mod` from the parent module).
 		// The same doesn't apply to `sys` and `types` below because they don't contain top-level comments.
-		writeln!(module_rs, "pub mod {module_rust_safe_name} {{")?;
+		writeln!(module_rs, "pub mod {module_rust_name} {{")?;
 		copy_indent(BufReader::new(File::open(&module_src_file)?), &mut module_rs, "\t")?;
 		self.write_use_manual(&mut module_rs, module_opencv_name)?;
 		writeln!(module_rs, "}}")?;
@@ -151,7 +146,7 @@ impl<'r> Collector<'r> {
 		for entry in type_files {
 			if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
 				if !header_written {
-					writeln!(types_rs, "mod {module_rust_safe_name}_types {{")?;
+					writeln!(types_rs, "mod {module_rust_name}_types {{")?;
 					writeln!(types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
 					writeln!(types_rs)?;
 					header_written = true;
@@ -162,13 +157,13 @@ impl<'r> Collector<'r> {
 		}
 		if header_written {
 			writeln!(types_rs, "}}")?;
-			writeln!(types_rs, "pub use {module_rust_safe_name}_types::*;")?;
+			writeln!(types_rs, "pub use {module_rust_name}_types::*;")?;
 			writeln!(types_rs)?;
 		}
 
 		// merge module-specific *.externs.rs and generated type-specific *.type.externs.rs into a single sys.rs
 		let externs_rs = self.out_dir.join(format!("{module_opencv_name}.externs.rs"));
-		writeln!(sys_rs, "mod {module_rust_safe_name}_sys {{")?;
+		writeln!(sys_rs, "mod {module_rust_name}_sys {{")?;
 		writeln!(sys_rs, "\tuse super::*;")?;
 		writeln!(sys_rs)?;
 		writeln!(sys_rs, "\tunsafe extern \"C\" {{")?;
@@ -186,7 +181,7 @@ impl<'r> Collector<'r> {
 		}
 		writeln!(sys_rs, "\t}}")?;
 		writeln!(sys_rs, "}}")?;
-		writeln!(sys_rs, "pub use {module_rust_safe_name}_sys::*;")?;
+		writeln!(sys_rs, "pub use {module_rust_name}_sys::*;")?;
 		writeln!(sys_rs)?;
 		Ok(())
 	}

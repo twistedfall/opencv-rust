@@ -1,6 +1,6 @@
 use opencv::core::Vector;
 use opencv::prelude::*;
-use opencv::{highgui, imgproc, not_opencv_branch_5, opencv_branch_5, videoio, Result};
+use opencv::{Result, highgui, imgproc, not_opencv_branch_5, opencv_branch_5, videoio};
 
 opencv_branch_5! {
 	use opencv::features as features2d;

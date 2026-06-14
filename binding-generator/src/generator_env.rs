@@ -9,13 +9,14 @@ use std::path::{Path, PathBuf};
 use std::rc::Rc;
 
 use clang::{Entity, EntityKind, EntityVisitResult};
+use semver::Version;
 
 use crate::class::ClassKind;
 use crate::settings::Settings;
 use crate::type_ref::CppNameStyle;
 use crate::{
-	is_opencv_path, opencv_module_from_path, settings, Class, Element, EntityWalkerExt, EntityWalkerVisitor, MemoizeMap,
-	MemoizeMapExt, SupportedModule,
+	Class, Element, EntityWalkerExt, EntityWalkerVisitor, MemoizeMap, MemoizeMapExt, SupportedModule, is_opencv_path,
+	opencv_module_from_path, settings,
 };
 
 #[derive(Copy, Clone, Debug)]
@@ -194,14 +195,14 @@ impl<'tu> GeneratorEnv<'tu> {
 	}
 
 	/// [GeneratorEnv] with the global settings for the regular working mode
-	pub fn global(module: SupportedModule, root_entity: Entity<'tu>) -> Self {
+	pub fn global(module: SupportedModule, root_entity: Entity<'tu>, opencv_version: &Version) -> Self {
 		let mut out = Self {
 			export_map: HashMap::with_capacity(1024),
 			rename_map: HashMap::with_capacity(64),
 			func_comments: HashMap::with_capacity(2048),
 			class_kind_cache: MemoizeMap::new(HashMap::with_capacity(32)),
 			descendants: HashMap::with_capacity(16),
-			settings: Settings::for_module(module),
+			settings: Settings::for_module(module, opencv_version),
 		};
 		root_entity.walk_opencv_entities(GeneratorEnvPopulator {
 			module,

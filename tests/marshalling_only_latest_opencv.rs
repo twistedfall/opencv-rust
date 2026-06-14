@@ -7,11 +7,11 @@ fn smart_ptr_optional() -> opencv::Result<()> {
 	// findCirclesGrid doesn't accept an optional blobDetector in 4.2.0, but there is no mechanism to enable type hints only on
 	// specific OpenCV versions. With 4.2.0 being that old it should be fine to just not run the test.
 
-	#[cfg(ocvrs_opencv_branch_5)]
-	use opencv::calib::{find_circles_grid_1, CALIB_CB_SYMMETRIC_GRID};
 	#[cfg(not(ocvrs_opencv_branch_5))]
-	use opencv::calib3d::{find_circles_grid_1, CALIB_CB_SYMMETRIC_GRID};
+	use opencv::calib3d::{CALIB_CB_SYMMETRIC_GRID, find_circles_grid};
 	use opencv::core::{Point2f, Size, Vector};
+	#[cfg(ocvrs_opencv_branch_5)]
+	use opencv::objdetect::{CALIB_CB_SYMMETRIC_GRID, find_circles_grid};
 
 	let mut centers = Vector::<Point2f>::new();
 	for i in 0..4 {
@@ -21,7 +21,7 @@ fn smart_ptr_optional() -> opencv::Result<()> {
 	}
 
 	let mut out_centers = Vector::<Point2f>::new();
-	let r = find_circles_grid_1(&centers, Size::new(4, 4), &mut out_centers, CALIB_CB_SYMMETRIC_GRID, None);
+	let r = find_circles_grid(&centers, Size::new(4, 4), &mut out_centers, CALIB_CB_SYMMETRIC_GRID, None);
 	assert!(matches!(r, Ok(true)));
 	Ok(())
 }

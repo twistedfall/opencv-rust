@@ -3,7 +3,7 @@ name = "test-proj"
 description = "Helper to test whether project using opencv dependency compiles"
 version = "0.1.0"
 authors = ["Pro"]
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 opencv = { path = "../..", features = ["clang-runtime"] }

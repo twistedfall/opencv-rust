@@ -8,10 +8,10 @@ use std::{fmt, mem, slice};
 pub use iter::{VectorIterator, VectorRefIterator};
 pub use vector_extern::{VectorExtern, VectorExternCopyNonBool};
 
+use crate::Result;
 use crate::boxed_ref::BoxedRef;
 use crate::platform_types::size_t;
 use crate::traits::{Boxed, OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
-use crate::Result;
 
 mod iter;
 mod vector_extern;

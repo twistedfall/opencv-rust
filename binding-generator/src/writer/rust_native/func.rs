@@ -8,11 +8,12 @@ use std::sync::LazyLock;
 use std::vec::IntoIter;
 
 use Cow::{Borrowed, Owned};
+use semver::Version;
 
-use super::comment::{render_ref, RenderComment};
+use super::comment::{RenderComment, render_ref};
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::{BorrowKind, Lifetime, TypeRefExt, TypeRefKindExt};
-use super::{comment, rust_disambiguate_names_ref, RustNativeGeneratedElement};
+use super::{RustNativeGeneratedElement, comment, rust_disambiguate_names_ref};
 use crate::field::Field;
 use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritConfig, OperatorKind, ReturnKind};
 use crate::name_pool::NamePool;
@@ -20,7 +21,7 @@ use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
 use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::type_ref::render_lane::FunctionProps;
-use crate::{reserved_rename, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt, SupportedModule};
+use crate::{CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt, SupportedModule, reserved_rename};
 
 pub trait FuncExt<'tu, 'ge> {
 	fn companion_functions(&self) -> Vec<Func<'tu, 'ge>>;
@@ -115,87 +116,86 @@ impl RustElement for Func<'_, '_> {
 				conv_name.cleanup_name();
 				conv_name.insert_str(0, "to_");
 				Owned(conv_name)
-			} else if let Some((cls, kind)) = kind.as_operator() {
-				if cpp_name.starts_with("operator") {
-					let op_name = match kind {
-						OperatorKind::Unsupported => cpp_name.as_ref(),
-						OperatorKind::Index => {
-							if self.constness().is_const() {
-								"get"
-							} else {
-								"get_mut"
-							}
-						}
-						OperatorKind::Add => "add",
-						OperatorKind::Sub => "sub",
-						OperatorKind::Mul => "mul",
-						OperatorKind::Div => "div",
-						OperatorKind::Apply => "apply",
-						OperatorKind::Set => "set",
-						OperatorKind::Deref => {
-							if self.constness().is_const() {
-								"try_deref"
-							} else {
-								"try_deref_mut"
-							}
-						}
-						OperatorKind::Equals => "equals",
-						OperatorKind::NotEquals => "not_equals",
-						OperatorKind::GreaterThan => "greater_than",
-						OperatorKind::GreaterThanOrEqual => "greater_than_or_equal",
-						OperatorKind::LessThan => "less_than",
-						OperatorKind::LessThanOrEqual => "less_than_or_equal",
-						OperatorKind::Incr => "incr",
-						OperatorKind::Decr => "decr",
-						OperatorKind::And => "and",
-						OperatorKind::Or => "or",
-						OperatorKind::Xor => "xor",
-						OperatorKind::BitwiseNot => "negate",
-					};
-					if kind.add_args_to_name() {
-						let args = self.arguments();
-						let args = args.as_ref();
-						// todo: MSRV 1.88 use let chains
-						let is_single_arg_same_as_class = if let (Some(cls), [single_arg]) = (cls, args) {
-							single_arg
-								.type_ref()
-								.source()
-								.kind()
-								.as_class()
-								.is_some_and(|single_class| single_class.as_ref() == cls)
+			} else if let Some((cls, kind)) = kind.as_operator()
+				&& cpp_name.starts_with("operator")
+			{
+				let op_name = match kind {
+					OperatorKind::Unsupported => cpp_name.as_ref(),
+					OperatorKind::Index => {
+						if self.constness().is_const() {
+							"get"
 						} else {
-							false
-						};
-						if args.is_empty() || is_single_arg_same_as_class {
-							Borrowed(op_name)
-						} else {
-							let args = args.iter().map(|arg| arg.type_ref().rust_simple_name()).join("_");
-							Owned(format!("{op_name}_{args}"))
+							"get_mut"
 						}
+					}
+					OperatorKind::Add => "add",
+					OperatorKind::Sub => "sub",
+					OperatorKind::Mul => "mul",
+					OperatorKind::Div => "div",
+					OperatorKind::Apply => "apply",
+					OperatorKind::Set => "set",
+					OperatorKind::Deref => {
+						if self.constness().is_const() {
+							"try_deref"
+						} else {
+							"try_deref_mut"
+						}
+					}
+					OperatorKind::Equals => "equals",
+					OperatorKind::NotEquals => "not_equals",
+					OperatorKind::GreaterThan => "greater_than",
+					OperatorKind::GreaterThanOrEqual => "greater_than_or_equal",
+					OperatorKind::LessThan => "less_than",
+					OperatorKind::LessThanOrEqual => "less_than_or_equal",
+					OperatorKind::Incr => "incr",
+					OperatorKind::Decr => "decr",
+					OperatorKind::And => "and",
+					OperatorKind::Or => "or",
+					OperatorKind::Xor => "xor",
+					OperatorKind::BitwiseNot => "negate",
+				};
+				if kind.add_args_to_name() {
+					let args = self.arguments();
+					let args = args.as_ref();
+					let is_single_arg_same_as_class = if let Some(cls) = cls
+						&& let [single_arg] = args
+					{
+						single_arg
+							.type_ref()
+							.source()
+							.kind()
+							.as_class()
+							.is_some_and(|single_class| single_class.as_ref() == cls)
 					} else {
+						false
+					};
+					if args.is_empty() || is_single_arg_same_as_class {
 						Borrowed(op_name)
+					} else {
+						let args = args.iter().map(|arg| arg.type_ref().rust_simple_name()).join("_");
+						Owned(format!("{op_name}_{args}"))
 					}
 				} else {
-					cpp_name
+					Borrowed(op_name)
 				}
 			} else {
 				cpp_name
 			}
 		};
 		let rust_name = reserved_rename(rust_name.cpp_name_to_rust_fn_case());
-		if let Self::Clang { gen_env, .. } = self {
-			if let Some(&name) = gen_env.settings.func_rename.get(self.identifier().as_str()) {
-				return if name.contains('+') {
-					Owned(name.replacen('+', rust_name.as_ref(), 1))
-				} else {
-					name.into()
-				};
-			}
+		if let Self::Clang { gen_env, .. } = self
+			&& let Some(&name) = gen_env.settings.func_rename.get(self.identifier().as_str())
+		{
+			return if name.contains('+') {
+				Owned(name.replacen('+', rust_name.as_ref(), 1))
+			} else {
+				name.into()
+			};
 		}
 		Owned(rust_name.into_owned())
 	}
 
-	fn rust_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
+	fn rust_doc_comment(&self, comment_marker: &str, opencv_version: &Version) -> String {
 		let mut comment = RenderComment::new(self.doc_comment().into_owned(), opencv_version);
 		let args = self.arguments();
 		let (_, default_args) = split_default_args(&args);
@@ -216,7 +216,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		format!("{}-{}", self.rust_module().opencv_name(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &Version) -> String {
 		static TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("tpl/func/rust.tpl.rs").compile_interpolation());
 
@@ -315,12 +315,10 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		}
 
 		let doc_comment = self.rust_doc_comment("///", opencv_version);
-		let visibility = if let Some(cls) = as_instance_method {
-			if cls.kind().is_trait() {
-				""
-			} else {
-				"pub "
-			}
+		let visibility = if let Some(cls) = as_instance_method
+			&& cls.kind().is_trait()
+		{
+			""
 		} else {
 			"pub "
 		};
@@ -338,10 +336,10 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		if self.is_no_discard() {
 			attributes.push(Borrowed("#[must_use]"));
 		}
-		if let Some((rust_attr, _)) = self.cfg_attrs() {
-			if !rust_attr.is_empty() {
-				attributes.push(format!("#[cfg({rust_attr})]").into());
-			}
+		if let Some((rust_attr, _)) = self.cfg_attrs()
+			&& !rust_attr.is_empty()
+		{
+			attributes.push(format!("#[cfg({rust_attr})]").into());
 		}
 
 		TPL.interpolate(&HashMap::from([
@@ -919,10 +917,10 @@ fn companion_func_default_args<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu,
 		doc_comment.push_str("\n\n");
 	}
 	write!(
-			&mut doc_comment,
-			"## Note\nThis alternative version of [{refr}] function uses the following default values for its arguments:\n{default_args}",
-			refr = render_ref(f, Some(&original_rust_leafname))
-		)
+		&mut doc_comment,
+		"## Note\nThis alternative version of [{refr}] function uses the following default values for its arguments:\n{default_args}",
+		refr = render_ref(f, Some(&original_rust_leafname))
+	)
 	.expect("Impossible");
 	let mut desc = f.to_desc_with_skip_config(InheritConfig::empty().doc_comment().arguments());
 	let desc_mut = Rc::make_mut(&mut desc);

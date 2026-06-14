@@ -12,7 +12,7 @@ use opencv_binding_generator::{CompiledInterpolation, Generator, IteratorExt, St
 
 use super::docs::transfer_bindings_to_docs;
 use super::enums::{SUPPORTED_INHERENT_FEATURES, SUPPORTED_MODULES};
-use super::{files_with_predicate, Library, Result, OUT_DIR, SRC_CPP_DIR, SRC_DIR, SUPPORTED_OPENCV_BRANCHES};
+use super::{Library, OUT_DIR, Result, SRC_CPP_DIR, SRC_DIR, SUPPORTED_OPENCV_BRANCHES, files_with_predicate};
 
 #[path = "generator/collector.rs"]
 mod collector;
@@ -181,16 +181,18 @@ impl<'r> BindingGenerator<'r> {
 			.map(|path| path.as_path())
 			.collect::<Vec<_>>();
 
-		let gen = Generator::new(opencv_header_dir, &additional_include_dirs, &SRC_CPP_DIR);
-		if !gen.is_clang_loaded() {
-			eprintln!("=== ERROR: Unable to load libclang library, check item #8 in https://github.com/twistedfall/opencv-rust/blob/master/TROUBLESHOOTING.md");
+		let gener = Generator::new(opencv_header_dir, &additional_include_dirs, &SRC_CPP_DIR);
+		if !gener.is_clang_loaded() {
+			eprintln!(
+				"=== ERROR: Unable to load libclang library, check item #8 in https://github.com/twistedfall/opencv-rust/blob/master/TROUBLESHOOTING.md"
+			);
 			eprintln!(
 				"=== Try enabling `clang-runtime` feature of the `opencv` crate, or alternatively disabling it if it's enabled"
 			);
 			return Err("a `libclang` shared library is not loaded on this thread".into());
 		}
-		eprintln!("=== Clang: {}", gen.clang_version());
-		eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
+		eprintln!("=== Clang: {}", gener.clang_version());
+		eprintln!("=== Clang command line args: {:#?}", gener.build_clang_command_line_args());
 
 		let additional_include_dirs = additional_include_dirs
 			.into_iter()

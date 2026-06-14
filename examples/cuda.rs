@@ -3,7 +3,7 @@ use std::time::Instant;
 
 use opencv::core::Size;
 use opencv::prelude::*;
-use opencv::{imgcodecs, imgproc, opencv_has_inherent_feature_cuda, opencv_has_module_cudafilters, Result};
+use opencv::{Result, imgcodecs, imgproc, opencv_has_inherent_feature_cuda, opencv_has_module_cudafilters};
 
 const ITERATIONS: usize = 100;
 

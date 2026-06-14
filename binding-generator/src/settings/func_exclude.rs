@@ -42,6 +42,7 @@ fn core_factory() -> FuncExclude {
 		"cv_fastMalloc_size_t",                                           // manual memory allocation
 		"cv_format_const_charX",                                          // accepts varargs
 		"cv_hconcat_const_MatX_size_t_const__OutputArrayR",               // duplicate of cv_hconcat_VectorOfMat_Mat, but with pointers
+		"cv_hfloat_hfloat", // looks like it's not zeroing the memory (failed test with macOS framework build)
 		"cv_merge_const_MatX_size_t_const__OutputArrayR", // duplicate of cv_merge_const__InputArrayR_const__OutputArrayR, but with pointers
 		"cv_mixChannels_const_MatX_size_t_MatX_size_t_const_intX_size_t", // duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
 		"cv_ocl_ProgramSource_ProgramSource_const_charX",                 // has duplicate with String
@@ -50,6 +51,7 @@ fn core_factory() -> FuncExclude {
 		"cv_useCollection",
 		"cv_vconcat_const_MatX_size_t_const__OutputArrayR", // duplicate of cv_vconcat_VectorOfMat_Mat, but with pointers
 		"cv_Mat_Mat_MatRR",                                 // Mat::copy that takes arg by value
+		"cv_MatShape_MatShape_const_intX_const_intX_DataLayout_int", // takes pointers to the beginning and the end
 		// those function are marked as CV_EXPORTS, but they are missing from the shared libraries
 		"cv_MatConstIterator_MatConstIterator_const_MatX_const_intX",
 		"cv_SparseMatConstIterator_operatorSS",

@@ -1,5 +1,5 @@
 use crate::core;
-use crate::core::{Point3_, Point_, Rect_, Size_, VecN, CV_16S, CV_16U, CV_32F, CV_32S, CV_64F, CV_8S, CV_8U};
+use crate::core::{CV_8S, CV_8U, CV_16S, CV_16U, CV_32F, CV_32S, CV_64F, Point_, Point3_, Rect_, Size_, VecN};
 
 #[inline]
 pub const fn CV_MAT_DEPTH(flags: i32) -> i32 {

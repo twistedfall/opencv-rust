@@ -4,12 +4,12 @@ use std::env::args;
 use std::f64::consts::PI;
 use std::sync::Mutex;
 
-use opencv::core::{find_file, Point, Point2f, Vec2f, Vec4i, Vector};
-use opencv::highgui::{create_trackbar, imshow, named_window, wait_key_def, WINDOW_AUTOSIZE};
-use opencv::imgcodecs::{imread, IMREAD_COLOR};
-use opencv::imgproc::{canny_def, cvt_color_def, hough_lines_def, hough_lines_p, line, COLOR_BGR2GRAY, COLOR_GRAY2BGR};
-use opencv::prelude::*;
 use opencv::Result;
+use opencv::core::{Point, Point2f, Vec2f, Vec4i, Vector, find_file};
+use opencv::highgui::{WINDOW_AUTOSIZE, create_trackbar, imshow, named_window, wait_key_def};
+use opencv::imgcodecs::{IMREAD_COLOR, imread};
+use opencv::imgproc::{COLOR_BGR2GRAY, COLOR_GRAY2BGR, canny_def, cvt_color_def, hough_lines_def, hough_lines_p, line};
+use opencv::prelude::*;
 
 opencv::not_opencv_branch_34! {
 	use opencv::imgproc::LINE_AA;

@@ -201,14 +201,12 @@ impl FishStyle {
 				}
 			}
 			FishStyle::Turbo => {
-				if let Some((before_bracket, _)) = rust_name.split_once('<') {
-					if before_bracket.ends_with("::") {
-						rust_name.into()
-					} else {
-						let mut rust_name = rust_name.to_string();
-						rust_name.insert_str(before_bracket.len(), "::");
-						rust_name.into()
-					}
+				if let Some((before_bracket, _)) = rust_name.split_once('<')
+					&& !before_bracket.ends_with("::")
+				{
+					let mut rust_name = rust_name.to_string();
+					rust_name.insert_str(before_bracket.len(), "::");
+					rust_name.into()
 				} else {
 					rust_name.into()
 				}

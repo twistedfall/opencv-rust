@@ -4,10 +4,15 @@ use std::ffi::c_void;
 
 use opencv::core::{Point, Point2f, Rect, RotatedRect, Size, Size2f, Vec2f, Vec3b, Vector};
 use opencv::prelude::*;
-use opencv::{imgproc, Result};
+use opencv::{Result, imgproc};
 
 #[test]
 fn min_enclosing() -> Result<()> {
+	#[cfg(ocvrs_opencv_branch_5)]
+	use opencv::geometry::min_enclosing_circle;
+	#[cfg(not(ocvrs_opencv_branch_5))]
+	use opencv::imgproc::min_enclosing_circle;
+
 	let mut pts = Mat::new_rows_cols_with_default(1, 2, Vec2f::opencv_type(), 0.into())?;
 	let points = pts.at_row_mut::<Vec2f>(0)?;
 	points[0].copy_from_slice(&[10., 10.]);
@@ -15,7 +20,7 @@ fn min_enclosing() -> Result<()> {
 
 	let mut center = Point2f::default();
 	let mut radius = 0.;
-	imgproc::min_enclosing_circle(&pts, &mut center, &mut radius)?;
+	min_enclosing_circle(&pts, &mut center, &mut radius)?;
 	assert_eq!(radius, 5.0001);
 	assert_eq!(center, Point2f::new(15., 10.));
 	Ok(())
@@ -33,7 +38,12 @@ fn ellipse() -> Result<()> {
 
 #[test]
 fn get_rotation_matrix_2d() -> Result<()> {
-	let mat = imgproc::get_rotation_matrix_2d(Point2f::new(10., 10.), 90., 2.)?;
+	#[cfg(ocvrs_opencv_branch_5)]
+	use opencv::geometry::get_rotation_matrix_2d;
+	#[cfg(not(ocvrs_opencv_branch_5))]
+	use opencv::imgproc::get_rotation_matrix_2d;
+
+	let mat = get_rotation_matrix_2d(Point2f::new(10., 10.), 90., 2.)?;
 	assert_eq!(Size::new(3, 2), mat.size()?);
 	assert_eq!(*mat.at_2d::<f64>(0, 0)?, *mat.at_2d::<f64>(1, 1)?);
 	assert_eq!(-*mat.at_2d::<f64>(0, 1)?, *mat.at_2d::<f64>(1, 0)?);
@@ -59,12 +69,10 @@ fn line_iterator() -> Result<()> {
 
 #[test]
 fn call_def() -> Result<()> {
-	opencv::not_opencv_branch_34! {
-		use opencv::imgproc::LINE_8;
-	}
-	opencv::opencv_branch_34! {
-		use opencv::core::LINE_8;
-	}
+	#[cfg(ocvrs_opencv_branch_34)]
+	use opencv::core::LINE_8;
+	#[cfg(not(ocvrs_opencv_branch_34))]
+	use opencv::imgproc::LINE_8;
 
 	let rect = Rect::new(0, 0, 3, 3);
 
@@ -93,11 +101,15 @@ fn call_def() -> Result<()> {
 }
 
 #[test]
-fn box_points() -> Result<()> {
+fn box_points_test() -> Result<()> {
+	#[cfg(ocvrs_opencv_branch_5)]
+	use opencv::geometry::box_points;
+	#[cfg(not(ocvrs_opencv_branch_5))]
+	use opencv::imgproc::box_points;
 	let rect = RotatedRect::new(Point2f::new(100., 100.), Size2f::new(100., 100.), 90.)?;
 
 	let mut pts = Mat::default();
-	imgproc::box_points(rect, &mut pts)?;
+	box_points(rect, &mut pts)?;
 	let pts = pts.reshape_def(Point2f::opencv_channels())?;
 
 	assert_eq!(Size::new(1, 4), pts.size()?);

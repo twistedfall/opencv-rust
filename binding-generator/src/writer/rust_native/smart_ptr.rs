@@ -2,10 +2,12 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 use std::sync::LazyLock;
 
+use semver::Version;
+
+use super::RustNativeGeneratedElement;
 use super::class::ClassExt;
 use super::element::RustElement;
 use super::type_ref::TypeRefExt;
-use super::RustNativeGeneratedElement;
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
@@ -51,7 +53,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		format!("{}-{}", self.rust_module().opencv_name(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, _opencv_version: &str) -> String {
+	fn gen_rust(&self, _opencv_version: &Version) -> String {
 		static TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("tpl/smart_ptr/rust.tpl.rs").compile_interpolation());
 

@@ -1,8 +1,8 @@
 use std::rc::Rc;
 
 use super::Typedef;
-use crate::type_ref::{TypeRef, TypeRefDesc};
 use crate::SupportedModule;
+use crate::type_ref::{TypeRef, TypeRefDesc};
 
 pub struct TypedefDesc<'tu, 'ge> {
 	pub cpp_fullname: Rc<str>,

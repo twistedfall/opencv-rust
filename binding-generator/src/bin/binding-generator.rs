@@ -1,63 +1,9 @@
 use std::env;
-use std::fs::File;
-use std::io::BufReader;
-use std::ops::ControlFlow;
 use std::path::{Path, PathBuf};
 
+use opencv_binding_generator::version::OpenCVHeaderVersionExt;
 use opencv_binding_generator::writer::RustNativeBindingWriter;
-use opencv_binding_generator::{line_reader, Generator, SupportedModule};
-
-fn get_version_header(header_dir: &Path) -> Option<PathBuf> {
-	let out = header_dir.join("opencv2/core/version.hpp");
-	if out.is_file() {
-		Some(out)
-	} else {
-		let out = header_dir.join("opencv2.framework/Headers/core/version.hpp");
-		if out.is_file() {
-			Some(out)
-		} else {
-			None
-		}
-	}
-}
-
-fn get_version_from_headers(header_dir: &Path) -> Option<String> {
-	let version_hpp = get_version_header(header_dir)?;
-	let mut major = None;
-	let mut minor = None;
-	let mut revision = None;
-	let reader = BufReader::new(File::open(version_hpp).ok()?);
-	line_reader(reader, |line| {
-		if let Some(line) = line.strip_prefix("#define CV_VERSION_") {
-			let mut parts = line.split_whitespace();
-			// todo: MSRV 1.88 use let chains
-			if let (Some(ver_spec), Some(version)) = (parts.next(), parts.next()) {
-				match ver_spec {
-					"MAJOR" => {
-						major = Some(version.to_string());
-					}
-					"MINOR" => {
-						minor = Some(version.to_string());
-					}
-					"REVISION" => {
-						revision = Some(version.to_string());
-					}
-					_ => {}
-				}
-			}
-			if major.is_some() && minor.is_some() && revision.is_some() {
-				return ControlFlow::Break(());
-			}
-		}
-		ControlFlow::Continue(())
-	});
-	// todo: MSRV 1.88 use let chains
-	if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
-		Some(format!("{major}.{minor}.{revision}"))
-	} else {
-		None
-	}
-}
+use opencv_binding_generator::{Generator, SupportedModule};
 
 fn main() {
 	let mut args = env::args_os().skip(1);
@@ -75,7 +21,9 @@ fn main() {
 		.to_str()
 		.and_then(SupportedModule::try_from_opencv_name)
 		.unwrap_or_else(|| panic!("Not a valid module name: {module:?}"));
-	let version = get_version_from_headers(&opencv_header_dir).expect("Can't find the version in the headers");
+	let version = opencv_header_dir
+		.opencv_find_version()
+		.expect("Can't find the version in the headers");
 	let arg_additional_include_dirs = args.next();
 	let additional_include_dirs = arg_additional_include_dirs
 		.as_ref()
@@ -86,6 +34,6 @@ fn main() {
 		.filter(|s| !s.is_empty())
 		.map(Path::new)
 		.collect::<Vec<_>>();
-	let bindings_writer = RustNativeBindingWriter::new(&src_cpp_dir, &out_dir, module, &version, debug);
-	Generator::new(&opencv_header_dir, &additional_include_dirs, &src_cpp_dir).generate(module, !debug, bindings_writer);
+	let bindings_writer = RustNativeBindingWriter::new(&src_cpp_dir, &out_dir, module, version.clone(), debug);
+	Generator::new(&opencv_header_dir, &additional_include_dirs, &src_cpp_dir).generate(module, &version, !debug, bindings_writer);
 }

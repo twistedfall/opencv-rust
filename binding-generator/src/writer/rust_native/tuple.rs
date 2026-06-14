@@ -2,9 +2,11 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 use std::sync::LazyLock;
 
+use semver::Version;
+
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
-use super::{disambiguate_single_name, RustNativeGeneratedElement};
+use super::{RustNativeGeneratedElement, disambiguate_single_name};
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
@@ -38,7 +40,7 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		format!("{}-{}", self.rust_element_module().opencv_name(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, _opencv_version: &str) -> String {
+	fn gen_rust(&self, _opencv_version: &Version) -> String {
 		static RUST_TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("tpl/tuple/rust.tpl.rs").compile_interpolation());
 

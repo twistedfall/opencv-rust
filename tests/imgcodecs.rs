@@ -4,7 +4,7 @@ use std::ffi::c_void;
 
 use opencv::core::{Size, Vec3b};
 use opencv::prelude::*;
-use opencv::{imgcodecs, Result};
+use opencv::{Result, imgcodecs};
 
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 

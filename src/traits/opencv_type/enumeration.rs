@@ -1,6 +1,6 @@
 use std::any::type_name;
 
-use crate::{core, Error, Result};
+use crate::{Error, Result, core};
 
 /// Common trait for all enums that represent flags, e.g. can be combined using bitwise operations
 pub trait OpenCVBitfieldEnum: Sized + Copy + 'static {

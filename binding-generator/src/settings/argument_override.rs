@@ -1,10 +1,10 @@
 use std::collections::HashMap;
 
+use crate::SupportedModule;
 use crate::func::FuncMatcher;
 use crate::type_ref::Constness::{Const, Mut};
 use crate::type_ref::TypeRefTypeHint;
 use crate::writer::rust_native::type_ref::Lifetime;
-use crate::SupportedModule;
 
 pub const ARG_OVERRIDE_SELF: &str = "this";
 
@@ -14,9 +14,10 @@ pub type PropertyOverride = HashMap<&'static str, TypeRefTypeHint>;
 
 pub fn arg_override_factory(module: SupportedModule) -> ArgOverride {
 	match module {
-		SupportedModule::Calib3d | SupportedModule::Calib | SupportedModule::ThreeD => calib3d_arg_override_factory(),
+		SupportedModule::Calib3d | SupportedModule::Calib => calib3d_arg_override_factory(),
 		SupportedModule::Core => core_arg_override_factory(),
 		SupportedModule::Freetype => freetype_arg_override_factory(),
+		SupportedModule::Geometry => geometry_arg_override_factory(),
 		SupportedModule::HighGui => highgui_arg_override_factory(),
 		SupportedModule::ImgProc => imgproc_arg_override_factory(),
 		SupportedModule::ObjDetect => objdetect_arg_override_factory(),
@@ -190,6 +191,28 @@ fn freetype_arg_override_factory() -> ArgOverride {
 	)]))
 }
 
+fn geometry_arg_override_factory() -> ArgOverride {
+	FuncMatcher::create(HashMap::from([(
+		"cv::getPerspectiveTransform",
+		vec![
+			(
+				pred!(mut, ["src", "dst", "solveMethod"]),
+				HashMap::from([
+					("src", TypeRefTypeHint::AddArrayLength(4)),
+					("dst", TypeRefTypeHint::AddArrayLength(4)),
+				]),
+			),
+			(
+				pred!(mut, ["src", "dst"]), // 3.x
+				HashMap::from([
+					("src", TypeRefTypeHint::AddArrayLength(4)),
+					("dst", TypeRefTypeHint::AddArrayLength(4)),
+				]),
+			),
+		],
+	)]))
+}
+
 fn highgui_arg_override_factory() -> ArgOverride {
 	FuncMatcher::create(HashMap::from([(
 		"cv::createTrackbar",
@@ -242,13 +265,31 @@ fn imgproc_arg_override_factory() -> ArgOverride {
 }
 
 fn objdetect_arg_override_factory() -> ArgOverride {
-	FuncMatcher::create(HashMap::from([(
-		"cv::decodeQRCode",
-		vec![(
-			pred!(mut, ["in", "points", "decoded_info", "straight_qrcode"]), // 3.4
-			HashMap::from([("decoded_info", TypeRefTypeHint::StringAsBytes(None))]),
-		)],
-	)]))
+	FuncMatcher::create(HashMap::from([
+		(
+			"cv::decodeQRCode",
+			vec![(
+				pred!(mut, ["in", "points", "decoded_info", "straight_qrcode"]), // 3.4
+				HashMap::from([("decoded_info", TypeRefTypeHint::StringAsBytes(None))]),
+			)],
+		),
+		(
+			"cv::findCirclesGrid",
+			vec![
+				(
+					pred!(
+						mut,
+						["image", "patternSize", "centers", "flags", "blobDetector", "parameters"]
+					),
+					HashMap::from([("blobDetector", TypeRefTypeHint::Nullable)]),
+				),
+				(
+					pred!(mut, ["image", "patternSize", "centers", "flags", "blobDetector"]),
+					HashMap::from([("blobDetector", TypeRefTypeHint::Nullable)]),
+				),
+			],
+		),
+	]))
 }
 
 fn videoio_arg_override_factory() -> ArgOverride {

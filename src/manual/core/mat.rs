@@ -11,7 +11,7 @@ use crate::core::{MatConstIterator, MatExpr, MatSize, MatStep, Point, Rect, Scal
 use crate::manual::core::DataType;
 use crate::prelude::*;
 use crate::traits::OpenCVFromExtern;
-use crate::{core, input_output_array, input_output_array_vector, sys, Error, Result};
+use crate::{Error, Result, core, input_output_array, input_output_array_vector, sys};
 
 mod mat_;
 
@@ -52,7 +52,7 @@ impl<T: MatTraitConst + ?Sized> MatMatcher for T {
 			.iter()
 			.zip(size)
 			.enumerate()
-			.find(|(_, (idx_val, &size))| !(0..size).contains(idx_val))
+			.find(|(_, (idx_val, size))| !(0..**size).contains(idx_val))
 		{
 			Err(Error::new(
 				core::StsOutOfRange,
@@ -134,7 +134,9 @@ fn match_length(sizes: &[i32], slice_len: usize, size_mul: usize) -> Result<()> 
 	if expected_len != slice_len {
 		let msg = match sizes {
 			[rows, cols] => {
-				format!("The length of the slice: {slice_len} must be: {expected_len} to match the passed row: {rows} and column: {cols} counts")
+				format!(
+					"The length of the slice: {slice_len} must be: {expected_len} to match the passed row: {rows} and column: {cols} counts"
+				)
 			}
 			_ => {
 				format!("The length of the slice: {slice_len} must be: {expected_len} to match the passed dimensions: {sizes:?}")
@@ -505,10 +507,20 @@ pub(crate) mod mat_forward {
 }
 
 pub trait MatTraitConstManual: MatTraitConst {
+	#[cfg(not(ocvrs_opencv_branch_5))]
+	/// number of bytes each matrix element/row/plane/dimension occupies
 	fn mat_step(&self) -> &[usize] {
 		let dims = usize::try_from(self.dims()).unwrap_or(0);
-		let mat_step = unsafe { MatStep::<'_>::opencv_from_extern(sys::cv_Mat_propStep_const(self.as_raw_Mat())) };
-		unsafe { slice::from_raw_parts(mat_step.p(), dims) }
+		let mat_step = unsafe { MatStep::opencv_from_extern(sys::cv_Mat_propStep_const(self.as_raw_Mat())) };
+		unsafe { slice::from_raw_parts(mat_step.p() as *const _, dims) }
+	}
+
+	#[cfg(ocvrs_opencv_branch_5)]
+	/// number of bytes each matrix element/row/plane/dimension occupies
+	fn mat_step(&self) -> Vec<usize> {
+		let dims = usize::try_from(self.dims()).unwrap_or(0);
+		let mat_step = unsafe { MatStep::opencv_from_extern(sys::cv_Mat_propStep_const(self.as_raw_Mat())) };
+		mat_step.p()[..dims].to_vec()
 	}
 
 	/// Like [Mat::at()] but performs no bounds or type checks
@@ -588,6 +600,9 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// of functions.
 	#[inline]
 	fn is_physically_contiguous(&self) -> Result<bool> {
+		if self.is_continuous() {
+			return Ok(true);
+		}
 		// OpenCV clears CONTINUOUS_FLAG for huge Mats whose flattened element count
 		// does not fit into C++ int, even when the underlying memory is still
 		// physically contiguous. For Rust slice exposure we only need packed byte
@@ -667,7 +682,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 							"Mat must have 2 dimensions for this operation, but it has: {}",
 							mat_size.len()
 						),
-					))
+					));
 				}
 			};
 			// safe because Mat size can't be negative
@@ -899,9 +914,73 @@ impl fmt::Debug for MatDataDumper<'_> {
 	}
 }
 
+pub trait UMatTraitConstManual: UMatTraitConst {
+	#[cfg(not(ocvrs_opencv_branch_5))]
+	/// number of bytes each matrix element/row/plane/dimension occupies
+	fn mat_step(&self) -> &[usize] {
+		let dims = usize::try_from(self.dims()).unwrap_or(0);
+		let mat_step = unsafe { MatStep::opencv_from_extern(sys::cv_UMat_propStep_const(self.as_raw_UMat())) };
+		unsafe { slice::from_raw_parts(mat_step.p() as *const _, dims) }
+	}
+
+	#[cfg(ocvrs_opencv_branch_5)]
+	/// number of bytes each matrix element/row/plane/dimension occupies
+	fn mat_step(&self) -> Vec<usize> {
+		let dims = usize::try_from(self.dims()).unwrap_or(0);
+		let mat_step = unsafe { MatStep::opencv_from_extern(sys::cv_UMat_propStep_const(self.as_raw_UMat())) };
+		mat_step.p()[..dims].to_vec()
+	}
+}
+
+impl<T: UMatTraitConst + ?Sized> UMatTraitConstManual for T {}
+
 input_output_array! { UMat, from_umat, from_umat_mut }
 input_output_array_vector! { UMat, from_umat_vec, from_umat_vec_mut }
 
+impl fmt::Debug for UMat {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		let typ = self.typ();
+		let depth = self.depth();
+		let typ = core::type_to_string(typ).map_err(|_| fmt::Error)?;
+		let depth = core::depth_to_string(depth).map_err(|_| fmt::Error)?;
+		let flags = self.flags();
+		let mut flags_str = String::new();
+		if flags & core::UMat_MAGIC_VAL != core::UMat_MAGIC_VAL {
+			flags_str.push_str("invalid magic value");
+		} else {
+			if flags & core::Mat_CONTINUOUS_FLAG != 0 {
+				flags_str.push_str("continuous");
+			}
+			if flags & core::Mat_SUBMATRIX_FLAG != 0 {
+				if !flags_str.is_empty() {
+					flags_str.push_str(", ");
+				}
+				flags_str.push_str("submatrix");
+			}
+		}
+		let mut data_mat = Mat::default();
+		self.copy_to(&mut data_mat).map_err(|_| fmt::Error)?;
+		f.debug_struct("Mat")
+			.field("type", &typ)
+			.field("flags", &format!("0x{flags:X} ({flags_str})"))
+			.field("channels", &self.channels())
+			.field("depth", &depth)
+			.field("dims", &self.dims())
+			.field("rows", &self.rows())
+			.field("cols", &self.cols())
+			.field("mat_size", &self.mat_size())
+			.field("elem_size", &self.elem_size().map_err(|_| fmt::Error)?)
+			.field("elem_size1", &self.elem_size1())
+			.field("mat_step", &self.mat_step())
+			.field("total", &self.total())
+			.field("is_continuous", &self.is_continuous())
+			.field("is_submatrix", &self.is_submatrix())
+			.field("data", &MatDataDumper(&data_mat))
+			.finish()
+	}
+}
+
+#[cfg(not(ocvrs_opencv_branch_5))]
 impl Deref for MatSize<'_> {
 	type Target = [i32];
 
@@ -917,26 +996,53 @@ impl Deref for MatSize<'_> {
 	}
 }
 
+#[cfg(ocvrs_opencv_branch_5)]
+impl Deref for MatSize {
+	type Target = [i32];
+
+	#[inline]
+	fn deref(&self) -> &Self::Target {
+		let dims = usize::try_from(self.dims).unwrap_or(0);
+		&self.p[..dims]
+	}
+}
+
+#[cfg(not(ocvrs_opencv_branch_5))]
 impl fmt::Debug for MatSize<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		writeln!(f, "{:#?}", self.deref())
 	}
 }
 
+#[cfg(not(ocvrs_opencv_branch_5))]
 impl Deref for MatStep<'_> {
-	#[cfg(not(ocvrs_opencv_branch_5))]
 	type Target = [usize; 2];
-	#[cfg(ocvrs_opencv_branch_5)]
-	type Target = [usize; 3];
 
 	fn deref(&self) -> &Self::Target {
 		self.buf()
 	}
 }
 
+#[cfg(not(ocvrs_opencv_branch_5))]
 impl DerefMut for MatStep<'_> {
 	fn deref_mut(&mut self) -> &mut Self::Target {
 		self.buf_mut()
+	}
+}
+
+#[cfg(ocvrs_opencv_branch_5)]
+impl Deref for MatStep {
+	type Target = [usize; 10];
+
+	fn deref(&self) -> &Self::Target {
+		self.p()
+	}
+}
+
+#[cfg(ocvrs_opencv_branch_5)]
+impl DerefMut for MatStep {
+	fn deref_mut(&mut self) -> &mut Self::Target {
+		self.p_mut()
 	}
 }
 

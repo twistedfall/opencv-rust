@@ -1,8 +1,8 @@
 use std::ffi::c_void;
 
+use opencv::Result;
 use opencv::core::Ptr;
 use opencv::prelude::*;
-use opencv::Result;
 
 /// Ptr<f32> creation, value mutation and read
 #[test]

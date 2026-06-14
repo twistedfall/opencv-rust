@@ -3,7 +3,7 @@ use std::ffi::c_void;
 use std::fmt;
 use std::marker::PhantomData;
 
-use super::{match_format, DataType, MatMatcher};
+use super::{DataType, MatMatcher, match_format};
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{
 	_InputArray, _InputOutputArray, _OutputArray, Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, Point,

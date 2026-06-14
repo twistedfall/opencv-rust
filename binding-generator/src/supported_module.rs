@@ -1,7 +1,6 @@
+// !! Update `pub static SUPPORTED_MODULES` in `enums.rs` when changing this
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum SupportedModule {
-	/// 3d
-	ThreeD,
 	/// alphamat
 	AlphaMat,
 	/// aruco
@@ -76,6 +75,8 @@ pub enum SupportedModule {
 	Fuzzy,
 	/// gapi
 	Gapi,
+	/// geometry
+	Geometry,
 	/// hdf
 	Hdf,
 	/// hfs
@@ -108,6 +109,8 @@ pub enum SupportedModule {
 	Photo,
 	/// plot
 	Plot,
+	/// ptcloud
+	PtCloud,
 	/// quality
 	Quality,
 	/// rapid
@@ -161,7 +164,6 @@ pub enum SupportedModule {
 impl SupportedModule {
 	pub fn try_from_opencv_name(name: &str) -> Option<Self> {
 		match name {
-			"3d" => Some(Self::ThreeD),
 			"alphamat" => Some(Self::AlphaMat),
 			"aruco" => Some(Self::Aruco),
 			"aruco_detector" => Some(Self::ArucoDetector),
@@ -196,6 +198,7 @@ impl SupportedModule {
 			"freetype" => Some(Self::Freetype),
 			"fuzzy" => Some(Self::Fuzzy),
 			"gapi" => Some(Self::Gapi),
+			"geometry" => Some(Self::Geometry),
 			"hdf" => Some(Self::Hdf),
 			"hfs" => Some(Self::Hfs),
 			"highgui" => Some(Self::HighGui),
@@ -212,6 +215,7 @@ impl SupportedModule {
 			"phase_unwrapping" => Some(Self::PhaseUnwrapping),
 			"photo" => Some(Self::Photo),
 			"plot" => Some(Self::Plot),
+			"ptcloud" => Some(Self::PtCloud),
 			"quality" => Some(Self::Quality),
 			"rapid" => Some(Self::Rapid),
 			"rgbd" => Some(Self::Rgbd),
@@ -242,7 +246,6 @@ impl SupportedModule {
 
 	pub fn opencv_name(self) -> &'static str {
 		match self {
-			Self::ThreeD => "3d",
 			Self::AlphaMat => "alphamat",
 			Self::Aruco => "aruco",
 			Self::ArucoDetector => "aruco_detector",
@@ -277,6 +280,7 @@ impl SupportedModule {
 			Self::Freetype => "freetype",
 			Self::Fuzzy => "fuzzy",
 			Self::Gapi => "gapi",
+			Self::Geometry => "geometry",
 			Self::Hdf => "hdf",
 			Self::Hfs => "hfs",
 			Self::HighGui => "highgui",
@@ -293,6 +297,7 @@ impl SupportedModule {
 			Self::PhaseUnwrapping => "phase_unwrapping",
 			Self::Photo => "photo",
 			Self::Plot => "plot",
+			Self::PtCloud => "ptcloud",
 			Self::Quality => "quality",
 			Self::Rapid => "rapid",
 			Self::Rgbd => "rgbd",
@@ -320,10 +325,7 @@ impl SupportedModule {
 		}
 	}
 
-	pub fn rust_safe_name(self) -> &'static str {
-		match self {
-			Self::ThreeD => "mod_3d",
-			_ => self.opencv_name(),
-		}
+	pub fn rust_name(self) -> &'static str {
+		self.opencv_name()
 	}
 }

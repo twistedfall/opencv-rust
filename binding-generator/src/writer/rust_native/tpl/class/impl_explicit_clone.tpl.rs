@@ -1,4 +1,4 @@
-impl Clone for {{rust_local}} {
+impl Clone for {{rust_local}}{{rust_elided_lt}} {
 	#[inline]
 	/// Calls try_clone() and panics if that fails
 	fn clone(&self) -> Self {

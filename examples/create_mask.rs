@@ -5,11 +5,11 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use std::{env, process};
 
-use opencv::core::{bitwise_and, find_file, CommandLineParser, Point, Scalar, Vec3b};
+use opencv::core::{CommandLineParser, Point, Scalar, Vec3b, bitwise_and, find_file};
 use opencv::highgui::imshow;
-use opencv::imgcodecs::{imread, IMREAD_COLOR};
+use opencv::imgcodecs::{IMREAD_COLOR, imread};
 use opencv::prelude::*;
-use opencv::{highgui, imgproc, not_opencv_branch_34, opencv_branch_34, Result};
+use opencv::{Result, highgui, imgproc, not_opencv_branch_34, opencv_branch_34};
 
 not_opencv_branch_34! {
 	use opencv::imgproc::LINE_8;

@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use super::{rust_arg_func_decl, rust_self_func_decl, FunctionProps, RenderLaneTrait};
+use super::{FunctionProps, RenderLaneTrait, rust_arg_func_decl, rust_self_func_decl};
 use crate::field::Field;
 use crate::function::Function;
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};

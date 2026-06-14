@@ -16,13 +16,13 @@ use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::ToEntity;
 use crate::field::FieldDesc;
-use crate::settings::{FuncSpec, ARG_OVERRIDE_SELF};
+use crate::settings::{ARG_OVERRIDE_SELF, FuncSpec};
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
-	debug, Class, CowMapBorrowedExt, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt,
-	NameDebug, NameStyle, StrExt, StringExt, TypeRef,
+	Class, CowMapBorrowedExt, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt, NameDebug,
+	NameStyle, StrExt, StringExt, TypeRef, debug,
 };
 
 mod desc;
@@ -491,10 +491,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					.into_iter()
 					.enumerate()
 					.map(|(idx, a)| {
-						if let Some(func_arg_override) = arg_overrides {
-							if let Some(type_hint) = a.get_name().and_then(|arg_name| func_arg_override.get(arg_name.as_str())) {
-								return Field::new_ext(a, type_hint.clone(), gen_env);
-							}
+						if let Some(func_arg_override) = arg_overrides
+							&& let Some(type_hint) = a.get_name().and_then(|arg_name| func_arg_override.get(arg_name.as_str()))
+						{
+							return Field::new_ext(a, type_hint.clone(), gen_env);
 						}
 						let out = Field::new(a, gen_env);
 						slice_arg_finder.feed(idx, &out);

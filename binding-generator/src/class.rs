@@ -17,8 +17,8 @@ use crate::settings::PropertyReadWrite;
 use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
-	settings, ClassKindOverride, Const, DefaultElement, Element, EntityExt, Enum, Field, Func, GeneratedType, GeneratorEnv,
-	NameDebug, StrExt,
+	ClassKindOverride, Const, DefaultElement, Element, EntityExt, Enum, Field, Func, GeneratedType, GeneratorEnv, NameDebug,
+	StrExt, settings,
 };
 
 mod desc;
@@ -341,16 +341,16 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 					} else {
 						func
 					};
-					if func.is_generic() {
-						if let Some(specs) = gen_env.settings.func_specialize.get(&mut func.matcher()) {
-							for spec in specs {
-								let spec_func = func.clone().specialize(spec);
-								if filter(&spec_func) {
-									out.push(spec_func);
-								}
+					if func.is_generic()
+						&& let Some(specs) = gen_env.settings.func_specialize.get(&mut func.matcher())
+					{
+						for spec in specs {
+							let spec_func = func.clone().specialize(spec);
+							if filter(&spec_func) {
+								out.push(spec_func);
 							}
-							return ControlFlow::Continue(());
 						}
+						return ControlFlow::Continue(());
 					}
 					if filter(&func) {
 						out.push(func);
@@ -359,10 +359,11 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				});
 				for inject_func_fact in &gen_env.settings.func_inject {
 					let inject_func: Func = inject_func_fact();
-					if let Some(cls) = inject_func.kind().as_class_method() {
-						if cls == self && filter(&inject_func) {
-							out.push(inject_func);
-						}
+					if let Some(cls) = inject_func.kind().as_class_method()
+						&& cls == self
+						&& filter(&inject_func)
+					{
+						out.push(inject_func);
 					}
 				}
 				out

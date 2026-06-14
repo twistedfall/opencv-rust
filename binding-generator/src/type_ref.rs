@@ -3,14 +3,14 @@ use std::collections::HashSet;
 use std::fmt;
 use std::rc::Rc;
 
+use Cow::{Borrowed, Owned};
 use clang::{Entity, Type};
 pub use desc::{ClangTypeExt, TypeRefDesc};
 pub use kind::{InputOutputArrayKind, TypeRefKind};
 pub use types::{
-	dbg_clang_type, Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, Nullability, StrEnc, StrType, TemplateArg,
-	TypeRefTypeHint,
+	Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, Nullability, StrEnc, StrType, TemplateArg, TypeRefTypeHint,
+	dbg_clang_type,
 };
-use Cow::{Borrowed, Owned};
 
 use crate::class::{ClassDesc, TemplateKind};
 use crate::element::ExcludeKind;
@@ -18,8 +18,8 @@ use crate::renderer::{CppExternReturnRenderer, CppRenderer, TypeRefRenderer};
 use crate::vector::VectorDesc;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
-	settings, AbstractRefWrapper, Class, ClassKindOverride, Element, ExportConfig, GeneratedType, GeneratorEnv, SmartPtr,
-	SupportedModule, Typedef, Vector,
+	AbstractRefWrapper, Class, ClassKindOverride, Element, ExportConfig, GeneratedType, GeneratorEnv, SmartPtr, SupportedModule,
+	Typedef, Vector, settings,
 };
 
 mod desc;
@@ -149,7 +149,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					type_hint: old_type_hint,
 					..
 				} => *old_type_hint = type_hint,
-				Self::Desc(ref mut desc) => {
+				Self::Desc(desc) => {
 					Rc::make_mut(desc).type_hint = type_hint;
 				}
 			}

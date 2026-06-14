@@ -1,6 +1,6 @@
 use matches::assert_matches;
-use opencv::core::BorderTypes;
 use opencv::Result;
+use opencv::core::BorderTypes;
 
 #[test]
 fn enum_from() -> Result<()> {

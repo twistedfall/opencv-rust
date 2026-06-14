@@ -6,9 +6,10 @@ use std::path::{Path, PathBuf};
 use std::rc::Rc;
 
 use clang::{Entity, EntityKind};
+use opencv_binding_generator::version::OpenCVHeaderVersionExt;
 use opencv_binding_generator::{
-	opencv_module_from_path, Class, Constness, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func, Generator, GeneratorEnv,
-	Pred, SupportedModule,
+	Class, Constness, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func, Generator, GeneratorEnv, Pred, SupportedModule,
+	opencv_module_from_path,
 };
 
 struct FunctionFinder<'tu> {
@@ -77,6 +78,9 @@ fn main() {
 	>::new()));
 	for opencv_header_dir in opencv_header_dirs {
 		println!("Processing header dir: {}", opencv_header_dir.display());
+		let version = opencv_header_dir
+			.opencv_find_version()
+			.expect("Can't find version in header dir");
 		let modules = opencv_header_dir
 			.join("opencv2")
 			.read_dir()
@@ -89,14 +93,14 @@ fn main() {
 					.and_then(|f| f.to_str())
 					.and_then(SupportedModule::try_from_opencv_name)
 			});
-		let gen = Generator::new(&opencv_header_dir, &[], &src_cpp_dir);
+		let gener = Generator::new(&opencv_header_dir, &[], &src_cpp_dir);
 		for module in modules {
 			println!("  {}", module.opencv_name());
-			gen.pre_process(module, false, {
+			gener.pre_process(module, false, {
 				let global_usage_tracking = Rc::clone(&global_usage_tracking);
 				|root_entity| {
 					let global_usage_tracking = global_usage_tracking; // force move
-					let mut gen_env = GeneratorEnv::global(module, root_entity);
+					let mut gen_env = GeneratorEnv::global(module, root_entity, &version);
 					gen_env.settings.start_usage_tracking();
 					let mut function_finder = FunctionFinder { module, gen_env };
 					root_entity.walk_opencv_entities(&mut function_finder);

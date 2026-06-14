@@ -4,8 +4,8 @@
 use std::ffi::c_void;
 use std::mem::MaybeUninit;
 
-use crate::templ::receive_string;
 use crate::Error;
+use crate::templ::receive_string;
 
 #[repr(C)]
 pub struct Result<T> {

@@ -3,12 +3,13 @@ use std::fmt::Debug;
 use std::ops::ControlFlow;
 
 use clang::{Entity, EntityKind};
+use semver::Version;
 
 use super::comment::RenderComment;
 use crate::type_ref::FishStyle;
 use crate::{
-	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, EntityExt, GeneratedType, IteratorExt, NameStyle,
-	StringExt, SupportedModule,
+	CppNameStyle, Element, EntityExt, GeneratedType, IteratorExt, NameStyle, StringExt, SupportedModule, opencv_module_from_path,
+	reserved_rename, settings,
 };
 
 pub struct DefaultRustNativeElement;
@@ -26,11 +27,11 @@ impl DefaultRustNativeElement {
 
 	pub fn rust_module_reference(this: &(impl RustElement + ?Sized)) -> Cow<'_, str> {
 		let module = this.rust_module();
-		let module_rust_safe_name = module.rust_safe_name();
-		if settings::STATIC_RUST_MODULES.contains(module_rust_safe_name) {
-			module_rust_safe_name.into()
+		let module_rust_name = module.rust_name();
+		if settings::STATIC_RUST_MODULES.contains(module_rust_name) {
+			module_rust_name.into()
 		} else {
-			format!("crate::{module_rust_safe_name}").into()
+			format!("crate::{module_rust_name}").into()
 		}
 	}
 
@@ -96,7 +97,7 @@ pub trait RustNativeGeneratedElement {
 
 	fn element_safe_id(&self) -> String;
 
-	fn gen_rust(&self, _opencv_version: &str) -> String {
+	fn gen_rust(&self, _opencv_version: &Version) -> String {
 		"".to_string()
 	}
 
@@ -126,7 +127,7 @@ pub trait RustElement: Element {
 		DefaultRustNativeElement::rust_leafname(self)
 	}
 
-	fn rust_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
+	fn rust_doc_comment(&self, comment_marker: &str, opencv_version: &Version) -> String {
 		RenderComment::new(self.doc_comment().into_owned(), opencv_version)
 			.render_with_comment_marker(comment_marker)
 			.into_owned()
@@ -164,12 +165,7 @@ fn rust_module_hack(entity: Entity, module_from_path: SupportedModule) -> Suppor
 				}
 				_ => ControlFlow::Continue(()),
 			});
-			// todo: MSRV 1.83 use `break_value()`
-			match break_res {
-				ControlFlow::Break(m) => Some(m),
-				ControlFlow::Continue(_) => None,
-			}
-			.unwrap_or(module_from_path)
+			break_res.break_value().unwrap_or(module_from_path)
 		}
 		_ => module_from_path,
 	}

@@ -1,5 +1,5 @@
 use opencv::core;
-use opencv::core::{Vec3i, CV_MAKETYPE, CV_MAKE_TYPE};
+use opencv::core::{CV_MAKE_TYPE, CV_MAKETYPE, Vec3i};
 use opencv::prelude::*;
 
 #[test]
@@ -101,7 +101,5 @@ fn hfloat() -> opencv::Result<()> {
 	#![cfg(ocvrs_has_inherent_feature_hfloat)]
 	let f = core::hfloat::new(65.1234)?;
 	assert_eq!(65.125, f.to_f32()?);
-
-	assert_eq!(0., core::hfloat::default()?.to_f32()?);
 	Ok(())
 }

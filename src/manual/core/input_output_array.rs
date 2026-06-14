@@ -5,7 +5,7 @@ use crate::core::{
 	_InputArray, _InputArrayTraitConst, _InputOutputArray, _InputOutputArrayTrait, _OutputArray, _OutputArrayTrait,
 };
 use crate::traits::Boxed;
-use crate::{sys, Result};
+use crate::{Result, sys};
 
 /// Trait to serve as a replacement for `InputArray` in C++ OpenCV
 ///

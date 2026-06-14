@@ -1,5 +1,5 @@
 use matches::assert_matches;
-use opencv::core::{add_mat_mat, ElemMul, Scalar, StsBadArg};
+use opencv::core::{ElemMul, Scalar, StsBadArg, add_mat_mat};
 use opencv::prelude::*;
 use opencv::{Error, Result};
 

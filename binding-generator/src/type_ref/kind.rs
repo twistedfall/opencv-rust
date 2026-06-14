@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 
-use clang::TypeKind;
 use Cow::{Borrowed, Owned};
+use clang::TypeKind;
 
 use crate::function::Function;
 use crate::smart_ptr::SmartPtr;
@@ -260,10 +260,10 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().kind().as_string(type_hint),
 			_ => None,
 		};
-		if let Some((_, str_type)) = out.as_mut() {
-			if matches!(type_hint, TypeRefTypeHint::StringAsBytes(_)) {
-				str_type.set_encoding(StrEnc::Binary)
-			}
+		if let Some((_, str_type)) = out.as_mut()
+			&& matches!(type_hint, TypeRefTypeHint::StringAsBytes(_))
+		{
+			str_type.set_encoding(StrEnc::Binary)
 		}
 		out
 	}
@@ -353,11 +353,11 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 	}
 
 	pub fn as_abstract_class_ptr(&self) -> Option<(Cow<'_, TypeRef<'tu, 'ge>>, Class<'tu, 'ge>)> {
-		if let Some(pointee) = self.as_pointer() {
-			if let Some(class) = pointee.kind().as_class().filter(|cls| cls.is_abstract()) {
-				let class = class.into_owned();
-				return Some((pointee, class));
-			}
+		if let Some(pointee) = self.as_pointer()
+			&& let Some(class) = pointee.kind().as_class().filter(|cls| cls.is_abstract())
+		{
+			let class = class.into_owned();
+			return Some((pointee, class));
 		}
 		None
 	}
@@ -365,6 +365,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 	pub fn is_copy(&self, type_hint: &TypeRefTypeHint) -> bool {
 		match self {
 			TypeRefKind::Primitive(_, _) | TypeRefKind::Enum(_) => true,
+			TypeRefKind::Array(elem, Some(_)) if elem.kind().is_copy(elem.type_hint()) => true,
 			TypeRefKind::Class(cls) if cls.kind().is_simple() => true,
 			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().kind().is_copy(type_hint),
 			kind => kind.is_char_ptr_string(type_hint),

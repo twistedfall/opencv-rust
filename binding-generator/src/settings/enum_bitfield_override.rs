@@ -2,8 +2,8 @@ use std::collections::HashMap;
 
 use EnumBitfield::NotBitfield;
 
-use crate::enumeration::EnumBitfield;
 use crate::SupportedModule;
+use crate::enumeration::EnumBitfield;
 
 pub type EnumBitfieldOverride = HashMap<&'static str, EnumBitfield>;
 

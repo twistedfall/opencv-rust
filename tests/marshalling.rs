@@ -4,7 +4,7 @@ use std::mem::ManuallyDrop;
 
 use opencv::core::{CommandLineParser, KeyPoint, MatStep, Point2f, Ptr, Scalar, SparseMat, Tuple};
 use opencv::prelude::*;
-use opencv::{core, Result};
+use opencv::{Result, core};
 
 /// Passing simple struct as argument
 #[test]
@@ -56,7 +56,7 @@ fn callback() -> Result<()> {
 	#![cfg(ocvrs_has_module_highgui)]
 	use std::sync::{Arc, Mutex};
 
-	use opencv::{core, highgui, Error};
+	use opencv::{Error, core, highgui};
 
 	// only run when GUI is available on the system
 	if has_gui() {
@@ -145,8 +145,8 @@ fn string_return() -> Result<()> {
 fn string_out_argument() -> Result<()> {
 	#![cfg(not(ocvrs_opencv_branch_34))]
 	use matches::assert_matches;
-	use opencv::core::{FileNode, FileStorage, FileStorage_Mode};
 	use opencv::Error;
+	use opencv::core::{FileNode, FileStorage, FileStorage_Mode};
 
 	{
 		let mut st = FileStorage::new_def(
@@ -186,7 +186,11 @@ fn simple_struct_return_infallible() -> Result<()> {
 	#![cfg(ocvrs_has_module_imgproc)]
 
 	use opencv::core::{Point2f, Rect, Size2f, Vector};
-	use opencv::imgproc;
+	#[cfg(ocvrs_opencv_branch_5)]
+	use opencv::geometry::{bounding_rect, min_area_rect};
+	#[cfg(not(ocvrs_opencv_branch_5))]
+	use opencv::imgproc::{bounding_rect, min_area_rect};
+
 	/*
 	There previously was an issue that return of the small simple structs like Point2f (2 floats, 64 bits in total) was handled
 	differently by Rust (v1.57.0) and default compilers in Ubuntu 20.04 (Gcc 9.3.0 & Clang 10.0.0). That mismatch led to
@@ -200,9 +204,9 @@ fn simple_struct_return_infallible() -> Result<()> {
 		Point2f::new(15., 5.),
 		Point2f::new(5., 5.),
 	]);
-	let bound_rect = imgproc::bounding_rect(&contour)?;
+	let bound_rect = bounding_rect(&contour)?;
 	assert_eq!(Rect::new(5, 5, 11, 11), bound_rect);
-	let min_area_rect = imgproc::min_area_rect(&contour)?;
+	let min_area_rect = min_area_rect(&contour)?;
 	assert_eq!(Point2f::new(10., 10.), min_area_rect.center);
 	assert_eq!(Size2f::new(10., 10.), min_area_rect.size);
 	// different versions of OpenCV return -90 and 90
@@ -234,10 +238,10 @@ fn tuple() -> Result<()> {
 
 	#[cfg(ocvrs_has_module_stitching)]
 	{
-		#[cfg(not(ocvrs_opencv_branch_34))]
-		use opencv::core::AccessFlag::ACCESS_READ;
 		#[cfg(ocvrs_opencv_branch_34)]
 		use opencv::core::ACCESS_READ;
+		#[cfg(not(ocvrs_opencv_branch_34))]
+		use opencv::core::AccessFlag::ACCESS_READ;
 		use opencv::core::{UMat, UMatUsageFlags};
 
 		let mat = Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), Scalar::all(76.))?;

@@ -8,9 +8,8 @@ keywords = ["opencv", "vision", "cv"]
 categories = ["api-bindings", "computer-vision", "external-ffi-bindings", "multimedia"]
 license = "MIT"
 version = "0.98.2"
-# bump edition to 2024 when MSRV is 1.85
-edition = "2021"
-rust-version = "1.82.0"
+edition = "2024"
+rust-version = "1.88.0"
 authors = ["Pro <twisted.fall@gmail.com>", "Mathieu Poumeyrol <kali@zoy.org>"]
 exclude = ["/.github", "/ci", "/tools", "/.editorconfig", "/.gitattributes", "/release.toml", "/rustfmt.toml", ".gitignore"]
 
@@ -62,7 +61,6 @@ vcpkg = "0.2.9"
 
 [features]
 default = [
-	"3d",
 	"alphamat",
 	"aruco",
 	"aruco_detector",
@@ -96,6 +94,7 @@ default = [
 	"freetype",
 	"fuzzy",
 	"gapi",
+	"geometry",
 	"hdf",
 	"hfs",
 	"highgui",
@@ -112,6 +111,7 @@ default = [
 	"phase_unwrapping",
 	"photo",
 	"plot",
+	"ptcloud",
 	"quality",
 	"rapid",
 	"rgbd",
@@ -139,7 +139,6 @@ default = [
 ]
 
 # OpenCV module features
-3d = []
 alphamat = []
 aruco = []
 aruco_detector = ["aruco"]
@@ -173,6 +172,7 @@ flann = []
 freetype = []
 fuzzy = []
 gapi = []
+geometry = []
 hdf = []
 hfs = []
 highgui = []
@@ -189,6 +189,7 @@ ovis = []
 phase_unwrapping = []
 photo = []
 plot = []
+ptcloud = []
 quality = ["ml"]
 rapid = []
 rgbd = []

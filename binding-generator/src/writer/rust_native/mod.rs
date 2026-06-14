@@ -11,6 +11,7 @@ use comment::RenderComment;
 use dunce::canonicalize;
 use element::{RustElement, RustNativeGeneratedElement};
 use func::FuncExt;
+use semver::Version;
 pub use string_ext::RustStringExt;
 
 use crate::comment::strip_doxygen_comment_markers;
@@ -18,8 +19,8 @@ use crate::field::Field;
 use crate::name_pool::NamePool;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
 use crate::{
-	opencv_module_from_path, settings, Class, CompiledInterpolation, Const, Element, Enum, Func, GeneratedType, GeneratorVisitor,
-	IteratorExt, StrExt, SupportedModule, Typedef,
+	Class, CompiledInterpolation, Const, Element, Enum, Func, GeneratedType, GeneratorVisitor, IteratorExt, StrExt,
+	SupportedModule, Typedef, opencv_module_from_path, settings,
 };
 
 mod abstract_ref_wrapper;
@@ -44,11 +45,11 @@ type UniqueEntries = HashMap<String, String>;
 
 /// Writer of the source files used when building OpenCV to run on a native platform (as opposed to for example WASM)
 #[derive(Clone, Debug)]
-pub struct RustNativeBindingWriter<'s> {
+pub struct RustNativeBindingWriter {
 	debug: bool,
 	src_cpp_dir: PathBuf,
 	module: SupportedModule,
-	opencv_version: &'s str,
+	opencv_version: Version,
 	debug_path: PathBuf,
 	out_dir: PathBuf,
 	comment: String,
@@ -64,12 +65,12 @@ pub struct RustNativeBindingWriter<'s> {
 	cpp_classes: Entries,
 }
 
-impl<'s> RustNativeBindingWriter<'s> {
+impl RustNativeBindingWriter {
 	pub fn new(
 		src_cpp_dir: &Path,
 		out_dir: impl Into<PathBuf>,
 		module: SupportedModule,
-		opencv_version: &'s str,
+		opencv_version: Version,
 		debug: bool,
 	) -> Self {
 		let out_dir = out_dir.into();
@@ -115,7 +116,7 @@ impl<'s> RustNativeBindingWriter<'s> {
 	}
 }
 
-impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
+impl GeneratorVisitor<'_> for RustNativeBindingWriter {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		match self.module {
 			// tracking_legacy.hpp includes header from the video module, but we need those definitions in the tracking module
@@ -132,7 +133,7 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 		self.emit_debug_log(&cnst);
 		self.consts.push((
 			cnst.rust_name(NameStyle::decl()).into_owned(),
-			cnst.gen_rust(self.opencv_version),
+			cnst.gen_rust(&self.opencv_version),
 		));
 	}
 
@@ -140,7 +141,7 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 		self.emit_debug_log(&enm);
 		self.enums.push((
 			enm.rust_name(NameStyle::decl()).into_owned(),
-			enm.gen_rust(self.opencv_version),
+			enm.gen_rust(&self.opencv_version),
 		));
 	}
 
@@ -148,7 +149,7 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 		self.emit_debug_log(&func);
 		for func in func.with_companion_functions() {
 			let name = func.identifier();
-			self.rust_funcs.push((name.clone(), func.gen_rust(self.opencv_version)));
+			self.rust_funcs.push((name.clone(), func.gen_rust(&self.opencv_version)));
 			self.extern_funcs.push((name.clone(), func.gen_rust_externs()));
 			self.cpp_funcs.push((name, func.gen_cpp()));
 		}
@@ -156,12 +157,11 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 
 	fn visit_typedef(&mut self, typedef: Typedef) {
 		self.emit_debug_log(&typedef);
-		let opencv_version = self.opencv_version;
 		let cpp_refname = typedef.cpp_name(CppNameStyle::Reference);
 		if !self.rust_typedefs.contains_key(cpp_refname.as_ref()) {
 			self
 				.rust_typedefs
-				.insert(cpp_refname.into_owned(), typedef.gen_rust(opencv_version));
+				.insert(cpp_refname.into_owned(), typedef.gen_rust(&self.opencv_version));
 		}
 	}
 
@@ -176,7 +176,7 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 				.push(class.rust_trait_name(NameStyle::decl(), Constness::Mut).into_owned());
 		}
 		let name = class.cpp_name(CppNameStyle::Reference).into_owned();
-		self.rust_classes.push((name.clone(), class.gen_rust(self.opencv_version)));
+		self.rust_classes.push((name.clone(), class.gen_rust(&self.opencv_version)));
 		self.extern_classes.push((name.clone(), class.gen_rust_externs()));
 		self.cpp_classes.push((name, class.gen_cpp()));
 	}
@@ -194,10 +194,10 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 			let file = OpenOptions::new().create_new(true).write(true).open(&path);
 			match file {
 				Ok(mut file) => {
-					let gen = generator();
-					if !gen.is_empty() {
+					let gener = generator();
+					if !gener.is_empty() {
 						file
-							.write_all(gen.as_bytes())
+							.write_all(gener.as_bytes())
 							.unwrap_or_else(|e| panic!("Can't write to {typ} file: {e}"));
 					} else {
 						drop(file);
@@ -210,7 +210,7 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 			}
 		}
 
-		write_generated_type(&self.out_dir, "rs", &safe_id, || typ.gen_rust(self.opencv_version));
+		write_generated_type(&self.out_dir, "rs", &safe_id, || typ.gen_rust(&self.opencv_version));
 		write_generated_type(&self.out_dir, "externs.rs", &safe_id, || typ.gen_rust_externs());
 		write_generated_type(&self.out_dir, "cpp", &safe_id, || typ.gen_cpp());
 	}
@@ -232,7 +232,7 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 			format!("pub use super::{{{}}};", self.prelude_traits.join(", "))
 		};
 		let prelude = RUST_PRELUDE.interpolate(&HashMap::from([("pub_use_traits", pub_use_traits)]));
-		let comment = RenderComment::new(self.comment, self.opencv_version);
+		let comment = RenderComment::new(self.comment, &self.opencv_version);
 		let comment = comment.render_with_comment_marker("//!");
 		let module_opencv_name = self.module.opencv_name();
 		let rust_path = self.out_dir.join(format!("{module_opencv_name}.rs"));

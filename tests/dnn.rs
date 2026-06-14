@@ -4,7 +4,7 @@ use matches::assert_matches;
 use opencv::core::Vector;
 use opencv::dnn::{DictValue, LayerParams, Net};
 use opencv::prelude::*;
-use opencv::{core, Error, Result};
+use opencv::{Error, Result, core};
 
 /// Specialization, passing Vector of boxed objects
 #[test]

@@ -6,7 +6,7 @@ use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{_InputArray, _InputOutputArray, _OutputArray, ToInputArray, ToInputOutputArray, ToOutputArray};
 use crate::manual::core::sized::*;
 use crate::traits::{Boxed, OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
-use crate::{core, extern_receive, extern_send, sys, Error, Result};
+use crate::{Error, Result, core, extern_receive, extern_send, sys};
 
 fn index_check(idx: (usize, usize), rows: usize, cols: usize) -> Result<()> {
 	if idx.0 >= rows {

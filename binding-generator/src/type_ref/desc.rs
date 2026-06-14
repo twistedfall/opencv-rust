@@ -12,7 +12,7 @@ use crate::tuple::Tuple;
 use crate::type_ref::{Constness, TemplateArg, TypeRef, TypeRefKind, TypeRefTypeHint};
 use crate::typedef::{NewTypedefResult, TypedefDesc};
 use crate::vector::{Vector, VectorDesc};
-use crate::{settings, Class, CppNameStyle, Element, Enum, GeneratorEnv, StringExt, Typedef};
+use crate::{Class, CppNameStyle, Element, Enum, GeneratorEnv, StringExt, Typedef, settings};
 
 #[derive(Clone, Debug)]
 pub struct TypeRefDesc<'tu, 'ge> {
@@ -447,10 +447,10 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					if matches!(out, TypeRefKind::Class(..)) {
 						let mut elaborate_name = self.get_display_name();
 						elaborate_name.replace_in_place("const ", "");
-						if elaborate_name.starts_with("std::") {
-							if let Some(decl) = self.get_declaration().map(|decl| decl.get_definition().unwrap_or(decl)) {
-								return TypeRefKind::Class(Class::new_ext(decl, elaborate_name, gen_env));
-							}
+						if elaborate_name.starts_with("std::")
+							&& let Some(decl) = self.get_declaration().map(|decl| decl.get_definition().unwrap_or(decl))
+						{
+							return TypeRefKind::Class(Class::new_ext(decl, elaborate_name, gen_env));
 						}
 					}
 					out
@@ -534,10 +534,10 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 
 				TypeKind::ConstantArray | TypeKind::IncompleteArray => {
 					let mut size = self.get_size();
-					if size.is_none() {
-						if let TypeRefTypeHint::AddArrayLength(force_size) = type_hint {
-							size = Some(force_size);
-						}
+					if size.is_none()
+						&& let TypeRefTypeHint::AddArrayLength(force_size) = type_hint
+					{
+						size = Some(force_size);
 					}
 					TypeRefKind::Array(
 						TypeRef::new_ext(

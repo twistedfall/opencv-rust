@@ -1,8 +1,8 @@
 use std::ptr;
 
-use opencv::core::{Mat, MatSize, Vector};
-use opencv::prelude::*;
 use opencv::Result;
+use opencv::core::{Mat, Vector};
+use opencv::prelude::*;
 
 /// test that null pointers are handled and not passed to slice::from_raw_parts
 #[test]
@@ -33,8 +33,9 @@ fn from_nullptr_slice() -> Result<()> {
 		assert!(d.is_empty());
 	}
 
+	#[cfg(not(ocvrs_opencv_branch_5))]
 	{
-		let s = unsafe { MatSize::new(ptr::null_mut()) };
+		let s = unsafe { opencv::core::MatSize::new(ptr::null_mut()) };
 		let s = &*s;
 		assert!(s.is_empty());
 	}

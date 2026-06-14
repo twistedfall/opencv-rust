@@ -1,8 +1,8 @@
 #![cfg(ocvrs_has_module_features2d)]
 
-use opencv::core::{no_array, Size, Vector, NORM_HAMMING};
+use opencv::core::{NORM_HAMMING, Size, Vector, no_array};
 use opencv::prelude::*;
-use opencv::{features2d, imgcodecs, Result};
+use opencv::{Result, features2d, imgcodecs};
 
 static BLOX: &[u8] = include_bytes!("../tests/blox.jpg");
 

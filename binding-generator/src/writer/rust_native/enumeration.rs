@@ -2,8 +2,10 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 use std::sync::LazyLock;
 
-use super::element::{DefaultRustNativeElement, RustElement};
+use semver::Version;
+
 use super::RustNativeGeneratedElement;
+use super::element::{DefaultRustNativeElement, RustElement};
 use crate::constant::{ConstDesc, Value};
 use crate::debug::NameDebug;
 use crate::enumeration::EnumBitfield;
@@ -26,7 +28,7 @@ impl RustNativeGeneratedElement for Enum<'_, '_> {
 		format!("{}-{}", self.rust_module().opencv_name(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &Version) -> String {
 		static ENUM_TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("tpl/enum/enum.tpl.rs").compile_interpolation());
 		static ENUM_BITFIELD_TPL: LazyLock<CompiledInterpolation> =

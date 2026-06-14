@@ -36,10 +36,10 @@ impl PathExt for Path {
 		self.file_name().map(|filename| {
 			let mut out = filename;
 			// strip lib extension from the filename
-			if let Some(stem) = self.file_stem() {
-				if self.library_kind().is_some() {
-					out = stem;
-				}
+			if let Some(stem) = self.file_stem()
+				&& self.library_kind().is_some()
+			{
+				out = stem;
 			}
 			if let Some(mut file) = out.to_str() {
 				let orig_len = file.len();

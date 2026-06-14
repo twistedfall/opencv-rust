@@ -4,13 +4,14 @@ use std::collections::HashMap;
 use std::sync::LazyLock;
 
 use clang::EntityKind;
+use semver::Version;
 
-use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
+use super::element::{DefaultRustNativeElement, RustElement};
 use crate::constant::{Value, ValueKind};
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
-use crate::{settings, CompiledInterpolation, Const, StrExt, SupportedModule};
+use crate::{CompiledInterpolation, Const, StrExt, SupportedModule, settings};
 
 impl RustElement for Const<'_> {
 	fn rust_module(&self) -> SupportedModule {
@@ -48,7 +49,7 @@ impl RustNativeGeneratedElement for Const<'_> {
 		format!("{}-{}", self.rust_module().opencv_name(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &Version) -> String {
 		static RUST_TPL: LazyLock<CompiledInterpolation> =
 			LazyLock::new(|| include_str!("tpl/const/rust.tpl.rs").compile_interpolation());
 
@@ -108,13 +109,10 @@ impl ValueExt for Value {
 		match self.kind {
 			ValueKind::Float | ValueKind::Double if !self.value.contains('.') => Owned(format!("{}.", self.value)),
 			ValueKind::Integer => {
-				if let Some(no_prefix) = self.value.strip_prefix("0x") {
-					// todo: use let chain when MSRV is 1.88
-					if i32::from_str_radix(no_prefix, 16).is_err() {
-						Owned(format!("{}u32 as i32", self.value))
-					} else {
-						Borrowed(&self.value)
-					}
+				if let Some(no_prefix) = self.value.strip_prefix("0x")
+					&& i32::from_str_radix(no_prefix, 16).is_err()
+				{
+					Owned(format!("{}u32 as i32", self.value))
 				} else {
 					Borrowed(&self.value)
 				}

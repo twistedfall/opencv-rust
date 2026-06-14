@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use opencv::core::{Rect, Size, Vector};
 use opencv::prelude::*;
-use opencv::{core, highgui, imgproc, videoio, Result};
+use opencv::{Result, core, highgui, imgproc, videoio};
 
 opencv::opencv_branch_5! {
 	use opencv::xobjdetect::{CascadeClassifier, CASCADE_SCALE_IMAGE};

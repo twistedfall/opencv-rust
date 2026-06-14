@@ -7,8 +7,8 @@ use std::process::{Command, Output};
 use semver::Version;
 use shlex::Shlex;
 
-use super::library::{LinkLib, LinkSearch, Linkage};
 use super::Result;
+use super::library::{LinkLib, LinkSearch, Linkage};
 
 pub struct ProbeResult {
 	pub version: Option<Version>,
@@ -164,13 +164,13 @@ impl<'r> CmakeProbe<'r> {
 			} else if !arg.starts_with('-') {
 				let path = Path::new(arg);
 				if let Some(link_lib) = LinkLib::try_from_library_path(path) {
-					if let Some(parent) = path.parent().map(|p| p.to_owned()) {
+					if let Some(parent) = path.parent().map(|p| p.to_owned())
 						// only care about non-empty parent paths
-						if parent.components().next().is_some() {
-							let search_path = LinkSearch(link_lib.0, parent);
-							if !link_paths.contains(&search_path) {
-								link_paths.push(search_path);
-							}
+						&& parent.components().next().is_some()
+					{
+						let search_path = LinkSearch(link_lib.0, parent);
+						if !link_paths.contains(&search_path) {
+							link_paths.push(search_path);
 						}
 					}
 					link_libs.push(link_lib);
@@ -182,6 +182,7 @@ impl<'r> CmakeProbe<'r> {
 	}
 
 	fn skip_ignorable_arg(args: &mut Shlex, arg: &str) -> bool {
+		#[expect(clippy::collapsible_if)]
 		if let Some(output_file) = arg.strip_prefix("-o") {
 			if output_file.trim().is_empty() {
 				args.next().expect("No output file after -o");

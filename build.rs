@@ -9,9 +9,9 @@ use binding_generator::handle_running_binding_generator;
 use docs::handle_running_in_docsrs;
 use enums::{InherentFeature, SUPPORTED_INHERENT_FEATURES, SUPPORTED_MODULES};
 use generator::BindingGenerator;
-use header::IncludePath;
 use library::Library;
 use opencv_binding_generator::SupportedModule;
+use opencv_binding_generator::version::OpenCVHeaderVersionExt;
 use semver::{Version, VersionReq};
 
 #[path = "build/binding-generator.rs"]
@@ -101,7 +101,7 @@ fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Re
 	})
 }
 
-fn make_modules_and_alises(
+fn make_modules_and_aliases(
 	opencv_dir: &Path,
 	opencv_version: &Version,
 ) -> Result<(Vec<SupportedModule>, HashMap<SupportedModule, SupportedModule>)> {
@@ -118,21 +118,30 @@ fn make_modules_and_alises(
 		.filter_map(|entry| {
 			let file_stem = entry.file_stem().and_then(OsStr::to_str);
 			let module = file_stem.and_then(SupportedModule::try_from_opencv_name);
-			if let Some(file_stem) = file_stem {
-				if module.is_none() {
-					eprintln!("=== Skipping unsupported module: {file_stem}")
-				}
+			if let Some(file_stem) = file_stem
+				&& module.is_none()
+			{
+				eprintln!("=== Skipping unsupported module: {file_stem}")
 			}
 			module.filter(|m| enable_modules.contains(m))
 		})
 		.collect::<Vec<_>>();
 
-	let aliases = if opencv_version.major == 5
-		&& modules.iter().any(|x| matches!(x, SupportedModule::Features2d))
-		&& modules.iter().any(|x| matches!(x, SupportedModule::Features))
-	{
-		// In OpenCV 5 `features2d` is a compatibility header that just includes `features.hpp`, and they don't work together
-		HashMap::from([(SupportedModule::Features2d, SupportedModule::Features)])
+	let aliases = if opencv_version.major == 5 {
+		let mut opencv_5_aliases = HashMap::new();
+		if modules.iter().any(|x| matches!(x, SupportedModule::Features2d))
+			&& modules.iter().any(|x| matches!(x, SupportedModule::Features))
+		{
+			// In OpenCV 5 `features2d` is a compatibility header that just includes `features.hpp`, and they don't work together
+			opencv_5_aliases.insert(SupportedModule::Features2d, SupportedModule::Features);
+		} else if modules.iter().any(|x| matches!(x, SupportedModule::Calib3d))
+			&& modules.iter().any(|x| matches!(x, SupportedModule::Calib))
+		{
+			// Same for `calib3d`
+			opencv_5_aliases.insert(SupportedModule::Calib3d, SupportedModule::Calib);
+		}
+
+		opencv_5_aliases
 	} else {
 		HashMap::new()
 	};
@@ -338,10 +347,10 @@ fn main() -> Result<()> {
 	let opencv_header_dir = opencv
 		.include_paths
 		.iter()
-		.find(|p| p.get_version_header().is_some())
+		.find(|p| p.opencv_find_version_header().is_some())
 		.expect("Discovered OpenCV include paths do not contain valid OpenCV headers");
 
-	if let Some(header_version) = opencv_header_dir.find_version() {
+	if let Some(header_version) = opencv_header_dir.opencv_find_version() {
 		if header_version != opencv.version {
 			panic!(
 				"OpenCV version from the headers: {header_version} (at {}) must match version of the OpenCV library: {} (include paths: {:?})",
@@ -364,13 +373,13 @@ fn main() -> Result<()> {
 	emit_inherent_features(&opencv);
 
 	let opencv_module_header_dir = opencv_header_dir
-		.get_module_header_dir()
+		.opencv_find_module_header_dir()
 		.expect("Can't find OpenCV module header dir");
 	eprintln!(
 		"=== Detected OpenCV module header dir at: {}",
 		opencv_module_header_dir.display()
 	);
-	let (modules, module_aliases) = make_modules_and_alises(&opencv_module_header_dir, &opencv.version)?;
+	let (modules, module_aliases) = make_modules_and_aliases(&opencv_module_header_dir, &opencv.version)?;
 	emit_modules(&modules);
 
 	setup_rerun()?;

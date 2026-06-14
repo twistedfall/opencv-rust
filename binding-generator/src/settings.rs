@@ -1,12 +1,6 @@
 // todo add doccomments
 
 macro_rules! pred {
-	($args: expr $(,)?) => {
-		[$crate::func::Pred::ArgNames(&$args)].as_slice()
-	};
-	($args: expr, $types: expr $(,)?) => {
-		[$crate::func::Pred::ArgNames(&$args), $crate::func::Pred::ArgTypes(&$types)].as_slice()
-	};
 	(const, $args: expr $(,)?) => {
 		[
 			$crate::func::Pred::Constness($crate::type_ref::Constness::Const),
@@ -37,6 +31,12 @@ macro_rules! pred {
 		]
 		.as_slice()
 	};
+	($args: expr $(,)?) => {
+		[$crate::func::Pred::ArgNames(&$args)].as_slice()
+	};
+	($args: expr, $types: expr $(,)?) => {
+		[$crate::func::Pred::ArgNames(&$args), $crate::func::Pred::ArgTypes(&$types)].as_slice()
+	};
 }
 
 use std::collections::{BTreeSet, HashMap, HashSet};
@@ -44,33 +44,34 @@ use std::sync::LazyLock;
 
 pub use argument_names::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
 pub use argument_override::{
-	arg_override_factory, property_override_factory, return_override_factory, ArgOverride, PropertyOverride, ReturnOverride,
-	ARG_OVERRIDE_SELF,
+	ARG_OVERRIDE_SELF, ArgOverride, PropertyOverride, ReturnOverride, arg_override_factory, property_override_factory,
+	return_override_factory,
 };
-pub use class_tweaks::{class_tweaks_factory, ClassTweak, ClassTweaks};
+pub use class_tweaks::{ClassTweak, ClassTweaks, class_tweaks_factory};
 pub use const_tweak::CONST_TYPE_OVERRIDE;
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
-pub use enum_bitfield_override::{enum_bitfield_override_factory, EnumBitfieldOverride};
-pub use force_infallible::{force_infallible_factory, ForceInfallible};
-pub use func_cfg_attr::{func_cfg_attr_factory, FuncCfgAttr, CFG_ATTR_NOT_ON_WINDOWS, CFG_ATTR_ONLY_OPENCV_5};
-pub use func_companion_tweak::{func_companion_tweak_factory, CompanionTweak, FuncCompanionTweak};
-pub use func_exclude::{func_exclude_factory, FuncExclude};
-pub use func_inject::{func_inject_factory, FuncFactory, FuncInject};
-pub use func_rename::{func_rename_factory, FuncRename};
-pub use func_replace::{func_replace_factory, FuncInheritFactory, FuncReplace};
-pub use func_specialize::{func_specialize_factory, FuncSpec, FuncSpecialize};
-pub use func_unsafe::{func_unsafe_factory, FuncUnsafe};
-pub use generator_module_tweaks::{generator_module_tweaks_factory, ModuleTweak};
+pub use enum_bitfield_override::{EnumBitfieldOverride, enum_bitfield_override_factory};
+pub use force_infallible::{ForceInfallible, force_infallible_factory};
+pub use func_cfg_attr::{CFG_ATTR_NOT_ON_WINDOWS, CFG_ATTR_ONLY_OPENCV_5, FuncCfgAttr, func_cfg_attr_factory};
+pub use func_companion_tweak::{CompanionTweak, FuncCompanionTweak, func_companion_tweak_factory};
+pub use func_exclude::{FuncExclude, func_exclude_factory};
+pub use func_inject::{FuncFactory, FuncInject, func_inject_factory};
+pub use func_rename::{FuncRename, func_rename_factory};
+pub use func_replace::{FuncInheritFactory, FuncReplace, func_replace_factory};
+pub use func_specialize::{FuncSpec, FuncSpecialize, func_specialize_factory};
+pub use func_unsafe::{FuncUnsafe, func_unsafe_factory};
+pub use generator_module_tweaks::{ModuleTweak, generator_module_tweaks_factory};
 pub use implemented::{
 	IMPLEMENTED_CONST_GENERICS, IMPLEMENTED_FUNCTION_LIKE_MACROS, IMPLEMENTED_GENERICS, IMPLEMENTED_MANUAL_DEBUG,
 	IMPLEMENTED_SYSTEM_CLASSES,
 };
-pub use property_tweaks::{property_tweaks_factory, PropertyReadWrite, PropertyTweak, PropertyTweaks};
+pub use property_tweaks::{PropertyReadWrite, PropertyTweak, PropertyTweaks, property_tweaks_factory};
+use semver::Version;
 
+use crate::SupportedModule;
 use crate::func::{FuncMatcher, UsageTracker};
 use crate::type_ref::TypeRef;
-use crate::SupportedModule;
 
 mod argument_names;
 mod argument_override;
@@ -137,7 +138,7 @@ impl Settings {
 		}
 	}
 
-	pub fn for_module(module: SupportedModule) -> Self {
+	pub fn for_module(module: SupportedModule, opencv_version: &Version) -> Self {
 		Self {
 			arg_override: arg_override_factory(module),
 			return_override: return_override_factory(module),
@@ -154,7 +155,7 @@ impl Settings {
 			generator_module_tweaks: generator_module_tweaks_factory(module),
 			property_override: property_override_factory(module),
 			property_tweaks: property_tweaks_factory(module),
-			class_tweak: class_tweaks_factory(module),
+			class_tweak: class_tweaks_factory(module, opencv_version),
 		}
 	}
 

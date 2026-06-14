@@ -2,10 +2,10 @@ use std::ffi::OsString;
 use std::iter::Peekable;
 use std::path::{Path, PathBuf};
 
+use opencv_binding_generator::version::OpenCVHeaderVersionExt;
 use opencv_binding_generator::writer::RustNativeBindingWriter;
 use opencv_binding_generator::{Generator, SupportedModule};
 
-use super::header::IncludePath;
 use super::{GenerateFullBindings, Result};
 
 /// Because clang can't be used from multiple threads we run the binding generator helper for each
@@ -32,9 +32,8 @@ pub fn run(mut args: impl Iterator<Item = OsString>) -> Result<()> {
 		.and_then(SupportedModule::try_from_opencv_name)
 		.ok_or_else(|| format!("Not a valid module name: {module:?}"))?;
 	let version = opencv_header_dir
-		.find_version()
-		.ok_or("Can't find the version in the headers")?
-		.to_string();
+		.opencv_find_version()
+		.ok_or("Can't find the version in the headers")?;
 	let arg_additional_include_dirs = args.next();
 	let additional_include_dirs = arg_additional_include_dirs
 		.as_ref()
@@ -45,7 +44,7 @@ pub fn run(mut args: impl Iterator<Item = OsString>) -> Result<()> {
 		.filter(|s| !s.is_empty())
 		.map(Path::new)
 		.collect::<Vec<_>>();
-	let bindings_writer = RustNativeBindingWriter::new(&src_cpp_dir, &out_dir, module, &version, false);
-	Generator::new(&opencv_header_dir, &additional_include_dirs, &src_cpp_dir).generate(module, true, bindings_writer);
+	let bindings_writer = RustNativeBindingWriter::new(&src_cpp_dir, &out_dir, module, version.clone(), false);
+	Generator::new(&opencv_header_dir, &additional_include_dirs, &src_cpp_dir).generate(module, &version, true, bindings_writer);
 	Ok(())
 }

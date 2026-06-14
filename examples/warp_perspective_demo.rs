@@ -7,7 +7,7 @@ use std::sync::{Arc, Mutex};
 
 use opencv::core::{Point2f, Size, Vector};
 use opencv::prelude::*;
-use opencv::{core, highgui, imgcodecs, imgproc, not_opencv_branch_34, opencv_branch_34};
+use opencv::{core, highgui, imgcodecs, imgproc, not_opencv_branch_34, opencv_branch_4, opencv_branch_34};
 
 not_opencv_branch_34! {
 	use opencv::imgproc::LINE_8;
@@ -186,7 +186,13 @@ fn main() -> Result<(), Box<dyn Error>> {
 					{
 						imgproc::get_perspective_transform(&roi_corners_mat, &dst_corners_mat)?
 					} else {
-						imgproc::get_perspective_transform_def(&roi_corners_mat, &dst_corners_mat)?
+						opencv_branch_4! {
+							{
+								imgproc::get_perspective_transform_def(&roi_corners_mat, &dst_corners_mat)?
+							} else {
+								opencv::geometry::get_perspective_transform_def(&roi_corners_mat, &dst_corners_mat)?
+							}
+						}
 					}
 				};
 				let mut warped_image = Mat::default();

@@ -6,7 +6,7 @@ use std::path::{Component, Path};
 use clang::{Accessibility, Entity, EntityKind};
 
 use crate::type_ref::CppNameStyle;
-use crate::{settings, IteratorExt, StrExt, StringExt, SupportedModule};
+use crate::{IteratorExt, StrExt, StringExt, SupportedModule, settings};
 
 pub const UNNAMED: &str = "unnamed";
 
@@ -226,10 +226,10 @@ pub fn is_opencv_path(path: &Path) -> bool {
 	path
 		.components()
 		.rfind(|c| {
-			if let Component::Normal(c) = c {
-				if *c == "opencv2" || *c == "Headers" {
-					return true;
-				}
+			if let Component::Normal(c) = c
+				&& (*c == "opencv2" || *c == "Headers")
+			{
+				return true;
 			}
 			false
 		})
@@ -252,11 +252,11 @@ fn opencv_module_component(path: &Path) -> Option<&OsStr> {
 		.peekable();
 	let mut module = None;
 	while let Some(cur) = module_comp.next() {
-		if let Some(&parent) = module_comp.peek() {
-			if parent == "opencv2" || parent == "src_cpp" || parent == "Headers" {
-				module = Some(cur);
-				break;
-			}
+		if let Some(&parent) = module_comp.peek()
+			&& (parent == "opencv2" || parent == "src_cpp" || parent == "Headers")
+		{
+			module = Some(cur);
+			break;
 		}
 	}
 	module

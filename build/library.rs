@@ -5,12 +5,13 @@ use std::path::{Path, PathBuf};
 use std::{env, fmt, iter};
 
 use dunce::canonicalize;
+use opencv_binding_generator::version::OpenCVHeaderVersionExt;
 use semver::Version;
 
 use super::cmake_probe::CmakeProbe;
 use super::header::IncludePath;
 use super::path_ext::{LibraryKind, PathExt};
-use super::{header, Result, MANIFEST_DIR, OUT_DIR, TARGET_OS_LINUX, TARGET_VENDOR_APPLE};
+use super::{MANIFEST_DIR, OUT_DIR, Result, TARGET_OS_LINUX, TARGET_VENDOR_APPLE, header};
 
 struct PackageName;
 
@@ -197,7 +198,7 @@ impl Library {
 	}
 
 	fn version_from_include_paths(include_paths: impl IntoIterator<Item = impl AsRef<Path>>) -> Option<Version> {
-		include_paths.into_iter().find_map(|x| x.as_ref().find_version())
+		include_paths.into_iter().find_map(|x| x.as_ref().opencv_find_version())
 	}
 
 	fn inherent_features_from_include_paths(include_paths: impl IntoIterator<Item = impl AsRef<Path>>) -> Option<Vec<String>> {
@@ -269,8 +270,10 @@ impl Library {
 		link_paths: Option<EnvList>,
 		link_libs: Option<EnvList>,
 	) -> Result<Self> {
-		// todo: MSRV 1.88 use let chains
-		if let (Some(include_paths), Some(link_paths), Some(link_libs)) = (include_paths, link_paths, link_libs) {
+		if let Some(include_paths) = include_paths
+			&& let Some(link_paths) = link_paths
+			&& let Some(link_libs) = link_libs
+		{
 			eprintln!("=== Configuring OpenCV library from the environment:");
 			eprintln!("===   include_paths: {include_paths}");
 			eprintln!("===   link_paths: {link_paths}");
@@ -559,12 +562,7 @@ impl Library {
 			let (probe_idx, over_idx) = probes
 				.iter()
 				.position(|probe| probe == &higher_prio)
-				.and_then(|probe_idx| {
-					probes
-						.iter()
-						.position(|probe| probe == &lower_prio)
-						.map(|over_idx| (probe_idx, over_idx))
-				})
+				.zip(probes.iter().position(|probe| probe == &lower_prio))
 				.expect("Can't find probe to swap");
 			if probe_idx > over_idx {
 				for i in (over_idx..probe_idx).rev() {

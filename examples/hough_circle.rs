@@ -1,15 +1,15 @@
 //! Port of https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/ImgTrans/HoughCircle_Demo.cpp
 
 use std::env::args;
-use std::sync::atomic::{AtomicI32, Ordering};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicI32, Ordering};
 
-use opencv::core::{find_file, Point, Point2i, Size2i, Vec3f, Vector, BORDER_DEFAULT};
-use opencv::highgui::{create_trackbar, imshow, named_window, wait_key, WINDOW_AUTOSIZE};
-use opencv::imgcodecs::{imread, IMREAD_COLOR};
-use opencv::imgproc::{circle, cvt_color_def, gaussian_blur, hough_circles, COLOR_BGR2GRAY, HOUGH_GRADIENT};
+use opencv::core::{BORDER_DEFAULT, Point, Point2i, Size2i, Vec3f, Vector, find_file};
+use opencv::highgui::{WINDOW_AUTOSIZE, create_trackbar, imshow, named_window, wait_key};
+use opencv::imgcodecs::{IMREAD_COLOR, imread};
+use opencv::imgproc::{COLOR_BGR2GRAY, HOUGH_GRADIENT, circle, cvt_color_def, gaussian_blur, hough_circles};
 use opencv::prelude::*;
-use opencv::{opencv_has_inherent_feature_algorithm_hint, Result};
+use opencv::{Result, opencv_has_inherent_feature_algorithm_hint};
 
 opencv::not_opencv_branch_34! {
 	use opencv::imgproc::LINE_8;

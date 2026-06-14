@@ -1,7 +1,7 @@
 #![cfg(ocvrs_has_module_imgproc)]
 
 use matches::assert_matches;
-use opencv::{core, Error, Result};
+use opencv::{Error, Result, core};
 
 #[test]
 fn fourcc() -> Result<()> {

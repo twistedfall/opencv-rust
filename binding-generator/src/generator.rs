@@ -9,6 +9,7 @@ use std::path::{Path, PathBuf};
 use clang::diagnostic::{Diagnostic, Severity};
 use clang::{Clang, Entity, EntityKind, Index};
 use dunce::canonicalize;
+use semver::Version;
 use shlex::Shlex;
 
 use crate::name_pool::NamePool;
@@ -16,8 +17,8 @@ use crate::type_ref::{CppNameStyle, FishStyle, TypeRef, TypeRefKind};
 use crate::typedef::NewTypedefResult;
 use crate::writer::rust_native::element::RustElement;
 use crate::{
-	get_definition_text, line_reader, settings, AbstractRefWrapper, Class, ClassKindOverride, Const, Element, EntityExt,
-	EntityWalkerExt, EntityWalkerVisitor, Enum, Func, GeneratorEnv, SmartPtr, SupportedModule, Tuple, Typedef, Vector,
+	AbstractRefWrapper, Class, ClassKindOverride, Const, Element, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Enum, Func,
+	GeneratorEnv, SmartPtr, SupportedModule, Tuple, Typedef, Vector, get_definition_text, line_reader, settings,
 };
 
 #[derive(Debug)]
@@ -481,9 +482,15 @@ impl Generator {
 	}
 
 	/// Runs the full binding generation process using the supplied `visitor`
-	pub fn generate(&self, module: SupportedModule, panic_on_error: bool, visitor: impl for<'tu> GeneratorVisitor<'tu>) {
+	pub fn generate(
+		&self,
+		module: SupportedModule,
+		opencv_version: &Version,
+		panic_on_error: bool,
+		visitor: impl for<'tu> GeneratorVisitor<'tu>,
+	) {
 		self.pre_process(module, panic_on_error, |root_entity| {
-			let gen_env = GeneratorEnv::global(module, root_entity);
+			let gen_env = GeneratorEnv::global(module, root_entity, opencv_version);
 			let opencv_walker = OpenCvWalker::new(module, &self.opencv_module_header_dir, visitor, gen_env);
 			root_entity.walk_opencv_entities(opencv_walker);
 		});

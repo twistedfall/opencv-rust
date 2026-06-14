@@ -7,7 +7,7 @@ use objdetect::FaceDetectorYN;
 use opencv::core::{CommandLineParser, Point, Point2f, Rect2f, Size, StsBadArg, StsError, TickMeter};
 use opencv::objdetect::{FaceRecognizerSF, FaceRecognizerSF_DisType};
 use opencv::prelude::*;
-use opencv::{core, highgui, imgcodecs, imgproc, not_opencv_branch_34, objdetect, opencv_branch_34, videoio, Error, Result};
+use opencv::{Error, Result, core, highgui, imgcodecs, imgproc, not_opencv_branch_34, objdetect, opencv_branch_34, videoio};
 
 not_opencv_branch_34! {
 	use opencv::imgproc::{LINE_8, FONT_HERSHEY_SIMPLEX};
@@ -130,7 +130,8 @@ fn main() -> Result<()> {
 			"{score_threshold   | 0.9        | Filter out faces of score < score_threshold}",
 			"{nms_threshold     | 0.3        | Suppress bounding boxes of iou >= nms_threshold}",
 			"{top_k             | 5000       | Keep top_k bounding boxes before NMS}",
-			"{save s            | false      | Set true to save results. This flag is invalid when using camera}"),
+			"{save s            | false      | Set true to save results. This flag is invalid when using camera}"
+		),
 	)?;
 	if parser.has("help")? {
 		parser.print_message()?;
