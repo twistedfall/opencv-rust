@@ -143,7 +143,6 @@ fn string_return() -> Result<()> {
 /// Return String via a mutable argument
 #[test]
 fn string_out_argument() -> Result<()> {
-	#![cfg(not(ocvrs_opencv_branch_34))]
 	use matches::assert_matches;
 	use opencv::Error;
 	use opencv::core::{FileNode, FileStorage, FileStorage_Mode};
@@ -216,7 +215,7 @@ fn simple_struct_return_infallible() -> Result<()> {
 
 #[test]
 fn tuple() -> Result<()> {
-	#[cfg(all(ocvrs_has_module_imgproc, not(ocvrs_opencv_branch_34)))]
+	#[cfg(ocvrs_has_module_imgproc)]
 	{
 		let src_tuple = (10, 20.);
 		let tuple = Tuple::<(i32, f32)>::new(src_tuple);
@@ -238,19 +237,15 @@ fn tuple() -> Result<()> {
 
 	#[cfg(ocvrs_has_module_stitching)]
 	{
-		#[cfg(ocvrs_opencv_branch_34)]
-		use opencv::core::ACCESS_READ;
-		#[cfg(not(ocvrs_opencv_branch_34))]
-		use opencv::core::AccessFlag::ACCESS_READ;
-		use opencv::core::{UMat, UMatUsageFlags};
+		use opencv::core::{AccessFlag, UMat, UMatUsageFlags};
 
 		let mat = Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), Scalar::all(76.))?;
-		let src_tuple = (mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?, 8);
+		let src_tuple = (mat.get_umat(AccessFlag::ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?, 8);
 		let tuple = Tuple::<(UMat, u8)>::new(src_tuple);
 		assert_eq!(10, tuple.get_0().rows());
 		assert_eq!(8, tuple.get_1());
 		let (res_umat, res_val) = tuple.into_tuple();
-		let res_mat = res_umat.get_mat(ACCESS_READ)?;
+		let res_mat = res_umat.get_mat(AccessFlag::ACCESS_READ)?;
 		assert_eq!(10, res_mat.rows());
 		assert_eq!(20, res_mat.cols());
 		assert_eq!(76., *res_mat.at_2d::<f64>(5, 5)?);

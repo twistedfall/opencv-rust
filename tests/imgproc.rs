@@ -69,15 +69,10 @@ fn line_iterator() -> Result<()> {
 
 #[test]
 fn call_def() -> Result<()> {
-	#[cfg(ocvrs_opencv_branch_34)]
-	use opencv::core::LINE_8;
-	#[cfg(not(ocvrs_opencv_branch_34))]
-	use opencv::imgproc::LINE_8;
-
 	let rect = Rect::new(0, 0, 3, 3);
 
 	let mut mat_full = Mat::new_size_with_default(rect.size(), Vec3b::opencv_type(), Vec3b::all(0).into())?;
-	imgproc::rectangle(&mut mat_full, rect, (255, 0, 0).into(), 1, LINE_8, 0)?;
+	imgproc::rectangle(&mut mat_full, rect, (255, 0, 0).into(), 1, imgproc::LINE_8, 0)?;
 
 	let mut mat_expect = Mat::new_rows_cols_with_default(3, 3, Vec3b::opencv_type(), Vec3b::all(0).into())?;
 	mat_expect.data_typed_mut::<Vec3b>()?.copy_from_slice(&[

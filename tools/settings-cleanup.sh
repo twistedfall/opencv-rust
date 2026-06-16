@@ -9,4 +9,4 @@ script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 cd "$script_dir/.."
 
 export RUST_BACKTRACE=full
-cargo run --release -p opencv-binding-generator --bin settings-cleanup -- src_cpp "$OPENCV_34_HEADER_DIR" "$OPENCV_4_HEADER_DIR"
+cargo run --release -p opencv-binding-generator --bin settings-cleanup -- src_cpp "$OPENCV_4_HEADER_DIR" "$OPENCV_5_HEADER_DIR"

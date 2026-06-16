@@ -22,8 +22,12 @@
 ///     }
 /// };
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(ocvrs_opencv_branch_34)]
 #[macro_export]
+#[deprecated(note = "OpenCV 3.4 support is deprecated. Please migrate to OpenCV 4.x or 5.x.")]
 macro_rules! opencv_branch_34 {
 	($bl_pos:block else $bl_neg:block) => { $bl_pos };
 	($($tt:tt)*) => { $($tt)* }
@@ -42,8 +46,12 @@ macro_rules! opencv_branch_34 {
 ///     use opencv::core::LINE_8;
 /// }
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(ocvrs_opencv_branch_34)]
 #[macro_export]
+#[deprecated(note = "OpenCV 3.4 support is deprecated. Please migrate to OpenCV 4.x or 5.x.")]
 macro_rules! not_opencv_branch_34 {
 	($($tt:tt)*) => {  }
 }
@@ -72,8 +80,12 @@ macro_rules! not_opencv_branch_34 {
 ///     }
 /// };
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(not(ocvrs_opencv_branch_34))]
 #[macro_export]
+#[deprecated(note = "OpenCV 3.4 support is deprecated. Please migrate to OpenCV 4.x or 5.x.")]
 macro_rules! opencv_branch_34 {
 	($bl_pos:block else $bl_neg:block) => { $bl_neg };
 	($($tt:tt)*) => {  }
@@ -92,8 +104,12 @@ macro_rules! opencv_branch_34 {
 ///     use opencv::core::LINE_8;
 /// }
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg(not(ocvrs_opencv_branch_34))]
 #[macro_export]
+#[deprecated(note = "OpenCV 3.4 support is deprecated. Please migrate to OpenCV 4.x or 5.x.")]
 macro_rules! not_opencv_branch_34 {
 	($($tt:tt)*) => { $($tt)* }
 }

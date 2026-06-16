@@ -14,8 +14,8 @@ The API is usable, but unstable and not very battle-tested; use at your own risk
 
 ## Quickstart
 
-Make sure the supported OpenCV version (3.4, 4.x or 5.x) and Clang (part of LLVM, needed for automatic binding
-generation) are installed in your system.
+Make sure the supported OpenCV version (4.x or 5.x) and Clang (part of LLVM, needed for automatic binding
+generation) are installed in your system. OpenCV 3.4 is still supported but deprecated and will be removed in a future release.
 
 Update your Cargo.toml
 
@@ -166,9 +166,9 @@ as well.
 
 The following OpenCV versions are supported at the moment:
 
-* 3.4
+* 3.4 (deprecated, will be removed in a future release)
 * 4.x
-* 5.x (preliminary)
+* 5.x
 
 ### Minimum `rustc` version (MSRV)
 
@@ -281,16 +281,21 @@ Overloaded methods have been mostly manually given different names or automatica
 
 ## Older OpenCV branches support
 
+### OpenCV 3.4
+
+The last version with the confirmed OpenCV 3.4 support is `0.98`, after that this branch of OpenCV is no longer
+tested and supported. It will be removed in a future release.
+
+### OpenCV 3.2
+
+The last version with confirmed OpenCV 3.2 support is `0.75`, after that this branch of OpenCV is no longer
+tested and supported. Since version 0.94.0 the support of OpenCV 3.2 is removed from the codebase.
+
 ### OpenCV 2
 
 If you can't use OpenCV 3.x or higher, the (no longer maintained) `0.2.4` version of this crate is known to
 work with OpenCV `2.4.7.13` (and probably other 2.4 versions). Please refer to the README.md file for that
 version because the crate has gone through the considerable rewrite since.
-
-### OpenCV 3.2
-
-The last version with confirmed OpenCV 3.2 support is 0.75.0, after that this branch of OpenCV is no longer
-tested and supported. Since version 0.94.0 the support of OpenCV 3.2 is removed from the codebase.
 
 ## Contributor's Guide
 

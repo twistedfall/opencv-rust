@@ -1,13 +1,9 @@
 use matches::assert_matches;
 use opencv::boxed_ref::{BoxedRef, BoxedRefMut};
-#[cfg(ocvrs_opencv_branch_34)]
-use opencv::core::ACCESS_READ;
-#[cfg(not(ocvrs_opencv_branch_34))]
-use opencv::core::AccessFlag::ACCESS_READ;
 use opencv::core::{
 	_InputArray, _InputArray_MAT, _InputArray_MATX, _InputArray_STD_BOOL_VECTOR, _InputArray_STD_VECTOR,
 	_InputArray_STD_VECTOR_MAT, _InputArray_STD_VECTOR_UMAT, _InputArray_STD_VECTOR_VECTOR, _InputArray_UMAT, _InputOutputArray,
-	_OutputArray, Matx12d, Scalar, ToInputArray, ToInputOutputArray, ToOutputArray, UMat, Vec2b, VecN, Vector,
+	_OutputArray, AccessFlag, Matx12d, Scalar, ToInputArray, ToInputOutputArray, ToOutputArray, UMat, Vec2b, VecN, Vector,
 };
 use opencv::prelude::*;
 use opencv::{Result, core};
@@ -165,7 +161,7 @@ fn input_output_array() -> Result<()> {
 	{
 		let mat_expr = Mat::ones(1, 3, u8::opencv_type())?;
 		let mat = Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), Scalar::all(3.))?;
-		let umat = mat.get_umat_def(ACCESS_READ)?;
+		let umat = mat.get_umat_def(AccessFlag::ACCESS_READ)?;
 		{
 			let mut trg = Vector::<u8>::new();
 			core::add(&mat_expr, &umat, &mut trg, &core::no_array(), -1)?;

@@ -1,9 +1,5 @@
 use opencv::Result;
-#[cfg(ocvrs_opencv_branch_34)]
-use opencv::core::ACCESS_READ;
-#[cfg(not(ocvrs_opencv_branch_34))]
-use opencv::core::AccessFlag::ACCESS_READ;
-use opencv::core::{Rect, Size, UMat, UMatTraitConstManual, UMatUsageFlags, Vec3d, Vector};
+use opencv::core::{AccessFlag, Rect, Size, UMat, UMatTraitConstManual, UMatUsageFlags, Vec3d, Vector};
 use opencv::prelude::*;
 
 #[test]
@@ -34,11 +30,11 @@ fn umat_to_mat() -> Result<()> {
 		vec.push(2);
 		vec.push(3);
 		let mat = Mat::from_exact_iter(vec.into_iter())?;
-		let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
+		let umat = mat.get_umat(AccessFlag::ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
 		assert_eq!(1, umat.rows());
 		assert_eq!(3, umat.cols());
 		assert_eq!(i32::opencv_type(), umat.typ());
-		let mat = umat.get_mat(ACCESS_READ)?;
+		let mat = umat.get_mat(AccessFlag::ACCESS_READ)?;
 		assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
 		assert_eq!(2, *mat.at_2d::<i32>(0, 1)?);
 		assert_eq!(3, *mat.at_2d::<i32>(0, 2)?);
@@ -47,11 +43,11 @@ fn umat_to_mat() -> Result<()> {
 	{
 		let vec: Vec<i32> = vec![1, 2, 3];
 		let mat = Mat::from_exact_iter(vec.into_iter())?;
-		let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
+		let umat = mat.get_umat(AccessFlag::ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
 		assert_eq!(1, umat.rows());
 		assert_eq!(3, umat.cols());
 		assert_eq!(i32::opencv_type(), umat.typ());
-		let mat = umat.get_mat(ACCESS_READ)?;
+		let mat = umat.get_mat(AccessFlag::ACCESS_READ)?;
 		assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
 		assert_eq!(2, *mat.at_2d::<i32>(0, 1)?);
 		assert_eq!(3, *mat.at_2d::<i32>(0, 2)?);
@@ -90,7 +86,7 @@ fn umat_continuous() -> Result<()> {
 	let s: Vec<Vec<f32>> = vec![vec![1., 2., 3.], vec![4., 5., 6.], vec![7., 8., 9.]];
 
 	let mat = Mat::from_slice_2d(&s)?;
-	let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
+	let umat = mat.get_umat(AccessFlag::ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
 
 	{
 		let sub_umat_non_cont = UMat::roi(&umat, Rect::new(1, 1, 2, 2))?;

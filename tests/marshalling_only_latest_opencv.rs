@@ -1,4 +1,4 @@
-//! Tests that will not be run in CI on OpenCV 4.2.0, 4.5.4 and 3.4.16 due to missing classes
+//! Tests that will not be run in CI on OpenCV 4.2.0 and 4.5.4 due to missing classes
 
 #[test]
 fn smart_ptr_optional() -> opencv::Result<()> {

@@ -22,6 +22,9 @@
 ///     }
 /// };
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg({{ cfg_condition_prefix }}ocvrs_opencv_branch_{{ feature }}{{ cfg_condition_suffix }})]
 #[macro_export]
 macro_rules! opencv_branch_{{ feature }} {
@@ -42,6 +45,9 @@ macro_rules! opencv_branch_{{ feature }} {
 ///     use opencv::core::LINE_8;
 /// }
 /// ```
+///
+/// **Note:** OpenCV 3.4 support is deprecated. The `opencv_branch_34` and `not_opencv_branch_34` macros
+/// will be removed in a future release. Please migrate to OpenCV 4.x or 5.x.
 #[cfg({{ cfg_condition_prefix }}ocvrs_opencv_branch_{{ feature }}{{ cfg_condition_suffix }})]
 #[macro_export]
 macro_rules! not_opencv_branch_{{ feature }} {

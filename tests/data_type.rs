@@ -28,7 +28,6 @@ fn data_type() {
 
 	assert_eq!(core::CV_32F, f32::opencv_type());
 	assert_eq!(core::CV_64F, f64::opencv_type());
-	#[cfg(not(ocvrs_opencv_branch_34))]
 	{
 		#[cfg(ocvrs_has_inherent_feature_hfloat)]
 		assert_eq!(core::CV_16F, core::hfloat::opencv_type());

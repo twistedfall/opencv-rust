@@ -9,14 +9,7 @@ use opencv::core::{CommandLineParser, Point, Scalar, Vec3b, bitwise_and, find_fi
 use opencv::highgui::imshow;
 use opencv::imgcodecs::{IMREAD_COLOR, imread};
 use opencv::prelude::*;
-use opencv::{Result, highgui, imgproc, not_opencv_branch_34, opencv_branch_34};
-
-not_opencv_branch_34! {
-	use opencv::imgproc::LINE_8;
-}
-opencv_branch_34! {
-	use opencv::core::LINE_8;
-}
+use opencv::{Result, highgui, imgproc};
 
 const SOURCE_WINDOW: &str = "Source image";
 
@@ -115,7 +108,15 @@ fn main() -> Result<()> {
 				}
 
 				let point = Point::new(x, y);
-				imgproc::circle(&mut next_frame, point, 2, Scalar::new(0., 0., 255., 0.), -1, LINE_8, 0)?;
+				imgproc::circle(
+					&mut next_frame,
+					point,
+					2,
+					Scalar::new(0., 0., 255., 0.),
+					-1,
+					imgproc::LINE_8,
+					0,
+				)?;
 				marker_points.push(point);
 
 				if marker_points.len() > 1 {
@@ -125,7 +126,7 @@ fn main() -> Result<()> {
 						point,
 						Scalar::new(0., 0., 255., 0.),
 						2,
-						LINE_8,
+						imgproc::LINE_8,
 						0,
 					)?;
 				}
@@ -142,7 +143,7 @@ fn main() -> Result<()> {
 						true,
 						Scalar::new(0., 0., 0., 0.),
 						2,
-						LINE_8,
+						imgproc::LINE_8,
 						0,
 					)?;
 

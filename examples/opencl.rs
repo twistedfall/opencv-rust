@@ -3,16 +3,9 @@ use opencv::{Result, opencv_has_inherent_feature_opencl};
 fn main() -> Result<()> {
 	use std::{env, time};
 
-	use opencv::core::{Size, UMat};
+	use opencv::core::{AccessFlag, Size, UMat};
 	use opencv::prelude::*;
 	use opencv::{imgcodecs, imgproc};
-
-	opencv::not_opencv_branch_34! {
-		use opencv::core::AccessFlag::ACCESS_READ;
-	}
-	opencv::opencv_branch_34! {
-		use opencv::core::ACCESS_READ;
-	}
 
 	const ITERATIONS: usize = 100;
 	let img_file = env::args().nth(1).expect("Please supply image file name");
@@ -75,7 +68,7 @@ fn main() -> Result<()> {
 	if opencl_use {
 		println!("Timing OpenCL implementation... ");
 		let mat = imgcodecs::imread_def(&img_file)?;
-		let img = mat.get_umat_def(ACCESS_READ)?;
+		let img = mat.get_umat_def(AccessFlag::ACCESS_READ)?;
 		let start = time::Instant::now();
 		for _ in 0..ITERATIONS {
 			let mut gray = UMat::new_def();

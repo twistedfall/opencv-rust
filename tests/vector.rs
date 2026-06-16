@@ -35,10 +35,6 @@ fn boxed() -> Result<()> {
 
 	#[cfg(ocvrs_has_module_imgproc)]
 	{
-		#[cfg(not(ocvrs_opencv_branch_34))]
-		use imgproc::LINE_8;
-		#[cfg(ocvrs_opencv_branch_34)]
-		use opencv::core::LINE_8;
 		use opencv::core::{Point, Vec3b};
 		use opencv::imgproc;
 
@@ -51,7 +47,7 @@ fn boxed() -> Result<()> {
 		p1.at_row_mut::<i32>(2)?.copy_from_slice(&[9, 9]);
 		ps.push(p1);
 		assert_eq!(ps.len(), 1);
-		imgproc::fill_poly(&mut m, &ps, (127, 127, 127).into(), LINE_8, 0, Point::default())?;
+		imgproc::fill_poly(&mut m, &ps, (127, 127, 127).into(), imgproc::LINE_8, 0, Point::default())?;
 		assert_eq!(*m.at_2d::<Vec3b>(0, 0)?, Vec3b::from([127, 127, 127]));
 		assert_eq!(*m.at_2d::<Vec3b>(0, 9)?, Vec3b::default());
 		assert_eq!(*m.at_2d::<Vec3b>(9, 9)?, Vec3b::from([127, 127, 127]));

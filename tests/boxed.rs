@@ -65,15 +65,12 @@ fn smart_ptr_crate_and_cast_to_base_class() -> Result<()> {
 	use opencv::features2d::{FastFeatureDetector, Feature2D};
 	use opencv::videostab::{KeypointBasedMotionEstimator, MotionEstimatorRansacL2};
 
-	let est = MotionEstimatorRansacL2::new_def().unwrap();
+	let est = MotionEstimatorRansacL2::new_def()?;
 	let est_ptr = Ptr::new(est);
-	let mut estimator = KeypointBasedMotionEstimator::new(est_ptr.into()).unwrap();
-	#[cfg(not(ocvrs_opencv_branch_34))]
-	let detector_ptr = FastFeatureDetector::create_def().unwrap();
-	#[cfg(ocvrs_opencv_branch_34)]
-	let detector_ptr = FastFeatureDetector::create_def().unwrap();
+	let mut estimator = KeypointBasedMotionEstimator::new(est_ptr.into())?;
+	let detector_ptr = FastFeatureDetector::create_def()?;
 	let base_detector_ptr: Ptr<Feature2D> = detector_ptr.into();
-	estimator.set_detector(base_detector_ptr).unwrap();
+	estimator.set_detector(base_detector_ptr)?;
 
 	Ok(())
 }

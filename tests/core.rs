@@ -57,7 +57,6 @@ fn in_range() -> Result<()> {
 }
 
 #[test]
-#[cfg(not(ocvrs_opencv_branch_34))]
 fn file_storage() -> Result<()> {
 	use opencv::core::{FileStorage, FileStorage_Mode};
 

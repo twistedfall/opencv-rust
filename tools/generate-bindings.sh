@@ -95,7 +95,7 @@ all_modules="alphamat
 export OPENCV_BINDING_GENERATOR_EMIT_DEBUG=1
 
 # Generate bindings for a specific OpenCV version
-# Arguments: $1 = version (34, 4, or 5), remaining args = optional module override
+# Arguments: $1 = version, remaining args = optional module override
 generate_version() {
 	local version="$1"
 	shift
@@ -104,10 +104,10 @@ generate_version() {
 	local additional_include_dirs_var="OPENCV_${version}_ADDITIONAL_INCLUDE_DIRS"
 	local header_dir="${!header_dir_var}"
 	local additional_include_dirs="${!additional_include_dirs_var}"
-	local out_dir="$script_dir/../out/${version/34/3.4}/"
+	local out_dir="$script_dir/../out/${version}/"
 	mkdir -p "$out_dir"
 
-	echo "=== Opencv ${version/34/3.4}..."
+	echo "=== OpenCV ${version}..."
 	local modules="${*:-$all_modules}"
 
 	local filtered_modules=""
@@ -132,6 +132,5 @@ generate_version() {
 	parallel --eta "$script_dir/../target/release/binding-generator" --debug "$header_dir" "$SRC_CPP_DIR" "$out_dir" "{}" "$additional_include_dirs" ::: $modules
 }
 
-generate_version "34" $*
 generate_version "4" $*
 generate_version "5" $*

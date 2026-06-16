@@ -7,16 +7,9 @@ use std::sync::atomic::{AtomicI32, Ordering};
 use opencv::core::{BORDER_DEFAULT, Point, Point2i, Size2i, Vec3f, Vector, find_file};
 use opencv::highgui::{WINDOW_AUTOSIZE, create_trackbar, imshow, named_window, wait_key};
 use opencv::imgcodecs::{IMREAD_COLOR, imread};
-use opencv::imgproc::{COLOR_BGR2GRAY, HOUGH_GRADIENT, circle, cvt_color_def, gaussian_blur, hough_circles};
+use opencv::imgproc::{COLOR_BGR2GRAY, HOUGH_GRADIENT, LINE_8, circle, cvt_color_def, gaussian_blur, hough_circles};
 use opencv::prelude::*;
 use opencv::{Result, opencv_has_inherent_feature_algorithm_hint};
-
-opencv::not_opencv_branch_34! {
-	use opencv::imgproc::LINE_8;
-}
-opencv::opencv_branch_34! {
-	use opencv::core::LINE_8;
-}
 
 opencv_has_inherent_feature_algorithm_hint! {
 	use opencv::core::AlgorithmHint;

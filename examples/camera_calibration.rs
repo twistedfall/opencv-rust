@@ -7,7 +7,7 @@ use opencv::core::{
 	Point2f, Point3f, Size, TermCriteria, TermCriteria_EPS, TermCriteria_MAX_ITER, TermCriteria_Type, Vector, no_array,
 };
 use opencv::prelude::*;
-use opencv::{highgui, imgcodecs, imgproc, opencv_branch_4, opencv_branch_5, opencv_branch_34};
+use opencv::{highgui, imgcodecs, imgproc, opencv_branch_4, opencv_branch_5};
 
 opencv_branch_5! {
 	use opencv::objdetect::{find_chessboard_corners_def, draw_chessboard_corners};
@@ -17,11 +17,6 @@ opencv_branch_5! {
 
 opencv_branch_4! {
 	use opencv::calib3d::{find_chessboard_corners_def, draw_chessboard_corners, calibrate_camera, undistort, init_undistort_rectify_map};
-}
-
-opencv_branch_34! {
-	use opencv::calib3d::{find_chessboard_corners_def, draw_chessboard_corners, calibrate_camera};
-	use opencv::imgproc::{undistort, init_undistort_rectify_map};
 }
 
 fn main() -> Result<(), Box<dyn Error>> {

@@ -6,12 +6,12 @@ script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 cd "$script_dir/.."
 
 (
-	. "$script_dir/env-34.sh"
+	. "$script_dir/env-4.sh"
 	ci/script.sh
 )
 
 (
-	. "$script_dir/env-4.sh"
+	. "$script_dir/env-5.sh"
 	ci/script.sh
 )
 

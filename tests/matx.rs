@@ -33,7 +33,7 @@ fn matx_set() {
 	assert_eq!(a[(1, 0)], 0.);
 }
 
-#[cfg(all(not(ocvrs_opencv_branch_34), not(target_env = "msvc")))]
+#[cfg(not(target_env = "msvc"))]
 #[test]
 fn matx_return() -> Result<()> {
 	use opencv::core::Point2f;

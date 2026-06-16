@@ -8,15 +8,8 @@ use opencv::Result;
 use opencv::core::{Point, Point2f, Vec2f, Vec4i, Vector, find_file};
 use opencv::highgui::{WINDOW_AUTOSIZE, create_trackbar, imshow, named_window, wait_key_def};
 use opencv::imgcodecs::{IMREAD_COLOR, imread};
-use opencv::imgproc::{COLOR_BGR2GRAY, COLOR_GRAY2BGR, canny_def, cvt_color_def, hough_lines_def, hough_lines_p, line};
+use opencv::imgproc::{COLOR_BGR2GRAY, COLOR_GRAY2BGR, LINE_AA, canny_def, cvt_color_def, hough_lines_def, hough_lines_p, line};
 use opencv::prelude::*;
-
-opencv::not_opencv_branch_34! {
-	use opencv::imgproc::LINE_AA;
-}
-opencv::opencv_branch_34! {
-	use opencv::core::LINE_AA;
-}
 
 const STANDARD_NAME: &str = "Standard Hough Lines Demo";
 const PROBABILISTIC_NAME: &str = "Probabilistic Hough Lines Demo";
