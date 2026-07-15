@@ -35,7 +35,7 @@ impl PackageName {
 	pub fn pkg_config() -> Vec<Cow<'static, str>> {
 		Self::env()
 			.or_else(Self::env_pkg_config)
-			.map_or_else(|| vec!["opencv4".into(), "opencv".into()], |env_name| vec![env_name.into()])
+			.map_or_else(|| vec!["opencv5".into(), "opencv4".into(), "opencv".into()], |env_name| vec![env_name.into()])
 	}
 
 	pub fn cmake() -> Cow<'static, str> {
