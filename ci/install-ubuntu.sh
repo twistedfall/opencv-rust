@@ -19,7 +19,7 @@ case "$ubuntu_version" in
 
 "22.04")
 	# workaround to make clang_sys crate detect installed libclang
-	sudo ln -fs libclang.so.1 /usr/lib/llvm-14/lib/libclang.so
+	sudo ln -fs libclang.so.1 /usr/lib/llvm-15/lib/libclang.so
 	if [[ "$OPENCV_VERSION" == "4.5.4" ]]; then
 		sudo apt-get -y install "libopencv-dev=${OPENCV_VERSION}*"
 		exit 0
