@@ -2,7 +2,6 @@ include!(concat!(env!("OUT_DIR"), "/opencv/alphamat.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/bgsegm.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/bioinspired.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/calib.rs"));
-include!(concat!(env!("OUT_DIR"), "/opencv/calib3d.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/ccalib.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/core.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/cudaarithm.rs"));
@@ -21,7 +20,6 @@ include!(concat!(env!("OUT_DIR"), "/opencv/dnn_superres.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/dpm.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/face.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/features.rs"));
-pub use features as features2d;
 include!(concat!(env!("OUT_DIR"), "/opencv/flann.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/freetype.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/fuzzy.rs"));
@@ -66,6 +64,8 @@ include!(concat!(env!("OUT_DIR"), "/opencv/ximgproc.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/xobjdetect.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/xphoto.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/xstereo.rs"));
+pub use calib as calib3d;
+pub use features as features2d;
 pub mod types {
 	include!(concat!(env!("OUT_DIR"), "/opencv/types.rs"));
 }
@@ -78,7 +78,6 @@ pub mod hub_prelude {
 	pub use super::bgsegm::prelude::*;
 	pub use super::bioinspired::prelude::*;
 	pub use super::calib::prelude::*;
-	pub use super::calib3d::prelude::*;
 	pub use super::ccalib::prelude::*;
 	pub use super::core::prelude::*;
 	pub use super::cudaarithm::prelude::*;
@@ -97,7 +96,6 @@ pub mod hub_prelude {
 	pub use super::dpm::prelude::*;
 	pub use super::face::prelude::*;
 	pub use super::features::prelude::*;
-	pub use super::features2d::prelude::*;
 	pub use super::flann::prelude::*;
 	pub use super::freetype::prelude::*;
 	pub use super::fuzzy::prelude::*;

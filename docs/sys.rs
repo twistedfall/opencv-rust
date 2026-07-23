@@ -280,14 +280,6 @@ mod calib_sys {
 }
 pub use calib_sys::*;
 
-mod calib3d_sys {
-	use super::*;
-
-	unsafe extern "C" {
-	}
-}
-pub use calib3d_sys::*;
-
 mod ccalib_sys {
 	use super::*;
 
