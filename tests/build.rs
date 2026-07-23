@@ -101,6 +101,46 @@ fn test_extract_from_cmdline() {
 	}
 }
 
+#[cfg(all(test, windows))]
+fn test_extract_from_cmdline_windows() {
+	{
+		let cmdline = r#"C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_highgui4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_ml4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_objdetect4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_photo4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_stitching4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_video4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_videoio4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_imgcodecs4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_calib3d4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_dnn4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_features2d4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_flann4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_imgproc4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_core4d.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib"#;
+
+		let expect_include_paths: Vec<PathBuf> = vec![];
+		let expect_link_paths = vec![LinkSearch(
+			Linkage::Static,
+			PathBuf::from(r#"C:\opt\vcpkg\installed\x64-windows\debug\lib"#),
+		)];
+		let expect_link_libs = vec![
+			LinkLib(Linkage::Static, "opencv_highgui4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_ml4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_objdetect4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_photo4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_stitching4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_video4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_videoio4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_imgcodecs4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_calib3d4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_dnn4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_features2d4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_flann4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_imgproc4d".to_string()),
+			LinkLib(Linkage::Static, "opencv_core4d".to_string()),
+			LinkLib(Linkage::Static, "kernel32".to_string()),
+			LinkLib(Linkage::Static, "user32".to_string()),
+			LinkLib(Linkage::Static, "gdi32".to_string()),
+			LinkLib(Linkage::Static, "winspool".to_string()),
+			LinkLib(Linkage::Static, "shell32".to_string()),
+			LinkLib(Linkage::Static, "ole32".to_string()),
+			LinkLib(Linkage::Static, "oleaut32".to_string()),
+			LinkLib(Linkage::Static, "uuid".to_string()),
+			LinkLib(Linkage::Static, "comdlg32".to_string()),
+			LinkLib(Linkage::Static, "advapi32".to_string()),
+		];
+		assert_extract_from_cmdline(cmdline, false, expect_include_paths, expect_link_paths, expect_link_libs);
+	}
+}
+
 #[track_caller]
 fn assert_extract_from_cmdline(
 	cmdline: &str,

@@ -40,9 +40,14 @@ dunce = "1"
 jobserver = "0.1.25"
 pkg-config = "0.3"
 semver = "1"
-shlex = { version = "2", default-features = false }
 # vcpkg-0.2.9 is the first one that has accessible find_vcpkg_root()
 vcpkg = "0.2.9"
+
+[target.'cfg(not(windows))'.build-dependencies]
+shlex = { version = "2", default-features = false }
+
+[target.'cfg(windows)'.build-dependencies]
+winsplit = "0.1"
 
 [dev-dependencies]
 # Switch to std's assert_matches when MSRV is 1.96
@@ -58,6 +63,12 @@ semver = "1"
 shlex = { version = "2", default-features = false }
 # vcpkg-0.2.9 is the first one that has accessible find_vcpkg_root()
 vcpkg = "0.2.9"
+
+[target.'cfg(not(windows))'.dev-dependencies]
+shlex = { version = "2", default-features = false }
+
+[target.'cfg(windows)'.dev-dependencies]
+winsplit = "0.1"
 
 [features]
 default = [

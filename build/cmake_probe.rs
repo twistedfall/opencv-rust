@@ -5,7 +5,6 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, Output};
 
 use semver::Version;
-use shlex::Shlex;
 
 use super::Result;
 use super::library::{LinkLib, LinkSearch, Linkage};
@@ -80,7 +79,7 @@ impl<'r> CmakeProbe<'r> {
 			out.arg("-DCMAKE_BUILD_TYPE=Debug");
 		}
 		if let Some(args) = &self.args {
-			for arg in Shlex::new(args) {
+			for arg in platform_argument_parser(args) {
 				out.arg(arg);
 			}
 		}
@@ -129,7 +128,22 @@ impl<'r> CmakeProbe<'r> {
 		link_libs: &mut Vec<LinkLib>,
 	) {
 		eprintln!("=== Extracting build arguments from: {cmdline}");
-		let mut args = Shlex::new(cmdline.trim());
+		Self::extract_from_cmdline_with_args(
+			platform_argument_parser(cmdline),
+			skip_cmd,
+			include_paths,
+			link_paths,
+			link_libs,
+		)
+	}
+
+	pub(crate) fn extract_from_cmdline_with_args(
+		mut args: impl Iterator<Item = String>,
+		skip_cmd: bool,
+		include_paths: &mut Vec<PathBuf>,
+		link_paths: &mut Vec<LinkSearch>,
+		link_libs: &mut Vec<LinkLib>,
+	) {
 		if skip_cmd {
 			args.next();
 		}
@@ -181,7 +195,7 @@ impl<'r> CmakeProbe<'r> {
 		}
 	}
 
-	fn skip_ignorable_arg(args: &mut Shlex, arg: &str) -> bool {
+	fn skip_ignorable_arg(args: &mut impl Iterator<Item = String>, arg: &str) -> bool {
 		if let Some(output_file) = arg.strip_prefix("-o") {
 			if output_file.trim().is_empty() {
 				args.next().expect("No output file after -o");
@@ -364,4 +378,16 @@ impl<'r> CmakeProbe<'r> {
 			link_libs,
 		})
 	}
+}
+
+#[cfg(not(windows))]
+fn platform_argument_parser(cmdline: &str) -> impl Iterator<Item = String> {
+	eprintln!("=== Using non-Windows argument parser");
+	shlex::Shlex::new(cmdline.trim())
+}
+
+#[cfg(windows)]
+fn platform_argument_parser(cmdline: &str) -> impl Iterator<Item = String> {
+	eprintln!("=== Using Windows-specific argument parser");
+	winsplit::split(cmdline.trim()).into_iter()
 }
