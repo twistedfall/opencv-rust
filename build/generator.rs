@@ -8,31 +8,25 @@ use std::time::Instant;
 use std::{env, fs, thread};
 
 use collector::Collector;
-use opencv_binding_generator::{CompiledInterpolation, Generator, IteratorExt, StrExt, SupportedModule};
+use opencv_binding_generator::{CompiledInterpolation, Generator, IteratorExt, StrExt};
 
 use super::docs::transfer_bindings_to_docs;
 use super::enums::{SUPPORTED_INHERENT_FEATURES, SUPPORTED_MODULES};
-use super::{Library, OUT_DIR, Result, SRC_CPP_DIR, SRC_DIR, SUPPORTED_OPENCV_BRANCHES, files_with_predicate};
+use super::{GenerateModules, Library, OUT_DIR, Result, SRC_CPP_DIR, SRC_DIR, SUPPORTED_OPENCV_BRANCHES, files_with_predicate};
 
 #[path = "generator/collector.rs"]
 mod collector;
 
 pub struct BindingGenerator<'r> {
 	build_script_path: &'r Path,
-	modules: &'r [SupportedModule],
-	module_aliases: &'r HashMap<SupportedModule, SupportedModule>,
+	gen_modules: &'r GenerateModules,
 }
 
 impl<'r> BindingGenerator<'r> {
-	pub fn new(
-		build_script_path: &'r Path,
-		modules: &'r [SupportedModule],
-		module_aliases: &'r HashMap<SupportedModule, SupportedModule>,
-	) -> Self {
+	pub fn new(build_script_path: &'r Path, gen_modules: &'r GenerateModules) -> Self {
 		Self {
 			build_script_path,
-			modules,
-			module_aliases,
+			gen_modules,
 		}
 	}
 
@@ -61,15 +55,7 @@ impl<'r> BindingGenerator<'r> {
 
 		self.run(opencv_header_dir, opencv)?;
 
-		Collector::new(
-			self.modules,
-			self.module_aliases,
-			ffi_export_suffix,
-			&target_module_dir,
-			&manual_dir,
-			&OUT_DIR,
-		)
-		.collect_bindings()?;
+		Collector::new(self.gen_modules, ffi_export_suffix, &target_module_dir, &manual_dir, &OUT_DIR).collect_bindings()?;
 		self.generate_opencv_branch_cond_macros()?;
 		self.generate_opencv_module_cond_macros()?;
 		self.generate_opencv_inherent_feature_cond_macros()?;
@@ -200,9 +186,10 @@ impl<'r> BindingGenerator<'r> {
 			.join(",");
 		let job_server = Jobserver::build()?;
 		let start = Instant::now();
-		eprintln!("=== Generating {} modules", self.modules.len());
+		eprintln!("=== Generating {} modules", self.gen_modules.modules.len());
 		thread::scope(|scope| {
 			let join_handles = self
+				.gen_modules
 				.modules
 				.iter()
 				.map(|module| {

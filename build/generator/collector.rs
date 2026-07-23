@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::ffi::OsStr;
 use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader, BufWriter, Write};
@@ -9,10 +8,10 @@ use std::{fs, io};
 use opencv_binding_generator::SupportedModule;
 
 use super::super::{Result, files_with_extension};
+use super::GenerateModules;
 
 pub struct Collector<'r> {
-	modules: &'r [SupportedModule],
-	module_aliases: &'r HashMap<SupportedModule, SupportedModule>,
+	gen_modules: &'r GenerateModules,
 	ffi_export_suffix: &'r str,
 	target_module_dir: &'r Path,
 	manual_dir: &'r Path,
@@ -21,16 +20,14 @@ pub struct Collector<'r> {
 
 impl<'r> Collector<'r> {
 	pub fn new(
-		modules: &'r [SupportedModule],
-		module_aliases: &'r HashMap<SupportedModule, SupportedModule>,
+		gen_modules: &'r GenerateModules,
 		ffi_export_suffix: &'r str,
 		target_module_dir: &'r Path,
 		manual_dir: &'r Path,
 		out_dir: &'r Path,
 	) -> Self {
 		Self {
-			modules,
-			module_aliases,
+			gen_modules,
 			ffi_export_suffix,
 			target_module_dir,
 			manual_dir,
@@ -66,14 +63,13 @@ impl<'r> Collector<'r> {
 		writeln!(sys_rs, "use crate::{{mod_prelude_sys::*, core}};")?;
 		writeln!(sys_rs)?;
 
-		for module in self.modules {
+		for module in &self.gen_modules.modules {
 			// add module entry to hub.rs
-			if let Some(alias) = self.module_aliases.get(module) {
-				writeln!(&mut hub_rs, "pub use {} as {};", alias.rust_name(), module.rust_name())?
-			} else {
-				write_module_include(&mut hub_rs, module.opencv_name())?;
-				self.collect_module(*module, &mut sys_rs, &mut types_rs)?
-			}
+			write_module_include(&mut hub_rs, module.opencv_name())?;
+			self.collect_module(*module, &mut sys_rs, &mut types_rs)?
+		}
+		for (module, replace) in &self.gen_modules.replaces {
+			writeln!(&mut hub_rs, "pub use {} as {};", replace.rust_name(), module.rust_name())?
 		}
 		writeln!(hub_rs, "pub mod types {{")?;
 		write!(hub_rs, "\t")?;
@@ -91,7 +87,7 @@ impl<'r> Collector<'r> {
 
 		// write hub_prelude that imports all module-specific preludes
 		writeln!(hub_rs, "pub mod hub_prelude {{")?;
-		for module in self.modules {
+		for module in &self.gen_modules.modules {
 			writeln!(hub_rs, "\tpub use super::{}::prelude::*;", module.rust_name())?;
 		}
 		writeln!(hub_rs, "}}")?;

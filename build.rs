@@ -12,7 +12,7 @@ use generator::BindingGenerator;
 use library::Library;
 use opencv_binding_generator::SupportedModule;
 use opencv_binding_generator::version::OpenCVHeaderVersionExt;
-use semver::{Version, VersionReq};
+use semver::VersionReq;
 
 #[path = "build/binding-generator.rs"]
 mod binding_generator;
@@ -80,6 +80,82 @@ pub enum GenerateFullBindings {
 	Proceed,
 }
 
+/// List of modules to be generated
+struct GenerateModules {
+	/// List of modules to generate, this excludes the compatibility modules mentioned in `replaces`
+	modules: Vec<SupportedModule>,
+	/// List of `Legacy module` -> `Replacement module` mappings for modules that exist only as compatibility headers
+	///
+	/// `Replacement module` is guaranteed to be included in `modules`.
+	replaces: Vec<(SupportedModule, SupportedModule)>,
+}
+
+impl GenerateModules {
+	fn make(opencv_dir: &Path) -> Result<Self> {
+		let mut enabled_modules = enabled_modules_from_cargo_features();
+
+		// boolean in the value gets set to true when a corresponding aliased module is being generated, it is to avoid dropping
+		// modules that have no actual aliases
+		let mut aliases = HashMap::from([
+			// In OpenCV 5 `features2d` is a compatibility header that just includes `features.hpp`, but they don't work together
+			(SupportedModule::Features2d, (SupportedModule::Features, false)),
+			// Same for `calib3d` => `calib`
+			(SupportedModule::Calib3d, (SupportedModule::Calib, false)),
+		]);
+
+		for (module, (alias, _)) in &aliases {
+			if enabled_modules.contains(module) {
+				enabled_modules.insert(*alias);
+			}
+		}
+
+		let mut modules = files_with_extension(opencv_dir, "hpp")?
+			.filter_map(|entry| {
+				let file_stem = entry.file_stem().and_then(OsStr::to_str);
+				let module = file_stem.and_then(SupportedModule::try_from_opencv_name);
+				if let Some(file_stem) = file_stem
+					&& module.is_none()
+				{
+					eprintln!("=== Skipping unsupported module: {file_stem}")
+				}
+				module.filter(|m| enabled_modules.contains(m))
+			})
+			.inspect(|module| {
+				for (alias, found) in aliases.values_mut() {
+					if module == alias {
+						*found = true;
+					}
+				}
+			})
+			.collect::<Vec<_>>();
+
+		let mut replaces = Vec::with_capacity(aliases.len());
+		modules.retain(|module| {
+			if let Some((alias, true)) = aliases.get(module) {
+				replaces.push((*module, *alias));
+				false
+			} else {
+				true
+			}
+		});
+
+		modules.sort_unstable();
+		replaces.sort_unstable();
+		Ok(Self { modules, replaces })
+	}
+}
+
+fn enabled_modules_from_cargo_features() -> HashSet<SupportedModule> {
+	[SupportedModule::Core]
+		.into_iter()
+		.chain(env::vars_os().filter_map(|(k, _)| {
+			k.to_str()
+				.and_then(|s| s.strip_prefix("CARGO_FEATURE_"))
+				.and_then(SupportedModule::try_from_opencv_name)
+		}))
+		.collect()
+}
+
 fn files_with_predicate<'p>(
 	dir: &Path,
 	mut predicate: impl FnMut(&Path) -> bool + 'p,
@@ -99,55 +175,6 @@ fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Re
 	files_with_predicate(dir, move |p| {
 		p.extension().is_some_and(|e| e.eq_ignore_ascii_case(extension.as_ref()))
 	})
-}
-
-fn make_modules_and_aliases(
-	opencv_dir: &Path,
-	opencv_version: &Version,
-) -> Result<(Vec<SupportedModule>, HashMap<SupportedModule, SupportedModule>)> {
-	let enable_modules = [SupportedModule::Core]
-		.into_iter()
-		.chain(env::vars_os().filter_map(|(k, _)| {
-			k.to_str()
-				.and_then(|s| s.strip_prefix("CARGO_FEATURE_"))
-				.and_then(|s| SupportedModule::try_from_opencv_name(&s.to_lowercase()))
-		}))
-		.collect::<HashSet<_>>();
-
-	let mut modules = files_with_extension(opencv_dir, "hpp")?
-		.filter_map(|entry| {
-			let file_stem = entry.file_stem().and_then(OsStr::to_str);
-			let module = file_stem.and_then(SupportedModule::try_from_opencv_name);
-			if let Some(file_stem) = file_stem
-				&& module.is_none()
-			{
-				eprintln!("=== Skipping unsupported module: {file_stem}")
-			}
-			module.filter(|m| enable_modules.contains(m))
-		})
-		.collect::<Vec<_>>();
-
-	let aliases = if opencv_version.major == 5 {
-		let mut opencv_5_aliases = HashMap::new();
-		if modules.iter().any(|x| matches!(x, SupportedModule::Features2d))
-			&& modules.iter().any(|x| matches!(x, SupportedModule::Features))
-		{
-			// In OpenCV 5 `features2d` is a compatibility header that just includes `features.hpp`, and they don't work together
-			opencv_5_aliases.insert(SupportedModule::Features2d, SupportedModule::Features);
-		} else if modules.iter().any(|x| matches!(x, SupportedModule::Calib3d))
-			&& modules.iter().any(|x| matches!(x, SupportedModule::Calib))
-		{
-			// Same for `calib3d`
-			opencv_5_aliases.insert(SupportedModule::Calib3d, SupportedModule::Calib);
-		}
-
-		opencv_5_aliases
-	} else {
-		HashMap::new()
-	};
-
-	modules.sort_unstable();
-	Ok((modules, aliases))
 }
 
 fn emit_opencv_branch(opencv: &Library) {
@@ -193,7 +220,7 @@ fn emit_inherent_features(opencv: &Library) {
 	}
 }
 
-fn emit_modules(modules: &[SupportedModule]) {
+fn emit_ocvrs_has_module(modules: &[SupportedModule]) {
 	for module in modules {
 		println!("cargo::rustc-cfg=ocvrs_has_module_{}", module.opencv_name());
 	}
@@ -284,9 +311,9 @@ fn target_os_windows() -> &'static str {
 	}
 }
 
-fn build_wrapper(mut cc: cc::Build, modules: &[SupportedModule], module_aliases: &HashMap<SupportedModule, SupportedModule>) {
+fn build_wrapper(mut cc: cc::Build, modules: &[SupportedModule]) {
 	eprintln!("=== Compiler information: {:#?}", cc.get_compiler());
-	for module in modules.iter().filter(|m| !module_aliases.contains_key(m)) {
+	for module in modules {
 		let module_opencv_name = module.opencv_name();
 		cc.file(OUT_DIR.join(format!("{module_opencv_name}.cpp")));
 		let manual_cpp = SRC_CPP_DIR.join(format!("manual-{module_opencv_name}.cpp"));
@@ -379,17 +406,17 @@ fn main() -> Result<()> {
 		"=== Detected OpenCV module header dir at: {}",
 		opencv_module_header_dir.display()
 	);
-	let (modules, module_aliases) = make_modules_and_aliases(&opencv_module_header_dir, &opencv.version)?;
-	emit_modules(&modules);
+	let gen_modules = GenerateModules::make(&opencv_module_header_dir)?;
 
+	emit_ocvrs_has_module(&gen_modules.modules);
 	setup_rerun()?;
 
 	let ffi_export_suffix = format!("_{}", pkg_version.replace(".", "_"));
 	let build_script_path = env::current_exe()?;
-	let binding_generator = BindingGenerator::new(&build_script_path, &modules, &module_aliases);
+	let binding_generator = BindingGenerator::new(&build_script_path, &gen_modules);
 	binding_generator.generate_wrapper(opencv_header_dir, &opencv, &ffi_export_suffix)?;
 	let cc = make_compiler(&opencv, &ffi_export_suffix);
-	build_wrapper(cc, &modules, &module_aliases);
+	build_wrapper(cc, &gen_modules.modules);
 	// -l linker args should be emitted after -l static
 	opencv.emit_cargo_metadata();
 	Ok(())
