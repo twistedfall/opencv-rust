@@ -66,7 +66,7 @@ impl<'r> CmakeProbe<'r> {
 		out.current_dir(&self.build_dir)
 			.args(["-S"])
 			.arg(self.src_dir)
-			.arg(format!("-DOCVRS_PACKAGE_NAME={}", &self.package_name));
+			.arg(format!("-DOCVRS_PACKAGE_NAME={}", self.package_name));
 
 		if let Some(toolchain) = self.toolchain {
 			out.arg(format!(
@@ -182,7 +182,6 @@ impl<'r> CmakeProbe<'r> {
 	}
 
 	fn skip_ignorable_arg(args: &mut Shlex, arg: &str) -> bool {
-		#[expect(clippy::collapsible_if)]
 		if let Some(output_file) = arg.strip_prefix("-o") {
 			if output_file.trim().is_empty() {
 				args.next().expect("No output file after -o");
@@ -198,6 +197,8 @@ impl<'r> CmakeProbe<'r> {
 				args.next().expect("No arch name after -arch");
 				return true;
 			}
+		} else if arg == "-g" {
+			return true;
 		}
 		false
 	}

@@ -1,7 +1,6 @@
 #ifndef __OCVRS_COMMON_HPP__
 #define __OCVRS_COMMON_HPP__
 
-#include <memory>
 #include <opencv2/cvconfig.h>
 // defining HAVE_VA starts to rely on <va/va.h> for VADisplay and VASurfaceID instead of OpenCV stubs, and we stop generating
 // bindings for the functions that use them

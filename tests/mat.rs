@@ -1386,7 +1386,7 @@ fn mat_dims_size() -> Result<()> {
 		} else {
 			// this gives different results in different 4.x versions, so let's skip it
 		}
-		assert_eq!(1 * 2 * 3 * 4, mat.total());
+		assert_eq!(2 * 3 * 4, mat.total());
 		assert_eq!(4, mat.channels());
 		assert_eq!(size_of::<f64>(), mat.elem_size1());
 		assert_eq!(size_of::<f64>() * 4, mat.elem_size()?);

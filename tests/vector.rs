@@ -414,6 +414,32 @@ fn nth() -> Result<()> {
 		assert_eq!(None, iter.nth(0));
 	}
 
+	#[expect(clippy::iter_nth_zero)]
+	{
+		let mut vec = Vector::<i32>::new();
+		vec.push(1);
+		vec.push(2);
+		vec.push(3);
+
+		let mut iter = vec.into_iter();
+		assert_eq!(Some(1), iter.nth(0));
+		assert_eq!(Some(2), iter.nth(0));
+		assert_eq!(Some(3), iter.nth(0));
+		assert_eq!(None, iter.nth(0));
+	}
+
+	#[expect(clippy::iter_nth_zero)]
+	{
+		let mut vec = Vector::<i32>::new();
+		vec.push(1);
+		vec.push(2);
+		vec.push(3);
+
+		let mut iter = vec.into_iter();
+		assert_eq!(Some(3), iter.nth(2));
+		assert_eq!(None, iter.nth(0));
+	}
+
 	Ok(())
 }
 
