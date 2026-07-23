@@ -71,7 +71,7 @@ elif [[ "$os_family" == "Linux" ]]; then
 fi
 
 # remove tests and examples that require the latest OpenCV version so that they don't fail due to missing modules
-if [[ "${OPENCV_VERSION:-}" != "4.13.0" || "${OPENCV_VERSION:-}" != "5.0.0" ]]; then
+if [[ "${OPENCV_VERSION:-}" != "4.14.0" || "${OPENCV_VERSION:-}" != "5.0.0" ]]; then
 	rm -vf tests/*_only_latest_opencv.rs
 fi
 

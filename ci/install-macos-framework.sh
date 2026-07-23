@@ -27,7 +27,9 @@ if [[ "$OPENCV_VERSION" == "5.0.0" ]]; then
 	# upstream fixes
 	patch -p1 -d "$opencv_src" < "$(dirname "$0")/patches/swift_name-attr.patch"
 	patch -p1 -d "$opencv_src" < "$(dirname "$0")/patches/enum-redefinition.patch"
-	# handling of the `doc_hosting_base_path` is properly broken in 5.0.0:
+fi
+if [[ "$OPENCV_VERSION" == "5.0.0" || "$OPENCV_VERSION" == "4.14.0" ]]; then
+	# handling of the `doc_hosting_base_path` is properly broken in 5.0.0 and 4.14.0:
 	# 1. it's a store_true flag, so it can't be set to a string value
 	# 2. it is used in a path.join() so, yeah, that can't work
 	# 3. if it's not supplied then the script tries to get the current git branch which we don't have in a release tarball

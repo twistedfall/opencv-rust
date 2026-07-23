@@ -17,7 +17,7 @@ jobs:
           - ubuntu-24.04
           - macos-15
         opencv-version:
-          - 4.13.0
+          - 4.14.0
           - 5.0.0
         linkage:
           - dynamic
@@ -58,18 +58,18 @@ jobs:
           - ubuntu-24.04
           - windows-2025
         vcpkg-version:
-          - 2026.06.01 # https://github.com/microsoft/vcpkg/releases
+          - 2026.06.24 # https://github.com/microsoft/vcpkg/releases
         vcpkg-features-cache-key:
           - full
         vcpkg-features:
           - contrib,nonfree,ade,opencl
         include:
           - os-image: windows-2025
-            vcpkg-version: 2026.06.01
+            vcpkg-version: 2026.06.24
             vcpkg-features-cache-key: min
             vcpkg-features: contrib
           - os-image: macos-15
-            vcpkg-version: 2026.06.01
+            vcpkg-version: 2026.06.24
             vcpkg-features-cache-key: full-no-opencl
             vcpkg-features: contrib,nonfree,ade
     runs-on: ${{ matrix.os-image }}
@@ -112,7 +112,7 @@ jobs:
               opencv: 4.5.4
           - os-image: macos-15
             version:
-              brew: "@4"
+              brew: "@5"
     runs-on: ${{ matrix.os-image }}
     env:
       OPENCV_VERSION: ${{ matrix.version.opencv }}
@@ -145,7 +145,7 @@ jobs:
   msrv:
     runs-on: ubuntu-24.04
     env:
-      OPENCV_VERSION: 4.13.0
+      OPENCV_VERSION: 4.14.0
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
     steps:
