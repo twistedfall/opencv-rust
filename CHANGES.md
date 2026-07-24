@@ -1,3 +1,7 @@
+* 0.99.1
+  * Fix argument handling on Windows (fixes https://github.com/twistedfall/opencv-rust/issues/669)
+  * Fix module dependency handling for OpenCV 5 (fixes https://github.com/twistedfall/opencv-rust/issues/718)
+
 * 0.99.0
   * Add support for OpenCV 5 (new modules: geometry and ptcloud).
   * Add the `Mat::is_physically_contiguous()` function that returns `true` for very large matrices where `Mat::is_continuous()`
