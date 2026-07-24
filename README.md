@@ -20,7 +20,7 @@ generation) are installed in your system. OpenCV 3.4 is still supported but depr
 Update your Cargo.toml
 
 ```toml
-opencv = "0.99.0"
+opencv = "0.99.1"
 ```
 
 Import prelude
