@@ -101,8 +101,9 @@ fn test_extract_from_cmdline() {
 	}
 }
 
-#[cfg(all(test, windows))]
 #[test]
+#[cfg_attr(not(windows), ignore)]
+// test ignored on non-Windows due to the platform-dependent path parsing inside [CmakeProbe] not working on Windows-style paths
 fn test_extract_from_cmdline_windows() {
 	{
 		let cmdline = r#"C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_highgui4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_ml4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_objdetect4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_photo4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_stitching4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_video4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_videoio4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_imgcodecs4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_calib3d4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_dnn4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_features2d4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_flann4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_imgproc4d.lib  C:\opt\vcpkg\installed\x64-windows\debug\lib\opencv_core4d.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib"#;
