@@ -383,7 +383,7 @@ impl Drop for Generator {
 
 impl Generator {
 	pub fn new(opencv_include_dir: &Path, additional_include_dirs: &[&Path], src_cpp_dir: &Path) -> Self {
-		let clang_bin = clang_sys::support::Clang::find(None, &[]).expect("Can't find clang binary");
+		let clang_bin = clang_sys::support::Clang::find(None, &["-nostdlibinc".to_string()]).expect("Can't find clang binary");
 		let mut clang_include_dirs = clang_bin.cpp_search_paths.unwrap_or_default();
 		for additional_dir in additional_include_dirs {
 			match canonicalize(additional_dir) {
