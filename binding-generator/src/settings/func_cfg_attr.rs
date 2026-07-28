@@ -13,7 +13,6 @@ pub fn func_cfg_attr_factory(module: SupportedModule) -> FuncCfgAttr {
 	match module {
 		SupportedModule::ImgProc => imgproc_factory(),
 		SupportedModule::Tracking => tracking_factory(),
-		SupportedModule::Core => core_outputarray_factory(),
 		_ => FuncCfgAttr::empty(),
 	}
 }
@@ -95,25 +94,6 @@ fn tracking_factory() -> FuncCfgAttr {
 			vec![(
 				pred!(mut, ["foreground"]),
 				CFG_ATTR_NOT_ON_WINDOWS, // 3.4
-			)],
-		),
-	]))
-}
-
-fn core_outputarray_factory() -> FuncCfgAttr {
-	FuncCfgAttr::create(HashMap::from([
-		(
-			"cv::_OutputArray::fit",
-			vec![(
-				pred!(mut, ["sz", "type", "i", "allowTransposed", "fixedDepthMask"]),
-				CFG_ATTR_NOT_ON_WINDOWS, // 5.0
-			)],
-		),
-		(
-			"cv::_OutputArray::fitSameSize",
-			vec![(
-				pred!(mut, ["arr", "mtype"]),
-				CFG_ATTR_NOT_ON_WINDOWS, // 5.0
 			)],
 		),
 	]))
