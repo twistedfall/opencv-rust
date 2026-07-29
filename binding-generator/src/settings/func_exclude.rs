@@ -59,11 +59,10 @@ fn core_factory() -> FuncExclude {
 		"cv__OutputArray__OutputArray_const_vectorLGpuMatGR",
 		"cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR",
 		"cv_getImpl_vectorLintGR_vectorLStringGR",
-		// workaround for OpenCV 5.0.0 on windows
-		"cv__OutputArray_fit_const_Size_int_int_bool_DepthMask",
-		"cv__OutputArray_fit_const_int_int_int_int_bool_DepthMask",
-		"cv__OutputArray_fit_const_const_MatShapeR_int_int_bool_DepthMask",
-		"cv__OutputArray_fitSameSize_const_const__InputArrayR_int",
+		"cv__OutputArray_fit_const_Size_int_int_bool_DepthMask",    // 5.0.0
+		"cv__OutputArray_fit_const_int_int_int_int_bool_DepthMask", // 5.0.0
+		"cv__OutputArray_fit_const_const_MatShapeR_int_int_bool_DepthMask", // 5.0.0
+		"cv__OutputArray_fitSameSize_const_const__InputArrayR_int", // 5.0.0
 	])
 }
 
