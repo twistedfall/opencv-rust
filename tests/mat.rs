@@ -1,6 +1,6 @@
-use std::ffi::c_void;
 use std::{mem, thread};
 
+use ::core::ffi::c_void;
 use matches::assert_matches;
 use opencv::core::{
 	MatConstIterator, MatIter, Point, Point2d, Point2f, Rect, Scalar, Size, Vec2b, Vec2s, Vec3b, Vec3d, Vec3f, Vec3s, Vec4d,

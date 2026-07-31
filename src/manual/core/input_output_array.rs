@@ -1,4 +1,4 @@
-use std::ffi::c_void;
+use core::ffi::c_void;
 
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{

@@ -1,6 +1,6 @@
 #![cfg(ocvrs_has_module_imgcodecs)]
 
-use std::ffi::c_void;
+use core::ffi::c_void;
 
 use opencv::core::{Size, Vec3b};
 use opencv::prelude::*;

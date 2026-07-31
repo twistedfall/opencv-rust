@@ -1,5 +1,5 @@
 #![expect(rustdoc::broken_intra_doc_links)]
-//!\ Rust bindings for the OpenCV computer vision library
+//! Rust bindings for the OpenCV computer vision library
 //!
 //! [Git](https://github.com/twistedfall/opencv-rust) | [Readme](https://github.com/twistedfall/opencv-rust/blob/master/README.md) |
 //! [Docs](https://docs.rs/opencv) | [Sponsor](https://github.com/sponsors/twistedfall)
@@ -18,6 +18,10 @@ mod manual;
 mod opencv;
 pub mod traits;
 
+/// Prelude for commonly used types and traits
+///
+/// The crate heavily relies on multiple traits to provide the methods of the C++ classes and implement the inheritance model, so
+/// without importing the prelude you will not be able to call class methods.
 pub mod prelude {
 	#[cfg(ocvrs_has_module_core)]
 	pub use crate::core::{DataType, Mat};
@@ -28,11 +32,11 @@ pub mod prelude {
 
 /// Reexported platform types that are used by OpenCV
 pub mod platform_types {
-	pub use libc::{FILE, clock_t, ptrdiff_t, size_t};
+	pub use libc::{ptrdiff_t, size_t};
 }
 
 /// Prelude for sys (externs) module and types
-pub mod mod_prelude_sys {
+mod mod_prelude_sys {
 	pub use core::ffi::{c_char, c_void};
 
 	pub use crate::platform_types::*;
@@ -40,8 +44,9 @@ pub mod mod_prelude_sys {
 }
 
 /// Prelude for generated modules and types
-pub mod mod_prelude {
+mod mod_prelude {
 	pub use std::ffi::OsStr;
+	#[cfg_attr(not(ocvrs_opencv_branch_4), allow(unused_imports))]
 	pub use std::marker::PhantomData;
 
 	pub use crate::boxed_ref::{BoxedRef, BoxedRefMut};

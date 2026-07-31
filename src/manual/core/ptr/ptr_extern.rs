@@ -1,4 +1,4 @@
-use std::ffi::c_void;
+use core::ffi::c_void;
 
 use crate::traits::{OpenCVFromExtern, OpenCVTypeExternContainerMove};
 use crate::{extern_receive, extern_send};
@@ -29,7 +29,7 @@ macro_rules! ptr_extern {
 	($type: ty, $extern_new_null: ident, $extern_delete: ident, $extern_inner_as_ptr: ident, $extern_inner_as_ptr_mut: ident $(,)?) => {
 		impl $crate::core::PtrExtern for $crate::core::Ptr<$type> {
 			#[inline]
-			unsafe fn extern_new_null() -> *mut ::std::ffi::c_void {
+			unsafe fn extern_new_null() -> *mut ::core::ffi::c_void {
 				unsafe { $crate::sys::$extern_new_null() }
 			}
 
@@ -39,13 +39,13 @@ macro_rules! ptr_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_inner_as_ptr(&self) -> *const ::std::ffi::c_void {
-				unsafe { $crate::sys::$extern_inner_as_ptr(self.as_raw()).cast::<::std::ffi::c_void>() }
+			unsafe fn extern_inner_as_ptr(&self) -> *const ::core::ffi::c_void {
+				unsafe { $crate::sys::$extern_inner_as_ptr(self.as_raw()).cast::<::core::ffi::c_void>() }
 			}
 
 			#[inline]
-			unsafe fn extern_inner_as_ptr_mut(&mut self) -> *mut ::std::ffi::c_void {
-				unsafe { $crate::sys::$extern_inner_as_ptr_mut(self.as_raw_mut()).cast::<::std::ffi::c_void>() }
+			unsafe fn extern_inner_as_ptr_mut(&mut self) -> *mut ::core::ffi::c_void {
+				unsafe { $crate::sys::$extern_inner_as_ptr_mut(self.as_raw_mut()).cast::<::core::ffi::c_void>() }
 			}
 		}
 	};

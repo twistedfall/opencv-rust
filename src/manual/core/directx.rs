@@ -1,6 +1,6 @@
 #![expect(non_snake_case)]
 
-use std::ffi::c_void;
+use core::ffi::c_void;
 
 pub trait ID3D11DeviceTrait {
 	fn as_raw_mut_ID3D11Device(&mut self) -> *mut c_void;

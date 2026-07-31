@@ -1,4 +1,4 @@
-use std::ffi::c_void;
+use core::ffi::c_void;
 use std::marker::PhantomData;
 use std::mem::ManuallyDrop;
 
@@ -9,11 +9,11 @@ use crate::traits::{Boxed, OpenCVTypeExternContainerMove};
 mod ptr_extern;
 mod ptr_f32;
 
-/// This is similar to Rust `Arc`, but handled by the C++. Some OpenCV functions insist on accepting `Ptr` instead of a heap
-/// allocated object, so we need to satisfy those.
+/// This is similar to Rust [`std::sync::Arc`], but handled by the C++. Some OpenCV functions insist on accepting [`Ptr`] instead
+/// of a heap allocated object, so we need to satisfy those.
 ///
-/// [docs.opencv.org 3.x](https://docs.opencv.org/3.4/d0/de7/structcv_1_1Ptr.html)
-/// [docs.opencv.org 4.x](https://en.cppreference.com/w/cpp/memory/shared_ptr)
+/// [docs.opencv.org 4.x](https://docs.opencv.org/4.13.0/dc/d84/group__core__basic.html#ga524e5e94ebf48db273a71ab275eaf5b5)
+/// [docs.opencv.org 5.x](https://docs.opencv.org/5.0/main_modules/core_basic.html#ptr)
 pub struct Ptr<T: ?Sized>
 where
 	Self: PtrExtern,
@@ -26,7 +26,7 @@ impl<T: ?Sized> Ptr<T>
 where
 	Self: PtrExtern,
 {
-	/// Create a new `Ptr` from the object
+	/// Create a new [`Ptr`] from the object
 	pub fn new(val: T) -> Self
 	where
 		T: OpenCVTypeExternContainerMove + Sized,
@@ -35,12 +35,12 @@ where
 		unsafe { Self::from_raw(Self::extern_new(val.opencv_into_extern())) }
 	}
 
-	/// Create a new `Ptr` which points to `NULL`
+	/// Create a new [`Ptr`] which points to `NULL`
 	///
 	/// Not generally useful, mostly for internal use.
 	///
 	/// # Safety
-	/// Should only be used as an argument to OpenCV functions that accept `Ptr` to `NULL`.
+	/// Should only be used as an argument to OpenCV functions that accept [`Ptr`] to `NULL`.
 	pub unsafe fn new_null() -> Self {
 		unsafe { Self::from_raw(Self::extern_new_null()) }
 	}

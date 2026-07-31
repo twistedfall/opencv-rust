@@ -1,5 +1,5 @@
+use core::ffi::c_void;
 use std::borrow::Borrow;
-use std::ffi::c_void;
 use std::iter::FromIterator;
 use std::marker::PhantomData;
 use std::mem::ManuallyDrop;

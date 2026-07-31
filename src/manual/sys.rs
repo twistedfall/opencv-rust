@@ -1,7 +1,7 @@
 // note to self, you can't use union here to store both result and error code because C++ side doesn't
 // support non-POD types as union fields
 
-use std::ffi::c_void;
+use core::ffi::c_void;
 use std::mem::MaybeUninit;
 
 use crate::Error;

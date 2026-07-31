@@ -1,6 +1,6 @@
 #![cfg(ocvrs_has_module_imgproc)]
 
-use std::ffi::c_void;
+use core::ffi::c_void;
 
 use opencv::core::{Point, Point2f, Rect, RotatedRect, Size, Size2f, Vec2f, Vec3b, Vector};
 use opencv::prelude::*;

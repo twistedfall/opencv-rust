@@ -86,7 +86,7 @@ impl<'r> Collector<'r> {
 		self.write_use_manual(&mut sys_rs, "sys")?;
 
 		// write hub_prelude that imports all module-specific preludes
-		writeln!(hub_rs, "pub mod hub_prelude {{")?;
+		writeln!(hub_rs, "pub(crate) mod hub_prelude {{")?;
 		for module in &self.gen_modules.modules {
 			writeln!(hub_rs, "\tpub use super::{}::prelude::*;", module.rust_name())?;
 		}

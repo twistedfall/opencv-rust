@@ -1,4 +1,4 @@
-use std::ffi::c_void;
+use core::ffi::c_void;
 use std::mem::{ManuallyDrop, transmute};
 
 use opencv::Result;
@@ -133,8 +133,6 @@ fn cast_descendant() -> Result<()> {
 #[test]
 fn cast_descendant_fail() -> Result<()> {
 	#![cfg(ocvrs_has_module_stitching)]
-	use std::convert::TryFrom;
-
 	use opencv::stitching::{Detail_Blender, Detail_FeatherBlender, Detail_MultiBandBlender};
 	use opencv::{Error, core};
 

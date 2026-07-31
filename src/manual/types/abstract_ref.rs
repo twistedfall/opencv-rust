@@ -1,4 +1,4 @@
-use std::ffi::c_void;
+use core::ffi::c_void;
 use std::marker::PhantomData;
 
 use crate::traits::Boxed;

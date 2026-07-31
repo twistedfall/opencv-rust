@@ -1,4 +1,4 @@
-//! Contains all tests that cover marshalling types to and from C++
+//! Contains all tests that cover marshaling types to and from C++
 
 use std::mem::ManuallyDrop;
 

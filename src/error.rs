@@ -1,3 +1,7 @@
+//! Crate error type
+//!
+//! Provides the [`Error`] type that encapsulates the error code and message from OpenCV and the corresponding [`Result`] alias.
+
 use std::char::TryFromCharError;
 use std::ffi::NulError;
 use std::fmt;
@@ -5,6 +9,10 @@ use std::num::TryFromIntError;
 
 use crate::core;
 
+/// Error type from OpenCV with the code and the message
+///
+/// The code is expected to be one of the [`core::Code`] constants, but it's never actually enforced in OpenCV so the code is exposed
+/// as plain [`i32`], to get the enum variant call [`Self::code_as_enum()`].
 pub struct Error {
 	pub code: i32,
 	pub message: String,
@@ -19,6 +27,9 @@ impl Error {
 		}
 	}
 
+	/// Return the corresponding [`core::Code`] variant of the error code, or [`None`] if no match has been found
+	///
+	/// The no match case shouldn't actually happen in reality.
 	#[inline]
 	pub fn code_as_enum(&self) -> Option<core::Code> {
 		error_code_as_enum(self.code)
@@ -74,8 +85,10 @@ impl From<TryFromIntError> for Error {
 
 impl std::error::Error for Error {}
 
+/// Alias to the [`std::result::Result`] with the crate specific [`Error`] type
 pub type Result<T, E = Error> = std::result::Result<T, E>;
 
+/// Given the OpenCV error code, returns the corresponding [`core::Code`] enum variant.
 pub fn error_code_as_enum(code: i32) -> Option<core::Code> {
 	match code {
 		core::StsOk => Some(core::Code::StsOk),

@@ -1,9 +1,8 @@
-use std::convert::TryInto;
-use std::ffi::c_void;
-use std::marker::PhantomData;
-use std::ops::{Deref, DerefMut};
 use std::{fmt, mem, ptr, slice};
 
+use ::core::ffi::c_void;
+use ::core::marker::PhantomData;
+use ::core::ops::{Deref, DerefMut};
 pub use mat_::*;
 
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};

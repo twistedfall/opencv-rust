@@ -1,4 +1,4 @@
-use std::ffi::c_void;
+use core::ffi::c_void;
 
 pub use enumeration::OpenCVBitfieldEnum;
 
@@ -7,13 +7,13 @@ use crate::Result;
 mod enumeration;
 mod string;
 
-/// Common trait of all OpenCV related types, helps with generic handling of FFI marshalling
+/// Common trait of all OpenCV related types, helps with generic handling of FFI marshaling
 ///
-/// This trait is somewhat unnecessary complex because of the need of handling String, we need to be able to
-/// pass &str as argument to functions that expect String and do necessary conversion through CString.
+/// This trait is somewhat unnecessary complex because of the need of handling [`String`]. We need to be able to
+/// pass [`&str`] as argument to functions that expect [`String`] and do necessary conversion through [`std::ffi::CString`].
 #[doc(hidden)]
 pub trait OpenCVType<'a>: OpenCVIntoExternContainer + OpenCVFromExtern {
-	/// Type when passed as argument to function, e.g. &str for String, for most other types it's Self
+	/// Type when passed as argument to function, e.g. [`&str`] for [`String`], for most other types it's Self
 	#[doc(hidden)]
 	type Arg: OpenCVIntoExternContainer;
 }
@@ -33,34 +33,34 @@ pub trait OpenCVFromExtern {
 
 /// Common trait for types that can be used as argument that will be converted into a OpenCV type.
 ///
-/// Mostly necessary to be able to pass `&str` argument for types that otherwise have `String` Rust representation.
+/// Mostly necessary to be able to pass [`&str`] argument for types that otherwise have [`String`] Rust representation.
 #[doc(hidden)]
 pub trait OpenCVIntoExternContainer: Sized {
-	/// Container to help marshall type over FFI boundary, e.g. CString for String or &str, for most other
-	/// types it's Self
+	/// Container to help marshal type over FFI boundary, e.g. [`std::ffi::CString`] for [`String`] or [`&str`], for most other
+	/// types it's [`Self`]
 	#[doc(hidden)]
 	type ExternContainer: OpenCVTypeExternContainer;
 
-	/// Convert Self into external container with possible error result, it shouldn't panic
+	/// Convert [`Self`] into external container with possible error result, it shouldn't panic
 	#[doc(hidden)]
 	#[inline]
 	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
 		Ok(self.opencv_into_extern_container_nofail())
 	}
 
-	/// Convert Self into external container in the nofail context, this can panic
+	/// Convert [`Self`] into external container in the nofail context, can panic
 	#[doc(hidden)]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer;
 }
 
-/// Common trait for the type that is used to help marshall OpenCV related type over the FFI boundary
+/// Common trait for the type that is used to help marshal OpenCV related type over the FFI boundary
 #[doc(hidden)]
 pub trait OpenCVTypeExternContainer {
-	/// Type when constant Self is sent to C++ function, usually it's Self for simple types or *const c_void
+	/// Type when constant [`Self`] is sent to C++ function, usually it's [`Self`] for simple types or *const c_void
 	/// for complex ones
 	#[doc(hidden)]
 	type ExternSend;
-	/// Type when mutable Self is sent to C++ function, usually it's Self for simple types or *mut c_void for
+	/// Type when mutable [`Self`] is sent to C++ function, usually it's [`Self`] for simple types or *mut c_void for
 	/// complex ones
 	#[doc(hidden)]
 	type ExternSendMut;
@@ -72,14 +72,14 @@ pub trait OpenCVTypeExternContainer {
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut;
 }
 
-/// Common trait for those `OpenCVTypeExternContainer`s that can be moved. Currently used for moving a boxed class behind a `Ptr`.
+/// Common trait for those [`OpenCVTypeExternContainer`]s that can be moved. Currently used for moving a boxed class behind a [`crate::core::Ptr`].
 #[doc(hidden)]
 pub trait OpenCVTypeExternContainerMove: OpenCVTypeExternContainer {
 	#[doc(hidden)]
 	fn opencv_into_extern(self) -> Self::ExternSendMut;
 }
 
-/// Extern type to receive the OpenCVType over FFI boundary, used to improve readability
+/// Extern type to receive the [`OpenCVType`] over FFI boundary, used to improve readability
 #[doc(hidden)]
 #[macro_export]
 macro_rules! extern_receive {
@@ -88,7 +88,7 @@ macro_rules! extern_receive {
 	};
 }
 
-/// Extern type to send the OpenCVTypeExternContainer over FFI boundary, used to improve readability
+/// Extern type to send the [`OpenCVTypeExternContainer`] over FFI boundary, used to improve readability
 #[doc(hidden)]
 #[macro_export]
 macro_rules! extern_send {
@@ -100,7 +100,7 @@ macro_rules! extern_send {
 	};
 }
 
-/// Extern type to send the owned OpenCVType over FFI boundary, used to improve readability
+/// Extern type to send the owned [`OpenCVType`] over FFI boundary, used to improve readability
 #[doc(hidden)]
 #[macro_export]
 macro_rules! extern_container_send {
@@ -112,7 +112,7 @@ macro_rules! extern_container_send {
 	};
 }
 
-/// Extern type to send the ::Arg of a OpenCVType over FFI boundary, used to improve readability
+/// Extern type to send the ::Arg of a [`OpenCVType`] over FFI boundary, used to improve readability
 #[doc(hidden)]
 #[macro_export]
 macro_rules! extern_arg_send {
