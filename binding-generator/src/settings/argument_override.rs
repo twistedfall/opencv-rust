@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use crate::SupportedModule;
 use crate::func::FuncMatcher;
 use crate::type_ref::Constness::{Const, Mut};
-use crate::type_ref::TypeRefTypeHint;
+use crate::type_ref::{Nullability, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::Lifetime;
 
 pub const ARG_OVERRIDE_SELF: &str = "this";
@@ -43,68 +43,54 @@ pub fn property_override_factory(module: SupportedModule) -> PropertyOverride {
 }
 
 fn calib3d_arg_override_factory() -> ArgOverride {
-	FuncMatcher::create(HashMap::from([
-		(
-			"cv::getOptimalNewCameraMatrix",
-			vec![(
+	FuncMatcher::create(HashMap::from([(
+		"cv::findCirclesGrid",
+		vec![
+			(
 				pred!(
 					mut,
-					[
-						"cameraMatrix",
-						"distCoeffs",
-						"imageSize",
-						"alpha",
-						"newImgSize",
-						"validPixROI",
-						"centerPrincipalPoint",
-					]
+					["image", "patternSize", "centers", "flags", "blobDetector", "parameters"]
 				),
-				HashMap::from([("validPixROI", TypeRefTypeHint::Nullable)]),
-			)],
-		),
-		(
-			"cv::findCirclesGrid",
-			vec![
-				(
-					pred!(
-						mut,
-						["image", "patternSize", "centers", "flags", "blobDetector", "parameters"]
-					),
-					HashMap::from([("blobDetector", TypeRefTypeHint::Nullable)]),
-				),
-				(
-					pred!(mut, ["image", "patternSize", "centers", "flags", "blobDetector"]),
-					HashMap::from([("blobDetector", TypeRefTypeHint::Nullable)]),
-				),
-			],
-		),
-	]))
+				HashMap::from([("blobDetector", TypeRefTypeHint::Nullable)]),
+			),
+			(
+				pred!(mut, ["image", "patternSize", "centers", "flags", "blobDetector"]),
+				HashMap::from([("blobDetector", TypeRefTypeHint::Nullable)]),
+			),
+		],
+	)]))
 }
 
 fn core_arg_override_factory() -> ArgOverride {
 	FuncMatcher::create(HashMap::from([
 		(
 			"cv::Mat::at",
-			vec![(pred!(["idx"]), HashMap::from([("idx", TypeRefTypeHint::Slice)]))],
+			vec![(
+				pred!(["idx"]),
+				HashMap::from([("idx", TypeRefTypeHint::Slice(Nullability::NotNullable))]),
+			)],
 		),
 		(
 			"cv::Mat::ptr",
-			vec![(pred!(["idx"]), HashMap::from([("idx", TypeRefTypeHint::Slice)]))],
+			vec![(
+				pred!(["idx"]),
+				HashMap::from([("idx", TypeRefTypeHint::Slice(Nullability::NotNullable))]),
+			)],
 		),
 		(
 			"cv::Mat::Mat",
 			vec![
 				(
 					pred!(mut, ["sizes", "type", "data", "steps"]),
-					HashMap::from([("steps", TypeRefTypeHint::NullableSlice)]),
+					HashMap::from([("steps", TypeRefTypeHint::Slice(Nullability::Nullable))]),
 				),
 				(
 					pred!(mut, ["ndims", "sizes", "type", "s"]),
-					HashMap::from([("steps", TypeRefTypeHint::NullableSlice)]),
+					HashMap::from([("steps", TypeRefTypeHint::Slice(Nullability::Nullable))]),
 				),
 				(
 					pred!(mut, ["ndims", "sizes", "type", "data", "steps"]),
-					HashMap::from([("steps", TypeRefTypeHint::NullableSlice)]),
+					HashMap::from([("steps", TypeRefTypeHint::Slice(Nullability::Nullable))]),
 				),
 			],
 		),
@@ -113,21 +99,11 @@ fn core_arg_override_factory() -> ArgOverride {
 			vec![
 				(
 					pred!(mut, ["src", "minVal", "maxVal", "minLoc", "maxLoc", "mask"]),
-					HashMap::from([
-						("minVal", TypeRefTypeHint::Nullable),
-						("maxVal", TypeRefTypeHint::Nullable),
-						("minLoc", TypeRefTypeHint::Nullable),
-						("maxLoc", TypeRefTypeHint::Nullable),
-					]),
+					HashMap::from([("minVal", TypeRefTypeHint::Nullable)]),
 				),
 				(
 					pred!(mut, ["a", "minVal", "maxVal", "minIdx", "maxIdx"]),
-					HashMap::from([
-						("minVal", TypeRefTypeHint::Nullable),
-						("maxVal", TypeRefTypeHint::Nullable),
-						("minIdx", TypeRefTypeHint::Nullable),
-						("maxIdx", TypeRefTypeHint::Nullable),
-					]),
+					HashMap::from([("maxVal", TypeRefTypeHint::Nullable), ("minVal", TypeRefTypeHint::Nullable)]),
 				),
 			],
 		),
@@ -135,12 +111,7 @@ fn core_arg_override_factory() -> ArgOverride {
 			"cv::minMaxIdx",
 			vec![(
 				pred!(mut, ["src", "minVal", "maxVal", "minIdx", "maxIdx", "mask"]),
-				HashMap::from([
-					("minVal", TypeRefTypeHint::Nullable),
-					("maxVal", TypeRefTypeHint::Nullable),
-					("minIdx", TypeRefTypeHint::Nullable),
-					("maxIdx", TypeRefTypeHint::Nullable),
-				]),
+				HashMap::from([("minVal", TypeRefTypeHint::Nullable)]),
 			)],
 		),
 		(
@@ -253,13 +224,6 @@ fn imgproc_arg_override_factory() -> ArgOverride {
 					]),
 				),
 			],
-		),
-		(
-			"cv::EMD",
-			vec![(
-				pred!(mut, ["signature1", "signature2", "distType", "cost", "lowerBound", "flow"],),
-				HashMap::from([("lowerBound", TypeRefTypeHint::Nullable)]),
-			)],
 		),
 	]))
 }

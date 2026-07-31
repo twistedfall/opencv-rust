@@ -5,24 +5,23 @@ use std::sync::Arc;
 
 use clang::Type;
 
+use crate::debug;
 use crate::type_ref::TypeRef;
 use crate::writer::rust_native::type_ref::Lifetime;
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum TypeRefTypeHint {
 	None,
-	/// This argument should be wrapped in an `Option` on Rust side
+	/// This argument should be wrapped in an [`Option`] on Rust side
 	Nullable,
-	/// Treat this pointer argument as `Option`al slice
-	NullableSlice,
 	/// Treat this pointer argument as slice
-	Slice,
+	Slice(Nullability),
 	/// This argument specified the length of the slice, arguments are (rust_arg_name, divisor)
 	LenForSlice(Arc<[String]>, usize),
-	/// Treat C++ string as a byte buffer (`Vec<u8>`) instead of an actual string, argument is optional cpp_arg_name of the argument that specifies the buffer byte length
+	/// Treat C++ string as a byte buffer ([`Vec<u8>`]) instead of an actual string, argument is optional cpp_arg_name of the argument that specifies the buffer byte length
 	StringAsBytes(Option<Arc<str>>),
 	/// Treat C++ string as a file path, done heuristically based on the argument name
-	StringAsPath,
+	StringAsPath(Nullability),
 	/// String len is passed in an additional argument (cpp_arg_name)
 	StringWithLen(Rc<str>),
 	/// when C++ char needs to be represented as Rust char
@@ -57,12 +56,13 @@ impl TypeRefTypeHint {
 	pub fn recurse_inner(self) -> Self {
 		match self {
 			Self::Nullable => Self::None,
-			Self::NullableSlice => Self::Slice,
+			Self::Slice(Nullability::Nullable) => Self::Slice(Nullability::NotNullable),
+			Self::StringAsPath(Nullability::Nullable) => Self::StringAsPath(Nullability::NotNullable),
 			Self::None
-			| Self::Slice
+			| Self::Slice(Nullability::NotNullable)
 			| Self::LenForSlice(_, _)
 			| Self::StringAsBytes(_)
-			| Self::StringAsPath
+			| Self::StringAsPath(Nullability::NotNullable)
 			| Self::StringWithLen(_)
 			| Self::CharAsRustChar
 			| Self::CharPtrSingleChar
@@ -76,12 +76,11 @@ impl TypeRefTypeHint {
 
 	pub fn nullability(&self) -> Nullability {
 		match self {
-			Self::Nullable | Self::NullableSlice => Nullability::Nullable,
+			Self::Slice(nullability) | Self::StringAsPath(nullability) => *nullability,
+			Self::Nullable => Nullability::Nullable,
 			Self::None
-			| Self::Slice
 			| Self::LenForSlice(_, _)
 			| Self::StringAsBytes(_)
-			| Self::StringAsPath
 			| Self::StringWithLen(_)
 			| Self::CharAsRustChar
 			| Self::CharPtrSingleChar
@@ -90,6 +89,34 @@ impl TypeRefTypeHint {
 			| Self::BoxedAsRef(_, _, _)
 			| Self::TraitClassConcrete
 			| Self::ExplicitLifetime(_) => Nullability::NotNullable,
+		}
+	}
+
+	pub fn set_nullability(&mut self, nullability: Nullability) {
+		match self {
+			Self::Slice(_) => *self = Self::Slice(nullability),
+			Self::None | Self::Nullable => {
+				*self = if nullability.is_nullable() {
+					Self::Nullable
+				} else {
+					Self::None
+				}
+			}
+			Self::StringAsPath(_) => *self = Self::StringAsPath(nullability),
+			Self::LenForSlice(_, _)
+			| Self::StringAsBytes(_)
+			| Self::StringWithLen(_)
+			| Self::CharAsRustChar
+			| Self::CharPtrSingleChar
+			| Self::PrimitivePtrAsRaw
+			| Self::AddArrayLength(_)
+			| Self::BoxedAsRef(_, _, _)
+			| Self::TraitClassConcrete
+			| Self::ExplicitLifetime(_) => {
+				if debug::enabled() {
+					panic!("=== Can't set nullability for {self:?}")
+				}
+			}
 		}
 	}
 

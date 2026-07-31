@@ -137,6 +137,13 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
+	pub fn type_hint_mut(&mut self) -> &mut TypeRefTypeHint {
+		match self {
+			Self::Clang { type_hint, .. } => type_hint,
+			Self::Desc(desc) => &mut Rc::make_mut(desc).type_hint,
+		}
+	}
+
 	pub fn with_type_hint(mut self, type_hint: TypeRefTypeHint) -> Self {
 		self.set_type_hint(type_hint);
 		self
@@ -144,15 +151,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn set_type_hint(&mut self, type_hint: TypeRefTypeHint) {
 		if *self.type_hint() != type_hint {
-			match self {
-				Self::Clang {
-					type_hint: old_type_hint,
-					..
-				} => *old_type_hint = type_hint,
-				Self::Desc(desc) => {
-					Rc::make_mut(desc).type_hint = type_hint;
-				}
-			}
+			*self.type_hint_mut() = type_hint;
 		}
 	}
 

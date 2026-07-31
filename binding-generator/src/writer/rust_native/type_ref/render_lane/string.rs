@@ -1,8 +1,9 @@
 use std::borrow::Cow;
 
 use super::{FunctionProps, RenderLaneTrait, rust_arg_func_decl, rust_self_func_decl};
-use crate::type_ref::{Constness, ExternDir, StrEnc, StrType, TypeRef, TypeRefTypeHint};
-use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
+use crate::NameStyle;
+use crate::type_ref::{Constness, ExternDir, FishStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
+use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
 
 pub struct InStringRenderLane<'tu, 'ge> {
 	str_type: StrType,
@@ -26,7 +27,12 @@ impl RenderLaneTrait for InStringRenderLane<'_, '_> {
 			StrEnc::Binary => "&[u8]",
 			StrEnc::OsStr => "impl AsRef<OsStr>",
 		};
-		rust_arg_func_decl(name, Constness::Const, typ)
+		let typ = self
+			.non_canonical
+			.type_hint()
+			.nullability()
+			.rust_wrap_nullable_func_decl(typ.into(), NameStyle::Reference(FishStyle::No));
+		rust_arg_func_decl(name, Constness::Const, &typ)
 	}
 
 	fn rust_arg_pre_call(&self, name: &str, function_props: &FunctionProps) -> String {
@@ -35,9 +41,14 @@ impl RenderLaneTrait for InStringRenderLane<'_, '_> {
 		} else {
 			""
 		};
+		let option_spec = if self.non_canonical.type_hint().nullability().is_nullable() {
+			"option "
+		} else {
+			""
+		};
 		match self.str_type.encoding() {
 			StrEnc::Text | StrEnc::Binary => format!("extern_container_arg!({fail_spec}{name})"),
-			StrEnc::OsStr => format!("path_arg!({fail_spec}{name})"),
+			StrEnc::OsStr => format!("path_arg!({fail_spec}{option_spec}{name})"),
 		}
 	}
 
@@ -117,11 +128,10 @@ impl RenderLaneTrait for OutStringRenderLane<'_, '_> {
 					TypeRefTypeHint::StringWithLen(len_arg_name) => len_arg_name.as_ref(),
 					TypeRefTypeHint::None
 					| TypeRefTypeHint::Nullable
-					| TypeRefTypeHint::NullableSlice
-					| TypeRefTypeHint::Slice
+					| TypeRefTypeHint::Slice(_)
 					| TypeRefTypeHint::LenForSlice(_, _)
 					| TypeRefTypeHint::StringAsBytes(_)
-					| TypeRefTypeHint::StringAsPath
+					| TypeRefTypeHint::StringAsPath(_)
 					| TypeRefTypeHint::CharAsRustChar
 					| TypeRefTypeHint::CharPtrSingleChar
 					| TypeRefTypeHint::PrimitivePtrAsRaw

@@ -9,7 +9,7 @@ use crate::class::ClassDesc;
 use crate::function::Function;
 use crate::smart_ptr::{SmartPtr, SmartPtrDesc};
 use crate::tuple::Tuple;
-use crate::type_ref::{Constness, TemplateArg, TypeRef, TypeRefKind, TypeRefTypeHint};
+use crate::type_ref::{Constness, Nullability, TemplateArg, TypeRef, TypeRefKind, TypeRefTypeHint};
 use crate::typedef::{NewTypedefResult, TypedefDesc};
 use crate::vector::{Vector, VectorDesc};
 use crate::{Class, CppNameStyle, Element, Enum, GeneratorEnv, StringExt, Typedef, settings};
@@ -418,7 +418,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					let pointee_kind = pointee_typeref.kind();
 					if pointee_kind.is_function() {
 						pointee_kind.into_owned()
-					} else if matches!(pointee_typeref.type_hint(), TypeRefTypeHint::Slice) {
+					} else if matches!(pointee_typeref.type_hint(), TypeRefTypeHint::Slice(Nullability::NotNullable)) {
 						TypeRefKind::Array(pointee_typeref, None)
 					} else {
 						TypeRefKind::Pointer(pointee_typeref)

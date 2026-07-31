@@ -17,7 +17,7 @@ use crate::element::ExcludeKind;
 use crate::entity::ToEntity;
 use crate::field::FieldDesc;
 use crate::settings::{ARG_OVERRIDE_SELF, FuncSpec};
-use crate::type_ref::{Constness, CppNameStyle, FishStyle, TypeRefDesc, TypeRefTypeHint};
+use crate::type_ref::{Constness, CppNameStyle, FishStyle, Nullability, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
@@ -492,14 +492,34 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					.enumerate()
 					.map(|(idx, a)| {
 						let arg_name = a.get_name();
-						if let Some(func_arg_override) = arg_overrides
-							&& let Some(type_hint) = arg_name.as_deref().and_then(|arg_name| func_arg_override.get(arg_name))
-						{
-							return Field::new_ext(a, type_hint.clone(), gen_env);
-						}
+						let overridden_type_hint = arg_overrides
+							.and_then(|func_arg_override| arg_name.as_deref().and_then(|arg_name| func_arg_override.get(arg_name)));
 						let mut arg = Field::new(a, gen_env);
+						let debug = debug::enabled();
+						// for non-debug we want to skip the automatic hint detection
+						if !debug {
+							if let Some(overridden_type_hint) = overridden_type_hint {
+								arg.set_type_ref_type_hint(overridden_type_hint.clone());
+								return arg;
+							}
+						}
 						if let Some(arg_name) = arg_name.as_deref() {
 							update_path_argument(&mut arg, arg_name);
+						}
+						update_nullable_argument(&mut arg);
+						// special debug handling, we do a check if the argument override doesn't override a useful auto-detected type hint
+						if debug && let Some(overridden_type_hint) = overridden_type_hint {
+							let detected_type_hint = arg.type_ref_type_hint();
+							if *detected_type_hint != TypeRefTypeHint::None
+								&& !(*detected_type_hint == TypeRefTypeHint::Nullable
+									&& *overridden_type_hint == TypeRefTypeHint::Slice(Nullability::Nullable))
+							{
+								panic!(
+									"Overriding detected type hint: {detected_type_hint:?} with manual: {overridden_type_hint:?} for: {arg:#?}",
+								);
+							}
+							arg.set_type_ref_type_hint(overridden_type_hint.clone());
+							return arg;
 						}
 						slice_arg_finder.feed(idx, &arg);
 						arg
@@ -888,12 +908,21 @@ fn update_path_argument(field: &mut Field, arg_name: &str) {
 		.next()
 		.is_some();
 	if arg_name_matched {
-		field.set_type_ref_type_hint(TypeRefTypeHint::StringAsPath);
+		let nullability = field.type_ref_type_hint().nullability();
+		field.set_type_ref_type_hint(TypeRefTypeHint::StringAsPath(nullability));
 		return;
 	}
 
 	if arg_name == "filenames" || arg_name == "paths" {
 		// todo: add support for Vector<impl Into<OsStr>>
+	}
+}
+
+fn update_nullable_argument(field: &mut Field) {
+	if field.default_value().is_some_and(|def_val| {
+		def_val == "nullptr" || def_val == "NULL" || def_val == "0" && field.type_ref().kind().as_pointer().is_some()
+	}) {
+		field.type_ref_type_hint_mut().set_nullability(Nullability::Nullable);
 	}
 }
 
@@ -903,7 +932,7 @@ fn update_slice_arguments(arguments: &mut [Field], slice_arg_finder: SliceArgFin
 		for &slice_arg_idx in &slice_arg_indices {
 			let slice_arg = &mut arguments[slice_arg_idx];
 			slice_arg_names.push(slice_arg.rust_name(NameStyle::ref_()).into_owned());
-			slice_arg.set_type_ref_type_hint(TypeRefTypeHint::Slice);
+			slice_arg.set_type_ref_type_hint(TypeRefTypeHint::Slice(Nullability::NotNullable));
 		}
 		let slice_len_arg = &mut arguments[slice_len_arg_idx];
 		let divisor = if slice_len_arg.cpp_name(CppNameStyle::Declaration).contains("pair") {

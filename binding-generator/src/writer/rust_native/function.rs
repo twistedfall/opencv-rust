@@ -21,7 +21,7 @@ impl RustElement for Function<'_, '_> {
 					args_str.extend_sep(", ", arg.type_ref().rust_extern(ExternDir::Contained).as_ref());
 				}
 			}
-			Nullability::Nullable.rust_wrap_nullable_decl(
+			Nullability::Nullable.rust_wrap_nullable_func_decl(
 				format!(
 					"Box{fish}<dyn FnMut({args_str}) -> {ret} + Send + Sync + 'static>",
 					fish = style.rust_turbo_fish_qual(),
@@ -48,7 +48,7 @@ impl<'tu, 'ge> FunctionExt<'tu, 'ge> for Function<'tu, 'ge> {
 			args_str.extend_sep(", ", arg.type_ref().rust_extern(ExternDir::Contained).as_ref());
 		}
 		let ret = self.return_type();
-		Nullability::Nullable.rust_wrap_nullable_decl(
+		Nullability::Nullable.rust_wrap_nullable_func_decl(
 			format!(
 				r#"unsafe extern "C" fn({args_str}) -> {ret}"#,
 				ret = ret.rust_extern(ExternDir::Contained)

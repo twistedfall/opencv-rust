@@ -6,7 +6,7 @@ use clang::TypeKind;
 use crate::function::Function;
 use crate::smart_ptr::SmartPtr;
 use crate::tuple::Tuple;
-use crate::type_ref::{Dir, StrEnc, StrType, TypeRef, TypeRefTypeHint};
+use crate::type_ref::{Dir, Nullability, StrEnc, StrType, TypeRef, TypeRefTypeHint};
 use crate::vector::Vector;
 use crate::{Class, CppNameStyle, Element, Enum, Typedef};
 
@@ -263,7 +263,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		if let Some((_, str_type)) = out.as_mut() {
 			match type_hint {
 				TypeRefTypeHint::StringAsBytes(_) => str_type.set_encoding(StrEnc::Binary),
-				TypeRefTypeHint::StringAsPath => str_type.set_encoding(StrEnc::OsStr),
+				TypeRefTypeHint::StringAsPath(_) => str_type.set_encoding(StrEnc::OsStr),
 				_ => {}
 			}
 		}
@@ -310,7 +310,8 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 	///
 	/// We want to present such cases as `&[u8]` on the Rust side.
 	pub fn is_void_slice(&self, type_hint: &TypeRefTypeHint) -> bool {
-		matches!(type_hint, TypeRefTypeHint::Slice) && self.as_variable_array().is_some_and(|inner| inner.kind().is_void())
+		matches!(type_hint, TypeRefTypeHint::Slice(Nullability::NotNullable))
+			&& self.as_variable_array().is_some_and(|inner| inner.kind().is_void())
 	}
 
 	pub fn is_generic(&self) -> bool {

@@ -12,7 +12,7 @@ use super::tuple::TupleExt;
 use super::vector::VectorExt;
 use crate::renderer::TypeRefRenderer;
 use crate::type_ref::{
-	Constness, Dir, ExternDir, FishStyle, InputOutputArrayKind, NameStyle, TypeRef, TypeRefKind, TypeRefTypeHint,
+	Constness, Dir, ExternDir, FishStyle, InputOutputArrayKind, NameStyle, Nullability, TypeRef, TypeRefKind, TypeRefTypeHint,
 };
 use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::type_ref::render_lane::{
@@ -79,7 +79,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 					CppPassByVoidPtrRenderLane::from_non_canonical_indirection(self.clone(), Indirection::None),
 				),
 				TypeRefKind::Array(elem, None) => {
-					if matches!(self.type_hint(), TypeRefTypeHint::Slice) && elem.kind().is_void() {
+					if matches!(self.type_hint(), TypeRefTypeHint::Slice(Nullability::NotNullable)) && elem.kind().is_void() {
 						RenderLane::VoidSlice(VoidSliceRenderLane::from_canonical(canonical.into_owned()))
 					} else {
 						RenderLane::VariableArray(VariableArrayRenderLane::from_canonical_element(canonical.into_owned(), elem))

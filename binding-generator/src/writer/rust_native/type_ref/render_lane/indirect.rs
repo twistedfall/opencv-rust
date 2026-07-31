@@ -35,12 +35,16 @@ impl RenderLaneTrait for IndirectRenderLane<'_, '_> {
 	}
 
 	fn rust_arg_func_call(&self, name: &str) -> String {
-		self
-			.non_canonical
-			.type_hint()
-			.nullability()
-			.rust_wrap_nullable_func_call(name, name.into(), self.non_canonical.constness())
-			.into_owned()
+		if self.non_canonical.kind().is_void_ptr() {
+			name.to_string()
+		} else {
+			self
+				.non_canonical
+				.type_hint()
+				.nullability()
+				.rust_wrap_nullable_func_call(name, name.into(), self.non_canonical.constness())
+				.into_owned()
+		}
 	}
 
 	fn rust_extern_arg_func_decl(&self, name: &str) -> String {

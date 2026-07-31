@@ -63,21 +63,16 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		}
 	}
 
-	pub fn set_type_ref_type_hint(&mut self, type_ref_type_hint: TypeRefTypeHint) {
+	pub fn type_ref_type_hint_mut(&mut self) -> &mut TypeRefTypeHint {
 		match self {
-			Self::Clang {
-				type_ref_type_hint: self_type_ref_type_hint,
-				..
-			} => {
-				if *self_type_ref_type_hint != type_ref_type_hint {
-					*self_type_ref_type_hint = type_ref_type_hint;
-				}
-			}
-			Self::Desc(desc) => {
-				if *desc.type_ref.type_hint() != type_ref_type_hint {
-					Rc::make_mut(desc).type_ref.set_type_hint(type_ref_type_hint);
-				}
-			}
+			Self::Clang { type_ref_type_hint, .. } => type_ref_type_hint,
+			Self::Desc(desc) => Rc::make_mut(desc).type_ref.type_hint_mut(),
+		}
+	}
+
+	pub fn set_type_ref_type_hint(&mut self, type_ref_type_hint: TypeRefTypeHint) {
+		if *self.type_ref_type_hint() != type_ref_type_hint {
+			*self.type_ref_type_hint_mut() = type_ref_type_hint;
 		}
 	}
 

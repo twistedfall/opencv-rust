@@ -4,12 +4,12 @@ use crate::NameStyle;
 use crate::type_ref::{Constness, Nullability};
 
 pub trait NullabilityExt {
-	fn rust_wrap_nullable_decl(self, typ: Cow<str>, name_style: NameStyle) -> Cow<str>;
+	fn rust_wrap_nullable_func_decl(self, typ: Cow<str>, name_style: NameStyle) -> Cow<str>;
 	fn rust_wrap_nullable_func_call<'call>(self, name: &str, call: Cow<'call, str>, constness: Constness) -> Cow<'call, str>;
 }
 
 impl NullabilityExt for Nullability {
-	fn rust_wrap_nullable_decl(self, typ: Cow<str>, name_style: NameStyle) -> Cow<str> {
+	fn rust_wrap_nullable_func_decl(self, typ: Cow<str>, name_style: NameStyle) -> Cow<str> {
 		match self {
 			Nullability::Nullable => format!("Option{fish}<{typ}>", fish = name_style.rust_turbo_fish_qual()).into(),
 			Nullability::NotNullable => typ,

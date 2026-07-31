@@ -11,43 +11,6 @@ use crate::writer::rust_native::function::FunctionExt;
 use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
 use crate::{CowMapBorrowedExt, Element, IteratorExt, settings};
 
-fn render_rust_tpl<'a>(
-	renderer: impl TypeRefRenderer<'a>,
-	type_ref: &TypeRef,
-	lifetime: Option<Lifetime>,
-	fish_style: FishStyle,
-) -> String {
-	let generic_types = type_ref.template_specialization_args();
-	if !generic_types.is_empty() {
-		let const_generics_implemented = type_ref
-			.kind()
-			.as_class()
-			.is_some_and(|cls| settings::IMPLEMENTED_CONST_GENERICS.contains(cls.cpp_name(CppNameStyle::Reference).as_ref()));
-		let mut constant_suffix = String::new();
-		let generic_types = generic_types.iter().filter_map(|t| match t {
-			TemplateArg::Typename(type_ref) => Some(renderer.recurse().render(type_ref)),
-			TemplateArg::Constant(literal) => {
-				if const_generics_implemented {
-					Some(literal.into())
-				} else {
-					constant_suffix += literal;
-					None
-				}
-			}
-			TemplateArg::Unknown => None,
-		});
-		let mut generics = generic_types.join(", ");
-		if let Some(lifetime) = lifetime {
-			generics.insert_str(0, &format!("{lifetime:,<#}"));
-		}
-		format!("{constant_suffix}{fish}<{generics}>", fish = fish_style.rust_qual())
-	} else if let Some(lifetime) = lifetime {
-		format!("{fish}<{lifetime:#}>", fish = fish_style.rust_qual())
-	} else {
-		"".to_string()
-	}
-}
-
 pub struct RustRenderer {
 	pub name_style: NameStyle,
 	pub lifetime: Lifetime,
@@ -62,6 +25,38 @@ impl RustRenderer {
 		match size {
 			Some(size) => format!("[{elem_type}; {size}]"),
 			None => format!("&{cnst}[{elem_type}]", cnst = constness.rust_qual()),
+		}
+	}
+
+	fn render_rust_tpl(&self, type_ref: &TypeRef, lifetime: Option<Lifetime>, fish_style: FishStyle) -> String {
+		let generic_types = type_ref.template_specialization_args();
+		if !generic_types.is_empty() {
+			let const_generics_implemented = type_ref
+				.kind()
+				.as_class()
+				.is_some_and(|cls| settings::IMPLEMENTED_CONST_GENERICS.contains(cls.cpp_name(CppNameStyle::Reference).as_ref()));
+			let mut constant_suffix = String::new();
+			let generic_types = generic_types.iter().filter_map(|t| match t {
+				TemplateArg::Typename(type_ref) => Some(self.recurse().render(type_ref)),
+				TemplateArg::Constant(literal) => {
+					if const_generics_implemented {
+						Some(literal.into())
+					} else {
+						constant_suffix += literal;
+						None
+					}
+				}
+				TemplateArg::Unknown => None,
+			});
+			let mut generics = generic_types.join(", ");
+			if let Some(lifetime) = lifetime {
+				generics.insert_str(0, &format!("{lifetime:,<#}"));
+			}
+			format!("{constant_suffix}{fish}<{generics}>", fish = fish_style.rust_qual())
+		} else if let Some(lifetime) = lifetime {
+			format!("{fish}<{lifetime:#}>", fish = fish_style.rust_qual())
+		} else {
+			"".to_string()
 		}
 	}
 }
@@ -85,7 +80,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 					type_ref
 						.type_hint()
 						.nullability()
-						.rust_wrap_nullable_decl(typ.into(), self.name_style)
+						.rust_wrap_nullable_func_decl(typ.into(), self.name_style)
 				}
 				TypeRefKind::StdVector(vec) => vec.rust_name(self.name_style),
 				TypeRefKind::StdTuple(tuple) => tuple.rust_name(self.name_style),
@@ -108,14 +103,14 @@ impl TypeRefRenderer<'_> for RustRenderer {
 					type_ref
 						.type_hint()
 						.nullability()
-						.rust_wrap_nullable_decl(typ.into(), self.name_style)
+						.rust_wrap_nullable_func_decl(typ.into(), self.name_style)
 				}
 				TypeRefKind::SmartPtr(ptr) => {
 					let typ = ptr.rust_name(self.name_style);
 					type_ref
 						.type_hint()
 						.nullability()
-						.rust_wrap_nullable_decl(typ, self.name_style)
+						.rust_wrap_nullable_func_decl(typ, self.name_style)
 				}
 				TypeRefKind::Class(cls) => {
 					let fish_style = self.name_style.turbo_fish_style();
@@ -123,7 +118,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 					format!(
 						"{name}{generic}",
 						name = cls.rust_name(self.name_style),
-						generic = render_rust_tpl(self, type_ref, lifetime, fish_style),
+						generic = self.render_rust_tpl(type_ref, lifetime, fish_style),
 					)
 					.into()
 				}

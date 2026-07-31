@@ -1,6 +1,7 @@
 use std::ffi::{CString, OsStr, c_char, c_void};
 
 use super::{OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
+use crate::Result;
 use crate::templ::receive_string;
 use crate::traits::OpenCVFromExtern;
 
@@ -30,7 +31,7 @@ impl OpenCVIntoExternContainer for String {
 	type ExternContainer = CString;
 
 	#[inline]
-	fn opencv_into_extern_container(self) -> crate::Result<Self::ExternContainer> {
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
 		CString::new(self).map_err(|e| e.into())
 	}
 
@@ -44,13 +45,27 @@ impl OpenCVIntoExternContainer for &str {
 	type ExternContainer = CString;
 
 	#[inline]
-	fn opencv_into_extern_container(self) -> crate::Result<Self::ExternContainer> {
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
 		CString::new(self).map_err(|e| e.into())
 	}
 
 	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
 		cstring_new_nofail(self)
+	}
+}
+
+impl OpenCVIntoExternContainer for Option<&str> {
+	type ExternContainer = Option<CString>;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		self.map(OpenCVIntoExternContainer::opencv_into_extern_container).transpose()
+	}
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self.map(OpenCVIntoExternContainer::opencv_into_extern_container_nofail)
 	}
 }
 
@@ -66,6 +81,25 @@ impl OpenCVTypeExternContainer for CString {
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		unimplemented!("Casting CString::as_ptr() to mut is UB")
+	}
+}
+
+impl OpenCVTypeExternContainer for Option<CString> {
+	type ExternSend = *const c_char;
+	type ExternSendMut = *mut c_char;
+
+	#[inline]
+	fn opencv_as_extern(&self) -> Self::ExternSend {
+		self
+			.as_ref()
+			.map_or_else(|| std::ptr::null(), OpenCVTypeExternContainer::opencv_as_extern)
+	}
+
+	#[inline]
+	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
+		self
+			.as_mut()
+			.map_or_else(|| std::ptr::null_mut(), OpenCVTypeExternContainer::opencv_as_extern_mut)
 	}
 }
 
@@ -109,11 +143,27 @@ impl OpenCVTypeExternContainer for Vec<u8> {
 impl OpenCVIntoExternContainer for &OsStr {
 	type ExternContainer = CString;
 
-	fn opencv_into_extern_container(self) -> crate::Result<Self::ExternContainer> {
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
 		CString::new(self.as_encoded_bytes()).map_err(|e| e.into())
 	}
 
+	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
 		cstring_new_nofail(self.as_encoded_bytes())
+	}
+}
+
+impl OpenCVIntoExternContainer for Option<&OsStr> {
+	type ExternContainer = Option<CString>;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		self.map(OpenCVIntoExternContainer::opencv_into_extern_container).transpose()
+	}
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self.map(OpenCVIntoExternContainer::opencv_into_extern_container_nofail)
 	}
 }

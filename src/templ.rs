@@ -118,6 +118,14 @@ macro_rules! path_arg {
 		let $name = $name.as_ref();
 		extern_container_arg!($name);
 	};
+	(nofail option $name: ident) => {
+		let $name = $name.as_ref().map(|x| x.as_ref());
+		extern_container_arg!(nofail $name);
+	};
+	(option $name: ident) => {
+		let $name = $name.as_ref().map(|x| x.as_ref());
+		extern_container_arg!($name);
+	};
 }
 
 macro_rules! return_send {
@@ -132,14 +140,14 @@ macro_rules! return_receive {
 	};
 }
 
-/// The return type of this function goes into `receive_string::<String>()`
+/// The return type of this function goes into [`receive_string::<String>()`]
 #[inline(always)]
 pub unsafe fn ocvrs_create_string(s: *const c_char) -> *mut String {
 	let s = unsafe { CStr::from_ptr(s) }.to_string_lossy().into_owned();
 	Box::into_raw(Box::new(s))
 }
 
-/// The return type of this function goes into `receive_string::<Vec<u8>>()`
+/// The return type of this function goes into [`receive_string::<Vec<u8>>()`]
 #[inline(always)]
 pub unsafe fn ocvrs_create_byte_string(v: *const u8, len: size_t) -> *mut Vec<u8> {
 	let byte_slice = if v.is_null() {
@@ -151,7 +159,7 @@ pub unsafe fn ocvrs_create_byte_string(v: *const u8, len: size_t) -> *mut Vec<u8
 	Box::into_raw(Box::new(v))
 }
 
-/// Used for both regular `String` and byte string (`Vec<u8>`)
+/// Used for both regular [`String`] and byte string ([`Vec<u8>`])
 #[inline]
 pub unsafe fn receive_string<T>(s: *mut T) -> T {
 	if s.is_null() {

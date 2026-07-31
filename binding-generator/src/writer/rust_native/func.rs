@@ -18,7 +18,9 @@ use crate::field::Field;
 use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritConfig, OperatorKind, ReturnKind};
 use crate::name_pool::NamePool;
 use crate::settings::ARG_OVERRIDE_SELF;
-use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
+use crate::type_ref::{
+	Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, Nullability, StrEnc, StrType, TypeRef, TypeRefTypeHint,
+};
 use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::type_ref::render_lane::FunctionProps;
 use crate::{CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt, SupportedModule, reserved_rename};
@@ -867,7 +869,7 @@ fn viable_default_arg(arg: &Field) -> bool {
 		// don't remove the arguments that are used to pass the slice or its length
 		!matches!(
 			type_ref.type_hint(),
-			TypeRefTypeHint::Slice | TypeRefTypeHint::LenForSlice(..)
+			TypeRefTypeHint::Slice(Nullability::NotNullable) | TypeRefTypeHint::LenForSlice(..)
 		)
 	}
 }

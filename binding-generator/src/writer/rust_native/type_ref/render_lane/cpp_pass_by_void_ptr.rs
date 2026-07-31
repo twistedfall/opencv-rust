@@ -1,9 +1,9 @@
 use std::borrow::Cow;
 use std::borrow::Cow::{Borrowed, Owned};
 
-use super::{FunctionProps, Indirection, RenderLaneTrait, rust_arg_func_decl, rust_self_func_decl};
+use super::{FunctionProps, Indirection, RenderLaneTrait, rust_arg_func_decl, rust_self_func_decl, void_ptr_rust_arg_func_call};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
-use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
+use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
 use crate::{CowMapBorrowedExt, CppNameStyle, NameStyle};
 
 pub struct CppPassByVoidPtrRenderLane<'tu, 'ge> {
@@ -51,7 +51,17 @@ impl RenderLaneTrait for CppPassByVoidPtrRenderLane<'_, '_> {
 	}
 
 	fn rust_arg_func_call(&self, name: &str) -> String {
-		rust_arg_func_call(&self.non_canonical, name)
+		let constness = self.non_canonical.constness();
+		let source = self.non_canonical.source();
+		let call = void_ptr_rust_arg_func_call(&source, name);
+		let nullability = self.non_canonical.type_hint().nullability();
+		if nullability.is_nullable() && source.kind().as_smart_ptr().is_some() {
+			call
+		} else {
+			nullability
+				.rust_wrap_nullable_func_call(name, call.into(), constness)
+				.into_owned()
+		}
 	}
 
 	fn rust_extern_arg_func_decl(&self, name: &str) -> String {
@@ -85,11 +95,4 @@ impl RenderLaneTrait for CppPassByVoidPtrRenderLane<'_, '_> {
 			name.into_owned()
 		}
 	}
-}
-
-fn rust_arg_func_call(type_ref: &TypeRef, name: &str) -> String {
-	format!(
-		"{name}.{as_raw}()",
-		as_raw = type_ref.source().rust_as_raw_name(type_ref.constness())
-	)
 }
