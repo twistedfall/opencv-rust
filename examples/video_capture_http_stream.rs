@@ -1,7 +1,8 @@
 //! Example code to stream mjpeg over http
 
+use core::net::SocketAddr;
 use std::io::Write;
-use std::net::{SocketAddr, TcpListener};
+use std::net::TcpListener;
 
 use opencv::core::{Mat, Vector};
 use opencv::imgcodecs::{IMWRITE_JPEG_QUALITY, imencode};

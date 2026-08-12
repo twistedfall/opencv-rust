@@ -45,9 +45,9 @@ mod mod_prelude_sys {
 
 /// Prelude for generated modules and types
 mod mod_prelude {
-	pub use std::ffi::OsStr;
 	#[cfg_attr(not(ocvrs_opencv_branch_4), allow(unused_imports))]
-	pub use std::marker::PhantomData;
+	pub use core::marker::PhantomData;
+	pub use std::ffi::OsStr;
 
 	pub use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 	pub use crate::core::{ToInputArray, ToInputOutputArray, ToOutputArray};

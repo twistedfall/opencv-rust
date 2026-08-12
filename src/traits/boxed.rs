@@ -87,7 +87,7 @@ macro_rules! opencv_type_boxed {
 
 			#[inline]
 			fn into_raw(self) -> $crate::extern_send!(mut $type) {
-				::std::mem::ManuallyDrop::new(self).ptr
+				::core::mem::ManuallyDrop::new(self).ptr
 			}
 
 			#[inline]

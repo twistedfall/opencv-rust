@@ -1,10 +1,10 @@
 //! Port of https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/warpPerspective_demo.cpp
 
 use std::env;
-use std::error::Error;
-use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 
+use ::core::error::Error;
+use ::core::sync::atomic::{AtomicBool, Ordering};
 use opencv::core::{Point2f, Size, Vector};
 use opencv::prelude::*;
 use opencv::{core, highgui, imgcodecs, imgproc, opencv_branch_4};

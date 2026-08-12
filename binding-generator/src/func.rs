@@ -497,11 +497,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 						let mut arg = Field::new(a, gen_env);
 						let debug = debug::enabled();
 						// for non-debug we want to skip the automatic hint detection
-						if !debug {
-							if let Some(overridden_type_hint) = overridden_type_hint {
-								arg.set_type_ref_type_hint(overridden_type_hint.clone());
-								return arg;
-							}
+						if !debug && let Some(overridden_type_hint) = overridden_type_hint {
+							arg.set_type_ref_type_hint(overridden_type_hint.clone());
+							return arg;
 						}
 						if let Some(arg_name) = arg_name.as_deref() {
 							update_path_argument(&mut arg, arg_name);

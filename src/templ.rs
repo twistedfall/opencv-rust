@@ -1,5 +1,5 @@
-use std::ffi::{CStr, c_char};
-use std::slice;
+use core::ffi::{CStr, c_char};
+use core::slice;
 
 use crate::platform_types::size_t;
 
@@ -20,7 +20,7 @@ macro_rules! extern_container_arg {
 
 macro_rules! string_arg_output_send {
 	(via $name_via: ident) => {
-		let mut $name_via = ::std::ptr::null_mut();
+		let mut $name_via = ::core::ptr::null_mut();
 	};
 }
 
@@ -51,7 +51,7 @@ macro_rules! userdata_arg {
 		let $userdata_name: $userdata_type = if let Some(callback) = $callback_name {
 			Box::into_raw(Box::new(callback)).cast()
 		} else {
-			::std::ptr::null_mut() // fixme, remove previous callback
+			::core::ptr::null_mut() // fixme, remove previous callback
 		};
 	};
 }

@@ -1,6 +1,6 @@
 use core::ffi::c_void;
-use std::marker::PhantomData;
-use std::mem::ManuallyDrop;
+use core::marker::PhantomData;
+use core::mem::ManuallyDrop;
 
 use crate::traits::Boxed;
 

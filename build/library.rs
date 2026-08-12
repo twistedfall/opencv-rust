@@ -1,8 +1,9 @@
+use core::{fmt, iter};
 use std::borrow::Cow;
 use std::collections::HashSet;
+use std::env;
 use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
-use std::{env, fmt, iter};
 
 use dunce::canonicalize;
 use opencv_binding_generator::version::OpenCVHeaderVersionExt;
@@ -33,9 +34,10 @@ impl PackageName {
 	}
 
 	pub fn pkg_config() -> Vec<Cow<'static, str>> {
-		Self::env()
-			.or_else(Self::env_pkg_config)
-			.map_or_else(|| vec!["opencv5".into(), "opencv4".into(), "opencv".into()], |env_name| vec![env_name.into()])
+		Self::env().or_else(Self::env_pkg_config).map_or_else(
+			|| vec!["opencv5".into(), "opencv4".into(), "opencv".into()],
+			|env_name| vec![env_name.into()],
+		)
 	}
 
 	pub fn cmake() -> Cow<'static, str> {

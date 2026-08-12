@@ -1,4 +1,4 @@
-use std::ops::*;
+use core::ops::{Add, Div, Mul, Sub};
 
 use crate::core::*;
 use crate::{Error, Result};

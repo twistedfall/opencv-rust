@@ -1,5 +1,4 @@
-use std::fmt;
-
+use ::core::fmt;
 use num_traits::{One, Zero};
 
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
@@ -159,7 +158,7 @@ impl<T: Default, A: SizedArray<T>> Default for Matx<T, A> {
 	}
 }
 
-impl<T, A: SizedArray<T>> std::ops::Index<(usize, usize)> for Matx<T, A> {
+impl<T, A: SizedArray<T>> ::core::ops::Index<(usize, usize)> for Matx<T, A> {
 	type Output = T;
 
 	#[inline]
@@ -168,7 +167,7 @@ impl<T, A: SizedArray<T>> std::ops::Index<(usize, usize)> for Matx<T, A> {
 	}
 }
 
-impl<T, A: SizedArray<T>> std::ops::IndexMut<(usize, usize)> for Matx<T, A> {
+impl<T, A: SizedArray<T>> ::core::ops::IndexMut<(usize, usize)> for Matx<T, A> {
 	#[inline]
 	fn index_mut(&mut self, index: (usize, usize)) -> &mut Self::Output {
 		self.get_mut(index).expect("Index out of range")

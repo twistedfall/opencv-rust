@@ -1,10 +1,11 @@
+use core::fmt::Debug;
+use core::iter;
 use std::collections::HashMap;
-use std::fmt::Debug;
 use std::fs::{File, OpenOptions};
 use std::io::{BufWriter, ErrorKind, Write};
 use std::path::{Path, PathBuf};
 use std::sync::LazyLock;
-use std::{fs, io, iter};
+use std::{fs, io};
 
 use class::ClassExt;
 use comment::RenderComment;

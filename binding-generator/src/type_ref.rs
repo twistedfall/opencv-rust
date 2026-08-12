@@ -513,7 +513,7 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		if kind.is_clone(self.type_hint()) {
 			props.push("clone");
 		}
-		if kind.is_debug() {
+		if kind.has_debug() {
 			props.push("debug");
 		}
 		if kind.return_as_naked(self.type_hint()) {

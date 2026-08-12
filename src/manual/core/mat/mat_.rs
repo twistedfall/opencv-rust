@@ -1,6 +1,6 @@
 use core::ffi::c_void;
-use std::fmt;
-use std::marker::PhantomData;
+use core::fmt;
+use core::marker::PhantomData;
 
 use super::{DataType, MatMatcher, match_format};
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};

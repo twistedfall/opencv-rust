@@ -1,7 +1,6 @@
 //! Contains all tests that cover marshaling types to and from C++
 
-use std::mem::ManuallyDrop;
-
+use ::core::mem::ManuallyDrop;
 use opencv::core::{CommandLineParser, KeyPoint, MatStep, Point2f, Ptr, Scalar, SparseMat, Tuple};
 use opencv::prelude::*;
 use opencv::{Result, core};

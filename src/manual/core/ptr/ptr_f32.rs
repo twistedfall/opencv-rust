@@ -1,5 +1,5 @@
-use std::fmt;
-use std::ops::{Deref, DerefMut};
+use core::fmt;
+use core::ops::{Deref, DerefMut};
 
 use crate::core::Ptr;
 

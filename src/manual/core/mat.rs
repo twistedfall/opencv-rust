@@ -1,8 +1,7 @@
-use std::{fmt, mem, ptr, slice};
-
 use ::core::ffi::c_void;
 use ::core::marker::PhantomData;
 use ::core::ops::{Deref, DerefMut};
+use ::core::{fmt, mem, ptr, slice};
 pub use mat_::*;
 
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};

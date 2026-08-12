@@ -1,9 +1,9 @@
+use core::hash::{Hash, Hasher};
+use core::ops::ControlFlow;
+use core::{fmt, iter};
 use std::borrow::Cow;
 use std::collections::HashSet;
-use std::hash::{Hash, Hasher};
-use std::ops::ControlFlow;
 use std::rc::Rc;
-use std::{fmt, iter};
 
 use clang::{Accessibility, Entity, EntityKind};
 pub use desc::ClassDesc;

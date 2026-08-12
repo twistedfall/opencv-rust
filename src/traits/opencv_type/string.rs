@@ -92,14 +92,14 @@ impl OpenCVTypeExternContainer for Option<CString> {
 	fn opencv_as_extern(&self) -> Self::ExternSend {
 		self
 			.as_ref()
-			.map_or_else(|| std::ptr::null(), OpenCVTypeExternContainer::opencv_as_extern)
+			.map_or_else(core::ptr::null, OpenCVTypeExternContainer::opencv_as_extern)
 	}
 
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self
 			.as_mut()
-			.map_or_else(|| std::ptr::null_mut(), OpenCVTypeExternContainer::opencv_as_extern_mut)
+			.map_or_else(core::ptr::null_mut, OpenCVTypeExternContainer::opencv_as_extern_mut)
 	}
 }
 

@@ -1,5 +1,5 @@
-use std::fmt;
-use std::marker::PhantomData;
+use core::fmt;
+use core::marker::PhantomData;
 
 use crate::mod_prelude::OpenCVTypeExternContainer;
 use crate::traits::{Boxed, OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVType};

@@ -1,7 +1,7 @@
+use core::ops::Deref;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufWriter, Write};
-use std::ops::Deref;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::Instant;

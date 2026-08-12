@@ -31,7 +31,7 @@ pub mod library;
 #[path = "build/path_ext.rs"]
 mod path_ext;
 
-type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
+type Result<T, E = Box<dyn core::error::Error>> = core::result::Result<T, E>;
 
 static OUT_DIR: LazyLock<PathBuf> = LazyLock::new(|| PathBuf::from(env::var_os("OUT_DIR").expect("Can't read OUT_DIR env var")));
 static MANIFEST_DIR: LazyLock<PathBuf> =
@@ -91,9 +91,7 @@ struct GenerateModules {
 }
 
 impl GenerateModules {
-	fn make(opencv_dir: &Path) -> Result<Self> {
-		let mut enabled_modules = enabled_modules_from_cargo_features();
-
+	fn make(opencv_dir: &Path, mut enabled_modules: HashSet<SupportedModule>) -> Result<Self> {
 		// boolean in the value gets set to true when a corresponding aliased module is being generated, it is to avoid dropping
 		// modules that have no actual aliases
 		let mut aliases = HashMap::from([
@@ -145,14 +143,14 @@ impl GenerateModules {
 	}
 }
 
-fn enabled_modules_from_cargo_features() -> HashSet<SupportedModule> {
+fn enabled_modules_from_cargo_features(cargo_features: impl IntoIterator<Item = impl AsRef<str>>) -> HashSet<SupportedModule> {
 	[SupportedModule::Core]
 		.into_iter()
-		.chain(env::vars_os().filter_map(|(k, _)| {
-			k.to_str()
-				.and_then(|s| s.strip_prefix("CARGO_FEATURE_"))
-				.and_then(SupportedModule::try_from_opencv_name)
-		}))
+		.chain(
+			cargo_features
+				.into_iter()
+				.flat_map(|s| SupportedModule::try_from_opencv_name(s.as_ref())),
+		)
 		.collect()
 }
 
@@ -357,14 +355,11 @@ fn main() -> Result<()> {
 		eprintln!("===   {v} = {:?}", env::var_os(v));
 	}
 	eprintln!("=== Enabled features:");
-	for (mut name, val) in env::vars() {
-		if val == "1" {
-			const PREFIX: &str = "CARGO_FEATURE_";
-			if name.starts_with(PREFIX) {
-				name.drain(..PREFIX.len());
-				eprintln!("===   {name}");
-			}
-		}
+	let cargo_features = env::vars()
+		.flat_map(|(name, _)| name.strip_prefix("CARGO_FEATURE_").map(|s| s.to_string()))
+		.collect::<Vec<_>>();
+	for name in &cargo_features {
+		eprintln!("===   {name}");
 	}
 
 	let opencv = Library::probe()?;
@@ -406,7 +401,8 @@ fn main() -> Result<()> {
 		"=== Detected OpenCV module header dir at: {}",
 		opencv_module_header_dir.display()
 	);
-	let gen_modules = GenerateModules::make(&opencv_module_header_dir)?;
+	let enabled_modules = enabled_modules_from_cargo_features(&cargo_features);
+	let gen_modules = GenerateModules::make(&opencv_module_header_dir, enabled_modules)?;
 
 	emit_ocvrs_has_module(&gen_modules.modules);
 	setup_rerun()?;

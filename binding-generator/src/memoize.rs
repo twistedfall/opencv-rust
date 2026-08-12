@@ -1,8 +1,7 @@
-use std::borrow::Borrow;
+use core::borrow::Borrow;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::hash::Hash;
-use std::mem::drop;
 
 pub type MemoizeMap<K, V> = RefCell<HashMap<K, V>>;
 

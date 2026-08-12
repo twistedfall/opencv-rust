@@ -120,7 +120,7 @@ impl ClassExt for Class<'_, '_> {
 pub fn rust_generate_debug_fields<'f>(field_const_methods: impl IntoIterator<Item = Func<'f, 'f>>) -> String {
 	field_const_methods
 		.into_iter()
-		.filter(|f| f.return_type_ref().kind().is_debug())
+		.filter(|f| f.return_type_ref().kind().has_debug())
 		.filter_map(|f| {
 			f.kind().as_field_accessor().map(|(cls, _)| {
 				format!(

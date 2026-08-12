@@ -76,7 +76,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 			kind.map_borrowed(|kind| match kind {
 				TypeRefKind::Primitive(rust, _) => (*rust).into(),
 				TypeRefKind::Array(elem, size) => {
-					let typ = RustRenderer::format_as_array(type_ref.constness(), &self.recurse().render(elem), *size);
+					let typ = Self::format_as_array(type_ref.constness(), &self.recurse().render(elem), *size);
 					type_ref
 						.type_hint()
 						.nullability()

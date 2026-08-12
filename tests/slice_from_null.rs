@@ -1,4 +1,4 @@
-use std::ptr;
+use core::ptr;
 
 use opencv::Result;
 use opencv::core::{Mat, Vector};

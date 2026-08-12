@@ -1,4 +1,4 @@
-use std::ops::ControlFlow;
+use core::ops::ControlFlow;
 use std::path::Path;
 
 use clang::{Entity, EntityKind, EntityVisitResult};

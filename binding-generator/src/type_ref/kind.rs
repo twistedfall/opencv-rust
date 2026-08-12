@@ -385,16 +385,16 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 	}
 
 	/// True if a `TypeRef` has `std::fmt::Debug` implementation
-	pub fn is_debug(&self) -> bool {
+	pub fn has_debug(&self) -> bool {
 		match self {
 			TypeRefKind::Primitive(..) | TypeRefKind::Class(_) | TypeRefKind::Enum(_) | TypeRefKind::SmartPtr(_) => true,
-			TypeRefKind::Array(elem, _) => elem.kind().is_debug(),
-			TypeRefKind::StdVector(vec) => vec.element_type().kind().is_debug(),
-			TypeRefKind::StdTuple(tuple) => tuple.elements().into_iter().all(|e| e.kind().is_debug()),
+			TypeRefKind::Array(elem, _) => elem.kind().has_debug(),
+			TypeRefKind::StdVector(vec) => vec.element_type().kind().has_debug(),
+			TypeRefKind::StdTuple(tuple) => tuple.elements().into_iter().all(|e| e.kind().has_debug()),
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
-				inner.kind().is_debug()
+				inner.kind().has_debug()
 			}
-			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().kind().is_debug(),
+			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().kind().has_debug(),
 			TypeRefKind::Function(_) | TypeRefKind::Generic(_) | TypeRefKind::Ignored => false,
 		}
 	}

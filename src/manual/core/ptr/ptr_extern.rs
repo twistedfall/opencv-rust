@@ -68,7 +68,7 @@ macro_rules! ptr_extern_ctor {
 #[macro_export]
 macro_rules! ptr_cast_base {
 	($type: ty, $base: ty, $extern_convert: ident) => {
-		impl ::std::convert::From<$type> for $base {
+		impl ::core::convert::From<$type> for $base {
 			#[inline]
 			fn from(s: $type) -> Self {
 				unsafe { Self::from_raw($crate::sys::$extern_convert(s.into_raw())) }

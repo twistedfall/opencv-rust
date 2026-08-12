@@ -274,7 +274,7 @@ impl<'r> CmakeProbe<'r> {
 
 		eprintln!("=== cmake makefiles probe command: {cmd:?}");
 		cmd.output()
-			.map_err(Box::<dyn std::error::Error>::from)
+			.map_err(Box::<dyn core::error::Error>::from)
 			.and_then(|output| Self::extract_from_output(&output, &mut version, &mut include_paths))?;
 
 		self.extract_from_makefile(&mut link_paths, &mut link_libs)?;
@@ -307,7 +307,7 @@ impl<'r> CmakeProbe<'r> {
 
 		eprintln!("=== cmake ninja probe command: {cmd:?}");
 		cmd.output()
-			.map_err(Box::<dyn std::error::Error>::from)
+			.map_err(Box::<dyn core::error::Error>::from)
 			.and_then(|output| Self::extract_from_output(&output, &mut version, &mut include_paths))?;
 
 		self.extract_from_ninja(&mut include_paths, &mut link_paths, &mut link_libs)?;
@@ -331,7 +331,7 @@ impl<'r> CmakeProbe<'r> {
 		cmd.args(["--find-package", "-DCOMPILER_ID=GNU", "-DLANGUAGE=CXX", "-DMODE=COMPILE"])
 			.arg(format!("-DNAME={}", self.package_name));
 		eprintln!("=== cmake find-package compile probe command: {cmd:?}");
-		cmd.output().map_err(Box::<dyn std::error::Error>::from).and_then(|output| {
+		cmd.output().map_err(Box::<dyn core::error::Error>::from).and_then(|output| {
 			if output.status.success() {
 				let stdout = String::from_utf8(output.stdout)?;
 				eprintln!("=== cmake include arguments: {stdout:#?}");
@@ -353,7 +353,7 @@ impl<'r> CmakeProbe<'r> {
 		cmd.args(["--find-package", "-DCOMPILER_ID=GNU", "-DLANGUAGE=CXX", "-DMODE=LINK"])
 			.arg(format!("-DNAME={}", self.package_name));
 		eprintln!("=== cmake find-package link probe command: {cmd:?}");
-		cmd.output().map_err(Box::<dyn std::error::Error>::from).and_then(|output| {
+		cmd.output().map_err(Box::<dyn core::error::Error>::from).and_then(|output| {
 			if output.status.success() {
 				let stdout = String::from_utf8(output.stdout)?;
 				eprintln!("=== cmake link arguments: {stdout:#?}");

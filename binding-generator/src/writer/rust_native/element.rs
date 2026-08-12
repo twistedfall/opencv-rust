@@ -1,6 +1,6 @@
+use core::fmt::Debug;
+use core::ops::ControlFlow;
 use std::borrow::Cow;
-use std::fmt::Debug;
-use std::ops::ControlFlow;
 
 use clang::{Entity, EntityKind};
 use semver::Version;

@@ -1,4 +1,4 @@
-use std::ops::{Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, Mul, Sub, SubAssign};
+use core::ops::{Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, Mul, Sub, SubAssign};
 
 use num_traits::{NumCast, NumOps, ToPrimitive, Zero};
 

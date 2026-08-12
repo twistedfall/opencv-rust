@@ -1,6 +1,6 @@
 use std::thread;
-use std::time::Duration;
 
+use ::core::time::Duration;
 use opencv::core::{Rect, Size, Vector};
 use opencv::prelude::*;
 use opencv::{Result, core, highgui, imgproc, videoio};

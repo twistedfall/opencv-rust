@@ -1,5 +1,5 @@
-use std::array;
-use std::ops::{Deref, DerefMut, MulAssign};
+use core::array;
+use core::ops::{Deref, DerefMut, MulAssign};
 
 use num_traits::{Float, NumCast, ToPrimitive};
 

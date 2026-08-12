@@ -1,5 +1,5 @@
 use core::ffi::c_void;
-use std::mem::{ManuallyDrop, transmute};
+use core::mem::{ManuallyDrop, transmute};
 
 use opencv::Result;
 use opencv::core::{

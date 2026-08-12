@@ -13,7 +13,7 @@ use opencv::prelude::*;
 use opencv::{dnn, highgui, imgproc, videoio};
 use videoio::VideoCapture;
 
-type Result<T, E = Box<dyn Error>> = std::result::Result<T, E>;
+type Result<T, E = Box<dyn Error>> = core::result::Result<T, E>;
 
 const KEYS: &str = concat!(
 	"{ help  h              | | Print help message. }",

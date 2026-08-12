@@ -1,9 +1,9 @@
+use core::mem::ManuallyDrop;
+use core::ops::ControlFlow;
 use std::borrow::Cow;
 use std::env;
 use std::fs::File;
 use std::io::BufReader;
-use std::mem::ManuallyDrop;
-use std::ops::ControlFlow;
 use std::path::{Path, PathBuf};
 
 use clang::diagnostic::{Diagnostic, Severity};

@@ -1,9 +1,9 @@
+use core::borrow::Borrow;
 use core::ffi::c_void;
-use std::borrow::Borrow;
-use std::iter::FromIterator;
-use std::marker::PhantomData;
-use std::mem::ManuallyDrop;
-use std::{fmt, mem, slice};
+use core::iter::FromIterator;
+use core::marker::PhantomData;
+use core::mem::{ManuallyDrop, transmute};
+use core::{fmt, slice};
 
 pub use iter::{VectorIterator, VectorRefIterator};
 pub use vector_extern::{VectorExtern, VectorExternCopyNonBool};
@@ -387,7 +387,7 @@ where
 	/// Transmutes a `&Vector<BoxedRef<T>>` into a `&Vector<T>`. This is safe as `BoxedRef` is a transparent wrapper around `T`,
 	/// but it breaks the lifetime guards imposed by `BoxedRef`, so this is a crate private function.
 	pub(crate) fn as_non_ref_vec(&self) -> &Vector<T> {
-		unsafe { mem::transmute::<_, &Vector<T>>(self) }
+		unsafe { transmute::<_, &Vector<T>>(self) }
 	}
 }
 

@@ -1,9 +1,9 @@
-use std::cmp::Reverse;
+use core::cmp::Reverse;
+use core::fmt;
+use core::ops::ControlFlow;
 use std::collections::{HashMap, HashSet};
-use std::fmt;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Read, Seek, SeekFrom};
-use std::ops::ControlFlow;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 
