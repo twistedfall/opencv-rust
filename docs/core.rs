@@ -3401,10 +3401,10 @@ pub mod core {
 	/// * min_val: -DBL_MAX
 	/// * max_val: DBL_MAX
 	#[inline]
-	pub fn check_range(a: &impl ToInputArray, quiet: bool, pos: &mut core::Point, min_val: f64, max_val: f64) -> Result<bool> {
+	pub fn check_range(a: &impl ToInputArray, quiet: bool, pos: Option<&mut core::Point>, min_val: f64, max_val: f64) -> Result<bool> {
 		input_array_arg!(a);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_checkRange_const__InputArrayR_bool_PointX_double_double(a.as_raw__InputArray(), quiet, pos, min_val, max_val, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_checkRange_const__InputArrayR_bool_PointX_double_double(a.as_raw__InputArray(), quiet, pos.map_or(::core::ptr::null_mut(), |pos| pos), min_val, max_val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6320,9 +6320,9 @@ pub mod core {
 	/// * filename: NULL
 	/// * line: 0
 	#[inline]
-	pub fn set_ipp_status(status: i32, funcname: &str, filename: impl AsRef<OsStr>, line: i32) -> Result<()> {
+	pub fn set_ipp_status(status: i32, funcname: Option<&str>, filename: Option<impl AsRef<OsStr>>, line: i32) -> Result<()> {
 		extern_container_arg!(funcname);
-		path_arg!(filename);
+		path_arg!(option filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ipp_setIppStatus_int_const_charX_const_charX_int(status, funcname.opencv_as_extern(), filename.opencv_as_extern(), line, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
@@ -8240,7 +8240,7 @@ pub mod core {
 	/// * ddepth: -1
 	/// * name: NULL
 	#[inline]
-	pub fn kernel_to_str(_kernel: &impl ToInputArray, ddepth: i32, name: &str) -> Result<String> {
+	pub fn kernel_to_str(_kernel: &impl ToInputArray, ddepth: i32, name: Option<&str>) -> Result<String> {
 		input_array_arg!(_kernel);
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
@@ -9629,10 +9629,10 @@ pub mod core {
 	/// * iter_factor: 1.
 	/// * rng: 0
 	#[inline]
-	pub fn rand_shuffle(dst: &mut impl ToInputOutputArray, iter_factor: f64, rng: &mut impl core::RNGTrait) -> Result<()> {
+	pub fn rand_shuffle(dst: &mut impl ToInputOutputArray, iter_factor: f64, rng: Option<&mut impl core::RNGTrait>) -> Result<()> {
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_randShuffle_const__InputOutputArrayR_double_RNGX(dst.as_raw__InputOutputArray(), iter_factor, rng.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_randShuffle_const__InputOutputArrayR_double_RNGX(dst.as_raw__InputOutputArray(), iter_factor, rng.map_or(::core::ptr::null_mut(), |rng| rng.as_raw_mut_RNG()), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -11009,7 +11009,7 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * suffix: 0
 	#[inline]
-	pub fn tempfile(suffix: &str) -> Result<String> {
+	pub fn tempfile(suffix: Option<&str>) -> Result<String> {
 		extern_container_arg!(suffix);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_tempfile_const_charX(suffix.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -12201,7 +12201,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Algorithm {
+	impl ::core::fmt::Debug for Algorithm {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Algorithm")
@@ -12386,7 +12386,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for AsyncArray {
+	impl ::core::fmt::Debug for AsyncArray {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AsyncArray")
@@ -12529,7 +12529,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for AsyncPromise {
+	impl ::core::fmt::Debug for AsyncPromise {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AsyncPromise")
@@ -13679,7 +13679,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for CommandLineParser {
+	impl ::core::fmt::Debug for CommandLineParser {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CommandLineParser")
@@ -13817,7 +13817,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for ConjGradSolver {
+	impl ::core::fmt::Debug for ConjGradSolver {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ConjGradSolver")
@@ -14084,7 +14084,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for DownhillSolver {
+	impl ::core::fmt::Debug for DownhillSolver {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DownhillSolver")
@@ -14313,7 +14313,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Exception {
+	impl ::core::fmt::Debug for Exception {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Exception")
@@ -14862,7 +14862,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for FileNode {
+	impl ::core::fmt::Debug for FileNode {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FileNode")
@@ -15042,7 +15042,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for FileNodeIterator {
+	impl ::core::fmt::Debug for FileNodeIterator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FileNodeIterator")
@@ -15614,7 +15614,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for FileStorage {
+	impl ::core::fmt::Debug for FileStorage {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FileStorage")
@@ -15681,7 +15681,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Formatted {
+	impl ::core::fmt::Debug for Formatted {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Formatted")
@@ -15857,7 +15857,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Formatter {
+	impl ::core::fmt::Debug for Formatter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Formatter")
@@ -15932,7 +15932,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for Hamming {
+	impl ::core::fmt::Debug for Hamming {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Hamming")
@@ -16324,7 +16324,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for KeyPoint {
+	impl ::core::fmt::Debug for KeyPoint {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("KeyPoint")
@@ -16578,7 +16578,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for LDA {
+	impl ::core::fmt::Debug for LDA {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LDA")
@@ -17387,9 +17387,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * steps: 0
 		#[inline]
-		pub unsafe fn new_2(shape: core::MatShape, typ: i32, data: *mut c_void, steps: &size_t) -> Result<core::Mat> {
+		pub unsafe fn new_2(shape: core::MatShape, typ: i32, data: *mut c_void, steps: Option<&size_t>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_const_MatShapeR_int_voidX_const_size_tX(&shape, typ, data, steps, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_const_MatShapeR_int_voidX_const_size_tX(&shape, typ, data, steps.map_or(::core::ptr::null(), |steps| steps), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -21751,7 +21751,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for MatConstIterator {
+	impl ::core::fmt::Debug for MatConstIterator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MatConstIterator")
@@ -22201,7 +22201,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for MatExpr {
+	impl ::core::fmt::Debug for MatExpr {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MatExpr")
@@ -22521,7 +22521,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for MatOp {
+	impl ::core::fmt::Debug for MatOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MatOp")
@@ -23152,7 +23152,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for MatStep {
+	impl ::core::fmt::Debug for MatStep {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MatStep")
@@ -23222,7 +23222,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Matx_AddOp {
+	impl ::core::fmt::Debug for Matx_AddOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Matx_AddOp")
@@ -23290,7 +23290,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Matx_DivOp {
+	impl ::core::fmt::Debug for Matx_DivOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Matx_DivOp")
@@ -23358,7 +23358,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Matx_MatMulOp {
+	impl ::core::fmt::Debug for Matx_MatMulOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Matx_MatMulOp")
@@ -23426,7 +23426,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Matx_MulOp {
+	impl ::core::fmt::Debug for Matx_MulOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Matx_MulOp")
@@ -23494,7 +23494,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Matx_ScaleOp {
+	impl ::core::fmt::Debug for Matx_ScaleOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Matx_ScaleOp")
@@ -23562,7 +23562,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Matx_SubOp {
+	impl ::core::fmt::Debug for Matx_SubOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Matx_SubOp")
@@ -23630,7 +23630,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Matx_TOp {
+	impl ::core::fmt::Debug for Matx_TOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Matx_TOp")
@@ -23765,7 +23765,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for MinProblemSolver {
+	impl ::core::fmt::Debug for MinProblemSolver {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MinProblemSolver")
@@ -23863,7 +23863,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for MinProblemSolver_Function {
+	impl ::core::fmt::Debug for MinProblemSolver_Function {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MinProblemSolver_Function")
@@ -24490,7 +24490,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for PCA {
+	impl ::core::fmt::Debug for PCA {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PCA")
@@ -24550,7 +24550,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for ParallelLoopBody {
+	impl ::core::fmt::Debug for ParallelLoopBody {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ParallelLoopBody")
@@ -25057,7 +25057,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for RNG {
+	impl ::core::fmt::Debug for RNG {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RNG")
@@ -25223,7 +25223,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for RNG_MT19937 {
+	impl ::core::fmt::Debug for RNG_MT19937 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RNG_MT19937")
@@ -25367,7 +25367,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Range {
+	impl ::core::fmt::Debug for Range {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Range")
@@ -25907,7 +25907,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for SVD {
+	impl ::core::fmt::Debug for SVD {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SVD")
@@ -26478,9 +26478,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * hashval: 0
 		#[inline]
-		fn ptr(&mut self, i0: i32, create_missing: bool, hashval: &mut size_t) -> Result<*mut u8> {
+		fn ptr(&mut self, i0: i32, create_missing: bool, hashval: Option<&mut size_t>) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_ptr_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, create_missing, hashval, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_ptr_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, create_missing, hashval.map_or(::core::ptr::null_mut(), |hashval| hashval), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -26514,9 +26514,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * hashval: 0
 		#[inline]
-		fn ptr_1(&mut self, i0: i32, i1: i32, create_missing: bool, hashval: &mut size_t) -> Result<*mut u8> {
+		fn ptr_1(&mut self, i0: i32, i1: i32, create_missing: bool, hashval: Option<&mut size_t>) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_ptr_int_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, i1, create_missing, hashval, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_ptr_int_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, i1, create_missing, hashval.map_or(::core::ptr::null_mut(), |hashval| hashval), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -26541,9 +26541,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * hashval: 0
 		#[inline]
-		fn ptr_2(&mut self, i0: i32, i1: i32, i2: i32, create_missing: bool, hashval: &mut size_t) -> Result<*mut u8> {
+		fn ptr_2(&mut self, i0: i32, i1: i32, i2: i32, create_missing: bool, hashval: Option<&mut size_t>) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_ptr_int_int_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, i1, i2, create_missing, hashval, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_ptr_int_int_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, i1, i2, create_missing, hashval.map_or(::core::ptr::null_mut(), |hashval| hashval), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -26568,9 +26568,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * hashval: 0
 		#[inline]
-		fn ptr_3(&mut self, idx: &i32, create_missing: bool, hashval: &mut size_t) -> Result<*mut u8> {
+		fn ptr_3(&mut self, idx: &i32, create_missing: bool, hashval: Option<&mut size_t>) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_ptr_const_intX_bool_size_tX(self.as_raw_mut_SparseMat(), idx, create_missing, hashval, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_ptr_const_intX_bool_size_tX(self.as_raw_mut_SparseMat(), idx, create_missing, hashval.map_or(::core::ptr::null_mut(), |hashval| hashval), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -26595,9 +26595,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * hashval: 0
 		#[inline]
-		fn erase(&mut self, i0: i32, i1: i32, hashval: &mut size_t) -> Result<()> {
+		fn erase(&mut self, i0: i32, i1: i32, hashval: Option<&mut size_t>) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_erase_int_int_size_tX(self.as_raw_mut_SparseMat(), i0, i1, hashval, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_erase_int_int_size_tX(self.as_raw_mut_SparseMat(), i0, i1, hashval.map_or(::core::ptr::null_mut(), |hashval| hashval), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -26622,9 +26622,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * hashval: 0
 		#[inline]
-		fn erase_1(&mut self, i0: i32, i1: i32, i2: i32, hashval: &mut size_t) -> Result<()> {
+		fn erase_1(&mut self, i0: i32, i1: i32, i2: i32, hashval: Option<&mut size_t>) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_erase_int_int_int_size_tX(self.as_raw_mut_SparseMat(), i0, i1, i2, hashval, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_erase_int_int_int_size_tX(self.as_raw_mut_SparseMat(), i0, i1, i2, hashval.map_or(::core::ptr::null_mut(), |hashval| hashval), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -26649,9 +26649,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * hashval: 0
 		#[inline]
-		fn erase_2(&mut self, idx: &i32, hashval: &mut size_t) -> Result<()> {
+		fn erase_2(&mut self, idx: &i32, hashval: Option<&mut size_t>) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_erase_const_intX_size_tX(self.as_raw_mut_SparseMat(), idx, hashval, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_erase_const_intX_size_tX(self.as_raw_mut_SparseMat(), idx, hashval.map_or(::core::ptr::null_mut(), |hashval| hashval), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -26745,7 +26745,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for SparseMat {
+	impl ::core::fmt::Debug for SparseMat {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SparseMat")
@@ -26926,7 +26926,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for SparseMat_Hdr {
+	impl ::core::fmt::Debug for SparseMat_Hdr {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SparseMat_Hdr")
@@ -27044,7 +27044,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for SparseMat_Node {
+	impl ::core::fmt::Debug for SparseMat_Node {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SparseMat_Node")
@@ -27218,7 +27218,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for SparseMatConstIterator {
+	impl ::core::fmt::Debug for SparseMatConstIterator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SparseMatConstIterator")
@@ -27338,7 +27338,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for SparseMatIterator {
+	impl ::core::fmt::Debug for SparseMatIterator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SparseMatIterator")
@@ -27633,7 +27633,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for TickMeter {
+	impl ::core::fmt::Debug for TickMeter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TickMeter")
@@ -29851,7 +29851,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for UMatData {
+	impl ::core::fmt::Debug for UMatData {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("UMatData")
@@ -30792,7 +30792,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for _InputArray {
+	impl ::core::fmt::Debug for _InputArray {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("_InputArray")
@@ -31061,7 +31061,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for _InputOutputArray {
+	impl ::core::fmt::Debug for _InputOutputArray {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("_InputOutputArray")
@@ -31788,7 +31788,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for _OutputArray {
+	impl ::core::fmt::Debug for _OutputArray {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("_OutputArray")
@@ -32053,7 +32053,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for BufferPool {
+	impl ::core::fmt::Debug for BufferPool {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BufferPool")
@@ -32717,7 +32717,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for DeviceInfo {
+	impl ::core::fmt::Debug for DeviceInfo {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DeviceInfo")
@@ -32847,7 +32847,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Event {
+	impl ::core::fmt::Debug for Event {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Event")
@@ -32935,7 +32935,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for GpuData {
+	impl ::core::fmt::Debug for GpuData {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GpuData")
@@ -34293,7 +34293,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for GpuMat {
+	impl ::core::fmt::Debug for GpuMat {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GpuMat")
@@ -34364,7 +34364,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for GpuMat_Allocator {
+	impl ::core::fmt::Debug for GpuMat_Allocator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GpuMat_Allocator")
@@ -34975,7 +34975,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for GpuMatND {
+	impl ::core::fmt::Debug for GpuMatND {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GpuMatND")
@@ -35486,7 +35486,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for HostMem {
+	impl ::core::fmt::Debug for HostMem {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("HostMem")
@@ -35686,7 +35686,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Stream {
+	impl ::core::fmt::Debug for Stream {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Stream")
@@ -35837,7 +35837,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for TargetArchs {
+	impl ::core::fmt::Debug for TargetArchs {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TargetArchs")
@@ -35969,7 +35969,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for Detail_CheckContext {
+	impl ::core::fmt::Debug for Detail_CheckContext {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_CheckContext")
@@ -36048,9 +36048,9 @@ pub mod core {
 		/// * instr_type: TYPE_GENERAL
 		/// * impl_type: IMPL_PLAIN
 		#[inline]
-		pub unsafe fn new(fun_name: &str, file_name: impl AsRef<OsStr>, line_num: i32, ret_address: *mut c_void, always_expand: bool, instr_type: core::TYPE, impl_type: core::IMPL) -> Result<core::NodeData> {
+		pub unsafe fn new(fun_name: Option<&str>, file_name: Option<impl AsRef<OsStr>>, line_num: i32, ret_address: *mut c_void, always_expand: bool, instr_type: core::TYPE, impl_type: core::IMPL) -> Result<core::NodeData> {
 			extern_container_arg!(fun_name);
-			path_arg!(file_name);
+			path_arg!(option file_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_instr_NodeData_NodeData_const_charX_const_charX_int_voidX_bool_TYPE_IMPL(fun_name.opencv_as_extern(), file_name.opencv_as_extern(), line_num, ret_address, always_expand, instr_type, impl_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -36262,7 +36262,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for NodeData {
+	impl ::core::fmt::Debug for NodeData {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NodeData")
@@ -36348,7 +36348,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for WriteStructContext {
+	impl ::core::fmt::Debug for WriteStructContext {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("WriteStructContext")
@@ -36619,7 +36619,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for Context {
+	impl ::core::fmt::Debug for Context {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Context")
@@ -36683,7 +36683,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for Context_UserContext {
+	impl ::core::fmt::Debug for Context_UserContext {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Context_UserContext")
@@ -37535,7 +37535,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for Device {
+	impl ::core::fmt::Debug for Device {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Device")
@@ -37699,7 +37699,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for Image2D {
+	impl ::core::fmt::Debug for Image2D {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Image2D")
@@ -38118,7 +38118,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for Kernel {
+	impl ::core::fmt::Debug for Kernel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Kernel")
@@ -38491,7 +38491,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for KernelArg {
+	impl ::core::fmt::Debug for KernelArg {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("KernelArg")
@@ -38786,7 +38786,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for OpenCLExecutionContext {
+	impl ::core::fmt::Debug for OpenCLExecutionContext {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OpenCLExecutionContext")
@@ -38911,7 +38911,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for Platform {
+	impl ::core::fmt::Debug for Platform {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Platform")
@@ -39094,7 +39094,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for PlatformInfo {
+	impl ::core::fmt::Debug for PlatformInfo {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PlatformInfo")
@@ -39302,7 +39302,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for Program {
+	impl ::core::fmt::Debug for Program {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Program")
@@ -39588,7 +39588,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for ProgramSource {
+	impl ::core::fmt::Debug for ProgramSource {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ProgramSource")
@@ -39781,7 +39781,7 @@ pub mod core {
 		}
 	}
 
-	impl std::fmt::Debug for Queue {
+	impl ::core::fmt::Debug for Queue {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Queue")
@@ -39866,7 +39866,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Timer {
+	impl ::core::fmt::Debug for Timer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Timer")
@@ -40071,7 +40071,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Arrays {
+	impl ::core::fmt::Debug for Arrays {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Arrays")
@@ -40888,7 +40888,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Buffer {
+	impl ::core::fmt::Debug for Buffer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Buffer")
@@ -41446,7 +41446,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Texture2D {
+	impl ::core::fmt::Debug for Texture2D {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Texture2D")
@@ -41591,7 +41591,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for LogTag {
+	impl ::core::fmt::Debug for LogTag {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LogTag")
@@ -41719,7 +41719,7 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for OriginalClassName {
+	impl ::core::fmt::Debug for OriginalClassName {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OriginalClassName")

@@ -318,7 +318,7 @@ pub mod rapid {
 	/// ## C++ default parameters
 	/// * rmsd: 0
 	#[inline]
-	pub fn rapid(img: &impl ToInputArray, num: i32, len: i32, pts3d: &impl ToInputArray, tris: &impl ToInputArray, k: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, rmsd: &mut f64) -> Result<f32> {
+	pub fn rapid(img: &impl ToInputArray, num: i32, len: i32, pts3d: &impl ToInputArray, tris: &impl ToInputArray, k: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, rmsd: Option<&mut f64>) -> Result<f32> {
 		input_array_arg!(img);
 		input_array_arg!(pts3d);
 		input_array_arg!(tris);
@@ -326,7 +326,7 @@ pub mod rapid {
 		input_output_array_arg!(rvec);
 		input_output_array_arg!(tvec);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rapid_rapid_const__InputArrayR_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_doubleX(img.as_raw__InputArray(), num, len, pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), rmsd, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rapid_rapid_const__InputArrayR_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_doubleX(img.as_raw__InputArray(), num, len, pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), rmsd.map_or(::core::ptr::null_mut(), |rmsd| rmsd), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -394,7 +394,7 @@ pub mod rapid {
 
 	}
 
-	impl std::fmt::Debug for Rapid_GOSTracker {
+	impl ::core::fmt::Debug for Rapid_GOSTracker {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Rapid_GOSTracker")
@@ -499,7 +499,7 @@ pub mod rapid {
 
 	}
 
-	impl std::fmt::Debug for Rapid_OLSTracker {
+	impl ::core::fmt::Debug for Rapid_OLSTracker {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Rapid_OLSTracker")
@@ -584,7 +584,7 @@ pub mod rapid {
 
 	}
 
-	impl std::fmt::Debug for Rapid_Rapid {
+	impl ::core::fmt::Debug for Rapid_Rapid {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Rapid_Rapid")
@@ -694,7 +694,7 @@ pub mod rapid {
 
 	}
 
-	impl std::fmt::Debug for Rapid_Tracker {
+	impl ::core::fmt::Debug for Rapid_Tracker {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Rapid_Tracker")

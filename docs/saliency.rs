@@ -66,7 +66,7 @@ pub mod saliency {
 
 	}
 
-	impl std::fmt::Debug for MotionSaliency {
+	impl ::core::fmt::Debug for MotionSaliency {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MotionSaliency")
@@ -240,7 +240,7 @@ pub mod saliency {
 
 	}
 
-	impl std::fmt::Debug for MotionSaliencyBinWangApr2014 {
+	impl ::core::fmt::Debug for MotionSaliencyBinWangApr2014 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MotionSaliencyBinWangApr2014")
@@ -322,7 +322,7 @@ pub mod saliency {
 
 	}
 
-	impl std::fmt::Debug for Objectness {
+	impl ::core::fmt::Debug for Objectness {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Objectness")
@@ -528,7 +528,7 @@ pub mod saliency {
 
 	}
 
-	impl std::fmt::Debug for ObjectnessBING {
+	impl ::core::fmt::Debug for ObjectnessBING {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ObjectnessBING")
@@ -625,7 +625,7 @@ pub mod saliency {
 
 	}
 
-	impl std::fmt::Debug for Saliency {
+	impl ::core::fmt::Debug for Saliency {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Saliency")
@@ -723,7 +723,7 @@ pub mod saliency {
 
 	}
 
-	impl std::fmt::Debug for StaticSaliency {
+	impl ::core::fmt::Debug for StaticSaliency {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("StaticSaliency")
@@ -834,7 +834,7 @@ pub mod saliency {
 
 	}
 
-	impl std::fmt::Debug for StaticSaliencyFineGrained {
+	impl ::core::fmt::Debug for StaticSaliencyFineGrained {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("StaticSaliencyFineGrained")
@@ -1009,7 +1009,7 @@ pub mod saliency {
 
 	}
 
-	impl std::fmt::Debug for StaticSaliencySpectralResidual {
+	impl ::core::fmt::Debug for StaticSaliencySpectralResidual {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("StaticSaliencySpectralResidual")

@@ -1809,7 +1809,7 @@ pub mod highgui {
 		}
 	}
 
-	impl std::fmt::Debug for QtFont {
+	impl ::core::fmt::Debug for QtFont {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QtFont")

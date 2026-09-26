@@ -1621,7 +1621,7 @@ pub mod dnn {
 	/// * engine: ENGINE_AUTO
 	/// * extra_outputs: std::vector<String>()
 	#[inline]
-	pub fn read_net_from_tensorflow_2(buffer_model: &str, len_model: size_t, buffer_config: &str, len_config: size_t, engine: i32, extra_outputs: &core::Vector<String>) -> Result<crate::dnn::Net> {
+	pub fn read_net_from_tensorflow_2(buffer_model: &str, len_model: size_t, buffer_config: Option<&str>, len_config: size_t, engine: i32, extra_outputs: &core::Vector<String>) -> Result<crate::dnn::Net> {
 		extern_container_arg!(buffer_model);
 		extern_container_arg!(buffer_config);
 		return_send!(via ocvrs_return);
@@ -2172,7 +2172,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AbsLayer {
+	impl ::core::fmt::Debug for AbsLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AbsLayer")
@@ -2288,7 +2288,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AccumLayer {
+	impl ::core::fmt::Debug for AccumLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AccumLayer")
@@ -2392,7 +2392,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AcosLayer {
+	impl ::core::fmt::Debug for AcosLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AcosLayer")
@@ -2508,7 +2508,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AcoshLayer {
+	impl ::core::fmt::Debug for AcoshLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AcoshLayer")
@@ -2653,7 +2653,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ActivationLayer {
+	impl ::core::fmt::Debug for ActivationLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ActivationLayer")
@@ -2906,7 +2906,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ActivationLayerInt8 {
+	impl ::core::fmt::Debug for ActivationLayerInt8 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ActivationLayerInt8")
@@ -3039,7 +3039,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AffineGridLayer {
+	impl ::core::fmt::Debug for AffineGridLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AffineGridLayer")
@@ -3169,7 +3169,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for Arg {
+	impl ::core::fmt::Debug for Arg {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Arg")
@@ -3282,7 +3282,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for ArgData {
+	impl ::core::fmt::Debug for ArgData {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ArgData")
@@ -3363,7 +3363,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ArgLayer {
+	impl ::core::fmt::Debug for ArgLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ArgLayer")
@@ -3467,7 +3467,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AsinLayer {
+	impl ::core::fmt::Debug for AsinLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AsinLayer")
@@ -3583,7 +3583,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AsinhLayer {
+	impl ::core::fmt::Debug for AsinhLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AsinhLayer")
@@ -3699,7 +3699,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AtanLayer {
+	impl ::core::fmt::Debug for AtanLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AtanLayer")
@@ -3815,7 +3815,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AtanhLayer {
+	impl ::core::fmt::Debug for AtanhLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AtanhLayer")
@@ -3931,7 +3931,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AttentionLayer {
+	impl ::core::fmt::Debug for AttentionLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AttentionLayer")
@@ -4047,7 +4047,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AttentionOnnxAiLayer {
+	impl ::core::fmt::Debug for AttentionOnnxAiLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AttentionOnnxAiLayer")
@@ -4242,7 +4242,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for AveragePoolLayer {
+	impl ::core::fmt::Debug for AveragePoolLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AveragePoolLayer")
@@ -4353,7 +4353,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for BNLLLayer {
+	impl ::core::fmt::Debug for BNLLLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BNLLLayer")
@@ -4455,7 +4455,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for BackendNode {
+	impl ::core::fmt::Debug for BackendNode {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BackendNode")
@@ -4559,7 +4559,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for BackendWrapper {
+	impl ::core::fmt::Debug for BackendWrapper {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BackendWrapper")
@@ -4799,7 +4799,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for BaseConvolutionLayer {
+	impl ::core::fmt::Debug for BaseConvolutionLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BaseConvolutionLayer")
@@ -4947,7 +4947,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for BatchNorm2Layer {
+	impl ::core::fmt::Debug for BatchNorm2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BatchNorm2Layer")
@@ -5088,7 +5088,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for BatchNormLayer {
+	impl ::core::fmt::Debug for BatchNormLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BatchNormLayer")
@@ -5255,7 +5255,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for BatchNormLayerInt8 {
+	impl ::core::fmt::Debug for BatchNormLayerInt8 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BatchNormLayerInt8")
@@ -5390,7 +5390,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for BitShiftLayer {
+	impl ::core::fmt::Debug for BitShiftLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BitShiftLayer")
@@ -5494,7 +5494,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for BlackmanWindowLayer {
+	impl ::core::fmt::Debug for BlackmanWindowLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BlackmanWindowLayer")
@@ -5617,7 +5617,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for BlankLayer {
+	impl ::core::fmt::Debug for BlankLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BlankLayer")
@@ -5721,7 +5721,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Cast2Layer {
+	impl ::core::fmt::Debug for Cast2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Cast2Layer")
@@ -5825,7 +5825,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for CastLayer {
+	impl ::core::fmt::Debug for CastLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CastLayer")
@@ -5929,7 +5929,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for CeilLayer {
+	impl ::core::fmt::Debug for CeilLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CeilLayer")
@@ -6057,7 +6057,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for CeluLayer {
+	impl ::core::fmt::Debug for CeluLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CeluLayer")
@@ -6174,7 +6174,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for CenterCropPadLayer {
+	impl ::core::fmt::Debug for CenterCropPadLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CenterCropPadLayer")
@@ -6278,7 +6278,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ChannelsPReLULayer {
+	impl ::core::fmt::Debug for ChannelsPReLULayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ChannelsPReLULayer")
@@ -6502,7 +6502,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ClassificationModel {
+	impl ::core::fmt::Debug for ClassificationModel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ClassificationModel")
@@ -6588,7 +6588,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ClipLayer {
+	impl ::core::fmt::Debug for ClipLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ClipLayer")
@@ -6692,7 +6692,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for CompareLayer {
+	impl ::core::fmt::Debug for CompareLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CompareLayer")
@@ -6808,7 +6808,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Concat2Layer {
+	impl ::core::fmt::Debug for Concat2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Concat2Layer")
@@ -6957,7 +6957,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ConcatLayer {
+	impl ::core::fmt::Debug for ConcatLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ConcatLayer")
@@ -7065,7 +7065,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ConstLayer {
+	impl ::core::fmt::Debug for ConstLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ConstLayer")
@@ -7170,7 +7170,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ConstantOfShapeLayer {
+	impl ::core::fmt::Debug for ConstantOfShapeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ConstantOfShapeLayer")
@@ -7425,7 +7425,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Conv2Int8Layer {
+	impl ::core::fmt::Debug for Conv2Int8Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Conv2Int8Layer")
@@ -7650,7 +7650,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for Conv2Layer {
+	impl ::core::fmt::Debug for Conv2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Conv2Layer")
@@ -7843,7 +7843,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for ConvTranspose2Layer {
+	impl ::core::fmt::Debug for ConvTranspose2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ConvTranspose2Layer")
@@ -7995,7 +7995,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ConvolutionLayer {
+	impl ::core::fmt::Debug for ConvolutionLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ConvolutionLayer")
@@ -8201,7 +8201,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ConvolutionLayerInt8 {
+	impl ::core::fmt::Debug for ConvolutionLayerInt8 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ConvolutionLayerInt8")
@@ -8336,7 +8336,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for CorrelationLayer {
+	impl ::core::fmt::Debug for CorrelationLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CorrelationLayer")
@@ -8440,7 +8440,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for CosLayer {
+	impl ::core::fmt::Debug for CosLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CosLayer")
@@ -8556,7 +8556,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for CoshLayer {
+	impl ::core::fmt::Debug for CoshLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CoshLayer")
@@ -8672,7 +8672,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for CropAndResizeLayer {
+	impl ::core::fmt::Debug for CropAndResizeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CropAndResizeLayer")
@@ -8776,7 +8776,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for CropLayer {
+	impl ::core::fmt::Debug for CropLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CropLayer")
@@ -8904,7 +8904,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for CumSumLayer {
+	impl ::core::fmt::Debug for CumSumLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CumSumLayer")
@@ -9059,7 +9059,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for DFTLayer {
+	impl ::core::fmt::Debug for DFTLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DFTLayer")
@@ -9167,7 +9167,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for DataAugmentationLayer {
+	impl ::core::fmt::Debug for DataAugmentationLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DataAugmentationLayer")
@@ -9271,7 +9271,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for DeconvolutionLayer {
+	impl ::core::fmt::Debug for DeconvolutionLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DeconvolutionLayer")
@@ -9400,7 +9400,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for DepthToSpaceLayer {
+	impl ::core::fmt::Debug for DepthToSpaceLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DepthToSpaceLayer")
@@ -9530,7 +9530,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for DequantizeLayer {
+	impl ::core::fmt::Debug for DequantizeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DequantizeLayer")
@@ -9660,7 +9660,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for DequantizeLinearLayer {
+	impl ::core::fmt::Debug for DequantizeLinearLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DequantizeLinearLayer")
@@ -9766,7 +9766,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for DetLayer {
+	impl ::core::fmt::Debug for DetLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DetLayer")
@@ -9991,7 +9991,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for DetectionModel {
+	impl ::core::fmt::Debug for DetectionModel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DetectionModel")
@@ -10083,7 +10083,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for DetectionOutputLayer {
+	impl ::core::fmt::Debug for DetectionOutputLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DetectionOutputLayer")
@@ -10285,7 +10285,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Dict {
+	impl ::core::fmt::Debug for Dict {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Dict")
@@ -10709,7 +10709,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ELULayer {
+	impl ::core::fmt::Debug for ELULayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ELULayer")
@@ -10852,7 +10852,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for EinsumLayer {
+	impl ::core::fmt::Debug for EinsumLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("EinsumLayer")
@@ -11006,7 +11006,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Eltwise2Int8Layer {
+	impl ::core::fmt::Debug for Eltwise2Int8Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Eltwise2Int8Layer")
@@ -11120,7 +11120,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for EltwiseLayer {
+	impl ::core::fmt::Debug for EltwiseLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("EltwiseLayer")
@@ -11299,7 +11299,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for EltwiseLayerInt8 {
+	impl ::core::fmt::Debug for EltwiseLayerInt8 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("EltwiseLayerInt8")
@@ -11409,7 +11409,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ErfLayer {
+	impl ::core::fmt::Debug for ErfLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ErfLayer")
@@ -11561,7 +11561,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ExpLayer {
+	impl ::core::fmt::Debug for ExpLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ExpLayer")
@@ -11680,7 +11680,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Expand2Layer {
+	impl ::core::fmt::Debug for Expand2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Expand2Layer")
@@ -11784,7 +11784,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ExpandLayer {
+	impl ::core::fmt::Debug for ExpandLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ExpandLayer")
@@ -11888,7 +11888,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for EyeLikeLayer {
+	impl ::core::fmt::Debug for EyeLikeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("EyeLikeLayer")
@@ -11992,7 +11992,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for FlattenLayer {
+	impl ::core::fmt::Debug for FlattenLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FlattenLayer")
@@ -12096,7 +12096,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for FloorLayer {
+	impl ::core::fmt::Debug for FloorLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FloorLayer")
@@ -12212,7 +12212,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for FlowWarpLayer {
+	impl ::core::fmt::Debug for FlowWarpLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FlowWarpLayer")
@@ -12343,7 +12343,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for GRULayer {
+	impl ::core::fmt::Debug for GRULayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GRULayer")
@@ -12459,7 +12459,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Gather2Layer {
+	impl ::core::fmt::Debug for Gather2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Gather2Layer")
@@ -12573,7 +12573,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for GatherElementsLayer {
+	impl ::core::fmt::Debug for GatherElementsLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GatherElementsLayer")
@@ -12678,7 +12678,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for GatherLayer {
+	impl ::core::fmt::Debug for GatherLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GatherLayer")
@@ -12786,7 +12786,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for GatherNDLayer {
+	impl ::core::fmt::Debug for GatherNDLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GatherNDLayer")
@@ -12890,7 +12890,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for GeluApproximationLayer {
+	impl ::core::fmt::Debug for GeluApproximationLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GeluApproximationLayer")
@@ -13006,7 +13006,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for GeluLayer {
+	impl ::core::fmt::Debug for GeluLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GeluLayer")
@@ -13182,7 +13182,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for GemmLayer {
+	impl ::core::fmt::Debug for GemmLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GemmLayer")
@@ -13291,7 +13291,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for GlobalAveragePoolLayer {
+	impl ::core::fmt::Debug for GlobalAveragePoolLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GlobalAveragePoolLayer")
@@ -13486,7 +13486,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for Graph {
+	impl ::core::fmt::Debug for Graph {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Graph")
@@ -13560,7 +13560,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for GridSampleLayer {
+	impl ::core::fmt::Debug for GridSampleLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GridSampleLayer")
@@ -13664,7 +13664,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for GroupNormLayer {
+	impl ::core::fmt::Debug for GroupNormLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GroupNormLayer")
@@ -13768,7 +13768,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for HammingWindowLayer {
+	impl ::core::fmt::Debug for HammingWindowLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("HammingWindowLayer")
@@ -13872,7 +13872,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for HannWindowLayer {
+	impl ::core::fmt::Debug for HannWindowLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("HannWindowLayer")
@@ -14000,7 +14000,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for HardSigmoidLayer {
+	impl ::core::fmt::Debug for HardSigmoidLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("HardSigmoidLayer")
@@ -14118,7 +14118,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for HardSwishLayer {
+	impl ::core::fmt::Debug for HardSwishLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("HardSwishLayer")
@@ -14234,7 +14234,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for HardmaxLayer {
+	impl ::core::fmt::Debug for HardmaxLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("HardmaxLayer")
@@ -14333,7 +14333,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for IfLayer {
+	impl ::core::fmt::Debug for IfLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("IfLayer")
@@ -14561,7 +14561,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for InnerProductLayer {
+	impl ::core::fmt::Debug for InnerProductLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("InnerProductLayer")
@@ -14738,7 +14738,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for InnerProductLayerInt8 {
+	impl ::core::fmt::Debug for InnerProductLayerInt8 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("InnerProductLayerInt8")
@@ -14873,7 +14873,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for InstanceNormLayer {
+	impl ::core::fmt::Debug for InstanceNormLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("InstanceNormLayer")
@@ -14981,7 +14981,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for InterpLayer {
+	impl ::core::fmt::Debug for InterpLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("InterpLayer")
@@ -15085,7 +15085,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for IsInfLayer {
+	impl ::core::fmt::Debug for IsInfLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("IsInfLayer")
@@ -15189,7 +15189,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for IsNaNLayer {
+	impl ::core::fmt::Debug for IsNaNLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("IsNaNLayer")
@@ -15373,7 +15373,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for KeypointsModel {
+	impl ::core::fmt::Debug for KeypointsModel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("KeypointsModel")
@@ -15531,7 +15531,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for LRNLayer {
+	impl ::core::fmt::Debug for LRNLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LRNLayer")
@@ -15642,7 +15642,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for LSTM2Layer {
+	impl ::core::fmt::Debug for LSTM2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LSTM2Layer")
@@ -15906,7 +15906,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for LSTMLayer {
+	impl ::core::fmt::Debug for LSTMLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LSTMLayer")
@@ -16523,7 +16523,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for Layer {
+	impl ::core::fmt::Debug for Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Layer")
@@ -17002,7 +17002,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for LayerFactory {
+	impl ::core::fmt::Debug for LayerFactory {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LayerFactory")
@@ -17100,7 +17100,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for LayerNorm2Layer {
+	impl ::core::fmt::Debug for LayerNorm2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LayerNorm2Layer")
@@ -17242,7 +17242,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for LayerNormLayer {
+	impl ::core::fmt::Debug for LayerNormLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LayerNormLayer")
@@ -17390,7 +17390,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for LayerParams {
+	impl ::core::fmt::Debug for LayerParams {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LayerParams")
@@ -17479,7 +17479,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for LogLayer {
+	impl ::core::fmt::Debug for LogLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LogLayer")
@@ -17593,7 +17593,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for LoopLayer {
+	impl ::core::fmt::Debug for LoopLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LoopLayer")
@@ -17733,7 +17733,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for MVNLayer {
+	impl ::core::fmt::Debug for MVNLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MVNLayer")
@@ -17902,7 +17902,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for MatMulInt8Layer {
+	impl ::core::fmt::Debug for MatMulInt8Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MatMulInt8Layer")
@@ -18076,7 +18076,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for MatMulLayer {
+	impl ::core::fmt::Debug for MatMulLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MatMulLayer")
@@ -18274,7 +18274,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for MaxPoolLayer {
+	impl ::core::fmt::Debug for MaxPoolLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MaxPoolLayer")
@@ -18427,7 +18427,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for MaxUnpoolLayer {
+	impl ::core::fmt::Debug for MaxUnpoolLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MaxUnpoolLayer")
@@ -18534,7 +18534,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for MishLayer {
+	impl ::core::fmt::Debug for MishLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MishLayer")
@@ -18945,7 +18945,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Model {
+	impl ::core::fmt::Debug for Model {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Model")
@@ -19033,7 +19033,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for NaryEltwiseLayer {
+	impl ::core::fmt::Debug for NaryEltwiseLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NaryEltwiseLayer")
@@ -19164,7 +19164,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for NegativeLogLikelihoodLossLayer {
+	impl ::core::fmt::Debug for NegativeLogLikelihoodLossLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NegativeLogLikelihoodLossLayer")
@@ -20577,7 +20577,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Net {
+	impl ::core::fmt::Debug for Net {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Net")
@@ -20651,7 +20651,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for NonMaxSuppressionLayer {
+	impl ::core::fmt::Debug for NonMaxSuppressionLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NonMaxSuppressionLayer")
@@ -20755,7 +20755,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for NonZeroLayer {
+	impl ::core::fmt::Debug for NonZeroLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NonZeroLayer")
@@ -20919,7 +20919,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for NormalizeBBoxLayer {
+	impl ::core::fmt::Debug for NormalizeBBoxLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NormalizeBBoxLayer")
@@ -21026,7 +21026,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for NotLayer {
+	impl ::core::fmt::Debug for NotLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NotLayer")
@@ -21142,7 +21142,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for OneHotLayer {
+	impl ::core::fmt::Debug for OneHotLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OneHotLayer")
@@ -21247,7 +21247,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Pad2Layer {
+	impl ::core::fmt::Debug for Pad2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Pad2Layer")
@@ -21371,7 +21371,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for PaddingLayer {
+	impl ::core::fmt::Debug for PaddingLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PaddingLayer")
@@ -21475,7 +21475,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for PermuteLayer {
+	impl ::core::fmt::Debug for PermuteLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PermuteLayer")
@@ -21729,7 +21729,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Pool2Int8Layer {
+	impl ::core::fmt::Debug for Pool2Int8Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Pool2Int8Layer")
@@ -22024,7 +22024,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for PoolingLayer {
+	impl ::core::fmt::Debug for PoolingLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PoolingLayer")
@@ -22190,7 +22190,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for PoolingLayerInt8 {
+	impl ::core::fmt::Debug for PoolingLayerInt8 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PoolingLayerInt8")
@@ -22360,7 +22360,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for PowerLayer {
+	impl ::core::fmt::Debug for PowerLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PowerLayer")
@@ -22479,7 +22479,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for PriorBoxLayer {
+	impl ::core::fmt::Debug for PriorBoxLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PriorBoxLayer")
@@ -22583,7 +22583,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ProposalLayer {
+	impl ::core::fmt::Debug for ProposalLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ProposalLayer")
@@ -22713,7 +22713,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for QuantizeLayer {
+	impl ::core::fmt::Debug for QuantizeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QuantizeLayer")
@@ -22867,7 +22867,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for QuantizeLinearLayer {
+	impl ::core::fmt::Debug for QuantizeLinearLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QuantizeLinearLayer")
@@ -22975,7 +22975,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for RMSNormLayer {
+	impl ::core::fmt::Debug for RMSNormLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RMSNormLayer")
@@ -23128,7 +23128,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for RNNLayer {
+	impl ::core::fmt::Debug for RNNLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RNNLayer")
@@ -23280,7 +23280,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for RandomNormalLikeLayer {
+	impl ::core::fmt::Debug for RandomNormalLikeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RandomNormalLikeLayer")
@@ -23388,7 +23388,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for RangeLayer {
+	impl ::core::fmt::Debug for RangeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RangeLayer")
@@ -23516,7 +23516,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ReLU6Layer {
+	impl ::core::fmt::Debug for ReLU6Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ReLU6Layer")
@@ -23646,7 +23646,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ReLULayer {
+	impl ::core::fmt::Debug for ReLULayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ReLULayer")
@@ -23763,7 +23763,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ReciprocalLayer {
+	impl ::core::fmt::Debug for ReciprocalLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ReciprocalLayer")
@@ -23930,7 +23930,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Reduce2Layer {
+	impl ::core::fmt::Debug for Reduce2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Reduce2Layer")
@@ -24038,7 +24038,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ReduceLayer {
+	impl ::core::fmt::Debug for ReduceLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ReduceLayer")
@@ -24154,7 +24154,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for RegionLayer {
+	impl ::core::fmt::Debug for RegionLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RegionLayer")
@@ -24259,7 +24259,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ReorgLayer {
+	impl ::core::fmt::Debug for ReorgLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ReorgLayer")
@@ -24387,7 +24387,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for RequantizeLayer {
+	impl ::core::fmt::Debug for RequantizeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RequantizeLayer")
@@ -24507,7 +24507,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Reshape2Layer {
+	impl ::core::fmt::Debug for Reshape2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Reshape2Layer")
@@ -24639,7 +24639,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ReshapeLayer {
+	impl ::core::fmt::Debug for ReshapeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ReshapeLayer")
@@ -24745,7 +24745,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Resize2Layer {
+	impl ::core::fmt::Debug for Resize2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Resize2Layer")
@@ -24852,7 +24852,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ResizeLayer {
+	impl ::core::fmt::Debug for ResizeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ResizeLayer")
@@ -24956,7 +24956,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for RoiAlignLayer {
+	impl ::core::fmt::Debug for RoiAlignLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RoiAlignLayer")
@@ -25060,7 +25060,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for RotaryEmbeddingLayer {
+	impl ::core::fmt::Debug for RotaryEmbeddingLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RotaryEmbeddingLayer")
@@ -25164,7 +25164,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for RoundLayer {
+	impl ::core::fmt::Debug for RoundLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RoundLayer")
@@ -25280,7 +25280,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SDPALayer {
+	impl ::core::fmt::Debug for SDPALayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SDPALayer")
@@ -25422,7 +25422,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ScaleLayer {
+	impl ::core::fmt::Debug for ScaleLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ScaleLayer")
@@ -25553,7 +25553,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ScaleLayerInt8 {
+	impl ::core::fmt::Debug for ScaleLayerInt8 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ScaleLayerInt8")
@@ -25674,7 +25674,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ScatterLayer {
+	impl ::core::fmt::Debug for ScatterLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ScatterLayer")
@@ -25778,7 +25778,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ScatterNDLayer {
+	impl ::core::fmt::Debug for ScatterNDLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ScatterNDLayer")
@@ -25936,7 +25936,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SegmentationModel {
+	impl ::core::fmt::Debug for SegmentationModel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SegmentationModel")
@@ -26046,7 +26046,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SeluLayer {
+	impl ::core::fmt::Debug for SeluLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SeluLayer")
@@ -26188,7 +26188,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ShapeLayer {
+	impl ::core::fmt::Debug for ShapeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ShapeLayer")
@@ -26294,7 +26294,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ShiftLayer {
+	impl ::core::fmt::Debug for ShiftLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ShiftLayer")
@@ -26398,7 +26398,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ShiftLayerInt8 {
+	impl ::core::fmt::Debug for ShiftLayerInt8 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ShiftLayerInt8")
@@ -26526,7 +26526,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ShrinkLayer {
+	impl ::core::fmt::Debug for ShrinkLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ShrinkLayer")
@@ -26664,7 +26664,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ShuffleChannelLayer {
+	impl ::core::fmt::Debug for ShuffleChannelLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ShuffleChannelLayer")
@@ -26769,7 +26769,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SigmoidLayer {
+	impl ::core::fmt::Debug for SigmoidLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SigmoidLayer")
@@ -26885,7 +26885,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SignLayer {
+	impl ::core::fmt::Debug for SignLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SignLayer")
@@ -27001,7 +27001,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SinLayer {
+	impl ::core::fmt::Debug for SinLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SinLayer")
@@ -27117,7 +27117,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SinhLayer {
+	impl ::core::fmt::Debug for SinhLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SinhLayer")
@@ -27233,7 +27233,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SizeLayer {
+	impl ::core::fmt::Debug for SizeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SizeLayer")
@@ -27376,7 +27376,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Slice2Layer {
+	impl ::core::fmt::Debug for Slice2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Slice2Layer")
@@ -27564,7 +27564,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SliceLayer {
+	impl ::core::fmt::Debug for SliceLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SliceLayer")
@@ -27722,7 +27722,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SoftmaxCrossEntropyLossLayer {
+	impl ::core::fmt::Debug for SoftmaxCrossEntropyLossLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SoftmaxCrossEntropyLossLayer")
@@ -27854,7 +27854,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SoftmaxLayer {
+	impl ::core::fmt::Debug for SoftmaxLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SoftmaxLayer")
@@ -27984,7 +27984,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SoftmaxLayerInt8 {
+	impl ::core::fmt::Debug for SoftmaxLayerInt8 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SoftmaxLayerInt8")
@@ -28104,7 +28104,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SoftplusLayer {
+	impl ::core::fmt::Debug for SoftplusLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SoftplusLayer")
@@ -28220,7 +28220,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SoftsignLayer {
+	impl ::core::fmt::Debug for SoftsignLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SoftsignLayer")
@@ -28336,7 +28336,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SpaceToDepthLayer {
+	impl ::core::fmt::Debug for SpaceToDepthLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SpaceToDepthLayer")
@@ -28465,7 +28465,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Split2Layer {
+	impl ::core::fmt::Debug for Split2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Split2Layer")
@@ -28585,7 +28585,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SplitLayer {
+	impl ::core::fmt::Debug for SplitLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SplitLayer")
@@ -28690,7 +28690,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SqrtLayer {
+	impl ::core::fmt::Debug for SqrtLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SqrtLayer")
@@ -28819,7 +28819,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SqueezeLayer {
+	impl ::core::fmt::Debug for SqueezeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SqueezeLayer")
@@ -28924,7 +28924,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for SwishLayer {
+	impl ::core::fmt::Debug for SwishLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SwishLayer")
@@ -29040,7 +29040,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for TanHLayer {
+	impl ::core::fmt::Debug for TanHLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TanHLayer")
@@ -29156,7 +29156,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for TanLayer {
+	impl ::core::fmt::Debug for TanLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TanLayer")
@@ -29352,7 +29352,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for TextDetectionModel {
+	impl ::core::fmt::Debug for TextDetectionModel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TextDetectionModel")
@@ -29569,7 +29569,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for TextDetectionModel_DB {
+	impl ::core::fmt::Debug for TextDetectionModel_DB {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TextDetectionModel_DB")
@@ -29762,7 +29762,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for TextDetectionModel_EAST {
+	impl ::core::fmt::Debug for TextDetectionModel_EAST {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TextDetectionModel_EAST")
@@ -30035,7 +30035,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for TextRecognitionModel {
+	impl ::core::fmt::Debug for TextRecognitionModel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TextRecognitionModel")
@@ -30133,7 +30133,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for ThresholdedReluLayer {
+	impl ::core::fmt::Debug for ThresholdedReluLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ThresholdedReluLayer")
@@ -30250,7 +30250,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Tile2Layer {
+	impl ::core::fmt::Debug for Tile2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Tile2Layer")
@@ -30354,7 +30354,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for TileLayer {
+	impl ::core::fmt::Debug for TileLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TileLayer")
@@ -30517,7 +30517,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for Tokenizer {
+	impl ::core::fmt::Debug for Tokenizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Tokenizer")
@@ -30591,7 +30591,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for TopK2Layer {
+	impl ::core::fmt::Debug for TopK2Layer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TopK2Layer")
@@ -30695,7 +30695,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for TopKLayer {
+	impl ::core::fmt::Debug for TopKLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TopKLayer")
@@ -30825,7 +30825,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for TransformLayoutLayer {
+	impl ::core::fmt::Debug for TransformLayoutLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TransformLayoutLayer")
@@ -30944,7 +30944,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for TransposeLayer {
+	impl ::core::fmt::Debug for TransposeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TransposeLayer")
@@ -31049,7 +31049,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for TriluLayer {
+	impl ::core::fmt::Debug for TriluLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TriluLayer")
@@ -31153,7 +31153,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for UniqueLayer {
+	impl ::core::fmt::Debug for UniqueLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("UniqueLayer")
@@ -31270,7 +31270,7 @@ pub mod dnn {
 		}
 	}
 
-	impl std::fmt::Debug for UnsqueezeLayer {
+	impl ::core::fmt::Debug for UnsqueezeLayer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("UnsqueezeLayer")
@@ -31384,7 +31384,7 @@ pub mod dnn {
 
 	}
 
-	impl std::fmt::Debug for _Range {
+	impl ::core::fmt::Debug for _Range {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("_Range")

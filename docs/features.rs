@@ -866,7 +866,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for ALIKED {
+	impl ::core::fmt::Debug for ALIKED {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ALIKED")
@@ -1230,7 +1230,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for ANNIndex {
+	impl ::core::fmt::Debug for ANNIndex {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ANNIndex")
@@ -1353,7 +1353,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for AffineFeature {
+	impl ::core::fmt::Debug for AffineFeature {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AffineFeature")
@@ -1549,7 +1549,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for BFMatcher {
+	impl ::core::fmt::Debug for BFMatcher {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BFMatcher")
@@ -1836,7 +1836,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for DISK {
+	impl ::core::fmt::Debug for DISK {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DISK")
@@ -2566,7 +2566,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for DescriptorMatcher {
+	impl ::core::fmt::Debug for DescriptorMatcher {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DescriptorMatcher")
@@ -2728,7 +2728,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for FastFeatureDetector {
+	impl ::core::fmt::Debug for FastFeatureDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FastFeatureDetector")
@@ -3104,7 +3104,7 @@ pub mod features {
 		}
 	}
 
-	impl std::fmt::Debug for Feature2D {
+	impl ::core::fmt::Debug for Feature2D {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Feature2D")
@@ -3306,7 +3306,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for FlannBasedMatcher {
+	impl ::core::fmt::Debug for FlannBasedMatcher {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FlannBasedMatcher")
@@ -3577,7 +3577,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for GFTTDetector {
+	impl ::core::fmt::Debug for GFTTDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GFTTDetector")
@@ -3740,7 +3740,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for KeyPointsFilter {
+	impl ::core::fmt::Debug for KeyPointsFilter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("KeyPointsFilter")
@@ -3949,7 +3949,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for LightGlueMatcher {
+	impl ::core::fmt::Debug for LightGlueMatcher {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LightGlueMatcher")
@@ -4308,7 +4308,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for MSER {
+	impl ::core::fmt::Debug for MSER {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MSER")
@@ -4664,7 +4664,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for ORB {
+	impl ::core::fmt::Debug for ORB {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ORB")
@@ -5008,7 +5008,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for SIFT {
+	impl ::core::fmt::Debug for SIFT {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SIFT")
@@ -5177,7 +5177,7 @@ pub mod features {
 
 	}
 
-	impl std::fmt::Debug for SimpleBlobDetector {
+	impl ::core::fmt::Debug for SimpleBlobDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SimpleBlobDetector")

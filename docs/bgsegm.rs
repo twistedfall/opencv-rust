@@ -582,7 +582,7 @@ pub mod bgsegm {
 
 	}
 
-	impl std::fmt::Debug for BackgroundSubtractorCNT {
+	impl ::core::fmt::Debug for BackgroundSubtractorCNT {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BackgroundSubtractorCNT")
@@ -981,7 +981,7 @@ pub mod bgsegm {
 
 	}
 
-	impl std::fmt::Debug for BackgroundSubtractorGMG {
+	impl ::core::fmt::Debug for BackgroundSubtractorGMG {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BackgroundSubtractorGMG")
@@ -1119,7 +1119,7 @@ pub mod bgsegm {
 
 	}
 
-	impl std::fmt::Debug for BackgroundSubtractorGSOC {
+	impl ::core::fmt::Debug for BackgroundSubtractorGSOC {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BackgroundSubtractorGSOC")
@@ -1255,7 +1255,7 @@ pub mod bgsegm {
 
 	}
 
-	impl std::fmt::Debug for BackgroundSubtractorLSBP {
+	impl ::core::fmt::Debug for BackgroundSubtractorLSBP {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BackgroundSubtractorLSBP")
@@ -1374,7 +1374,7 @@ pub mod bgsegm {
 		}
 	}
 
-	impl std::fmt::Debug for BackgroundSubtractorLSBPDesc {
+	impl ::core::fmt::Debug for BackgroundSubtractorLSBPDesc {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BackgroundSubtractorLSBPDesc")
@@ -1592,7 +1592,7 @@ pub mod bgsegm {
 
 	}
 
-	impl std::fmt::Debug for BackgroundSubtractorMOG {
+	impl ::core::fmt::Debug for BackgroundSubtractorMOG {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BackgroundSubtractorMOG")
@@ -1705,7 +1705,7 @@ pub mod bgsegm {
 
 	}
 
-	impl std::fmt::Debug for SyntheticSequenceGenerator {
+	impl ::core::fmt::Debug for SyntheticSequenceGenerator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SyntheticSequenceGenerator")

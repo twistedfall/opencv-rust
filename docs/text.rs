@@ -945,10 +945,10 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: Option<&mut core::Vector<core::Rect>>, component_texts: Option<&mut core::Vector<String>>, component_confidences: Option<&mut core::Vector<f32>>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_BaseOCR_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_BaseOCR_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.map_or(::core::ptr::null_mut(), |component_rects| component_rects.as_raw_mut_VectorOfRect()), component_texts.map_or(::core::ptr::null_mut(), |component_texts| component_texts.as_raw_mut_VectorOfString()), component_confidences.map_or(::core::ptr::null_mut(), |component_confidences| component_confidences.as_raw_mut_VectorOff32()), component_level, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -978,10 +978,10 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: Option<&mut core::Vector<core::Rect>>, component_texts: Option<&mut core::Vector<String>>, component_confidences: Option<&mut core::Vector<f32>>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_BaseOCR_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_BaseOCR_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.map_or(::core::ptr::null_mut(), |component_rects| component_rects.as_raw_mut_VectorOfRect()), component_texts.map_or(::core::ptr::null_mut(), |component_texts| component_texts.as_raw_mut_VectorOfString()), component_confidences.map_or(::core::ptr::null_mut(), |component_confidences| component_confidences.as_raw_mut_VectorOff32()), component_level, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -1007,7 +1007,7 @@ pub mod text {
 
 	}
 
-	impl std::fmt::Debug for BaseOCR {
+	impl ::core::fmt::Debug for BaseOCR {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BaseOCR")
@@ -1159,7 +1159,7 @@ pub mod text {
 
 	}
 
-	impl std::fmt::Debug for ERFilter {
+	impl ::core::fmt::Debug for ERFilter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ERFilter")
@@ -1233,7 +1233,7 @@ pub mod text {
 
 	}
 
-	impl std::fmt::Debug for ERFilter_Callback {
+	impl ::core::fmt::Debug for ERFilter_Callback {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ERFilter_Callback")
@@ -1593,7 +1593,7 @@ pub mod text {
 
 	}
 
-	impl std::fmt::Debug for ERStat {
+	impl ::core::fmt::Debug for ERStat {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ERStat")
@@ -1813,10 +1813,10 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: Option<&mut core::Vector<core::Rect>>, component_texts: Option<&mut core::Vector<String>>, component_confidences: Option<&mut core::Vector<f32>>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.map_or(::core::ptr::null_mut(), |component_rects| component_rects.as_raw_mut_VectorOfRect()), component_texts.map_or(::core::ptr::null_mut(), |component_texts| component_texts.as_raw_mut_VectorOfString()), component_confidences.map_or(::core::ptr::null_mut(), |component_confidences| component_confidences.as_raw_mut_VectorOff32()), component_level, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -1868,10 +1868,10 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: Option<&mut core::Vector<core::Rect>>, component_texts: Option<&mut core::Vector<String>>, component_confidences: Option<&mut core::Vector<f32>>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.map_or(::core::ptr::null_mut(), |component_rects| component_rects.as_raw_mut_VectorOfRect()), component_texts.map_or(::core::ptr::null_mut(), |component_texts| component_texts.as_raw_mut_VectorOfString()), component_confidences.map_or(::core::ptr::null_mut(), |component_confidences| component_confidences.as_raw_mut_VectorOff32()), component_level, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -1961,7 +1961,7 @@ pub mod text {
 		}
 	}
 
-	impl std::fmt::Debug for OCRBeamSearchDecoder {
+	impl ::core::fmt::Debug for OCRBeamSearchDecoder {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRBeamSearchDecoder")
@@ -2081,7 +2081,7 @@ pub mod text {
 		}
 	}
 
-	impl std::fmt::Debug for OCRBeamSearchDecoder_ClassifierCallback {
+	impl ::core::fmt::Debug for OCRBeamSearchDecoder_ClassifierCallback {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRBeamSearchDecoder_ClassifierCallback")
@@ -2313,10 +2313,10 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: Option<&mut core::Vector<core::Rect>>, component_texts: Option<&mut core::Vector<String>>, component_confidences: Option<&mut core::Vector<f32>>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.map_or(::core::ptr::null_mut(), |component_rects| component_rects.as_raw_mut_VectorOfRect()), component_texts.map_or(::core::ptr::null_mut(), |component_texts| component_texts.as_raw_mut_VectorOfString()), component_confidences.map_or(::core::ptr::null_mut(), |component_confidences| component_confidences.as_raw_mut_VectorOff32()), component_level, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -2392,10 +2392,10 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: Option<&mut core::Vector<core::Rect>>, component_texts: Option<&mut core::Vector<String>>, component_confidences: Option<&mut core::Vector<f32>>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.map_or(::core::ptr::null_mut(), |component_rects| component_rects.as_raw_mut_VectorOfRect()), component_texts.map_or(::core::ptr::null_mut(), |component_texts| component_texts.as_raw_mut_VectorOfString()), component_confidences.map_or(::core::ptr::null_mut(), |component_confidences| component_confidences.as_raw_mut_VectorOff32()), component_level, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -2509,7 +2509,7 @@ pub mod text {
 		}
 	}
 
-	impl std::fmt::Debug for OCRHMMDecoder {
+	impl ::core::fmt::Debug for OCRHMMDecoder {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRHMMDecoder")
@@ -2611,7 +2611,7 @@ pub mod text {
 		}
 	}
 
-	impl std::fmt::Debug for OCRHMMDecoder_ClassifierCallback {
+	impl ::core::fmt::Debug for OCRHMMDecoder_ClassifierCallback {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRHMMDecoder_ClassifierCallback")
@@ -2684,10 +2684,10 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: OCR_LEVEL_WORD
 		#[inline]
-		fn run(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: Option<&mut core::Vector<core::Rect>>, component_texts: Option<&mut core::Vector<String>>, component_confidences: Option<&mut core::Vector<f32>>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.map_or(::core::ptr::null_mut(), |component_rects| component_rects.as_raw_mut_VectorOfRect()), component_texts.map_or(::core::ptr::null_mut(), |component_texts| component_texts.as_raw_mut_VectorOfString()), component_confidences.map_or(::core::ptr::null_mut(), |component_confidences| component_confidences.as_raw_mut_VectorOff32()), component_level, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -2741,10 +2741,10 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: OCR_LEVEL_WORD
 		#[inline]
-		fn run_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: Option<&mut core::Vector<core::Rect>>, component_texts: Option<&mut core::Vector<String>>, component_confidences: Option<&mut core::Vector<f32>>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.map_or(::core::ptr::null_mut(), |component_rects| component_rects.as_raw_mut_VectorOfRect()), component_texts.map_or(::core::ptr::null_mut(), |component_texts| component_texts.as_raw_mut_VectorOfString()), component_confidences.map_or(::core::ptr::null_mut(), |component_confidences| component_confidences.as_raw_mut_VectorOff32()), component_level, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -2794,7 +2794,7 @@ pub mod text {
 
 	}
 
-	impl std::fmt::Debug for OCRHolisticWordRecognizer {
+	impl ::core::fmt::Debug for OCRHolisticWordRecognizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRHolisticWordRecognizer")
@@ -2877,8 +2877,8 @@ pub mod text {
 		/// * oem: OEM_DEFAULT
 		/// * psmode: PSM_AUTO
 		#[inline]
-		pub fn create(datapath: impl AsRef<OsStr>, language: &str, char_whitelist: &str, oem: i32, psmode: i32) -> Result<core::Ptr<crate::text::OCRTesseract>> {
-			path_arg!(datapath);
+		pub fn create(datapath: Option<impl AsRef<OsStr>>, language: Option<&str>, char_whitelist: Option<&str>, oem: i32, psmode: i32) -> Result<core::Ptr<crate::text::OCRTesseract>> {
+			path_arg!(option datapath);
 			extern_container_arg!(language);
 			extern_container_arg!(char_whitelist);
 			return_send!(via ocvrs_return);
@@ -2959,10 +2959,10 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: Option<&mut core::Vector<core::Rect>>, component_texts: Option<&mut core::Vector<String>>, component_confidences: Option<&mut core::Vector<f32>>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRTesseract_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_OCRTesseract_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.map_or(::core::ptr::null_mut(), |component_rects| component_rects.as_raw_mut_VectorOfRect()), component_texts.map_or(::core::ptr::null_mut(), |component_texts| component_texts.as_raw_mut_VectorOfString()), component_confidences.map_or(::core::ptr::null_mut(), |component_confidences| component_confidences.as_raw_mut_VectorOff32()), component_level, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -3009,10 +3009,10 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: Option<&mut core::Vector<core::Rect>>, component_texts: Option<&mut core::Vector<String>>, component_confidences: Option<&mut core::Vector<f32>>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRTesseract_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_OCRTesseract_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.map_or(::core::ptr::null_mut(), |component_rects| component_rects.as_raw_mut_VectorOfRect()), component_texts.map_or(::core::ptr::null_mut(), |component_texts| component_texts.as_raw_mut_VectorOfString()), component_confidences.map_or(::core::ptr::null_mut(), |component_confidences| component_confidences.as_raw_mut_VectorOff32()), component_level, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -3104,7 +3104,7 @@ pub mod text {
 
 	}
 
-	impl std::fmt::Debug for OCRTesseract {
+	impl ::core::fmt::Debug for OCRTesseract {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRTesseract")
@@ -3178,7 +3178,7 @@ pub mod text {
 
 	}
 
-	impl std::fmt::Debug for TextDetector {
+	impl ::core::fmt::Debug for TextDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TextDetector")
@@ -3290,7 +3290,7 @@ pub mod text {
 
 	}
 
-	impl std::fmt::Debug for TextDetectorCNN {
+	impl ::core::fmt::Debug for TextDetectorCNN {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TextDetectorCNN")

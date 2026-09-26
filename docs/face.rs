@@ -592,7 +592,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for BIF {
+	impl ::core::fmt::Debug for BIF {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BIF")
@@ -770,7 +770,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for BasicFaceRecognizer {
+	impl ::core::fmt::Debug for BasicFaceRecognizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BasicFaceRecognizer")
@@ -968,7 +968,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for CParams {
+	impl ::core::fmt::Debug for CParams {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CParams")
@@ -1107,7 +1107,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for EigenFaceRecognizer {
+	impl ::core::fmt::Debug for EigenFaceRecognizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("EigenFaceRecognizer")
@@ -1679,7 +1679,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for FaceRecognizer {
+	impl ::core::fmt::Debug for FaceRecognizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FaceRecognizer")
@@ -1808,7 +1808,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for Facemark {
+	impl ::core::fmt::Debug for Facemark {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Facemark")
@@ -1918,7 +1918,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for FacemarkAAM {
+	impl ::core::fmt::Debug for FacemarkAAM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FacemarkAAM")
@@ -2085,7 +2085,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for FacemarkAAM_Config {
+	impl ::core::fmt::Debug for FacemarkAAM_Config {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FacemarkAAM_Config")
@@ -2167,7 +2167,7 @@ pub mod face {
 		}
 	}
 
-	impl std::fmt::Debug for FacemarkAAM_Data {
+	impl ::core::fmt::Debug for FacemarkAAM_Data {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FacemarkAAM_Data")
@@ -2311,7 +2311,7 @@ pub mod face {
 		}
 	}
 
-	impl std::fmt::Debug for FacemarkAAM_Model {
+	impl ::core::fmt::Debug for FacemarkAAM_Model {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FacemarkAAM_Model")
@@ -2513,7 +2513,7 @@ pub mod face {
 		}
 	}
 
-	impl std::fmt::Debug for FacemarkAAM_Model_Texture {
+	impl ::core::fmt::Debug for FacemarkAAM_Model_Texture {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FacemarkAAM_Model_Texture")
@@ -2725,7 +2725,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for FacemarkAAM_Params {
+	impl ::core::fmt::Debug for FacemarkAAM_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FacemarkAAM_Params")
@@ -2880,7 +2880,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for FacemarkKazemi {
+	impl ::core::fmt::Debug for FacemarkKazemi {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FacemarkKazemi")
@@ -3091,7 +3091,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for FacemarkKazemi_Params {
+	impl ::core::fmt::Debug for FacemarkKazemi_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FacemarkKazemi_Params")
@@ -3173,7 +3173,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for FacemarkLBF {
+	impl ::core::fmt::Debug for FacemarkLBF {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FacemarkLBF")
@@ -3478,7 +3478,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for FacemarkLBF_Params {
+	impl ::core::fmt::Debug for FacemarkLBF_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FacemarkLBF_Params")
@@ -3802,7 +3802,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for FacemarkTrain {
+	impl ::core::fmt::Debug for FacemarkTrain {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FacemarkTrain")
@@ -3965,7 +3965,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for FisherFaceRecognizer {
+	impl ::core::fmt::Debug for FisherFaceRecognizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FisherFaceRecognizer")
@@ -4276,7 +4276,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for LBPHFaceRecognizer {
+	impl ::core::fmt::Debug for LBPHFaceRecognizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LBPHFaceRecognizer")
@@ -4512,7 +4512,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for MACE {
+	impl ::core::fmt::Debug for MACE {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MACE")
@@ -4595,7 +4595,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for PredictCollector {
+	impl ::core::fmt::Debug for PredictCollector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PredictCollector")
@@ -4789,7 +4789,7 @@ pub mod face {
 
 	}
 
-	impl std::fmt::Debug for StandardCollector {
+	impl ::core::fmt::Debug for StandardCollector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("StandardCollector")

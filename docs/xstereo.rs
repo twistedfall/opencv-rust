@@ -425,7 +425,7 @@ pub mod xstereo {
 
 	}
 
-	impl std::fmt::Debug for QuasiDenseStereo {
+	impl ::core::fmt::Debug for QuasiDenseStereo {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QuasiDenseStereo")

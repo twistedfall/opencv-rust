@@ -1608,7 +1608,7 @@ pub mod objdetect {
 
 	}
 
-	impl std::fmt::Debug for FaceDetectorYN {
+	impl ::core::fmt::Debug for FaceDetectorYN {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FaceDetectorYN")
@@ -1826,7 +1826,7 @@ pub mod objdetect {
 
 	}
 
-	impl std::fmt::Debug for FaceRecognizerSF {
+	impl ::core::fmt::Debug for FaceRecognizerSF {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FaceRecognizerSF")
@@ -2131,7 +2131,7 @@ pub mod objdetect {
 		}
 	}
 
-	impl std::fmt::Debug for GraphicalCodeDetector {
+	impl ::core::fmt::Debug for GraphicalCodeDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GraphicalCodeDetector")
@@ -2364,7 +2364,7 @@ pub mod objdetect {
 		}
 	}
 
-	impl std::fmt::Debug for QRCodeDetector {
+	impl ::core::fmt::Debug for QRCodeDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QRCodeDetector")
@@ -2495,7 +2495,7 @@ pub mod objdetect {
 		}
 	}
 
-	impl std::fmt::Debug for QRCodeDetectorAruco {
+	impl ::core::fmt::Debug for QRCodeDetectorAruco {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QRCodeDetectorAruco")
@@ -2659,7 +2659,7 @@ pub mod objdetect {
 
 	}
 
-	impl std::fmt::Debug for QRCodeEncoder {
+	impl ::core::fmt::Debug for QRCodeEncoder {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QRCodeEncoder")
@@ -3287,7 +3287,7 @@ pub mod objdetect {
 
 	}
 
-	impl std::fmt::Debug for ArucoDetector {
+	impl ::core::fmt::Debug for ArucoDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ArucoDetector")
@@ -3523,7 +3523,7 @@ pub mod objdetect {
 		}
 	}
 
-	impl std::fmt::Debug for Board {
+	impl ::core::fmt::Debug for Board {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Board")
@@ -3746,7 +3746,7 @@ pub mod objdetect {
 		}
 	}
 
-	impl std::fmt::Debug for CharucoBoard {
+	impl ::core::fmt::Debug for CharucoBoard {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CharucoBoard")
@@ -4086,7 +4086,7 @@ pub mod objdetect {
 
 	}
 
-	impl std::fmt::Debug for CharucoDetector {
+	impl ::core::fmt::Debug for CharucoDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CharucoDetector")
@@ -4235,7 +4235,7 @@ pub mod objdetect {
 		}
 	}
 
-	impl std::fmt::Debug for CharucoParameters {
+	impl ::core::fmt::Debug for CharucoParameters {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CharucoParameters")
@@ -4937,7 +4937,7 @@ pub mod objdetect {
 		}
 	}
 
-	impl std::fmt::Debug for DetectorParameters {
+	impl ::core::fmt::Debug for DetectorParameters {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DetectorParameters")
@@ -5339,7 +5339,7 @@ pub mod objdetect {
 		}
 	}
 
-	impl std::fmt::Debug for Dictionary {
+	impl ::core::fmt::Debug for Dictionary {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Dictionary")
@@ -5482,7 +5482,7 @@ pub mod objdetect {
 		}
 	}
 
-	impl std::fmt::Debug for GridBoard {
+	impl ::core::fmt::Debug for GridBoard {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GridBoard")
@@ -5830,7 +5830,7 @@ pub mod objdetect {
 		}
 	}
 
-	impl std::fmt::Debug for BarcodeDetector {
+	impl ::core::fmt::Debug for BarcodeDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BarcodeDetector")
@@ -6052,7 +6052,7 @@ pub mod objdetect {
 
 	}
 
-	impl std::fmt::Debug for CChecker {
+	impl ::core::fmt::Debug for CChecker {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CChecker")
@@ -6402,7 +6402,7 @@ pub mod objdetect {
 
 	}
 
-	impl std::fmt::Debug for CCheckerDetector {
+	impl ::core::fmt::Debug for CCheckerDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CCheckerDetector")

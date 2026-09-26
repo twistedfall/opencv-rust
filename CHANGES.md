@@ -1,3 +1,9 @@
+* 0.101.0
+  * Function arguments that default to `NULL` in C++ are now typed as `Option`, e.g. `core::rand_shuffle()`, `text::OCRTesseract::create()`.
+  * "objdetect" feature now also enables "dnn" and "features" features (kudos to de-vri-es).
+  * Internal modules `mod_prelude`, `mod_prelude_sys` and `hub_prelude` are no longer public. `FILE` and `clock_t` are no longer
+    reexported from `platform_types`.
+
 * 0.100.1
   * Fix generation of the `DrawLinesMatchesFlags` enum with Apple clang.
 

@@ -136,11 +136,11 @@ pub mod videostab {
 	/// * model: MM_AFFINE
 	/// * rmse: 0
 	#[inline]
-	pub fn estimate_global_motion_least_squares(points0: &mut impl ToInputOutputArray, points1: &mut impl ToInputOutputArray, model: i32, rmse: &mut f32) -> Result<core::Mat> {
+	pub fn estimate_global_motion_least_squares(points0: &mut impl ToInputOutputArray, points1: &mut impl ToInputOutputArray, model: i32, rmse: Option<&mut f32>) -> Result<core::Mat> {
 		input_output_array_arg!(points0);
 		input_output_array_arg!(points1);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_videostab_estimateGlobalMotionLeastSquares_const__InputOutputArrayR_const__InputOutputArrayR_int_floatX(points0.as_raw__InputOutputArray(), points1.as_raw__InputOutputArray(), model, rmse, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_videostab_estimateGlobalMotionLeastSquares_const__InputOutputArrayR_const__InputOutputArrayR_int_floatX(points0.as_raw__InputOutputArray(), points1.as_raw__InputOutputArray(), model, rmse.map_or(::core::ptr::null_mut(), |rmse| rmse), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -191,11 +191,11 @@ pub mod videostab {
 	/// * rmse: 0
 	/// * ninliers: 0
 	#[inline]
-	pub fn estimate_global_motion_ransac(points0: &impl ToInputArray, points1: &impl ToInputArray, model: i32, params: &impl crate::videostab::RansacParamsTraitConst, rmse: &mut f32, ninliers: &mut i32) -> Result<core::Mat> {
+	pub fn estimate_global_motion_ransac(points0: &impl ToInputArray, points1: &impl ToInputArray, model: i32, params: &impl crate::videostab::RansacParamsTraitConst, rmse: Option<&mut f32>, ninliers: Option<&mut i32>) -> Result<core::Mat> {
 		input_array_arg!(points0);
 		input_array_arg!(points1);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_videostab_estimateGlobalMotionRansac_const__InputArrayR_const__InputArrayR_int_const_RansacParamsR_floatX_intX(points0.as_raw__InputArray(), points1.as_raw__InputArray(), model, params.as_raw_RansacParams(), rmse, ninliers, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_videostab_estimateGlobalMotionRansac_const__InputArrayR_const__InputArrayR_int_const_RansacParamsR_floatX_intX(points0.as_raw__InputArray(), points1.as_raw__InputArray(), model, params.as_raw_RansacParams(), rmse.map_or(::core::ptr::null_mut(), |rmse| rmse), ninliers.map_or(::core::ptr::null_mut(), |ninliers| ninliers), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -284,7 +284,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for ColorAverageInpainter {
+	impl ::core::fmt::Debug for ColorAverageInpainter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ColorAverageInpainter")
@@ -380,7 +380,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for ColorInpainter {
+	impl ::core::fmt::Debug for ColorInpainter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ColorInpainter")
@@ -477,7 +477,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for ConsistentMosaicInpainter {
+	impl ::core::fmt::Debug for ConsistentMosaicInpainter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ConsistentMosaicInpainter")
@@ -618,7 +618,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for DeblurerBase {
+	impl ::core::fmt::Debug for DeblurerBase {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DeblurerBase")
@@ -694,7 +694,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for DensePyrLkOptFlowEstimatorGpu {
+	impl ::core::fmt::Debug for DensePyrLkOptFlowEstimatorGpu {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DensePyrLkOptFlowEstimatorGpu")
@@ -791,7 +791,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for FastMarchingMethod {
+	impl ::core::fmt::Debug for FastMarchingMethod {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FastMarchingMethod")
@@ -851,9 +851,9 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, frame0: &impl core::MatTraitConst, frame1: &impl core::MatTraitConst, ok: &mut bool) -> Result<core::Mat> {
+		fn estimate(&mut self, frame0: &impl core::MatTraitConst, frame1: &impl core::MatTraitConst, ok: Option<&mut bool>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_FromFileMotionReader_estimate_const_MatR_const_MatR_boolX(self.as_raw_mut_FromFileMotionReader(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_FromFileMotionReader_estimate_const_MatR_const_MatR_boolX(self.as_raw_mut_FromFileMotionReader(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok.map_or(::core::ptr::null_mut(), |ok| ok), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -875,7 +875,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for FromFileMotionReader {
+	impl ::core::fmt::Debug for FromFileMotionReader {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FromFileMotionReader")
@@ -1013,7 +1013,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for GaussianMotionFilter {
+	impl ::core::fmt::Debug for GaussianMotionFilter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GaussianMotionFilter")
@@ -1096,7 +1096,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for IDenseOptFlowEstimator {
+	impl ::core::fmt::Debug for IDenseOptFlowEstimator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("IDenseOptFlowEstimator")
@@ -1162,7 +1162,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for IFrameSource {
+	impl ::core::fmt::Debug for IFrameSource {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("IFrameSource")
@@ -1227,7 +1227,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for ILog {
+	impl ::core::fmt::Debug for ILog {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ILog")
@@ -1286,7 +1286,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for IMotionStabilizer {
+	impl ::core::fmt::Debug for IMotionStabilizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("IMotionStabilizer")
@@ -1351,7 +1351,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for IOutlierRejector {
+	impl ::core::fmt::Debug for IOutlierRejector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("IOutlierRejector")
@@ -1415,7 +1415,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for ISparseOptFlowEstimator {
+	impl ::core::fmt::Debug for ISparseOptFlowEstimator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ISparseOptFlowEstimator")
@@ -1494,9 +1494,9 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, frame0: &impl core::MatTraitConst, frame1: &impl core::MatTraitConst, ok: &mut bool) -> Result<core::Mat> {
+		fn estimate(&mut self, frame0: &impl core::MatTraitConst, frame1: &impl core::MatTraitConst, ok: Option<&mut bool>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_ImageMotionEstimatorBase_estimate_const_MatR_const_MatR_boolX(self.as_raw_mut_ImageMotionEstimatorBase(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_ImageMotionEstimatorBase_estimate_const_MatR_const_MatR_boolX(self.as_raw_mut_ImageMotionEstimatorBase(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok.map_or(::core::ptr::null_mut(), |ok| ok), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -1518,7 +1518,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for ImageMotionEstimatorBase {
+	impl ::core::fmt::Debug for ImageMotionEstimatorBase {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ImageMotionEstimatorBase")
@@ -1692,7 +1692,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for InpainterBase {
+	impl ::core::fmt::Debug for InpainterBase {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("InpainterBase")
@@ -1849,7 +1849,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for InpaintingPipeline {
+	impl ::core::fmt::Debug for InpaintingPipeline {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("InpaintingPipeline")
@@ -2007,9 +2007,9 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate_mat(&mut self, frame0: &impl core::MatTraitConst, frame1: &impl core::MatTraitConst, ok: &mut bool) -> Result<core::Mat> {
+		fn estimate_mat(&mut self, frame0: &impl core::MatTraitConst, frame1: &impl core::MatTraitConst, ok: Option<&mut bool>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_estimate_const_MatR_const_MatR_boolX(self.as_raw_mut_KeypointBasedMotionEstimator(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_estimate_const_MatR_const_MatR_boolX(self.as_raw_mut_KeypointBasedMotionEstimator(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok.map_or(::core::ptr::null_mut(), |ok| ok), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -2032,11 +2032,11 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, frame0: &impl ToInputArray, frame1: &impl ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+		fn estimate(&mut self, frame0: &impl ToInputArray, frame1: &impl ToInputArray, ok: Option<&mut bool>) -> Result<core::Mat> {
 			input_array_arg!(frame0);
 			input_array_arg!(frame1);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_KeypointBasedMotionEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), ok, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_KeypointBasedMotionEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), ok.map_or(::core::ptr::null_mut(), |ok| ok), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -2060,7 +2060,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for KeypointBasedMotionEstimator {
+	impl ::core::fmt::Debug for KeypointBasedMotionEstimator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("KeypointBasedMotionEstimator")
@@ -2168,9 +2168,9 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, frame0: &impl core::MatTraitConst, frame1: &impl core::MatTraitConst, ok: &mut bool) -> Result<core::Mat> {
+		fn estimate(&mut self, frame0: &impl core::MatTraitConst, frame1: &impl core::MatTraitConst, ok: Option<&mut bool>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_estimate_const_MatR_const_MatR_boolX(self.as_raw_mut_KeypointBasedMotionEstimatorGpu(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_estimate_const_MatR_const_MatR_boolX(self.as_raw_mut_KeypointBasedMotionEstimatorGpu(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok.map_or(::core::ptr::null_mut(), |ok| ok), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -2193,9 +2193,9 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate_1(&mut self, frame0: &impl core::GpuMatTraitConst, frame1: &impl core::GpuMatTraitConst, ok: &mut bool) -> Result<core::Mat> {
+		fn estimate_1(&mut self, frame0: &impl core::GpuMatTraitConst, frame1: &impl core::GpuMatTraitConst, ok: Option<&mut bool>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_estimate_const_GpuMatR_const_GpuMatR_boolX(self.as_raw_mut_KeypointBasedMotionEstimatorGpu(), frame0.as_raw_GpuMat(), frame1.as_raw_GpuMat(), ok, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_estimate_const_GpuMatR_const_GpuMatR_boolX(self.as_raw_mut_KeypointBasedMotionEstimatorGpu(), frame0.as_raw_GpuMat(), frame1.as_raw_GpuMat(), ok.map_or(::core::ptr::null_mut(), |ok| ok), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -2217,7 +2217,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for KeypointBasedMotionEstimatorGpu {
+	impl ::core::fmt::Debug for KeypointBasedMotionEstimatorGpu {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("KeypointBasedMotionEstimatorGpu")
@@ -2303,7 +2303,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for LogToStdout {
+	impl ::core::fmt::Debug for LogToStdout {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LogToStdout")
@@ -2523,7 +2523,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for LpMotionStabilizer {
+	impl ::core::fmt::Debug for LpMotionStabilizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LpMotionStabilizer")
@@ -2612,7 +2612,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for MaskFrameSource {
+	impl ::core::fmt::Debug for MaskFrameSource {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MaskFrameSource")
@@ -2697,7 +2697,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressor {
+	impl ::core::fmt::Debug for MoreAccurateMotionWobbleSuppressor {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MoreAccurateMotionWobbleSuppressor")
@@ -2784,7 +2784,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressorBase {
+	impl ::core::fmt::Debug for MoreAccurateMotionWobbleSuppressorBase {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MoreAccurateMotionWobbleSuppressorBase")
@@ -2882,7 +2882,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressorGpu {
+	impl ::core::fmt::Debug for MoreAccurateMotionWobbleSuppressorGpu {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MoreAccurateMotionWobbleSuppressorGpu")
@@ -2986,11 +2986,11 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, points0: &impl ToInputArray, points1: &impl ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+		fn estimate(&mut self, points0: &impl ToInputArray, points1: &impl ToInputArray, ok: Option<&mut bool>) -> Result<core::Mat> {
 			input_array_arg!(points0);
 			input_array_arg!(points1);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_MotionEstimatorBase_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_MotionEstimatorBase(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_MotionEstimatorBase_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_MotionEstimatorBase(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok.map_or(::core::ptr::null_mut(), |ok| ok), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -3023,7 +3023,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for MotionEstimatorBase {
+	impl ::core::fmt::Debug for MotionEstimatorBase {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MotionEstimatorBase")
@@ -3105,11 +3105,11 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, points0: &impl ToInputArray, points1: &impl ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+		fn estimate(&mut self, points0: &impl ToInputArray, points1: &impl ToInputArray, ok: Option<&mut bool>) -> Result<core::Mat> {
 			input_array_arg!(points0);
 			input_array_arg!(points1);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_MotionEstimatorL1_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_MotionEstimatorL1(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_MotionEstimatorL1_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_MotionEstimatorL1(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok.map_or(::core::ptr::null_mut(), |ok| ok), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -3133,7 +3133,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for MotionEstimatorL1 {
+	impl ::core::fmt::Debug for MotionEstimatorL1 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MotionEstimatorL1")
@@ -3257,11 +3257,11 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, points0: &impl ToInputArray, points1: &impl ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+		fn estimate(&mut self, points0: &impl ToInputArray, points1: &impl ToInputArray, ok: Option<&mut bool>) -> Result<core::Mat> {
 			input_array_arg!(points0);
 			input_array_arg!(points1);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_MotionEstimatorRansacL2(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_MotionEstimatorRansacL2(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok.map_or(::core::ptr::null_mut(), |ok| ok), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -3285,7 +3285,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for MotionEstimatorRansacL2 {
+	impl ::core::fmt::Debug for MotionEstimatorRansacL2 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MotionEstimatorRansacL2")
@@ -3361,7 +3361,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for MotionFilterBase {
+	impl ::core::fmt::Debug for MotionFilterBase {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MotionFilterBase")
@@ -3515,7 +3515,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for MotionInpainter {
+	impl ::core::fmt::Debug for MotionInpainter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MotionInpainter")
@@ -3618,7 +3618,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for MotionStabilizationPipeline {
+	impl ::core::fmt::Debug for MotionStabilizationPipeline {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MotionStabilizationPipeline")
@@ -3703,7 +3703,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for NullDeblurer {
+	impl ::core::fmt::Debug for NullDeblurer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullDeblurer")
@@ -3798,7 +3798,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for NullFrameSource {
+	impl ::core::fmt::Debug for NullFrameSource {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullFrameSource")
@@ -3883,7 +3883,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for NullInpainter {
+	impl ::core::fmt::Debug for NullInpainter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullInpainter")
@@ -3969,7 +3969,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for NullLog {
+	impl ::core::fmt::Debug for NullLog {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullLog")
@@ -4057,7 +4057,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for NullOutlierRejector {
+	impl ::core::fmt::Debug for NullOutlierRejector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullOutlierRejector")
@@ -4142,7 +4142,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for NullWobbleSuppressor {
+	impl ::core::fmt::Debug for NullWobbleSuppressor {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullWobbleSuppressor")
@@ -4250,7 +4250,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for OnePassStabilizer {
+	impl ::core::fmt::Debug for OnePassStabilizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OnePassStabilizer")
@@ -4368,7 +4368,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for PyrLkOptFlowEstimatorBase {
+	impl ::core::fmt::Debug for PyrLkOptFlowEstimatorBase {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PyrLkOptFlowEstimatorBase")
@@ -4530,7 +4530,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for RansacParams {
+	impl ::core::fmt::Debug for RansacParams {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RansacParams")
@@ -4613,7 +4613,7 @@ pub mod videostab {
 		}
 	}
 
-	impl std::fmt::Debug for SparsePyrLkOptFlowEstimator {
+	impl ::core::fmt::Debug for SparsePyrLkOptFlowEstimator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SparsePyrLkOptFlowEstimator")
@@ -4728,7 +4728,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for SparsePyrLkOptFlowEstimatorGpu {
+	impl ::core::fmt::Debug for SparsePyrLkOptFlowEstimatorGpu {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SparsePyrLkOptFlowEstimatorGpu")
@@ -4983,7 +4983,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for StabilizerBase {
+	impl ::core::fmt::Debug for StabilizerBase {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("StabilizerBase")
@@ -5075,9 +5075,9 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, frame0: &impl core::MatTraitConst, frame1: &impl core::MatTraitConst, ok: &mut bool) -> Result<core::Mat> {
+		fn estimate(&mut self, frame0: &impl core::MatTraitConst, frame1: &impl core::MatTraitConst, ok: Option<&mut bool>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_ToFileMotionWriter_estimate_const_MatR_const_MatR_boolX(self.as_raw_mut_ToFileMotionWriter(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_ToFileMotionWriter_estimate_const_MatR_const_MatR_boolX(self.as_raw_mut_ToFileMotionWriter(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok.map_or(::core::ptr::null_mut(), |ok| ok), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -5099,7 +5099,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for ToFileMotionWriter {
+	impl ::core::fmt::Debug for ToFileMotionWriter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ToFileMotionWriter")
@@ -5218,7 +5218,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for TranslationBasedLocalOutlierRejector {
+	impl ::core::fmt::Debug for TranslationBasedLocalOutlierRejector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TranslationBasedLocalOutlierRejector")
@@ -5363,7 +5363,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for TwoPassStabilizer {
+	impl ::core::fmt::Debug for TwoPassStabilizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TwoPassStabilizer")
@@ -5517,7 +5517,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for VideoFileSource {
+	impl ::core::fmt::Debug for VideoFileSource {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("VideoFileSource")
@@ -5614,7 +5614,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for WeightingDeblurer {
+	impl ::core::fmt::Debug for WeightingDeblurer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("WeightingDeblurer")
@@ -5774,7 +5774,7 @@ pub mod videostab {
 
 	}
 
-	impl std::fmt::Debug for WobbleSuppressorBase {
+	impl ::core::fmt::Debug for WobbleSuppressorBase {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("WobbleSuppressorBase")

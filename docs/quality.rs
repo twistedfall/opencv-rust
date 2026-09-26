@@ -122,7 +122,7 @@ pub mod quality {
 
 	}
 
-	impl std::fmt::Debug for QualityBRISQUE {
+	impl ::core::fmt::Debug for QualityBRISQUE {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QualityBRISQUE")
@@ -236,7 +236,7 @@ pub mod quality {
 
 	}
 
-	impl std::fmt::Debug for QualityBase {
+	impl ::core::fmt::Debug for QualityBase {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QualityBase")
@@ -376,7 +376,7 @@ pub mod quality {
 
 	}
 
-	impl std::fmt::Debug for QualityGMSD {
+	impl ::core::fmt::Debug for QualityGMSD {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QualityGMSD")
@@ -517,7 +517,7 @@ pub mod quality {
 
 	}
 
-	impl std::fmt::Debug for QualityMSE {
+	impl ::core::fmt::Debug for QualityMSE {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QualityMSE")
@@ -732,7 +732,7 @@ pub mod quality {
 
 	}
 
-	impl std::fmt::Debug for QualityPSNR {
+	impl ::core::fmt::Debug for QualityPSNR {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QualityPSNR")
@@ -873,7 +873,7 @@ pub mod quality {
 
 	}
 
-	impl std::fmt::Debug for QualitySSIM {
+	impl ::core::fmt::Debug for QualitySSIM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("QualitySSIM")

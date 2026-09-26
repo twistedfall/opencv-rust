@@ -187,7 +187,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for TrackerCSRT {
+	impl ::core::fmt::Debug for TrackerCSRT {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TrackerCSRT")
@@ -594,7 +594,7 @@ pub mod tracking {
 		}
 	}
 
-	impl std::fmt::Debug for TrackerCSRT_Params {
+	impl ::core::fmt::Debug for TrackerCSRT_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TrackerCSRT_Params")
@@ -732,7 +732,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for TrackerKCF {
+	impl ::core::fmt::Debug for TrackerKCF {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TrackerKCF")
@@ -891,7 +891,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerContribFeature {
+	impl ::core::fmt::Debug for Detail_TrackerContribFeature {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerContribFeature")
@@ -1038,7 +1038,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerContribFeatureHAAR {
+	impl ::core::fmt::Debug for Detail_TrackerContribFeatureHAAR {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerContribFeatureHAAR")
@@ -1164,7 +1164,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerContribFeatureHAAR_Params {
+	impl ::core::fmt::Debug for Detail_TrackerContribFeatureHAAR_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerContribFeatureHAAR_Params")
@@ -1368,7 +1368,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerContribFeatureSet {
+	impl ::core::fmt::Debug for Detail_TrackerContribFeatureSet {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerContribFeatureSet")
@@ -1538,7 +1538,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerContribSampler {
+	impl ::core::fmt::Debug for Detail_TrackerContribSampler {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerContribSampler")
@@ -1636,7 +1636,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerContribSamplerAlgorithm {
+	impl ::core::fmt::Debug for Detail_TrackerContribSamplerAlgorithm {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerContribSamplerAlgorithm")
@@ -1756,7 +1756,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerContribSamplerCSC {
+	impl ::core::fmt::Debug for Detail_TrackerContribSamplerCSC {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerContribSamplerCSC")
@@ -1922,7 +1922,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerContribSamplerCSC_Params {
+	impl ::core::fmt::Debug for Detail_TrackerContribSamplerCSC_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerContribSamplerCSC_Params")
@@ -1987,7 +1987,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerFeature {
+	impl ::core::fmt::Debug for Detail_TrackerFeature {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerFeature")
@@ -2070,7 +2070,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerFeatureFeature2d {
+	impl ::core::fmt::Debug for Detail_TrackerFeatureFeature2d {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerFeatureFeature2d")
@@ -2162,7 +2162,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerFeatureHOG {
+	impl ::core::fmt::Debug for Detail_TrackerFeatureHOG {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerFeatureHOG")
@@ -2254,7 +2254,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerFeatureLBP {
+	impl ::core::fmt::Debug for Detail_TrackerFeatureLBP {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerFeatureLBP")
@@ -2393,7 +2393,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerFeatureSet {
+	impl ::core::fmt::Debug for Detail_TrackerFeatureSet {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerFeatureSet")
@@ -2551,7 +2551,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerModel {
+	impl ::core::fmt::Debug for Detail_TrackerModel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerModel")
@@ -2663,7 +2663,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerSampler {
+	impl ::core::fmt::Debug for Detail_TrackerSampler {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerSampler")
@@ -2728,7 +2728,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerSamplerAlgorithm {
+	impl ::core::fmt::Debug for Detail_TrackerSamplerAlgorithm {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerSamplerAlgorithm")
@@ -2856,7 +2856,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerSamplerCS {
+	impl ::core::fmt::Debug for Detail_TrackerSamplerCS {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerSamplerCS")
@@ -2966,7 +2966,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerSamplerCS_Params {
+	impl ::core::fmt::Debug for Detail_TrackerSamplerCS_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerSamplerCS_Params")
@@ -3079,7 +3079,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerSamplerCSC {
+	impl ::core::fmt::Debug for Detail_TrackerSamplerCSC {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerSamplerCSC")
@@ -3233,7 +3233,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerSamplerCSC_Params {
+	impl ::core::fmt::Debug for Detail_TrackerSamplerCSC_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerSamplerCSC_Params")
@@ -3338,7 +3338,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerSamplerPF {
+	impl ::core::fmt::Debug for Detail_TrackerSamplerPF {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerSamplerPF")
@@ -3484,7 +3484,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerSamplerPF_Params {
+	impl ::core::fmt::Debug for Detail_TrackerSamplerPF_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerSamplerPF_Params")
@@ -3599,7 +3599,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerStateEstimator {
+	impl ::core::fmt::Debug for Detail_TrackerStateEstimator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerStateEstimator")
@@ -3736,7 +3736,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerStateEstimatorAdaBoosting {
+	impl ::core::fmt::Debug for Detail_TrackerStateEstimatorAdaBoosting {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerStateEstimatorAdaBoosting")
@@ -3858,7 +3858,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState {
+	impl ::core::fmt::Debug for Detail_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerStateEstimatorAdaBoosting_TrackerAdaBoostingTargetState")
@@ -3929,7 +3929,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Detail_TrackerStateEstimatorSVM {
+	impl ::core::fmt::Debug for Detail_TrackerStateEstimatorSVM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerStateEstimatorSVM")
@@ -4083,7 +4083,7 @@ pub mod tracking {
 		}
 	}
 
-	impl std::fmt::Debug for Detail_TrackerTargetState {
+	impl ::core::fmt::Debug for Detail_TrackerTargetState {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TrackerTargetState")
@@ -4228,7 +4228,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_MultiTracker {
+	impl ::core::fmt::Debug for Legacy_MultiTracker {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_MultiTracker")
@@ -4339,7 +4339,7 @@ pub mod tracking {
 		}
 	}
 
-	impl std::fmt::Debug for Legacy_MultiTrackerTLD {
+	impl ::core::fmt::Debug for Legacy_MultiTrackerTLD {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_MultiTrackerTLD")
@@ -4512,7 +4512,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_MultiTracker_Alt {
+	impl ::core::fmt::Debug for Legacy_MultiTracker_Alt {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_MultiTracker_Alt")
@@ -4617,7 +4617,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_Tracker {
+	impl ::core::fmt::Debug for Legacy_Tracker {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_Tracker")
@@ -4719,7 +4719,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerBoosting {
+	impl ::core::fmt::Debug for Legacy_TrackerBoosting {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerBoosting")
@@ -4891,7 +4891,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerBoosting_Params {
+	impl ::core::fmt::Debug for Legacy_TrackerBoosting_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerBoosting_Params")
@@ -4981,7 +4981,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerCSRT {
+	impl ::core::fmt::Debug for Legacy_TrackerCSRT {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerCSRT")
@@ -5089,7 +5089,7 @@ pub mod tracking {
 		}
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerCSRT_Params {
+	impl ::core::fmt::Debug for Legacy_TrackerCSRT_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerCSRT_Params")
@@ -5229,7 +5229,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerKCF {
+	impl ::core::fmt::Debug for Legacy_TrackerKCF {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerKCF")
@@ -5335,7 +5335,7 @@ pub mod tracking {
 		}
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerKCF_Params {
+	impl ::core::fmt::Debug for Legacy_TrackerKCF_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerKCF_Params")
@@ -5413,7 +5413,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerMIL {
+	impl ::core::fmt::Debug for Legacy_TrackerMIL {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerMIL")
@@ -5519,7 +5519,7 @@ pub mod tracking {
 		}
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerMIL_Params {
+	impl ::core::fmt::Debug for Legacy_TrackerMIL_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerMIL_Params")
@@ -5583,7 +5583,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerMOSSE {
+	impl ::core::fmt::Debug for Legacy_TrackerMOSSE {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerMOSSE")
@@ -5687,7 +5687,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerMedianFlow {
+	impl ::core::fmt::Debug for Legacy_TrackerMedianFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerMedianFlow")
@@ -5879,7 +5879,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerMedianFlow_Params {
+	impl ::core::fmt::Debug for Legacy_TrackerMedianFlow_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerMedianFlow_Params")
@@ -5968,7 +5968,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerTLD {
+	impl ::core::fmt::Debug for Legacy_TrackerTLD {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerTLD")
@@ -6068,7 +6068,7 @@ pub mod tracking {
 
 	}
 
-	impl std::fmt::Debug for Legacy_TrackerTLD_Params {
+	impl ::core::fmt::Debug for Legacy_TrackerTLD_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Legacy_TrackerTLD_Params")

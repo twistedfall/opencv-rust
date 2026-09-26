@@ -369,7 +369,7 @@ pub mod hfs {
 
 	}
 
-	impl std::fmt::Debug for HfsSegment {
+	impl ::core::fmt::Debug for HfsSegment {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("HfsSegment")

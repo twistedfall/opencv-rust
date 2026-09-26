@@ -522,7 +522,7 @@ pub mod surface_matching {
 
 	}
 
-	impl std::fmt::Debug for ICP {
+	impl ::core::fmt::Debug for ICP {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ICP")
@@ -726,7 +726,7 @@ pub mod surface_matching {
 
 	}
 
-	impl std::fmt::Debug for PPF3DDetector {
+	impl ::core::fmt::Debug for PPF3DDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PPF3DDetector")
@@ -997,7 +997,7 @@ pub mod surface_matching {
 
 	}
 
-	impl std::fmt::Debug for Pose3D {
+	impl ::core::fmt::Debug for Pose3D {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Pose3D")
@@ -1155,7 +1155,7 @@ pub mod surface_matching {
 
 	}
 
-	impl std::fmt::Debug for PoseCluster3D {
+	impl ::core::fmt::Debug for PoseCluster3D {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PoseCluster3D")

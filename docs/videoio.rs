@@ -1308,7 +1308,7 @@ pub mod videoio {
 
 	}
 
-	impl std::fmt::Debug for IStreamReader {
+	impl ::core::fmt::Debug for IStreamReader {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("IStreamReader")
@@ -1975,7 +1975,7 @@ pub mod videoio {
 
 	}
 
-	impl std::fmt::Debug for VideoCapture {
+	impl ::core::fmt::Debug for VideoCapture {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("VideoCapture")
@@ -2474,7 +2474,7 @@ pub mod videoio {
 
 	}
 
-	impl std::fmt::Debug for VideoWriter {
+	impl ::core::fmt::Debug for VideoWriter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("VideoWriter")

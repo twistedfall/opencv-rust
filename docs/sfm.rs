@@ -1106,7 +1106,7 @@ pub mod sfm {
 
 	}
 
-	impl std::fmt::Debug for BaseSFM {
+	impl ::core::fmt::Debug for BaseSFM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BaseSFM")
@@ -1347,7 +1347,7 @@ pub mod sfm {
 
 	}
 
-	impl std::fmt::Debug for SFMLibmvEuclideanReconstruction {
+	impl ::core::fmt::Debug for SFMLibmvEuclideanReconstruction {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SFMLibmvEuclideanReconstruction")

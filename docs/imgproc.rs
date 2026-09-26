@@ -7043,10 +7043,10 @@ pub mod imgproc {
 	/// * up_diff: Scalar()
 	/// * flags: 4
 	#[inline]
-	pub fn flood_fill(image: &mut impl ToInputOutputArray, seed_point: core::Point, new_val: core::Scalar, rect: &mut core::Rect, lo_diff: core::Scalar, up_diff: core::Scalar, flags: i32) -> Result<i32> {
+	pub fn flood_fill(image: &mut impl ToInputOutputArray, seed_point: core::Point, new_val: core::Scalar, rect: Option<&mut core::Rect>, lo_diff: core::Scalar, up_diff: core::Scalar, flags: i32) -> Result<i32> {
 		input_output_array_arg!(image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_floodFill_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), &seed_point, &new_val, rect, &lo_diff, &up_diff, flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_floodFill_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), &seed_point, &new_val, rect.map_or(::core::ptr::null_mut(), |rect| rect), &lo_diff, &up_diff, flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7223,11 +7223,11 @@ pub mod imgproc {
 	/// * up_diff: Scalar()
 	/// * flags: 4
 	#[inline]
-	pub fn flood_fill_mask(image: &mut impl ToInputOutputArray, mask: &mut impl ToInputOutputArray, seed_point: core::Point, new_val: core::Scalar, rect: &mut core::Rect, lo_diff: core::Scalar, up_diff: core::Scalar, flags: i32) -> Result<i32> {
+	pub fn flood_fill_mask(image: &mut impl ToInputOutputArray, mask: &mut impl ToInputOutputArray, seed_point: core::Point, new_val: core::Scalar, rect: Option<&mut core::Rect>, lo_diff: core::Scalar, up_diff: core::Scalar, flags: i32) -> Result<i32> {
 		input_output_array_arg!(image);
 		input_output_array_arg!(mask);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), mask.as_raw__InputOutputArray(), &seed_point, &new_val, rect, &lo_diff, &up_diff, flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), mask.as_raw__InputOutputArray(), &seed_point, &new_val, rect.map_or(::core::ptr::null_mut(), |rect| rect), &lo_diff, &up_diff, flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8681,12 +8681,12 @@ pub mod imgproc {
 	/// * window: noArray()
 	/// * response: 0
 	#[inline]
-	pub fn phase_correlate(src1: &impl ToInputArray, src2: &impl ToInputArray, window: &impl ToInputArray, response: &mut f64) -> Result<core::Point2d> {
+	pub fn phase_correlate(src1: &impl ToInputArray, src2: &impl ToInputArray, window: &impl ToInputArray, response: Option<&mut f64>) -> Result<core::Point2d> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		input_array_arg!(window);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_phaseCorrelate_const__InputArrayR_const__InputArrayR_const__InputArrayR_doubleX(src1.as_raw__InputArray(), src2.as_raw__InputArray(), window.as_raw__InputArray(), response, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_phaseCorrelate_const__InputArrayR_const__InputArrayR_const__InputArrayR_doubleX(src1.as_raw__InputArray(), src2.as_raw__InputArray(), window.as_raw__InputArray(), response.map_or(::core::ptr::null_mut(), |response| response), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -10425,7 +10425,7 @@ pub mod imgproc {
 
 	}
 
-	impl std::fmt::Debug for CLAHE {
+	impl ::core::fmt::Debug for CLAHE {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CLAHE")
@@ -10592,7 +10592,7 @@ pub mod imgproc {
 		}
 	}
 
-	impl std::fmt::Debug for FontFace {
+	impl ::core::fmt::Debug for FontFace {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FontFace")
@@ -10855,7 +10855,7 @@ pub mod imgproc {
 
 	}
 
-	impl std::fmt::Debug for GeneralizedHough {
+	impl ::core::fmt::Debug for GeneralizedHough {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GeneralizedHough")
@@ -10957,7 +10957,7 @@ pub mod imgproc {
 
 	}
 
-	impl std::fmt::Debug for GeneralizedHoughBallard {
+	impl ::core::fmt::Debug for GeneralizedHoughBallard {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GeneralizedHoughBallard")
@@ -11257,7 +11257,7 @@ pub mod imgproc {
 
 	}
 
-	impl std::fmt::Debug for GeneralizedHoughGuil {
+	impl ::core::fmt::Debug for GeneralizedHoughGuil {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GeneralizedHoughGuil")
@@ -11709,7 +11709,7 @@ pub mod imgproc {
 
 	}
 
-	impl std::fmt::Debug for LineIterator {
+	impl ::core::fmt::Debug for LineIterator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LineIterator")
@@ -11913,7 +11913,7 @@ pub mod imgproc {
 
 	}
 
-	impl std::fmt::Debug for LineSegmentDetector {
+	impl ::core::fmt::Debug for LineSegmentDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LineSegmentDetector")

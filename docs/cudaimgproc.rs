@@ -1752,7 +1752,7 @@ pub mod cudaimgproc {
 
 	}
 
-	impl std::fmt::Debug for CUDA_CLAHE {
+	impl ::core::fmt::Debug for CUDA_CLAHE {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_CLAHE")
@@ -1992,7 +1992,7 @@ pub mod cudaimgproc {
 
 	}
 
-	impl std::fmt::Debug for CUDA_CannyEdgeDetector {
+	impl ::core::fmt::Debug for CUDA_CannyEdgeDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_CannyEdgeDetector")
@@ -2223,7 +2223,7 @@ pub mod cudaimgproc {
 
 	}
 
-	impl std::fmt::Debug for CUDA_HoughCirclesDetector {
+	impl ::core::fmt::Debug for CUDA_HoughCirclesDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_HoughCirclesDetector")
@@ -2468,7 +2468,7 @@ pub mod cudaimgproc {
 
 	}
 
-	impl std::fmt::Debug for CUDA_HoughLinesDetector {
+	impl ::core::fmt::Debug for CUDA_HoughLinesDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_HoughLinesDetector")
@@ -2683,7 +2683,7 @@ pub mod cudaimgproc {
 
 	}
 
-	impl std::fmt::Debug for CUDA_HoughSegmentDetector {
+	impl ::core::fmt::Debug for CUDA_HoughSegmentDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_HoughSegmentDetector")
@@ -2788,7 +2788,7 @@ pub mod cudaimgproc {
 
 	}
 
-	impl std::fmt::Debug for CUDA_TemplateMatching {
+	impl ::core::fmt::Debug for CUDA_TemplateMatching {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_TemplateMatching")

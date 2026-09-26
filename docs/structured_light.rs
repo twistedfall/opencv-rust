@@ -196,7 +196,7 @@ pub mod structured_light {
 
 	}
 
-	impl std::fmt::Debug for GrayCodePattern {
+	impl ::core::fmt::Debug for GrayCodePattern {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GrayCodePattern")
@@ -306,7 +306,7 @@ pub mod structured_light {
 
 	}
 
-	impl std::fmt::Debug for GrayCodePattern_Params {
+	impl ::core::fmt::Debug for GrayCodePattern_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GrayCodePattern_Params")
@@ -514,7 +514,7 @@ pub mod structured_light {
 
 	}
 
-	impl std::fmt::Debug for SinusoidalPattern {
+	impl ::core::fmt::Debug for SinusoidalPattern {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SinusoidalPattern")
@@ -715,7 +715,7 @@ pub mod structured_light {
 
 	}
 
-	impl std::fmt::Debug for SinusoidalPattern_Params {
+	impl ::core::fmt::Debug for SinusoidalPattern_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SinusoidalPattern_Params")
@@ -837,7 +837,7 @@ pub mod structured_light {
 
 	}
 
-	impl std::fmt::Debug for StructuredLightPattern {
+	impl ::core::fmt::Debug for StructuredLightPattern {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("StructuredLightPattern")

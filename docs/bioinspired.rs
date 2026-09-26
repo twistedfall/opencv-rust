@@ -790,7 +790,7 @@ pub mod bioinspired {
 
 	}
 
-	impl std::fmt::Debug for Retina {
+	impl ::core::fmt::Debug for Retina {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Retina")
@@ -944,7 +944,7 @@ pub mod bioinspired {
 
 	}
 
-	impl std::fmt::Debug for RetinaFastToneMapping {
+	impl ::core::fmt::Debug for RetinaFastToneMapping {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RetinaFastToneMapping")
@@ -1067,7 +1067,7 @@ pub mod bioinspired {
 		}
 	}
 
-	impl std::fmt::Debug for RetinaParameters {
+	impl ::core::fmt::Debug for RetinaParameters {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RetinaParameters")
@@ -1442,7 +1442,7 @@ pub mod bioinspired {
 
 	}
 
-	impl std::fmt::Debug for TransientAreasSegmentationModule {
+	impl ::core::fmt::Debug for TransientAreasSegmentationModule {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TransientAreasSegmentationModule")

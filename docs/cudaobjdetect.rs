@@ -302,7 +302,7 @@ pub mod cudaobjdetect {
 
 	}
 
-	impl std::fmt::Debug for CUDA_CascadeClassifier {
+	impl ::core::fmt::Debug for CUDA_CascadeClassifier {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_CascadeClassifier")
@@ -651,10 +651,10 @@ pub mod cudaobjdetect {
 		/// ## C++ default parameters
 		/// * confidences: NULL
 		#[inline]
-		fn detect(&mut self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
+		fn detect(&mut self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: Option<&mut core::Vector<f64>>) -> Result<()> {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGX(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGX(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.map_or(::core::ptr::null_mut(), |confidences| confidences.as_raw_mut_VectorOff64()), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -715,10 +715,10 @@ pub mod cudaobjdetect {
 		/// ## C++ default parameters
 		/// * confidences: NULL
 		#[inline]
-		fn detect_multi_scale(&mut self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
+		fn detect_multi_scale(&mut self, img: &impl ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: Option<&mut core::Vector<f64>>) -> Result<()> {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGX(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGX(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.map_or(::core::ptr::null_mut(), |confidences| confidences.as_raw_mut_VectorOff64()), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -812,7 +812,7 @@ pub mod cudaobjdetect {
 
 	}
 
-	impl std::fmt::Debug for CUDA_HOG {
+	impl ::core::fmt::Debug for CUDA_HOG {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_HOG")

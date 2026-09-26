@@ -586,7 +586,7 @@ pub mod cudastereo {
 
 	}
 
-	impl std::fmt::Debug for CUDA_DisparityBilateralFilter {
+	impl ::core::fmt::Debug for CUDA_DisparityBilateralFilter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_DisparityBilateralFilter")
@@ -658,7 +658,7 @@ pub mod cudastereo {
 
 	}
 
-	impl std::fmt::Debug for CUDA_StereoBM {
+	impl ::core::fmt::Debug for CUDA_StereoBM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_StereoBM")
@@ -989,7 +989,7 @@ pub mod cudastereo {
 
 	}
 
-	impl std::fmt::Debug for CUDA_StereoBeliefPropagation {
+	impl ::core::fmt::Debug for CUDA_StereoBeliefPropagation {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_StereoBeliefPropagation")
@@ -1132,7 +1132,7 @@ pub mod cudastereo {
 
 	}
 
-	impl std::fmt::Debug for CUDA_StereoConstantSpaceBP {
+	impl ::core::fmt::Debug for CUDA_StereoConstantSpaceBP {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_StereoConstantSpaceBP")
@@ -1257,7 +1257,7 @@ pub mod cudastereo {
 
 	}
 
-	impl std::fmt::Debug for CUDA_StereoSGM {
+	impl ::core::fmt::Debug for CUDA_StereoSGM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_StereoSGM")

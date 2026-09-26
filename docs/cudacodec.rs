@@ -802,7 +802,7 @@ pub mod cudacodec {
 
 	}
 
-	impl std::fmt::Debug for CUDA_EncoderCallback {
+	impl ::core::fmt::Debug for CUDA_EncoderCallback {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_EncoderCallback")
@@ -997,7 +997,7 @@ pub mod cudacodec {
 
 	}
 
-	impl std::fmt::Debug for CUDA_NVSurfaceToColorConverter {
+	impl ::core::fmt::Debug for CUDA_NVSurfaceToColorConverter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_NVSurfaceToColorConverter")
@@ -1136,7 +1136,7 @@ pub mod cudacodec {
 
 	}
 
-	impl std::fmt::Debug for CUDA_RawVideoSource {
+	impl ::core::fmt::Debug for CUDA_RawVideoSource {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_RawVideoSource")
@@ -1569,7 +1569,7 @@ pub mod cudacodec {
 
 	}
 
-	impl std::fmt::Debug for CUDA_VideoReader {
+	impl ::core::fmt::Debug for CUDA_VideoReader {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_VideoReader")
@@ -1706,7 +1706,7 @@ pub mod cudacodec {
 
 	}
 
-	impl std::fmt::Debug for CUDA_VideoWriter {
+	impl ::core::fmt::Debug for CUDA_VideoWriter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_VideoWriter")

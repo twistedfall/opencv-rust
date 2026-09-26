@@ -74,7 +74,7 @@ pub mod types {
 pub mod sys {
 	include!(concat!(env!("OUT_DIR"), "/opencv/sys.rs"));
 }
-pub mod hub_prelude {
+pub(crate) mod hub_prelude {
 	pub use super::alphamat::prelude::*;
 	pub use super::bgsegm::prelude::*;
 	pub use super::bioinspired::prelude::*;

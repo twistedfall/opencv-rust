@@ -1664,11 +1664,11 @@ pub mod geometry {
 	/// * scale: nullptr
 	/// * force_rotation: true
 	#[inline]
-	pub fn estimate_affine_3d_1(src: &impl ToInputArray, dst: &impl ToInputArray, scale: &mut f64, force_rotation: bool) -> Result<core::Mat> {
+	pub fn estimate_affine_3d_1(src: &impl ToInputArray, dst: &impl ToInputArray, scale: Option<&mut f64>, force_rotation: bool) -> Result<core::Mat> {
 		input_array_arg!(src);
 		input_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_estimateAffine3D_const__InputArrayR_const__InputArrayR_doubleX_bool(src.as_raw__InputArray(), dst.as_raw__InputArray(), scale, force_rotation, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_estimateAffine3D_const__InputArrayR_const__InputArrayR_doubleX_bool(src.as_raw__InputArray(), dst.as_raw__InputArray(), scale.map_or(::core::ptr::null_mut(), |scale| scale), force_rotation, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -2111,11 +2111,11 @@ pub mod geometry {
 	/// * dist_lower_limit: 0
 	/// * rng: nullptr
 	#[inline]
-	pub fn farthest_point_sampling_1(sampled_point_flags: &mut impl ToOutputArray, input_pts: &impl ToInputArray, sampled_scale: f32, dist_lower_limit: f32, rng: &mut impl core::RNGTrait) -> Result<i32> {
+	pub fn farthest_point_sampling_1(sampled_point_flags: &mut impl ToOutputArray, input_pts: &impl ToInputArray, sampled_scale: f32, dist_lower_limit: f32, rng: Option<&mut impl core::RNGTrait>) -> Result<i32> {
 		output_array_arg!(sampled_point_flags);
 		input_array_arg!(input_pts);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_farthestPointSampling_const__OutputArrayR_const__InputArrayR_float_float_RNGX(sampled_point_flags.as_raw__OutputArray(), input_pts.as_raw__InputArray(), sampled_scale, dist_lower_limit, rng.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_farthestPointSampling_const__OutputArrayR_const__InputArrayR_float_float_RNGX(sampled_point_flags.as_raw__OutputArray(), input_pts.as_raw__InputArray(), sampled_scale, dist_lower_limit, rng.map_or(::core::ptr::null_mut(), |rng| rng.as_raw_mut_RNG()), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2190,11 +2190,11 @@ pub mod geometry {
 	/// * dist_lower_limit: 0
 	/// * rng: nullptr
 	#[inline]
-	pub fn farthest_point_sampling(sampled_point_flags: &mut impl ToOutputArray, input_pts: &impl ToInputArray, sampled_pts_size: i32, dist_lower_limit: f32, rng: &mut impl core::RNGTrait) -> Result<i32> {
+	pub fn farthest_point_sampling(sampled_point_flags: &mut impl ToOutputArray, input_pts: &impl ToInputArray, sampled_pts_size: i32, dist_lower_limit: f32, rng: Option<&mut impl core::RNGTrait>) -> Result<i32> {
 		output_array_arg!(sampled_point_flags);
 		input_array_arg!(input_pts);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_farthestPointSampling_const__OutputArrayR_const__InputArrayR_int_float_RNGX(sampled_point_flags.as_raw__OutputArray(), input_pts.as_raw__InputArray(), sampled_pts_size, dist_lower_limit, rng.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_farthestPointSampling_const__OutputArrayR_const__InputArrayR_int_float_RNGX(sampled_point_flags.as_raw__OutputArray(), input_pts.as_raw__InputArray(), sampled_pts_size, dist_lower_limit, rng.map_or(::core::ptr::null_mut(), |rng| rng.as_raw_mut_RNG()), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4544,11 +4544,11 @@ pub mod geometry {
 	/// * valid_pix_roi: 0
 	/// * center_principal_point: false
 	#[inline]
-	pub fn get_optimal_new_camera_matrix(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, image_size: core::Size, alpha: f64, new_img_size: core::Size, valid_pix_roi: &mut core::Rect, center_principal_point: bool) -> Result<core::Mat> {
+	pub fn get_optimal_new_camera_matrix(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, image_size: core::Size, alpha: f64, new_img_size: core::Size, valid_pix_roi: Option<&mut core::Rect>, center_principal_point: bool) -> Result<core::Mat> {
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getOptimalNewCameraMatrix_const__InputArrayR_const__InputArrayR_Size_double_Size_RectX_bool(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &image_size, alpha, &new_img_size, valid_pix_roi, center_principal_point, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_getOptimalNewCameraMatrix_const__InputArrayR_const__InputArrayR_Size_double_Size_RectX_bool(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &image_size, alpha, &new_img_size, valid_pix_roi.map_or(::core::ptr::null_mut(), |valid_pix_roi| valid_pix_roi), center_principal_point, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -5531,11 +5531,11 @@ pub mod geometry {
 	/// ## C++ default parameters
 	/// * rng: nullptr
 	#[inline]
-	pub fn random_sampling_1(sampled_pts: &mut impl ToOutputArray, input_pts: &impl ToInputArray, sampled_scale: f32, rng: &mut impl core::RNGTrait) -> Result<()> {
+	pub fn random_sampling_1(sampled_pts: &mut impl ToOutputArray, input_pts: &impl ToInputArray, sampled_scale: f32, rng: Option<&mut impl core::RNGTrait>) -> Result<()> {
 		output_array_arg!(sampled_pts);
 		input_array_arg!(input_pts);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_randomSampling_const__OutputArrayR_const__InputArrayR_float_RNGX(sampled_pts.as_raw__OutputArray(), input_pts.as_raw__InputArray(), sampled_scale, rng.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_randomSampling_const__OutputArrayR_const__InputArrayR_float_RNGX(sampled_pts.as_raw__OutputArray(), input_pts.as_raw__InputArray(), sampled_scale, rng.map_or(::core::ptr::null_mut(), |rng| rng.as_raw_mut_RNG()), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5584,11 +5584,11 @@ pub mod geometry {
 	/// ## C++ default parameters
 	/// * rng: nullptr
 	#[inline]
-	pub fn random_sampling(sampled_pts: &mut impl ToOutputArray, input_pts: &impl ToInputArray, sampled_pts_size: i32, rng: &mut impl core::RNGTrait) -> Result<()> {
+	pub fn random_sampling(sampled_pts: &mut impl ToOutputArray, input_pts: &impl ToInputArray, sampled_pts_size: i32, rng: Option<&mut impl core::RNGTrait>) -> Result<()> {
 		output_array_arg!(sampled_pts);
 		input_array_arg!(input_pts);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_randomSampling_const__OutputArrayR_const__InputArrayR_int_RNGX(sampled_pts.as_raw__OutputArray(), input_pts.as_raw__InputArray(), sampled_pts_size, rng.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_randomSampling_const__OutputArrayR_const__InputArrayR_int_RNGX(sampled_pts.as_raw__OutputArray(), input_pts.as_raw__InputArray(), sampled_pts_size, rng.map_or(::core::ptr::null_mut(), |rng| rng.as_raw_mut_RNG()), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7422,7 +7422,7 @@ pub mod geometry {
 
 	}
 
-	impl std::fmt::Debug for LevMarq {
+	impl ::core::fmt::Debug for LevMarq {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LevMarq")
@@ -7519,7 +7519,7 @@ pub mod geometry {
 
 	}
 
-	impl std::fmt::Debug for LevMarq_Report {
+	impl ::core::fmt::Debug for LevMarq_Report {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LevMarq_Report")
@@ -8005,7 +8005,7 @@ pub mod geometry {
 
 	}
 
-	impl std::fmt::Debug for LevMarq_Settings {
+	impl ::core::fmt::Debug for LevMarq_Settings {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LevMarq_Settings")
@@ -8331,7 +8331,7 @@ pub mod geometry {
 
 	}
 
-	impl std::fmt::Debug for RegionGrowing3D {
+	impl ::core::fmt::Debug for RegionGrowing3D {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RegionGrowing3D")
@@ -8625,7 +8625,7 @@ pub mod geometry {
 
 	}
 
-	impl std::fmt::Debug for SACSegmentation {
+	impl ::core::fmt::Debug for SACSegmentation {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SACSegmentation")
@@ -8771,9 +8771,9 @@ pub mod geometry {
 		/// ## C++ default parameters
 		/// * first_edge: 0
 		#[inline]
-		fn get_vertex(&self, vertex: i32, first_edge: &mut i32) -> Result<core::Point2f> {
+		fn get_vertex(&self, vertex: i32, first_edge: Option<&mut i32>) -> Result<core::Point2f> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_getVertex_const_int_intX(self.as_raw_Subdiv2D(), vertex, first_edge, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Subdiv2D_getVertex_const_int_intX(self.as_raw_Subdiv2D(), vertex, first_edge.map_or(::core::ptr::null_mut(), |first_edge| first_edge), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -8887,9 +8887,9 @@ pub mod geometry {
 		/// ## C++ default parameters
 		/// * orgpt: 0
 		#[inline]
-		fn edge_org(&self, edge: i32, orgpt: &mut core::Point2f) -> Result<i32> {
+		fn edge_org(&self, edge: i32, orgpt: Option<&mut core::Point2f>) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_edgeOrg_const_int_Point2fX(self.as_raw_Subdiv2D(), edge, orgpt, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Subdiv2D_edgeOrg_const_int_Point2fX(self.as_raw_Subdiv2D(), edge, orgpt.map_or(::core::ptr::null_mut(), |orgpt| orgpt), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -8928,9 +8928,9 @@ pub mod geometry {
 		/// ## C++ default parameters
 		/// * dstpt: 0
 		#[inline]
-		fn edge_dst(&self, edge: i32, dstpt: &mut core::Point2f) -> Result<i32> {
+		fn edge_dst(&self, edge: i32, dstpt: Option<&mut core::Point2f>) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_edgeDst_const_int_Point2fX(self.as_raw_Subdiv2D(), edge, dstpt, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Subdiv2D_edgeDst_const_int_Point2fX(self.as_raw_Subdiv2D(), edge, dstpt.map_or(::core::ptr::null_mut(), |dstpt| dstpt), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9077,9 +9077,9 @@ pub mod geometry {
 		/// ## C++ default parameters
 		/// * nearest_pt: 0
 		#[inline]
-		fn find_nearest(&mut self, pt: core::Point2f, nearest_pt: &mut core::Point2f) -> Result<i32> {
+		fn find_nearest(&mut self, pt: core::Point2f, nearest_pt: Option<&mut core::Point2f>) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_findNearest_Point2f_Point2fX(self.as_raw_mut_Subdiv2D(), &pt, nearest_pt, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Subdiv2D_findNearest_Point2f_Point2fX(self.as_raw_mut_Subdiv2D(), &pt, nearest_pt.map_or(::core::ptr::null_mut(), |nearest_pt| nearest_pt), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9128,7 +9128,7 @@ pub mod geometry {
 
 	}
 
-	impl std::fmt::Debug for Subdiv2D {
+	impl ::core::fmt::Debug for Subdiv2D {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Subdiv2D")

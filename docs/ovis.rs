@@ -1318,7 +1318,7 @@ pub mod ovis {
 
 	}
 
-	impl std::fmt::Debug for WindowScene {
+	impl ::core::fmt::Debug for WindowScene {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("WindowScene")

@@ -622,7 +622,7 @@ pub mod stereo {
 	/// * valid_pix_roi1: 0
 	/// * valid_pix_roi2: 0
 	#[inline]
-	pub fn stereo_rectify(camera_matrix1: &impl ToInputArray, dist_coeffs1: &impl ToInputArray, camera_matrix2: &impl ToInputArray, dist_coeffs2: &impl ToInputArray, image_size: core::Size, r: &impl ToInputArray, t: &impl ToInputArray, r1: &mut impl ToOutputArray, r2: &mut impl ToOutputArray, p1: &mut impl ToOutputArray, p2: &mut impl ToOutputArray, q: &mut impl ToOutputArray, flags: i32, alpha: f64, new_image_size: core::Size, valid_pix_roi1: &mut core::Rect, valid_pix_roi2: &mut core::Rect) -> Result<()> {
+	pub fn stereo_rectify(camera_matrix1: &impl ToInputArray, dist_coeffs1: &impl ToInputArray, camera_matrix2: &impl ToInputArray, dist_coeffs2: &impl ToInputArray, image_size: core::Size, r: &impl ToInputArray, t: &impl ToInputArray, r1: &mut impl ToOutputArray, r2: &mut impl ToOutputArray, p1: &mut impl ToOutputArray, p2: &mut impl ToOutputArray, q: &mut impl ToOutputArray, flags: i32, alpha: f64, new_image_size: core::Size, valid_pix_roi1: Option<&mut core::Rect>, valid_pix_roi2: Option<&mut core::Rect>) -> Result<()> {
 		input_array_arg!(camera_matrix1);
 		input_array_arg!(dist_coeffs1);
 		input_array_arg!(camera_matrix2);
@@ -635,7 +635,7 @@ pub mod stereo {
 		output_array_arg!(p2);
 		output_array_arg!(q);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_Size_RectX_RectX(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), &image_size, r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, alpha, &new_image_size, valid_pix_roi1, valid_pix_roi2, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_Size_RectX_RectX(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), &image_size, r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, alpha, &new_image_size, valid_pix_roi1.map_or(::core::ptr::null_mut(), |valid_pix_roi1| valid_pix_roi1), valid_pix_roi2.map_or(::core::ptr::null_mut(), |valid_pix_roi2| valid_pix_roi2), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -903,7 +903,7 @@ pub mod stereo {
 
 	}
 
-	impl std::fmt::Debug for StereoBM {
+	impl ::core::fmt::Debug for StereoBM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("StereoBM")
@@ -1101,7 +1101,7 @@ pub mod stereo {
 
 	}
 
-	impl std::fmt::Debug for StereoMatcher {
+	impl ::core::fmt::Debug for StereoMatcher {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("StereoMatcher")
@@ -1394,7 +1394,7 @@ pub mod stereo {
 
 	}
 
-	impl std::fmt::Debug for StereoSGBM {
+	impl ::core::fmt::Debug for StereoSGBM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("StereoSGBM")

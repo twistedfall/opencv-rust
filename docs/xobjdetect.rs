@@ -475,7 +475,7 @@ pub mod xobjdetect {
 
 	}
 
-	impl std::fmt::Debug for BaseCascadeClassifier {
+	impl ::core::fmt::Debug for BaseCascadeClassifier {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BaseCascadeClassifier")
@@ -551,7 +551,7 @@ pub mod xobjdetect {
 
 	}
 
-	impl std::fmt::Debug for BaseCascadeClassifier_MaskGenerator {
+	impl ::core::fmt::Debug for BaseCascadeClassifier_MaskGenerator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BaseCascadeClassifier_MaskGenerator")
@@ -1008,7 +1008,7 @@ pub mod xobjdetect {
 
 	}
 
-	impl std::fmt::Debug for CascadeClassifier {
+	impl ::core::fmt::Debug for CascadeClassifier {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CascadeClassifier")
@@ -1157,7 +1157,7 @@ pub mod xobjdetect {
 
 	}
 
-	impl std::fmt::Debug for DetectionBasedTracker {
+	impl ::core::fmt::Debug for DetectionBasedTracker {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DetectionBasedTracker")
@@ -1262,7 +1262,7 @@ pub mod xobjdetect {
 		}
 	}
 
-	impl std::fmt::Debug for DetectionBasedTracker_ExtObject {
+	impl ::core::fmt::Debug for DetectionBasedTracker_ExtObject {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DetectionBasedTracker_ExtObject")
@@ -1391,7 +1391,7 @@ pub mod xobjdetect {
 
 	}
 
-	impl std::fmt::Debug for DetectionBasedTracker_IDetector {
+	impl ::core::fmt::Debug for DetectionBasedTracker_IDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DetectionBasedTracker_IDetector")
@@ -1473,7 +1473,7 @@ pub mod xobjdetect {
 
 	}
 
-	impl std::fmt::Debug for DetectionBasedTracker_Parameters {
+	impl ::core::fmt::Debug for DetectionBasedTracker_Parameters {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DetectionBasedTracker_Parameters")
@@ -1584,7 +1584,7 @@ pub mod xobjdetect {
 		}
 	}
 
-	impl std::fmt::Debug for DetectionROI {
+	impl ::core::fmt::Debug for DetectionROI {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DetectionROI")
@@ -2636,7 +2636,7 @@ pub mod xobjdetect {
 
 	}
 
-	impl std::fmt::Debug for HOGDescriptor {
+	impl ::core::fmt::Debug for HOGDescriptor {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("HOGDescriptor")
@@ -2733,7 +2733,7 @@ pub mod xobjdetect {
 
 	}
 
-	impl std::fmt::Debug for SimilarRects {
+	impl ::core::fmt::Debug for SimilarRects {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SimilarRects")
@@ -2847,7 +2847,7 @@ pub mod xobjdetect {
 
 	}
 
-	impl std::fmt::Debug for WBDetector {
+	impl ::core::fmt::Debug for WBDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("WBDetector")

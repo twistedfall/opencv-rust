@@ -1618,7 +1618,7 @@ pub mod ptcloud {
 
 	}
 
-	impl std::fmt::Debug for Octree {
+	impl ::core::fmt::Debug for Octree {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Octree")
@@ -1809,7 +1809,7 @@ pub mod ptcloud {
 
 	}
 
-	impl std::fmt::Debug for Odometry {
+	impl ::core::fmt::Debug for Odometry {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Odometry")
@@ -2036,7 +2036,7 @@ pub mod ptcloud {
 		}
 	}
 
-	impl std::fmt::Debug for OdometryFrame {
+	impl ::core::fmt::Debug for OdometryFrame {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OdometryFrame")
@@ -2414,7 +2414,7 @@ pub mod ptcloud {
 		}
 	}
 
-	impl std::fmt::Debug for OdometrySettings {
+	impl ::core::fmt::Debug for OdometrySettings {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OdometrySettings")
@@ -2647,7 +2647,7 @@ pub mod ptcloud {
 
 	}
 
-	impl std::fmt::Debug for RgbdNormals {
+	impl ::core::fmt::Debug for RgbdNormals {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RgbdNormals")
@@ -3048,7 +3048,7 @@ pub mod ptcloud {
 
 	}
 
-	impl std::fmt::Debug for Volume {
+	impl ::core::fmt::Debug for Volume {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Volume")
@@ -3523,7 +3523,7 @@ pub mod ptcloud {
 		}
 	}
 
-	impl std::fmt::Debug for VolumeSettings {
+	impl ::core::fmt::Debug for VolumeSettings {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("VolumeSettings")

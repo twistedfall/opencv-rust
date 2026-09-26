@@ -248,7 +248,7 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl std::fmt::Debug for CUDA_CornernessCriteria {
+	impl ::core::fmt::Debug for CUDA_CornernessCriteria {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_CornernessCriteria")
@@ -374,7 +374,7 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl std::fmt::Debug for CUDA_CornersDetector {
+	impl ::core::fmt::Debug for CUDA_CornersDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_CornersDetector")
@@ -1495,7 +1495,7 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl std::fmt::Debug for CUDA_DescriptorMatcher {
+	impl ::core::fmt::Debug for CUDA_DescriptorMatcher {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_DescriptorMatcher")
@@ -1618,7 +1618,7 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl std::fmt::Debug for CUDA_FastFeatureDetector {
+	impl ::core::fmt::Debug for CUDA_FastFeatureDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_FastFeatureDetector")
@@ -1841,7 +1841,7 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl std::fmt::Debug for CUDA_Feature2DAsync {
+	impl ::core::fmt::Debug for CUDA_Feature2DAsync {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_Feature2DAsync")
@@ -2151,7 +2151,7 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl std::fmt::Debug for CUDA_ORB {
+	impl ::core::fmt::Debug for CUDA_ORB {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_ORB")

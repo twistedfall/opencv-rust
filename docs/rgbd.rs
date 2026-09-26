@@ -286,7 +286,7 @@ pub mod rgbd {
 
 	}
 
-	impl std::fmt::Debug for ColoredKinfu_ColoredKinFu {
+	impl ::core::fmt::Debug for ColoredKinfu_ColoredKinFu {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ColoredKinfu_ColoredKinFu")
@@ -806,7 +806,7 @@ pub mod rgbd {
 
 	}
 
-	impl std::fmt::Debug for ColoredKinfu_Params {
+	impl ::core::fmt::Debug for ColoredKinfu_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ColoredKinfu_Params")
@@ -1083,7 +1083,7 @@ pub mod rgbd {
 
 	}
 
-	impl std::fmt::Debug for Dynafu_DynaFu {
+	impl ::core::fmt::Debug for Dynafu_DynaFu {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Dynafu_DynaFu")
@@ -1302,7 +1302,7 @@ pub mod rgbd {
 
 	}
 
-	impl std::fmt::Debug for Kinfu_KinFu {
+	impl ::core::fmt::Debug for Kinfu_KinFu {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Kinfu_KinFu")
@@ -1808,7 +1808,7 @@ pub mod rgbd {
 
 	}
 
-	impl std::fmt::Debug for Kinfu_Params {
+	impl ::core::fmt::Debug for Kinfu_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Kinfu_Params")
@@ -2117,7 +2117,7 @@ pub mod rgbd {
 		}
 	}
 
-	impl std::fmt::Debug for Kinfu_VolumeParams {
+	impl ::core::fmt::Debug for Kinfu_VolumeParams {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Kinfu_VolumeParams")
@@ -2306,7 +2306,7 @@ pub mod rgbd {
 
 	}
 
-	impl std::fmt::Debug for LargeKinfu {
+	impl ::core::fmt::Debug for LargeKinfu {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LargeKinfu")
@@ -2648,7 +2648,7 @@ pub mod rgbd {
 		}
 	}
 
-	impl std::fmt::Debug for Params {
+	impl ::core::fmt::Debug for Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Params")
@@ -2987,7 +2987,7 @@ pub mod rgbd {
 		}
 	}
 
-	impl std::fmt::Debug for VolumeParams {
+	impl ::core::fmt::Debug for VolumeParams {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("VolumeParams")
@@ -3149,7 +3149,7 @@ pub mod rgbd {
 
 	}
 
-	impl std::fmt::Debug for LineMod_ColorGradient {
+	impl ::core::fmt::Debug for LineMod_ColorGradient {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LineMod_ColorGradient")
@@ -3328,7 +3328,7 @@ pub mod rgbd {
 
 	}
 
-	impl std::fmt::Debug for LineMod_DepthNormal {
+	impl ::core::fmt::Debug for LineMod_DepthNormal {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LineMod_DepthNormal")
@@ -3616,10 +3616,10 @@ pub mod rgbd {
 		/// ## C++ default parameters
 		/// * bounding_box: NULL
 		#[inline]
-		fn add_template(&mut self, sources: &core::Vector<core::Mat>, class_id: &str, object_mask: &impl core::MatTraitConst, bounding_box: &mut core::Rect) -> Result<i32> {
+		fn add_template(&mut self, sources: &core::Vector<core::Mat>, class_id: &str, object_mask: &impl core::MatTraitConst, bounding_box: Option<&mut core::Rect>) -> Result<i32> {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_addTemplate_const_vectorLMatGR_const_StringR_const_MatR_RectX(self.as_raw_mut_LineMod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_as_extern(), object_mask.as_raw_Mat(), bounding_box, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_addTemplate_const_vectorLMatGR_const_StringR_const_MatR_RectX(self.as_raw_mut_LineMod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_as_extern(), object_mask.as_raw_Mat(), bounding_box.map_or(::core::ptr::null_mut(), |bounding_box| bounding_box), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3719,7 +3719,7 @@ pub mod rgbd {
 
 	}
 
-	impl std::fmt::Debug for LineMod_Detector {
+	impl ::core::fmt::Debug for LineMod_Detector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LineMod_Detector")
@@ -3930,7 +3930,7 @@ pub mod rgbd {
 		}
 	}
 
-	impl std::fmt::Debug for LineMod_Match {
+	impl ::core::fmt::Debug for LineMod_Match {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LineMod_Match")
@@ -4078,7 +4078,7 @@ pub mod rgbd {
 
 	}
 
-	impl std::fmt::Debug for LineMod_Modality {
+	impl ::core::fmt::Debug for LineMod_Modality {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LineMod_Modality")
@@ -4165,7 +4165,7 @@ pub mod rgbd {
 
 	}
 
-	impl std::fmt::Debug for LineMod_QuantizedPyramid {
+	impl ::core::fmt::Debug for LineMod_QuantizedPyramid {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LineMod_QuantizedPyramid")
@@ -4303,7 +4303,7 @@ pub mod rgbd {
 		}
 	}
 
-	impl std::fmt::Debug for LineMod_Template {
+	impl ::core::fmt::Debug for LineMod_Template {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LineMod_Template")

@@ -336,7 +336,7 @@ pub mod superres {
 
 	}
 
-	impl std::fmt::Debug for SuperRes_BroxOpticalFlow {
+	impl ::core::fmt::Debug for SuperRes_BroxOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SuperRes_BroxOpticalFlow")
@@ -444,7 +444,7 @@ pub mod superres {
 
 	}
 
-	impl std::fmt::Debug for SuperRes_DenseOpticalFlowExt {
+	impl ::core::fmt::Debug for SuperRes_DenseOpticalFlowExt {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SuperRes_DenseOpticalFlowExt")
@@ -685,7 +685,7 @@ pub mod superres {
 
 	}
 
-	impl std::fmt::Debug for SuperRes_DualTVL1OpticalFlow {
+	impl ::core::fmt::Debug for SuperRes_DualTVL1OpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SuperRes_DualTVL1OpticalFlow")
@@ -908,7 +908,7 @@ pub mod superres {
 
 	}
 
-	impl std::fmt::Debug for SuperRes_FarnebackOpticalFlow {
+	impl ::core::fmt::Debug for SuperRes_FarnebackOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SuperRes_FarnebackOpticalFlow")
@@ -996,7 +996,7 @@ pub mod superres {
 
 	}
 
-	impl std::fmt::Debug for SuperRes_FrameSource {
+	impl ::core::fmt::Debug for SuperRes_FrameSource {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SuperRes_FrameSource")
@@ -1109,7 +1109,7 @@ pub mod superres {
 
 	}
 
-	impl std::fmt::Debug for SuperRes_PyrLKOpticalFlow {
+	impl ::core::fmt::Debug for SuperRes_PyrLKOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SuperRes_PyrLKOpticalFlow")
@@ -1469,7 +1469,7 @@ pub mod superres {
 
 	}
 
-	impl std::fmt::Debug for SuperRes_SuperResolution {
+	impl ::core::fmt::Debug for SuperRes_SuperResolution {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SuperRes_SuperResolution")

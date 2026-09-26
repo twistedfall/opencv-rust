@@ -1322,7 +1322,7 @@ pub mod optflow {
 
 	}
 
-	impl std::fmt::Debug for DenseRLOFOpticalFlow {
+	impl ::core::fmt::Debug for DenseRLOFOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DenseRLOFOpticalFlow")
@@ -1774,7 +1774,7 @@ pub mod optflow {
 
 	}
 
-	impl std::fmt::Debug for DualTVL1OpticalFlow {
+	impl ::core::fmt::Debug for DualTVL1OpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DualTVL1OpticalFlow")
@@ -1889,7 +1889,7 @@ pub mod optflow {
 		}
 	}
 
-	impl std::fmt::Debug for GPCDetails {
+	impl ::core::fmt::Debug for GPCDetails {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GPCDetails")
@@ -2041,7 +2041,7 @@ pub mod optflow {
 		}
 	}
 
-	impl std::fmt::Debug for GPCPatchDescriptor {
+	impl ::core::fmt::Debug for GPCPatchDescriptor {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GPCPatchDescriptor")
@@ -2154,7 +2154,7 @@ pub mod optflow {
 		}
 	}
 
-	impl std::fmt::Debug for GPCPatchSample {
+	impl ::core::fmt::Debug for GPCPatchSample {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GPCPatchSample")
@@ -2322,7 +2322,7 @@ pub mod optflow {
 		}
 	}
 
-	impl std::fmt::Debug for GPCTrainingSamples {
+	impl ::core::fmt::Debug for GPCTrainingSamples {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GPCTrainingSamples")
@@ -2465,7 +2465,7 @@ pub mod optflow {
 		}
 	}
 
-	impl std::fmt::Debug for GPCTree {
+	impl ::core::fmt::Debug for GPCTree {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GPCTree")
@@ -2629,7 +2629,7 @@ pub mod optflow {
 
 	}
 
-	impl std::fmt::Debug for OpticalFlowPCAFlow {
+	impl ::core::fmt::Debug for OpticalFlowPCAFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OpticalFlowPCAFlow")
@@ -2743,7 +2743,7 @@ pub mod optflow {
 
 	}
 
-	impl std::fmt::Debug for PCAPrior {
+	impl ::core::fmt::Debug for PCAPrior {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PCAPrior")
@@ -3277,7 +3277,7 @@ pub mod optflow {
 
 	}
 
-	impl std::fmt::Debug for RLOFOpticalFlowParameter {
+	impl ::core::fmt::Debug for RLOFOpticalFlowParameter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RLOFOpticalFlowParameter")
@@ -3449,7 +3449,7 @@ pub mod optflow {
 
 	}
 
-	impl std::fmt::Debug for SparseRLOFOpticalFlow {
+	impl ::core::fmt::Debug for SparseRLOFOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SparseRLOFOpticalFlow")

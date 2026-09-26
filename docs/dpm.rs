@@ -153,7 +153,7 @@ pub mod dpm {
 
 	}
 
-	impl std::fmt::Debug for DPMDetector {
+	impl ::core::fmt::Debug for DPMDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DPMDetector")
@@ -274,7 +274,7 @@ pub mod dpm {
 
 	}
 
-	impl std::fmt::Debug for DPMDetector_ObjectDetection {
+	impl ::core::fmt::Debug for DPMDetector_ObjectDetection {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("DPMDetector_ObjectDetection")

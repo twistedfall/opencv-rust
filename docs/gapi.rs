@@ -6143,7 +6143,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for GArg {
+	impl ::core::fmt::Debug for GArg {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GArg")
@@ -6226,7 +6226,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GArrayDesc {
+	impl ::core::fmt::Debug for GArrayDesc {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GArrayDesc")
@@ -6413,7 +6413,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for GCall {
+	impl ::core::fmt::Debug for GCall {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GCall")
@@ -6499,7 +6499,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GCompileArg {
+	impl ::core::fmt::Debug for GCompileArg {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GCompileArg")
@@ -6821,7 +6821,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for GCompiled {
+	impl ::core::fmt::Debug for GCompiled {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GCompiled")
@@ -7506,7 +7506,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for GComputation {
+	impl ::core::fmt::Debug for GComputation {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GComputation")
@@ -7607,7 +7607,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GFrame {
+	impl ::core::fmt::Debug for GFrame {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GFrame")
@@ -7709,7 +7709,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GFrameDesc {
+	impl ::core::fmt::Debug for GFrameDesc {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GFrameDesc")
@@ -7842,7 +7842,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GKernel {
+	impl ::core::fmt::Debug for GKernel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GKernel")
@@ -7924,7 +7924,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GKernelImpl {
+	impl ::core::fmt::Debug for GKernelImpl {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GKernelImpl")
@@ -8125,7 +8125,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GKernelPackage {
+	impl ::core::fmt::Debug for GKernelPackage {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GKernelPackage")
@@ -8228,7 +8228,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GMat {
+	impl ::core::fmt::Debug for GMat {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GMat")
@@ -8527,7 +8527,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GMatDesc {
+	impl ::core::fmt::Debug for GMatDesc {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GMatDesc")
@@ -8596,7 +8596,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GMatP {
+	impl ::core::fmt::Debug for GMatP {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GMatP")
@@ -8689,7 +8689,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GOpaqueDesc {
+	impl ::core::fmt::Debug for GOpaqueDesc {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GOpaqueDesc")
@@ -8785,7 +8785,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for GRunArg {
+	impl ::core::fmt::Debug for GRunArg {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GRunArg")
@@ -8969,7 +8969,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GScalar {
+	impl ::core::fmt::Debug for GScalar {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GScalar")
@@ -9059,7 +9059,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GScalarDesc {
+	impl ::core::fmt::Debug for GScalarDesc {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GScalarDesc")
@@ -9283,7 +9283,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GStreamingCompiled {
+	impl ::core::fmt::Debug for GStreamingCompiled {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GStreamingCompiled")
@@ -9342,7 +9342,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for GTransform {
+	impl ::core::fmt::Debug for GTransform {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GTransform")
@@ -9442,7 +9442,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for GTypeInfo {
+	impl ::core::fmt::Debug for GTypeInfo {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GTypeInfo")
@@ -9544,7 +9544,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for MediaFrame {
+	impl ::core::fmt::Debug for MediaFrame {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MediaFrame")
@@ -9618,7 +9618,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for MediaFrame_IAdapter {
+	impl ::core::fmt::Debug for MediaFrame_IAdapter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MediaFrame_IAdapter")
@@ -9710,7 +9710,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for MediaFrame_View {
+	impl ::core::fmt::Debug for MediaFrame_View {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MediaFrame_View")
@@ -9784,7 +9784,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for RMat {
+	impl ::core::fmt::Debug for RMat {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RMat")
@@ -9839,7 +9839,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for RMat_IAdapter {
+	impl ::core::fmt::Debug for RMat_IAdapter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RMat_IAdapter")
@@ -10024,7 +10024,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for RMat_View {
+	impl ::core::fmt::Debug for RMat_View {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RMat_View")
@@ -10098,7 +10098,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for Detail_ExtractArgsCallback {
+	impl ::core::fmt::Debug for Detail_ExtractArgsCallback {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_ExtractArgsCallback")
@@ -10162,7 +10162,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for Detail_ExtractMetaCallback {
+	impl ::core::fmt::Debug for Detail_ExtractMetaCallback {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_ExtractMetaCallback")
@@ -10207,7 +10207,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for Detail_GArrayU {
+	impl ::core::fmt::Debug for Detail_GArrayU {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_GArrayU")
@@ -10252,7 +10252,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for Detail_GOpaqueU {
+	impl ::core::fmt::Debug for Detail_GOpaqueU {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_GOpaqueU")
@@ -10320,7 +10320,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for GBackend {
+	impl ::core::fmt::Debug for GBackend {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GBackend")
@@ -10396,7 +10396,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for GFunctor {
+	impl ::core::fmt::Debug for GFunctor {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GFunctor")
@@ -10538,7 +10538,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for Scalar {
+	impl ::core::fmt::Debug for Scalar {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Scalar")
@@ -10660,7 +10660,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for use_only {
+	impl ::core::fmt::Debug for use_only {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("use_only")
@@ -10730,7 +10730,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for Data {
+	impl ::core::fmt::Debug for Data {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Data")
@@ -10965,7 +10965,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for Image {
+	impl ::core::fmt::Debug for Image {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Image")
@@ -11290,7 +11290,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for Poly {
+	impl ::core::fmt::Debug for Poly {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Poly")
@@ -11625,7 +11625,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for Text {
+	impl ::core::fmt::Debug for Text {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Text")
@@ -11717,7 +11717,7 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for use_threaded_executor {
+	impl ::core::fmt::Debug for use_threaded_executor {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("use_threaded_executor")
@@ -11823,7 +11823,7 @@ pub mod gapi {
 		}
 	}
 
-	impl std::fmt::Debug for any {
+	impl ::core::fmt::Debug for any {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("any")

@@ -1505,7 +1505,7 @@ pub mod hdf {
 
 	}
 
-	impl std::fmt::Debug for HDF5 {
+	impl ::core::fmt::Debug for HDF5 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("HDF5")

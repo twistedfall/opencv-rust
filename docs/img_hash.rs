@@ -303,7 +303,7 @@ pub mod img_hash {
 
 	}
 
-	impl std::fmt::Debug for AverageHash {
+	impl ::core::fmt::Debug for AverageHash {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AverageHash")
@@ -425,7 +425,7 @@ pub mod img_hash {
 
 	}
 
-	impl std::fmt::Debug for BlockMeanHash {
+	impl ::core::fmt::Debug for BlockMeanHash {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BlockMeanHash")
@@ -510,7 +510,7 @@ pub mod img_hash {
 
 	}
 
-	impl std::fmt::Debug for ColorMomentHash {
+	impl ::core::fmt::Debug for ColorMomentHash {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ColorMomentHash")
@@ -613,7 +613,7 @@ pub mod img_hash {
 
 	}
 
-	impl std::fmt::Debug for ImgHashBase {
+	impl ::core::fmt::Debug for ImgHashBase {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ImgHashBase")
@@ -744,7 +744,7 @@ pub mod img_hash {
 
 	}
 
-	impl std::fmt::Debug for MarrHildrethHash {
+	impl ::core::fmt::Debug for MarrHildrethHash {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MarrHildrethHash")
@@ -831,7 +831,7 @@ pub mod img_hash {
 
 	}
 
-	impl std::fmt::Debug for PHash {
+	impl ::core::fmt::Debug for PHash {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PHash")
@@ -1009,7 +1009,7 @@ pub mod img_hash {
 
 	}
 
-	impl std::fmt::Debug for RadialVarianceHash {
+	impl ::core::fmt::Debug for RadialVarianceHash {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RadialVarianceHash")

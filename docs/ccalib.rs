@@ -1034,7 +1034,7 @@ pub mod ccalib {
 
 	}
 
-	impl std::fmt::Debug for CustomPattern {
+	impl ::core::fmt::Debug for CustomPattern {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CustomPattern")
@@ -1193,7 +1193,7 @@ pub mod ccalib {
 
 	}
 
-	impl std::fmt::Debug for MultiCameraCalibration {
+	impl ::core::fmt::Debug for MultiCameraCalibration {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MultiCameraCalibration")
@@ -1300,7 +1300,7 @@ pub mod ccalib {
 
 	}
 
-	impl std::fmt::Debug for MultiCameraCalibration_edge {
+	impl ::core::fmt::Debug for MultiCameraCalibration_edge {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MultiCameraCalibration_edge")
@@ -1397,7 +1397,7 @@ pub mod ccalib {
 
 	}
 
-	impl std::fmt::Debug for MultiCameraCalibration_vertex {
+	impl ::core::fmt::Debug for MultiCameraCalibration_vertex {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MultiCameraCalibration_vertex")
@@ -1550,7 +1550,7 @@ pub mod ccalib {
 
 	}
 
-	impl std::fmt::Debug for RandomPatternCornerFinder {
+	impl ::core::fmt::Debug for RandomPatternCornerFinder {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RandomPatternCornerFinder")
@@ -1627,7 +1627,7 @@ pub mod ccalib {
 
 	}
 
-	impl std::fmt::Debug for RandomPatternGenerator {
+	impl ::core::fmt::Debug for RandomPatternGenerator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("RandomPatternGenerator")

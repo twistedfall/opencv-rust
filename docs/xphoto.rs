@@ -656,7 +656,7 @@ pub mod xphoto {
 
 	}
 
-	impl std::fmt::Debug for GrayworldWB {
+	impl ::core::fmt::Debug for GrayworldWB {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GrayworldWB")
@@ -843,7 +843,7 @@ pub mod xphoto {
 
 	}
 
-	impl std::fmt::Debug for LearningBasedWB {
+	impl ::core::fmt::Debug for LearningBasedWB {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LearningBasedWB")
@@ -1035,7 +1035,7 @@ pub mod xphoto {
 
 	}
 
-	impl std::fmt::Debug for SimpleWB {
+	impl ::core::fmt::Debug for SimpleWB {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SimpleWB")
@@ -1184,7 +1184,7 @@ pub mod xphoto {
 
 	}
 
-	impl std::fmt::Debug for TonemapDurand {
+	impl ::core::fmt::Debug for TonemapDurand {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TonemapDurand")
@@ -1272,7 +1272,7 @@ pub mod xphoto {
 
 	}
 
-	impl std::fmt::Debug for WhiteBalancer {
+	impl ::core::fmt::Debug for WhiteBalancer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("WhiteBalancer")

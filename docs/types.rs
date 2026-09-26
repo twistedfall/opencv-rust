@@ -39,7 +39,7 @@ mod bgsegm_types {
 
 	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorCNT>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorCNTG_to_PtrOfBackgroundSubtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorCNT> {
+	impl ::core::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorCNT> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBackgroundSubtractorCNT")
@@ -84,7 +84,7 @@ mod bgsegm_types {
 
 	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorGMG>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorGMGG_to_PtrOfBackgroundSubtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorGMG> {
+	impl ::core::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorGMG> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBackgroundSubtractorGMG")
@@ -129,7 +129,7 @@ mod bgsegm_types {
 
 	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorGSOCG_to_PtrOfBackgroundSubtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC> {
+	impl ::core::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBackgroundSubtractorGSOC")
@@ -174,7 +174,7 @@ mod bgsegm_types {
 
 	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorLSBPG_to_PtrOfBackgroundSubtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP> {
+	impl ::core::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBackgroundSubtractorLSBP")
@@ -219,7 +219,7 @@ mod bgsegm_types {
 
 	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorMOG>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorMOGG_to_PtrOfBackgroundSubtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorMOG> {
+	impl ::core::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorMOG> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBackgroundSubtractorMOG")
@@ -255,7 +255,7 @@ mod bgsegm_types {
 
 	ptr_cast_base! { core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_SyntheticSequenceGeneratorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::bgsegm::SyntheticSequenceGenerator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::bgsegm::SyntheticSequenceGenerator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSyntheticSequenceGenerator")
@@ -296,7 +296,7 @@ mod bioinspired_types {
 
 	ptr_cast_base! { core::Ptr<crate::bioinspired::Retina>, core::Ptr<core::Algorithm>, cv_PtrLcv_bioinspired_RetinaG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::bioinspired::Retina> {
+	impl ::core::fmt::Debug for core::Ptr<crate::bioinspired::Retina> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRetina")
@@ -331,7 +331,7 @@ mod bioinspired_types {
 
 	ptr_cast_base! { core::Ptr<crate::bioinspired::RetinaFastToneMapping>, core::Ptr<core::Algorithm>, cv_PtrLcv_bioinspired_RetinaFastToneMappingG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::bioinspired::RetinaFastToneMapping> {
+	impl ::core::fmt::Debug for core::Ptr<crate::bioinspired::RetinaFastToneMapping> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRetinaFastToneMapping")
@@ -366,7 +366,7 @@ mod bioinspired_types {
 
 	ptr_cast_base! { core::Ptr<crate::bioinspired::TransientAreasSegmentationModule>, core::Ptr<core::Algorithm>, cv_PtrLcv_bioinspired_TransientAreasSegmentationModuleG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::bioinspired::TransientAreasSegmentationModule> {
+	impl ::core::fmt::Debug for core::Ptr<crate::bioinspired::TransientAreasSegmentationModule> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTransientAreasSegmentationModule")
@@ -408,7 +408,7 @@ mod ccalib_types {
 
 	ptr_cast_base! { core::Ptr<crate::ccalib::CustomPattern>, core::Ptr<core::Algorithm>, cv_PtrLcv_ccalib_CustomPatternG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ccalib::CustomPattern> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ccalib::CustomPattern> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCustomPattern")
@@ -448,7 +448,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<core::Algorithm> {
+	impl ::core::fmt::Debug for core::Ptr<core::Algorithm> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAlgorithm")
@@ -493,7 +493,7 @@ mod core_types {
 
 	ptr_cast_base! { core::Ptr<core::ConjGradSolver>, core::Ptr<core::MinProblemSolver>, cv_PtrLcv_ConjGradSolverG_to_PtrOfMinProblemSolver }
 
-	impl std::fmt::Debug for core::Ptr<core::ConjGradSolver> {
+	impl ::core::fmt::Debug for core::Ptr<core::ConjGradSolver> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConjGradSolver")
@@ -538,7 +538,7 @@ mod core_types {
 
 	ptr_cast_base! { core::Ptr<core::DownhillSolver>, core::Ptr<core::MinProblemSolver>, cv_PtrLcv_DownhillSolverG_to_PtrOfMinProblemSolver }
 
-	impl std::fmt::Debug for core::Ptr<core::DownhillSolver> {
+	impl ::core::fmt::Debug for core::Ptr<core::DownhillSolver> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDownhillSolver")
@@ -563,7 +563,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_Formatted(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<core::Formatted> {
+	impl ::core::fmt::Debug for core::Ptr<core::Formatted> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFormatted")
@@ -588,7 +588,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_Formatter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<core::Formatter> {
+	impl ::core::fmt::Debug for core::Ptr<core::Formatter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFormatter")
@@ -613,7 +613,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_GpuMat_Allocator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<core::GpuMat_Allocator> {
+	impl ::core::fmt::Debug for core::Ptr<core::GpuMat_Allocator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGpuMat_Allocator")
@@ -639,7 +639,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_KeyPoint(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<core::KeyPoint> {
+	impl ::core::fmt::Debug for core::Ptr<core::KeyPoint> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfKeyPoint")
@@ -674,7 +674,7 @@ mod core_types {
 
 	ptr_cast_base! { core::Ptr<core::MinProblemSolver>, core::Ptr<core::Algorithm>, cv_PtrLcv_MinProblemSolverG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<core::MinProblemSolver> {
+	impl ::core::fmt::Debug for core::Ptr<core::MinProblemSolver> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMinProblemSolver")
@@ -699,7 +699,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_MinProblemSolver_Function(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<core::MinProblemSolver_Function> {
+	impl ::core::fmt::Debug for core::Ptr<core::MinProblemSolver_Function> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMinProblemSolver_Function")
@@ -725,7 +725,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_OriginalClassName(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<core::OriginalClassName> {
+	impl ::core::fmt::Debug for core::Ptr<core::OriginalClassName> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfOriginalClassName")
@@ -3754,7 +3754,7 @@ mod cudaarithm_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaarithm::Convolution>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_ConvolutionG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaarithm::Convolution> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaarithm::Convolution> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConvolution")
@@ -3789,7 +3789,7 @@ mod cudaarithm_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaarithm::DFT>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DFTG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaarithm::DFT> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaarithm::DFT> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDFT")
@@ -3824,7 +3824,7 @@ mod cudaarithm_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaarithm::LookUpTable>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_LookUpTableG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaarithm::LookUpTable> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaarithm::LookUpTable> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLookUpTable")
@@ -3875,7 +3875,7 @@ mod cudabgsegm_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_cuda_BackgroundSubtractorMOGG_to_PtrOfBackgroundSubtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_BackgroundSubtractorMOG")
@@ -3930,7 +3930,7 @@ mod cudabgsegm_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>, core::Ptr<crate::video::BackgroundSubtractorMOG2>, cv_PtrLcv_cuda_BackgroundSubtractorMOG2G_to_PtrOfBackgroundSubtractorMOG2 }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_BackgroundSubtractorMOG2")
@@ -3961,7 +3961,7 @@ mod cudacodec_types {
 		#[inline] fn as_raw_mut_CUDA_EncoderCallback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::cudacodec::CUDA_EncoderCallback> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudacodec::CUDA_EncoderCallback> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_EncoderCallback")
@@ -3986,7 +3986,7 @@ mod cudacodec_types {
 		#[inline] fn as_raw_mut_CUDA_NVSurfaceToColorConverter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_NVSurfaceToColorConverter")
@@ -4011,7 +4011,7 @@ mod cudacodec_types {
 		#[inline] fn as_raw_mut_CUDA_RawVideoSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::cudacodec::CUDA_RawVideoSource> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudacodec::CUDA_RawVideoSource> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_RawVideoSource")
@@ -4036,7 +4036,7 @@ mod cudacodec_types {
 		#[inline] fn as_raw_mut_CUDA_VideoReader(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::cudacodec::CUDA_VideoReader> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudacodec::CUDA_VideoReader> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_VideoReader")
@@ -4061,7 +4061,7 @@ mod cudacodec_types {
 		#[inline] fn as_raw_mut_CUDA_VideoWriter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::cudacodec::CUDA_VideoWriter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudacodec::CUDA_VideoWriter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_VideoWriter")
@@ -4102,7 +4102,7 @@ mod cudafeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_CornernessCriteria>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CornernessCriteriaG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_CornernessCriteria> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_CornernessCriteria> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_CornernessCriteria")
@@ -4137,7 +4137,7 @@ mod cudafeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_CornersDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CornersDetectorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_CornersDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_CornersDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_CornersDetector")
@@ -4172,7 +4172,7 @@ mod cudafeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DescriptorMatcherG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_DescriptorMatcher")
@@ -4227,7 +4227,7 @@ mod cudafeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector>, core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>, cv_PtrLcv_cuda_FastFeatureDetectorG_to_PtrOfCUDA_Feature2DAsync }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_FastFeatureDetector")
@@ -4272,7 +4272,7 @@ mod cudafeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_cuda_Feature2DAsyncG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_Feature2DAsync")
@@ -4327,7 +4327,7 @@ mod cudafeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_ORB>, core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>, cv_PtrLcv_cuda_ORBG_to_PtrOfCUDA_Feature2DAsync }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_ORB> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_ORB> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_ORB")
@@ -4368,7 +4368,7 @@ mod cudafilters_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudafilters::Filter>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_FilterG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudafilters::Filter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudafilters::Filter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFilter")
@@ -4419,7 +4419,7 @@ mod cudaimgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_CLAHE>, core::Ptr<crate::imgproc::CLAHE>, cv_PtrLcv_cuda_CLAHEG_to_PtrOfCLAHE }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_CLAHE> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_CLAHE> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_CLAHE")
@@ -4454,7 +4454,7 @@ mod cudaimgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_CannyEdgeDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CannyEdgeDetectorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_CannyEdgeDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_CannyEdgeDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_CannyEdgeDetector")
@@ -4489,7 +4489,7 @@ mod cudaimgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_HoughCirclesDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HoughCirclesDetectorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_HoughCirclesDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_HoughCirclesDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_HoughCirclesDetector")
@@ -4524,7 +4524,7 @@ mod cudaimgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_HoughLinesDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HoughLinesDetectorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_HoughLinesDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_HoughLinesDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_HoughLinesDetector")
@@ -4559,7 +4559,7 @@ mod cudaimgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HoughSegmentDetectorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_HoughSegmentDetector")
@@ -4594,7 +4594,7 @@ mod cudaimgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_TemplateMatching>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_TemplateMatchingG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_TemplateMatching> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_TemplateMatching> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_TemplateMatching")
@@ -4645,7 +4645,7 @@ mod cudalegacy_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_cuda_BackgroundSubtractorFGDG_to_PtrOfBackgroundSubtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_BackgroundSubtractorFGD")
@@ -4690,7 +4690,7 @@ mod cudalegacy_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_cuda_BackgroundSubtractorGMGG_to_PtrOfBackgroundSubtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_BackgroundSubtractorGMG")
@@ -4725,7 +4725,7 @@ mod cudalegacy_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudalegacy::CUDA_ImagePyramid>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_ImagePyramidG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudalegacy::CUDA_ImagePyramid> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudalegacy::CUDA_ImagePyramid> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_ImagePyramid")
@@ -4766,7 +4766,7 @@ mod cudaobjdetect_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CascadeClassifierG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_CascadeClassifier")
@@ -4801,7 +4801,7 @@ mod cudaobjdetect_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaobjdetect::CUDA_HOG>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HOGG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaobjdetect::CUDA_HOG> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaobjdetect::CUDA_HOG> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_HOG")
@@ -4852,7 +4852,7 @@ mod cudaoptflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_BroxOpticalFlowG_to_PtrOfCUDA_DenseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_BroxOpticalFlow")
@@ -4887,7 +4887,7 @@ mod cudaoptflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DenseOpticalFlowG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_DenseOpticalFlow")
@@ -4932,7 +4932,7 @@ mod cudaoptflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_DensePyrLKOpticalFlowG_to_PtrOfCUDA_DenseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_DensePyrLKOpticalFlow")
@@ -4977,7 +4977,7 @@ mod cudaoptflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_FarnebackOpticalFlowG_to_PtrOfCUDA_DenseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_FarnebackOpticalFlow")
@@ -5012,7 +5012,7 @@ mod cudaoptflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_NvidiaHWOpticalFlowG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_NvidiaHWOpticalFlow")
@@ -5057,7 +5057,7 @@ mod cudaoptflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>, core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>, cv_PtrLcv_cuda_NvidiaOpticalFlow_1_0G_to_PtrOfCUDA_NvidiaHWOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_NvidiaOpticalFlow_1_0")
@@ -5102,7 +5102,7 @@ mod cudaoptflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>, core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>, cv_PtrLcv_cuda_NvidiaOpticalFlow_2_0G_to_PtrOfCUDA_NvidiaHWOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_NvidiaOpticalFlow_2_0")
@@ -5147,7 +5147,7 @@ mod cudaoptflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_OpticalFlowDual_TVL1G_to_PtrOfCUDA_DenseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_OpticalFlowDual_TVL1")
@@ -5182,7 +5182,7 @@ mod cudaoptflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_SparseOpticalFlowG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_SparseOpticalFlow")
@@ -5227,7 +5227,7 @@ mod cudaoptflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>, core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow>, cv_PtrLcv_cuda_SparsePyrLKOpticalFlowG_to_PtrOfCUDA_SparseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_SparsePyrLKOpticalFlow")
@@ -5268,7 +5268,7 @@ mod cudastereo_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DisparityBilateralFilterG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_DisparityBilateralFilter")
@@ -5323,7 +5323,7 @@ mod cudastereo_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoBM>, core::Ptr<crate::stereo::StereoMatcher>, cv_PtrLcv_cuda_StereoBMG_to_PtrOfStereoMatcher }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoBM> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoBM> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_StereoBM")
@@ -5368,7 +5368,7 @@ mod cudastereo_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>, core::Ptr<crate::stereo::StereoMatcher>, cv_PtrLcv_cuda_StereoBeliefPropagationG_to_PtrOfStereoMatcher }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_StereoBeliefPropagation")
@@ -5423,7 +5423,7 @@ mod cudastereo_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>, core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>, cv_PtrLcv_cuda_StereoConstantSpaceBPG_to_PtrOfCUDA_StereoBeliefPropagation }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_StereoConstantSpaceBP")
@@ -5478,7 +5478,7 @@ mod cudastereo_types {
 
 	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoSGM>, core::Ptr<crate::stereo::StereoSGBM>, cv_PtrLcv_cuda_StereoSGMG_to_PtrOfStereoSGBM }
 
-	impl std::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoSGM> {
+	impl ::core::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoSGM> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_StereoSGM")
@@ -5540,7 +5540,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AbsLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AbsLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AbsLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AbsLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAbsLayer")
@@ -5592,7 +5592,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AccumLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AccumLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AccumLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AccumLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAccumLayer")
@@ -5654,7 +5654,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AcosLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AcosLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AcosLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AcosLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAcosLayer")
@@ -5716,7 +5716,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AcoshLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AcoshLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AcoshLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AcoshLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAcoshLayer")
@@ -5768,7 +5768,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ActivationLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ActivationLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ActivationLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfActivationLayer")
@@ -5830,7 +5830,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ActivationLayerInt8G_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ActivationLayerInt8> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ActivationLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfActivationLayerInt8")
@@ -5887,7 +5887,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AffineGridLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AffineGridLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AffineGridLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AffineGridLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAffineGridLayer")
@@ -5940,7 +5940,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ArgLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ArgLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ArgLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ArgLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfArgLayer")
@@ -6002,7 +6002,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AsinLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AsinLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AsinLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AsinLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAsinLayer")
@@ -6064,7 +6064,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AsinhLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AsinhLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AsinhLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AsinhLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAsinhLayer")
@@ -6126,7 +6126,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AtanLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AtanLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AtanLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AtanLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAtanLayer")
@@ -6188,7 +6188,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AtanhLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AtanhLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AtanhLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AtanhLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAtanhLayer")
@@ -6240,7 +6240,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AttentionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AttentionLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AttentionLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AttentionLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAttentionLayer")
@@ -6292,7 +6292,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AttentionOnnxAiLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AttentionOnnxAiLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AttentionOnnxAiLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AttentionOnnxAiLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAttentionOnnxAiLayer")
@@ -6345,7 +6345,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AveragePoolLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AveragePoolLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::AveragePoolLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::AveragePoolLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAveragePoolLayer")
@@ -6414,7 +6414,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BNLLLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BNLLLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::BNLLLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::BNLLLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBNLLLayer")
@@ -6446,7 +6446,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BackendNode(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::BackendNode> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::BackendNode> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBackendNode")
@@ -6472,7 +6472,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BackendWrapper(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::BackendWrapper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::BackendWrapper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBackendWrapper")
@@ -6520,7 +6520,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BaseConvolutionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BaseConvolutionLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::BaseConvolutionLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::BaseConvolutionLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBaseConvolutionLayer")
@@ -6584,7 +6584,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BatchNorm2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BatchNorm2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::BatchNorm2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::BatchNorm2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBatchNorm2Layer")
@@ -6647,7 +6647,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BatchNormLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::BatchNormLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::BatchNormLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBatchNormLayer")
@@ -6722,7 +6722,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::BatchNormLayerInt8> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::BatchNormLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBatchNormLayerInt8")
@@ -6781,7 +6781,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BitShiftLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BitShiftLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::BitShiftLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::BitShiftLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBitShiftLayer")
@@ -6833,7 +6833,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BlackmanWindowLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BlackmanWindowLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::BlackmanWindowLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::BlackmanWindowLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBlackmanWindowLayer")
@@ -6885,7 +6885,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BlankLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BlankLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::BlankLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::BlankLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBlankLayer")
@@ -6937,7 +6937,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Cast2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Cast2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Cast2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Cast2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCast2Layer")
@@ -6989,7 +6989,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CastLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CastLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::CastLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::CastLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCastLayer")
@@ -7051,7 +7051,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CeilLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CeilLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::CeilLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::CeilLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCeilLayer")
@@ -7113,7 +7113,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CeluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CeluLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::CeluLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::CeluLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCeluLayer")
@@ -7166,7 +7166,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CenterCropPadLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CenterCropPadLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::CenterCropPadLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::CenterCropPadLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCenterCropPadLayer")
@@ -7228,7 +7228,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ChannelsPReLULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ChannelsPReLULayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ChannelsPReLULayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ChannelsPReLULayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfChannelsPReLULayer")
@@ -7280,7 +7280,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ClipLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ClipLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ClipLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ClipLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfClipLayer")
@@ -7332,7 +7332,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CompareLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CompareLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::CompareLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::CompareLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCompareLayer")
@@ -7384,7 +7384,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Concat2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Concat2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Concat2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Concat2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConcat2Layer")
@@ -7437,7 +7437,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConcatLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConcatLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ConcatLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ConcatLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConcatLayer")
@@ -7492,7 +7492,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConstLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConstLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ConstLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ConstLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConstLayer")
@@ -7544,7 +7544,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConstantOfShapeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConstantOfShapeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ConstantOfShapeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ConstantOfShapeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConstantOfShapeLayer")
@@ -7596,7 +7596,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Conv2Int8Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Conv2Int8LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Conv2Int8Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Conv2Int8Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConv2Int8Layer")
@@ -7659,7 +7659,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Conv2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Conv2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Conv2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Conv2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConv2Layer")
@@ -7716,7 +7716,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConvTranspose2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConvTranspose2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ConvTranspose2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ConvTranspose2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConvTranspose2Layer")
@@ -7784,7 +7784,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConvolutionLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ConvolutionLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ConvolutionLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConvolutionLayer")
@@ -7862,7 +7862,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConvolutionLayerInt8G_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ConvolutionLayerInt8> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ConvolutionLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConvolutionLayerInt8")
@@ -7933,7 +7933,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CorrelationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CorrelationLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::CorrelationLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::CorrelationLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCorrelationLayer")
@@ -7995,7 +7995,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CosLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CosLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::CosLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::CosLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCosLayer")
@@ -8057,7 +8057,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CoshLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CoshLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::CoshLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::CoshLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCoshLayer")
@@ -8109,7 +8109,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CropAndResizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CropAndResizeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::CropAndResizeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::CropAndResizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCropAndResizeLayer")
@@ -8161,7 +8161,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CropLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CropLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::CropLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::CropLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCropLayer")
@@ -8213,7 +8213,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CumSumLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CumSumLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::CumSumLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::CumSumLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCumSumLayer")
@@ -8267,7 +8267,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DFTLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DFTLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::DFTLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::DFTLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDFTLayer")
@@ -8323,7 +8323,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DataAugmentationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DataAugmentationLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::DataAugmentationLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::DataAugmentationLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDataAugmentationLayer")
@@ -8385,7 +8385,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DeconvolutionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::DeconvolutionLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::DeconvolutionLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDeconvolutionLayer")
@@ -8450,7 +8450,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DepthToSpaceLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DepthToSpaceLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::DepthToSpaceLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::DepthToSpaceLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDepthToSpaceLayer")
@@ -8502,7 +8502,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DequantizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DequantizeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::DequantizeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::DequantizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDequantizeLayer")
@@ -8556,7 +8556,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DequantizeLinearLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DequantizeLinearLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::DequantizeLinearLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::DequantizeLinearLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDequantizeLinearLayer")
@@ -8610,7 +8610,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DetLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DetLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::DetLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::DetLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetLayer")
@@ -8662,7 +8662,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DetectionOutputLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DetectionOutputLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::DetectionOutputLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::DetectionOutputLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetectionOutputLayer")
@@ -8724,7 +8724,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ELULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ELULayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ELULayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ELULayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfELULayer")
@@ -8777,7 +8777,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::EinsumLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EinsumLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::EinsumLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::EinsumLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEinsumLayer")
@@ -8829,7 +8829,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Eltwise2Int8Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Eltwise2Int8LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Eltwise2Int8Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Eltwise2Int8Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEltwise2Int8Layer")
@@ -8885,7 +8885,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EltwiseLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::EltwiseLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::EltwiseLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEltwiseLayer")
@@ -8937,7 +8937,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EltwiseLayerInt8G_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::EltwiseLayerInt8> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::EltwiseLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEltwiseLayerInt8")
@@ -9005,7 +9005,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ErfLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ErfLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ErfLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ErfLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfErfLayer")
@@ -9067,7 +9067,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ExpLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ExpLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ExpLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ExpLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfExpLayer")
@@ -9122,7 +9122,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Expand2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Expand2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Expand2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Expand2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfExpand2Layer")
@@ -9174,7 +9174,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ExpandLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ExpandLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ExpandLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ExpandLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfExpandLayer")
@@ -9226,7 +9226,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::EyeLikeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EyeLikeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::EyeLikeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::EyeLikeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEyeLikeLayer")
@@ -9278,7 +9278,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::FlattenLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FlattenLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::FlattenLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::FlattenLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFlattenLayer")
@@ -9340,7 +9340,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::FloorLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FloorLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::FloorLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::FloorLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFloorLayer")
@@ -9392,7 +9392,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::FlowWarpLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FlowWarpLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::FlowWarpLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::FlowWarpLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFlowWarpLayer")
@@ -9444,7 +9444,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GRULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GRULayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::GRULayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::GRULayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGRULayer")
@@ -9496,7 +9496,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Gather2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Gather2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Gather2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Gather2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGather2Layer")
@@ -9549,7 +9549,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GatherElementsLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GatherElementsLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::GatherElementsLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::GatherElementsLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGatherElementsLayer")
@@ -9601,7 +9601,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GatherLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GatherLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::GatherLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::GatherLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGatherLayer")
@@ -9653,7 +9653,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GatherNDLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GatherNDLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::GatherNDLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::GatherNDLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGatherNDLayer")
@@ -9715,7 +9715,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GeluApproximationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GeluApproximationLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::GeluApproximationLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::GeluApproximationLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGeluApproximationLayer")
@@ -9777,7 +9777,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GeluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GeluLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::GeluLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::GeluLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGeluLayer")
@@ -9829,7 +9829,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GemmLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GemmLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::GemmLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::GemmLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGemmLayer")
@@ -9886,7 +9886,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GlobalAveragePoolLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GlobalAveragePoolLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::GlobalAveragePoolLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::GlobalAveragePoolLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGlobalAveragePoolLayer")
@@ -9917,7 +9917,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Graph(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Graph> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Graph> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGraph")
@@ -9963,7 +9963,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GridSampleLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GridSampleLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::GridSampleLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::GridSampleLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGridSampleLayer")
@@ -10015,7 +10015,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GroupNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GroupNormLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::GroupNormLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::GroupNormLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGroupNormLayer")
@@ -10067,7 +10067,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::HammingWindowLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HammingWindowLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::HammingWindowLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::HammingWindowLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHammingWindowLayer")
@@ -10119,7 +10119,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::HannWindowLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HannWindowLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::HannWindowLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::HannWindowLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHannWindowLayer")
@@ -10181,7 +10181,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::HardSigmoidLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HardSigmoidLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::HardSigmoidLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::HardSigmoidLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHardSigmoidLayer")
@@ -10245,7 +10245,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::HardSwishLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HardSwishLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::HardSwishLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::HardSwishLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHardSwishLayer")
@@ -10297,7 +10297,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::HardmaxLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HardmaxLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::HardmaxLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::HardmaxLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHardmaxLayer")
@@ -10348,7 +10348,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::IfLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_IfLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::IfLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::IfLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfIfLayer")
@@ -10400,7 +10400,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InnerProductLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::InnerProductLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::InnerProductLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfInnerProductLayer")
@@ -10463,7 +10463,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InnerProductLayerInt8G_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::InnerProductLayerInt8> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::InnerProductLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfInnerProductLayerInt8")
@@ -10522,7 +10522,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::InstanceNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InstanceNormLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::InstanceNormLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::InstanceNormLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfInstanceNormLayer")
@@ -10575,7 +10575,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::InterpLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InterpLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::InterpLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::InterpLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfInterpLayer")
@@ -10627,7 +10627,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::IsInfLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_IsInfLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::IsInfLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::IsInfLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfIsInfLayer")
@@ -10679,7 +10679,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::IsNaNLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_IsNaNLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::IsNaNLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::IsNaNLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfIsNaNLayer")
@@ -10731,7 +10731,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LRNLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LRNLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::LRNLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::LRNLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLRNLayer")
@@ -10789,7 +10789,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LSTM2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LSTM2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::LSTM2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::LSTM2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLSTM2Layer")
@@ -10840,7 +10840,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LSTMLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LSTMLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::LSTMLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::LSTMLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLSTMLayer")
@@ -10882,7 +10882,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LayerG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLayer")
@@ -10934,7 +10934,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LayerNorm2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LayerNorm2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::LayerNorm2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::LayerNorm2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLayerNorm2Layer")
@@ -10988,7 +10988,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LayerNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LayerNormLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::LayerNormLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::LayerNormLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLayerNormLayer")
@@ -11053,7 +11053,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LogLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LogLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::LogLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::LogLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLogLayer")
@@ -11104,7 +11104,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LoopLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LoopLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::LoopLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::LoopLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLoopLayer")
@@ -11156,7 +11156,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MVNLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MVNLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::MVNLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::MVNLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMVNLayer")
@@ -11221,7 +11221,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MatMulInt8Layer>, core::Ptr<crate::dnn::MatMulLayer>, cv_PtrLcv_dnn_MatMulInt8LayerG_to_PtrOfMatMulLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::MatMulInt8Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::MatMulInt8Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMatMulInt8Layer")
@@ -11283,7 +11283,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MatMulLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MatMulLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::MatMulLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::MatMulLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMatMulLayer")
@@ -11339,7 +11339,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MaxPoolLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MaxPoolLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::MaxPoolLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::MaxPoolLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMaxPoolLayer")
@@ -11398,7 +11398,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MaxUnpoolLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MaxUnpoolLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::MaxUnpoolLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::MaxUnpoolLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMaxUnpoolLayer")
@@ -11463,7 +11463,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MishLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MishLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::MishLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::MishLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMishLayer")
@@ -11515,7 +11515,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NaryEltwiseLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NaryEltwiseLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::NaryEltwiseLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::NaryEltwiseLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNaryEltwiseLayer")
@@ -11568,7 +11568,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NegativeLogLikelihoodLossLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNegativeLogLikelihoodLossLayer")
@@ -11622,7 +11622,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NonMaxSuppressionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NonMaxSuppressionLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::NonMaxSuppressionLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::NonMaxSuppressionLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNonMaxSuppressionLayer")
@@ -11674,7 +11674,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NonZeroLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NonZeroLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::NonZeroLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::NonZeroLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNonZeroLayer")
@@ -11726,7 +11726,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NormalizeBBoxLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NormalizeBBoxLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::NormalizeBBoxLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::NormalizeBBoxLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNormalizeBBoxLayer")
@@ -11781,7 +11781,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NotLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NotLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::NotLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::NotLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNotLayer")
@@ -11833,7 +11833,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::OneHotLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_OneHotLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::OneHotLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::OneHotLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfOneHotLayer")
@@ -11886,7 +11886,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Pad2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Pad2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Pad2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Pad2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPad2Layer")
@@ -11938,7 +11938,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PaddingLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PaddingLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::PaddingLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::PaddingLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPaddingLayer")
@@ -11990,7 +11990,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PermuteLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PermuteLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::PermuteLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::PermuteLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPermuteLayer")
@@ -12042,7 +12042,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Pool2Int8Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Pool2Int8LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Pool2Int8Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Pool2Int8Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPool2Int8Layer")
@@ -12106,7 +12106,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PoolingLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::PoolingLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::PoolingLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPoolingLayer")
@@ -12182,7 +12182,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayerInt8>, core::Ptr<crate::dnn::PoolingLayer>, cv_PtrLcv_dnn_PoolingLayerInt8G_to_PtrOfPoolingLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::PoolingLayerInt8> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::PoolingLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPoolingLayerInt8")
@@ -12262,7 +12262,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PowerLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PowerLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::PowerLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::PowerLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPowerLayer")
@@ -12317,7 +12317,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PriorBoxLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PriorBoxLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::PriorBoxLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::PriorBoxLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPriorBoxLayer")
@@ -12369,7 +12369,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ProposalLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ProposalLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ProposalLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ProposalLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfProposalLayer")
@@ -12421,7 +12421,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::QuantizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_QuantizeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::QuantizeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::QuantizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfQuantizeLayer")
@@ -12475,7 +12475,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::QuantizeLinearLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_QuantizeLinearLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::QuantizeLinearLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::QuantizeLinearLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfQuantizeLinearLayer")
@@ -12531,7 +12531,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RMSNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RMSNormLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::RMSNormLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::RMSNormLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRMSNormLayer")
@@ -12582,7 +12582,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RNNLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RNNLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::RNNLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::RNNLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRNNLayer")
@@ -12634,7 +12634,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RandomNormalLikeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RandomNormalLikeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::RandomNormalLikeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::RandomNormalLikeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRandomNormalLikeLayer")
@@ -12690,7 +12690,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RangeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RangeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::RangeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::RangeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRangeLayer")
@@ -12752,7 +12752,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReLU6Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReLU6LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ReLU6Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ReLU6Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfReLU6Layer")
@@ -12816,7 +12816,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReLULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReLULayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ReLULayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ReLULayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfReLULayer")
@@ -12879,7 +12879,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReciprocalLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReciprocalLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ReciprocalLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ReciprocalLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfReciprocalLayer")
@@ -12931,7 +12931,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Reduce2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Reduce2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Reduce2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Reduce2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfReduce2Layer")
@@ -12987,7 +12987,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReduceLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReduceLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ReduceLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ReduceLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfReduceLayer")
@@ -13039,7 +13039,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RegionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RegionLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::RegionLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::RegionLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRegionLayer")
@@ -13092,7 +13092,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReorgLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReorgLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ReorgLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ReorgLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfReorgLayer")
@@ -13144,7 +13144,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RequantizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RequantizeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::RequantizeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::RequantizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRequantizeLayer")
@@ -13198,7 +13198,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Reshape2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Reshape2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Reshape2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Reshape2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfReshape2Layer")
@@ -13251,7 +13251,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReshapeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReshapeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ReshapeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ReshapeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfReshapeLayer")
@@ -13305,7 +13305,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Resize2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Resize2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Resize2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Resize2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfResize2Layer")
@@ -13357,7 +13357,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ResizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ResizeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ResizeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ResizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfResizeLayer")
@@ -13409,7 +13409,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RoiAlignLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RoiAlignLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::RoiAlignLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::RoiAlignLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRoiAlignLayer")
@@ -13461,7 +13461,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RotaryEmbeddingLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RotaryEmbeddingLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::RotaryEmbeddingLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::RotaryEmbeddingLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRotaryEmbeddingLayer")
@@ -13523,7 +13523,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RoundLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RoundLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::RoundLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::RoundLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRoundLayer")
@@ -13575,7 +13575,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SDPALayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SDPALayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SDPALayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SDPALayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSDPALayer")
@@ -13627,7 +13627,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScaleLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ScaleLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ScaleLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfScaleLayer")
@@ -13692,7 +13692,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayerInt8>, core::Ptr<crate::dnn::ScaleLayer>, cv_PtrLcv_dnn_ScaleLayerInt8G_to_PtrOfScaleLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ScaleLayerInt8> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ScaleLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfScaleLayerInt8")
@@ -13749,7 +13749,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ScatterLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScatterLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ScatterLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ScatterLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfScatterLayer")
@@ -13801,7 +13801,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ScatterNDLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScatterNDLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ScatterNDLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ScatterNDLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfScatterNDLayer")
@@ -13863,7 +13863,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SeluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SeluLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SeluLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SeluLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSeluLayer")
@@ -13917,7 +13917,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ShapeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShapeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ShapeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ShapeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfShapeLayer")
@@ -13971,7 +13971,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShiftLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ShiftLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ShiftLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfShiftLayer")
@@ -14023,7 +14023,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShiftLayerInt8G_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ShiftLayerInt8> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ShiftLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfShiftLayerInt8")
@@ -14085,7 +14085,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ShrinkLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShrinkLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ShrinkLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ShrinkLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfShrinkLayer")
@@ -14139,7 +14139,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ShuffleChannelLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShuffleChannelLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ShuffleChannelLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ShuffleChannelLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfShuffleChannelLayer")
@@ -14202,7 +14202,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SigmoidLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SigmoidLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SigmoidLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SigmoidLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSigmoidLayer")
@@ -14264,7 +14264,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SignLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SignLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SignLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SignLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSignLayer")
@@ -14326,7 +14326,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SinLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SinLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SinLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SinLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSinLayer")
@@ -14388,7 +14388,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SinhLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SinhLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SinhLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SinhLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSinhLayer")
@@ -14440,7 +14440,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SizeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SizeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSizeLayer")
@@ -14492,7 +14492,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Slice2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Slice2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Slice2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Slice2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSlice2Layer")
@@ -14547,7 +14547,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SliceLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SliceLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SliceLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SliceLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSliceLayer")
@@ -14603,7 +14603,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftmaxCrossEntropyLossLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSoftmaxCrossEntropyLossLayer")
@@ -14659,7 +14659,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftmaxLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SoftmaxLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SoftmaxLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSoftmaxLayer")
@@ -14723,7 +14723,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayerInt8>, core::Ptr<crate::dnn::SoftmaxLayer>, cv_PtrLcv_dnn_SoftmaxLayerInt8G_to_PtrOfSoftmaxLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SoftmaxLayerInt8> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SoftmaxLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSoftmaxLayerInt8")
@@ -14789,7 +14789,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SoftplusLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftplusLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SoftplusLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SoftplusLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSoftplusLayer")
@@ -14851,7 +14851,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SoftsignLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SoftsignLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SoftsignLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSoftsignLayer")
@@ -14903,7 +14903,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SpaceToDepthLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SpaceToDepthLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SpaceToDepthLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SpaceToDepthLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSpaceToDepthLayer")
@@ -14955,7 +14955,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Split2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Split2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Split2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Split2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSplit2Layer")
@@ -15009,7 +15009,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SplitLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SplitLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SplitLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SplitLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSplitLayer")
@@ -15072,7 +15072,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SqrtLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SqrtLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SqrtLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SqrtLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSqrtLayer")
@@ -15124,7 +15124,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SqueezeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SqueezeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SqueezeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SqueezeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSqueezeLayer")
@@ -15187,7 +15187,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SwishLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SwishLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::SwishLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::SwishLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSwishLayer")
@@ -15249,7 +15249,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TanHLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TanHLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::TanHLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::TanHLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTanHLayer")
@@ -15311,7 +15311,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TanLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TanLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::TanLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::TanLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTanLayer")
@@ -15373,7 +15373,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ThresholdedReluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ThresholdedReluLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::ThresholdedReluLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::ThresholdedReluLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfThresholdedReluLayer")
@@ -15426,7 +15426,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Tile2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Tile2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::Tile2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::Tile2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTile2Layer")
@@ -15478,7 +15478,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TileLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TileLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::TileLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::TileLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTileLayer")
@@ -15530,7 +15530,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TopK2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TopK2LayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::TopK2Layer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::TopK2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTopK2Layer")
@@ -15582,7 +15582,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TopKLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TopKLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::TopKLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::TopKLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTopKLayer")
@@ -15634,7 +15634,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TransformLayoutLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TransformLayoutLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::TransformLayoutLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::TransformLayoutLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTransformLayoutLayer")
@@ -15688,7 +15688,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TransposeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TransposeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::TransposeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::TransposeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTransposeLayer")
@@ -15741,7 +15741,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TriluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TriluLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::TriluLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::TriluLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTriluLayer")
@@ -15793,7 +15793,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::UniqueLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_UniqueLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::UniqueLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::UniqueLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfUniqueLayer")
@@ -15845,7 +15845,7 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::UnsqueezeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_UnsqueezeLayerG_to_PtrOfLayer }
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn::UnsqueezeLayer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn::UnsqueezeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfUnsqueezeLayer")
@@ -16041,7 +16041,7 @@ mod dnn_superres_types {
 		#[inline] fn as_raw_mut_DnnSuperResImpl(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::dnn_superres::DnnSuperResImpl> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dnn_superres::DnnSuperResImpl> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDnnSuperResImpl")
@@ -16072,7 +16072,7 @@ mod dpm_types {
 		#[inline] fn as_raw_mut_DPMDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::dpm::DPMDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::dpm::DPMDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDPMDetector")
@@ -16143,7 +16143,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::BIF>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_BIFG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::BIF> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::BIF> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBIF")
@@ -16188,7 +16188,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::BasicFaceRecognizer>, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_BasicFaceRecognizerG_to_PtrOfFaceRecognizer }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::BasicFaceRecognizer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::BasicFaceRecognizer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBasicFaceRecognizer")
@@ -16243,7 +16243,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::EigenFaceRecognizer>, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_EigenFaceRecognizerG_to_PtrOfFaceRecognizer }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::EigenFaceRecognizer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::EigenFaceRecognizer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEigenFaceRecognizer")
@@ -16278,7 +16278,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::FaceRecognizer>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FaceRecognizerG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::FaceRecognizer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::FaceRecognizer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFaceRecognizer")
@@ -16313,7 +16313,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::Facemark>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FacemarkG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::Facemark> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::Facemark> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFacemark")
@@ -16368,7 +16368,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::FacemarkAAM>, core::Ptr<crate::face::FacemarkTrain>, cv_PtrLcv_face_FacemarkAAMG_to_PtrOfFacemarkTrain }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::FacemarkAAM> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::FacemarkAAM> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFacemarkAAM")
@@ -16413,7 +16413,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::FacemarkKazemi>, core::Ptr<crate::face::Facemark>, cv_PtrLcv_face_FacemarkKazemiG_to_PtrOfFacemark }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::FacemarkKazemi> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::FacemarkKazemi> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFacemarkKazemi")
@@ -16468,7 +16468,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::FacemarkLBF>, core::Ptr<crate::face::FacemarkTrain>, cv_PtrLcv_face_FacemarkLBFG_to_PtrOfFacemarkTrain }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::FacemarkLBF> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::FacemarkLBF> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFacemarkLBF")
@@ -16513,7 +16513,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::FacemarkTrain>, core::Ptr<crate::face::Facemark>, cv_PtrLcv_face_FacemarkTrainG_to_PtrOfFacemark }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::FacemarkTrain> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::FacemarkTrain> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFacemarkTrain")
@@ -16568,7 +16568,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::FisherFaceRecognizer>, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_FisherFaceRecognizerG_to_PtrOfFaceRecognizer }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::FisherFaceRecognizer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::FisherFaceRecognizer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFisherFaceRecognizer")
@@ -16613,7 +16613,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::LBPHFaceRecognizer>, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_LBPHFaceRecognizerG_to_PtrOfFaceRecognizer }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::LBPHFaceRecognizer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::LBPHFaceRecognizer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLBPHFaceRecognizer")
@@ -16648,7 +16648,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::MACE>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_MACEG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::MACE> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::MACE> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMACE")
@@ -16673,7 +16673,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::face::PredictCollector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::PredictCollector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPredictCollector")
@@ -16709,7 +16709,7 @@ mod face_types {
 
 	ptr_cast_base! { core::Ptr<crate::face::StandardCollector>, core::Ptr<crate::face::PredictCollector>, cv_PtrLcv_face_StandardCollectorG_to_PtrOfPredictCollector }
 
-	impl std::fmt::Debug for core::Ptr<crate::face::StandardCollector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::face::StandardCollector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStandardCollector")
@@ -16821,7 +16821,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::ALIKED>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_ALIKEDG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::ALIKED> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::ALIKED> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfALIKED")
@@ -16846,7 +16846,7 @@ mod features_types {
 		#[inline] fn as_raw_mut_ANNIndex(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::features::ANNIndex> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::ANNIndex> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfANNIndex")
@@ -16891,7 +16891,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::AffineFeature>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_AffineFeatureG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::AffineFeature> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::AffineFeature> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAffineFeature")
@@ -16937,7 +16937,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::BFMatcher>, core::Ptr<crate::features::DescriptorMatcher>, cv_PtrLcv_BFMatcherG_to_PtrOfDescriptorMatcher }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::BFMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::BFMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBFMatcher")
@@ -16982,7 +16982,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::DISK>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_DISKG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::DISK> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::DISK> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDISK")
@@ -17017,7 +17017,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::DescriptorMatcher>, core::Ptr<core::Algorithm>, cv_PtrLcv_DescriptorMatcherG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::DescriptorMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::DescriptorMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDescriptorMatcher")
@@ -17062,7 +17062,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::FastFeatureDetector>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_FastFeatureDetectorG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::FastFeatureDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::FastFeatureDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFastFeatureDetector")
@@ -17098,7 +17098,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::Feature2D>, core::Ptr<core::Algorithm>, cv_PtrLcv_Feature2DG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::Feature2D> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::Feature2D> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFeature2D")
@@ -17144,7 +17144,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::FlannBasedMatcher>, core::Ptr<crate::features::DescriptorMatcher>, cv_PtrLcv_FlannBasedMatcherG_to_PtrOfDescriptorMatcher }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::FlannBasedMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::FlannBasedMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFlannBasedMatcher")
@@ -17189,7 +17189,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::GFTTDetector>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_GFTTDetectorG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::GFTTDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::GFTTDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGFTTDetector")
@@ -17234,7 +17234,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::LightGlueMatcher>, core::Ptr<crate::features::DescriptorMatcher>, cv_PtrLcv_LightGlueMatcherG_to_PtrOfDescriptorMatcher }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::LightGlueMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::LightGlueMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLightGlueMatcher")
@@ -17279,7 +17279,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::MSER>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_MSERG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::MSER> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::MSER> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMSER")
@@ -17324,7 +17324,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::ORB>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_ORBG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::ORB> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::ORB> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfORB")
@@ -17369,7 +17369,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::SIFT>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_SIFTG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::SIFT> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::SIFT> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSIFT")
@@ -17414,7 +17414,7 @@ mod features_types {
 
 	ptr_cast_base! { core::Ptr<crate::features::SimpleBlobDetector>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_SimpleBlobDetectorG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::features::SimpleBlobDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::features::SimpleBlobDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSimpleBlobDetector")
@@ -17456,7 +17456,7 @@ mod flann_types {
 
 	ptr_cast_base! { core::Ptr<crate::flann::AutotunedIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_AutotunedIndexParamsG_to_PtrOfIndexParams }
 
-	impl std::fmt::Debug for core::Ptr<crate::flann::AutotunedIndexParams> {
+	impl ::core::fmt::Debug for core::Ptr<crate::flann::AutotunedIndexParams> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAutotunedIndexParams")
@@ -17492,7 +17492,7 @@ mod flann_types {
 
 	ptr_cast_base! { core::Ptr<crate::flann::CompositeIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_CompositeIndexParamsG_to_PtrOfIndexParams }
 
-	impl std::fmt::Debug for core::Ptr<crate::flann::CompositeIndexParams> {
+	impl ::core::fmt::Debug for core::Ptr<crate::flann::CompositeIndexParams> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCompositeIndexParams")
@@ -17528,7 +17528,7 @@ mod flann_types {
 
 	ptr_cast_base! { core::Ptr<crate::flann::HierarchicalClusteringIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_HierarchicalClusteringIndexParamsG_to_PtrOfIndexParams }
 
-	impl std::fmt::Debug for core::Ptr<crate::flann::HierarchicalClusteringIndexParams> {
+	impl ::core::fmt::Debug for core::Ptr<crate::flann::HierarchicalClusteringIndexParams> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHierarchicalClusteringIndexParams")
@@ -17554,7 +17554,7 @@ mod flann_types {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::flann::IndexParams> {
+	impl ::core::fmt::Debug for core::Ptr<crate::flann::IndexParams> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfIndexParams")
@@ -17590,7 +17590,7 @@ mod flann_types {
 
 	ptr_cast_base! { core::Ptr<crate::flann::KDTreeIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_KDTreeIndexParamsG_to_PtrOfIndexParams }
 
-	impl std::fmt::Debug for core::Ptr<crate::flann::KDTreeIndexParams> {
+	impl ::core::fmt::Debug for core::Ptr<crate::flann::KDTreeIndexParams> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfKDTreeIndexParams")
@@ -17626,7 +17626,7 @@ mod flann_types {
 
 	ptr_cast_base! { core::Ptr<crate::flann::KMeansIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_KMeansIndexParamsG_to_PtrOfIndexParams }
 
-	impl std::fmt::Debug for core::Ptr<crate::flann::KMeansIndexParams> {
+	impl ::core::fmt::Debug for core::Ptr<crate::flann::KMeansIndexParams> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfKMeansIndexParams")
@@ -17662,7 +17662,7 @@ mod flann_types {
 
 	ptr_cast_base! { core::Ptr<crate::flann::LinearIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_LinearIndexParamsG_to_PtrOfIndexParams }
 
-	impl std::fmt::Debug for core::Ptr<crate::flann::LinearIndexParams> {
+	impl ::core::fmt::Debug for core::Ptr<crate::flann::LinearIndexParams> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLinearIndexParams")
@@ -17698,7 +17698,7 @@ mod flann_types {
 
 	ptr_cast_base! { core::Ptr<crate::flann::LshIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_LshIndexParamsG_to_PtrOfIndexParams }
 
-	impl std::fmt::Debug for core::Ptr<crate::flann::LshIndexParams> {
+	impl ::core::fmt::Debug for core::Ptr<crate::flann::LshIndexParams> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLshIndexParams")
@@ -17734,7 +17734,7 @@ mod flann_types {
 
 	ptr_cast_base! { core::Ptr<crate::flann::SavedIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_SavedIndexParamsG_to_PtrOfIndexParams }
 
-	impl std::fmt::Debug for core::Ptr<crate::flann::SavedIndexParams> {
+	impl ::core::fmt::Debug for core::Ptr<crate::flann::SavedIndexParams> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSavedIndexParams")
@@ -17770,7 +17770,7 @@ mod flann_types {
 
 	ptr_cast_base! { core::Ptr<crate::flann::SearchParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_SearchParamsG_to_PtrOfIndexParams }
 
-	impl std::fmt::Debug for core::Ptr<crate::flann::SearchParams> {
+	impl ::core::fmt::Debug for core::Ptr<crate::flann::SearchParams> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSearchParams")
@@ -17900,7 +17900,7 @@ mod freetype_types {
 
 	ptr_cast_base! { core::Ptr<crate::freetype::FreeType2>, core::Ptr<core::Algorithm>, cv_PtrLcv_freetype_FreeType2G_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::freetype::FreeType2> {
+	impl ::core::fmt::Debug for core::Ptr<crate::freetype::FreeType2> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFreeType2")
@@ -18247,7 +18247,7 @@ mod geometry_types {
 		#[inline] fn as_raw_mut_RegionGrowing3D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::geometry::RegionGrowing3D> {
+	impl ::core::fmt::Debug for core::Ptr<crate::geometry::RegionGrowing3D> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRegionGrowing3D")
@@ -18272,7 +18272,7 @@ mod geometry_types {
 		#[inline] fn as_raw_mut_SACSegmentation(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::geometry::SACSegmentation> {
+	impl ::core::fmt::Debug for core::Ptr<crate::geometry::SACSegmentation> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSACSegmentation")
@@ -18303,7 +18303,7 @@ mod hdf_types {
 		#[inline] fn as_raw_mut_HDF5(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::hdf::HDF5> {
+	impl ::core::fmt::Debug for core::Ptr<crate::hdf::HDF5> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHDF5")
@@ -18344,7 +18344,7 @@ mod hfs_types {
 
 	ptr_cast_base! { core::Ptr<crate::hfs::HfsSegment>, core::Ptr<core::Algorithm>, cv_PtrLcv_hfs_HfsSegmentG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::hfs::HfsSegment> {
+	impl ::core::fmt::Debug for core::Ptr<crate::hfs::HfsSegment> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHfsSegment")
@@ -18396,7 +18396,7 @@ mod img_hash_types {
 
 	ptr_cast_base! { core::Ptr<crate::img_hash::AverageHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_AverageHashG_to_PtrOfImgHashBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::img_hash::AverageHash> {
+	impl ::core::fmt::Debug for core::Ptr<crate::img_hash::AverageHash> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAverageHash")
@@ -18442,7 +18442,7 @@ mod img_hash_types {
 
 	ptr_cast_base! { core::Ptr<crate::img_hash::BlockMeanHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_BlockMeanHashG_to_PtrOfImgHashBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::img_hash::BlockMeanHash> {
+	impl ::core::fmt::Debug for core::Ptr<crate::img_hash::BlockMeanHash> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBlockMeanHash")
@@ -18488,7 +18488,7 @@ mod img_hash_types {
 
 	ptr_cast_base! { core::Ptr<crate::img_hash::ColorMomentHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_ColorMomentHashG_to_PtrOfImgHashBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::img_hash::ColorMomentHash> {
+	impl ::core::fmt::Debug for core::Ptr<crate::img_hash::ColorMomentHash> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfColorMomentHash")
@@ -18524,7 +18524,7 @@ mod img_hash_types {
 
 	ptr_cast_base! { core::Ptr<crate::img_hash::ImgHashBase>, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_ImgHashBaseG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::img_hash::ImgHashBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::img_hash::ImgHashBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfImgHashBase")
@@ -18570,7 +18570,7 @@ mod img_hash_types {
 
 	ptr_cast_base! { core::Ptr<crate::img_hash::MarrHildrethHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_MarrHildrethHashG_to_PtrOfImgHashBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::img_hash::MarrHildrethHash> {
+	impl ::core::fmt::Debug for core::Ptr<crate::img_hash::MarrHildrethHash> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMarrHildrethHash")
@@ -18616,7 +18616,7 @@ mod img_hash_types {
 
 	ptr_cast_base! { core::Ptr<crate::img_hash::PHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_PHashG_to_PtrOfImgHashBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::img_hash::PHash> {
+	impl ::core::fmt::Debug for core::Ptr<crate::img_hash::PHash> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPHash")
@@ -18662,7 +18662,7 @@ mod img_hash_types {
 
 	ptr_cast_base! { core::Ptr<crate::img_hash::RadialVarianceHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_RadialVarianceHashG_to_PtrOfImgHashBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::img_hash::RadialVarianceHash> {
+	impl ::core::fmt::Debug for core::Ptr<crate::img_hash::RadialVarianceHash> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRadialVarianceHash")
@@ -18703,7 +18703,7 @@ mod imgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::imgproc::CLAHE>, core::Ptr<core::Algorithm>, cv_PtrLcv_CLAHEG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::imgproc::CLAHE> {
+	impl ::core::fmt::Debug for core::Ptr<crate::imgproc::CLAHE> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCLAHE")
@@ -18738,7 +18738,7 @@ mod imgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::imgproc::GeneralizedHough>, core::Ptr<core::Algorithm>, cv_PtrLcv_GeneralizedHoughG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::imgproc::GeneralizedHough> {
+	impl ::core::fmt::Debug for core::Ptr<crate::imgproc::GeneralizedHough> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGeneralizedHough")
@@ -18783,7 +18783,7 @@ mod imgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::imgproc::GeneralizedHoughBallard>, core::Ptr<crate::imgproc::GeneralizedHough>, cv_PtrLcv_GeneralizedHoughBallardG_to_PtrOfGeneralizedHough }
 
-	impl std::fmt::Debug for core::Ptr<crate::imgproc::GeneralizedHoughBallard> {
+	impl ::core::fmt::Debug for core::Ptr<crate::imgproc::GeneralizedHoughBallard> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGeneralizedHoughBallard")
@@ -18828,7 +18828,7 @@ mod imgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::imgproc::GeneralizedHoughGuil>, core::Ptr<crate::imgproc::GeneralizedHough>, cv_PtrLcv_GeneralizedHoughGuilG_to_PtrOfGeneralizedHough }
 
-	impl std::fmt::Debug for core::Ptr<crate::imgproc::GeneralizedHoughGuil> {
+	impl ::core::fmt::Debug for core::Ptr<crate::imgproc::GeneralizedHoughGuil> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGeneralizedHoughGuil")
@@ -18863,7 +18863,7 @@ mod imgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::imgproc::LineSegmentDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_LineSegmentDetectorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::imgproc::LineSegmentDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::imgproc::LineSegmentDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLineSegmentDetector")
@@ -18905,7 +18905,7 @@ mod line_descriptor_types {
 
 	ptr_cast_base! { core::Ptr<crate::line_descriptor::BinaryDescriptor>, core::Ptr<core::Algorithm>, cv_PtrLcv_line_descriptor_BinaryDescriptorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::line_descriptor::BinaryDescriptor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::line_descriptor::BinaryDescriptor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBinaryDescriptor")
@@ -18941,7 +18941,7 @@ mod line_descriptor_types {
 
 	ptr_cast_base! { core::Ptr<crate::line_descriptor::BinaryDescriptorMatcher>, core::Ptr<core::Algorithm>, cv_PtrLcv_line_descriptor_BinaryDescriptorMatcherG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::line_descriptor::BinaryDescriptorMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::line_descriptor::BinaryDescriptorMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBinaryDescriptorMatcher")
@@ -18977,7 +18977,7 @@ mod line_descriptor_types {
 
 	ptr_cast_base! { core::Ptr<crate::line_descriptor::LSDDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_line_descriptor_LSDDetectorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::line_descriptor::LSDDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::line_descriptor::LSDDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLSDDetector")
@@ -19067,7 +19067,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::ANN_MLP>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_ANN_MLPG_to_PtrOfStatModel }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::ANN_MLP> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::ANN_MLP> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfANN_MLP")
@@ -19122,7 +19122,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::Boost>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_BoostG_to_PtrOfStatModel }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::Boost> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::Boost> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBoost")
@@ -19167,7 +19167,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::DTrees>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_DTreesG_to_PtrOfStatModel }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::DTrees> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::DTrees> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDTrees")
@@ -19212,7 +19212,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::EM>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_EMG_to_PtrOfStatModel }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::EM> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::EM> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEM")
@@ -19257,7 +19257,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::KNearest>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_KNearestG_to_PtrOfStatModel }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::KNearest> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::KNearest> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfKNearest")
@@ -19302,7 +19302,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::LogisticRegression>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_LogisticRegressionG_to_PtrOfStatModel }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::LogisticRegression> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::LogisticRegression> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLogisticRegression")
@@ -19347,7 +19347,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::NormalBayesClassifier>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_NormalBayesClassifierG_to_PtrOfStatModel }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::NormalBayesClassifier> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::NormalBayesClassifier> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNormalBayesClassifier")
@@ -19373,7 +19373,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_ParamGrid(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::ParamGrid> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::ParamGrid> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfParamGrid")
@@ -19431,7 +19431,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::RTrees>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_RTreesG_to_PtrOfStatModel }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::RTrees> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::RTrees> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRTrees")
@@ -19476,7 +19476,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::SVM>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_SVMG_to_PtrOfStatModel }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::SVM> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::SVM> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSVM")
@@ -19521,7 +19521,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::SVMSGD>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_SVMSGDG_to_PtrOfStatModel }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::SVMSGD> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::SVMSGD> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSVMSGD")
@@ -19556,7 +19556,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::SVM_Kernel>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_SVM_KernelG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::SVM_Kernel> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::SVM_Kernel> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSVM_Kernel")
@@ -19591,7 +19591,7 @@ mod ml_types {
 
 	ptr_cast_base! { core::Ptr<crate::ml::StatModel>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_StatModelG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::StatModel> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::StatModel> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStatModel")
@@ -19616,7 +19616,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_TrainData(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::ml::TrainData> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ml::TrainData> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTrainData")
@@ -19718,7 +19718,7 @@ mod objdetect_types {
 
 	ptr_cast_base! { core::Ptr<crate::objdetect::ArucoDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_aruco_ArucoDetectorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::objdetect::ArucoDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::objdetect::ArucoDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfArucoDetector")
@@ -19753,7 +19753,7 @@ mod objdetect_types {
 
 	ptr_cast_base! { core::Ptr<crate::objdetect::CChecker>, core::Ptr<core::Algorithm>, cv_PtrLcv_mcc_CCheckerG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::objdetect::CChecker> {
+	impl ::core::fmt::Debug for core::Ptr<crate::objdetect::CChecker> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCChecker")
@@ -19788,7 +19788,7 @@ mod objdetect_types {
 
 	ptr_cast_base! { core::Ptr<crate::objdetect::CCheckerDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_mcc_CCheckerDetectorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::objdetect::CCheckerDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::objdetect::CCheckerDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCCheckerDetector")
@@ -19824,7 +19824,7 @@ mod objdetect_types {
 
 	ptr_cast_base! { core::Ptr<crate::objdetect::CharucoDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_aruco_CharucoDetectorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::objdetect::CharucoDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::objdetect::CharucoDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCharucoDetector")
@@ -19849,7 +19849,7 @@ mod objdetect_types {
 		#[inline] fn as_raw_mut_FaceDetectorYN(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::objdetect::FaceDetectorYN> {
+	impl ::core::fmt::Debug for core::Ptr<crate::objdetect::FaceDetectorYN> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFaceDetectorYN")
@@ -19874,7 +19874,7 @@ mod objdetect_types {
 		#[inline] fn as_raw_mut_FaceRecognizerSF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::objdetect::FaceRecognizerSF> {
+	impl ::core::fmt::Debug for core::Ptr<crate::objdetect::FaceRecognizerSF> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFaceRecognizerSF")
@@ -19899,7 +19899,7 @@ mod objdetect_types {
 		#[inline] fn as_raw_mut_QRCodeEncoder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::objdetect::QRCodeEncoder> {
+	impl ::core::fmt::Debug for core::Ptr<crate::objdetect::QRCodeEncoder> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfQRCodeEncoder")
@@ -19998,7 +19998,7 @@ mod optflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::optflow::DenseRLOFOpticalFlow>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_optflow_DenseRLOFOpticalFlowG_to_PtrOfDenseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::optflow::DenseRLOFOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::optflow::DenseRLOFOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDenseRLOFOpticalFlow")
@@ -20043,7 +20043,7 @@ mod optflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::optflow::DualTVL1OpticalFlow>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_optflow_DualTVL1OpticalFlowG_to_PtrOfDenseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::optflow::DualTVL1OpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::optflow::DualTVL1OpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDualTVL1OpticalFlow")
@@ -20069,7 +20069,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_GPCTrainingSamples(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::optflow::GPCTrainingSamples> {
+	impl ::core::fmt::Debug for core::Ptr<crate::optflow::GPCTrainingSamples> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGPCTrainingSamples")
@@ -20105,7 +20105,7 @@ mod optflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::optflow::GPCTree>, core::Ptr<core::Algorithm>, cv_PtrLcv_optflow_GPCTreeG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::optflow::GPCTree> {
+	impl ::core::fmt::Debug for core::Ptr<crate::optflow::GPCTree> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGPCTree")
@@ -20151,7 +20151,7 @@ mod optflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::optflow::OpticalFlowPCAFlow>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_optflow_OpticalFlowPCAFlowG_to_PtrOfDenseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::optflow::OpticalFlowPCAFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::optflow::OpticalFlowPCAFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfOpticalFlowPCAFlow")
@@ -20177,7 +20177,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_PCAPrior(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::optflow::PCAPrior> {
+	impl ::core::fmt::Debug for core::Ptr<crate::optflow::PCAPrior> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPCAPrior")
@@ -20203,7 +20203,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_RLOFOpticalFlowParameter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::optflow::RLOFOpticalFlowParameter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::optflow::RLOFOpticalFlowParameter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRLOFOpticalFlowParameter")
@@ -20262,7 +20262,7 @@ mod optflow_types {
 
 	ptr_cast_base! { core::Ptr<crate::optflow::SparseRLOFOpticalFlow>, core::Ptr<crate::video::SparseOpticalFlow>, cv_PtrLcv_optflow_SparseRLOFOpticalFlowG_to_PtrOfSparseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::optflow::SparseRLOFOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::optflow::SparseRLOFOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSparseRLOFOpticalFlow")
@@ -20353,7 +20353,7 @@ mod ovis_types {
 		#[inline] fn as_raw_mut_WindowScene(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::ovis::WindowScene> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ovis::WindowScene> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfWindowScene")
@@ -20404,7 +20404,7 @@ mod phase_unwrapping_types {
 
 	ptr_cast_base! { core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>, core::Ptr<crate::phase_unwrapping::PhaseUnwrapping>, cv_PtrLcv_phase_unwrapping_HistogramPhaseUnwrappingG_to_PtrOfPhaseUnwrapping }
 
-	impl std::fmt::Debug for core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping> {
+	impl ::core::fmt::Debug for core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHistogramPhaseUnwrapping")
@@ -20439,7 +20439,7 @@ mod phase_unwrapping_types {
 
 	ptr_cast_base! { core::Ptr<crate::phase_unwrapping::PhaseUnwrapping>, core::Ptr<core::Algorithm>, cv_PtrLcv_phase_unwrapping_PhaseUnwrappingG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::phase_unwrapping::PhaseUnwrapping> {
+	impl ::core::fmt::Debug for core::Ptr<crate::phase_unwrapping::PhaseUnwrapping> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPhaseUnwrapping")
@@ -20480,7 +20480,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::AlignExposures>, core::Ptr<core::Algorithm>, cv_PtrLcv_AlignExposuresG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::AlignExposures> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::AlignExposures> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAlignExposures")
@@ -20525,7 +20525,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::AlignMTB>, core::Ptr<crate::photo::AlignExposures>, cv_PtrLcv_AlignMTBG_to_PtrOfAlignExposures }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::AlignMTB> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::AlignMTB> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAlignMTB")
@@ -20560,7 +20560,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::CalibrateCRF>, core::Ptr<core::Algorithm>, cv_PtrLcv_CalibrateCRFG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::CalibrateCRF> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::CalibrateCRF> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCalibrateCRF")
@@ -20605,7 +20605,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::CalibrateDebevec>, core::Ptr<crate::photo::CalibrateCRF>, cv_PtrLcv_CalibrateDebevecG_to_PtrOfCalibrateCRF }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::CalibrateDebevec> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::CalibrateDebevec> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCalibrateDebevec")
@@ -20650,7 +20650,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::CalibrateRobertson>, core::Ptr<crate::photo::CalibrateCRF>, cv_PtrLcv_CalibrateRobertsonG_to_PtrOfCalibrateCRF }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::CalibrateRobertson> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::CalibrateRobertson> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCalibrateRobertson")
@@ -20695,7 +20695,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::MergeDebevec>, core::Ptr<crate::photo::MergeExposures>, cv_PtrLcv_MergeDebevecG_to_PtrOfMergeExposures }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::MergeDebevec> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::MergeDebevec> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMergeDebevec")
@@ -20730,7 +20730,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::MergeExposures>, core::Ptr<core::Algorithm>, cv_PtrLcv_MergeExposuresG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::MergeExposures> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::MergeExposures> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMergeExposures")
@@ -20775,7 +20775,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::MergeMertens>, core::Ptr<crate::photo::MergeExposures>, cv_PtrLcv_MergeMertensG_to_PtrOfMergeExposures }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::MergeMertens> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::MergeMertens> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMergeMertens")
@@ -20820,7 +20820,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::MergeRobertson>, core::Ptr<crate::photo::MergeExposures>, cv_PtrLcv_MergeRobertsonG_to_PtrOfMergeExposures }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::MergeRobertson> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::MergeRobertson> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMergeRobertson")
@@ -20855,7 +20855,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::Tonemap>, core::Ptr<core::Algorithm>, cv_PtrLcv_TonemapG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::Tonemap> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::Tonemap> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTonemap")
@@ -20900,7 +20900,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::TonemapDrago>, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_TonemapDragoG_to_PtrOfTonemap }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::TonemapDrago> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::TonemapDrago> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTonemapDrago")
@@ -20945,7 +20945,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::TonemapMantiuk>, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_TonemapMantiukG_to_PtrOfTonemap }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::TonemapMantiuk> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::TonemapMantiuk> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTonemapMantiuk")
@@ -20990,7 +20990,7 @@ mod photo_types {
 
 	ptr_cast_base! { core::Ptr<crate::photo::TonemapReinhard>, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_TonemapReinhardG_to_PtrOfTonemap }
 
-	impl std::fmt::Debug for core::Ptr<crate::photo::TonemapReinhard> {
+	impl ::core::fmt::Debug for core::Ptr<crate::photo::TonemapReinhard> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTonemapReinhard")
@@ -21031,7 +21031,7 @@ mod plot_types {
 
 	ptr_cast_base! { core::Ptr<crate::plot::Plot2d>, core::Ptr<core::Algorithm>, cv_PtrLcv_plot_Plot2dG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::plot::Plot2d> {
+	impl ::core::fmt::Debug for core::Ptr<crate::plot::Plot2d> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPlot2d")
@@ -21063,7 +21063,7 @@ mod ptcloud_types {
 		#[inline] fn as_raw_mut_Octree(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::ptcloud::Octree> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ptcloud::Octree> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfOctree")
@@ -21088,7 +21088,7 @@ mod ptcloud_types {
 		#[inline] fn as_raw_mut_RgbdNormals(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::ptcloud::RgbdNormals> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ptcloud::RgbdNormals> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRgbdNormals")
@@ -21140,7 +21140,7 @@ mod quality_types {
 
 	ptr_cast_base! { core::Ptr<crate::quality::QualityBRISQUE>, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityBRISQUEG_to_PtrOfQualityBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::quality::QualityBRISQUE> {
+	impl ::core::fmt::Debug for core::Ptr<crate::quality::QualityBRISQUE> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfQualityBRISQUE")
@@ -21175,7 +21175,7 @@ mod quality_types {
 
 	ptr_cast_base! { core::Ptr<crate::quality::QualityBase>, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualityBaseG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::quality::QualityBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::quality::QualityBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfQualityBase")
@@ -21221,7 +21221,7 @@ mod quality_types {
 
 	ptr_cast_base! { core::Ptr<crate::quality::QualityGMSD>, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityGMSDG_to_PtrOfQualityBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::quality::QualityGMSD> {
+	impl ::core::fmt::Debug for core::Ptr<crate::quality::QualityGMSD> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfQualityGMSD")
@@ -21267,7 +21267,7 @@ mod quality_types {
 
 	ptr_cast_base! { core::Ptr<crate::quality::QualityMSE>, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityMSEG_to_PtrOfQualityBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::quality::QualityMSE> {
+	impl ::core::fmt::Debug for core::Ptr<crate::quality::QualityMSE> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfQualityMSE")
@@ -21313,7 +21313,7 @@ mod quality_types {
 
 	ptr_cast_base! { core::Ptr<crate::quality::QualityPSNR>, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityPSNRG_to_PtrOfQualityBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::quality::QualityPSNR> {
+	impl ::core::fmt::Debug for core::Ptr<crate::quality::QualityPSNR> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfQualityPSNR")
@@ -21359,7 +21359,7 @@ mod quality_types {
 
 	ptr_cast_base! { core::Ptr<crate::quality::QualitySSIM>, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualitySSIMG_to_PtrOfQualityBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::quality::QualitySSIM> {
+	impl ::core::fmt::Debug for core::Ptr<crate::quality::QualitySSIM> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfQualitySSIM")
@@ -21410,7 +21410,7 @@ mod rapid_types {
 
 	ptr_cast_base! { core::Ptr<crate::rapid::Rapid_GOSTracker>, core::Ptr<crate::rapid::Rapid_Tracker>, cv_PtrLcv_rapid_GOSTrackerG_to_PtrOfRapid_Tracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::rapid::Rapid_GOSTracker> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rapid::Rapid_GOSTracker> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRapid_GOSTracker")
@@ -21455,7 +21455,7 @@ mod rapid_types {
 
 	ptr_cast_base! { core::Ptr<crate::rapid::Rapid_OLSTracker>, core::Ptr<crate::rapid::Rapid_Tracker>, cv_PtrLcv_rapid_OLSTrackerG_to_PtrOfRapid_Tracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::rapid::Rapid_OLSTracker> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rapid::Rapid_OLSTracker> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRapid_OLSTracker")
@@ -21500,7 +21500,7 @@ mod rapid_types {
 
 	ptr_cast_base! { core::Ptr<crate::rapid::Rapid_Rapid>, core::Ptr<crate::rapid::Rapid_Tracker>, cv_PtrLcv_rapid_RapidG_to_PtrOfRapid_Tracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::rapid::Rapid_Rapid> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rapid::Rapid_Rapid> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRapid_Rapid")
@@ -21535,7 +21535,7 @@ mod rapid_types {
 
 	ptr_cast_base! { core::Ptr<crate::rapid::Rapid_Tracker>, core::Ptr<core::Algorithm>, cv_PtrLcv_rapid_TrackerG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::rapid::Rapid_Tracker> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rapid::Rapid_Tracker> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRapid_Tracker")
@@ -21566,7 +21566,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_ColoredKinfu_ColoredKinFu(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::ColoredKinfu_ColoredKinFu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::ColoredKinfu_ColoredKinFu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfColoredKinfu_ColoredKinFu")
@@ -21592,7 +21592,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_ColoredKinfu_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::ColoredKinfu_Params> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::ColoredKinfu_Params> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfColoredKinfu_Params")
@@ -21639,7 +21639,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Dynafu_DynaFu(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::Dynafu_DynaFu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::Dynafu_DynaFu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDynafu_DynaFu")
@@ -21664,7 +21664,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Kinfu_KinFu(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::Kinfu_KinFu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::Kinfu_KinFu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfKinfu_KinFu")
@@ -21690,7 +21690,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Kinfu_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::Kinfu_Params> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::Kinfu_Params> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfKinfu_Params")
@@ -21736,7 +21736,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_LargeKinfu(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::LargeKinfu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::LargeKinfu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLargeKinfu")
@@ -21772,7 +21772,7 @@ mod rgbd_types {
 
 	ptr_cast_base! { core::Ptr<crate::rgbd::LineMod_ColorGradient>, core::Ptr<crate::rgbd::LineMod_Modality>, cv_PtrLcv_linemod_ColorGradientG_to_PtrOfLineMod_Modality }
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::LineMod_ColorGradient> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::LineMod_ColorGradient> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLineMod_ColorGradient")
@@ -21811,7 +21811,7 @@ mod rgbd_types {
 
 	ptr_cast_base! { core::Ptr<crate::rgbd::LineMod_DepthNormal>, core::Ptr<crate::rgbd::LineMod_Modality>, cv_PtrLcv_linemod_DepthNormalG_to_PtrOfLineMod_Modality }
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::LineMod_DepthNormal> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::LineMod_DepthNormal> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLineMod_DepthNormal")
@@ -21841,7 +21841,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_LineMod_Detector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::LineMod_Detector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::LineMod_Detector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLineMod_Detector")
@@ -21866,7 +21866,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_LineMod_Modality(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::LineMod_Modality> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::LineMod_Modality> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLineMod_Modality")
@@ -21891,7 +21891,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_LineMod_QuantizedPyramid(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::LineMod_QuantizedPyramid> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::LineMod_QuantizedPyramid> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLineMod_QuantizedPyramid")
@@ -21917,7 +21917,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::Params> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::Params> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfParams")
@@ -21958,7 +21958,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_VolumeParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::rgbd::VolumeParams> {
+	impl ::core::fmt::Debug for core::Ptr<crate::rgbd::VolumeParams> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfVolumeParams")
@@ -22120,7 +22120,7 @@ mod saliency_types {
 
 	ptr_cast_base! { core::Ptr<crate::saliency::MotionSaliency>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_MotionSaliencyG_to_PtrOfSaliency }
 
-	impl std::fmt::Debug for core::Ptr<crate::saliency::MotionSaliency> {
+	impl ::core::fmt::Debug for core::Ptr<crate::saliency::MotionSaliency> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMotionSaliency")
@@ -22176,7 +22176,7 @@ mod saliency_types {
 
 	ptr_cast_base! { core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_MotionSaliencyBinWangApr2014G_to_PtrOfSaliency }
 
-	impl std::fmt::Debug for core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014> {
+	impl ::core::fmt::Debug for core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMotionSaliencyBinWangApr2014")
@@ -22221,7 +22221,7 @@ mod saliency_types {
 
 	ptr_cast_base! { core::Ptr<crate::saliency::Objectness>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_ObjectnessG_to_PtrOfSaliency }
 
-	impl std::fmt::Debug for core::Ptr<crate::saliency::Objectness> {
+	impl ::core::fmt::Debug for core::Ptr<crate::saliency::Objectness> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfObjectness")
@@ -22277,7 +22277,7 @@ mod saliency_types {
 
 	ptr_cast_base! { core::Ptr<crate::saliency::ObjectnessBING>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_ObjectnessBINGG_to_PtrOfSaliency }
 
-	impl std::fmt::Debug for core::Ptr<crate::saliency::ObjectnessBING> {
+	impl ::core::fmt::Debug for core::Ptr<crate::saliency::ObjectnessBING> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfObjectnessBING")
@@ -22312,7 +22312,7 @@ mod saliency_types {
 
 	ptr_cast_base! { core::Ptr<crate::saliency::Saliency>, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_SaliencyG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::saliency::Saliency> {
+	impl ::core::fmt::Debug for core::Ptr<crate::saliency::Saliency> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSaliency")
@@ -22357,7 +22357,7 @@ mod saliency_types {
 
 	ptr_cast_base! { core::Ptr<crate::saliency::StaticSaliency>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_StaticSaliencyG_to_PtrOfSaliency }
 
-	impl std::fmt::Debug for core::Ptr<crate::saliency::StaticSaliency> {
+	impl ::core::fmt::Debug for core::Ptr<crate::saliency::StaticSaliency> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStaticSaliency")
@@ -22413,7 +22413,7 @@ mod saliency_types {
 
 	ptr_cast_base! { core::Ptr<crate::saliency::StaticSaliencyFineGrained>, core::Ptr<crate::saliency::StaticSaliency>, cv_PtrLcv_saliency_StaticSaliencyFineGrainedG_to_PtrOfStaticSaliency }
 
-	impl std::fmt::Debug for core::Ptr<crate::saliency::StaticSaliencyFineGrained> {
+	impl ::core::fmt::Debug for core::Ptr<crate::saliency::StaticSaliencyFineGrained> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStaticSaliencyFineGrained")
@@ -22469,7 +22469,7 @@ mod saliency_types {
 
 	ptr_cast_base! { core::Ptr<crate::saliency::StaticSaliencySpectralResidual>, core::Ptr<crate::saliency::StaticSaliency>, cv_PtrLcv_saliency_StaticSaliencySpectralResidualG_to_PtrOfStaticSaliency }
 
-	impl std::fmt::Debug for core::Ptr<crate::saliency::StaticSaliencySpectralResidual> {
+	impl ::core::fmt::Debug for core::Ptr<crate::saliency::StaticSaliencySpectralResidual> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStaticSaliencySpectralResidual")
@@ -22500,7 +22500,7 @@ mod sfm_types {
 		#[inline] fn as_raw_mut_BaseSFM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::sfm::BaseSFM> {
+	impl ::core::fmt::Debug for core::Ptr<crate::sfm::BaseSFM> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBaseSFM")
@@ -22535,7 +22535,7 @@ mod sfm_types {
 
 	ptr_cast_base! { core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction>, core::Ptr<crate::sfm::BaseSFM>, cv_PtrLcv_sfm_SFMLibmvEuclideanReconstructionG_to_PtrOfBaseSFM }
 
-	impl std::fmt::Debug for core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction> {
+	impl ::core::fmt::Debug for core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSFMLibmvEuclideanReconstruction")
@@ -22586,7 +22586,7 @@ mod shape_types {
 
 	ptr_cast_base! { core::Ptr<crate::shape::AffineTransformer>, core::Ptr<crate::shape::ShapeTransformer>, cv_PtrLcv_AffineTransformerG_to_PtrOfShapeTransformer }
 
-	impl std::fmt::Debug for core::Ptr<crate::shape::AffineTransformer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::shape::AffineTransformer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAffineTransformer")
@@ -22631,7 +22631,7 @@ mod shape_types {
 
 	ptr_cast_base! { core::Ptr<crate::shape::ChiHistogramCostExtractor>, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_ChiHistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::shape::ChiHistogramCostExtractor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::shape::ChiHistogramCostExtractor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfChiHistogramCostExtractor")
@@ -22676,7 +22676,7 @@ mod shape_types {
 
 	ptr_cast_base! { core::Ptr<crate::shape::EMDHistogramCostExtractor>, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_EMDHistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::shape::EMDHistogramCostExtractor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::shape::EMDHistogramCostExtractor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEMDHistogramCostExtractor")
@@ -22721,7 +22721,7 @@ mod shape_types {
 
 	ptr_cast_base! { core::Ptr<crate::shape::EMDL1HistogramCostExtractor>, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_EMDL1HistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::shape::EMDL1HistogramCostExtractor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::shape::EMDL1HistogramCostExtractor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEMDL1HistogramCostExtractor")
@@ -22766,7 +22766,7 @@ mod shape_types {
 
 	ptr_cast_base! { core::Ptr<crate::shape::HausdorffDistanceExtractor>, core::Ptr<crate::shape::ShapeDistanceExtractor>, cv_PtrLcv_HausdorffDistanceExtractorG_to_PtrOfShapeDistanceExtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::shape::HausdorffDistanceExtractor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::shape::HausdorffDistanceExtractor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHausdorffDistanceExtractor")
@@ -22801,7 +22801,7 @@ mod shape_types {
 
 	ptr_cast_base! { core::Ptr<crate::shape::HistogramCostExtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_HistogramCostExtractorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::shape::HistogramCostExtractor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::shape::HistogramCostExtractor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHistogramCostExtractor")
@@ -22846,7 +22846,7 @@ mod shape_types {
 
 	ptr_cast_base! { core::Ptr<crate::shape::NormHistogramCostExtractor>, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_NormHistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::shape::NormHistogramCostExtractor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::shape::NormHistogramCostExtractor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNormHistogramCostExtractor")
@@ -22891,7 +22891,7 @@ mod shape_types {
 
 	ptr_cast_base! { core::Ptr<crate::shape::ShapeContextDistanceExtractor>, core::Ptr<crate::shape::ShapeDistanceExtractor>, cv_PtrLcv_ShapeContextDistanceExtractorG_to_PtrOfShapeDistanceExtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::shape::ShapeContextDistanceExtractor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::shape::ShapeContextDistanceExtractor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfShapeContextDistanceExtractor")
@@ -22926,7 +22926,7 @@ mod shape_types {
 
 	ptr_cast_base! { core::Ptr<crate::shape::ShapeDistanceExtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_ShapeDistanceExtractorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::shape::ShapeDistanceExtractor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::shape::ShapeDistanceExtractor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfShapeDistanceExtractor")
@@ -22961,7 +22961,7 @@ mod shape_types {
 
 	ptr_cast_base! { core::Ptr<crate::shape::ShapeTransformer>, core::Ptr<core::Algorithm>, cv_PtrLcv_ShapeTransformerG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::shape::ShapeTransformer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::shape::ShapeTransformer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfShapeTransformer")
@@ -23006,7 +23006,7 @@ mod shape_types {
 
 	ptr_cast_base! { core::Ptr<crate::shape::ThinPlateSplineShapeTransformer>, core::Ptr<crate::shape::ShapeTransformer>, cv_PtrLcv_ThinPlateSplineShapeTransformerG_to_PtrOfShapeTransformer }
 
-	impl std::fmt::Debug for core::Ptr<crate::shape::ThinPlateSplineShapeTransformer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::shape::ThinPlateSplineShapeTransformer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfThinPlateSplineShapeTransformer")
@@ -23057,7 +23057,7 @@ mod stereo_types {
 
 	ptr_cast_base! { core::Ptr<crate::stereo::StereoBM>, core::Ptr<crate::stereo::StereoMatcher>, cv_PtrLcv_StereoBMG_to_PtrOfStereoMatcher }
 
-	impl std::fmt::Debug for core::Ptr<crate::stereo::StereoBM> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stereo::StereoBM> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStereoBM")
@@ -23092,7 +23092,7 @@ mod stereo_types {
 
 	ptr_cast_base! { core::Ptr<crate::stereo::StereoMatcher>, core::Ptr<core::Algorithm>, cv_PtrLcv_StereoMatcherG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::stereo::StereoMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stereo::StereoMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStereoMatcher")
@@ -23137,7 +23137,7 @@ mod stereo_types {
 
 	ptr_cast_base! { core::Ptr<crate::stereo::StereoSGBM>, core::Ptr<crate::stereo::StereoMatcher>, cv_PtrLcv_StereoSGBMG_to_PtrOfStereoMatcher }
 
-	impl std::fmt::Debug for core::Ptr<crate::stereo::StereoSGBM> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stereo::StereoSGBM> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStereoSGBM")
@@ -23179,7 +23179,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::AffineWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_AffineWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::AffineWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::AffineWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAffineWarper")
@@ -23215,7 +23215,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::CompressedRectilinearPortraitWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CompressedRectilinearPortraitWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::CompressedRectilinearPortraitWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::CompressedRectilinearPortraitWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCompressedRectilinearPortraitWarper")
@@ -23251,7 +23251,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::CompressedRectilinearWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CompressedRectilinearWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::CompressedRectilinearWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::CompressedRectilinearWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCompressedRectilinearWarper")
@@ -23287,7 +23287,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::CylindricalWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CylindricalWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::CylindricalWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::CylindricalWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCylindricalWarper")
@@ -23323,7 +23323,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::CylindricalWarperGpu>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CylindricalWarperGpuG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::CylindricalWarperGpu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::CylindricalWarperGpu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCylindricalWarperGpu")
@@ -23359,7 +23359,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_AffineBasedEstimator>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_AffineBasedEstimatorG_to_PtrOfDetail_Estimator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_AffineBasedEstimator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_AffineBasedEstimator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_AffineBasedEstimator")
@@ -23405,7 +23405,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_AffineBestOf2NearestMatcher>, core::Ptr<crate::stitching::Detail_FeaturesMatcher>, cv_PtrLcv_detail_AffineBestOf2NearestMatcherG_to_PtrOfDetail_FeaturesMatcher }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_AffineBestOf2NearestMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_AffineBestOf2NearestMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_AffineBestOf2NearestMatcher")
@@ -23441,7 +23441,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>, core::Ptr<crate::stitching::Detail_FeaturesMatcher>, cv_PtrLcv_detail_BestOf2NearestMatcherG_to_PtrOfDetail_FeaturesMatcher }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_BestOf2NearestMatcher")
@@ -23487,7 +23487,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BestOf2NearestRangeMatcher>, core::Ptr<crate::stitching::Detail_FeaturesMatcher>, cv_PtrLcv_detail_BestOf2NearestRangeMatcherG_to_PtrOfDetail_FeaturesMatcher }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BestOf2NearestRangeMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_BestOf2NearestRangeMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_BestOf2NearestRangeMatcher")
@@ -23513,7 +23513,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Blender(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_Blender> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_Blender> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_Blender")
@@ -23559,7 +23559,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BlocksChannelsCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_BlocksChannelsCompensatorG_to_PtrOfDetail_ExposureCompensator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BlocksChannelsCompensator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_BlocksChannelsCompensator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_BlocksChannelsCompensator")
@@ -23594,7 +23594,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BlocksCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_BlocksCompensatorG_to_PtrOfDetail_ExposureCompensator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BlocksCompensator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_BlocksCompensator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_BlocksCompensator")
@@ -23640,7 +23640,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BlocksGainCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_BlocksGainCompensatorG_to_PtrOfDetail_ExposureCompensator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BlocksGainCompensator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_BlocksGainCompensator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_BlocksGainCompensator")
@@ -23686,7 +23686,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterAffine>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterAffineG_to_PtrOfDetail_Estimator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterAffine> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterAffine> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_BundleAdjusterAffine")
@@ -23732,7 +23732,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterAffinePartial>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterAffinePartialG_to_PtrOfDetail_Estimator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterAffinePartial> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterAffinePartial> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_BundleAdjusterAffinePartial")
@@ -23767,7 +23767,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterBaseG_to_PtrOfDetail_Estimator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_BundleAdjusterBase")
@@ -23813,7 +23813,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterRay>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterRayG_to_PtrOfDetail_Estimator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterRay> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterRay> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_BundleAdjusterRay")
@@ -23859,7 +23859,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterReproj>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterReprojG_to_PtrOfDetail_Estimator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterReproj> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterReproj> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_BundleAdjusterReproj")
@@ -23895,7 +23895,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_ChannelsCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_ChannelsCompensatorG_to_PtrOfDetail_ExposureCompensator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_ChannelsCompensator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_ChannelsCompensator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_ChannelsCompensator")
@@ -23931,7 +23931,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_DpSeamFinder>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_DpSeamFinderG_to_PtrOfDetail_SeamFinder }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_DpSeamFinder> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_DpSeamFinder> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_DpSeamFinder")
@@ -23956,7 +23956,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_Estimator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_Estimator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_Estimator")
@@ -23981,7 +23981,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_ExposureCompensator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_ExposureCompensator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_ExposureCompensator")
@@ -24017,7 +24017,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_FeatherBlender>, core::Ptr<crate::stitching::Detail_Blender>, cv_PtrLcv_detail_FeatherBlenderG_to_PtrOfDetail_Blender }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_FeatherBlender> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_FeatherBlender> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_FeatherBlender")
@@ -24042,7 +24042,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_FeaturesMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_FeaturesMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_FeaturesMatcher")
@@ -24078,7 +24078,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_GainCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_GainCompensatorG_to_PtrOfDetail_ExposureCompensator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_GainCompensator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_GainCompensator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_GainCompensator")
@@ -24124,7 +24124,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_GraphCutSeamFinder>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_GraphCutSeamFinderG_to_PtrOfDetail_SeamFinder }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_GraphCutSeamFinder> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_GraphCutSeamFinder> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_GraphCutSeamFinder")
@@ -24150,7 +24150,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_GraphCutSeamFinderBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_GraphCutSeamFinderBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_GraphCutSeamFinderBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_GraphCutSeamFinderBase")
@@ -24206,7 +24206,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_GraphCutSeamFinderGpuG_to_PtrOfDetail_SeamFinder }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_GraphCutSeamFinderGpu")
@@ -24242,7 +24242,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_HomographyBasedEstimator>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_HomographyBasedEstimatorG_to_PtrOfDetail_Estimator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_HomographyBasedEstimator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_HomographyBasedEstimator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_HomographyBasedEstimator")
@@ -24278,7 +24278,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_LightGlueFeaturesMatcher>, core::Ptr<crate::stitching::Detail_FeaturesMatcher>, cv_PtrLcv_detail_LightGlueFeaturesMatcherG_to_PtrOfDetail_FeaturesMatcher }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_LightGlueFeaturesMatcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_LightGlueFeaturesMatcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_LightGlueFeaturesMatcher")
@@ -24314,7 +24314,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_MultiBandBlender>, core::Ptr<crate::stitching::Detail_Blender>, cv_PtrLcv_detail_MultiBandBlenderG_to_PtrOfDetail_Blender }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_MultiBandBlender> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_MultiBandBlender> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_MultiBandBlender")
@@ -24360,7 +24360,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_NoBundleAdjuster>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_NoBundleAdjusterG_to_PtrOfDetail_Estimator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_NoBundleAdjuster> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_NoBundleAdjuster> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_NoBundleAdjuster")
@@ -24396,7 +24396,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_NoExposureCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_NoExposureCompensatorG_to_PtrOfDetail_ExposureCompensator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_NoExposureCompensator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_NoExposureCompensator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_NoExposureCompensator")
@@ -24432,7 +24432,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_NoSeamFinder>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_NoSeamFinderG_to_PtrOfDetail_SeamFinder }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_NoSeamFinder> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_NoSeamFinder> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_NoSeamFinder")
@@ -24467,7 +24467,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_PairwiseSeamFinder>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_PairwiseSeamFinderG_to_PtrOfDetail_SeamFinder }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_PairwiseSeamFinder> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_PairwiseSeamFinder> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_PairwiseSeamFinder")
@@ -24492,7 +24492,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_RotationWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_RotationWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_RotationWarper")
@@ -24517,7 +24517,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_SeamFinder> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_SeamFinder> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_SeamFinder")
@@ -24563,7 +24563,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::Detail_VoronoiSeamFinder>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_VoronoiSeamFinderG_to_PtrOfDetail_SeamFinder }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_VoronoiSeamFinder> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Detail_VoronoiSeamFinder> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_VoronoiSeamFinder")
@@ -24599,7 +24599,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::FisheyeWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_FisheyeWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::FisheyeWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::FisheyeWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFisheyeWarper")
@@ -24635,7 +24635,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::MercatorWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_MercatorWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::MercatorWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::MercatorWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMercatorWarper")
@@ -24671,7 +24671,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::PaniniPortraitWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PaniniPortraitWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::PaniniPortraitWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::PaniniPortraitWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPaniniPortraitWarper")
@@ -24707,7 +24707,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::PaniniWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PaniniWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::PaniniWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::PaniniWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPaniniWarper")
@@ -24743,7 +24743,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::PlaneWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PlaneWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::PlaneWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::PlaneWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPlaneWarper")
@@ -24779,7 +24779,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::PlaneWarperGpu>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PlaneWarperGpuG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::PlaneWarperGpu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::PlaneWarperGpu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPlaneWarperGpu")
@@ -24815,7 +24815,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::SphericalWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_SphericalWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::SphericalWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::SphericalWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSphericalWarper")
@@ -24851,7 +24851,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::SphericalWarperGpu>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_SphericalWarperGpuG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::SphericalWarperGpu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::SphericalWarperGpu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSphericalWarperGpu")
@@ -24887,7 +24887,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::StereographicWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_StereographicWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::StereographicWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::StereographicWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStereographicWarper")
@@ -24913,7 +24913,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Stitcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::Stitcher> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::Stitcher> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStitcher")
@@ -24949,7 +24949,7 @@ mod stitching_types {
 
 	ptr_cast_base! { core::Ptr<crate::stitching::TransverseMercatorWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_TransverseMercatorWarperG_to_PtrOfWarperCreator }
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::TransverseMercatorWarper> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::TransverseMercatorWarper> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTransverseMercatorWarper")
@@ -24974,7 +24974,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::stitching::WarperCreator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::stitching::WarperCreator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfWarperCreator")
@@ -25115,7 +25115,7 @@ mod structured_light_types {
 
 	ptr_cast_base! { core::Ptr<crate::structured_light::GrayCodePattern>, core::Ptr<crate::structured_light::StructuredLightPattern>, cv_PtrLcv_structured_light_GrayCodePatternG_to_PtrOfStructuredLightPattern }
 
-	impl std::fmt::Debug for core::Ptr<crate::structured_light::GrayCodePattern> {
+	impl ::core::fmt::Debug for core::Ptr<crate::structured_light::GrayCodePattern> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGrayCodePattern")
@@ -25160,7 +25160,7 @@ mod structured_light_types {
 
 	ptr_cast_base! { core::Ptr<crate::structured_light::SinusoidalPattern>, core::Ptr<crate::structured_light::StructuredLightPattern>, cv_PtrLcv_structured_light_SinusoidalPatternG_to_PtrOfStructuredLightPattern }
 
-	impl std::fmt::Debug for core::Ptr<crate::structured_light::SinusoidalPattern> {
+	impl ::core::fmt::Debug for core::Ptr<crate::structured_light::SinusoidalPattern> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSinusoidalPattern")
@@ -25186,7 +25186,7 @@ mod structured_light_types {
 		#[inline] fn as_raw_mut_SinusoidalPattern_Params(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::structured_light::SinusoidalPattern_Params> {
+	impl ::core::fmt::Debug for core::Ptr<crate::structured_light::SinusoidalPattern_Params> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSinusoidalPattern_Params")
@@ -25230,7 +25230,7 @@ mod structured_light_types {
 
 	ptr_cast_base! { core::Ptr<crate::structured_light::StructuredLightPattern>, core::Ptr<core::Algorithm>, cv_PtrLcv_structured_light_StructuredLightPatternG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::structured_light::StructuredLightPattern> {
+	impl ::core::fmt::Debug for core::Ptr<crate::structured_light::StructuredLightPattern> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStructuredLightPattern")
@@ -25281,7 +25281,7 @@ mod superres_types {
 
 	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_BroxOpticalFlow>, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_BroxOpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
 
-	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_BroxOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::superres::SuperRes_BroxOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSuperRes_BroxOpticalFlow")
@@ -25316,7 +25316,7 @@ mod superres_types {
 
 	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_DenseOpticalFlowExtG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt> {
+	impl ::core::fmt::Debug for core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSuperRes_DenseOpticalFlowExt")
@@ -25361,7 +25361,7 @@ mod superres_types {
 
 	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow>, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_DualTVL1OpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
 
-	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSuperRes_DualTVL1OpticalFlow")
@@ -25406,7 +25406,7 @@ mod superres_types {
 
 	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow>, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_FarnebackOpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
 
-	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSuperRes_FarnebackOpticalFlow")
@@ -25431,7 +25431,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_SuperRes_FrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_FrameSource> {
+	impl ::core::fmt::Debug for core::Ptr<crate::superres::SuperRes_FrameSource> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSuperRes_FrameSource")
@@ -25476,7 +25476,7 @@ mod superres_types {
 
 	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow>, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_PyrLKOpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
 
-	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSuperRes_PyrLKOpticalFlow")
@@ -25521,7 +25521,7 @@ mod superres_types {
 
 	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_SuperResolution>, core::Ptr<crate::superres::SuperRes_FrameSource>, cv_PtrLcv_superres_SuperResolutionG_to_PtrOfSuperRes_FrameSource }
 
-	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_SuperResolution> {
+	impl ::core::fmt::Debug for core::Ptr<crate::superres::SuperRes_SuperResolution> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSuperRes_SuperResolution")
@@ -25553,7 +25553,7 @@ mod surface_matching_types {
 		#[inline] fn as_raw_mut_Pose3D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::surface_matching::Pose3D> {
+	impl ::core::fmt::Debug for core::Ptr<crate::surface_matching::Pose3D> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPose3D")
@@ -25587,7 +25587,7 @@ mod surface_matching_types {
 		#[inline] fn as_raw_mut_PoseCluster3D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::surface_matching::PoseCluster3D> {
+	impl ::core::fmt::Debug for core::Ptr<crate::surface_matching::PoseCluster3D> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPoseCluster3D")
@@ -25639,7 +25639,7 @@ mod text_types {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::text::BaseOCR> {
+	impl ::core::fmt::Debug for core::Ptr<crate::text::BaseOCR> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBaseOCR")
@@ -25674,7 +25674,7 @@ mod text_types {
 
 	ptr_cast_base! { core::Ptr<crate::text::ERFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_text_ERFilterG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::text::ERFilter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::text::ERFilter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfERFilter")
@@ -25699,7 +25699,7 @@ mod text_types {
 		#[inline] fn as_raw_mut_ERFilter_Callback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::text::ERFilter_Callback> {
+	impl ::core::fmt::Debug for core::Ptr<crate::text::ERFilter_Callback> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfERFilter_Callback")
@@ -25735,7 +25735,7 @@ mod text_types {
 
 	ptr_cast_base! { core::Ptr<crate::text::OCRBeamSearchDecoder>, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRBeamSearchDecoderG_to_PtrOfBaseOCR }
 
-	impl std::fmt::Debug for core::Ptr<crate::text::OCRBeamSearchDecoder> {
+	impl ::core::fmt::Debug for core::Ptr<crate::text::OCRBeamSearchDecoder> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfOCRBeamSearchDecoder")
@@ -25761,7 +25761,7 @@ mod text_types {
 		#[inline] fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback> {
+	impl ::core::fmt::Debug for core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfOCRBeamSearchDecoder_ClassifierCallback")
@@ -25797,7 +25797,7 @@ mod text_types {
 
 	ptr_cast_base! { core::Ptr<crate::text::OCRHMMDecoder>, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRHMMDecoderG_to_PtrOfBaseOCR }
 
-	impl std::fmt::Debug for core::Ptr<crate::text::OCRHMMDecoder> {
+	impl ::core::fmt::Debug for core::Ptr<crate::text::OCRHMMDecoder> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfOCRHMMDecoder")
@@ -25823,7 +25823,7 @@ mod text_types {
 		#[inline] fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback> {
+	impl ::core::fmt::Debug for core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfOCRHMMDecoder_ClassifierCallback")
@@ -25858,7 +25858,7 @@ mod text_types {
 
 	ptr_cast_base! { core::Ptr<crate::text::OCRHolisticWordRecognizer>, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRHolisticWordRecognizerG_to_PtrOfBaseOCR }
 
-	impl std::fmt::Debug for core::Ptr<crate::text::OCRHolisticWordRecognizer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::text::OCRHolisticWordRecognizer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfOCRHolisticWordRecognizer")
@@ -25893,7 +25893,7 @@ mod text_types {
 
 	ptr_cast_base! { core::Ptr<crate::text::OCRTesseract>, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRTesseractG_to_PtrOfBaseOCR }
 
-	impl std::fmt::Debug for core::Ptr<crate::text::OCRTesseract> {
+	impl ::core::fmt::Debug for core::Ptr<crate::text::OCRTesseract> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfOCRTesseract")
@@ -25918,7 +25918,7 @@ mod text_types {
 		#[inline] fn as_raw_mut_TextDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::text::TextDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::text::TextDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTextDetector")
@@ -25953,7 +25953,7 @@ mod text_types {
 
 	ptr_cast_base! { core::Ptr<crate::text::TextDetectorCNN>, core::Ptr<crate::text::TextDetector>, cv_PtrLcv_text_TextDetectorCNNG_to_PtrOfTextDetector }
 
-	impl std::fmt::Debug for core::Ptr<crate::text::TextDetectorCNN> {
+	impl ::core::fmt::Debug for core::Ptr<crate::text::TextDetectorCNN> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTextDetectorCNN")
@@ -26042,7 +26042,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerContribFeature>, core::Ptr<crate::tracking::Detail_TrackerFeature>, cv_PtrLcv_detail_TrackerContribFeatureG_to_PtrOfDetail_TrackerFeature }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribFeature> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribFeature> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerContribFeature")
@@ -26088,7 +26088,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR>, core::Ptr<crate::tracking::Detail_TrackerFeature>, cv_PtrLcv_detail_TrackerContribFeatureHAARG_to_PtrOfDetail_TrackerFeature }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribFeatureHAAR> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerContribFeatureHAAR")
@@ -26123,7 +26123,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm>, core::Ptr<crate::tracking::Detail_TrackerSamplerAlgorithm>, cv_PtrLcv_detail_TrackerContribSamplerAlgorithmG_to_PtrOfDetail_TrackerSamplerAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribSamplerAlgorithm> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerContribSamplerAlgorithm")
@@ -26169,7 +26169,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC>, core::Ptr<crate::tracking::Detail_TrackerSamplerAlgorithm>, cv_PtrLcv_detail_TrackerContribSamplerCSCG_to_PtrOfDetail_TrackerSamplerAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerContribSamplerCSC> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerContribSamplerCSC")
@@ -26194,7 +26194,7 @@ mod tracking_types {
 		#[inline] fn as_raw_mut_Detail_TrackerFeature(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerFeature> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerFeature> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerFeature")
@@ -26240,7 +26240,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d>, core::Ptr<crate::tracking::Detail_TrackerFeature>, cv_PtrLcv_detail_TrackerFeatureFeature2dG_to_PtrOfDetail_TrackerFeature }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerFeatureFeature2d> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerFeatureFeature2d")
@@ -26286,7 +26286,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerFeatureHOG>, core::Ptr<crate::tracking::Detail_TrackerFeature>, cv_PtrLcv_detail_TrackerFeatureHOGG_to_PtrOfDetail_TrackerFeature }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerFeatureHOG> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerFeatureHOG> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerFeatureHOG")
@@ -26332,7 +26332,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerFeatureLBP>, core::Ptr<crate::tracking::Detail_TrackerFeature>, cv_PtrLcv_detail_TrackerFeatureLBPG_to_PtrOfDetail_TrackerFeature }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerFeatureLBP> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerFeatureLBP> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerFeatureLBP")
@@ -26357,7 +26357,7 @@ mod tracking_types {
 		#[inline] fn as_raw_mut_Detail_TrackerSamplerAlgorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerSamplerAlgorithm> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerSamplerAlgorithm> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerSamplerAlgorithm")
@@ -26403,7 +26403,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerSamplerCS>, core::Ptr<crate::tracking::Detail_TrackerSamplerAlgorithm>, cv_PtrLcv_detail_TrackerSamplerCSG_to_PtrOfDetail_TrackerSamplerAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerSamplerCS> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerSamplerCS> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerSamplerCS")
@@ -26439,7 +26439,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerSamplerCSC>, core::Ptr<crate::tracking::Detail_TrackerSamplerAlgorithm>, cv_PtrLcv_detail_TrackerSamplerCSCG_to_PtrOfDetail_TrackerSamplerAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerSamplerCSC> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerSamplerCSC> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerSamplerCSC")
@@ -26485,7 +26485,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerSamplerPF>, core::Ptr<crate::tracking::Detail_TrackerSamplerAlgorithm>, cv_PtrLcv_detail_TrackerSamplerPFG_to_PtrOfDetail_TrackerSamplerAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerSamplerPF> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerSamplerPF> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerSamplerPF")
@@ -26510,7 +26510,7 @@ mod tracking_types {
 		#[inline] fn as_raw_mut_Detail_TrackerStateEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerStateEstimator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerStateEstimator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerStateEstimator")
@@ -26546,7 +26546,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerStateEstimatorAdaBoosting>, core::Ptr<crate::tracking::Detail_TrackerStateEstimator>, cv_PtrLcv_detail_TrackerStateEstimatorAdaBoostingG_to_PtrOfDetail_TrackerStateEstimator }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerStateEstimatorAdaBoosting> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerStateEstimatorAdaBoosting> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerStateEstimatorAdaBoosting")
@@ -26582,7 +26582,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Detail_TrackerStateEstimatorSVM>, core::Ptr<crate::tracking::Detail_TrackerStateEstimator>, cv_PtrLcv_detail_TrackerStateEstimatorSVMG_to_PtrOfDetail_TrackerStateEstimator }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerStateEstimatorSVM> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerStateEstimatorSVM> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerStateEstimatorSVM")
@@ -26608,7 +26608,7 @@ mod tracking_types {
 		#[inline] fn as_raw_mut_Detail_TrackerTargetState(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerTargetState> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Detail_TrackerTargetState> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetail_TrackerTargetState")
@@ -26644,7 +26644,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_MultiTracker>, core::Ptr<core::Algorithm>, cv_PtrLcv_legacy_MultiTrackerG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_MultiTracker> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Legacy_MultiTracker> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLegacy_MultiTracker")
@@ -26679,7 +26679,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_Tracker>, core::Ptr<core::Algorithm>, cv_PtrLcv_legacy_TrackerG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_Tracker> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Legacy_Tracker> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLegacy_Tracker")
@@ -26724,7 +26724,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerBoosting>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerBoostingG_to_PtrOfLegacy_Tracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerBoosting> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerBoosting> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLegacy_TrackerBoosting")
@@ -26769,7 +26769,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerCSRT>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerCSRTG_to_PtrOfLegacy_Tracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerCSRT> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerCSRT> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLegacy_TrackerCSRT")
@@ -26814,7 +26814,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerKCF>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerKCFG_to_PtrOfLegacy_Tracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerKCF> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerKCF> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLegacy_TrackerKCF")
@@ -26859,7 +26859,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerMIL>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerMILG_to_PtrOfLegacy_Tracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerMIL> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerMIL> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLegacy_TrackerMIL")
@@ -26904,7 +26904,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerMOSSE>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerMOSSEG_to_PtrOfLegacy_Tracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerMOSSE> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerMOSSE> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLegacy_TrackerMOSSE")
@@ -26949,7 +26949,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerMedianFlow>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerMedianFlowG_to_PtrOfLegacy_Tracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerMedianFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerMedianFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLegacy_TrackerMedianFlow")
@@ -26994,7 +26994,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::Legacy_TrackerTLD>, core::Ptr<crate::tracking::Legacy_Tracker>, cv_PtrLcv_legacy_TrackerTLDG_to_PtrOfLegacy_Tracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerTLD> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::Legacy_TrackerTLD> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLegacy_TrackerTLD")
@@ -27029,7 +27029,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::TrackerCSRT>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerCSRTG_to_PtrOfTracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::TrackerCSRT> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::TrackerCSRT> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTrackerCSRT")
@@ -27064,7 +27064,7 @@ mod tracking_types {
 
 	ptr_cast_base! { core::Ptr<crate::tracking::TrackerKCF>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerKCFG_to_PtrOfTracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::tracking::TrackerKCF> {
+	impl ::core::fmt::Debug for core::Ptr<crate::tracking::TrackerKCF> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTrackerKCF")
@@ -27282,7 +27282,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::BackgroundSubtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_BackgroundSubtractorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::BackgroundSubtractor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::BackgroundSubtractor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBackgroundSubtractor")
@@ -27327,7 +27327,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::BackgroundSubtractorKNN>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_BackgroundSubtractorKNNG_to_PtrOfBackgroundSubtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::BackgroundSubtractorKNN> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::BackgroundSubtractorKNN> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBackgroundSubtractorKNN")
@@ -27372,7 +27372,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::BackgroundSubtractorMOG2>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_BackgroundSubtractorMOG2G_to_PtrOfBackgroundSubtractor }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::BackgroundSubtractorMOG2> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::BackgroundSubtractorMOG2> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBackgroundSubtractorMOG2")
@@ -27417,7 +27417,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::DISOpticalFlow>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_DISOpticalFlowG_to_PtrOfDenseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::DISOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::DISOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDISOpticalFlow")
@@ -27452,7 +27452,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::DenseOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_DenseOpticalFlowG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::DenseOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::DenseOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDenseOpticalFlow")
@@ -27497,7 +27497,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::FarnebackOpticalFlow>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_FarnebackOpticalFlowG_to_PtrOfDenseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::FarnebackOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::FarnebackOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFarnebackOpticalFlow")
@@ -27532,7 +27532,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::SparseOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_SparseOpticalFlowG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::SparseOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::SparseOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSparseOpticalFlow")
@@ -27577,7 +27577,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::SparsePyrLKOpticalFlow>, core::Ptr<crate::video::SparseOpticalFlow>, cv_PtrLcv_SparsePyrLKOpticalFlowG_to_PtrOfSparseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::SparsePyrLKOpticalFlow> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::SparsePyrLKOpticalFlow> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSparsePyrLKOpticalFlow")
@@ -27602,7 +27602,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::video::Tracker> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::Tracker> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTracker")
@@ -27637,7 +27637,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::TrackerDaSiamRPN>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerDaSiamRPNG_to_PtrOfTracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::TrackerDaSiamRPN> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::TrackerDaSiamRPN> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTrackerDaSiamRPN")
@@ -27672,7 +27672,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::TrackerMIL>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerMILG_to_PtrOfTracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::TrackerMIL> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::TrackerMIL> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTrackerMIL")
@@ -27707,7 +27707,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::TrackerNano>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerNanoG_to_PtrOfTracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::TrackerNano> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::TrackerNano> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTrackerNano")
@@ -27742,7 +27742,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::TrackerVit>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerVitG_to_PtrOfTracker }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::TrackerVit> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::TrackerVit> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTrackerVit")
@@ -27787,7 +27787,7 @@ mod video_types {
 
 	ptr_cast_base! { core::Ptr<crate::video::VariationalRefinement>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_VariationalRefinementG_to_PtrOfDenseOpticalFlow }
 
-	impl std::fmt::Debug for core::Ptr<crate::video::VariationalRefinement> {
+	impl ::core::fmt::Debug for core::Ptr<crate::video::VariationalRefinement> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfVariationalRefinement")
@@ -27818,7 +27818,7 @@ mod videoio_types {
 		#[inline] fn as_raw_mut_IStreamReader(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videoio::IStreamReader> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videoio::IStreamReader> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfIStreamReader")
@@ -27911,7 +27911,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::ColorAverageInpainter>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_ColorAverageInpainterG_to_PtrOfInpainterBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::ColorAverageInpainter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::ColorAverageInpainter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfColorAverageInpainter")
@@ -27947,7 +27947,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::ColorInpainter>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_ColorInpainterG_to_PtrOfInpainterBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::ColorInpainter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::ColorInpainter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfColorInpainter")
@@ -27983,7 +27983,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::ConsistentMosaicInpainter>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_ConsistentMosaicInpainterG_to_PtrOfInpainterBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::ConsistentMosaicInpainter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::ConsistentMosaicInpainter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfConsistentMosaicInpainter")
@@ -28008,7 +28008,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_DeblurerBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::DeblurerBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::DeblurerBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDeblurerBase")
@@ -28054,7 +28054,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::DensePyrLkOptFlowEstimatorGpu>, core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>, cv_PtrLcv_videostab_DensePyrLkOptFlowEstimatorGpuG_to_PtrOfPyrLkOptFlowEstimatorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::DensePyrLkOptFlowEstimatorGpu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::DensePyrLkOptFlowEstimatorGpu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDensePyrLkOptFlowEstimatorGpu")
@@ -28090,7 +28090,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::FromFileMotionReader>, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_FromFileMotionReaderG_to_PtrOfImageMotionEstimatorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::FromFileMotionReader> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::FromFileMotionReader> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFromFileMotionReader")
@@ -28136,7 +28136,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::GaussianMotionFilter>, core::Ptr<crate::videostab::MotionFilterBase>, cv_PtrLcv_videostab_GaussianMotionFilterG_to_PtrOfMotionFilterBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::GaussianMotionFilter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::GaussianMotionFilter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGaussianMotionFilter")
@@ -28161,7 +28161,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IDenseOptFlowEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::IDenseOptFlowEstimator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::IDenseOptFlowEstimator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfIDenseOptFlowEstimator")
@@ -28186,7 +28186,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::IFrameSource> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::IFrameSource> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfIFrameSource")
@@ -28211,7 +28211,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_ILog(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::ILog> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::ILog> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfILog")
@@ -28236,7 +28236,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::IMotionStabilizer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::IMotionStabilizer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfIMotionStabilizer")
@@ -28261,7 +28261,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IOutlierRejector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::IOutlierRejector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::IOutlierRejector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfIOutlierRejector")
@@ -28286,7 +28286,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_ISparseOptFlowEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::ISparseOptFlowEstimator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::ISparseOptFlowEstimator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfISparseOptFlowEstimator")
@@ -28311,7 +28311,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::ImageMotionEstimatorBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::ImageMotionEstimatorBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfImageMotionEstimatorBase")
@@ -28336,7 +28336,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::InpainterBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::InpainterBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfInpainterBase")
@@ -28372,7 +28372,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::InpaintingPipeline>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_InpaintingPipelineG_to_PtrOfInpainterBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::InpaintingPipeline> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::InpaintingPipeline> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfInpaintingPipeline")
@@ -28408,7 +28408,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::KeypointBasedMotionEstimator>, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorG_to_PtrOfImageMotionEstimatorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::KeypointBasedMotionEstimator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::KeypointBasedMotionEstimator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfKeypointBasedMotionEstimator")
@@ -28444,7 +28444,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::KeypointBasedMotionEstimatorGpu>, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorGpuG_to_PtrOfImageMotionEstimatorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::KeypointBasedMotionEstimatorGpu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::KeypointBasedMotionEstimatorGpu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfKeypointBasedMotionEstimatorGpu")
@@ -28480,7 +28480,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::LogToStdout>, core::Ptr<crate::videostab::ILog>, cv_PtrLcv_videostab_LogToStdoutG_to_PtrOfILog }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::LogToStdout> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::LogToStdout> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLogToStdout")
@@ -28516,7 +28516,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::LpMotionStabilizer>, core::Ptr<crate::videostab::IMotionStabilizer>, cv_PtrLcv_videostab_LpMotionStabilizerG_to_PtrOfIMotionStabilizer }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::LpMotionStabilizer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::LpMotionStabilizer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLpMotionStabilizer")
@@ -28552,7 +28552,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::MaskFrameSource>, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_MaskFrameSourceG_to_PtrOfIFrameSource }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::MaskFrameSource> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::MaskFrameSource> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMaskFrameSource")
@@ -28598,7 +28598,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressor>, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorG_to_PtrOfWobbleSuppressorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMoreAccurateMotionWobbleSuppressor")
@@ -28633,7 +28633,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase>, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorBaseG_to_PtrOfWobbleSuppressorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMoreAccurateMotionWobbleSuppressorBase")
@@ -28679,7 +28679,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorGpu>, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorGpuG_to_PtrOfWobbleSuppressorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorGpu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorGpu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMoreAccurateMotionWobbleSuppressorGpu")
@@ -28704,7 +28704,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_MotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::MotionEstimatorBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::MotionEstimatorBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMotionEstimatorBase")
@@ -28740,7 +28740,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::MotionEstimatorL1>, core::Ptr<crate::videostab::MotionEstimatorBase>, cv_PtrLcv_videostab_MotionEstimatorL1G_to_PtrOfMotionEstimatorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::MotionEstimatorL1> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::MotionEstimatorL1> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMotionEstimatorL1")
@@ -28776,7 +28776,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::MotionEstimatorRansacL2>, core::Ptr<crate::videostab::MotionEstimatorBase>, cv_PtrLcv_videostab_MotionEstimatorRansacL2G_to_PtrOfMotionEstimatorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::MotionEstimatorRansacL2> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::MotionEstimatorRansacL2> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMotionEstimatorRansacL2")
@@ -28811,7 +28811,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::MotionFilterBase>, core::Ptr<crate::videostab::IMotionStabilizer>, cv_PtrLcv_videostab_MotionFilterBaseG_to_PtrOfIMotionStabilizer }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::MotionFilterBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::MotionFilterBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMotionFilterBase")
@@ -28847,7 +28847,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::MotionInpainter>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_MotionInpainterG_to_PtrOfInpainterBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::MotionInpainter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::MotionInpainter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMotionInpainter")
@@ -28883,7 +28883,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::MotionStabilizationPipeline>, core::Ptr<crate::videostab::IMotionStabilizer>, cv_PtrLcv_videostab_MotionStabilizationPipelineG_to_PtrOfIMotionStabilizer }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::MotionStabilizationPipeline> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::MotionStabilizationPipeline> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMotionStabilizationPipeline")
@@ -28919,7 +28919,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::NullDeblurer>, core::Ptr<crate::videostab::DeblurerBase>, cv_PtrLcv_videostab_NullDeblurerG_to_PtrOfDeblurerBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::NullDeblurer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::NullDeblurer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNullDeblurer")
@@ -28955,7 +28955,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::NullFrameSource>, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_NullFrameSourceG_to_PtrOfIFrameSource }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::NullFrameSource> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::NullFrameSource> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNullFrameSource")
@@ -28991,7 +28991,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::NullInpainter>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_NullInpainterG_to_PtrOfInpainterBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::NullInpainter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::NullInpainter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNullInpainter")
@@ -29027,7 +29027,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::NullLog>, core::Ptr<crate::videostab::ILog>, cv_PtrLcv_videostab_NullLogG_to_PtrOfILog }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::NullLog> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::NullLog> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNullLog")
@@ -29063,7 +29063,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::NullOutlierRejector>, core::Ptr<crate::videostab::IOutlierRejector>, cv_PtrLcv_videostab_NullOutlierRejectorG_to_PtrOfIOutlierRejector }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::NullOutlierRejector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::NullOutlierRejector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNullOutlierRejector")
@@ -29099,7 +29099,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::NullWobbleSuppressor>, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_NullWobbleSuppressorG_to_PtrOfWobbleSuppressorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::NullWobbleSuppressor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::NullWobbleSuppressor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfNullWobbleSuppressor")
@@ -29145,7 +29145,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::OnePassStabilizer>, core::Ptr<crate::videostab::StabilizerBase>, cv_PtrLcv_videostab_OnePassStabilizerG_to_PtrOfStabilizerBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::OnePassStabilizer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::OnePassStabilizer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfOnePassStabilizer")
@@ -29171,7 +29171,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_PyrLkOptFlowEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPyrLkOptFlowEstimatorBase")
@@ -29217,7 +29217,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimator>, core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorG_to_PtrOfPyrLkOptFlowEstimatorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSparsePyrLkOptFlowEstimator")
@@ -29263,7 +29263,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimatorGpu>, core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorGpuG_to_PtrOfPyrLkOptFlowEstimatorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimatorGpu> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimatorGpu> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSparsePyrLkOptFlowEstimatorGpu")
@@ -29288,7 +29288,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_StabilizerBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::StabilizerBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::StabilizerBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStabilizerBase")
@@ -29324,7 +29324,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::ToFileMotionWriter>, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_ToFileMotionWriterG_to_PtrOfImageMotionEstimatorBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::ToFileMotionWriter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::ToFileMotionWriter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfToFileMotionWriter")
@@ -29360,7 +29360,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::TranslationBasedLocalOutlierRejector>, core::Ptr<crate::videostab::IOutlierRejector>, cv_PtrLcv_videostab_TranslationBasedLocalOutlierRejectorG_to_PtrOfIOutlierRejector }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::TranslationBasedLocalOutlierRejector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::TranslationBasedLocalOutlierRejector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTranslationBasedLocalOutlierRejector")
@@ -29406,7 +29406,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::TwoPassStabilizer>, core::Ptr<crate::videostab::StabilizerBase>, cv_PtrLcv_videostab_TwoPassStabilizerG_to_PtrOfStabilizerBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::TwoPassStabilizer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::TwoPassStabilizer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTwoPassStabilizer")
@@ -29442,7 +29442,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::VideoFileSource>, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_VideoFileSourceG_to_PtrOfIFrameSource }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::VideoFileSource> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::VideoFileSource> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfVideoFileSource")
@@ -29478,7 +29478,7 @@ mod videostab_types {
 
 	ptr_cast_base! { core::Ptr<crate::videostab::WeightingDeblurer>, core::Ptr<crate::videostab::DeblurerBase>, cv_PtrLcv_videostab_WeightingDeblurerG_to_PtrOfDeblurerBase }
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::WeightingDeblurer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::WeightingDeblurer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfWeightingDeblurer")
@@ -29503,7 +29503,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::videostab::WobbleSuppressorBase> {
+	impl ::core::fmt::Debug for core::Ptr<crate::videostab::WobbleSuppressorBase> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfWobbleSuppressorBase")
@@ -29554,7 +29554,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::AKAZE>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_AKAZEG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::AKAZE> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::AKAZE> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAKAZE")
@@ -29599,7 +29599,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::AffineFeature2D>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_AffineFeature2DG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::AffineFeature2D> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::AffineFeature2D> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAffineFeature2D")
@@ -29644,7 +29644,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::AgastFeatureDetector>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_AgastFeatureDetectorG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::AgastFeatureDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::AgastFeatureDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAgastFeatureDetector")
@@ -29689,7 +29689,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::BEBLID>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_BEBLIDG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::BEBLID> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::BEBLID> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBEBLID")
@@ -29734,7 +29734,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::BRISK>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_BRISKG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::BRISK> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::BRISK> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBRISK")
@@ -29779,7 +29779,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::BoostDesc>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_BoostDescG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::BoostDesc> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::BoostDesc> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBoostDesc")
@@ -29824,7 +29824,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_BriefDescriptorExtractorG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBriefDescriptorExtractor")
@@ -29869,7 +29869,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::DAISY>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_DAISYG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::DAISY> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::DAISY> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDAISY")
@@ -29914,7 +29914,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::FREAK>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_FREAKG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::FREAK> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::FREAK> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFREAK")
@@ -29959,7 +29959,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_HarrisLaplaceFeatureDetectorG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfHarrisLaplaceFeatureDetector")
@@ -30004,7 +30004,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::KAZE>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_KAZEG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::KAZE> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::KAZE> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfKAZE")
@@ -30049,7 +30049,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::LATCH>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_LATCHG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::LATCH> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::LATCH> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLATCH")
@@ -30094,7 +30094,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::LUCID>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_LUCIDG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::LUCID> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::LUCID> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLUCID")
@@ -30139,7 +30139,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::MSDDetector>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_MSDDetectorG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::MSDDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::MSDDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfMSDDetector")
@@ -30174,7 +30174,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::PCTSignatures>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_PCTSignaturesG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::PCTSignatures> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::PCTSignatures> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPCTSignatures")
@@ -30209,7 +30209,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::PCTSignaturesSQFD>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_PCTSignaturesSQFDG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::PCTSignaturesSQFD> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::PCTSignaturesSQFD> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfPCTSignaturesSQFD")
@@ -30254,7 +30254,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::SURF>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_SURFG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::SURF> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::SURF> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSURF")
@@ -30280,7 +30280,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_SURF_CUDA(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::SURF_CUDA> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::SURF_CUDA> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSURF_CUDA")
@@ -30337,7 +30337,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::StarDetector>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_StarDetectorG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::StarDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::StarDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStarDetector")
@@ -30392,7 +30392,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::TBMR>, core::Ptr<crate::xfeatures2d::AffineFeature2D>, cv_PtrLcv_xfeatures2d_TBMRG_to_PtrOfAffineFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::TBMR> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::TBMR> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTBMR")
@@ -30438,7 +30438,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::TEBLID>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_TEBLIDG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::TEBLID> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::TEBLID> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTEBLID")
@@ -30483,7 +30483,7 @@ mod xfeatures2d_types {
 
 	ptr_cast_base! { core::Ptr<crate::xfeatures2d::VGG>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_xfeatures2d_VGGG_to_PtrOfFeature2D }
 
-	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::VGG> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xfeatures2d::VGG> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfVGG")
@@ -30554,7 +30554,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_AdaptiveManifoldFilterG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::AdaptiveManifoldFilter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::AdaptiveManifoldFilter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfAdaptiveManifoldFilter")
@@ -30590,7 +30590,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::ContourFitting>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_ContourFittingG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::ContourFitting> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::ContourFitting> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfContourFitting")
@@ -30625,7 +30625,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::DTFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_DTFilterG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::DTFilter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::DTFilter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDTFilter")
@@ -30660,7 +30660,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::DisparityFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_DisparityFilterG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::DisparityFilter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::DisparityFilter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDisparityFilter")
@@ -30705,7 +30705,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::DisparityWLSFilter>, core::Ptr<crate::ximgproc::DisparityFilter>, cv_PtrLcv_ximgproc_DisparityWLSFilterG_to_PtrOfDisparityFilter }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::DisparityWLSFilter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::DisparityWLSFilter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDisparityWLSFilter")
@@ -30750,7 +30750,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::EdgeAwareInterpolator>, core::Ptr<crate::ximgproc::SparseMatchInterpolator>, cv_PtrLcv_ximgproc_EdgeAwareInterpolatorG_to_PtrOfSparseMatchInterpolator }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::EdgeAwareInterpolator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::EdgeAwareInterpolator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEdgeAwareInterpolator")
@@ -30785,7 +30785,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::EdgeBoxes>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_EdgeBoxesG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::EdgeBoxes> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::EdgeBoxes> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEdgeBoxes")
@@ -30820,7 +30820,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::EdgeDrawing>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_EdgeDrawingG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::EdgeDrawing> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::EdgeDrawing> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfEdgeDrawing")
@@ -30856,7 +30856,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::FastBilateralSolverFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_FastBilateralSolverFilterG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::FastBilateralSolverFilter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::FastBilateralSolverFilter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFastBilateralSolverFilter")
@@ -30891,7 +30891,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::FastGlobalSmootherFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_FastGlobalSmootherFilterG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::FastGlobalSmootherFilter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::FastGlobalSmootherFilter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFastGlobalSmootherFilter")
@@ -30926,7 +30926,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::FastLineDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_FastLineDetectorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::FastLineDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::FastLineDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfFastLineDetector")
@@ -30961,7 +30961,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::GraphSegmentation>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_GraphSegmentationG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::GraphSegmentation> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::GraphSegmentation> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGraphSegmentation")
@@ -30996,7 +30996,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::GuidedFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_GuidedFilterG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::GuidedFilter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::GuidedFilter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGuidedFilter")
@@ -31031,7 +31031,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::RFFeatureGetter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_RFFeatureGetterG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::RFFeatureGetter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::RFFeatureGetter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRFFeatureGetter")
@@ -31076,7 +31076,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::RICInterpolator>, core::Ptr<crate::ximgproc::SparseMatchInterpolator>, cv_PtrLcv_ximgproc_RICInterpolatorG_to_PtrOfSparseMatchInterpolator }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::RICInterpolator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::RICInterpolator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRICInterpolator")
@@ -31111,7 +31111,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::RidgeDetectionFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_RidgeDetectionFilterG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::RidgeDetectionFilter> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::RidgeDetectionFilter> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfRidgeDetectionFilter")
@@ -31146,7 +31146,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::ScanSegment>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_ScanSegmentG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::ScanSegment> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::ScanSegment> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfScanSegment")
@@ -31181,7 +31181,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentation>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentation> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentation> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSelectiveSearchSegmentation")
@@ -31216,7 +31216,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSelectiveSearchSegmentationStrategy")
@@ -31261,7 +31261,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor>, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColorG_to_PtrOfSelectiveSearchSegmentationStrategy }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSelectiveSearchSegmentationStrategyColor")
@@ -31306,7 +31306,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill>, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFillG_to_PtrOfSelectiveSearchSegmentationStrategy }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSelectiveSearchSegmentationStrategyFill")
@@ -31351,7 +31351,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultipleG_to_PtrOfSelectiveSearchSegmentationStrategy }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSelectiveSearchSegmentationStrategyMultiple")
@@ -31396,7 +31396,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize>, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySizeG_to_PtrOfSelectiveSearchSegmentationStrategy }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSelectiveSearchSegmentationStrategySize")
@@ -31441,7 +31441,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTextureG_to_PtrOfSelectiveSearchSegmentationStrategy }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSelectiveSearchSegmentationStrategyTexture")
@@ -31476,7 +31476,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::SparseMatchInterpolator>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SparseMatchInterpolatorG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SparseMatchInterpolator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::SparseMatchInterpolator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSparseMatchInterpolator")
@@ -31511,7 +31511,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::StructuredEdgeDetection>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_StructuredEdgeDetectionG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::StructuredEdgeDetection> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::StructuredEdgeDetection> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfStructuredEdgeDetection")
@@ -31546,7 +31546,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::SuperpixelLSC>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SuperpixelLSCG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SuperpixelLSC> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::SuperpixelLSC> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSuperpixelLSC")
@@ -31581,7 +31581,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::SuperpixelSEEDS>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SuperpixelSEEDSG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SuperpixelSEEDS> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::SuperpixelSEEDS> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSuperpixelSEEDS")
@@ -31616,7 +31616,7 @@ mod ximgproc_types {
 
 	ptr_cast_base! { core::Ptr<crate::ximgproc::SuperpixelSLIC>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SuperpixelSLICG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SuperpixelSLIC> {
+	impl ::core::fmt::Debug for core::Ptr<crate::ximgproc::SuperpixelSLIC> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSuperpixelSLIC")
@@ -31678,7 +31678,7 @@ mod xobjdetect_types {
 
 	ptr_cast_base! { core::Ptr<crate::xobjdetect::BaseCascadeClassifier>, core::Ptr<core::Algorithm>, cv_PtrLcv_BaseCascadeClassifierG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::xobjdetect::BaseCascadeClassifier> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xobjdetect::BaseCascadeClassifier> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBaseCascadeClassifier")
@@ -31703,7 +31703,7 @@ mod xobjdetect_types {
 		#[inline] fn as_raw_mut_BaseCascadeClassifier_MaskGenerator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::xobjdetect::BaseCascadeClassifier_MaskGenerator> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xobjdetect::BaseCascadeClassifier_MaskGenerator> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfBaseCascadeClassifier_MaskGenerator")
@@ -31728,7 +31728,7 @@ mod xobjdetect_types {
 		#[inline] fn as_raw_mut_DetectionBasedTracker_IDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::xobjdetect::DetectionBasedTracker_IDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xobjdetect::DetectionBasedTracker_IDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfDetectionBasedTracker_IDetector")
@@ -31753,7 +31753,7 @@ mod xobjdetect_types {
 		#[inline] fn as_raw_mut_WBDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::xobjdetect::WBDetector> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xobjdetect::WBDetector> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfWBDetector")
@@ -31882,7 +31882,7 @@ mod xphoto_types {
 
 	ptr_cast_base! { core::Ptr<crate::xphoto::GrayworldWB>, core::Ptr<crate::xphoto::WhiteBalancer>, cv_PtrLcv_xphoto_GrayworldWBG_to_PtrOfWhiteBalancer }
 
-	impl std::fmt::Debug for core::Ptr<crate::xphoto::GrayworldWB> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xphoto::GrayworldWB> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGrayworldWB")
@@ -31927,7 +31927,7 @@ mod xphoto_types {
 
 	ptr_cast_base! { core::Ptr<crate::xphoto::LearningBasedWB>, core::Ptr<crate::xphoto::WhiteBalancer>, cv_PtrLcv_xphoto_LearningBasedWBG_to_PtrOfWhiteBalancer }
 
-	impl std::fmt::Debug for core::Ptr<crate::xphoto::LearningBasedWB> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xphoto::LearningBasedWB> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfLearningBasedWB")
@@ -31972,7 +31972,7 @@ mod xphoto_types {
 
 	ptr_cast_base! { core::Ptr<crate::xphoto::SimpleWB>, core::Ptr<crate::xphoto::WhiteBalancer>, cv_PtrLcv_xphoto_SimpleWBG_to_PtrOfWhiteBalancer }
 
-	impl std::fmt::Debug for core::Ptr<crate::xphoto::SimpleWB> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xphoto::SimpleWB> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfSimpleWB")
@@ -32017,7 +32017,7 @@ mod xphoto_types {
 
 	ptr_cast_base! { core::Ptr<crate::xphoto::TonemapDurand>, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_xphoto_TonemapDurandG_to_PtrOfTonemap }
 
-	impl std::fmt::Debug for core::Ptr<crate::xphoto::TonemapDurand> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xphoto::TonemapDurand> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTonemapDurand")
@@ -32052,7 +32052,7 @@ mod xphoto_types {
 
 	ptr_cast_base! { core::Ptr<crate::xphoto::WhiteBalancer>, core::Ptr<core::Algorithm>, cv_PtrLcv_xphoto_WhiteBalancerG_to_PtrOfAlgorithm }
 
-	impl std::fmt::Debug for core::Ptr<crate::xphoto::WhiteBalancer> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xphoto::WhiteBalancer> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfWhiteBalancer")
@@ -32083,7 +32083,7 @@ mod xstereo_types {
 		#[inline] fn as_raw_mut_QuasiDenseStereo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl std::fmt::Debug for core::Ptr<crate::xstereo::QuasiDenseStereo> {
+	impl ::core::fmt::Debug for core::Ptr<crate::xstereo::QuasiDenseStereo> {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfQuasiDenseStereo")

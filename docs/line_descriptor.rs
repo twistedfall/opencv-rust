@@ -680,7 +680,7 @@ pub mod line_descriptor {
 
 	}
 
-	impl std::fmt::Debug for BinaryDescriptor {
+	impl ::core::fmt::Debug for BinaryDescriptor {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BinaryDescriptor")
@@ -825,7 +825,7 @@ pub mod line_descriptor {
 
 	}
 
-	impl std::fmt::Debug for BinaryDescriptor_Params {
+	impl ::core::fmt::Debug for BinaryDescriptor_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BinaryDescriptor_Params")
@@ -1317,7 +1317,7 @@ pub mod line_descriptor {
 
 	}
 
-	impl std::fmt::Debug for BinaryDescriptorMatcher {
+	impl ::core::fmt::Debug for BinaryDescriptorMatcher {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BinaryDescriptorMatcher")
@@ -1625,7 +1625,7 @@ pub mod line_descriptor {
 
 	}
 
-	impl std::fmt::Debug for LSDDetector {
+	impl ::core::fmt::Debug for LSDDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LSDDetector")

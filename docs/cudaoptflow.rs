@@ -283,7 +283,7 @@ pub mod cudaoptflow {
 
 	}
 
-	impl std::fmt::Debug for CUDA_BroxOpticalFlow {
+	impl ::core::fmt::Debug for CUDA_BroxOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_BroxOpticalFlow")
@@ -398,7 +398,7 @@ pub mod cudaoptflow {
 
 	}
 
-	impl std::fmt::Debug for CUDA_DenseOpticalFlow {
+	impl ::core::fmt::Debug for CUDA_DenseOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_DenseOpticalFlow")
@@ -573,7 +573,7 @@ pub mod cudaoptflow {
 
 	}
 
-	impl std::fmt::Debug for CUDA_DensePyrLKOpticalFlow {
+	impl ::core::fmt::Debug for CUDA_DensePyrLKOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_DensePyrLKOpticalFlow")
@@ -829,7 +829,7 @@ pub mod cudaoptflow {
 
 	}
 
-	impl std::fmt::Debug for CUDA_FarnebackOpticalFlow {
+	impl ::core::fmt::Debug for CUDA_FarnebackOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_FarnebackOpticalFlow")
@@ -1002,7 +1002,7 @@ pub mod cudaoptflow {
 
 	}
 
-	impl std::fmt::Debug for CUDA_NvidiaHWOpticalFlow {
+	impl ::core::fmt::Debug for CUDA_NvidiaHWOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_NvidiaHWOpticalFlow")
@@ -1168,7 +1168,7 @@ pub mod cudaoptflow {
 
 	}
 
-	impl std::fmt::Debug for CUDA_NvidiaOpticalFlow_1_0 {
+	impl ::core::fmt::Debug for CUDA_NvidiaOpticalFlow_1_0 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_NvidiaOpticalFlow_1_0")
@@ -1440,7 +1440,7 @@ pub mod cudaoptflow {
 
 	}
 
-	impl std::fmt::Debug for CUDA_NvidiaOpticalFlow_2_0 {
+	impl ::core::fmt::Debug for CUDA_NvidiaOpticalFlow_2_0 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_NvidiaOpticalFlow_2_0")
@@ -1762,7 +1762,7 @@ pub mod cudaoptflow {
 
 	}
 
-	impl std::fmt::Debug for CUDA_OpticalFlowDual_TVL1 {
+	impl ::core::fmt::Debug for CUDA_OpticalFlowDual_TVL1 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_OpticalFlowDual_TVL1")
@@ -1892,7 +1892,7 @@ pub mod cudaoptflow {
 
 	}
 
-	impl std::fmt::Debug for CUDA_SparseOpticalFlow {
+	impl ::core::fmt::Debug for CUDA_SparseOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_SparseOpticalFlow")
@@ -2068,7 +2068,7 @@ pub mod cudaoptflow {
 
 	}
 
-	impl std::fmt::Debug for CUDA_SparsePyrLKOpticalFlow {
+	impl ::core::fmt::Debug for CUDA_SparsePyrLKOpticalFlow {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_SparsePyrLKOpticalFlow")

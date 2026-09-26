@@ -2055,7 +2055,7 @@ pub mod imgcodecs {
 		}
 	}
 
-	impl std::fmt::Debug for Animation {
+	impl ::core::fmt::Debug for Animation {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Animation")
@@ -2209,7 +2209,7 @@ pub mod imgcodecs {
 
 	}
 
-	impl std::fmt::Debug for ImageCollection {
+	impl ::core::fmt::Debug for ImageCollection {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ImageCollection")
@@ -2297,7 +2297,7 @@ pub mod imgcodecs {
 
 	}
 
-	impl std::fmt::Debug for ImageCollection_iterator {
+	impl ::core::fmt::Debug for ImageCollection_iterator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ImageCollection_iterator")

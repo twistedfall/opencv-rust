@@ -542,9 +542,9 @@ pub mod cudalegacy {
 	/// * min_inlier_count: 100
 	/// * inliers: NULL
 	#[inline]
-	pub fn solve_pnp_ransac(object: &impl core::MatTraitConst, image: &impl core::MatTraitConst, camera_mat: &impl core::MatTraitConst, dist_coef: &impl core::MatTraitConst, rvec: &mut impl core::MatTrait, tvec: &mut impl core::MatTrait, use_extrinsic_guess: bool, num_iters: i32, max_dist: f32, min_inlier_count: i32, inliers: &mut core::Vector<i32>) -> Result<()> {
+	pub fn solve_pnp_ransac(object: &impl core::MatTraitConst, image: &impl core::MatTraitConst, camera_mat: &impl core::MatTraitConst, dist_coef: &impl core::MatTraitConst, rvec: &mut impl core::MatTrait, tvec: &mut impl core::MatTrait, use_extrinsic_guess: bool, num_iters: i32, max_dist: f32, min_inlier_count: i32, inliers: Option<&mut core::Vector<i32>>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_solvePnPRansac_const_MatR_const_MatR_const_MatR_const_MatR_MatR_MatR_bool_int_float_int_vectorLintGX(object.as_raw_Mat(), image.as_raw_Mat(), camera_mat.as_raw_Mat(), dist_coef.as_raw_Mat(), rvec.as_raw_mut_Mat(), tvec.as_raw_mut_Mat(), use_extrinsic_guess, num_iters, max_dist, min_inlier_count, inliers.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_solvePnPRansac_const_MatR_const_MatR_const_MatR_const_MatR_MatR_MatR_bool_int_float_int_vectorLintGX(object.as_raw_Mat(), image.as_raw_Mat(), camera_mat.as_raw_Mat(), dist_coef.as_raw_Mat(), rvec.as_raw_mut_Mat(), tvec.as_raw_mut_Mat(), use_extrinsic_guess, num_iters, max_dist, min_inlier_count, inliers.map_or(::core::ptr::null_mut(), |inliers| inliers.as_raw_mut_VectorOfi32()), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -621,7 +621,7 @@ pub mod cudalegacy {
 
 	}
 
-	impl std::fmt::Debug for CUDA_BackgroundSubtractorFGD {
+	impl ::core::fmt::Debug for CUDA_BackgroundSubtractorFGD {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_BackgroundSubtractorFGD")
@@ -898,7 +898,7 @@ pub mod cudalegacy {
 
 	}
 
-	impl std::fmt::Debug for CUDA_BackgroundSubtractorGMG {
+	impl ::core::fmt::Debug for CUDA_BackgroundSubtractorGMG {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_BackgroundSubtractorGMG")
@@ -1183,7 +1183,7 @@ pub mod cudalegacy {
 
 	}
 
-	impl std::fmt::Debug for CUDA_FGDParams {
+	impl ::core::fmt::Debug for CUDA_FGDParams {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_FGDParams")
@@ -1288,7 +1288,7 @@ pub mod cudalegacy {
 		}
 	}
 
-	impl std::fmt::Debug for CUDA_FastOpticalFlowBM {
+	impl ::core::fmt::Debug for CUDA_FastOpticalFlowBM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_FastOpticalFlowBM")
@@ -1358,7 +1358,7 @@ pub mod cudalegacy {
 
 	}
 
-	impl std::fmt::Debug for CUDA_ImagePyramid {
+	impl ::core::fmt::Debug for CUDA_ImagePyramid {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CUDA_ImagePyramid")
