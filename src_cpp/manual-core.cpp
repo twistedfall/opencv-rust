@@ -4,28 +4,16 @@ template struct Result<void*>;
 template struct Result<cv::Size>;
 template struct Result<const unsigned char*>;
 
-template<typename T> inline void ocvrs_input_array(const T* instance, Result<void*>* ocvrs_return) {
+template<typename Array, typename T> inline void ocvrs_array(T* instance, Result<void*>* ocvrs_return) {
 	try {
-		Ok<void*>(new cv::_InputArray(*instance), ocvrs_return);
-	} OCVRS_CATCH(ocvrs_return)
-}
-
-template<typename T> inline void ocvrs_output_array(T* instance, Result<void*>* ocvrs_return) {
-	try {
-		Ok<void*>(new cv::_OutputArray(*instance), ocvrs_return);
-	} OCVRS_CATCH(ocvrs_return)
-}
-
-template<typename T> inline void ocvrs_input_output_array(T* instance, Result<void*>* ocvrs_return) {
-	try {
-		Ok<void*>(new cv::_InputOutputArray(*instance), ocvrs_return);
+		Ok<void*>(new Array(*instance), ocvrs_return);
 	} OCVRS_CATCH(ocvrs_return)
 }
 
 #define ocvrs_ioa(base) \
-	void cv_##base##_input_array(const cv::base* instance, Result<void*>* ocvrs_return) { return ocvrs_input_array(instance, ocvrs_return); } \
-	void cv_##base##_output_array(cv::base* instance, Result<void*>* ocvrs_return) { return ocvrs_output_array(instance, ocvrs_return); } \
-	void cv_##base##_input_output_array(cv::base* instance, Result<void*>* ocvrs_return) { return ocvrs_input_output_array(instance, ocvrs_return); }
+	void cv_##base##_input_array(const cv::base* instance, Result<void*>* ocvrs_return) { return ocvrs_array<cv::_InputArray>(instance, ocvrs_return); } \
+	void cv_##base##_output_array(cv::base* instance, Result<void*>* ocvrs_return) { return ocvrs_array<cv::_OutputArray>(instance, ocvrs_return); } \
+	void cv_##base##_input_output_array(cv::base* instance, Result<void*>* ocvrs_return) { return ocvrs_array<cv::_InputOutputArray>(instance, ocvrs_return); }
 
 #define ocvrs_ioa_df(base) \
 	ocvrs_ioa(base##d) \
@@ -39,10 +27,14 @@ template<typename T> inline void ocvrs_input_output_array(T* instance, Result<vo
 	ocvrs_ioa(base##s) \
 	ocvrs_ioa(base##w)
 
+namespace cv {
+	using Vec18d = Vec<double, 18>;
+}
+
 extern "C" {
-	void cv_InputArray_input_array(cv::_InputArray* instance, Result<void*>* ocvrs_return) { return ocvrs_input_array(instance, ocvrs_return); }
-	void cv_OutputArray_output_array(cv::_OutputArray* instance, Result<void*>* ocvrs_return) { return ocvrs_output_array(instance, ocvrs_return); }
-	void cv_InputOutputArray_input_output_array(cv::_InputOutputArray* instance, Result<void*>* ocvrs_return) { return ocvrs_input_output_array(instance, ocvrs_return); }
+	void cv_InputArray_input_array(const cv::_InputArray* instance, Result<void*>* ocvrs_return) { return ocvrs_array<cv::_InputArray>(instance, ocvrs_return); }
+	void cv_OutputArray_output_array(cv::_OutputArray* instance, Result<void*>* ocvrs_return) { return ocvrs_array<cv::_OutputArray>(instance, ocvrs_return); }
+	void cv_InputOutputArray_input_output_array(cv::_InputOutputArray* instance, Result<void*>* ocvrs_return) { return ocvrs_array<cv::_InputOutputArray>(instance, ocvrs_return); }
 
 	ocvrs_ioa_df(Matx12)
 	ocvrs_ioa_df(Matx13)
@@ -75,7 +67,5 @@ extern "C" {
 
 	ocvrs_ioa(Vec8i)
 
-	void cv_Vec18d_input_array(cv::Vec<double, 18>* instance, Result<void*>* ocvrs_return) { return ocvrs_input_array(instance, ocvrs_return); }
-	void cv_Vec18d_output_array(cv::Vec<double, 18>* instance, Result<void*>* ocvrs_return) { return ocvrs_output_array(instance, ocvrs_return); }
-	void cv_Vec18d_input_output_array(cv::Vec<double, 18>* instance, Result<void*>* ocvrs_return) { return ocvrs_input_output_array(instance, ocvrs_return); }
+	ocvrs_ioa(Vec18d)
 }

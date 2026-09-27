@@ -1,5 +1,5 @@
+use core::fmt::Write;
 use std::borrow::Cow;
-use std::fmt::Write;
 use std::sync::LazyLock;
 
 use percent_encoding::{NON_ALPHANUMERIC, utf8_percent_encode};

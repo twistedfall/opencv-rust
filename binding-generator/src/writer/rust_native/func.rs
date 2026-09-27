@@ -1,8 +1,8 @@
+use core::fmt::Write;
+use core::iter;
+use core::iter::{Chain, Once};
 use std::borrow::Cow;
 use std::collections::HashMap;
-use std::fmt::Write;
-use std::iter;
-use std::iter::{Chain, Once};
 use std::rc::Rc;
 use std::sync::LazyLock;
 use std::vec::IntoIter;

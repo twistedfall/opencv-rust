@@ -281,12 +281,7 @@ fn write_lines<T: AsRef<[u8]>>(mut out: impl Write, mut v: Vec<(String, T)>) -> 
 
 fn ensure_filename_length(file_name: &mut String, reserve: usize) {
 	const MAX_FILENAME_LEN: usize = 255;
-
-	let max_length = MAX_FILENAME_LEN - reserve;
-
-	if file_name.len() > max_length {
-		*file_name = file_name[..max_length].to_string();
-	}
+	file_name.truncate(MAX_FILENAME_LEN - reserve);
 }
 
 fn rust_disambiguate_names<'tu, 'ge>(

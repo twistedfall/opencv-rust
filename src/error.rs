@@ -2,10 +2,11 @@
 //!
 //! Provides the [`Error`] type that encapsulates the error code and message from OpenCV and the corresponding [`Result`] alias.
 
-use std::char::TryFromCharError;
 use std::ffi::NulError;
-use std::fmt;
-use std::num::TryFromIntError;
+
+use ::core::char::TryFromCharError;
+use ::core::fmt;
+use ::core::num::TryFromIntError;
 
 use crate::core;
 

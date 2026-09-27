@@ -1,6 +1,6 @@
+use core::fmt;
+use core::ops::ControlFlow;
 use std::borrow::Cow;
-use std::fmt;
-use std::ops::ControlFlow;
 use std::rc::Rc;
 
 use clang::{Entity, EntityKind};

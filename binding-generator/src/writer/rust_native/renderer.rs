@@ -1,5 +1,5 @@
+use core::fmt::Write;
 use std::borrow::Cow;
-use std::fmt::Write;
 
 use crate::renderer::TypeRefRenderer;
 use crate::type_ref::{

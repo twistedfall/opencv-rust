@@ -1,5 +1,5 @@
-use std::fmt;
-use std::fmt::Write;
+use core::fmt;
+use core::fmt::Write;
 
 /// Represents a Rust lifetime. Call `next()` to get the next lifetime (supported for `Automatic`, `Elided` and static lifetimes).
 ///

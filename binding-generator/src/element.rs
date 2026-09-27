@@ -1,6 +1,6 @@
+use core::fmt;
 use std::borrow::Cow;
 use std::ffi::OsStr;
-use std::fmt;
 use std::path::{Component, Path};
 
 use clang::{Accessibility, Entity, EntityKind};

@@ -1,7 +1,7 @@
+use core::fmt;
+use core::ops::ControlFlow;
 use std::borrow::Cow;
 use std::borrow::Cow::{Borrowed, Owned};
-use std::fmt;
-use std::ops::ControlFlow;
 use std::rc::Rc;
 use std::sync::LazyLock;
 
@@ -645,7 +645,8 @@ impl Element for Func<'_, '_> {
 						// filter out postfix version of ++ and --: https://en.cppreference.com/w/cpp/language/operator_incdec
 						OperatorKind::Incr | OperatorKind::Decr if self.num_arguments() == 1 => true,
 						_ => false,
-					}) || kind.as_constructor().is_some_and(|cls| cls.is_abstract()) // don't generate constructors of abstract classes
+					})
+					|| kind.as_constructor().is_some_and(|cls| cls.is_abstract()) // don't generate constructors of abstract classes
 			})
 	}
 

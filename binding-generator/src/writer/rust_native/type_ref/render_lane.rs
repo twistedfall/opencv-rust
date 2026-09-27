@@ -1,5 +1,5 @@
+use core::fmt;
 use std::borrow::Cow;
-use std::fmt;
 
 pub use array::{FixedArrayRenderLane, VariableArrayRenderLane};
 pub use by_move::ByMoveRenderLane;
@@ -71,9 +71,9 @@ pub enum RenderLane<'tu, 'ge> {
 	SimpleClass(SimpleClassRenderLane<'tu, 'ge>),
 }
 
-impl RenderLane<'_, '_> {
+impl<'slf> RenderLane<'slf, 'slf> {
 	#[inline(always)]
-	pub fn to_dyn(&self) -> &dyn RenderLaneTrait {
+	pub fn to_dyn(&self) -> &(dyn RenderLaneTrait + 'slf) {
 		match self {
 			RenderLane::Primitive(rlane) => rlane,
 			RenderLane::InString(rlane) => rlane,

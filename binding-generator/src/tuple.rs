@@ -1,5 +1,5 @@
+use core::fmt;
 use std::borrow::Cow;
-use std::fmt;
 
 use clang::{Entity, Type};
 

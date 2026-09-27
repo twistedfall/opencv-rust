@@ -1,6 +1,6 @@
+use core::fmt;
+use core::fmt::Display;
 use std::borrow::Cow;
-use std::fmt;
-use std::fmt::Display;
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 

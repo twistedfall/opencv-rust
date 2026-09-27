@@ -41,7 +41,7 @@ fn core_factory() -> FuncExclude {
 		"cv_fastFree_voidX",                                              // manual memory allocation
 		"cv_fastMalloc_size_t",                                           // manual memory allocation
 		"cv_format_const_charX",                                          // accepts varargs
-		"cv_hconcat_const_MatX_size_t_const__OutputArrayR",               // duplicate of cv_hconcat_VectorOfMat_Mat, but with pointers
+		"cv_hconcat_const_MatX_size_t_const__OutputArrayR", // duplicate of cv_hconcat_VectorOfMat_Mat, but with pointers
 		"cv_hfloat_hfloat", // looks like it's not zeroing the memory (failed test with macOS framework build)
 		"cv_merge_const_MatX_size_t_const__OutputArrayR", // duplicate of cv_merge_const__InputArrayR_const__OutputArrayR, but with pointers
 		"cv_mixChannels_const_MatX_size_t_MatX_size_t_const_intX_size_t", // duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
@@ -77,7 +77,7 @@ fn dnn_factory() -> FuncExclude {
 	HashSet::from([
 		"cv_dnn_DictValue_DictValue_const_StringR", // effectively duplicate of cv_dnn_DictValue_DictValue_const_charX
 		"cv_dnn_Layer_finalize_const_vectorLMatXGR_vectorLMatGR", // dup of cv_dnn_Layer_finalize_const__InputArrayR_const__OutputArrayR
-		"cv_dnn_Model_operator_cv_dnn_Net_const",   // fixme, should generate fine, it's a dup of get_network_() anyway
+		"cv_dnn_Model_operator_cv_dnn_Net_const", // fixme, should generate fine, it's a dup of get_network_() anyway
 		// those function are marked as CV_EXPORTS, but they are missing from the shared libraries
 		"cv_dnn_BackendNode_BackendNode_int",
 	])
@@ -111,7 +111,7 @@ fn imgproc_factory() -> FuncExclude {
 		"cv_calcBackProject_const_MatX_int_const_intX_const__InputArrayR_const__OutputArrayR_const_floatXX_double_bool", // slice pointers
 		"cv_calcHist_const_MatX_int_const_intX_const__InputArrayR_SparseMatR_int_const_intX_const_floatXX_bool_bool", // slice pointers
 		"cv_calcHist_const_MatX_int_const_intX_const__InputArrayR_const__OutputArrayR_int_const_intX_const_floatXX_bool_bool", // slice pointers
-		"cv_fillConvexPoly_MatR_const_PointX_int_const_ScalarR_int_int",                                                       // 3.4
+		"cv_fillConvexPoly_MatR_const_PointX_int_const_ScalarR_int_int", // 3.4
 		"cv_fillConvexPoly_const__InputOutputArrayR_const_PointX_int_const_ScalarR_int_int",
 		"cv_fillPoly_MatR_const_PointXX_const_intX_int_const_ScalarR_int_int_Point", // 3.4
 		"cv_fillPoly_const__InputOutputArrayR_const_PointXX_const_intX_int_const_ScalarR_int_int_Point",

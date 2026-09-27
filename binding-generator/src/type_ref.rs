@@ -1,6 +1,6 @@
+use core::fmt;
 use std::borrow::Cow;
 use std::collections::HashSet;
-use std::fmt;
 use std::rc::Rc;
 
 use Cow::{Borrowed, Owned};
