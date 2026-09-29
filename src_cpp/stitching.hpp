@@ -10,14 +10,12 @@
 
 	// generate a minimal stub for GpuMat so that C++ code compiles, but because of the missing export macro the bindings for the
 	// functions using this type will not be generated
-	namespace cv {
-		namespace cuda {
-			class GpuMat {
-				public:
-				void upload(InputArray arr);
-				void download(OutputArray dst) const;
-			};
-		}
+	namespace cv::cuda {
+		class GpuMat {
+			public:
+			void upload(InputArray arr);
+			void download(OutputArray dst) const;
+		};
 	}
 #endif
 

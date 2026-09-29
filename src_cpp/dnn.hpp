@@ -1,7 +1,6 @@
 #include "ocvrs_common.hpp"
 #include <opencv2/dnn.hpp>
-#if (CV_VERSION_MAJOR == 4) \
-	|| (CV_VERSION_MAJOR == 5)
+#if __has_include(<opencv2/dnn/version.hpp>) /* 4.0+ */
 	#include <opencv2/dnn/version.hpp>
 #endif
 #include <opencv2/dnn/all_layers.hpp>

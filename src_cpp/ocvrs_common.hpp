@@ -1,6 +1,9 @@
 #ifndef __OCVRS_COMMON_HPP__
 #define __OCVRS_COMMON_HPP__
 
+#include <type_traits>
+#include <utility>
+
 #include <opencv2/cvconfig.h>
 // defining HAVE_VA starts to rely on <va/va.h> for VADisplay and VASurfaceID instead of OpenCV stubs, and we stop generating
 // bindings for the functions that use them
@@ -24,9 +27,9 @@
 #define OCVRS_HANDLE(code, msg, return_name) Err(code, msg, return_name)
 
 #define OCVRS_CATCH(return_name) \
-catch (cv::Exception& e) { \
+catch (const cv::Exception& e) { \
 	OCVRS_HANDLE(e.code, e.what(), return_name); \
-} catch (std::exception &e) { \
+} catch (const std::exception& e) { \
 	OCVRS_HANDLE(cv::Error::StsError, e.what(), return_name); \
 } catch (...) { \
 	OCVRS_HANDLE(cv::Error::StsError, "Unspecified error, neither from OpenCV nor from std", return_name); \
@@ -50,26 +53,31 @@ template<typename T> struct Result {
 	T result;
 };
 
-struct ResultVoid {
+template<> struct Result<void> {
 	int error_code;
 	void* error_msg;
 };
 
 template<typename T, typename R> inline void Ok(T result, Result<R>* ocvrs_return) {
 	ocvrs_return->error_code = 0;
-	ocvrs_return->error_msg = NULL;
-	ocvrs_return->result = *const_cast<R*>(&result);
+	ocvrs_return->error_msg = nullptr;
+	if constexpr (std::is_same_v<T, R>) {
+		ocvrs_return->result = std::move(result);
+	} else {
+		// allows passing e.g. `const cv::Mat*` into `Result<cv::Mat*>`
+		ocvrs_return->result = const_cast<R>(result);
+	}
 }
 
-inline void Ok(ResultVoid* ocvrs_return) {
+inline void Ok(Result<void>* ocvrs_return) {
 	ocvrs_return->error_code = 0;
-	ocvrs_return->error_msg = NULL;
+	ocvrs_return->error_msg = nullptr;
 }
 
 template<typename T> inline void Err(int code, const char* msg, T* ocvrs_return) {
 	ocvrs_return->error_code = code;
 	ocvrs_return->error_msg = ocvrs_create_string(msg);
-	// it's ok to leave result uninitialized because the Rust implementation only assumes it as init if error_msg is NULL
+	// it's ok to leave result uninitialized because the Rust implementation only assumes it as init if error_msg is nullptr
 }
 
 #endif

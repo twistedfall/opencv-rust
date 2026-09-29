@@ -494,15 +494,11 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let (ret, ret_cast) = cpp_return_map(&return_type_ref, "ret", kind.as_constructor().is_some());
 
 		// exception handling
-		let func_try = if return_kind.is_infallible() {
-			""
+		// func_noexcept: an exception must not unwind into Rust, for infallible functions it's better to terminate than to have UB
+		let (func_noexcept, func_try, catch) = if return_kind.is_infallible() {
+			(" noexcept", "", "".to_string())
 		} else {
-			"try {"
-		};
-		let catch = if return_kind.is_infallible() {
-			"".to_string()
-		} else {
-			format!("}} OCVRS_CATCH({ocv_ret_name});")
+			("", "try {", format!("}} OCVRS_CATCH({ocv_ret_name});"))
 		};
 
 		TPL.interpolate(&HashMap::from([
@@ -511,6 +507,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			("return_spec", &return_spec),
 			("identifier", &identifier),
 			("decl_args", &decl_args.join(", ")),
+			("noexcept", func_noexcept),
 			("try", func_try),
 			("pre_call_args", &pre_call_args.join("\n")),
 			("call", &cpp_call(self, &kind, &call_args, &return_type_ref)),
@@ -805,14 +802,16 @@ pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: 
 		let ret_source = return_type.source();
 		let out = ret_source.kind().as_class().filter(|cls| cls.is_abstract()).map_or_else(
 			|| {
-				// todo implement higher count if it's needed
-				let deref_count = return_type.kind().as_pointer().map_or(0, |_| 1);
-				format!(
-					"new {typ}({:*<deref_count$}{name})",
-					"",
-					typ = ret_source.cpp_name(CppNameStyle::Reference)
-				)
-				.into()
+				let typ = ret_source.cpp_name(CppNameStyle::Reference);
+				// `true` when `name` refers to a local variable holding the returned value, i.e. moved instead of copied
+				let name_is_owned_local = !name.starts_with("*") && !name.starts_with("&");
+				if name_is_owned_local && return_kind.as_pointer_reference_move().is_none() {
+					format!("new {typ}(std::move({name}))").into()
+				} else {
+					// todo implement higher count if it's needed
+					let deref_count = return_kind.as_pointer().map_or(0, |_| 1);
+					format!("new {typ}({:*<deref_count$}{name})", "").into()
+				}
 			},
 			|_| name.into(),
 		);

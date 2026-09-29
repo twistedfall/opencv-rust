@@ -1,6 +1,6 @@
 {{attributes_begin}}
 {{debug}}
-{{return_spec}} {{identifier}}({{decl_args}}) {
+{{return_spec}} {{identifier}}({{decl_args}}){{noexcept}} {
 	{{try}}
 		{{pre_call_args}}
 		{{call}}

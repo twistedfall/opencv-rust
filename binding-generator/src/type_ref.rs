@@ -456,11 +456,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn cpp_extern_return_fallible(&self) -> Cow<'_, str> {
-		if self.kind().is_void() {
-			"ResultVoid".into()
-		} else {
-			format!("Result<{ext}>", ext = self.cpp_extern_return()).into()
-		}
+		format!("Result<{ext}>", ext = self.cpp_extern_return()).into()
 	}
 }
 

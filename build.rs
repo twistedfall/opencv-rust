@@ -256,7 +256,6 @@ fn make_compiler(opencv: &Library, ffi_export_suffix: &str) -> cc::Build {
 		.flag_if_supported("-Wno-comment") // multi-line comment in include/opencv4/opencv2/mcc/ccm.hpp:73:25
 		.flag_if_supported("-Wno-uninitialized") // /usr/include/opencv4/opencv2/gapi/render/render_types.hpp:164:30: warning: 'ret.cv::gapi::wip::draw::Circle::radius' is used uninitialized
 		// crate warnings
-		.flag_if_supported("-Wno-unused-variable") // ‘cv::CV_VERSION_OCVRS_OVERRIDE’ defined but not used
 		.flag_if_supported("-Wno-ignored-qualifiers") // type qualifiers ignored on function return type in const size_t cv_MatStep_operator___const_int(const cv::MatStep* instance, int i)
 		.flag_if_supported("-Wno-return-type-c-linkage") // warning: 'cv_aruco_CharucoBoard_getChessboardSize_const' has C-linkage specified, but returns user-defined type 'Result<cv::Size>' (aka 'Result<Size_<int> >') which is incompatible with C
 		.flag_if_supported("-Wno-overloaded-virtual")
