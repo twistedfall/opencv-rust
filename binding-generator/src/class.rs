@@ -493,7 +493,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 					};
 					let mut write_yield = if read_write.is_write()
 						&& constness_filter.is_none_or(|c| c.is_mut())
-						&& !fld_type_ref.constness().is_const()
+						&& fld_type_ref.constness().is_mut()
 						&& !fld_type_kind.as_fixed_array().is_some()
 					{
 						let (first_letter, rest) = fld_declname.capitalize_first_ascii_letter().expect("Empty fld_declname");
@@ -506,7 +506,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								rust_module,
 								[Field::new_desc(FieldDesc {
 									cpp_fullname: "val".into(),
-									type_ref: fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
+									type_ref: fld_type_ref.as_ref().clone(),
 									default_value: fld.default_value().map(|v| v.into()),
 								})],
 								TypeRefDesc::void(),

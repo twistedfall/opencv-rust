@@ -105,6 +105,31 @@ pub enum Indirection {
 	Reference,
 }
 
+#[derive(Clone, Copy, Debug)]
+pub enum Ownership {
+	Owned,
+	OwnedButConst,
+	BorrowedByPointer,
+	BorrowedByReference,
+}
+
+impl Ownership {
+	pub fn owned(constness: Constness) -> Self {
+		match constness {
+			Constness::Const => Ownership::OwnedButConst,
+			Constness::Mut => Ownership::Owned,
+		}
+	}
+
+	pub fn from_indirection(indirection: Indirection, constness: Constness) -> Self {
+		match indirection {
+			Indirection::None => Ownership::owned(constness),
+			Indirection::Pointer => Ownership::BorrowedByPointer,
+			Indirection::Reference => Ownership::BorrowedByReference,
+		}
+	}
+}
+
 impl fmt::Debug for RenderLane<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		match self {

@@ -670,12 +670,15 @@ fn cpp_call(f: &Func, kind: &FuncKind, call_args: &[String], return_type_ref: &T
 		LazyLock::new(|| "{{ret_with_type}};".compile_interpolation());
 
 	static BOXED_CONSTRUCTOR_TPL: LazyLock<CompiledInterpolation> =
-		LazyLock::new(|| "{{ret_type}}* ret = new {{ret_type}}({{args}});".compile_interpolation());
+		LazyLock::new(|| "{{ret_type_mut}}* ret = new {{ret_type_mut}}({{args}});".compile_interpolation());
 
 	let call_args = call_args.join(", ");
 
 	let return_type_kind = return_type_ref.kind();
 	let ret_type = return_type_ref.cpp_name(CppNameStyle::Reference);
+	// heap objects are always allocated as non-const, even if exposed as const, to allow moving from them later
+	let return_type_ref_mut = return_type_ref.clone().with_inherent_constness(Constness::Mut);
+	let ret_type_mut = return_type_ref_mut.cpp_name(CppNameStyle::Reference);
 	let ret_with_type = return_type_ref.cpp_name_ext(CppNameStyle::Reference, "ret", true);
 	let doref = if return_type_kind.as_fixed_array().is_some() {
 		"&"
@@ -705,6 +708,7 @@ fn cpp_call(f: &Func, kind: &FuncKind, call_args: &[String], return_type_ref: &T
 
 	let mut inter_vars = HashMap::from([
 		("ret_type", ret_type),
+		("ret_type_mut", ret_type_mut),
 		("ret_with_type", ret_with_type),
 		("doref", doref.into()),
 		("args", call_args.as_str().into()),
@@ -808,7 +812,13 @@ pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: 
 		let ret_source = return_type.source();
 		let out = ret_source.kind().as_class().filter(|cls| cls.is_abstract()).map_or_else(
 			|| {
-				let typ = ret_source.cpp_name(CppNameStyle::Reference);
+				// heap objects are always allocated as non-const, even if exposed as const, to allow moving from them later
+				let typ = ret_source
+					.as_ref()
+					.clone()
+					.with_inherent_constness(Constness::Mut)
+					.cpp_name(CppNameStyle::Reference)
+					.into_owned();
 				// `true` when `name` refers to a local variable holding the returned value, i.e. moved instead of copied
 				let name_is_owned_local = !name.starts_with(['*', '&']);
 				if name_is_owned_local && return_kind.as_pointer_reference_move().is_none() {

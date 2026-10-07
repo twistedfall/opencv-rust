@@ -18,7 +18,8 @@ use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::type_ref::render_lane::{
 	ByMoveRenderLane, CppPassByVoidPtrRenderLane, EnumRenderLane, FixedArrayRenderLane, FunctionRenderLane, InStringRenderLane,
 	IndirectRenderLane, Indirection, InputArrayRenderLane, InputOutputArrayRenderLane, OutStringRenderLane, OutputArrayRenderLane,
-	PrimitiveRenderLane, RenderLane, SimpleClassRenderLane, TraitClassRenderLane, VariableArrayRenderLane, VoidSliceRenderLane,
+	Ownership, PrimitiveRenderLane, RenderLane, SimpleClassRenderLane, TraitClassRenderLane, VariableArrayRenderLane,
+	VoidSliceRenderLane,
 };
 use crate::{StringExt, SupportedModule};
 
@@ -76,7 +77,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				}
 				TypeRefKind::Function(f) => RenderLane::Function(FunctionRenderLane::from_non_canonical_func(self.clone(), f)),
 				TypeRefKind::StdVector(_) | TypeRefKind::SmartPtr(_) | TypeRefKind::StdTuple(_) => RenderLane::CppPassByVoidPtr(
-					CppPassByVoidPtrRenderLane::from_non_canonical_indirection(self.clone(), Indirection::None),
+					CppPassByVoidPtrRenderLane::from_non_canonical(self.clone(), Ownership::owned(self.constness())),
 				),
 				TypeRefKind::Array(elem, None) => {
 					if matches!(self.type_hint(), TypeRefTypeHint::Slice(Nullability::NotNullable)) && elem.kind().is_void() {
@@ -92,9 +93,9 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				)),
 				TypeRefKind::RValueReference(inner) => {
 					if inner.kind().extern_pass_kind().is_by_void_ptr() {
-						RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical_indirection(
+						RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical(
 							self.clone(),
-							Indirection::None,
+							Ownership::owned(self.constness()),
 						))
 					} else {
 						RenderLane::ByMove(ByMoveRenderLane::from_non_canonical(self.clone()))
@@ -121,10 +122,10 @@ impl TypeRefExt for TypeRef<'_, '_> {
 									indirection,
 								))
 							} else if cls_kind.is_trait() {
-								RenderLane::TraitClass(TraitClassRenderLane::from_non_canonical_class_indirection(
+								RenderLane::TraitClass(TraitClassRenderLane::from_non_canonical_class(
 									self.clone(),
 									cls,
-									indirection,
+									Ownership::from_indirection(indirection, self.constness()),
 								))
 							} else {
 								unreachable!("Class shouldn't be generated, kind: {cls_kind:?}, class: {cls:?}")
@@ -135,9 +136,12 @@ impl TypeRefExt for TypeRef<'_, '_> {
 							enm,
 							indirection,
 						)),
-						kind if kind.extern_pass_kind().is_by_void_ptr() => RenderLane::CppPassByVoidPtr(
-							CppPassByVoidPtrRenderLane::from_non_canonical_indirection(self.clone(), indirection),
-						),
+						kind if kind.extern_pass_kind().is_by_void_ptr() => {
+							RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical(
+								self.clone(),
+								Ownership::from_indirection(indirection, self.constness()),
+							))
+						}
 						_ => RenderLane::Indirect(IndirectRenderLane::from_non_canonical_indirection(self.clone(), indirection)),
 					}
 				}
