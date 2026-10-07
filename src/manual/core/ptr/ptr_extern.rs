@@ -70,8 +70,8 @@ macro_rules! ptr_cast_base {
 	($type: ty, $base: ty, $extern_convert: ident) => {
 		impl ::core::convert::From<$type> for $base {
 			#[inline]
-			fn from(s: $type) -> Self {
-				unsafe { Self::from_raw($crate::sys::$extern_convert(s.into_raw())) }
+			fn from(mut s: $type) -> Self {
+				unsafe { Self::from_raw($crate::sys::$extern_convert(s.as_raw_mut())) }
 			}
 		}
 	};

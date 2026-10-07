@@ -239,6 +239,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let mut pre_call_args = Vec::with_capacity(args.len());
 		let mut call_args = Vec::with_capacity(args.len() + 1);
 		let mut forward_args = Vec::with_capacity(args.len());
+		let mut post_call_args = Vec::with_capacity(args.len());
 		let mut post_success_call_args = Vec::with_capacity(args.len());
 		let (return_lifetime, return_lt_from_args) = return_lifetime(&kind, &args, &return_type_ref);
 		if let Some(cls) = as_instance_method {
@@ -309,6 +310,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			} else {
 				call_args.push(render_lane.rust_arg_func_call(&name));
 			}
+			post_call_args.push_code_line_if_not_empty(render_lane.rust_arg_post_call(&name));
 			post_success_call_args.push_code_line_if_not_empty(render_lane.rust_arg_post_success_call(&name));
 			forward_args.push(name);
 		}
@@ -361,6 +363,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 				&rust_call(self, &identifier, &name, &call_args, &forward_args, return_kind),
 			),
 			("return_handle", &ret_handle),
+			("post_call_args", &post_call_args.join("\n")),
 			("post_success_call_args", &post_success_call_args.join("\n")),
 			("return", ret_stmt),
 		]))

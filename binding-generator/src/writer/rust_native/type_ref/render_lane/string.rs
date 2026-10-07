@@ -106,7 +106,7 @@ impl RenderLaneTrait for OutStringRenderLane<'_, '_> {
 		format!("&mut {name}_via")
 	}
 
-	fn rust_arg_post_success_call(&self, name: &str) -> String {
+	fn rust_arg_post_call(&self, name: &str) -> String {
 		format!("string_arg_output_receive!({name}_via => {name})")
 	}
 

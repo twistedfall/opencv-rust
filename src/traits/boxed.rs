@@ -125,8 +125,11 @@ macro_rules! boxed_cast_descendant {
 
 			#[inline]
 			fn try_from(s: $type) -> $crate::Result<Self> {
-				let ret = unsafe { $crate::sys::$extern_convert(s.into_raw()) };
+				let raw = s.into_raw();
+				let ret = unsafe { $crate::sys::$extern_convert(raw) };
 				if ret.is_null() {
+					// If the cast fails, we need to free the original pointer to avoid memory leak
+					unsafe { <$type>::from_raw(raw) };
 					Err($crate::Error::new(
 						$crate::core::StsBadArg,
 						format!(

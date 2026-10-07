@@ -37,6 +37,9 @@ pub trait RenderLaneTrait {
 		"".to_string()
 	}
 	fn rust_arg_func_call(&self, name: &str) -> String;
+	fn rust_arg_post_call(&self, _name: &str) -> String {
+		"".to_string()
+	}
 	fn rust_arg_post_success_call(&self, _name: &str) -> String {
 		"".to_string()
 	}

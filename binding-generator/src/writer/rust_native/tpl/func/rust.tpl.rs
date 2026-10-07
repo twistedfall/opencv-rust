@@ -6,6 +6,7 @@
 	{{pre_call_args}}
 	{{return_pre_call}}
 	{{call}}
+	{{post_call_args}}
 	{{return_handle}}
 	{{post_success_call_args}}
 	{{return}}
