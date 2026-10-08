@@ -1,10 +1,12 @@
 use core::fmt::Debug;
 use core::iter;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::fs::{File, OpenOptions};
 use std::io::{BufWriter, ErrorKind, Write};
 use std::path::{Path, PathBuf};
 use std::sync::LazyLock;
+use std::thread::sleep;
+use std::time::Duration;
 use std::{fs, io};
 
 use class::ClassExt;
@@ -63,6 +65,7 @@ pub struct RustNativeBindingWriter {
 	extern_classes: Entries,
 	cpp_funcs: Entries,
 	cpp_classes: Entries,
+	generated_types: HashSet<String>,
 }
 
 impl RustNativeBindingWriter {
@@ -89,6 +92,7 @@ impl RustNativeBindingWriter {
 			extern_classes: vec![],
 			cpp_funcs: vec![],
 			cpp_classes: vec![],
+			generated_types: HashSet::new(),
 		}
 	}
 
@@ -171,6 +175,9 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter {
 	fn visit_generated_type(&mut self, typ: GeneratedType) {
 		let typ = typ.as_ref();
 		let safe_id = typ.element_safe_id();
+		if self.generated_types.contains(&safe_id) {
+			return;
+		}
 
 		fn write_generated_type(types_dir: &Path, typ: &str, safe_id: &str, generator: impl FnOnce() -> String) {
 			let suffix = format!(".type.{typ}");
@@ -178,28 +185,39 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter {
 			ensure_filename_length(&mut file_name, suffix.len());
 			file_name.push_str(&suffix);
 			let path = types_dir.join(file_name);
-			let file = OpenOptions::new().create_new(true).write(true).open(&path);
-			match file {
-				Ok(mut file) => {
-					let gener = generator();
-					if !gener.is_empty() {
-						file
-							.write_all(gener.as_bytes())
-							.unwrap_or_else(|e| panic!("Can't write to {typ} file: {e}"));
-					} else {
-						drop(file);
-						fs::remove_file(&path).expect("Can't remove empty file");
+			// 10 exponential retry delays from 1 ms to 512 ms, totaling 1,023 ms.
+			let mut retry_delays = (0..10).map(|retry| Duration::from_millis(1 << retry));
+			let file = loop {
+				match OpenOptions::new().create_new(true).write(true).open(&path) {
+					Err(e) if e.kind() == ErrorKind::AlreadyExists => return, // expected, we need to exclusively create file
+					Err(e) if e.kind() == ErrorKind::PermissionDenied => {
+						// happens sporadically on Windows, retry
+						if let Some(delay) = retry_delays.next() {
+							sleep(delay);
+						} else {
+							break Err(e);
+						}
 					}
+					result => break result,
 				}
-				Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ }
-				Err(e) if e.kind() == ErrorKind::PermissionDenied => { /* happens sporadically on Windows */ }
-				Err(e) => panic!("Error while creating file: {} for {typ} generated type: {e}", path.display()),
+			};
+			let mut file =
+				file.unwrap_or_else(|e| panic!("Error while creating file: {} for {typ} generated type: {e}", path.display()));
+			let gener = generator();
+			if !gener.is_empty() {
+				file
+					.write_all(gener.as_bytes())
+					.unwrap_or_else(|e| panic!("Can't write to {typ} file: {e}"));
+			} else {
+				drop(file);
+				fs::remove_file(&path).expect("Can't remove empty file");
 			}
 		}
 
 		write_generated_type(&self.out_dir, "rs", &safe_id, || typ.gen_rust(&self.opencv_version));
 		write_generated_type(&self.out_dir, "externs.rs", &safe_id, || typ.gen_rust_externs());
 		write_generated_type(&self.out_dir, "cpp", &safe_id, || typ.gen_cpp());
+		self.generated_types.insert(safe_id);
 	}
 
 	fn goodbye(mut self) {
