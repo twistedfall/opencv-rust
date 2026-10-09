@@ -522,9 +522,9 @@ pub mod surface_matching {
 
 	}
 
-	impl ::core::fmt::Debug for ICP {
+	impl fmt::Debug for ICP {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ICP")
 				.finish()
 		}
@@ -726,9 +726,9 @@ pub mod surface_matching {
 
 	}
 
-	impl ::core::fmt::Debug for PPF3DDetector {
+	impl fmt::Debug for PPF3DDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PPF3DDetector")
 				.finish()
 		}
@@ -997,9 +997,9 @@ pub mod surface_matching {
 
 	}
 
-	impl ::core::fmt::Debug for Pose3D {
+	impl fmt::Debug for Pose3D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Pose3D")
 				.field("alpha", &crate::surface_matching::Pose3DTraitConst::alpha(self))
 				.field("residual", &crate::surface_matching::Pose3DTraitConst::residual(self))
@@ -1155,9 +1155,9 @@ pub mod surface_matching {
 
 	}
 
-	impl ::core::fmt::Debug for PoseCluster3D {
+	impl fmt::Debug for PoseCluster3D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PoseCluster3D")
 				.field("pose_list", &crate::surface_matching::PoseCluster3DTraitConst::pose_list(self))
 				.field("num_votes", &crate::surface_matching::PoseCluster3DTraitConst::num_votes(self))

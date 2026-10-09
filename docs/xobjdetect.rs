@@ -475,9 +475,9 @@ pub mod xobjdetect {
 
 	}
 
-	impl ::core::fmt::Debug for BaseCascadeClassifier {
+	impl fmt::Debug for BaseCascadeClassifier {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BaseCascadeClassifier")
 				.finish()
 		}
@@ -551,9 +551,9 @@ pub mod xobjdetect {
 
 	}
 
-	impl ::core::fmt::Debug for BaseCascadeClassifier_MaskGenerator {
+	impl fmt::Debug for BaseCascadeClassifier_MaskGenerator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BaseCascadeClassifier_MaskGenerator")
 				.finish()
 		}
@@ -1008,9 +1008,9 @@ pub mod xobjdetect {
 
 	}
 
-	impl ::core::fmt::Debug for CascadeClassifier {
+	impl fmt::Debug for CascadeClassifier {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CascadeClassifier")
 				.finish()
 		}
@@ -1157,9 +1157,9 @@ pub mod xobjdetect {
 
 	}
 
-	impl ::core::fmt::Debug for DetectionBasedTracker {
+	impl fmt::Debug for DetectionBasedTracker {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DetectionBasedTracker")
 				.finish()
 		}
@@ -1262,9 +1262,9 @@ pub mod xobjdetect {
 		}
 	}
 
-	impl ::core::fmt::Debug for DetectionBasedTracker_ExtObject {
+	impl fmt::Debug for DetectionBasedTracker_ExtObject {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DetectionBasedTracker_ExtObject")
 				.field("id", &crate::xobjdetect::DetectionBasedTracker_ExtObjectTraitConst::id(self))
 				.field("location", &crate::xobjdetect::DetectionBasedTracker_ExtObjectTraitConst::location(self))
@@ -1391,9 +1391,9 @@ pub mod xobjdetect {
 
 	}
 
-	impl ::core::fmt::Debug for DetectionBasedTracker_IDetector {
+	impl fmt::Debug for DetectionBasedTracker_IDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DetectionBasedTracker_IDetector")
 				.finish()
 		}
@@ -1473,9 +1473,9 @@ pub mod xobjdetect {
 
 	}
 
-	impl ::core::fmt::Debug for DetectionBasedTracker_Parameters {
+	impl fmt::Debug for DetectionBasedTracker_Parameters {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DetectionBasedTracker_Parameters")
 				.field("max_track_lifetime", &crate::xobjdetect::DetectionBasedTracker_ParametersTraitConst::max_track_lifetime(self))
 				.field("min_detection_period", &crate::xobjdetect::DetectionBasedTracker_ParametersTraitConst::min_detection_period(self))
@@ -1584,9 +1584,9 @@ pub mod xobjdetect {
 		}
 	}
 
-	impl ::core::fmt::Debug for DetectionROI {
+	impl fmt::Debug for DetectionROI {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DetectionROI")
 				.field("scale", &crate::xobjdetect::DetectionROITraitConst::scale(self))
 				.field("locations", &crate::xobjdetect::DetectionROITraitConst::locations(self))
@@ -2636,9 +2636,9 @@ pub mod xobjdetect {
 
 	}
 
-	impl ::core::fmt::Debug for HOGDescriptor {
+	impl fmt::Debug for HOGDescriptor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HOGDescriptor")
 				.field("win_size", &crate::xobjdetect::HOGDescriptorTraitConst::win_size(self))
 				.field("block_size", &crate::xobjdetect::HOGDescriptorTraitConst::block_size(self))
@@ -2733,9 +2733,9 @@ pub mod xobjdetect {
 
 	}
 
-	impl ::core::fmt::Debug for SimilarRects {
+	impl fmt::Debug for SimilarRects {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SimilarRects")
 				.field("eps", &crate::xobjdetect::SimilarRectsTraitConst::eps(self))
 				.finish()
@@ -2847,9 +2847,9 @@ pub mod xobjdetect {
 
 	}
 
-	impl ::core::fmt::Debug for WBDetector {
+	impl fmt::Debug for WBDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WBDetector")
 				.finish()
 		}

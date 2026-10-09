@@ -1322,9 +1322,9 @@ pub mod optflow {
 
 	}
 
-	impl ::core::fmt::Debug for DenseRLOFOpticalFlow {
+	impl fmt::Debug for DenseRLOFOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DenseRLOFOpticalFlow")
 				.finish()
 		}
@@ -1774,9 +1774,9 @@ pub mod optflow {
 
 	}
 
-	impl ::core::fmt::Debug for DualTVL1OpticalFlow {
+	impl fmt::Debug for DualTVL1OpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DualTVL1OpticalFlow")
 				.finish()
 		}
@@ -1889,9 +1889,9 @@ pub mod optflow {
 		}
 	}
 
-	impl ::core::fmt::Debug for GPCDetails {
+	impl fmt::Debug for GPCDetails {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GPCDetails")
 				.finish()
 		}
@@ -2041,9 +2041,9 @@ pub mod optflow {
 		}
 	}
 
-	impl ::core::fmt::Debug for GPCPatchDescriptor {
+	impl fmt::Debug for GPCPatchDescriptor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GPCPatchDescriptor")
 				.field("feature", &crate::optflow::GPCPatchDescriptorTraitConst::feature(self))
 				.finish()
@@ -2154,9 +2154,9 @@ pub mod optflow {
 		}
 	}
 
-	impl ::core::fmt::Debug for GPCPatchSample {
+	impl fmt::Debug for GPCPatchSample {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GPCPatchSample")
 				.field("ref_", &crate::optflow::GPCPatchSampleTraitConst::ref_(self))
 				.field("pos", &crate::optflow::GPCPatchSampleTraitConst::pos(self))
@@ -2322,9 +2322,9 @@ pub mod optflow {
 		}
 	}
 
-	impl ::core::fmt::Debug for GPCTrainingSamples {
+	impl fmt::Debug for GPCTrainingSamples {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GPCTrainingSamples")
 				.finish()
 		}
@@ -2465,9 +2465,9 @@ pub mod optflow {
 		}
 	}
 
-	impl ::core::fmt::Debug for GPCTree {
+	impl fmt::Debug for GPCTree {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GPCTree")
 				.finish()
 		}
@@ -2629,9 +2629,9 @@ pub mod optflow {
 
 	}
 
-	impl ::core::fmt::Debug for OpticalFlowPCAFlow {
+	impl fmt::Debug for OpticalFlowPCAFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("OpticalFlowPCAFlow")
 				.finish()
 		}
@@ -2743,9 +2743,9 @@ pub mod optflow {
 
 	}
 
-	impl ::core::fmt::Debug for PCAPrior {
+	impl fmt::Debug for PCAPrior {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PCAPrior")
 				.finish()
 		}
@@ -3277,9 +3277,9 @@ pub mod optflow {
 
 	}
 
-	impl ::core::fmt::Debug for RLOFOpticalFlowParameter {
+	impl fmt::Debug for RLOFOpticalFlowParameter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RLOFOpticalFlowParameter")
 				.field("solver_type", &crate::optflow::RLOFOpticalFlowParameterTraitConst::solver_type(self))
 				.field("support_region_type", &crate::optflow::RLOFOpticalFlowParameterTraitConst::support_region_type(self))
@@ -3449,9 +3449,9 @@ pub mod optflow {
 
 	}
 
-	impl ::core::fmt::Debug for SparseRLOFOpticalFlow {
+	impl fmt::Debug for SparseRLOFOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SparseRLOFOpticalFlow")
 				.finish()
 		}

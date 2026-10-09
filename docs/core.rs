@@ -8039,9 +8039,9 @@ pub mod core {
 		input_array_arg!(_m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_buildOptionsAddMatrixDescription_StringR_const_StringR_const__InputArrayR(&mut build_options_via, name.opencv_as_extern(), _m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		string_arg_output_receive!(build_options_via => build_options);
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		string_arg_output_receive!(build_options_via => build_options);
 		Ok(ret)
 	}
 
@@ -8138,10 +8138,10 @@ pub mod core {
 		string_arg_output_send!(via buf_via);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX(sdepth, ddepth, cn, &mut buf_via, ocvrs_return.as_mut_ptr()) };
+		string_arg_output_receive!(buf_via => buf);
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
-		string_arg_output_receive!(buf_via => buf);
 		Ok(ret)
 	}
 
@@ -8150,10 +8150,10 @@ pub mod core {
 		string_arg_output_send!(via buf_via);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX_size_t(sdepth, ddepth, cn, &mut buf_via, buf_size, ocvrs_return.as_mut_ptr()) };
+		string_arg_output_receive!(buf_via => buf);
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
-		string_arg_output_receive!(buf_via => buf);
 		Ok(ret)
 	}
 
@@ -9791,9 +9791,9 @@ pub mod core {
 		extern_container_arg!(default_value);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_stringR_const_stringR(node.as_raw_FileNode(), &mut value_via, default_value.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		string_arg_output_receive!(value_via => value);
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		string_arg_output_receive!(value_via => value);
 		Ok(ret)
 	}
 
@@ -12201,9 +12201,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Algorithm {
+	impl fmt::Debug for Algorithm {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Algorithm")
 				.finish()
 		}
@@ -12386,9 +12386,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for AsyncArray {
+	impl fmt::Debug for AsyncArray {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AsyncArray")
 				.finish()
 		}
@@ -12529,9 +12529,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for AsyncPromise {
+	impl fmt::Debug for AsyncPromise {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AsyncPromise")
 				.finish()
 		}
@@ -13679,9 +13679,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for CommandLineParser {
+	impl fmt::Debug for CommandLineParser {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CommandLineParser")
 				.finish()
 		}
@@ -13817,9 +13817,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for ConjGradSolver {
+	impl fmt::Debug for ConjGradSolver {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ConjGradSolver")
 				.finish()
 		}
@@ -14084,9 +14084,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for DownhillSolver {
+	impl fmt::Debug for DownhillSolver {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DownhillSolver")
 				.finish()
 		}
@@ -14313,9 +14313,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Exception {
+	impl fmt::Debug for Exception {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Exception")
 				.field("msg", &core::ExceptionTraitConst::msg(self))
 				.field("code", &core::ExceptionTraitConst::code(self))
@@ -14862,9 +14862,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for FileNode {
+	impl fmt::Debug for FileNode {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FileNode")
 				.field("block_idx", &core::FileNodeTraitConst::block_idx(self))
 				.field("ofs", &core::FileNodeTraitConst::ofs(self))
@@ -15042,9 +15042,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for FileNodeIterator {
+	impl fmt::Debug for FileNodeIterator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FileNodeIterator")
 				.finish()
 		}
@@ -15614,9 +15614,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for FileStorage {
+	impl fmt::Debug for FileStorage {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FileStorage")
 				.field("state", &core::FileStorageTraitConst::state(self))
 				.field("elname", &core::FileStorageTraitConst::elname(self))
@@ -15681,9 +15681,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Formatted {
+	impl fmt::Debug for Formatted {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Formatted")
 				.finish()
 		}
@@ -15857,9 +15857,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Formatter {
+	impl fmt::Debug for Formatter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Formatter")
 				.finish()
 		}
@@ -15932,9 +15932,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for Hamming {
+	impl fmt::Debug for Hamming {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Hamming")
 				.finish()
 		}
@@ -16324,9 +16324,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for KeyPoint {
+	impl fmt::Debug for KeyPoint {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("KeyPoint")
 				.field("pt", &core::KeyPointTraitConst::pt(self))
 				.field("size", &core::KeyPointTraitConst::size(self))
@@ -16578,9 +16578,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for LDA {
+	impl fmt::Debug for LDA {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LDA")
 				.finish()
 		}
@@ -21751,9 +21751,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for MatConstIterator {
+	impl fmt::Debug for MatConstIterator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MatConstIterator")
 				.field("m", &core::MatConstIteratorTraitConst::m(self))
 				.field("elem_size", &core::MatConstIteratorTraitConst::elem_size(self))
@@ -22201,9 +22201,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for MatExpr {
+	impl fmt::Debug for MatExpr {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MatExpr")
 				.field("flags", &core::MatExprTraitConst::flags(self))
 				.field("a", &core::MatExprTraitConst::a(self))
@@ -22521,9 +22521,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for MatOp {
+	impl fmt::Debug for MatOp {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MatOp")
 				.finish()
 		}
@@ -23152,9 +23152,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for MatStep {
+	impl fmt::Debug for MatStep {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MatStep")
 				.field("p", &core::MatStepTraitConst::p(self))
 				.finish()
@@ -23222,9 +23222,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Matx_AddOp {
+	impl fmt::Debug for Matx_AddOp {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Matx_AddOp")
 				.finish()
 		}
@@ -23290,9 +23290,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Matx_DivOp {
+	impl fmt::Debug for Matx_DivOp {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Matx_DivOp")
 				.finish()
 		}
@@ -23358,9 +23358,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Matx_MatMulOp {
+	impl fmt::Debug for Matx_MatMulOp {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Matx_MatMulOp")
 				.finish()
 		}
@@ -23426,9 +23426,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Matx_MulOp {
+	impl fmt::Debug for Matx_MulOp {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Matx_MulOp")
 				.finish()
 		}
@@ -23494,9 +23494,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Matx_ScaleOp {
+	impl fmt::Debug for Matx_ScaleOp {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Matx_ScaleOp")
 				.finish()
 		}
@@ -23562,9 +23562,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Matx_SubOp {
+	impl fmt::Debug for Matx_SubOp {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Matx_SubOp")
 				.finish()
 		}
@@ -23630,9 +23630,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Matx_TOp {
+	impl fmt::Debug for Matx_TOp {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Matx_TOp")
 				.finish()
 		}
@@ -23765,9 +23765,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for MinProblemSolver {
+	impl fmt::Debug for MinProblemSolver {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MinProblemSolver")
 				.finish()
 		}
@@ -23863,9 +23863,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for MinProblemSolver_Function {
+	impl fmt::Debug for MinProblemSolver_Function {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MinProblemSolver_Function")
 				.finish()
 		}
@@ -24490,9 +24490,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for PCA {
+	impl fmt::Debug for PCA {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PCA")
 				.field("eigenvectors", &core::PCATraitConst::eigenvectors(self))
 				.field("eigenvalues", &core::PCATraitConst::eigenvalues(self))
@@ -24550,9 +24550,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for ParallelLoopBody {
+	impl fmt::Debug for ParallelLoopBody {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ParallelLoopBody")
 				.finish()
 		}
@@ -25057,9 +25057,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for RNG {
+	impl fmt::Debug for RNG {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RNG")
 				.field("state", &core::RNGTraitConst::state(self))
 				.finish()
@@ -25223,9 +25223,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for RNG_MT19937 {
+	impl fmt::Debug for RNG_MT19937 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RNG_MT19937")
 				.finish()
 		}
@@ -25367,9 +25367,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Range {
+	impl fmt::Debug for Range {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Range")
 				.field("start", &core::RangeTraitConst::start(self))
 				.field("end", &core::RangeTraitConst::end(self))
@@ -25907,9 +25907,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for SVD {
+	impl fmt::Debug for SVD {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SVD")
 				.field("u", &core::SVDTraitConst::u(self))
 				.field("w", &core::SVDTraitConst::w(self))
@@ -26745,9 +26745,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for SparseMat {
+	impl fmt::Debug for SparseMat {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SparseMat")
 				.field("flags", &core::SparseMatTraitConst::flags(self))
 				.finish()
@@ -26926,9 +26926,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for SparseMat_Hdr {
+	impl fmt::Debug for SparseMat_Hdr {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SparseMat_Hdr")
 				.field("refcount", &core::SparseMat_HdrTraitConst::refcount(self))
 				.field("dims", &core::SparseMat_HdrTraitConst::dims(self))
@@ -27044,9 +27044,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for SparseMat_Node {
+	impl fmt::Debug for SparseMat_Node {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SparseMat_Node")
 				.field("hashval", &core::SparseMat_NodeTraitConst::hashval(self))
 				.field("next", &core::SparseMat_NodeTraitConst::next(self))
@@ -27218,9 +27218,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for SparseMatConstIterator {
+	impl fmt::Debug for SparseMatConstIterator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SparseMatConstIterator")
 				.field("m", &core::SparseMatConstIteratorTraitConst::m(self))
 				.field("hashidx", &core::SparseMatConstIteratorTraitConst::hashidx(self))
@@ -27338,9 +27338,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for SparseMatIterator {
+	impl fmt::Debug for SparseMatIterator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SparseMatIterator")
 				.field("m", &core::SparseMatConstIteratorTraitConst::m(self))
 				.field("hashidx", &core::SparseMatConstIteratorTraitConst::hashidx(self))
@@ -27633,9 +27633,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for TickMeter {
+	impl fmt::Debug for TickMeter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TickMeter")
 				.finish()
 		}
@@ -29851,9 +29851,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for UMatData {
+	impl fmt::Debug for UMatData {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("UMatData")
 				.field("urefcount", &core::UMatDataTraitConst::urefcount(self))
 				.field("refcount", &core::UMatDataTraitConst::refcount(self))
@@ -30792,9 +30792,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for _InputArray {
+	impl fmt::Debug for _InputArray {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("_InputArray")
 				.finish()
 		}
@@ -31061,9 +31061,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for _InputOutputArray {
+	impl fmt::Debug for _InputOutputArray {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("_InputOutputArray")
 				.finish()
 		}
@@ -31788,9 +31788,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for _OutputArray {
+	impl fmt::Debug for _OutputArray {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("_OutputArray")
 				.finish()
 		}
@@ -32053,9 +32053,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for BufferPool {
+	impl fmt::Debug for BufferPool {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BufferPool")
 				.finish()
 		}
@@ -32717,9 +32717,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for DeviceInfo {
+	impl fmt::Debug for DeviceInfo {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DeviceInfo")
 				.finish()
 		}
@@ -32847,9 +32847,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Event {
+	impl fmt::Debug for Event {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Event")
 				.finish()
 		}
@@ -32935,9 +32935,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for GpuData {
+	impl fmt::Debug for GpuData {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GpuData")
 				.field("data", &core::GpuDataTraitConst::data(self))
 				.field("size", &core::GpuDataTraitConst::size(self))
@@ -34293,9 +34293,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for GpuMat {
+	impl fmt::Debug for GpuMat {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GpuMat")
 				.field("flags", &core::GpuMatTraitConst::flags(self))
 				.field("rows", &core::GpuMatTraitConst::rows(self))
@@ -34364,9 +34364,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for GpuMat_Allocator {
+	impl fmt::Debug for GpuMat_Allocator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GpuMat_Allocator")
 				.finish()
 		}
@@ -34975,9 +34975,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for GpuMatND {
+	impl fmt::Debug for GpuMatND {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GpuMatND")
 				.field("flags", &core::GpuMatNDTraitConst::flags(self))
 				.field("dims", &core::GpuMatNDTraitConst::dims(self))
@@ -35486,9 +35486,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for HostMem {
+	impl fmt::Debug for HostMem {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HostMem")
 				.field("flags", &core::HostMemTraitConst::flags(self))
 				.field("rows", &core::HostMemTraitConst::rows(self))
@@ -35686,9 +35686,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Stream {
+	impl fmt::Debug for Stream {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Stream")
 				.finish()
 		}
@@ -35837,9 +35837,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for TargetArchs {
+	impl fmt::Debug for TargetArchs {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TargetArchs")
 				.finish()
 		}
@@ -35969,9 +35969,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_CheckContext {
+	impl fmt::Debug for Detail_CheckContext {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_CheckContext")
 				.field("func", &core::Detail_CheckContextTraitConst::func(self))
 				.field("file", &core::Detail_CheckContextTraitConst::file(self))
@@ -36262,9 +36262,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for NodeData {
+	impl fmt::Debug for NodeData {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NodeData")
 				.field("m_fun_name", &core::NodeDataTraitConst::m_fun_name(self))
 				.field("m_instr_type", &core::NodeDataTraitConst::m_instr_type(self))
@@ -36348,9 +36348,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for WriteStructContext {
+	impl fmt::Debug for WriteStructContext {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WriteStructContext")
 				.finish()
 		}
@@ -36575,10 +36575,10 @@ pub mod core {
 			string_arg_output_send!(via errmsg_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_getProg_const_ProgramSourceR_const_StringR_StringR(self.as_raw_mut_Context(), prog.as_raw_ProgramSource(), buildopt.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
+			string_arg_output_receive!(errmsg_via => errmsg);
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Program::opencv_from_extern(ret) };
-			string_arg_output_receive!(errmsg_via => errmsg);
 			Ok(ret)
 		}
 
@@ -36619,9 +36619,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for Context {
+	impl fmt::Debug for Context {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Context")
 				.finish()
 		}
@@ -36683,9 +36683,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for Context_UserContext {
+	impl fmt::Debug for Context_UserContext {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Context_UserContext")
 				.finish()
 		}
@@ -37535,9 +37535,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for Device {
+	impl fmt::Debug for Device {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Device")
 				.finish()
 		}
@@ -37699,9 +37699,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for Image2D {
+	impl fmt::Debug for Image2D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Image2D")
 				.finish()
 		}
@@ -37761,10 +37761,10 @@ pub mod core {
 			string_arg_output_send!(via errmsg_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR_const_StringR_StringX(kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
+			string_arg_output_receive!(errmsg_via => errmsg);
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
-			string_arg_output_receive!(errmsg_via => errmsg);
 			Ok(ret)
 		}
 
@@ -37900,9 +37900,9 @@ pub mod core {
 			string_arg_output_send!(via errmsg_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_create_const_charX_const_ProgramSourceR_const_StringR_StringX(self.as_raw_mut_Kernel(), kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
+			string_arg_output_receive!(errmsg_via => errmsg);
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			string_arg_output_receive!(errmsg_via => errmsg);
 			Ok(ret)
 		}
 
@@ -38118,9 +38118,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for Kernel {
+	impl fmt::Debug for Kernel {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Kernel")
 				.finish()
 		}
@@ -38491,9 +38491,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for KernelArg {
+	impl fmt::Debug for KernelArg {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("KernelArg")
 				.field("flags", &core::KernelArgTraitConst::flags(self))
 				.field("obj", &core::KernelArgTraitConst::obj(self))
@@ -38786,9 +38786,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for OpenCLExecutionContext {
+	impl fmt::Debug for OpenCLExecutionContext {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("OpenCLExecutionContext")
 				.finish()
 		}
@@ -38911,9 +38911,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for Platform {
+	impl fmt::Debug for Platform {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Platform")
 				.finish()
 		}
@@ -39094,9 +39094,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for PlatformInfo {
+	impl fmt::Debug for PlatformInfo {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PlatformInfo")
 				.finish()
 		}
@@ -39141,10 +39141,10 @@ pub mod core {
 			string_arg_output_send!(via errmsg_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_Program_const_ProgramSourceR_const_StringR_StringR(src.as_raw_ProgramSource(), buildflags.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
+			string_arg_output_receive!(errmsg_via => errmsg);
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Program::opencv_from_extern(ret) };
-			string_arg_output_receive!(errmsg_via => errmsg);
 			Ok(ret)
 		}
 
@@ -39222,9 +39222,9 @@ pub mod core {
 			string_arg_output_send!(via buf_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_write_const_StringR(self.as_raw_Program(), &mut buf_via, ocvrs_return.as_mut_ptr()) };
+			string_arg_output_receive!(buf_via => buf);
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			string_arg_output_receive!(buf_via => buf);
 			Ok(ret)
 		}
 
@@ -39275,9 +39275,9 @@ pub mod core {
 			string_arg_output_send!(via errmsg_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Program_create_const_ProgramSourceR_const_StringR_StringR(self.as_raw_mut_Program(), src.as_raw_ProgramSource(), buildflags.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
+			string_arg_output_receive!(errmsg_via => errmsg);
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			string_arg_output_receive!(errmsg_via => errmsg);
 			Ok(ret)
 		}
 
@@ -39302,9 +39302,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for Program {
+	impl fmt::Debug for Program {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Program")
 				.finish()
 		}
@@ -39588,9 +39588,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for ProgramSource {
+	impl fmt::Debug for ProgramSource {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ProgramSource")
 				.finish()
 		}
@@ -39781,9 +39781,9 @@ pub mod core {
 		}
 	}
 
-	impl ::core::fmt::Debug for Queue {
+	impl fmt::Debug for Queue {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Queue")
 				.finish()
 		}
@@ -39866,9 +39866,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Timer {
+	impl fmt::Debug for Timer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Timer")
 				.finish()
 		}
@@ -40071,9 +40071,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Arrays {
+	impl fmt::Debug for Arrays {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Arrays")
 				.finish()
 		}
@@ -40888,9 +40888,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Buffer {
+	impl fmt::Debug for Buffer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Buffer")
 				.finish()
 		}
@@ -41446,9 +41446,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for Texture2D {
+	impl fmt::Debug for Texture2D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Texture2D")
 				.finish()
 		}
@@ -41591,9 +41591,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for LogTag {
+	impl fmt::Debug for LogTag {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LogTag")
 				.field("name", &core::LogTagTraitConst::name(self))
 				.field("level", &core::LogTagTraitConst::level(self))
@@ -41719,9 +41719,9 @@ pub mod core {
 
 	}
 
-	impl ::core::fmt::Debug for OriginalClassName {
+	impl fmt::Debug for OriginalClassName {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("OriginalClassName")
 				.finish()
 		}

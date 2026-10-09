@@ -903,9 +903,9 @@ pub mod stereo {
 
 	}
 
-	impl ::core::fmt::Debug for StereoBM {
+	impl fmt::Debug for StereoBM {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("StereoBM")
 				.finish()
 		}
@@ -1101,9 +1101,9 @@ pub mod stereo {
 
 	}
 
-	impl ::core::fmt::Debug for StereoMatcher {
+	impl fmt::Debug for StereoMatcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("StereoMatcher")
 				.finish()
 		}
@@ -1394,9 +1394,9 @@ pub mod stereo {
 
 	}
 
-	impl ::core::fmt::Debug for StereoSGBM {
+	impl fmt::Debug for StereoSGBM {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("StereoSGBM")
 				.finish()
 		}

@@ -257,9 +257,9 @@ pub mod cudabgsegm {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_BackgroundSubtractorMOG {
+	impl fmt::Debug for CUDA_BackgroundSubtractorMOG {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_BackgroundSubtractorMOG")
 				.finish()
 		}
@@ -375,9 +375,9 @@ pub mod cudabgsegm {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_BackgroundSubtractorMOG2 {
+	impl fmt::Debug for CUDA_BackgroundSubtractorMOG2 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_BackgroundSubtractorMOG2")
 				.finish()
 		}

@@ -7422,9 +7422,9 @@ pub mod geometry {
 
 	}
 
-	impl ::core::fmt::Debug for LevMarq {
+	impl fmt::Debug for LevMarq {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LevMarq")
 				.finish()
 		}
@@ -7519,9 +7519,9 @@ pub mod geometry {
 
 	}
 
-	impl ::core::fmt::Debug for LevMarq_Report {
+	impl fmt::Debug for LevMarq_Report {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LevMarq_Report")
 				.field("found", &crate::geometry::LevMarq_ReportTraitConst::found(self))
 				.field("iters", &crate::geometry::LevMarq_ReportTraitConst::iters(self))
@@ -8005,9 +8005,9 @@ pub mod geometry {
 
 	}
 
-	impl ::core::fmt::Debug for LevMarq_Settings {
+	impl fmt::Debug for LevMarq_Settings {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LevMarq_Settings")
 				.field("jacobi_scaling", &crate::geometry::LevMarq_SettingsTraitConst::jacobi_scaling(self))
 				.field("up_double", &crate::geometry::LevMarq_SettingsTraitConst::up_double(self))
@@ -8331,9 +8331,9 @@ pub mod geometry {
 
 	}
 
-	impl ::core::fmt::Debug for RegionGrowing3D {
+	impl fmt::Debug for RegionGrowing3D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RegionGrowing3D")
 				.finish()
 		}
@@ -8625,9 +8625,9 @@ pub mod geometry {
 
 	}
 
-	impl ::core::fmt::Debug for SACSegmentation {
+	impl fmt::Debug for SACSegmentation {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SACSegmentation")
 				.finish()
 		}
@@ -9128,9 +9128,9 @@ pub mod geometry {
 
 	}
 
-	impl ::core::fmt::Debug for Subdiv2D {
+	impl fmt::Debug for Subdiv2D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Subdiv2D")
 				.finish()
 		}

@@ -286,9 +286,9 @@ pub mod rgbd {
 
 	}
 
-	impl ::core::fmt::Debug for ColoredKinfu_ColoredKinFu {
+	impl fmt::Debug for ColoredKinfu_ColoredKinFu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ColoredKinfu_ColoredKinFu")
 				.finish()
 		}
@@ -806,9 +806,9 @@ pub mod rgbd {
 
 	}
 
-	impl ::core::fmt::Debug for ColoredKinfu_Params {
+	impl fmt::Debug for ColoredKinfu_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ColoredKinfu_Params")
 				.field("frame_size", &crate::rgbd::ColoredKinfu_ParamsTraitConst::frame_size(self))
 				.field("rgb_frame_size", &crate::rgbd::ColoredKinfu_ParamsTraitConst::rgb_frame_size(self))
@@ -1083,9 +1083,9 @@ pub mod rgbd {
 
 	}
 
-	impl ::core::fmt::Debug for Dynafu_DynaFu {
+	impl fmt::Debug for Dynafu_DynaFu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Dynafu_DynaFu")
 				.finish()
 		}
@@ -1302,9 +1302,9 @@ pub mod rgbd {
 
 	}
 
-	impl ::core::fmt::Debug for Kinfu_KinFu {
+	impl fmt::Debug for Kinfu_KinFu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Kinfu_KinFu")
 				.finish()
 		}
@@ -1808,9 +1808,9 @@ pub mod rgbd {
 
 	}
 
-	impl ::core::fmt::Debug for Kinfu_Params {
+	impl fmt::Debug for Kinfu_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Kinfu_Params")
 				.field("frame_size", &crate::rgbd::Kinfu_ParamsTraitConst::frame_size(self))
 				.field("volume_kind", &crate::rgbd::Kinfu_ParamsTraitConst::volume_kind(self))
@@ -2117,9 +2117,9 @@ pub mod rgbd {
 		}
 	}
 
-	impl ::core::fmt::Debug for Kinfu_VolumeParams {
+	impl fmt::Debug for Kinfu_VolumeParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Kinfu_VolumeParams")
 				.field("kind", &crate::rgbd::Kinfu_VolumeParamsTraitConst::kind(self))
 				.field("resolution_x", &crate::rgbd::Kinfu_VolumeParamsTraitConst::resolution_x(self))
@@ -2306,9 +2306,9 @@ pub mod rgbd {
 
 	}
 
-	impl ::core::fmt::Debug for LargeKinfu {
+	impl fmt::Debug for LargeKinfu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LargeKinfu")
 				.finish()
 		}
@@ -2648,9 +2648,9 @@ pub mod rgbd {
 		}
 	}
 
-	impl ::core::fmt::Debug for Params {
+	impl fmt::Debug for Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Params")
 				.field("frame_size", &crate::rgbd::ParamsTraitConst::frame_size(self))
 				.field("intr", &crate::rgbd::ParamsTraitConst::intr(self))
@@ -2987,9 +2987,9 @@ pub mod rgbd {
 		}
 	}
 
-	impl ::core::fmt::Debug for VolumeParams {
+	impl fmt::Debug for VolumeParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("VolumeParams")
 				.field("kind", &crate::rgbd::VolumeParamsTraitConst::kind(self))
 				.field("resolution_x", &crate::rgbd::VolumeParamsTraitConst::resolution_x(self))
@@ -3149,9 +3149,9 @@ pub mod rgbd {
 
 	}
 
-	impl ::core::fmt::Debug for LineMod_ColorGradient {
+	impl fmt::Debug for LineMod_ColorGradient {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LineMod_ColorGradient")
 				.field("weak_threshold", &crate::rgbd::LineMod_ColorGradientTraitConst::weak_threshold(self))
 				.field("num_features", &crate::rgbd::LineMod_ColorGradientTraitConst::num_features(self))
@@ -3328,9 +3328,9 @@ pub mod rgbd {
 
 	}
 
-	impl ::core::fmt::Debug for LineMod_DepthNormal {
+	impl fmt::Debug for LineMod_DepthNormal {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LineMod_DepthNormal")
 				.field("distance_threshold", &crate::rgbd::LineMod_DepthNormalTraitConst::distance_threshold(self))
 				.field("difference_threshold", &crate::rgbd::LineMod_DepthNormalTraitConst::difference_threshold(self))
@@ -3719,9 +3719,9 @@ pub mod rgbd {
 
 	}
 
-	impl ::core::fmt::Debug for LineMod_Detector {
+	impl fmt::Debug for LineMod_Detector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LineMod_Detector")
 				.finish()
 		}
@@ -3930,9 +3930,9 @@ pub mod rgbd {
 		}
 	}
 
-	impl ::core::fmt::Debug for LineMod_Match {
+	impl fmt::Debug for LineMod_Match {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LineMod_Match")
 				.field("x", &crate::rgbd::LineMod_MatchTraitConst::x(self))
 				.field("y", &crate::rgbd::LineMod_MatchTraitConst::y(self))
@@ -4078,9 +4078,9 @@ pub mod rgbd {
 
 	}
 
-	impl ::core::fmt::Debug for LineMod_Modality {
+	impl fmt::Debug for LineMod_Modality {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LineMod_Modality")
 				.finish()
 		}
@@ -4165,9 +4165,9 @@ pub mod rgbd {
 
 	}
 
-	impl ::core::fmt::Debug for LineMod_QuantizedPyramid {
+	impl fmt::Debug for LineMod_QuantizedPyramid {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LineMod_QuantizedPyramid")
 				.finish()
 		}
@@ -4303,9 +4303,9 @@ pub mod rgbd {
 		}
 	}
 
-	impl ::core::fmt::Debug for LineMod_Template {
+	impl fmt::Debug for LineMod_Template {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LineMod_Template")
 				.field("width", &crate::rgbd::LineMod_TemplateTraitConst::width(self))
 				.field("height", &crate::rgbd::LineMod_TemplateTraitConst::height(self))

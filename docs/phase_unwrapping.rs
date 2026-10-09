@@ -109,9 +109,9 @@ pub mod phase_unwrapping {
 
 	}
 
-	impl ::core::fmt::Debug for HistogramPhaseUnwrapping {
+	impl fmt::Debug for HistogramPhaseUnwrapping {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HistogramPhaseUnwrapping")
 				.finish()
 		}
@@ -253,9 +253,9 @@ pub mod phase_unwrapping {
 
 	}
 
-	impl ::core::fmt::Debug for PhaseUnwrapping {
+	impl fmt::Debug for PhaseUnwrapping {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PhaseUnwrapping")
 				.finish()
 		}

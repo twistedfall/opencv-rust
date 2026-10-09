@@ -817,9 +817,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for Camera {
+	impl fmt::Debug for Camera {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Camera")
 				.finish()
 		}
@@ -1268,9 +1268,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for Color {
+	impl fmt::Debug for Color {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Color")
 				.finish()
 		}
@@ -1387,9 +1387,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for KeyboardEvent {
+	impl fmt::Debug for KeyboardEvent {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("KeyboardEvent")
 				.field("action", &crate::viz::KeyboardEventTraitConst::action(self))
 				.field("symbol", &crate::viz::KeyboardEventTraitConst::symbol(self))
@@ -1592,9 +1592,9 @@ pub mod viz {
 		}
 	}
 
-	impl ::core::fmt::Debug for Mesh {
+	impl fmt::Debug for Mesh {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Mesh")
 				.field("cloud", &crate::viz::MeshTraitConst::cloud(self))
 				.field("colors", &crate::viz::MeshTraitConst::colors(self))
@@ -1720,9 +1720,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for MouseEvent {
+	impl fmt::Debug for MouseEvent {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MouseEvent")
 				.field("typ", &crate::viz::MouseEventTraitConst::typ(self))
 				.field("button", &crate::viz::MouseEventTraitConst::button(self))
@@ -2534,9 +2534,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for Viz3d {
+	impl fmt::Debug for Viz3d {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Viz3d")
 				.finish()
 		}
@@ -2632,9 +2632,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WArrow {
+	impl fmt::Debug for WArrow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WArrow")
 				.finish()
 		}
@@ -2942,9 +2942,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WCameraPosition {
+	impl fmt::Debug for WCameraPosition {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WCameraPosition")
 				.finish()
 		}
@@ -3101,9 +3101,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WCircle {
+	impl fmt::Debug for WCircle {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WCircle")
 				.finish()
 		}
@@ -3277,9 +3277,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WCloud {
+	impl fmt::Debug for WCloud {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WCloud")
 				.finish()
 		}
@@ -3456,9 +3456,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WCloudCollection {
+	impl fmt::Debug for WCloudCollection {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WCloudCollection")
 				.finish()
 		}
@@ -3586,9 +3586,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WCloudNormals {
+	impl fmt::Debug for WCloudNormals {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WCloudNormals")
 				.finish()
 		}
@@ -3747,9 +3747,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WCone {
+	impl fmt::Debug for WCone {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WCone")
 				.finish()
 		}
@@ -3855,9 +3855,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WCoordinateSystem {
+	impl fmt::Debug for WCoordinateSystem {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WCoordinateSystem")
 				.finish()
 		}
@@ -3979,9 +3979,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WCube {
+	impl fmt::Debug for WCube {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WCube")
 				.finish()
 		}
@@ -4097,9 +4097,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WCylinder {
+	impl fmt::Debug for WCylinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WCylinder")
 				.finish()
 		}
@@ -4246,9 +4246,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WGrid {
+	impl fmt::Debug for WGrid {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WGrid")
 				.finish()
 		}
@@ -4381,9 +4381,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WImage3D {
+	impl fmt::Debug for WImage3D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WImage3D")
 				.finish()
 		}
@@ -4484,9 +4484,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WImageOverlay {
+	impl fmt::Debug for WImageOverlay {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WImageOverlay")
 				.finish()
 		}
@@ -4596,9 +4596,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WLine {
+	impl fmt::Debug for WLine {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WLine")
 				.finish()
 		}
@@ -4719,9 +4719,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WMesh {
+	impl fmt::Debug for WMesh {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WMesh")
 				.finish()
 		}
@@ -4827,9 +4827,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WPaintedCloud {
+	impl fmt::Debug for WPaintedCloud {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WPaintedCloud")
 				.finish()
 		}
@@ -4984,9 +4984,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WPlane {
+	impl fmt::Debug for WPlane {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WPlane")
 				.finish()
 		}
@@ -5108,9 +5108,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WPolyLine {
+	impl fmt::Debug for WPolyLine {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WPolyLine")
 				.finish()
 		}
@@ -5224,9 +5224,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WSphere {
+	impl fmt::Debug for WSphere {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WSphere")
 				.finish()
 		}
@@ -5367,9 +5367,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WText {
+	impl fmt::Debug for WText {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WText")
 				.finish()
 		}
@@ -5514,9 +5514,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WText3D {
+	impl fmt::Debug for WText3D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WText3D")
 				.finish()
 		}
@@ -5646,9 +5646,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WTrajectory {
+	impl fmt::Debug for WTrajectory {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WTrajectory")
 				.finish()
 		}
@@ -5817,9 +5817,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WTrajectoryFrustums {
+	impl fmt::Debug for WTrajectoryFrustums {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WTrajectoryFrustums")
 				.finish()
 		}
@@ -5944,9 +5944,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WTrajectorySpheres {
+	impl fmt::Debug for WTrajectorySpheres {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WTrajectorySpheres")
 				.finish()
 		}
@@ -6069,9 +6069,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for WWidgetMerger {
+	impl fmt::Debug for WWidgetMerger {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WWidgetMerger")
 				.finish()
 		}
@@ -6254,9 +6254,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for Widget {
+	impl fmt::Debug for Widget {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Widget")
 				.finish()
 		}
@@ -6326,9 +6326,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for Widget2D {
+	impl fmt::Debug for Widget2D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Widget2D")
 				.finish()
 		}
@@ -6459,9 +6459,9 @@ pub mod viz {
 
 	}
 
-	impl ::core::fmt::Debug for Widget3D {
+	impl fmt::Debug for Widget3D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Widget3D")
 				.finish()
 		}

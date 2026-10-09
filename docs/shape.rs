@@ -288,9 +288,9 @@ pub mod shape {
 
 	}
 
-	impl ::core::fmt::Debug for AffineTransformer {
+	impl fmt::Debug for AffineTransformer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AffineTransformer")
 				.finish()
 		}
@@ -358,9 +358,9 @@ pub mod shape {
 
 	}
 
-	impl ::core::fmt::Debug for ChiHistogramCostExtractor {
+	impl fmt::Debug for ChiHistogramCostExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ChiHistogramCostExtractor")
 				.finish()
 		}
@@ -446,9 +446,9 @@ pub mod shape {
 
 	}
 
-	impl ::core::fmt::Debug for EMDHistogramCostExtractor {
+	impl fmt::Debug for EMDHistogramCostExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("EMDHistogramCostExtractor")
 				.finish()
 		}
@@ -516,9 +516,9 @@ pub mod shape {
 
 	}
 
-	impl ::core::fmt::Debug for EMDL1HistogramCostExtractor {
+	impl fmt::Debug for EMDL1HistogramCostExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("EMDL1HistogramCostExtractor")
 				.finish()
 		}
@@ -639,9 +639,9 @@ pub mod shape {
 
 	}
 
-	impl ::core::fmt::Debug for HausdorffDistanceExtractor {
+	impl fmt::Debug for HausdorffDistanceExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HausdorffDistanceExtractor")
 				.finish()
 		}
@@ -757,9 +757,9 @@ pub mod shape {
 
 	}
 
-	impl ::core::fmt::Debug for HistogramCostExtractor {
+	impl fmt::Debug for HistogramCostExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HistogramCostExtractor")
 				.finish()
 		}
@@ -841,9 +841,9 @@ pub mod shape {
 
 	}
 
-	impl ::core::fmt::Debug for NormHistogramCostExtractor {
+	impl fmt::Debug for NormHistogramCostExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NormHistogramCostExtractor")
 				.finish()
 		}
@@ -1219,9 +1219,9 @@ pub mod shape {
 
 	}
 
-	impl ::core::fmt::Debug for ShapeContextDistanceExtractor {
+	impl fmt::Debug for ShapeContextDistanceExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ShapeContextDistanceExtractor")
 				.finish()
 		}
@@ -1308,9 +1308,9 @@ pub mod shape {
 
 	}
 
-	impl ::core::fmt::Debug for ShapeDistanceExtractor {
+	impl fmt::Debug for ShapeDistanceExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ShapeDistanceExtractor")
 				.finish()
 		}
@@ -1474,9 +1474,9 @@ pub mod shape {
 
 	}
 
-	impl ::core::fmt::Debug for ShapeTransformer {
+	impl fmt::Debug for ShapeTransformer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ShapeTransformer")
 				.finish()
 		}
@@ -1562,9 +1562,9 @@ pub mod shape {
 
 	}
 
-	impl ::core::fmt::Debug for ThinPlateSplineShapeTransformer {
+	impl fmt::Debug for ThinPlateSplineShapeTransformer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ThinPlateSplineShapeTransformer")
 				.finish()
 		}

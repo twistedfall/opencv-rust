@@ -284,9 +284,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for ColorAverageInpainter {
+	impl fmt::Debug for ColorAverageInpainter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ColorAverageInpainter")
 				.finish()
 		}
@@ -380,9 +380,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for ColorInpainter {
+	impl fmt::Debug for ColorInpainter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ColorInpainter")
 				.finish()
 		}
@@ -477,9 +477,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for ConsistentMosaicInpainter {
+	impl fmt::Debug for ConsistentMosaicInpainter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ConsistentMosaicInpainter")
 				.finish()
 		}
@@ -618,9 +618,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for DeblurerBase {
+	impl fmt::Debug for DeblurerBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DeblurerBase")
 				.finish()
 		}
@@ -694,9 +694,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for DensePyrLkOptFlowEstimatorGpu {
+	impl fmt::Debug for DensePyrLkOptFlowEstimatorGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DensePyrLkOptFlowEstimatorGpu")
 				.finish()
 		}
@@ -791,9 +791,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for FastMarchingMethod {
+	impl fmt::Debug for FastMarchingMethod {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FastMarchingMethod")
 				.finish()
 		}
@@ -875,9 +875,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for FromFileMotionReader {
+	impl fmt::Debug for FromFileMotionReader {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FromFileMotionReader")
 				.finish()
 		}
@@ -1013,9 +1013,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for GaussianMotionFilter {
+	impl fmt::Debug for GaussianMotionFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GaussianMotionFilter")
 				.finish()
 		}
@@ -1096,9 +1096,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for IDenseOptFlowEstimator {
+	impl fmt::Debug for IDenseOptFlowEstimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("IDenseOptFlowEstimator")
 				.finish()
 		}
@@ -1162,9 +1162,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for IFrameSource {
+	impl fmt::Debug for IFrameSource {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("IFrameSource")
 				.finish()
 		}
@@ -1227,9 +1227,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for ILog {
+	impl fmt::Debug for ILog {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ILog")
 				.finish()
 		}
@@ -1286,9 +1286,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for IMotionStabilizer {
+	impl fmt::Debug for IMotionStabilizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("IMotionStabilizer")
 				.finish()
 		}
@@ -1351,9 +1351,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for IOutlierRejector {
+	impl fmt::Debug for IOutlierRejector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("IOutlierRejector")
 				.finish()
 		}
@@ -1415,9 +1415,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for ISparseOptFlowEstimator {
+	impl fmt::Debug for ISparseOptFlowEstimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ISparseOptFlowEstimator")
 				.finish()
 		}
@@ -1518,9 +1518,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for ImageMotionEstimatorBase {
+	impl fmt::Debug for ImageMotionEstimatorBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ImageMotionEstimatorBase")
 				.finish()
 		}
@@ -1692,9 +1692,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for InpainterBase {
+	impl fmt::Debug for InpainterBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("InpainterBase")
 				.finish()
 		}
@@ -1849,9 +1849,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for InpaintingPipeline {
+	impl fmt::Debug for InpaintingPipeline {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("InpaintingPipeline")
 				.finish()
 		}
@@ -2060,9 +2060,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for KeypointBasedMotionEstimator {
+	impl fmt::Debug for KeypointBasedMotionEstimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("KeypointBasedMotionEstimator")
 				.finish()
 		}
@@ -2217,9 +2217,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for KeypointBasedMotionEstimatorGpu {
+	impl fmt::Debug for KeypointBasedMotionEstimatorGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("KeypointBasedMotionEstimatorGpu")
 				.finish()
 		}
@@ -2303,9 +2303,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for LogToStdout {
+	impl fmt::Debug for LogToStdout {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LogToStdout")
 				.finish()
 		}
@@ -2523,9 +2523,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for LpMotionStabilizer {
+	impl fmt::Debug for LpMotionStabilizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LpMotionStabilizer")
 				.finish()
 		}
@@ -2612,9 +2612,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for MaskFrameSource {
+	impl fmt::Debug for MaskFrameSource {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MaskFrameSource")
 				.finish()
 		}
@@ -2697,9 +2697,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for MoreAccurateMotionWobbleSuppressor {
+	impl fmt::Debug for MoreAccurateMotionWobbleSuppressor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MoreAccurateMotionWobbleSuppressor")
 				.finish()
 		}
@@ -2784,9 +2784,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for MoreAccurateMotionWobbleSuppressorBase {
+	impl fmt::Debug for MoreAccurateMotionWobbleSuppressorBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MoreAccurateMotionWobbleSuppressorBase")
 				.finish()
 		}
@@ -2882,9 +2882,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for MoreAccurateMotionWobbleSuppressorGpu {
+	impl fmt::Debug for MoreAccurateMotionWobbleSuppressorGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MoreAccurateMotionWobbleSuppressorGpu")
 				.finish()
 		}
@@ -3023,9 +3023,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for MotionEstimatorBase {
+	impl fmt::Debug for MotionEstimatorBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MotionEstimatorBase")
 				.finish()
 		}
@@ -3133,9 +3133,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for MotionEstimatorL1 {
+	impl fmt::Debug for MotionEstimatorL1 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MotionEstimatorL1")
 				.finish()
 		}
@@ -3285,9 +3285,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for MotionEstimatorRansacL2 {
+	impl fmt::Debug for MotionEstimatorRansacL2 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MotionEstimatorRansacL2")
 				.finish()
 		}
@@ -3361,9 +3361,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for MotionFilterBase {
+	impl fmt::Debug for MotionFilterBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MotionFilterBase")
 				.finish()
 		}
@@ -3515,9 +3515,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for MotionInpainter {
+	impl fmt::Debug for MotionInpainter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MotionInpainter")
 				.finish()
 		}
@@ -3618,9 +3618,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for MotionStabilizationPipeline {
+	impl fmt::Debug for MotionStabilizationPipeline {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MotionStabilizationPipeline")
 				.finish()
 		}
@@ -3703,9 +3703,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for NullDeblurer {
+	impl fmt::Debug for NullDeblurer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NullDeblurer")
 				.finish()
 		}
@@ -3798,9 +3798,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for NullFrameSource {
+	impl fmt::Debug for NullFrameSource {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NullFrameSource")
 				.finish()
 		}
@@ -3883,9 +3883,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for NullInpainter {
+	impl fmt::Debug for NullInpainter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NullInpainter")
 				.finish()
 		}
@@ -3969,9 +3969,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for NullLog {
+	impl fmt::Debug for NullLog {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NullLog")
 				.finish()
 		}
@@ -4057,9 +4057,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for NullOutlierRejector {
+	impl fmt::Debug for NullOutlierRejector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NullOutlierRejector")
 				.finish()
 		}
@@ -4142,9 +4142,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for NullWobbleSuppressor {
+	impl fmt::Debug for NullWobbleSuppressor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NullWobbleSuppressor")
 				.finish()
 		}
@@ -4250,9 +4250,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for OnePassStabilizer {
+	impl fmt::Debug for OnePassStabilizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("OnePassStabilizer")
 				.finish()
 		}
@@ -4368,9 +4368,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for PyrLkOptFlowEstimatorBase {
+	impl fmt::Debug for PyrLkOptFlowEstimatorBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PyrLkOptFlowEstimatorBase")
 				.finish()
 		}
@@ -4530,9 +4530,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for RansacParams {
+	impl fmt::Debug for RansacParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RansacParams")
 				.field("size", &crate::videostab::RansacParamsTraitConst::size(self))
 				.field("thresh", &crate::videostab::RansacParamsTraitConst::thresh(self))
@@ -4613,9 +4613,9 @@ pub mod videostab {
 		}
 	}
 
-	impl ::core::fmt::Debug for SparsePyrLkOptFlowEstimator {
+	impl fmt::Debug for SparsePyrLkOptFlowEstimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SparsePyrLkOptFlowEstimator")
 				.finish()
 		}
@@ -4728,9 +4728,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for SparsePyrLkOptFlowEstimatorGpu {
+	impl fmt::Debug for SparsePyrLkOptFlowEstimatorGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SparsePyrLkOptFlowEstimatorGpu")
 				.finish()
 		}
@@ -4983,9 +4983,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for StabilizerBase {
+	impl fmt::Debug for StabilizerBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("StabilizerBase")
 				.finish()
 		}
@@ -5099,9 +5099,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for ToFileMotionWriter {
+	impl fmt::Debug for ToFileMotionWriter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ToFileMotionWriter")
 				.finish()
 		}
@@ -5218,9 +5218,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for TranslationBasedLocalOutlierRejector {
+	impl fmt::Debug for TranslationBasedLocalOutlierRejector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TranslationBasedLocalOutlierRejector")
 				.finish()
 		}
@@ -5363,9 +5363,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for TwoPassStabilizer {
+	impl fmt::Debug for TwoPassStabilizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TwoPassStabilizer")
 				.finish()
 		}
@@ -5517,9 +5517,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for VideoFileSource {
+	impl fmt::Debug for VideoFileSource {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("VideoFileSource")
 				.finish()
 		}
@@ -5614,9 +5614,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for WeightingDeblurer {
+	impl fmt::Debug for WeightingDeblurer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WeightingDeblurer")
 				.finish()
 		}
@@ -5774,9 +5774,9 @@ pub mod videostab {
 
 	}
 
-	impl ::core::fmt::Debug for WobbleSuppressorBase {
+	impl fmt::Debug for WobbleSuppressorBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WobbleSuppressorBase")
 				.finish()
 		}

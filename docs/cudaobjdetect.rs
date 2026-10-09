@@ -302,9 +302,9 @@ pub mod cudaobjdetect {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_CascadeClassifier {
+	impl fmt::Debug for CUDA_CascadeClassifier {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_CascadeClassifier")
 				.finish()
 		}
@@ -812,9 +812,9 @@ pub mod cudaobjdetect {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_HOG {
+	impl fmt::Debug for CUDA_HOG {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_HOG")
 				.finish()
 		}

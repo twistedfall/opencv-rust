@@ -1038,9 +1038,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for ANN_MLP {
+	impl fmt::Debug for ANN_MLP {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ANN_MLP")
 				.finish()
 		}
@@ -1253,9 +1253,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for Boost {
+	impl fmt::Debug for Boost {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Boost")
 				.finish()
 		}
@@ -1761,9 +1761,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for DTrees {
+	impl fmt::Debug for DTrees {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DTrees")
 				.finish()
 		}
@@ -1952,9 +1952,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for DTrees_Node {
+	impl fmt::Debug for DTrees_Node {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DTrees_Node")
 				.field("value", &crate::ml::DTrees_NodeTraitConst::value(self))
 				.field("class_idx", &crate::ml::DTrees_NodeTraitConst::class_idx(self))
@@ -2132,9 +2132,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for DTrees_Split {
+	impl fmt::Debug for DTrees_Split {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DTrees_Split")
 				.field("var_idx", &crate::ml::DTrees_SplitTraitConst::var_idx(self))
 				.field("inversed", &crate::ml::DTrees_SplitTraitConst::inversed(self))
@@ -2701,9 +2701,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for EM {
+	impl fmt::Debug for EM {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("EM")
 				.finish()
 		}
@@ -2988,9 +2988,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for KNearest {
+	impl fmt::Debug for KNearest {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("KNearest")
 				.finish()
 		}
@@ -3330,9 +3330,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for LogisticRegression {
+	impl fmt::Debug for LogisticRegression {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LogisticRegression")
 				.finish()
 		}
@@ -3510,9 +3510,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for NormalBayesClassifier {
+	impl fmt::Debug for NormalBayesClassifier {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NormalBayesClassifier")
 				.finish()
 		}
@@ -3705,9 +3705,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for ParamGrid {
+	impl fmt::Debug for ParamGrid {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ParamGrid")
 				.field("min_val", &crate::ml::ParamGridTraitConst::min_val(self))
 				.field("max_val", &crate::ml::ParamGridTraitConst::max_val(self))
@@ -3955,9 +3955,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for RTrees {
+	impl fmt::Debug for RTrees {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RTrees")
 				.finish()
 		}
@@ -4648,9 +4648,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for SVM {
+	impl fmt::Debug for SVM {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SVM")
 				.finish()
 		}
@@ -4735,9 +4735,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for SVM_Kernel {
+	impl fmt::Debug for SVM_Kernel {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SVM_Kernel")
 				.finish()
 		}
@@ -5133,9 +5133,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for SVMSGD {
+	impl fmt::Debug for SVMSGD {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SVMSGD")
 				.finish()
 		}
@@ -5363,9 +5363,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for StatModel {
+	impl fmt::Debug for StatModel {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("StatModel")
 				.finish()
 		}
@@ -6137,9 +6137,9 @@ pub mod ml {
 
 	}
 
-	impl ::core::fmt::Debug for TrainData {
+	impl fmt::Debug for TrainData {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TrainData")
 				.finish()
 		}

@@ -4456,9 +4456,9 @@ pub mod cudaarithm {
 
 	}
 
-	impl ::core::fmt::Debug for Convolution {
+	impl fmt::Debug for Convolution {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Convolution")
 				.finish()
 		}
@@ -4555,9 +4555,9 @@ pub mod cudaarithm {
 
 	}
 
-	impl ::core::fmt::Debug for DFT {
+	impl fmt::Debug for DFT {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DFT")
 				.finish()
 		}
@@ -4656,9 +4656,9 @@ pub mod cudaarithm {
 
 	}
 
-	impl ::core::fmt::Debug for LookUpTable {
+	impl fmt::Debug for LookUpTable {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LookUpTable")
 				.finish()
 		}

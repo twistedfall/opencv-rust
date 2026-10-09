@@ -394,9 +394,9 @@ pub mod rapid {
 
 	}
 
-	impl ::core::fmt::Debug for Rapid_GOSTracker {
+	impl fmt::Debug for Rapid_GOSTracker {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Rapid_GOSTracker")
 				.finish()
 		}
@@ -499,9 +499,9 @@ pub mod rapid {
 
 	}
 
-	impl ::core::fmt::Debug for Rapid_OLSTracker {
+	impl fmt::Debug for Rapid_OLSTracker {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Rapid_OLSTracker")
 				.finish()
 		}
@@ -584,9 +584,9 @@ pub mod rapid {
 
 	}
 
-	impl ::core::fmt::Debug for Rapid_Rapid {
+	impl fmt::Debug for Rapid_Rapid {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Rapid_Rapid")
 				.finish()
 		}
@@ -694,9 +694,9 @@ pub mod rapid {
 
 	}
 
-	impl ::core::fmt::Debug for Rapid_Tracker {
+	impl fmt::Debug for Rapid_Tracker {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Rapid_Tracker")
 				.finish()
 		}

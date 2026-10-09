@@ -162,9 +162,9 @@ pub mod wechat_qrcode {
 
 	}
 
-	impl ::core::fmt::Debug for WeChatQRCode {
+	impl fmt::Debug for WeChatQRCode {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WeChatQRCode")
 				.finish()
 		}

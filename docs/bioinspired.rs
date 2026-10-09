@@ -790,9 +790,9 @@ pub mod bioinspired {
 
 	}
 
-	impl ::core::fmt::Debug for Retina {
+	impl fmt::Debug for Retina {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Retina")
 				.finish()
 		}
@@ -944,9 +944,9 @@ pub mod bioinspired {
 
 	}
 
-	impl ::core::fmt::Debug for RetinaFastToneMapping {
+	impl fmt::Debug for RetinaFastToneMapping {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RetinaFastToneMapping")
 				.finish()
 		}
@@ -1067,9 +1067,9 @@ pub mod bioinspired {
 		}
 	}
 
-	impl ::core::fmt::Debug for RetinaParameters {
+	impl fmt::Debug for RetinaParameters {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RetinaParameters")
 				.field("op_land_ipl_parvo", &crate::bioinspired::RetinaParametersTraitConst::op_land_ipl_parvo(self))
 				.field("ipl_magno", &crate::bioinspired::RetinaParametersTraitConst::ipl_magno(self))
@@ -1442,9 +1442,9 @@ pub mod bioinspired {
 
 	}
 
-	impl ::core::fmt::Debug for TransientAreasSegmentationModule {
+	impl fmt::Debug for TransientAreasSegmentationModule {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TransientAreasSegmentationModule")
 				.finish()
 		}

@@ -6143,9 +6143,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for GArg {
+	impl fmt::Debug for GArg {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GArg")
 				.field("kind", &crate::gapi::GArgTraitConst::kind(self))
 				.field("opaque_kind", &crate::gapi::GArgTraitConst::opaque_kind(self))
@@ -6226,9 +6226,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GArrayDesc {
+	impl fmt::Debug for GArrayDesc {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GArrayDesc")
 				.finish()
 		}
@@ -6413,9 +6413,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for GCall {
+	impl fmt::Debug for GCall {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GCall")
 				.finish()
 		}
@@ -6499,9 +6499,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GCompileArg {
+	impl fmt::Debug for GCompileArg {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GCompileArg")
 				.field("tag", &crate::gapi::GCompileArgTraitConst::tag(self))
 				.finish()
@@ -6821,9 +6821,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for GCompiled {
+	impl fmt::Debug for GCompiled {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GCompiled")
 				.finish()
 		}
@@ -7506,9 +7506,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for GComputation {
+	impl fmt::Debug for GComputation {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GComputation")
 				.finish()
 		}
@@ -7607,9 +7607,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GFrame {
+	impl fmt::Debug for GFrame {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GFrame")
 				.finish()
 		}
@@ -7709,9 +7709,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GFrameDesc {
+	impl fmt::Debug for GFrameDesc {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GFrameDesc")
 				.field("fmt", &crate::gapi::GFrameDescTraitConst::fmt(self))
 				.field("size", &crate::gapi::GFrameDescTraitConst::size(self))
@@ -7842,9 +7842,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GKernel {
+	impl fmt::Debug for GKernel {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GKernel")
 				.field("name", &crate::gapi::GKernelTraitConst::name(self))
 				.field("tag", &crate::gapi::GKernelTraitConst::tag(self))
@@ -7924,9 +7924,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GKernelImpl {
+	impl fmt::Debug for GKernelImpl {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GKernelImpl")
 				.field("opaque", &crate::gapi::GKernelImplTraitConst::opaque(self))
 				.finish()
@@ -8125,9 +8125,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GKernelPackage {
+	impl fmt::Debug for GKernelPackage {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GKernelPackage")
 				.finish()
 		}
@@ -8228,9 +8228,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GMat {
+	impl fmt::Debug for GMat {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GMat")
 				.finish()
 		}
@@ -8527,9 +8527,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GMatDesc {
+	impl fmt::Debug for GMatDesc {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GMatDesc")
 				.field("depth", &crate::gapi::GMatDescTraitConst::depth(self))
 				.field("chan", &crate::gapi::GMatDescTraitConst::chan(self))
@@ -8596,9 +8596,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GMatP {
+	impl fmt::Debug for GMatP {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GMatP")
 				.finish()
 		}
@@ -8689,9 +8689,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GOpaqueDesc {
+	impl fmt::Debug for GOpaqueDesc {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GOpaqueDesc")
 				.finish()
 		}
@@ -8785,9 +8785,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for GRunArg {
+	impl fmt::Debug for GRunArg {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GRunArg")
 				.finish()
 		}
@@ -8969,9 +8969,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GScalar {
+	impl fmt::Debug for GScalar {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GScalar")
 				.finish()
 		}
@@ -9059,9 +9059,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GScalarDesc {
+	impl fmt::Debug for GScalarDesc {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GScalarDesc")
 				.finish()
 		}
@@ -9283,9 +9283,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GStreamingCompiled {
+	impl fmt::Debug for GStreamingCompiled {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GStreamingCompiled")
 				.finish()
 		}
@@ -9342,9 +9342,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for GTransform {
+	impl fmt::Debug for GTransform {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GTransform")
 				.field("description", &crate::gapi::GTransformTraitConst::description(self))
 				.finish()
@@ -9442,9 +9442,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for GTypeInfo {
+	impl fmt::Debug for GTypeInfo {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GTypeInfo")
 				.field("shape", &crate::gapi::GTypeInfoTraitConst::shape(self))
 				.field("kind", &crate::gapi::GTypeInfoTraitConst::kind(self))
@@ -9544,9 +9544,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for MediaFrame {
+	impl fmt::Debug for MediaFrame {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MediaFrame")
 				.finish()
 		}
@@ -9618,9 +9618,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for MediaFrame_IAdapter {
+	impl fmt::Debug for MediaFrame_IAdapter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MediaFrame_IAdapter")
 				.finish()
 		}
@@ -9710,9 +9710,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for MediaFrame_View {
+	impl fmt::Debug for MediaFrame_View {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MediaFrame_View")
 				.finish()
 		}
@@ -9784,9 +9784,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for RMat {
+	impl fmt::Debug for RMat {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RMat")
 				.finish()
 		}
@@ -9839,9 +9839,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for RMat_IAdapter {
+	impl fmt::Debug for RMat_IAdapter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RMat_IAdapter")
 				.finish()
 		}
@@ -10024,9 +10024,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for RMat_View {
+	impl fmt::Debug for RMat_View {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RMat_View")
 				.finish()
 		}
@@ -10098,9 +10098,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_ExtractArgsCallback {
+	impl fmt::Debug for Detail_ExtractArgsCallback {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_ExtractArgsCallback")
 				.finish()
 		}
@@ -10162,9 +10162,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_ExtractMetaCallback {
+	impl fmt::Debug for Detail_ExtractMetaCallback {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_ExtractMetaCallback")
 				.finish()
 		}
@@ -10207,9 +10207,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_GArrayU {
+	impl fmt::Debug for Detail_GArrayU {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_GArrayU")
 				.finish()
 		}
@@ -10252,9 +10252,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_GOpaqueU {
+	impl fmt::Debug for Detail_GOpaqueU {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_GOpaqueU")
 				.finish()
 		}
@@ -10320,9 +10320,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for GBackend {
+	impl fmt::Debug for GBackend {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GBackend")
 				.finish()
 		}
@@ -10396,9 +10396,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for GFunctor {
+	impl fmt::Debug for GFunctor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GFunctor")
 				.finish()
 		}
@@ -10538,9 +10538,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for Scalar {
+	impl fmt::Debug for Scalar {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Scalar")
 				.field("val", &crate::gapi::ScalarTraitConst::val(self))
 				.finish()
@@ -10660,9 +10660,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for use_only {
+	impl fmt::Debug for use_only {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("use_only")
 				.field("pkg", &crate::gapi::use_onlyTraitConst::pkg(self))
 				.finish()
@@ -10730,9 +10730,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for Data {
+	impl fmt::Debug for Data {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Data")
 				.finish()
 		}
@@ -10965,9 +10965,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for Image {
+	impl fmt::Debug for Image {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Image")
 				.field("org", &crate::gapi::ImageTraitConst::org(self))
 				.field("img", &crate::gapi::ImageTraitConst::img(self))
@@ -11290,9 +11290,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for Poly {
+	impl fmt::Debug for Poly {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Poly")
 				.field("points", &crate::gapi::PolyTraitConst::points(self))
 				.field("color", &crate::gapi::PolyTraitConst::color(self))
@@ -11625,9 +11625,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for Text {
+	impl fmt::Debug for Text {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Text")
 				.field("text", &crate::gapi::TextTraitConst::text(self))
 				.field("org", &crate::gapi::TextTraitConst::org(self))
@@ -11717,9 +11717,9 @@ pub mod gapi {
 
 	}
 
-	impl ::core::fmt::Debug for use_threaded_executor {
+	impl fmt::Debug for use_threaded_executor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("use_threaded_executor")
 				.field("num_threads", &crate::gapi::use_threaded_executorTraitConst::num_threads(self))
 				.finish()
@@ -11823,9 +11823,9 @@ pub mod gapi {
 		}
 	}
 
-	impl ::core::fmt::Debug for any {
+	impl fmt::Debug for any {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("any")
 				.finish()
 		}

@@ -1183,9 +1183,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for BackgroundSubtractor {
+	impl fmt::Debug for BackgroundSubtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BackgroundSubtractor")
 				.finish()
 		}
@@ -1407,9 +1407,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for BackgroundSubtractorKNN {
+	impl fmt::Debug for BackgroundSubtractorKNN {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BackgroundSubtractorKNN")
 				.finish()
 		}
@@ -1844,9 +1844,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for BackgroundSubtractorMOG2 {
+	impl fmt::Debug for BackgroundSubtractorMOG2 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BackgroundSubtractorMOG2")
 				.finish()
 		}
@@ -2272,9 +2272,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for DISOpticalFlow {
+	impl fmt::Debug for DISOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DISOpticalFlow")
 				.finish()
 		}
@@ -2370,9 +2370,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for DenseOpticalFlow {
+	impl fmt::Debug for DenseOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DenseOpticalFlow")
 				.finish()
 		}
@@ -2559,9 +2559,9 @@ pub mod video {
 		}
 	}
 
-	impl ::core::fmt::Debug for ECCParameters {
+	impl fmt::Debug for ECCParameters {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ECCParameters")
 				.field("motion_type", &crate::video::ECCParametersTraitConst::motion_type(self))
 				.field("criteria", &crate::video::ECCParametersTraitConst::criteria(self))
@@ -2797,9 +2797,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for FarnebackOpticalFlow {
+	impl fmt::Debug for FarnebackOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FarnebackOpticalFlow")
 				.finish()
 		}
@@ -3233,9 +3233,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for KalmanFilter {
+	impl fmt::Debug for KalmanFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("KalmanFilter")
 				.field("state_pre", &crate::video::KalmanFilterTraitConst::state_pre(self))
 				.field("state_post", &crate::video::KalmanFilterTraitConst::state_post(self))
@@ -3350,9 +3350,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for SparseOpticalFlow {
+	impl fmt::Debug for SparseOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SparseOpticalFlow")
 				.finish()
 		}
@@ -3541,9 +3541,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for SparsePyrLKOpticalFlow {
+	impl fmt::Debug for SparsePyrLKOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SparsePyrLKOpticalFlow")
 				.finish()
 		}
@@ -3655,9 +3655,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for Tracker {
+	impl fmt::Debug for Tracker {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Tracker")
 				.finish()
 		}
@@ -3759,9 +3759,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for TrackerDaSiamRPN {
+	impl fmt::Debug for TrackerDaSiamRPN {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TrackerDaSiamRPN")
 				.finish()
 		}
@@ -3902,9 +3902,9 @@ pub mod video {
 		}
 	}
 
-	impl ::core::fmt::Debug for TrackerDaSiamRPN_Params {
+	impl fmt::Debug for TrackerDaSiamRPN_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TrackerDaSiamRPN_Params")
 				.field("model", &crate::video::TrackerDaSiamRPN_ParamsTraitConst::model(self))
 				.field("kernel_cls1", &crate::video::TrackerDaSiamRPN_ParamsTraitConst::kernel_cls1(self))
@@ -3995,9 +3995,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for TrackerMIL {
+	impl fmt::Debug for TrackerMIL {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TrackerMIL")
 				.finish()
 		}
@@ -4142,9 +4142,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for TrackerNano {
+	impl fmt::Debug for TrackerNano {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TrackerNano")
 				.finish()
 		}
@@ -4271,9 +4271,9 @@ pub mod video {
 		}
 	}
 
-	impl ::core::fmt::Debug for TrackerNano_Params {
+	impl fmt::Debug for TrackerNano_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TrackerNano_Params")
 				.field("backbone", &crate::video::TrackerNano_ParamsTraitConst::backbone(self))
 				.field("neckhead", &crate::video::TrackerNano_ParamsTraitConst::neckhead(self))
@@ -4404,9 +4404,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for TrackerVit {
+	impl fmt::Debug for TrackerVit {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TrackerVit")
 				.finish()
 		}
@@ -4559,9 +4559,9 @@ pub mod video {
 		}
 	}
 
-	impl ::core::fmt::Debug for TrackerVit_Params {
+	impl fmt::Debug for TrackerVit_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TrackerVit_Params")
 				.field("net", &crate::video::TrackerVit_ParamsTraitConst::net(self))
 				.field("backend", &crate::video::TrackerVit_ParamsTraitConst::backend(self))
@@ -4818,9 +4818,9 @@ pub mod video {
 
 	}
 
-	impl ::core::fmt::Debug for VariationalRefinement {
+	impl fmt::Debug for VariationalRefinement {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("VariationalRefinement")
 				.finish()
 		}

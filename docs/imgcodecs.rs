@@ -2055,9 +2055,9 @@ pub mod imgcodecs {
 		}
 	}
 
-	impl ::core::fmt::Debug for Animation {
+	impl fmt::Debug for Animation {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Animation")
 				.field("loop_count", &crate::imgcodecs::AnimationTraitConst::loop_count(self))
 				.field("bgcolor", &crate::imgcodecs::AnimationTraitConst::bgcolor(self))
@@ -2209,9 +2209,9 @@ pub mod imgcodecs {
 
 	}
 
-	impl ::core::fmt::Debug for ImageCollection {
+	impl fmt::Debug for ImageCollection {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ImageCollection")
 				.finish()
 		}
@@ -2297,9 +2297,9 @@ pub mod imgcodecs {
 
 	}
 
-	impl ::core::fmt::Debug for ImageCollection_iterator {
+	impl fmt::Debug for ImageCollection_iterator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ImageCollection_iterator")
 				.finish()
 		}

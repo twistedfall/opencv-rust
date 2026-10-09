@@ -1034,9 +1034,9 @@ pub mod ccalib {
 
 	}
 
-	impl ::core::fmt::Debug for CustomPattern {
+	impl fmt::Debug for CustomPattern {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CustomPattern")
 				.finish()
 		}
@@ -1193,9 +1193,9 @@ pub mod ccalib {
 
 	}
 
-	impl ::core::fmt::Debug for MultiCameraCalibration {
+	impl fmt::Debug for MultiCameraCalibration {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MultiCameraCalibration")
 				.finish()
 		}
@@ -1300,9 +1300,9 @@ pub mod ccalib {
 
 	}
 
-	impl ::core::fmt::Debug for MultiCameraCalibration_edge {
+	impl fmt::Debug for MultiCameraCalibration_edge {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MultiCameraCalibration_edge")
 				.field("camera_vertex", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::camera_vertex(self))
 				.field("photo_vertex", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::photo_vertex(self))
@@ -1397,9 +1397,9 @@ pub mod ccalib {
 
 	}
 
-	impl ::core::fmt::Debug for MultiCameraCalibration_vertex {
+	impl fmt::Debug for MultiCameraCalibration_vertex {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MultiCameraCalibration_vertex")
 				.field("pose", &crate::ccalib::MultiCameraCalibration_vertexTraitConst::pose(self))
 				.field("timestamp", &crate::ccalib::MultiCameraCalibration_vertexTraitConst::timestamp(self))
@@ -1550,9 +1550,9 @@ pub mod ccalib {
 
 	}
 
-	impl ::core::fmt::Debug for RandomPatternCornerFinder {
+	impl fmt::Debug for RandomPatternCornerFinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RandomPatternCornerFinder")
 				.finish()
 		}
@@ -1627,9 +1627,9 @@ pub mod ccalib {
 
 	}
 
-	impl ::core::fmt::Debug for RandomPatternGenerator {
+	impl fmt::Debug for RandomPatternGenerator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RandomPatternGenerator")
 				.finish()
 		}

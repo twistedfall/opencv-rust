@@ -1284,9 +1284,9 @@ pub mod videoio {
 			string_arg_output_send!(via buffer_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_IStreamReader_read_charX_long_long(self.as_raw_mut_IStreamReader(), &mut buffer_via, size, ocvrs_return.as_mut_ptr()) };
+			string_arg_output_receive!(buffer_via => buffer);
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			string_arg_output_receive!(buffer_via => buffer);
 			Ok(ret)
 		}
 
@@ -1308,9 +1308,9 @@ pub mod videoio {
 
 	}
 
-	impl ::core::fmt::Debug for IStreamReader {
+	impl fmt::Debug for IStreamReader {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("IStreamReader")
 				.finish()
 		}
@@ -1975,9 +1975,9 @@ pub mod videoio {
 
 	}
 
-	impl ::core::fmt::Debug for VideoCapture {
+	impl fmt::Debug for VideoCapture {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("VideoCapture")
 				.finish()
 		}
@@ -2474,9 +2474,9 @@ pub mod videoio {
 
 	}
 
-	impl ::core::fmt::Debug for VideoWriter {
+	impl fmt::Debug for VideoWriter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("VideoWriter")
 				.finish()
 		}

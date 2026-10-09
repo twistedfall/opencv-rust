@@ -196,9 +196,9 @@ pub mod structured_light {
 
 	}
 
-	impl ::core::fmt::Debug for GrayCodePattern {
+	impl fmt::Debug for GrayCodePattern {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GrayCodePattern")
 				.finish()
 		}
@@ -306,9 +306,9 @@ pub mod structured_light {
 
 	}
 
-	impl ::core::fmt::Debug for GrayCodePattern_Params {
+	impl fmt::Debug for GrayCodePattern_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GrayCodePattern_Params")
 				.field("width", &crate::structured_light::GrayCodePattern_ParamsTraitConst::width(self))
 				.field("height", &crate::structured_light::GrayCodePattern_ParamsTraitConst::height(self))
@@ -514,9 +514,9 @@ pub mod structured_light {
 
 	}
 
-	impl ::core::fmt::Debug for SinusoidalPattern {
+	impl fmt::Debug for SinusoidalPattern {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SinusoidalPattern")
 				.finish()
 		}
@@ -715,9 +715,9 @@ pub mod structured_light {
 
 	}
 
-	impl ::core::fmt::Debug for SinusoidalPattern_Params {
+	impl fmt::Debug for SinusoidalPattern_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SinusoidalPattern_Params")
 				.field("width", &crate::structured_light::SinusoidalPattern_ParamsTraitConst::width(self))
 				.field("height", &crate::structured_light::SinusoidalPattern_ParamsTraitConst::height(self))
@@ -837,9 +837,9 @@ pub mod structured_light {
 
 	}
 
-	impl ::core::fmt::Debug for StructuredLightPattern {
+	impl fmt::Debug for StructuredLightPattern {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("StructuredLightPattern")
 				.finish()
 		}

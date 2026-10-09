@@ -592,9 +592,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for BIF {
+	impl fmt::Debug for BIF {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BIF")
 				.finish()
 		}
@@ -770,9 +770,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for BasicFaceRecognizer {
+	impl fmt::Debug for BasicFaceRecognizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BasicFaceRecognizer")
 				.finish()
 		}
@@ -968,9 +968,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for CParams {
+	impl fmt::Debug for CParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CParams")
 				.field("cascade", &crate::face::CParamsTraitConst::cascade(self))
 				.field("scale_factor", &crate::face::CParamsTraitConst::scale_factor(self))
@@ -1107,9 +1107,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for EigenFaceRecognizer {
+	impl fmt::Debug for EigenFaceRecognizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("EigenFaceRecognizer")
 				.finish()
 		}
@@ -1679,9 +1679,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for FaceRecognizer {
+	impl fmt::Debug for FaceRecognizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FaceRecognizer")
 				.finish()
 		}
@@ -1808,9 +1808,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for Facemark {
+	impl fmt::Debug for Facemark {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Facemark")
 				.finish()
 		}
@@ -1918,9 +1918,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for FacemarkAAM {
+	impl fmt::Debug for FacemarkAAM {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FacemarkAAM")
 				.finish()
 		}
@@ -2085,9 +2085,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for FacemarkAAM_Config {
+	impl fmt::Debug for FacemarkAAM_Config {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FacemarkAAM_Config")
 				.field("r", &crate::face::FacemarkAAM_ConfigTraitConst::r(self))
 				.field("t", &crate::face::FacemarkAAM_ConfigTraitConst::t(self))
@@ -2167,9 +2167,9 @@ pub mod face {
 		}
 	}
 
-	impl ::core::fmt::Debug for FacemarkAAM_Data {
+	impl fmt::Debug for FacemarkAAM_Data {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FacemarkAAM_Data")
 				.field("s0", &crate::face::FacemarkAAM_DataTraitConst::s0(self))
 				.finish()
@@ -2311,9 +2311,9 @@ pub mod face {
 		}
 	}
 
-	impl ::core::fmt::Debug for FacemarkAAM_Model {
+	impl fmt::Debug for FacemarkAAM_Model {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FacemarkAAM_Model")
 				.field("scales", &crate::face::FacemarkAAM_ModelTraitConst::scales(self))
 				.field("triangles", &crate::face::FacemarkAAM_ModelTraitConst::triangles(self))
@@ -2513,9 +2513,9 @@ pub mod face {
 		}
 	}
 
-	impl ::core::fmt::Debug for FacemarkAAM_Model_Texture {
+	impl fmt::Debug for FacemarkAAM_Model_Texture {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FacemarkAAM_Model_Texture")
 				.field("max_m", &crate::face::FacemarkAAM_Model_TextureTraitConst::max_m(self))
 				.field("resolution", &crate::face::FacemarkAAM_Model_TextureTraitConst::resolution(self))
@@ -2725,9 +2725,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for FacemarkAAM_Params {
+	impl fmt::Debug for FacemarkAAM_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FacemarkAAM_Params")
 				.field("model_filename", &crate::face::FacemarkAAM_ParamsTraitConst::model_filename(self))
 				.field("m", &crate::face::FacemarkAAM_ParamsTraitConst::m(self))
@@ -2880,9 +2880,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for FacemarkKazemi {
+	impl fmt::Debug for FacemarkKazemi {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FacemarkKazemi")
 				.finish()
 		}
@@ -3091,9 +3091,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for FacemarkKazemi_Params {
+	impl fmt::Debug for FacemarkKazemi_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FacemarkKazemi_Params")
 				.field("cascade_depth", &crate::face::FacemarkKazemi_ParamsTraitConst::cascade_depth(self))
 				.field("tree_depth", &crate::face::FacemarkKazemi_ParamsTraitConst::tree_depth(self))
@@ -3173,9 +3173,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for FacemarkLBF {
+	impl fmt::Debug for FacemarkLBF {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FacemarkLBF")
 				.finish()
 		}
@@ -3478,9 +3478,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for FacemarkLBF_Params {
+	impl fmt::Debug for FacemarkLBF_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FacemarkLBF_Params")
 				.field("shape_offset", &crate::face::FacemarkLBF_ParamsTraitConst::shape_offset(self))
 				.field("cascade_face", &crate::face::FacemarkLBF_ParamsTraitConst::cascade_face(self))
@@ -3802,9 +3802,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for FacemarkTrain {
+	impl fmt::Debug for FacemarkTrain {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FacemarkTrain")
 				.finish()
 		}
@@ -3965,9 +3965,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for FisherFaceRecognizer {
+	impl fmt::Debug for FisherFaceRecognizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FisherFaceRecognizer")
 				.finish()
 		}
@@ -4276,9 +4276,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for LBPHFaceRecognizer {
+	impl fmt::Debug for LBPHFaceRecognizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LBPHFaceRecognizer")
 				.finish()
 		}
@@ -4512,9 +4512,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for MACE {
+	impl fmt::Debug for MACE {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MACE")
 				.finish()
 		}
@@ -4595,9 +4595,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for PredictCollector {
+	impl fmt::Debug for PredictCollector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PredictCollector")
 				.finish()
 		}
@@ -4789,9 +4789,9 @@ pub mod face {
 
 	}
 
-	impl ::core::fmt::Debug for StandardCollector {
+	impl fmt::Debug for StandardCollector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("StandardCollector")
 				.finish()
 		}

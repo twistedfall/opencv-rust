@@ -925,9 +925,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for SURF_CUDA {
+	impl fmt::Debug for SURF_CUDA {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SURF_CUDA")
 				.field("hessian_threshold", &crate::xfeatures2d::SURF_CUDATraitConst::hessian_threshold(self))
 				.field("n_octaves", &crate::xfeatures2d::SURF_CUDATraitConst::n_octaves(self))
@@ -1227,9 +1227,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for AKAZE {
+	impl fmt::Debug for AKAZE {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AKAZE")
 				.finish()
 		}
@@ -1398,9 +1398,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for AffineFeature2D {
+	impl fmt::Debug for AffineFeature2D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AffineFeature2D")
 				.finish()
 		}
@@ -1566,9 +1566,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for AgastFeatureDetector {
+	impl fmt::Debug for AgastFeatureDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AgastFeatureDetector")
 				.finish()
 		}
@@ -1732,9 +1732,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for BEBLID {
+	impl fmt::Debug for BEBLID {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BEBLID")
 				.finish()
 		}
@@ -2019,9 +2019,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for BOWImgDescriptorExtractor {
+	impl fmt::Debug for BOWImgDescriptorExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BOWImgDescriptorExtractor")
 				.finish()
 		}
@@ -2125,9 +2125,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for BOWKMeansTrainer {
+	impl fmt::Debug for BOWKMeansTrainer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BOWKMeansTrainer")
 				.finish()
 		}
@@ -2272,9 +2272,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for BOWTrainer {
+	impl fmt::Debug for BOWTrainer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BOWTrainer")
 				.finish()
 		}
@@ -2556,9 +2556,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for BRISK {
+	impl fmt::Debug for BRISK {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BRISK")
 				.finish()
 		}
@@ -2729,9 +2729,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for BoostDesc {
+	impl fmt::Debug for BoostDesc {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BoostDesc")
 				.finish()
 		}
@@ -2879,9 +2879,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for BriefDescriptorExtractor {
+	impl fmt::Debug for BriefDescriptorExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BriefDescriptorExtractor")
 				.finish()
 		}
@@ -3278,9 +3278,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for DAISY {
+	impl fmt::Debug for DAISY {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DAISY")
 				.finish()
 		}
@@ -3417,9 +3417,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for Elliptic_KeyPoint {
+	impl fmt::Debug for Elliptic_KeyPoint {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Elliptic_KeyPoint")
 				.field("axes", &crate::xfeatures2d::Elliptic_KeyPointTraitConst::axes(self))
 				.field("si", &crate::xfeatures2d::Elliptic_KeyPointTraitConst::si(self))
@@ -3630,9 +3630,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for FREAK {
+	impl fmt::Debug for FREAK {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FREAK")
 				.finish()
 		}
@@ -3854,9 +3854,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for HarrisLaplaceFeatureDetector {
+	impl fmt::Debug for HarrisLaplaceFeatureDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HarrisLaplaceFeatureDetector")
 				.finish()
 		}
@@ -4107,9 +4107,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for KAZE {
+	impl fmt::Debug for KAZE {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("KAZE")
 				.finish()
 		}
@@ -4308,9 +4308,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for LATCH {
+	impl fmt::Debug for LATCH {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LATCH")
 				.finish()
 		}
@@ -4468,9 +4468,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for LUCID {
+	impl fmt::Debug for LUCID {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LUCID")
 				.finish()
 		}
@@ -4763,9 +4763,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for MSDDetector {
+	impl fmt::Debug for MSDDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MSDDetector")
 				.finish()
 		}
@@ -5531,9 +5531,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for PCTSignatures {
+	impl fmt::Debug for PCTSignatures {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PCTSignatures")
 				.finish()
 		}
@@ -5675,9 +5675,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for PCTSignaturesSQFD {
+	impl fmt::Debug for PCTSignaturesSQFD {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PCTSignaturesSQFD")
 				.finish()
 		}
@@ -5915,9 +5915,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for SURF {
+	impl fmt::Debug for SURF {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SURF")
 				.finish()
 		}
@@ -6125,9 +6125,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for StarDetector {
+	impl fmt::Debug for StarDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("StarDetector")
 				.finish()
 		}
@@ -6326,9 +6326,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for TBMR {
+	impl fmt::Debug for TBMR {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TBMR")
 				.finish()
 		}
@@ -6500,9 +6500,9 @@ pub mod xfeatures2d {
 		}
 	}
 
-	impl ::core::fmt::Debug for TEBLID {
+	impl fmt::Debug for TEBLID {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TEBLID")
 				.finish()
 		}
@@ -6723,9 +6723,9 @@ pub mod xfeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for VGG {
+	impl fmt::Debug for VGG {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("VGG")
 				.finish()
 		}

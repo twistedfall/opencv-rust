@@ -680,9 +680,9 @@ pub mod line_descriptor {
 
 	}
 
-	impl ::core::fmt::Debug for BinaryDescriptor {
+	impl fmt::Debug for BinaryDescriptor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BinaryDescriptor")
 				.finish()
 		}
@@ -825,9 +825,9 @@ pub mod line_descriptor {
 
 	}
 
-	impl ::core::fmt::Debug for BinaryDescriptor_Params {
+	impl fmt::Debug for BinaryDescriptor_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BinaryDescriptor_Params")
 				.field("num_of_octave_", &crate::line_descriptor::BinaryDescriptor_ParamsTraitConst::num_of_octave_(self))
 				.field("width_of_band_", &crate::line_descriptor::BinaryDescriptor_ParamsTraitConst::width_of_band_(self))
@@ -1317,9 +1317,9 @@ pub mod line_descriptor {
 
 	}
 
-	impl ::core::fmt::Debug for BinaryDescriptorMatcher {
+	impl fmt::Debug for BinaryDescriptorMatcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BinaryDescriptorMatcher")
 				.finish()
 		}
@@ -1625,9 +1625,9 @@ pub mod line_descriptor {
 
 	}
 
-	impl ::core::fmt::Debug for LSDDetector {
+	impl fmt::Debug for LSDDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LSDDetector")
 				.finish()
 		}

@@ -1618,9 +1618,9 @@ pub mod ptcloud {
 
 	}
 
-	impl ::core::fmt::Debug for Octree {
+	impl fmt::Debug for Octree {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Octree")
 				.finish()
 		}
@@ -1809,9 +1809,9 @@ pub mod ptcloud {
 
 	}
 
-	impl ::core::fmt::Debug for Odometry {
+	impl fmt::Debug for Odometry {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Odometry")
 				.finish()
 		}
@@ -2036,9 +2036,9 @@ pub mod ptcloud {
 		}
 	}
 
-	impl ::core::fmt::Debug for OdometryFrame {
+	impl fmt::Debug for OdometryFrame {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("OdometryFrame")
 				.finish()
 		}
@@ -2414,9 +2414,9 @@ pub mod ptcloud {
 		}
 	}
 
-	impl ::core::fmt::Debug for OdometrySettings {
+	impl fmt::Debug for OdometrySettings {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("OdometrySettings")
 				.finish()
 		}
@@ -2647,9 +2647,9 @@ pub mod ptcloud {
 
 	}
 
-	impl ::core::fmt::Debug for RgbdNormals {
+	impl fmt::Debug for RgbdNormals {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RgbdNormals")
 				.finish()
 		}
@@ -3048,9 +3048,9 @@ pub mod ptcloud {
 
 	}
 
-	impl ::core::fmt::Debug for Volume {
+	impl fmt::Debug for Volume {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Volume")
 				.finish()
 		}
@@ -3523,9 +3523,9 @@ pub mod ptcloud {
 		}
 	}
 
-	impl ::core::fmt::Debug for VolumeSettings {
+	impl fmt::Debug for VolumeSettings {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("VolumeSettings")
 				.finish()
 		}

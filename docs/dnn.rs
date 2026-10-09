@@ -2172,9 +2172,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AbsLayer {
+	impl fmt::Debug for AbsLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AbsLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -2288,9 +2288,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AccumLayer {
+	impl fmt::Debug for AccumLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AccumLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -2392,9 +2392,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AcosLayer {
+	impl fmt::Debug for AcosLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AcosLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -2508,9 +2508,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AcoshLayer {
+	impl fmt::Debug for AcoshLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AcoshLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -2653,9 +2653,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ActivationLayer {
+	impl fmt::Debug for ActivationLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ActivationLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -2906,9 +2906,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ActivationLayerInt8 {
+	impl fmt::Debug for ActivationLayerInt8 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ActivationLayerInt8")
 				.field("input_zp", &crate::dnn::ActivationLayerInt8TraitConst::input_zp(self))
 				.field("output_zp", &crate::dnn::ActivationLayerInt8TraitConst::output_zp(self))
@@ -3039,9 +3039,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AffineGridLayer {
+	impl fmt::Debug for AffineGridLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AffineGridLayer")
 				.field("align_corners", &crate::dnn::AffineGridLayerTraitConst::align_corners(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -3169,9 +3169,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for Arg {
+	impl fmt::Debug for Arg {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Arg")
 				.field("idx", &crate::dnn::ArgTraitConst::idx(self))
 				.finish()
@@ -3282,9 +3282,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for ArgData {
+	impl fmt::Debug for ArgData {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ArgData")
 				.field("name", &crate::dnn::ArgDataTraitConst::name(self))
 				.field("kind", &crate::dnn::ArgDataTraitConst::kind(self))
@@ -3363,9 +3363,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ArgLayer {
+	impl fmt::Debug for ArgLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ArgLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -3467,9 +3467,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AsinLayer {
+	impl fmt::Debug for AsinLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AsinLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -3583,9 +3583,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AsinhLayer {
+	impl fmt::Debug for AsinhLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AsinhLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -3699,9 +3699,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AtanLayer {
+	impl fmt::Debug for AtanLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AtanLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -3815,9 +3815,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AtanhLayer {
+	impl fmt::Debug for AtanhLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AtanhLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -3931,9 +3931,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AttentionLayer {
+	impl fmt::Debug for AttentionLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AttentionLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -4047,9 +4047,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AttentionOnnxAiLayer {
+	impl fmt::Debug for AttentionOnnxAiLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AttentionOnnxAiLayer")
 				.field("kv_num_heads", &crate::dnn::AttentionOnnxAiLayerTraitConst::kv_num_heads(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -4242,9 +4242,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for AveragePoolLayer {
+	impl fmt::Debug for AveragePoolLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AveragePoolLayer")
 				.field("kernel_shape", &crate::dnn::AveragePoolLayerTraitConst::kernel_shape(self))
 				.field("strides", &crate::dnn::AveragePoolLayerTraitConst::strides(self))
@@ -4353,9 +4353,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for BNLLLayer {
+	impl fmt::Debug for BNLLLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BNLLLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -4455,9 +4455,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for BackendNode {
+	impl fmt::Debug for BackendNode {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BackendNode")
 				.field("backend_id", &crate::dnn::BackendNodeTraitConst::backend_id(self))
 				.finish()
@@ -4559,9 +4559,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for BackendWrapper {
+	impl fmt::Debug for BackendWrapper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BackendWrapper")
 				.field("backend_id", &crate::dnn::BackendWrapperTraitConst::backend_id(self))
 				.field("target_id", &crate::dnn::BackendWrapperTraitConst::target_id(self))
@@ -4799,9 +4799,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for BaseConvolutionLayer {
+	impl fmt::Debug for BaseConvolutionLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BaseConvolutionLayer")
 				.field("kernel", &crate::dnn::BaseConvolutionLayerTraitConst::kernel(self))
 				.field("stride", &crate::dnn::BaseConvolutionLayerTraitConst::stride(self))
@@ -4947,9 +4947,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for BatchNorm2Layer {
+	impl fmt::Debug for BatchNorm2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BatchNorm2Layer")
 				.field("epsilon", &crate::dnn::BatchNorm2LayerTraitConst::epsilon(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -5088,9 +5088,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for BatchNormLayer {
+	impl fmt::Debug for BatchNormLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BatchNormLayer")
 				.field("has_weights", &crate::dnn::BatchNormLayerTraitConst::has_weights(self))
 				.field("has_bias", &crate::dnn::BatchNormLayerTraitConst::has_bias(self))
@@ -5255,9 +5255,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for BatchNormLayerInt8 {
+	impl fmt::Debug for BatchNormLayerInt8 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BatchNormLayerInt8")
 				.field("input_sc", &crate::dnn::BatchNormLayerInt8TraitConst::input_sc(self))
 				.field("output_sc", &crate::dnn::BatchNormLayerInt8TraitConst::output_sc(self))
@@ -5390,9 +5390,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for BitShiftLayer {
+	impl fmt::Debug for BitShiftLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BitShiftLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -5494,9 +5494,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for BlackmanWindowLayer {
+	impl fmt::Debug for BlackmanWindowLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BlackmanWindowLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -5617,9 +5617,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for BlankLayer {
+	impl fmt::Debug for BlankLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BlankLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -5721,9 +5721,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Cast2Layer {
+	impl fmt::Debug for Cast2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Cast2Layer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -5825,9 +5825,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for CastLayer {
+	impl fmt::Debug for CastLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CastLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -5929,9 +5929,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for CeilLayer {
+	impl fmt::Debug for CeilLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CeilLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -6057,9 +6057,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for CeluLayer {
+	impl fmt::Debug for CeluLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CeluLayer")
 				.field("alpha", &crate::dnn::CeluLayerTraitConst::alpha(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -6174,9 +6174,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for CenterCropPadLayer {
+	impl fmt::Debug for CenterCropPadLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CenterCropPadLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -6278,9 +6278,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ChannelsPReLULayer {
+	impl fmt::Debug for ChannelsPReLULayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ChannelsPReLULayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -6502,9 +6502,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ClassificationModel {
+	impl fmt::Debug for ClassificationModel {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ClassificationModel")
 				.finish()
 		}
@@ -6588,9 +6588,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ClipLayer {
+	impl fmt::Debug for ClipLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ClipLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -6692,9 +6692,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for CompareLayer {
+	impl fmt::Debug for CompareLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CompareLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -6808,9 +6808,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Concat2Layer {
+	impl fmt::Debug for Concat2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Concat2Layer")
 				.field("axis", &crate::dnn::Concat2LayerTraitConst::axis(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -6957,9 +6957,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ConcatLayer {
+	impl fmt::Debug for ConcatLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ConcatLayer")
 				.field("axis", &crate::dnn::ConcatLayerTraitConst::axis(self))
 				.field("padding", &crate::dnn::ConcatLayerTraitConst::padding(self))
@@ -7065,9 +7065,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ConstLayer {
+	impl fmt::Debug for ConstLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ConstLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -7170,9 +7170,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ConstantOfShapeLayer {
+	impl fmt::Debug for ConstantOfShapeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ConstantOfShapeLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -7425,9 +7425,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Conv2Int8Layer {
+	impl fmt::Debug for Conv2Int8Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Conv2Int8Layer")
 				.field("input_zp", &crate::dnn::Conv2Int8LayerTraitConst::input_zp(self))
 				.field("output_zp", &crate::dnn::Conv2Int8LayerTraitConst::output_zp(self))
@@ -7650,9 +7650,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for Conv2Layer {
+	impl fmt::Debug for Conv2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Conv2Layer")
 				.field("strides", &crate::dnn::Conv2LayerTraitConst::strides(self))
 				.field("dilations", &crate::dnn::Conv2LayerTraitConst::dilations(self))
@@ -7843,9 +7843,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for ConvTranspose2Layer {
+	impl fmt::Debug for ConvTranspose2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ConvTranspose2Layer")
 				.field("strides", &crate::dnn::ConvTranspose2LayerTraitConst::strides(self))
 				.field("dilations", &crate::dnn::ConvTranspose2LayerTraitConst::dilations(self))
@@ -7995,9 +7995,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ConvolutionLayer {
+	impl fmt::Debug for ConvolutionLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ConvolutionLayer")
 				.field("fused_activation", &crate::dnn::ConvolutionLayerTraitConst::fused_activation(self))
 				.field("fused_add", &crate::dnn::ConvolutionLayerTraitConst::fused_add(self))
@@ -8201,9 +8201,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ConvolutionLayerInt8 {
+	impl fmt::Debug for ConvolutionLayerInt8 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ConvolutionLayerInt8")
 				.field("input_zp", &crate::dnn::ConvolutionLayerInt8TraitConst::input_zp(self))
 				.field("output_zp", &crate::dnn::ConvolutionLayerInt8TraitConst::output_zp(self))
@@ -8336,9 +8336,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for CorrelationLayer {
+	impl fmt::Debug for CorrelationLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CorrelationLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -8440,9 +8440,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for CosLayer {
+	impl fmt::Debug for CosLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CosLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -8556,9 +8556,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for CoshLayer {
+	impl fmt::Debug for CoshLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CoshLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -8672,9 +8672,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for CropAndResizeLayer {
+	impl fmt::Debug for CropAndResizeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CropAndResizeLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -8776,9 +8776,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for CropLayer {
+	impl fmt::Debug for CropLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CropLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -8904,9 +8904,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for CumSumLayer {
+	impl fmt::Debug for CumSumLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CumSumLayer")
 				.field("exclusive", &crate::dnn::CumSumLayerTraitConst::exclusive(self))
 				.field("reverse", &crate::dnn::CumSumLayerTraitConst::reverse(self))
@@ -9059,9 +9059,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for DFTLayer {
+	impl fmt::Debug for DFTLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DFTLayer")
 				.field("inverse", &crate::dnn::DFTLayerTraitConst::inverse(self))
 				.field("onesided", &crate::dnn::DFTLayerTraitConst::onesided(self))
@@ -9167,9 +9167,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for DataAugmentationLayer {
+	impl fmt::Debug for DataAugmentationLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DataAugmentationLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -9271,9 +9271,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for DeconvolutionLayer {
+	impl fmt::Debug for DeconvolutionLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DeconvolutionLayer")
 				.field("kernel", &crate::dnn::BaseConvolutionLayerTraitConst::kernel(self))
 				.field("stride", &crate::dnn::BaseConvolutionLayerTraitConst::stride(self))
@@ -9400,9 +9400,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for DepthToSpaceLayer {
+	impl fmt::Debug for DepthToSpaceLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DepthToSpaceLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -9530,9 +9530,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for DequantizeLayer {
+	impl fmt::Debug for DequantizeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DequantizeLayer")
 				.field("scales", &crate::dnn::DequantizeLayerTraitConst::scales(self))
 				.field("zeropoints", &crate::dnn::DequantizeLayerTraitConst::zeropoints(self))
@@ -9660,9 +9660,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for DequantizeLinearLayer {
+	impl fmt::Debug for DequantizeLinearLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DequantizeLinearLayer")
 				.field("axis", &crate::dnn::DequantizeLinearLayerTraitConst::axis(self))
 				.field("block_size", &crate::dnn::DequantizeLinearLayerTraitConst::block_size(self))
@@ -9766,9 +9766,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for DetLayer {
+	impl fmt::Debug for DetLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DetLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -9991,9 +9991,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for DetectionModel {
+	impl fmt::Debug for DetectionModel {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DetectionModel")
 				.finish()
 		}
@@ -10083,9 +10083,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for DetectionOutputLayer {
+	impl fmt::Debug for DetectionOutputLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DetectionOutputLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -10285,9 +10285,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Dict {
+	impl fmt::Debug for Dict {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Dict")
 				.finish()
 		}
@@ -10709,9 +10709,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ELULayer {
+	impl fmt::Debug for ELULayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ELULayer")
 				.field("alpha", &crate::dnn::ELULayerTraitConst::alpha(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -10852,9 +10852,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for EinsumLayer {
+	impl fmt::Debug for EinsumLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("EinsumLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -11006,9 +11006,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Eltwise2Int8Layer {
+	impl fmt::Debug for Eltwise2Int8Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Eltwise2Int8Layer")
 				.field("scales", &crate::dnn::Eltwise2Int8LayerTraitConst::scales(self))
 				.field("zeropoints", &crate::dnn::Eltwise2Int8LayerTraitConst::zeropoints(self))
@@ -11120,9 +11120,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for EltwiseLayer {
+	impl fmt::Debug for EltwiseLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("EltwiseLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -11299,9 +11299,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for EltwiseLayerInt8 {
+	impl fmt::Debug for EltwiseLayerInt8 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("EltwiseLayerInt8")
 				.field("coeffs", &crate::dnn::EltwiseLayerInt8TraitConst::coeffs(self))
 				.field("zeropoints", &crate::dnn::EltwiseLayerInt8TraitConst::zeropoints(self))
@@ -11409,9 +11409,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ErfLayer {
+	impl fmt::Debug for ErfLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ErfLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -11561,9 +11561,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ExpLayer {
+	impl fmt::Debug for ExpLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ExpLayer")
 				.field("base", &crate::dnn::ExpLayerTraitConst::base(self))
 				.field("scale", &crate::dnn::ExpLayerTraitConst::scale(self))
@@ -11680,9 +11680,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Expand2Layer {
+	impl fmt::Debug for Expand2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Expand2Layer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -11784,9 +11784,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ExpandLayer {
+	impl fmt::Debug for ExpandLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ExpandLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -11888,9 +11888,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for EyeLikeLayer {
+	impl fmt::Debug for EyeLikeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("EyeLikeLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -11992,9 +11992,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for FlattenLayer {
+	impl fmt::Debug for FlattenLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FlattenLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -12096,9 +12096,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for FloorLayer {
+	impl fmt::Debug for FloorLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FloorLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -12212,9 +12212,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for FlowWarpLayer {
+	impl fmt::Debug for FlowWarpLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FlowWarpLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -12343,9 +12343,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for GRULayer {
+	impl fmt::Debug for GRULayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GRULayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -12459,9 +12459,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Gather2Layer {
+	impl fmt::Debug for Gather2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Gather2Layer")
 				.field("axis", &crate::dnn::Gather2LayerTraitConst::axis(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -12573,9 +12573,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for GatherElementsLayer {
+	impl fmt::Debug for GatherElementsLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GatherElementsLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -12678,9 +12678,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for GatherLayer {
+	impl fmt::Debug for GatherLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GatherLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -12786,9 +12786,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for GatherNDLayer {
+	impl fmt::Debug for GatherNDLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GatherNDLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -12890,9 +12890,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for GeluApproximationLayer {
+	impl fmt::Debug for GeluApproximationLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GeluApproximationLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -13006,9 +13006,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for GeluLayer {
+	impl fmt::Debug for GeluLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GeluLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -13182,9 +13182,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for GemmLayer {
+	impl fmt::Debug for GemmLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GemmLayer")
 				.field("trans_a", &crate::dnn::GemmLayerTraitConst::trans_a(self))
 				.field("trans_b", &crate::dnn::GemmLayerTraitConst::trans_b(self))
@@ -13291,9 +13291,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for GlobalAveragePoolLayer {
+	impl fmt::Debug for GlobalAveragePoolLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GlobalAveragePoolLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -13486,9 +13486,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for Graph {
+	impl fmt::Debug for Graph {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Graph")
 				.finish()
 		}
@@ -13560,9 +13560,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for GridSampleLayer {
+	impl fmt::Debug for GridSampleLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GridSampleLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -13664,9 +13664,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for GroupNormLayer {
+	impl fmt::Debug for GroupNormLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GroupNormLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -13768,9 +13768,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for HammingWindowLayer {
+	impl fmt::Debug for HammingWindowLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HammingWindowLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -13872,9 +13872,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for HannWindowLayer {
+	impl fmt::Debug for HannWindowLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HannWindowLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -14000,9 +14000,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for HardSigmoidLayer {
+	impl fmt::Debug for HardSigmoidLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HardSigmoidLayer")
 				.field("alpha", &crate::dnn::HardSigmoidLayerTraitConst::alpha(self))
 				.field("beta", &crate::dnn::HardSigmoidLayerTraitConst::beta(self))
@@ -14118,9 +14118,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for HardSwishLayer {
+	impl fmt::Debug for HardSwishLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HardSwishLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -14234,9 +14234,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for HardmaxLayer {
+	impl fmt::Debug for HardmaxLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HardmaxLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -14333,9 +14333,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for IfLayer {
+	impl fmt::Debug for IfLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("IfLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -14561,9 +14561,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for InnerProductLayer {
+	impl fmt::Debug for InnerProductLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("InnerProductLayer")
 				.field("axis", &crate::dnn::InnerProductLayerTraitConst::axis(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -14738,9 +14738,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for InnerProductLayerInt8 {
+	impl fmt::Debug for InnerProductLayerInt8 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("InnerProductLayerInt8")
 				.field("input_zp", &crate::dnn::InnerProductLayerInt8TraitConst::input_zp(self))
 				.field("output_zp", &crate::dnn::InnerProductLayerInt8TraitConst::output_zp(self))
@@ -14873,9 +14873,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for InstanceNormLayer {
+	impl fmt::Debug for InstanceNormLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("InstanceNormLayer")
 				.field("epsilon", &crate::dnn::InstanceNormLayerTraitConst::epsilon(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -14981,9 +14981,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for InterpLayer {
+	impl fmt::Debug for InterpLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("InterpLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -15085,9 +15085,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for IsInfLayer {
+	impl fmt::Debug for IsInfLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("IsInfLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -15189,9 +15189,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for IsNaNLayer {
+	impl fmt::Debug for IsNaNLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("IsNaNLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -15373,9 +15373,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for KeypointsModel {
+	impl fmt::Debug for KeypointsModel {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("KeypointsModel")
 				.finish()
 		}
@@ -15531,9 +15531,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for LRNLayer {
+	impl fmt::Debug for LRNLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LRNLayer")
 				.field("typ", &crate::dnn::LRNLayerTraitConst::typ(self))
 				.field("size", &crate::dnn::LRNLayerTraitConst::size(self))
@@ -15642,9 +15642,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for LSTM2Layer {
+	impl fmt::Debug for LSTM2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LSTM2Layer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -15906,9 +15906,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for LSTMLayer {
+	impl fmt::Debug for LSTMLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LSTMLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -16523,9 +16523,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for Layer {
+	impl fmt::Debug for Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Layer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -17002,9 +17002,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for LayerFactory {
+	impl fmt::Debug for LayerFactory {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LayerFactory")
 				.finish()
 		}
@@ -17100,9 +17100,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for LayerNorm2Layer {
+	impl fmt::Debug for LayerNorm2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LayerNorm2Layer")
 				.field("axis", &crate::dnn::LayerNorm2LayerTraitConst::axis(self))
 				.field("epsilon", &crate::dnn::LayerNorm2LayerTraitConst::epsilon(self))
@@ -17242,9 +17242,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for LayerNormLayer {
+	impl fmt::Debug for LayerNormLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LayerNormLayer")
 				.field("has_bias", &crate::dnn::LayerNormLayerTraitConst::has_bias(self))
 				.field("axis", &crate::dnn::LayerNormLayerTraitConst::axis(self))
@@ -17390,9 +17390,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for LayerParams {
+	impl fmt::Debug for LayerParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LayerParams")
 				.field("blobs", &crate::dnn::LayerParamsTraitConst::blobs(self))
 				.field("name", &crate::dnn::LayerParamsTraitConst::name(self))
@@ -17479,9 +17479,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for LogLayer {
+	impl fmt::Debug for LogLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LogLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -17593,9 +17593,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for LoopLayer {
+	impl fmt::Debug for LoopLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LoopLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -17733,9 +17733,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for MVNLayer {
+	impl fmt::Debug for MVNLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MVNLayer")
 				.field("eps", &crate::dnn::MVNLayerTraitConst::eps(self))
 				.field("norm_variance", &crate::dnn::MVNLayerTraitConst::norm_variance(self))
@@ -17902,9 +17902,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for MatMulInt8Layer {
+	impl fmt::Debug for MatMulInt8Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MatMulInt8Layer")
 				.field("input_zp", &crate::dnn::MatMulInt8LayerTraitConst::input_zp(self))
 				.field("output_zp", &crate::dnn::MatMulInt8LayerTraitConst::output_zp(self))
@@ -18076,9 +18076,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for MatMulLayer {
+	impl fmt::Debug for MatMulLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MatMulLayer")
 				.field("trans_a", &crate::dnn::MatMulLayerTraitConst::trans_a(self))
 				.field("trans_b", &crate::dnn::MatMulLayerTraitConst::trans_b(self))
@@ -18274,9 +18274,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for MaxPoolLayer {
+	impl fmt::Debug for MaxPoolLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MaxPoolLayer")
 				.field("kernel_shape", &crate::dnn::MaxPoolLayerTraitConst::kernel_shape(self))
 				.field("strides", &crate::dnn::MaxPoolLayerTraitConst::strides(self))
@@ -18427,9 +18427,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for MaxUnpoolLayer {
+	impl fmt::Debug for MaxUnpoolLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MaxUnpoolLayer")
 				.field("pool_kernel", &crate::dnn::MaxUnpoolLayerTraitConst::pool_kernel(self))
 				.field("pool_pad", &crate::dnn::MaxUnpoolLayerTraitConst::pool_pad(self))
@@ -18534,9 +18534,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for MishLayer {
+	impl fmt::Debug for MishLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MishLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -18945,9 +18945,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Model {
+	impl fmt::Debug for Model {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Model")
 				.finish()
 		}
@@ -19033,9 +19033,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for NaryEltwiseLayer {
+	impl fmt::Debug for NaryEltwiseLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NaryEltwiseLayer")
 				.field("op", &crate::dnn::NaryEltwiseLayerTraitConst::op(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -19164,9 +19164,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for NegativeLogLikelihoodLossLayer {
+	impl fmt::Debug for NegativeLogLikelihoodLossLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NegativeLogLikelihoodLossLayer")
 				.field("reduction", &crate::dnn::NegativeLogLikelihoodLossLayerTraitConst::reduction(self))
 				.field("ignore_index", &crate::dnn::NegativeLogLikelihoodLossLayerTraitConst::ignore_index(self))
@@ -20577,9 +20577,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Net {
+	impl fmt::Debug for Net {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Net")
 				.finish()
 		}
@@ -20651,9 +20651,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for NonMaxSuppressionLayer {
+	impl fmt::Debug for NonMaxSuppressionLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NonMaxSuppressionLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -20755,9 +20755,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for NonZeroLayer {
+	impl fmt::Debug for NonZeroLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NonZeroLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -20919,9 +20919,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for NormalizeBBoxLayer {
+	impl fmt::Debug for NormalizeBBoxLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NormalizeBBoxLayer")
 				.field("pnorm", &crate::dnn::NormalizeBBoxLayerTraitConst::pnorm(self))
 				.field("epsilon", &crate::dnn::NormalizeBBoxLayerTraitConst::epsilon(self))
@@ -21026,9 +21026,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for NotLayer {
+	impl fmt::Debug for NotLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("NotLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -21142,9 +21142,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for OneHotLayer {
+	impl fmt::Debug for OneHotLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("OneHotLayer")
 				.field("axis", &crate::dnn::OneHotLayerTraitConst::axis(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -21247,9 +21247,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Pad2Layer {
+	impl fmt::Debug for Pad2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Pad2Layer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -21371,9 +21371,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for PaddingLayer {
+	impl fmt::Debug for PaddingLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PaddingLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -21475,9 +21475,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for PermuteLayer {
+	impl fmt::Debug for PermuteLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PermuteLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -21729,9 +21729,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Pool2Int8Layer {
+	impl fmt::Debug for Pool2Int8Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Pool2Int8Layer")
 				.field("input_zp", &crate::dnn::Pool2Int8LayerTraitConst::input_zp(self))
 				.field("output_zp", &crate::dnn::Pool2Int8LayerTraitConst::output_zp(self))
@@ -22024,9 +22024,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for PoolingLayer {
+	impl fmt::Debug for PoolingLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PoolingLayer")
 				.field("typ", &crate::dnn::PoolingLayerTraitConst::typ(self))
 				.field("kernel_size", &crate::dnn::PoolingLayerTraitConst::kernel_size(self))
@@ -22190,9 +22190,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for PoolingLayerInt8 {
+	impl fmt::Debug for PoolingLayerInt8 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PoolingLayerInt8")
 				.field("input_zp", &crate::dnn::PoolingLayerInt8TraitConst::input_zp(self))
 				.field("output_zp", &crate::dnn::PoolingLayerInt8TraitConst::output_zp(self))
@@ -22360,9 +22360,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for PowerLayer {
+	impl fmt::Debug for PowerLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PowerLayer")
 				.field("power", &crate::dnn::PowerLayerTraitConst::power(self))
 				.field("scale", &crate::dnn::PowerLayerTraitConst::scale(self))
@@ -22479,9 +22479,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for PriorBoxLayer {
+	impl fmt::Debug for PriorBoxLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PriorBoxLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -22583,9 +22583,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ProposalLayer {
+	impl fmt::Debug for ProposalLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ProposalLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -22713,9 +22713,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for QuantizeLayer {
+	impl fmt::Debug for QuantizeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("QuantizeLayer")
 				.field("scales", &crate::dnn::QuantizeLayerTraitConst::scales(self))
 				.field("zeropoints", &crate::dnn::QuantizeLayerTraitConst::zeropoints(self))
@@ -22867,9 +22867,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for QuantizeLinearLayer {
+	impl fmt::Debug for QuantizeLinearLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("QuantizeLinearLayer")
 				.field("axis", &crate::dnn::QuantizeLinearLayerTraitConst::axis(self))
 				.field("block_size", &crate::dnn::QuantizeLinearLayerTraitConst::block_size(self))
@@ -22975,9 +22975,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for RMSNormLayer {
+	impl fmt::Debug for RMSNormLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RMSNormLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -23128,9 +23128,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for RNNLayer {
+	impl fmt::Debug for RNNLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RNNLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -23280,9 +23280,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for RandomNormalLikeLayer {
+	impl fmt::Debug for RandomNormalLikeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RandomNormalLikeLayer")
 				.field("mean", &crate::dnn::RandomNormalLikeLayerTraitConst::mean(self))
 				.field("scale", &crate::dnn::RandomNormalLikeLayerTraitConst::scale(self))
@@ -23388,9 +23388,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for RangeLayer {
+	impl fmt::Debug for RangeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RangeLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -23516,9 +23516,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ReLU6Layer {
+	impl fmt::Debug for ReLU6Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ReLU6Layer")
 				.field("min_value", &crate::dnn::ReLU6LayerTraitConst::min_value(self))
 				.field("max_value", &crate::dnn::ReLU6LayerTraitConst::max_value(self))
@@ -23646,9 +23646,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ReLULayer {
+	impl fmt::Debug for ReLULayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ReLULayer")
 				.field("negative_slope", &crate::dnn::ReLULayerTraitConst::negative_slope(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -23763,9 +23763,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ReciprocalLayer {
+	impl fmt::Debug for ReciprocalLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ReciprocalLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -23930,9 +23930,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Reduce2Layer {
+	impl fmt::Debug for Reduce2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Reduce2Layer")
 				.field("reduce_type", &crate::dnn::Reduce2LayerTraitConst::reduce_type(self))
 				.field("keepdims", &crate::dnn::Reduce2LayerTraitConst::keepdims(self))
@@ -24038,9 +24038,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ReduceLayer {
+	impl fmt::Debug for ReduceLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ReduceLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -24154,9 +24154,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for RegionLayer {
+	impl fmt::Debug for RegionLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RegionLayer")
 				.field("nms_threshold", &crate::dnn::RegionLayerTraitConst::nms_threshold(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -24259,9 +24259,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ReorgLayer {
+	impl fmt::Debug for ReorgLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ReorgLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -24387,9 +24387,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for RequantizeLayer {
+	impl fmt::Debug for RequantizeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RequantizeLayer")
 				.field("scale", &crate::dnn::RequantizeLayerTraitConst::scale(self))
 				.field("shift", &crate::dnn::RequantizeLayerTraitConst::shift(self))
@@ -24507,9 +24507,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Reshape2Layer {
+	impl fmt::Debug for Reshape2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Reshape2Layer")
 				.field("new_shape_desc", &crate::dnn::Reshape2LayerTraitConst::new_shape_desc(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -24639,9 +24639,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ReshapeLayer {
+	impl fmt::Debug for ReshapeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ReshapeLayer")
 				.field("new_shape_desc", &crate::dnn::ReshapeLayerTraitConst::new_shape_desc(self))
 				.field("new_shape_range", &crate::dnn::ReshapeLayerTraitConst::new_shape_range(self))
@@ -24745,9 +24745,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Resize2Layer {
+	impl fmt::Debug for Resize2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Resize2Layer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -24852,9 +24852,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ResizeLayer {
+	impl fmt::Debug for ResizeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ResizeLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -24956,9 +24956,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for RoiAlignLayer {
+	impl fmt::Debug for RoiAlignLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RoiAlignLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -25060,9 +25060,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for RotaryEmbeddingLayer {
+	impl fmt::Debug for RotaryEmbeddingLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RotaryEmbeddingLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -25164,9 +25164,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for RoundLayer {
+	impl fmt::Debug for RoundLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RoundLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -25280,9 +25280,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SDPALayer {
+	impl fmt::Debug for SDPALayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SDPALayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -25422,9 +25422,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ScaleLayer {
+	impl fmt::Debug for ScaleLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ScaleLayer")
 				.field("has_bias", &crate::dnn::ScaleLayerTraitConst::has_bias(self))
 				.field("axis", &crate::dnn::ScaleLayerTraitConst::axis(self))
@@ -25553,9 +25553,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ScaleLayerInt8 {
+	impl fmt::Debug for ScaleLayerInt8 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ScaleLayerInt8")
 				.field("output_sc", &crate::dnn::ScaleLayerInt8TraitConst::output_sc(self))
 				.field("output_zp", &crate::dnn::ScaleLayerInt8TraitConst::output_zp(self))
@@ -25674,9 +25674,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ScatterLayer {
+	impl fmt::Debug for ScatterLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ScatterLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -25778,9 +25778,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ScatterNDLayer {
+	impl fmt::Debug for ScatterNDLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ScatterNDLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -25936,9 +25936,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SegmentationModel {
+	impl fmt::Debug for SegmentationModel {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SegmentationModel")
 				.finish()
 		}
@@ -26046,9 +26046,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SeluLayer {
+	impl fmt::Debug for SeluLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SeluLayer")
 				.field("alpha", &crate::dnn::SeluLayerTraitConst::alpha(self))
 				.field("gamma", &crate::dnn::SeluLayerTraitConst::gamma(self))
@@ -26188,9 +26188,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ShapeLayer {
+	impl fmt::Debug for ShapeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ShapeLayer")
 				.field("start", &crate::dnn::ShapeLayerTraitConst::start(self))
 				.field("end", &crate::dnn::ShapeLayerTraitConst::end(self))
@@ -26294,9 +26294,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ShiftLayer {
+	impl fmt::Debug for ShiftLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ShiftLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -26398,9 +26398,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ShiftLayerInt8 {
+	impl fmt::Debug for ShiftLayerInt8 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ShiftLayerInt8")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -26526,9 +26526,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ShrinkLayer {
+	impl fmt::Debug for ShrinkLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ShrinkLayer")
 				.field("bias", &crate::dnn::ShrinkLayerTraitConst::bias(self))
 				.field("lambd", &crate::dnn::ShrinkLayerTraitConst::lambd(self))
@@ -26664,9 +26664,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ShuffleChannelLayer {
+	impl fmt::Debug for ShuffleChannelLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ShuffleChannelLayer")
 				.field("group", &crate::dnn::ShuffleChannelLayerTraitConst::group(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -26769,9 +26769,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SigmoidLayer {
+	impl fmt::Debug for SigmoidLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SigmoidLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -26885,9 +26885,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SignLayer {
+	impl fmt::Debug for SignLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SignLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -27001,9 +27001,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SinLayer {
+	impl fmt::Debug for SinLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SinLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -27117,9 +27117,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SinhLayer {
+	impl fmt::Debug for SinhLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SinhLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -27233,9 +27233,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SizeLayer {
+	impl fmt::Debug for SizeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SizeLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -27376,9 +27376,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Slice2Layer {
+	impl fmt::Debug for Slice2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Slice2Layer")
 				.field("starts", &crate::dnn::Slice2LayerTraitConst::starts(self))
 				.field("ends", &crate::dnn::Slice2LayerTraitConst::ends(self))
@@ -27564,9 +27564,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SliceLayer {
+	impl fmt::Debug for SliceLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SliceLayer")
 				.field("slice_ranges", &crate::dnn::SliceLayerTraitConst::slice_ranges(self))
 				.field("slice_steps", &crate::dnn::SliceLayerTraitConst::slice_steps(self))
@@ -27722,9 +27722,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SoftmaxCrossEntropyLossLayer {
+	impl fmt::Debug for SoftmaxCrossEntropyLossLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SoftmaxCrossEntropyLossLayer")
 				.field("reduction", &crate::dnn::SoftmaxCrossEntropyLossLayerTraitConst::reduction(self))
 				.field("ignore_index", &crate::dnn::SoftmaxCrossEntropyLossLayerTraitConst::ignore_index(self))
@@ -27854,9 +27854,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SoftmaxLayer {
+	impl fmt::Debug for SoftmaxLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SoftmaxLayer")
 				.field("log_soft_max", &crate::dnn::SoftmaxLayerTraitConst::log_soft_max(self))
 				.field("scale", &crate::dnn::SoftmaxLayerTraitConst::scale(self))
@@ -27984,9 +27984,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SoftmaxLayerInt8 {
+	impl fmt::Debug for SoftmaxLayerInt8 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SoftmaxLayerInt8")
 				.field("output_sc", &crate::dnn::SoftmaxLayerInt8TraitConst::output_sc(self))
 				.field("output_zp", &crate::dnn::SoftmaxLayerInt8TraitConst::output_zp(self))
@@ -28104,9 +28104,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SoftplusLayer {
+	impl fmt::Debug for SoftplusLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SoftplusLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -28220,9 +28220,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SoftsignLayer {
+	impl fmt::Debug for SoftsignLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SoftsignLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -28336,9 +28336,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SpaceToDepthLayer {
+	impl fmt::Debug for SpaceToDepthLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SpaceToDepthLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -28465,9 +28465,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Split2Layer {
+	impl fmt::Debug for Split2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Split2Layer")
 				.field("axis", &crate::dnn::Split2LayerTraitConst::axis(self))
 				.field("split", &crate::dnn::Split2LayerTraitConst::split(self))
@@ -28585,9 +28585,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SplitLayer {
+	impl fmt::Debug for SplitLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SplitLayer")
 				.field("outputs_count", &crate::dnn::SplitLayerTraitConst::outputs_count(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -28690,9 +28690,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SqrtLayer {
+	impl fmt::Debug for SqrtLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SqrtLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -28819,9 +28819,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SqueezeLayer {
+	impl fmt::Debug for SqueezeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SqueezeLayer")
 				.field("axes", &crate::dnn::SqueezeLayerTraitConst::axes(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -28924,9 +28924,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for SwishLayer {
+	impl fmt::Debug for SwishLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SwishLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -29040,9 +29040,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for TanHLayer {
+	impl fmt::Debug for TanHLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TanHLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -29156,9 +29156,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for TanLayer {
+	impl fmt::Debug for TanLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TanLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -29352,9 +29352,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for TextDetectionModel {
+	impl fmt::Debug for TextDetectionModel {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TextDetectionModel")
 				.finish()
 		}
@@ -29569,9 +29569,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for TextDetectionModel_DB {
+	impl fmt::Debug for TextDetectionModel_DB {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TextDetectionModel_DB")
 				.finish()
 		}
@@ -29762,9 +29762,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for TextDetectionModel_EAST {
+	impl fmt::Debug for TextDetectionModel_EAST {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TextDetectionModel_EAST")
 				.finish()
 		}
@@ -30035,9 +30035,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for TextRecognitionModel {
+	impl fmt::Debug for TextRecognitionModel {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TextRecognitionModel")
 				.finish()
 		}
@@ -30133,9 +30133,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for ThresholdedReluLayer {
+	impl fmt::Debug for ThresholdedReluLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ThresholdedReluLayer")
 				.field("alpha", &crate::dnn::ThresholdedReluLayerTraitConst::alpha(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -30250,9 +30250,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Tile2Layer {
+	impl fmt::Debug for Tile2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Tile2Layer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -30354,9 +30354,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for TileLayer {
+	impl fmt::Debug for TileLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TileLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -30517,9 +30517,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for Tokenizer {
+	impl fmt::Debug for Tokenizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Tokenizer")
 				.finish()
 		}
@@ -30591,9 +30591,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for TopK2Layer {
+	impl fmt::Debug for TopK2Layer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TopK2Layer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -30695,9 +30695,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for TopKLayer {
+	impl fmt::Debug for TopKLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TopKLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -30825,9 +30825,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for TransformLayoutLayer {
+	impl fmt::Debug for TransformLayoutLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TransformLayoutLayer")
 				.field("layout", &crate::dnn::TransformLayoutLayerTraitConst::layout(self))
 				.field("c0", &crate::dnn::TransformLayoutLayerTraitConst::c0(self))
@@ -30944,9 +30944,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for TransposeLayer {
+	impl fmt::Debug for TransposeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TransposeLayer")
 				.field("perm", &crate::dnn::TransposeLayerTraitConst::perm(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -31049,9 +31049,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for TriluLayer {
+	impl fmt::Debug for TriluLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TriluLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -31153,9 +31153,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for UniqueLayer {
+	impl fmt::Debug for UniqueLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("UniqueLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
@@ -31270,9 +31270,9 @@ pub mod dnn {
 		}
 	}
 
-	impl ::core::fmt::Debug for UnsqueezeLayer {
+	impl fmt::Debug for UnsqueezeLayer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("UnsqueezeLayer")
 				.field("axes", &crate::dnn::UnsqueezeLayerTraitConst::axes(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
@@ -31384,9 +31384,9 @@ pub mod dnn {
 
 	}
 
-	impl ::core::fmt::Debug for _Range {
+	impl fmt::Debug for _Range {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("_Range")
 				.field("start", &core::RangeTraitConst::start(self))
 				.field("end", &core::RangeTraitConst::end(self))

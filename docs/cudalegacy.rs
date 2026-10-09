@@ -621,9 +621,9 @@ pub mod cudalegacy {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_BackgroundSubtractorFGD {
+	impl fmt::Debug for CUDA_BackgroundSubtractorFGD {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_BackgroundSubtractorFGD")
 				.finish()
 		}
@@ -898,9 +898,9 @@ pub mod cudalegacy {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_BackgroundSubtractorGMG {
+	impl fmt::Debug for CUDA_BackgroundSubtractorGMG {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_BackgroundSubtractorGMG")
 				.finish()
 		}
@@ -1183,9 +1183,9 @@ pub mod cudalegacy {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_FGDParams {
+	impl fmt::Debug for CUDA_FGDParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_FGDParams")
 				.field("lc", &crate::cudalegacy::CUDA_FGDParamsTraitConst::lc(self))
 				.field("n1c", &crate::cudalegacy::CUDA_FGDParamsTraitConst::n1c(self))
@@ -1288,9 +1288,9 @@ pub mod cudalegacy {
 		}
 	}
 
-	impl ::core::fmt::Debug for CUDA_FastOpticalFlowBM {
+	impl fmt::Debug for CUDA_FastOpticalFlowBM {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_FastOpticalFlowBM")
 				.finish()
 		}
@@ -1358,9 +1358,9 @@ pub mod cudalegacy {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_ImagePyramid {
+	impl fmt::Debug for CUDA_ImagePyramid {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_ImagePyramid")
 				.finish()
 		}

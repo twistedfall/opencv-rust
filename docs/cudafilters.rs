@@ -997,9 +997,9 @@ pub mod cudafilters {
 
 	}
 
-	impl ::core::fmt::Debug for Filter {
+	impl fmt::Debug for Filter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Filter")
 				.finish()
 		}

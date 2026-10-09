@@ -1809,9 +1809,9 @@ pub mod highgui {
 		}
 	}
 
-	impl ::core::fmt::Debug for QtFont {
+	impl fmt::Debug for QtFont {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("QtFont")
 				.field("name_font", &crate::highgui::QtFontTraitConst::name_font(self))
 				.field("color", &crate::highgui::QtFontTraitConst::color(self))

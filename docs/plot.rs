@@ -241,9 +241,9 @@ pub mod plot {
 
 	}
 
-	impl ::core::fmt::Debug for Plot2d {
+	impl fmt::Debug for Plot2d {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Plot2d")
 				.finish()
 		}

@@ -213,9 +213,9 @@ pub mod dnn_superres {
 
 	}
 
-	impl ::core::fmt::Debug for DnnSuperResImpl {
+	impl fmt::Debug for DnnSuperResImpl {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DnnSuperResImpl")
 				.finish()
 		}

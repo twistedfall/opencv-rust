@@ -3603,9 +3603,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for AdaptiveManifoldFilter {
+	impl fmt::Debug for AdaptiveManifoldFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AdaptiveManifoldFilter")
 				.finish()
 		}
@@ -3861,9 +3861,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for ContourFitting {
+	impl fmt::Debug for ContourFitting {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ContourFitting")
 				.finish()
 		}
@@ -3968,9 +3968,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for DTFilter {
+	impl fmt::Debug for DTFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DTFilter")
 				.finish()
 		}
@@ -4109,9 +4109,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for DisparityFilter {
+	impl fmt::Debug for DisparityFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DisparityFilter")
 				.finish()
 		}
@@ -4283,9 +4283,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for DisparityWLSFilter {
+	impl fmt::Debug for DisparityWLSFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("DisparityWLSFilter")
 				.finish()
 		}
@@ -4509,9 +4509,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for EdgeAwareInterpolator {
+	impl fmt::Debug for EdgeAwareInterpolator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("EdgeAwareInterpolator")
 				.finish()
 		}
@@ -4863,9 +4863,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for EdgeBoxes {
+	impl fmt::Debug for EdgeBoxes {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("EdgeBoxes")
 				.finish()
 		}
@@ -5045,9 +5045,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for EdgeDrawing {
+	impl fmt::Debug for EdgeDrawing {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("EdgeDrawing")
 				.field("params", &crate::ximgproc::EdgeDrawingTraitConst::params(self))
 				.finish()
@@ -5196,9 +5196,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for FastBilateralSolverFilter {
+	impl fmt::Debug for FastBilateralSolverFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FastBilateralSolverFilter")
 				.finish()
 		}
@@ -5273,9 +5273,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for FastGlobalSmootherFilter {
+	impl fmt::Debug for FastGlobalSmootherFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FastGlobalSmootherFilter")
 				.finish()
 		}
@@ -5408,9 +5408,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for FastLineDetector {
+	impl fmt::Debug for FastLineDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FastLineDetector")
 				.finish()
 		}
@@ -5515,9 +5515,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for GuidedFilter {
+	impl fmt::Debug for GuidedFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GuidedFilter")
 				.finish()
 		}
@@ -5596,9 +5596,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for RFFeatureGetter {
+	impl fmt::Debug for RFFeatureGetter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RFFeatureGetter")
 				.finish()
 		}
@@ -6219,9 +6219,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for RICInterpolator {
+	impl fmt::Debug for RICInterpolator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RICInterpolator")
 				.finish()
 		}
@@ -6375,9 +6375,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for RidgeDetectionFilter {
+	impl fmt::Debug for RidgeDetectionFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RidgeDetectionFilter")
 				.finish()
 		}
@@ -6529,9 +6529,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for ScanSegment {
+	impl fmt::Debug for ScanSegment {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ScanSegment")
 				.finish()
 		}
@@ -6616,9 +6616,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for SparseMatchInterpolator {
+	impl fmt::Debug for SparseMatchInterpolator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SparseMatchInterpolator")
 				.finish()
 		}
@@ -6771,9 +6771,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for StructuredEdgeDetection {
+	impl fmt::Debug for StructuredEdgeDetection {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("StructuredEdgeDetection")
 				.finish()
 		}
@@ -7008,9 +7008,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for SuperpixelLSC {
+	impl fmt::Debug for SuperpixelLSC {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SuperpixelLSC")
 				.finish()
 		}
@@ -7259,9 +7259,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for SuperpixelSEEDS {
+	impl fmt::Debug for SuperpixelSEEDS {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SuperpixelSEEDS")
 				.finish()
 		}
@@ -7498,9 +7498,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for SuperpixelSLIC {
+	impl fmt::Debug for SuperpixelSLIC {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SuperpixelSLIC")
 				.finish()
 		}
@@ -7626,9 +7626,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for GraphSegmentation {
+	impl fmt::Debug for GraphSegmentation {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GraphSegmentation")
 				.finish()
 		}
@@ -7890,9 +7890,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for SelectiveSearchSegmentation {
+	impl fmt::Debug for SelectiveSearchSegmentation {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SelectiveSearchSegmentation")
 				.finish()
 		}
@@ -8018,9 +8018,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for SelectiveSearchSegmentationStrategy {
+	impl fmt::Debug for SelectiveSearchSegmentationStrategy {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SelectiveSearchSegmentationStrategy")
 				.finish()
 		}
@@ -8087,9 +8087,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for SelectiveSearchSegmentationStrategyColor {
+	impl fmt::Debug for SelectiveSearchSegmentationStrategyColor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SelectiveSearchSegmentationStrategyColor")
 				.finish()
 		}
@@ -8158,9 +8158,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for SelectiveSearchSegmentationStrategyFill {
+	impl fmt::Debug for SelectiveSearchSegmentationStrategyFill {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SelectiveSearchSegmentationStrategyFill")
 				.finish()
 		}
@@ -8251,9 +8251,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for SelectiveSearchSegmentationStrategyMultiple {
+	impl fmt::Debug for SelectiveSearchSegmentationStrategyMultiple {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SelectiveSearchSegmentationStrategyMultiple")
 				.finish()
 		}
@@ -8322,9 +8322,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for SelectiveSearchSegmentationStrategySize {
+	impl fmt::Debug for SelectiveSearchSegmentationStrategySize {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SelectiveSearchSegmentationStrategySize")
 				.finish()
 		}
@@ -8393,9 +8393,9 @@ pub mod ximgproc {
 
 	}
 
-	impl ::core::fmt::Debug for SelectiveSearchSegmentationStrategyTexture {
+	impl fmt::Debug for SelectiveSearchSegmentationStrategyTexture {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SelectiveSearchSegmentationStrategyTexture")
 				.finish()
 		}

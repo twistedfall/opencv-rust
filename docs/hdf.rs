@@ -1452,9 +1452,9 @@ pub mod hdf {
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atread_StringX_const_StringR(self.as_raw_mut_HDF5(), &mut value_via, atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			string_arg_output_receive!(value_via => value);
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			string_arg_output_receive!(value_via => value);
 			Ok(ret)
 		}
 
@@ -1505,9 +1505,9 @@ pub mod hdf {
 
 	}
 
-	impl ::core::fmt::Debug for HDF5 {
+	impl fmt::Debug for HDF5 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HDF5")
 				.finish()
 		}

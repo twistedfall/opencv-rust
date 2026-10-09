@@ -10425,9 +10425,9 @@ pub mod imgproc {
 
 	}
 
-	impl ::core::fmt::Debug for CLAHE {
+	impl fmt::Debug for CLAHE {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CLAHE")
 				.finish()
 		}
@@ -10592,9 +10592,9 @@ pub mod imgproc {
 		}
 	}
 
-	impl ::core::fmt::Debug for FontFace {
+	impl fmt::Debug for FontFace {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FontFace")
 				.finish()
 		}
@@ -10855,9 +10855,9 @@ pub mod imgproc {
 
 	}
 
-	impl ::core::fmt::Debug for GeneralizedHough {
+	impl fmt::Debug for GeneralizedHough {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GeneralizedHough")
 				.finish()
 		}
@@ -10957,9 +10957,9 @@ pub mod imgproc {
 
 	}
 
-	impl ::core::fmt::Debug for GeneralizedHoughBallard {
+	impl fmt::Debug for GeneralizedHoughBallard {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GeneralizedHoughBallard")
 				.finish()
 		}
@@ -11257,9 +11257,9 @@ pub mod imgproc {
 
 	}
 
-	impl ::core::fmt::Debug for GeneralizedHoughGuil {
+	impl fmt::Debug for GeneralizedHoughGuil {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("GeneralizedHoughGuil")
 				.finish()
 		}
@@ -11709,9 +11709,9 @@ pub mod imgproc {
 
 	}
 
-	impl ::core::fmt::Debug for LineIterator {
+	impl fmt::Debug for LineIterator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LineIterator")
 				.field("ptr", &crate::imgproc::LineIteratorTraitConst::ptr(self))
 				.field("ptr0", &crate::imgproc::LineIteratorTraitConst::ptr0(self))
@@ -11913,9 +11913,9 @@ pub mod imgproc {
 
 	}
 
-	impl ::core::fmt::Debug for LineSegmentDetector {
+	impl fmt::Debug for LineSegmentDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LineSegmentDetector")
 				.finish()
 		}

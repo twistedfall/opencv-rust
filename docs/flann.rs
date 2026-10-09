@@ -327,9 +327,9 @@ pub mod flann {
 
 	}
 
-	impl ::core::fmt::Debug for AutotunedIndexParams {
+	impl fmt::Debug for AutotunedIndexParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AutotunedIndexParams")
 				.finish()
 		}
@@ -420,9 +420,9 @@ pub mod flann {
 
 	}
 
-	impl ::core::fmt::Debug for CompositeIndexParams {
+	impl fmt::Debug for CompositeIndexParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CompositeIndexParams")
 				.finish()
 		}
@@ -511,9 +511,9 @@ pub mod flann {
 
 	}
 
-	impl ::core::fmt::Debug for HierarchicalClusteringIndexParams {
+	impl fmt::Debug for HierarchicalClusteringIndexParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("HierarchicalClusteringIndexParams")
 				.finish()
 		}
@@ -739,9 +739,9 @@ pub mod flann {
 
 	}
 
-	impl ::core::fmt::Debug for Index {
+	impl fmt::Debug for Index {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Index")
 				.finish()
 		}
@@ -956,9 +956,9 @@ pub mod flann {
 
 	}
 
-	impl ::core::fmt::Debug for IndexParams {
+	impl fmt::Debug for IndexParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("IndexParams")
 				.finish()
 		}
@@ -1029,9 +1029,9 @@ pub mod flann {
 
 	}
 
-	impl ::core::fmt::Debug for KDTreeIndexParams {
+	impl fmt::Debug for KDTreeIndexParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("KDTreeIndexParams")
 				.finish()
 		}
@@ -1120,9 +1120,9 @@ pub mod flann {
 
 	}
 
-	impl ::core::fmt::Debug for KMeansIndexParams {
+	impl fmt::Debug for KMeansIndexParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("KMeansIndexParams")
 				.finish()
 		}
@@ -1190,9 +1190,9 @@ pub mod flann {
 
 	}
 
-	impl ::core::fmt::Debug for LinearIndexParams {
+	impl fmt::Debug for LinearIndexParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LinearIndexParams")
 				.finish()
 		}
@@ -1260,9 +1260,9 @@ pub mod flann {
 
 	}
 
-	impl ::core::fmt::Debug for LshIndexParams {
+	impl fmt::Debug for LshIndexParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("LshIndexParams")
 				.finish()
 		}
@@ -1331,9 +1331,9 @@ pub mod flann {
 
 	}
 
-	impl ::core::fmt::Debug for SavedIndexParams {
+	impl fmt::Debug for SavedIndexParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SavedIndexParams")
 				.finish()
 		}
@@ -1430,9 +1430,9 @@ pub mod flann {
 
 	}
 
-	impl ::core::fmt::Debug for SearchParams {
+	impl fmt::Debug for SearchParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SearchParams")
 				.finish()
 		}

@@ -1752,9 +1752,9 @@ pub mod cudaimgproc {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_CLAHE {
+	impl fmt::Debug for CUDA_CLAHE {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_CLAHE")
 				.finish()
 		}
@@ -1992,9 +1992,9 @@ pub mod cudaimgproc {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_CannyEdgeDetector {
+	impl fmt::Debug for CUDA_CannyEdgeDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_CannyEdgeDetector")
 				.finish()
 		}
@@ -2223,9 +2223,9 @@ pub mod cudaimgproc {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_HoughCirclesDetector {
+	impl fmt::Debug for CUDA_HoughCirclesDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_HoughCirclesDetector")
 				.finish()
 		}
@@ -2468,9 +2468,9 @@ pub mod cudaimgproc {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_HoughLinesDetector {
+	impl fmt::Debug for CUDA_HoughLinesDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_HoughLinesDetector")
 				.finish()
 		}
@@ -2683,9 +2683,9 @@ pub mod cudaimgproc {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_HoughSegmentDetector {
+	impl fmt::Debug for CUDA_HoughSegmentDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_HoughSegmentDetector")
 				.finish()
 		}
@@ -2788,9 +2788,9 @@ pub mod cudaimgproc {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_TemplateMatching {
+	impl fmt::Debug for CUDA_TemplateMatching {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_TemplateMatching")
 				.finish()
 		}

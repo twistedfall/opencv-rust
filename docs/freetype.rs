@@ -201,9 +201,9 @@ pub mod freetype {
 
 	}
 
-	impl ::core::fmt::Debug for FreeType2 {
+	impl fmt::Debug for FreeType2 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FreeType2")
 				.finish()
 		}

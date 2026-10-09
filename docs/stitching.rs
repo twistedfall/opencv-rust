@@ -461,9 +461,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for AffineWarper {
+	impl fmt::Debug for AffineWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AffineWarper")
 				.finish()
 		}
@@ -558,9 +558,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for CompressedRectilinearPortraitWarper {
+	impl fmt::Debug for CompressedRectilinearPortraitWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CompressedRectilinearPortraitWarper")
 				.finish()
 		}
@@ -655,9 +655,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for CompressedRectilinearWarper {
+	impl fmt::Debug for CompressedRectilinearWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CompressedRectilinearWarper")
 				.finish()
 		}
@@ -744,9 +744,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for CylindricalWarper {
+	impl fmt::Debug for CylindricalWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CylindricalWarper")
 				.finish()
 		}
@@ -830,9 +830,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for CylindricalWarperGpu {
+	impl fmt::Debug for CylindricalWarperGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CylindricalWarperGpu")
 				.finish()
 		}
@@ -916,9 +916,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for FisheyeWarper {
+	impl fmt::Debug for FisheyeWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("FisheyeWarper")
 				.finish()
 		}
@@ -1002,9 +1002,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for MercatorWarper {
+	impl fmt::Debug for MercatorWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MercatorWarper")
 				.finish()
 		}
@@ -1099,9 +1099,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for PaniniPortraitWarper {
+	impl fmt::Debug for PaniniPortraitWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PaniniPortraitWarper")
 				.finish()
 		}
@@ -1196,9 +1196,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for PaniniWarper {
+	impl fmt::Debug for PaniniWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PaniniWarper")
 				.finish()
 		}
@@ -1285,9 +1285,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for PlaneWarper {
+	impl fmt::Debug for PlaneWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PlaneWarper")
 				.finish()
 		}
@@ -1371,9 +1371,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for PlaneWarperGpu {
+	impl fmt::Debug for PlaneWarperGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PlaneWarperGpu")
 				.finish()
 		}
@@ -1595,9 +1595,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for PyRotationWarper {
+	impl fmt::Debug for PyRotationWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PyRotationWarper")
 				.finish()
 		}
@@ -1670,9 +1670,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for SphericalWarper {
+	impl fmt::Debug for SphericalWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SphericalWarper")
 				.finish()
 		}
@@ -1756,9 +1756,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for SphericalWarperGpu {
+	impl fmt::Debug for SphericalWarperGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("SphericalWarperGpu")
 				.finish()
 		}
@@ -1842,9 +1842,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for StereographicWarper {
+	impl fmt::Debug for StereographicWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("StereographicWarper")
 				.finish()
 		}
@@ -2583,9 +2583,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Stitcher {
+	impl fmt::Debug for Stitcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Stitcher")
 				.finish()
 		}
@@ -2657,9 +2657,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for TransverseMercatorWarper {
+	impl fmt::Debug for TransverseMercatorWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TransverseMercatorWarper")
 				.finish()
 		}
@@ -2725,9 +2725,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for WarperCreator {
+	impl fmt::Debug for WarperCreator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("WarperCreator")
 				.finish()
 		}
@@ -2819,9 +2819,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_AffineBasedEstimator {
+	impl fmt::Debug for Detail_AffineBasedEstimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_AffineBasedEstimator")
 				.finish()
 		}
@@ -2944,9 +2944,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_AffineBestOf2NearestMatcher {
+	impl fmt::Debug for Detail_AffineBestOf2NearestMatcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_AffineBestOf2NearestMatcher")
 				.finish()
 		}
@@ -3157,9 +3157,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_AffineWarper {
+	impl fmt::Debug for Detail_AffineWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_AffineWarper")
 				.finish()
 		}
@@ -3332,9 +3332,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_BestOf2NearestMatcher {
+	impl fmt::Debug for Detail_BestOf2NearestMatcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_BestOf2NearestMatcher")
 				.finish()
 		}
@@ -3429,9 +3429,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_BestOf2NearestRangeMatcher {
+	impl fmt::Debug for Detail_BestOf2NearestRangeMatcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_BestOf2NearestRangeMatcher")
 				.finish()
 		}
@@ -3608,9 +3608,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_Blender {
+	impl fmt::Debug for Detail_Blender {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_Blender")
 				.finish()
 		}
@@ -3700,9 +3700,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_BlocksChannelsCompensator {
+	impl fmt::Debug for Detail_BlocksChannelsCompensator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_BlocksChannelsCompensator")
 				.finish()
 		}
@@ -3880,9 +3880,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_BlocksCompensator {
+	impl fmt::Debug for Detail_BlocksCompensator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_BlocksCompensator")
 				.finish()
 		}
@@ -4021,9 +4021,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_BlocksGainCompensator {
+	impl fmt::Debug for Detail_BlocksGainCompensator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_BlocksGainCompensator")
 				.finish()
 		}
@@ -4111,9 +4111,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_BundleAdjusterAffine {
+	impl fmt::Debug for Detail_BundleAdjusterAffine {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_BundleAdjusterAffine")
 				.finish()
 		}
@@ -4201,9 +4201,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_BundleAdjusterAffinePartial {
+	impl fmt::Debug for Detail_BundleAdjusterAffinePartial {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_BundleAdjusterAffinePartial")
 				.finish()
 		}
@@ -4326,9 +4326,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_BundleAdjusterBase {
+	impl fmt::Debug for Detail_BundleAdjusterBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_BundleAdjusterBase")
 				.finish()
 		}
@@ -4410,9 +4410,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_BundleAdjusterRay {
+	impl fmt::Debug for Detail_BundleAdjusterRay {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_BundleAdjusterRay")
 				.finish()
 		}
@@ -4497,9 +4497,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_BundleAdjusterReproj {
+	impl fmt::Debug for Detail_BundleAdjusterReproj {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_BundleAdjusterReproj")
 				.finish()
 		}
@@ -4693,9 +4693,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_CameraParams {
+	impl fmt::Debug for Detail_CameraParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_CameraParams")
 				.field("focal", &crate::stitching::Detail_CameraParamsTraitConst::focal(self))
 				.field("aspect", &crate::stitching::Detail_CameraParamsTraitConst::aspect(self))
@@ -4858,9 +4858,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_ChannelsCompensator {
+	impl fmt::Debug for Detail_ChannelsCompensator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_ChannelsCompensator")
 				.finish()
 		}
@@ -4976,9 +4976,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_CompressedRectilinearPortraitProjector {
+	impl fmt::Debug for Detail_CompressedRectilinearPortraitProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_CompressedRectilinearPortraitProjector")
 				.field("a", &crate::stitching::Detail_CompressedRectilinearPortraitProjectorTraitConst::a(self))
 				.field("b", &crate::stitching::Detail_CompressedRectilinearPortraitProjectorTraitConst::b(self))
@@ -5071,9 +5071,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_CompressedRectilinearPortraitWarper {
+	impl fmt::Debug for Detail_CompressedRectilinearPortraitWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_CompressedRectilinearPortraitWarper")
 				.finish()
 		}
@@ -5189,9 +5189,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_CompressedRectilinearProjector {
+	impl fmt::Debug for Detail_CompressedRectilinearProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_CompressedRectilinearProjector")
 				.field("a", &crate::stitching::Detail_CompressedRectilinearProjectorTraitConst::a(self))
 				.field("b", &crate::stitching::Detail_CompressedRectilinearProjectorTraitConst::b(self))
@@ -5284,9 +5284,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_CompressedRectilinearWarper {
+	impl fmt::Debug for Detail_CompressedRectilinearWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_CompressedRectilinearWarper")
 				.finish()
 		}
@@ -5378,9 +5378,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_CylindricalPortraitProjector {
+	impl fmt::Debug for Detail_CylindricalPortraitProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_CylindricalPortraitProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
 				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
@@ -5454,9 +5454,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_CylindricalPortraitWarper {
+	impl fmt::Debug for Detail_CylindricalPortraitWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_CylindricalPortraitWarper")
 				.finish()
 		}
@@ -5548,9 +5548,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_CylindricalProjector {
+	impl fmt::Debug for Detail_CylindricalProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_CylindricalProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
 				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
@@ -5655,9 +5655,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_CylindricalWarper {
+	impl fmt::Debug for Detail_CylindricalWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_CylindricalWarper")
 				.finish()
 		}
@@ -5775,9 +5775,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_CylindricalWarperGpu {
+	impl fmt::Debug for Detail_CylindricalWarperGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_CylindricalWarperGpu")
 				.finish()
 		}
@@ -5925,9 +5925,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_DisjointSets {
+	impl fmt::Debug for Detail_DisjointSets {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_DisjointSets")
 				.field("parent", &crate::stitching::Detail_DisjointSetsTraitConst::parent(self))
 				.field("size", &crate::stitching::Detail_DisjointSetsTraitConst::size(self))
@@ -6048,9 +6048,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_DpSeamFinder {
+	impl fmt::Debug for Detail_DpSeamFinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_DpSeamFinder")
 				.finish()
 		}
@@ -6130,9 +6130,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_Estimator {
+	impl fmt::Debug for Detail_Estimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_Estimator")
 				.finish()
 		}
@@ -6289,9 +6289,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_ExposureCompensator {
+	impl fmt::Debug for Detail_ExposureCompensator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_ExposureCompensator")
 				.finish()
 		}
@@ -6435,9 +6435,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_FeatherBlender {
+	impl fmt::Debug for Detail_FeatherBlender {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_FeatherBlender")
 				.finish()
 		}
@@ -6584,9 +6584,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_FeaturesMatcher {
+	impl fmt::Debug for Detail_FeaturesMatcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_FeaturesMatcher")
 				.finish()
 		}
@@ -6674,9 +6674,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_FisheyeProjector {
+	impl fmt::Debug for Detail_FisheyeProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_FisheyeProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
 				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
@@ -6750,9 +6750,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_FisheyeWarper {
+	impl fmt::Debug for Detail_FisheyeWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_FisheyeWarper")
 				.finish()
 		}
@@ -6934,9 +6934,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_GainCompensator {
+	impl fmt::Debug for Detail_GainCompensator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_GainCompensator")
 				.finish()
 		}
@@ -7046,9 +7046,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_Graph {
+	impl fmt::Debug for Detail_Graph {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_Graph")
 				.finish()
 		}
@@ -7162,9 +7162,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_GraphCutSeamFinder {
+	impl fmt::Debug for Detail_GraphCutSeamFinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_GraphCutSeamFinder")
 				.finish()
 		}
@@ -7251,9 +7251,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_GraphCutSeamFinderBase {
+	impl fmt::Debug for Detail_GraphCutSeamFinderBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_GraphCutSeamFinderBase")
 				.finish()
 		}
@@ -7346,9 +7346,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_GraphCutSeamFinderGpu {
+	impl fmt::Debug for Detail_GraphCutSeamFinderGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_GraphCutSeamFinderGpu")
 				.finish()
 		}
@@ -7494,9 +7494,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_GraphEdge {
+	impl fmt::Debug for Detail_GraphEdge {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_GraphEdge")
 				.field("from", &crate::stitching::Detail_GraphEdgeTraitConst::from(self))
 				.field("to", &crate::stitching::Detail_GraphEdgeTraitConst::to(self))
@@ -7571,9 +7571,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_HomographyBasedEstimator {
+	impl fmt::Debug for Detail_HomographyBasedEstimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_HomographyBasedEstimator")
 				.finish()
 		}
@@ -7717,9 +7717,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_ImageFeatures {
+	impl fmt::Debug for Detail_ImageFeatures {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_ImageFeatures")
 				.field("img_idx", &crate::stitching::Detail_ImageFeaturesTraitConst::img_idx(self))
 				.field("img_size", &crate::stitching::Detail_ImageFeaturesTraitConst::img_size(self))
@@ -7835,9 +7835,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_LightGlueFeaturesMatcher {
+	impl fmt::Debug for Detail_LightGlueFeaturesMatcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_LightGlueFeaturesMatcher")
 				.finish()
 		}
@@ -8054,9 +8054,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_MatchesInfo {
+	impl fmt::Debug for Detail_MatchesInfo {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_MatchesInfo")
 				.field("src_img_idx", &crate::stitching::Detail_MatchesInfoTraitConst::src_img_idx(self))
 				.field("dst_img_idx", &crate::stitching::Detail_MatchesInfoTraitConst::dst_img_idx(self))
@@ -8143,9 +8143,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_MercatorProjector {
+	impl fmt::Debug for Detail_MercatorProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_MercatorProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
 				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
@@ -8219,9 +8219,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_MercatorWarper {
+	impl fmt::Debug for Detail_MercatorWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_MercatorWarper")
 				.finish()
 		}
@@ -8358,9 +8358,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_MultiBandBlender {
+	impl fmt::Debug for Detail_MultiBandBlender {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_MultiBandBlender")
 				.finish()
 		}
@@ -8429,9 +8429,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_NoBundleAdjuster {
+	impl fmt::Debug for Detail_NoBundleAdjuster {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_NoBundleAdjuster")
 				.finish()
 		}
@@ -8556,9 +8556,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_NoExposureCompensator {
+	impl fmt::Debug for Detail_NoExposureCompensator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_NoExposureCompensator")
 				.finish()
 		}
@@ -8642,9 +8642,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_NoSeamFinder {
+	impl fmt::Debug for Detail_NoSeamFinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_NoSeamFinder")
 				.finish()
 		}
@@ -8709,9 +8709,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_PairwiseSeamFinder {
+	impl fmt::Debug for Detail_PairwiseSeamFinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_PairwiseSeamFinder")
 				.finish()
 		}
@@ -8831,9 +8831,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_PaniniPortraitProjector {
+	impl fmt::Debug for Detail_PaniniPortraitProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_PaniniPortraitProjector")
 				.field("a", &crate::stitching::Detail_PaniniPortraitProjectorTraitConst::a(self))
 				.field("b", &crate::stitching::Detail_PaniniPortraitProjectorTraitConst::b(self))
@@ -8926,9 +8926,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_PaniniPortraitWarper {
+	impl fmt::Debug for Detail_PaniniPortraitWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_PaniniPortraitWarper")
 				.finish()
 		}
@@ -9044,9 +9044,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_PaniniProjector {
+	impl fmt::Debug for Detail_PaniniProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_PaniniProjector")
 				.field("a", &crate::stitching::Detail_PaniniProjectorTraitConst::a(self))
 				.field("b", &crate::stitching::Detail_PaniniProjectorTraitConst::b(self))
@@ -9139,9 +9139,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_PaniniWarper {
+	impl fmt::Debug for Detail_PaniniWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_PaniniWarper")
 				.finish()
 		}
@@ -9233,9 +9233,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_PlanePortraitProjector {
+	impl fmt::Debug for Detail_PlanePortraitProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_PlanePortraitProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
 				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
@@ -9309,9 +9309,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_PlanePortraitWarper {
+	impl fmt::Debug for Detail_PlanePortraitWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_PlanePortraitWarper")
 				.finish()
 		}
@@ -9403,9 +9403,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_PlaneProjector {
+	impl fmt::Debug for Detail_PlaneProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_PlaneProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
 				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
@@ -9628,9 +9628,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_PlaneWarper {
+	impl fmt::Debug for Detail_PlaneWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_PlaneWarper")
 				.finish()
 		}
@@ -9817,9 +9817,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_PlaneWarperGpu {
+	impl fmt::Debug for Detail_PlaneWarperGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_PlaneWarperGpu")
 				.finish()
 		}
@@ -10025,9 +10025,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_ProjectorBase {
+	impl fmt::Debug for Detail_ProjectorBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_ProjectorBase")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
 				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
@@ -10220,9 +10220,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_RotationWarper {
+	impl fmt::Debug for Detail_RotationWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_RotationWarper")
 				.finish()
 		}
@@ -10294,9 +10294,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_SeamFinder {
+	impl fmt::Debug for Detail_SeamFinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_SeamFinder")
 				.finish()
 		}
@@ -10388,9 +10388,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_SphericalPortraitProjector {
+	impl fmt::Debug for Detail_SphericalPortraitProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_SphericalPortraitProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
 				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
@@ -10464,9 +10464,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_SphericalPortraitWarper {
+	impl fmt::Debug for Detail_SphericalPortraitWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_SphericalPortraitWarper")
 				.finish()
 		}
@@ -10565,9 +10565,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_SphericalProjector {
+	impl fmt::Debug for Detail_SphericalProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_SphericalProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
 				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
@@ -10677,9 +10677,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_SphericalWarper {
+	impl fmt::Debug for Detail_SphericalWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_SphericalWarper")
 				.finish()
 		}
@@ -10797,9 +10797,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_SphericalWarperGpu {
+	impl fmt::Debug for Detail_SphericalWarperGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_SphericalWarperGpu")
 				.finish()
 		}
@@ -10903,9 +10903,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_StereographicProjector {
+	impl fmt::Debug for Detail_StereographicProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_StereographicProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
 				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
@@ -10979,9 +10979,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_StereographicWarper {
+	impl fmt::Debug for Detail_StereographicWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_StereographicWarper")
 				.finish()
 		}
@@ -11073,9 +11073,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_TransverseMercatorProjector {
+	impl fmt::Debug for Detail_TransverseMercatorProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_TransverseMercatorProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
 				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
@@ -11149,9 +11149,9 @@ pub mod stitching {
 
 	}
 
-	impl ::core::fmt::Debug for Detail_TransverseMercatorWarper {
+	impl fmt::Debug for Detail_TransverseMercatorWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_TransverseMercatorWarper")
 				.finish()
 		}
@@ -11244,9 +11244,9 @@ pub mod stitching {
 		}
 	}
 
-	impl ::core::fmt::Debug for Detail_VoronoiSeamFinder {
+	impl fmt::Debug for Detail_VoronoiSeamFinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Detail_VoronoiSeamFinder")
 				.finish()
 		}

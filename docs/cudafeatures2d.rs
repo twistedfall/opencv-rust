@@ -248,9 +248,9 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_CornernessCriteria {
+	impl fmt::Debug for CUDA_CornernessCriteria {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_CornernessCriteria")
 				.finish()
 		}
@@ -374,9 +374,9 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_CornersDetector {
+	impl fmt::Debug for CUDA_CornersDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_CornersDetector")
 				.finish()
 		}
@@ -1495,9 +1495,9 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_DescriptorMatcher {
+	impl fmt::Debug for CUDA_DescriptorMatcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_DescriptorMatcher")
 				.finish()
 		}
@@ -1618,9 +1618,9 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_FastFeatureDetector {
+	impl fmt::Debug for CUDA_FastFeatureDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_FastFeatureDetector")
 				.finish()
 		}
@@ -1841,9 +1841,9 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_Feature2DAsync {
+	impl fmt::Debug for CUDA_Feature2DAsync {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_Feature2DAsync")
 				.finish()
 		}
@@ -2151,9 +2151,9 @@ pub mod cudafeatures2d {
 
 	}
 
-	impl ::core::fmt::Debug for CUDA_ORB {
+	impl fmt::Debug for CUDA_ORB {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CUDA_ORB")
 				.finish()
 		}

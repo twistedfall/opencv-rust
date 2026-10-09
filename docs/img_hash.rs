@@ -303,9 +303,9 @@ pub mod img_hash {
 
 	}
 
-	impl ::core::fmt::Debug for AverageHash {
+	impl fmt::Debug for AverageHash {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AverageHash")
 				.finish()
 		}
@@ -425,9 +425,9 @@ pub mod img_hash {
 
 	}
 
-	impl ::core::fmt::Debug for BlockMeanHash {
+	impl fmt::Debug for BlockMeanHash {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("BlockMeanHash")
 				.finish()
 		}
@@ -510,9 +510,9 @@ pub mod img_hash {
 
 	}
 
-	impl ::core::fmt::Debug for ColorMomentHash {
+	impl fmt::Debug for ColorMomentHash {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ColorMomentHash")
 				.finish()
 		}
@@ -613,9 +613,9 @@ pub mod img_hash {
 
 	}
 
-	impl ::core::fmt::Debug for ImgHashBase {
+	impl fmt::Debug for ImgHashBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ImgHashBase")
 				.finish()
 		}
@@ -744,9 +744,9 @@ pub mod img_hash {
 
 	}
 
-	impl ::core::fmt::Debug for MarrHildrethHash {
+	impl fmt::Debug for MarrHildrethHash {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MarrHildrethHash")
 				.finish()
 		}
@@ -831,9 +831,9 @@ pub mod img_hash {
 
 	}
 
-	impl ::core::fmt::Debug for PHash {
+	impl fmt::Debug for PHash {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PHash")
 				.finish()
 		}
@@ -1009,9 +1009,9 @@ pub mod img_hash {
 
 	}
 
-	impl ::core::fmt::Debug for RadialVarianceHash {
+	impl fmt::Debug for RadialVarianceHash {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("RadialVarianceHash")
 				.finish()
 		}

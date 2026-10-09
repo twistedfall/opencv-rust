@@ -2330,9 +2330,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for AlignExposures {
+	impl fmt::Debug for AlignExposures {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AlignExposures")
 				.finish()
 		}
@@ -2530,9 +2530,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for AlignMTB {
+	impl fmt::Debug for AlignMTB {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("AlignMTB")
 				.finish()
 		}
@@ -2618,9 +2618,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for CalibrateCRF {
+	impl fmt::Debug for CalibrateCRF {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CalibrateCRF")
 				.finish()
 		}
@@ -2738,9 +2738,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for CalibrateDebevec {
+	impl fmt::Debug for CalibrateDebevec {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CalibrateDebevec")
 				.finish()
 		}
@@ -2857,9 +2857,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for CalibrateRobertson {
+	impl fmt::Debug for CalibrateRobertson {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("CalibrateRobertson")
 				.finish()
 		}
@@ -2955,9 +2955,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for MergeDebevec {
+	impl fmt::Debug for MergeDebevec {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MergeDebevec")
 				.finish()
 		}
@@ -3046,9 +3046,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for MergeExposures {
+	impl fmt::Debug for MergeExposures {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MergeExposures")
 				.finish()
 		}
@@ -3202,9 +3202,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for MergeMertens {
+	impl fmt::Debug for MergeMertens {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MergeMertens")
 				.finish()
 		}
@@ -3300,9 +3300,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for MergeRobertson {
+	impl fmt::Debug for MergeRobertson {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("MergeRobertson")
 				.finish()
 		}
@@ -3404,9 +3404,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for Tonemap {
+	impl fmt::Debug for Tonemap {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("Tonemap")
 				.finish()
 		}
@@ -3512,9 +3512,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for TonemapDrago {
+	impl fmt::Debug for TonemapDrago {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TonemapDrago")
 				.finish()
 		}
@@ -3622,9 +3622,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for TonemapMantiuk {
+	impl fmt::Debug for TonemapMantiuk {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TonemapMantiuk")
 				.finish()
 		}
@@ -3751,9 +3751,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for TonemapReinhard {
+	impl fmt::Debug for TonemapReinhard {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("TonemapReinhard")
 				.finish()
 		}
@@ -4232,9 +4232,9 @@ pub mod photo {
 
 	}
 
-	impl ::core::fmt::Debug for ColorCorrectionModel {
+	impl fmt::Debug for ColorCorrectionModel {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("ColorCorrectionModel")
 				.finish()
 		}
@@ -4600,9 +4600,9 @@ pub mod photo {
 		}
 	}
 
-	impl ::core::fmt::Debug for IntelligentScissorsMB {
+	impl fmt::Debug for IntelligentScissorsMB {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("IntelligentScissorsMB")
 				.finish()
 		}
