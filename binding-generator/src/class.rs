@@ -454,7 +454,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 						.and_then(|tweak| tweak.read_write)
 						.unwrap_or(PropertyReadWrite::ReadWrite);
 					let fld_declname = fld_refname.localname();
-					let (mut read_const_yield, mut read_mut_yield) = if read_write.is_read() {
+					let (mut read_const_yield, mut read_mut_yield) = {
 						let base_read_func = FuncDesc::new(
 							FuncKind::FieldAccessor(cls.clone(), fld.clone()),
 							fld_const,
@@ -490,8 +490,6 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								.then(|| Func::new_desc(base_read_func));
 							(single_read_func, None)
 						}
-					} else {
-						(None, None)
 					};
 					let mut write_yield = if read_write.is_write()
 						&& constness_filter.is_none_or(|c| c.is_mut())
@@ -778,6 +776,7 @@ pub enum ClassKind {
 }
 
 impl ClassKind {
+	/// Class that can be directly mapped to a Rust struct with fields, i.e. no pointer indirection is needed
 	pub fn is_simple(self) -> bool {
 		match self {
 			Self::Simple => true,
@@ -785,6 +784,7 @@ impl ClassKind {
 		}
 	}
 
+	/// Class that is represented by a raw pointer in Rust, allocation and deallocation is happening on C++ side
 	pub fn is_boxed(self) -> bool {
 		match self {
 			Self::Boxed | Self::BoxedForced => true,
@@ -792,6 +792,7 @@ impl ClassKind {
 		}
 	}
 
+	/// Class that passed as `impl Trait` in Rust when used as a function argument enabling inheritance-like behavior
 	pub fn is_trait(&self) -> bool {
 		match self {
 			Self::Boxed | Self::BoxedForced | Self::System => true,

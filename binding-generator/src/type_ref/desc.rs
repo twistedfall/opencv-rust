@@ -392,9 +392,11 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 }
 
 pub trait ClangTypeExt<'tu> {
+	fn inherent_constness(self) -> Constness;
+
 	fn kind<'ge>(
 		self,
-		type_hint: TypeRefTypeHint,
+		type_hint: &TypeRefTypeHint,
 		parent_entity: Option<Entity<'tu>>,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	) -> TypeRefKind<'tu, 'ge>;
@@ -403,9 +405,13 @@ pub trait ClangTypeExt<'tu> {
 }
 
 impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
+	fn inherent_constness(self) -> Constness {
+		Constness::from_is_const(self.is_const_qualified())
+	}
+
 	fn kind<'ge>(
 		self,
-		type_hint: TypeRefTypeHint,
+		type_hint: &TypeRefTypeHint,
 		parent_entity: Option<Entity<'tu>>,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	) -> TypeRefKind<'tu, 'ge> {
@@ -434,7 +440,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 
 				TypeKind::RValueReference => TypeRefKind::RValueReference(TypeRef::new_ext(
 					self.get_pointee_type().expect("No pointee type for reference"),
-					type_hint,
+					type_hint.clone(),
 					parent_entity,
 					gen_env,
 				)),
@@ -537,12 +543,12 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					if size.is_none()
 						&& let TypeRefTypeHint::AddArrayLength(force_size) = type_hint
 					{
-						size = Some(force_size);
+						size = Some(*force_size);
 					}
 					TypeRefKind::Array(
 						TypeRef::new_ext(
 							self.get_element_type().expect("Can't get array element type"),
-							type_hint,
+							type_hint.clone(),
 							None,
 							gen_env,
 						),

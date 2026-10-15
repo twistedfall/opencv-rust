@@ -29,13 +29,22 @@ mod test;
 mod types;
 
 #[derive(Clone)]
+pub struct TypeRefClang<'tu, 'ge> {
+	type_ref: Type<'tu>,
+	type_hint: TypeRefTypeHint,
+	parent_entity: Option<Entity<'tu>>,
+	gen_env: &'ge GeneratorEnv<'tu>,
+}
+
+impl TypeRefClang<'_, '_> {
+	pub fn inherent_constness(&self) -> Constness {
+		self.type_ref.inherent_constness()
+	}
+}
+
+#[derive(Clone)]
 pub enum TypeRef<'tu, 'ge> {
-	Clang {
-		type_ref: Type<'tu>,
-		type_hint: TypeRefTypeHint,
-		parent_entity: Option<Entity<'tu>>,
-		gen_env: &'ge GeneratorEnv<'tu>,
-	},
+	Clang(TypeRefClang<'tu, 'ge>),
 	Desc(Rc<TypeRefDesc<'tu, 'ge>>),
 }
 
@@ -50,12 +59,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		parent_entity: Option<Entity<'tu>>,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	) -> Self {
-		Self::Clang {
+		Self::Clang(TypeRefClang {
 			type_ref,
 			type_hint,
 			parent_entity,
 			gen_env,
-		}
+		})
 	}
 
 	pub fn new_desc(desc: TypeRefDesc<'tu, 'ge>) -> Self {
@@ -132,14 +141,14 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn type_hint(&self) -> &TypeRefTypeHint {
 		match self {
-			Self::Clang { type_hint, .. } => type_hint,
+			Self::Clang(TypeRefClang { type_hint, .. }) => type_hint,
 			Self::Desc(desc) => &desc.type_hint,
 		}
 	}
 
 	pub fn type_hint_mut(&mut self) -> &mut TypeRefTypeHint {
 		match self {
-			Self::Clang { type_hint, .. } => type_hint,
+			Self::Clang(TypeRefClang { type_hint, .. }) => type_hint,
 			Self::Desc(desc) => &mut Rc::make_mut(desc).type_hint,
 		}
 	}
@@ -157,12 +166,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn kind(&self) -> Cow<'_, TypeRefKind<'tu, 'ge>> {
 		match self {
-			Self::Clang {
+			Self::Clang(TypeRefClang {
 				type_ref,
 				type_hint,
 				parent_entity,
 				gen_env,
-			} => Owned(type_ref.kind(type_hint.clone(), *parent_entity, gen_env)),
+			}) => Owned(type_ref.kind(type_hint, *parent_entity, gen_env)),
 			Self::Desc(desc) => Borrowed(&desc.kind),
 		}
 	}
@@ -270,7 +279,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn exclude_kind(&self) -> ExcludeKind {
 		match self.kind().as_ref() {
 			TypeRefKind::Generic(_) => match self {
-				TypeRef::Clang { .. } => ExcludeKind::Ignored,
+				TypeRef::Clang(..) => ExcludeKind::Ignored,
 				TypeRef::Desc(_) => ExcludeKind::Included, // assume manual generic functions are added for a reason
 			},
 			TypeRefKind::StdVector(vec) => vec.exclude_kind(),
@@ -319,37 +328,52 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn inherent_constness(&self) -> Constness {
 		match self {
-			TypeRef::Clang { type_ref, .. } => Constness::from_is_const(type_ref.is_const_qualified()),
+			TypeRef::Clang(clang) => clang.inherent_constness(),
 			TypeRef::Desc(desc) => desc.inherent_constness,
 		}
 	}
 
 	pub fn set_inherent_constness(&mut self, constness: Constness) {
-		if self.inherent_constness() != constness {
-			match self {
-				Self::Clang {
-					type_ref,
-					type_hint,
-					parent_entity,
-					gen_env,
-				} => {
+		match self {
+			Self::Clang(clang) => {
+				if clang.inherent_constness() != constness {
 					*self = Self::new_desc(TypeRefDesc {
-						kind: type_ref.kind(type_hint.clone(), *parent_entity, gen_env),
+						kind: clang.type_ref.kind(&clang.type_hint, clang.parent_entity, clang.gen_env),
 						inherent_constness: constness,
-						type_hint: type_hint.clone(),
-						template_specialization_args: type_ref.template_specialization_args(gen_env).into(),
+						type_hint: clang.type_hint.clone(),
+						template_specialization_args: clang.type_ref.template_specialization_args(clang.gen_env).into(),
 					})
 				}
-				Self::Desc(desc) => {
+			}
+			Self::Desc(desc) => {
+				if desc.inherent_constness != constness {
 					Rc::make_mut(desc).inherent_constness = constness;
 				}
 			}
 		}
 	}
 
-	pub fn with_inherent_constness(mut self, constness: Constness) -> Self {
-		self.set_inherent_constness(constness);
-		self
+	pub fn with_inherent_constness(self, constness: Constness) -> Self {
+		match self {
+			Self::Clang(clang) => {
+				if clang.inherent_constness() != constness {
+					Self::new_desc(TypeRefDesc {
+						kind: clang.type_ref.kind(&clang.type_hint, clang.parent_entity, clang.gen_env),
+						inherent_constness: constness,
+						type_hint: clang.type_hint,
+						template_specialization_args: clang.type_ref.template_specialization_args(clang.gen_env).into(),
+					})
+				} else {
+					Self::Clang(clang)
+				}
+			}
+			Self::Desc(mut desc) => {
+				if desc.inherent_constness != constness {
+					Rc::make_mut(&mut desc).inherent_constness = constness;
+				}
+				Self::Desc(desc)
+			}
+		}
 	}
 
 	fn is_data_type_inner(&self, data_types: &HashSet<&str>) -> bool {
@@ -391,14 +415,14 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn template_specialization_args(&self) -> Cow<'_, [TemplateArg<'tu, 'ge>]> {
 		match self {
-			&Self::Clang { type_ref, gen_env, .. } => type_ref.template_specialization_args(gen_env).into(),
+			&Self::Clang(TypeRefClang { type_ref, gen_env, .. }) => type_ref.template_specialization_args(gen_env).into(),
 			Self::Desc(desc) => desc.template_specialization_args.as_ref().into(),
 		}
 	}
 
 	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
 		match self {
-			Self::Clang { .. } => {
+			Self::Clang(..) => {
 				let source = self.source();
 				match source.kind().into_owned() {
 					TypeRefKind::StdVector(vec) => {
@@ -520,7 +544,7 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		}
 		let props = props.join(", ");
 		let mut dbg = f.debug_struct(match self {
-			Self::Clang { .. } => "TypeRef::Clang",
+			Self::Clang(..) => "TypeRef::Clang",
 			Self::Desc(_) => "TypeRef::Desc",
 		});
 		dbg.field("cpp_full", &self.cpp_name(CppNameStyle::Reference))

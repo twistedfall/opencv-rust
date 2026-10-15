@@ -564,7 +564,7 @@ fn return_lifetime(
 		(lifetime, Some(args))
 	} else {
 		let lt = match return_type_ref.rust_lifetime_count() {
-			0 => Lifetime::Elided,
+			0 => Lifetime::statik(),
 			1 => {
 				let borrow_kind_from_any_arg = func_kind
 					.as_instance_method()
@@ -629,14 +629,14 @@ fn rust_return(
 
 fn rust_return_map(return_type: &TypeRef, ret_name: &str, return_kind: ReturnKind, lifetime: Lifetime) -> Cow<'static, str> {
 	let return_type_kind = return_type.kind();
-	if return_type_kind.as_string(return_type.type_hint()).is_some() || return_type_kind.extern_pass_kind().is_by_void_ptr() {
+	let type_hint = return_type.type_hint();
+	if return_type_kind.as_string(type_hint).is_some() || return_type_kind.extern_pass_kind().is_by_void_ptr() {
 		format!(
 			"unsafe {{ {typ}::opencv_from_extern({ret_name}) }}",
 			typ = return_type.rust_return(FishStyle::Turbo, lifetime),
 		)
 		.into()
-	} else if return_type_kind.as_pointer().is_some_and(|i| !i.kind().is_void())
-		&& !return_type_kind.is_rust_by_ptr(return_type.type_hint())
+	} else if return_type_kind.as_pointer().is_some_and(|i| !i.kind().is_void()) && !return_type_kind.is_rust_by_ptr(type_hint)
 		|| return_type_kind.as_fixed_array().is_some()
 	{
 		let ptr_call = if return_type.constness().is_const() {
@@ -711,39 +711,42 @@ fn cpp_call(f: &Func, kind: &FuncKind, call_args: &[String], return_type_ref: &T
 		("name", call_name),
 	]);
 
-	let (call_tpl, full_tpl) = match f.cpp_body() {
+	enum RenderTpl<'t> {
+		CallTpl(Cow<'t, CompiledInterpolation<'t>>),
+		FullTpl(Cow<'t, CompiledInterpolation<'t>>),
+	}
+
+	let render_tpl = match f.cpp_body() {
 		FuncCppBody::Auto => {
 			if let Some(cls) = kind.as_constructor() {
 				if cls.kind().is_boxed() {
-					(None, Some(Borrowed(&*BOXED_CONSTRUCTOR_TPL)))
+					RenderTpl::FullTpl(Borrowed(&*BOXED_CONSTRUCTOR_TPL))
 				} else if call_args.is_empty() {
-					(None, Some(Borrowed(&*CONSTRUCTOR_NO_ARGS_TPL)))
+					RenderTpl::FullTpl(Borrowed(&*CONSTRUCTOR_NO_ARGS_TPL))
 				} else {
-					(None, Some(Borrowed(&*CONSTRUCTOR_TPL)))
+					RenderTpl::FullTpl(Borrowed(&*CONSTRUCTOR_TPL))
 				}
 			} else {
-				(Some(Borrowed(&*CALL_TPL)), None)
+				RenderTpl::CallTpl(Borrowed(&*CALL_TPL))
 			}
 		}
-		FuncCppBody::ManualCall(call) => (Some(Owned(call.compile_interpolation())), None),
-		FuncCppBody::ManualCallReturn(full_tpl) => (None, Some(Owned(full_tpl.compile_interpolation()))),
-		FuncCppBody::Absent => (None, None),
+		FuncCppBody::ManualCall(call) => RenderTpl::CallTpl(Owned(call.compile_interpolation())),
+		FuncCppBody::ManualCallReturn(full_tpl) => RenderTpl::FullTpl(Owned(full_tpl.compile_interpolation())),
+		FuncCppBody::Absent => panic!("Impossible, cpp_call() woudn't be called"),
 	};
-	let tpl = full_tpl
-		.or_else(|| {
-			call_tpl.map(|call_tpl| {
-				let call = call_tpl.interpolate(&inter_vars);
-				inter_vars.insert("call", call.into());
-				if return_type_ref.kind().is_void() {
-					Borrowed(&*VOID_TPL)
-				} else {
-					Borrowed(&*RETURN_TPL)
-				}
-			})
-		})
-		.expect("Impossible");
-
-	tpl.interpolate(&inter_vars)
+	match render_tpl {
+		RenderTpl::FullTpl(tpl) => tpl,
+		RenderTpl::CallTpl(tpl) => {
+			let call = tpl.interpolate(&inter_vars);
+			inter_vars.insert("call", call.into());
+			if return_type_ref.kind().is_void() {
+				Borrowed(&*VOID_TPL)
+			} else {
+				Borrowed(&*RETURN_TPL)
+			}
+		}
+	}
+	.interpolate(&inter_vars)
 }
 
 fn cpp_return(f: &Func, return_kind: ReturnKind, ret: &str, ret_cast: Option<&str>, ocv_ret_name: &str) -> Cow<'static, str> {
@@ -807,7 +810,7 @@ pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: 
 			|| {
 				let typ = ret_source.cpp_name(CppNameStyle::Reference);
 				// `true` when `name` refers to a local variable holding the returned value, i.e. moved instead of copied
-				let name_is_owned_local = !name.starts_with("*") && !name.starts_with("&");
+				let name_is_owned_local = !name.starts_with(['*', '&']);
 				if name_is_owned_local && return_kind.as_pointer_reference_move().is_none() {
 					format!("new {typ}(std::move({name}))").into()
 				} else {

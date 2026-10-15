@@ -161,7 +161,8 @@ impl TypeRefRenderer<'_> for RustExternRenderer {
 
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
 		let kind = type_ref.kind();
-		if let Some((arg_dir, _)) = kind.as_string(type_ref.type_hint()) {
+		let type_hint = type_ref.type_hint();
+		if let Some((arg_dir, _)) = kind.as_string(type_hint) {
 			match self.direction {
 				ExternDir::ToCpp | ExternDir::Contained => match arg_dir {
 					Dir::In => format!("*{cnst}c_char", cnst = Constness::Const.rust_qual_ptr()).into(),
@@ -169,7 +170,7 @@ impl TypeRefRenderer<'_> for RustExternRenderer {
 				},
 				ExternDir::FromCpp => "*mut c_void".into(),
 			}
-		} else if kind.extern_pass_kind().is_by_void_ptr() || kind.is_void_slice(type_ref.type_hint()) {
+		} else if kind.extern_pass_kind().is_by_void_ptr() || kind.is_void_slice(type_hint) {
 			let void_ptr_constness = match self.direction {
 				ExternDir::Contained | ExternDir::ToCpp => type_ref.constness(),
 				ExternDir::FromCpp => Constness::Mut,

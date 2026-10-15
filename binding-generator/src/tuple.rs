@@ -4,14 +4,14 @@ use std::borrow::Cow;
 use clang::{Entity, Type};
 
 use crate::element::ExcludeKind;
-use crate::type_ref::{Constness, CppNameStyle, TemplateArg};
+use crate::type_ref::{ClangTypeExt, Constness, CppNameStyle, TemplateArg};
 use crate::{DefaultElement, Element, EntityElement, GeneratorEnv, TypeRef};
 
 #[derive(Clone)]
 pub struct Tuple<'tu, 'ge> {
 	type_ref: Type<'tu>,
 	gen_env: &'ge GeneratorEnv<'tu>,
-	/// true for C++ representation as `pair` instead of `tuple`
+	/// "pair" or "tuple" depending on the C++ tuple type
 	tuple_type: &'static str,
 }
 
@@ -47,7 +47,7 @@ impl<'tu, 'ge> Tuple<'tu, 'ge> {
 	}
 
 	pub fn constness(&self) -> Constness {
-		Constness::from_is_const(self.type_ref.is_const_qualified())
+		self.type_ref.inherent_constness()
 	}
 }
 

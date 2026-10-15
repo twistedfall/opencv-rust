@@ -53,7 +53,7 @@ impl TypeRefTypeHint {
 	/// Filters current TypeRef type hint to make it suitable for inner type e.g. for the pointee
 	///
 	/// Useful for example to strip the nullability from the inner type of a pointer
-	pub fn recurse_inner(self) -> Self {
+	pub fn recurse_inner(&self) -> Self {
 		match self {
 			Self::Nullable => Self::None,
 			Self::Slice(Nullability::Nullable) => Self::Slice(Nullability::NotNullable),
@@ -461,8 +461,8 @@ pub fn dbg_clang_type(type_ref: Type) {
 				.field("element_type", &self.0.get_element_type())
 				.field("exception_specification", &self.0.get_exception_specification())
 				.field("fields", &self.0.get_fields())
-//				.field("modified_type", &self.0.get_modified_type())
-//				.field("nullability", &self.0.get_nullability())
+				//				.field("modified_type", &self.0.get_modified_type())
+				.field("nullability", &self.0.get_nullability())
 				.field("pointee_type", &self.0.get_pointee_type())
 				.field("ref_qualifier", &self.0.get_ref_qualifier())
 				.field("result_type", &self.0.get_result_type())

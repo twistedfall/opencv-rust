@@ -16,7 +16,6 @@ exclude = ["release.toml"]
 clang = { version = "2", features = ["clang_9_0"] }
 clang-sys = { version = "1", features = ["clang_9_0"] }
 dunce = "1"
-percent-encoding = { version = "2", default-features = false }
 regex = "1"
 semver = "1"
 shlex = { version = "2", default-features = false }

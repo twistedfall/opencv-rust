@@ -63,12 +63,6 @@ pub enum PropertyReadWrite {
 }
 
 impl PropertyReadWrite {
-	pub fn is_read(self) -> bool {
-		match self {
-			PropertyReadWrite::ReadOnly | PropertyReadWrite::ReadWrite => true,
-		}
-	}
-
 	pub fn is_write(self) -> bool {
 		match self {
 			PropertyReadWrite::ReadWrite => true,

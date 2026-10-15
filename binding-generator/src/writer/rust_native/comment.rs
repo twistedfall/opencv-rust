@@ -2,7 +2,6 @@ use core::fmt::Write;
 use std::borrow::Cow;
 use std::sync::LazyLock;
 
-use percent_encoding::{NON_ALPHANUMERIC, utf8_percent_encode};
 use regex::bytes::Regex;
 use semver::Version;
 
@@ -133,12 +132,12 @@ impl RenderComment {
 		static INLINE_FORMULA: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?s)\\f\$(.*?)\\f\$").unwrap());
 		doc_comment.replace_in_place_regex_cb(&BLOCK_FORMULA, |out, caps| {
 			let formula = preprocess_formula(caps.get(1).map(|(s, e)| &out[s..e]).expect("Impossible"));
-			let encoded = utf8_percent_encode(&formula, NON_ALPHANUMERIC);
+			let encoded = percent_encode(&formula);
 			Some(format!("![block formula](https://latex.codecogs.com/png.latex?{encoded})").into())
 		});
 		doc_comment.replace_in_place_regex_cb(&INLINE_FORMULA, |out, caps| {
 			let formula = preprocess_formula(caps.get(1).map(|(s, e)| &out[s..e]).expect("Impossible"));
-			let encoded = utf8_percent_encode(&formula, NON_ALPHANUMERIC);
+			let encoded = percent_encode(&formula);
 			Some(format!("![inline formula](https://latex.codecogs.com/png.latex?{encoded})").into())
 		});
 
@@ -173,6 +172,19 @@ impl RenderComment {
 		}
 		out
 	}
+}
+
+/// Percent-encode UTF-8 bytes, leaving only ASCII letters and digits unchanged.
+fn percent_encode(input: &str) -> String {
+	let mut out = String::with_capacity(input.len());
+	for byte in input.bytes() {
+		if byte.is_ascii_alphanumeric() {
+			out.push(char::from(byte));
+		} else {
+			write!(&mut out, "%{byte:02X}").expect("write! to String shouldn't fail");
+		}
+	}
+	out
 }
 
 fn preprocess_formula(formula: &str) -> String {
@@ -286,8 +298,36 @@ pub fn render_ref<'r>(referenced: &'r Func, force_cpp_name: Option<&'r str>) -> 
 mod test {
 	use semver::Version;
 
-	use super::RenderComment;
+	use super::{RenderComment, percent_encode};
 	use crate::comment::strip_doxygen_comment_markers;
+
+	#[test]
+	fn percent_encode_formula() {
+		for (input, expected) in [
+			("", ""),
+			("AZaz09", "AZaz09"),
+			("-._~", "%2D%2E%5F%7E"),
+			(" #%&+?()/=", "%20%23%25%26%2B%3F%28%29%2F%3D"),
+			("\0\t\n\r\u{7f}", "%00%09%0A%0D%7F"),
+			(r"\frac{x_1 + y}{2}", "%5Cfrac%7Bx%5F1%20%2B%20y%7D%7B2%7D"),
+			("é∑😀", "%C3%A9%E2%88%91%F0%9F%98%80"),
+		] {
+			assert_eq!(percent_encode(input), expected, "input: {input:?}");
+		}
+	}
+
+	#[test]
+	fn render_formulas() {
+		let comment = "Inline \\f$x_1 + α\\f$.\nBlock \\f[\\mathbbm{R}\n& y\\f].";
+		let rendered = RenderComment::new(comment.to_string(), &Version::new(5, 0, 0));
+		assert_eq!(
+			rendered.doc_comment,
+			concat!(
+				"Inline ![inline formula](https://latex.codecogs.com/png.latex?x%5F1%20%2B%20%CE%B1).\n",
+				"Block ![block formula](https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%0A%26%20y).",
+			)
+		);
+	}
 
 	#[test]
 	fn test_render_doc_comment() {
