@@ -1,0 +1,10 @@
+diff --git a/modules/features/misc/objc/gen_dict.json b/modules/features/misc/objc/gen_dict.json
+--- a/modules/features/misc/objc/gen_dict.json
++++ b/modules/features/misc/objc/gen_dict.json
+@@ -24,6 +24,7 @@
+         },
+         "LightGlueMatcher": {
++            "(LightGlueMatcher*)create:(NSString*)modelPath" : { "create" : {"name" : "createFromFile"} },
+             "(LightGlueMatcher*)create:(NSString*)modelPath scoreThreshold:(float)scoreThreshold backend:(int)backend target:(int)target" : { "create" : {"name" : "createFromFile"} }
+         },
+         "FlannBasedMatcher": {

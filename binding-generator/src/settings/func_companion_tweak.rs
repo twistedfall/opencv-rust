@@ -25,6 +25,8 @@ fn dnn_factory() -> FuncCompanionTweak {
 		vec![
 			(pred!(mut, ["layer", "outnames"]), CompanionTweak::SkipDefault),
 			(pred!(mut, ["layer", "outname"]), CompanionTweak::SkipDefault),
+			(pred!(mut, ["op", "outnames"]), CompanionTweak::SkipDefault),
+			(pred!(mut, ["op", "outname"]), CompanionTweak::SkipDefault),
 		],
 	)]))
 }

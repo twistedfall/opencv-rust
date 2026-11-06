@@ -17,6 +17,7 @@ pub fn func_exclude_factory(module: SupportedModule) -> FuncExclude {
 		SupportedModule::Stitching => stitching_factory(),
 		SupportedModule::SurfaceMatching => surface_matching_factory(),
 		SupportedModule::Tracking => tracking_factory(),
+		SupportedModule::PtCloud => ptcloud_factory(),
 		_ => FuncExclude::default(),
 	}
 }
@@ -129,6 +130,12 @@ fn objdetect_factory() -> FuncExclude {
 fn optflow_factory() -> FuncExclude {
 	HashSet::from([
 		"cv_optflow_GPCTrainingSamples_operator_cv_optflow_GPCSamplesVector", // support of "operator &" missing
+	])
+}
+
+fn ptcloud_factory() -> FuncExclude {
+	HashSet::from([
+		"cv_slam_VisualOdometry_getMap_const", // returns a non-copyable Map by value
 	])
 }
 
