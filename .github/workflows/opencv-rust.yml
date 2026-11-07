@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         os-image:
-          - ubuntu-24.04
+          - ubuntu-26.04
           - macos-15
         opencv-version:
           - 4.14.0
@@ -22,7 +22,7 @@ jobs:
         linkage:
           - dynamic
         include:
-          - os-image: ubuntu-24.04
+          - os-image: ubuntu-26.04
             opencv-version: 5.1.0
             linkage: static
     runs-on: ${{ matrix.os-image }}
@@ -55,21 +55,21 @@ jobs:
       fail-fast: false
       matrix:
         os-image:
-          - ubuntu-24.04
+          - ubuntu-26.04
           - windows-2025
         vcpkg-version:
-          - 2026.06.24 # https://github.com/microsoft/vcpkg/releases
+          - 2026.10.16 # https://github.com/microsoft/vcpkg/releases
         vcpkg-features-cache-key:
           - full
         vcpkg-features:
           - contrib,nonfree,ade,opencl
         include:
           - os-image: windows-2025
-            vcpkg-version: 2026.06.24
+            vcpkg-version: 2026.10.16
             vcpkg-features-cache-key: min
             vcpkg-features: contrib
           - os-image: macos-15
-            vcpkg-version: 2026.06.24
+            vcpkg-version: 2026.10.16
             vcpkg-features-cache-key: full-no-opencl
             vcpkg-features: contrib,nonfree,ade
     runs-on: ${{ matrix.os-image }}
@@ -104,6 +104,9 @@ jobs:
         version:
           - opencv: 4.13.0 # https://community.chocolatey.org/packages/OpenCV#versionhistory
         include:
+          - os-image: ubuntu-26.04
+            version:
+              opencv: 4.10.0
           - os-image: ubuntu-24.04
             version:
               opencv: 4.6.0
@@ -133,7 +136,7 @@ jobs:
         shell: bash
 
   docs-rs:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
@@ -143,7 +146,7 @@ jobs:
         shell: bash
 
   msrv:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     env:
       OPENCV_VERSION: 4.14.0
       SCCACHE_GHA_ENABLED: "true"
@@ -155,7 +158,7 @@ jobs:
       - uses: actions/cache@v6
         with:
           path: ~/build
-          key: build-${{ env.OPENCV_VERSION }}-dynamic-ubuntu-24.04
+          key: build-${{ env.OPENCV_VERSION }}-dynamic-ubuntu-26.04
 
       - name: Get MSRV package metadata
         id: metadata

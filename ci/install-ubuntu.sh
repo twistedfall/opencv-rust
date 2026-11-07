@@ -32,6 +32,13 @@ case "$ubuntu_version" in
 		exit 0
 	fi
 	;;
+
+"26.04")
+	if [[ "$OPENCV_VERSION" == "4.10.0" ]]; then
+		sudo apt-get -y install "libopencv-dev=${OPENCV_VERSION}*"
+		exit 0
+	fi
+	;;
 esac
 
 BUILD_FLAGS="
@@ -268,6 +275,38 @@ else # dynamic build
 			libdc1394-dev \
 			libeigen3-dev \
 			libfreetype6-dev \
+			libgdal-dev \
+			libgflags-dev \
+			libgoogle-glog-dev \
+			libgphoto2-dev \
+			libgstreamer-plugins-base1.0-dev \
+			libharfbuzz-dev \
+			libhdf5-dev \
+			libjpeg-dev \
+			liblapacke64-dev \
+			libleptonica-dev \
+			libopenexr-dev \
+			libpng-dev \
+			libswscale-dev \
+			libtbb-dev \
+			libtesseract-dev \
+			libtiff-dev \
+			libunwind-dev \
+			libvtk9-dev \
+			libwebp-dev \
+			qtbase5-dev
+		;;
+
+	"26.04")
+		# build deps
+		sudo apt-get -y install \
+			libopenblas-dev \
+			libavcodec-dev \
+			libavformat-dev \
+			libceres-dev \
+			libdc1394-dev \
+			libeigen3-dev \
+			libfreetype-dev \
 			libgdal-dev \
 			libgflags-dev \
 			libgoogle-glog-dev \
