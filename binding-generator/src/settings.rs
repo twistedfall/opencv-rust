@@ -263,6 +263,7 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: LazyLock<HashMap<Option<SupportedModu
 		HashMap::from([
 			(None, HashMap::from([("detail", "Detail")])),
 			(Some(SupportedModule::Calib3d), HashMap::from([("fisheye", "Fisheye")])),
+			(Some(SupportedModule::Core), HashMap::from([("ogl", "OGL")])),
 			(Some(SupportedModule::CudaBgSegm), HashMap::from([("cuda", "CUDA")])),
 			(Some(SupportedModule::CudaCodec), HashMap::from([("cudacodec", "CUDA")])),
 			(Some(SupportedModule::CudaFeatures2d), HashMap::from([("cuda", "CUDA")])),

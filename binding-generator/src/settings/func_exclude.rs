@@ -14,6 +14,7 @@ pub fn func_exclude_factory(module: SupportedModule) -> FuncExclude {
 		SupportedModule::ImgProc => imgproc_factory(),
 		SupportedModule::ObjDetect => objdetect_factory(),
 		SupportedModule::OptFlow => optflow_factory(),
+		SupportedModule::PtCloud => ptcloud_factory(),
 		SupportedModule::Stitching => stitching_factory(),
 		SupportedModule::SurfaceMatching => surface_matching_factory(),
 		SupportedModule::Tracking => tracking_factory(),
@@ -129,6 +130,12 @@ fn objdetect_factory() -> FuncExclude {
 fn optflow_factory() -> FuncExclude {
 	HashSet::from([
 		"cv_optflow_GPCTrainingSamples_operator_cv_optflow_GPCSamplesVector", // support of "operator &" missing
+	])
+}
+
+fn ptcloud_factory() -> FuncExclude {
+	HashSet::from([
+		"cv_slam_VisualOdometry_getMap_const", // returns a reference to noncopyable cv::slam::Map, 5.1
 	])
 }
 
