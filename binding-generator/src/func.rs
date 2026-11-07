@@ -446,7 +446,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 						out.set_inherent_constness(borrow_arg_constness);
 					}
 				} else if !out.kind().is_char_ptr_string(out.type_hint()) {
-					out.set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
+					out.set_type_hint(TypeRefTypeHint::PtrAsRaw);
 				}
 				Owned(out)
 			}

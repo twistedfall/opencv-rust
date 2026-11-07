@@ -434,12 +434,8 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 						fld_type_ref.to_mut().set_type_hint(type_hint.clone());
 					} else {
 						let fld_type_kind = fld_type_ref.kind();
-						if fld_type_kind
-							.as_pointer()
-							.is_some_and(|inner| inner.kind().as_primitive().is_some())
-							&& !fld_type_kind.is_char_ptr_string(fld_type_ref.type_hint())
-						{
-							fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
+						if fld_type_kind.as_pointer().is_some() && !fld_type_kind.is_char_ptr_string(fld_type_ref.type_hint()) {
+							fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::PtrAsRaw);
 						} else if fld_type_kind.as_class().is_some_and(|cls| cls.kind().is_trait()) {
 							fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::TraitClassConcrete);
 						}

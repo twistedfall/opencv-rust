@@ -134,7 +134,7 @@ impl RenderLaneTrait for OutStringRenderLane<'_, '_> {
 					| TypeRefTypeHint::StringAsPath(_)
 					| TypeRefTypeHint::CharAsRustChar
 					| TypeRefTypeHint::CharPtrSingleChar
-					| TypeRefTypeHint::PrimitivePtrAsRaw
+					| TypeRefTypeHint::PtrAsRaw
 					| TypeRefTypeHint::AddArrayLength(_)
 					| TypeRefTypeHint::BoxedAsRef(_, _, _)
 					| TypeRefTypeHint::TraitClassConcrete

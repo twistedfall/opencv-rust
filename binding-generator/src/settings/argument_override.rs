@@ -123,17 +123,11 @@ fn core_arg_override_factory() -> ArgOverride {
 		),
 		(
 			"cv::MatConstIterator::pos",
-			vec![(
-				pred!(const, ["_idx"]),
-				HashMap::from([("_idx", TypeRefTypeHint::PrimitivePtrAsRaw)]),
-			)],
+			vec![(pred!(const, ["_idx"]), HashMap::from([("_idx", TypeRefTypeHint::PtrAsRaw)]))],
 		),
 		(
 			"cv::MatSize::MatSize",
-			vec![(
-				pred!(mut, ["_p"]),
-				HashMap::from([("_p", TypeRefTypeHint::PrimitivePtrAsRaw)]),
-			)],
+			vec![(pred!(mut, ["_p"]), HashMap::from([("_p", TypeRefTypeHint::PtrAsRaw)]))],
 		),
 		(
 			"cv::cuda::GpuMat::setDefaultAllocator",
@@ -157,7 +151,7 @@ fn freetype_arg_override_factory() -> ArgOverride {
 		"cv::freetype::FreeType2::loadFontData",
 		vec![(
 			pred!(mut, ["pBuf", "bufSize", "idx"]),
-			HashMap::from([("pBuf", TypeRefTypeHint::PrimitivePtrAsRaw)]),
+			HashMap::from([("pBuf", TypeRefTypeHint::PtrAsRaw)]),
 		)],
 	)]))
 }

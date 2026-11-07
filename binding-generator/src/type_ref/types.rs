@@ -28,8 +28,8 @@ pub enum TypeRefTypeHint {
 	CharAsRustChar,
 	/// for the cases when `char *` should not be treated as string, but as a pointer to single char
 	CharPtrSingleChar,
-	/// render a reference to a primitive type as a raw Rust pointer
-	PrimitivePtrAsRaw,
+	/// render a reference to a type as a raw Rust pointer
+	PtrAsRaw,
 	/// Adds a length to an unsized array
 	AddArrayLength(usize),
 	/// Return boxed class as a wrapped reference to maintain lifetime connection to the indicated argument names
@@ -66,7 +66,7 @@ impl TypeRefTypeHint {
 			| Self::StringWithLen(_)
 			| Self::CharAsRustChar
 			| Self::CharPtrSingleChar
-			| Self::PrimitivePtrAsRaw
+			| Self::PtrAsRaw
 			| Self::AddArrayLength(_)
 			| Self::BoxedAsRef(_, _, _)
 			| Self::TraitClassConcrete
@@ -84,7 +84,7 @@ impl TypeRefTypeHint {
 			| Self::StringWithLen(_)
 			| Self::CharAsRustChar
 			| Self::CharPtrSingleChar
-			| Self::PrimitivePtrAsRaw
+			| Self::PtrAsRaw
 			| Self::AddArrayLength(_)
 			| Self::BoxedAsRef(_, _, _)
 			| Self::TraitClassConcrete
@@ -108,7 +108,7 @@ impl TypeRefTypeHint {
 			| Self::StringWithLen(_)
 			| Self::CharAsRustChar
 			| Self::CharPtrSingleChar
-			| Self::PrimitivePtrAsRaw
+			| Self::PtrAsRaw
 			| Self::AddArrayLength(_)
 			| Self::BoxedAsRef(_, _, _)
 			| Self::TraitClassConcrete

@@ -243,11 +243,8 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 				.kind()
 				.as_string(type_hint)
 				.or_else(|| {
-					(!matches!(
-						type_hint,
-						TypeRefTypeHint::CharPtrSingleChar | TypeRefTypeHint::PrimitivePtrAsRaw
-					) && inner.kind().is_char())
-					.then_some((Dir::In, StrType::CharPtr(StrEnc::Text)))
+					(!matches!(type_hint, TypeRefTypeHint::CharPtrSingleChar | TypeRefTypeHint::PtrAsRaw) && inner.kind().is_char())
+						.then_some((Dir::In, StrType::CharPtr(StrEnc::Text)))
 				})
 				.map(|(_, str_type)| (Dir::from_out_dir(inner.inherent_constness().is_mut()), str_type)),
 			TypeRefKind::Array(inner, ..) => {
@@ -404,12 +401,10 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		self.as_pointer().is_some_and(|inner| {
 			let inner_kind = inner.kind();
 			// todo: support receiving slices for CUDA_RawVideoSourceTrait::get_next_packet
-			inner_kind.is_void()
+			matches!(type_hint, TypeRefTypeHint::PtrAsRaw)
+				|| inner_kind.is_void()
 				|| inner_kind.is_unsigned_char()
 				|| inner_kind.as_pointer().is_some_and(|inner| inner.kind().is_copy(type_hint))
-				|| matches!(type_hint, TypeRefTypeHint::PrimitivePtrAsRaw)
-					&& inner_kind.as_primitive().is_some()
-					&& !self.as_string(type_hint).is_some()
 		})
 	}
 
