@@ -40,7 +40,7 @@ jobs:
       - uses: actions/cache@v6
         with:
           path: ~/build
-          key: build-${{ matrix.opencv-version }}-${{ matrix.linkage }}-${{ matrix.os-image }}-${{ matrix.opencv-version == '5.1.0' && 'rebuild-2' || 'base' }}
+          key: build-${{ matrix.opencv-version }}-${{ matrix.linkage }}-${{ matrix.os-image }}-${{ matrix.opencv-version == '5.1.0' && 'rebuild-3' || 'base' }}
 
       - name: Install dependencies
         run: ci/install.sh
