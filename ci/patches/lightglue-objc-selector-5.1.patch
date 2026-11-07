@@ -1,0 +1,6 @@
+diff --git a/modules/objc/generator/gen_objc.py b/modules/objc/generator/gen_objc.py
+--- a/modules/objc/generator/gen_objc.py
++++ b/modules/objc/generator/gen_objc.py
+@@ -1239 +1239 @@
+-                    objc_name = fi.objc_name if not constructor else ("init" + ("With" + (args[0].name[0].upper() + args[0].name[1:]) if len(args) > 0 else ""))
++                    objc_name = ("createFromFile" if fi.classname == "LightGlueMatcher" and fi.name == "create" else fi.objc_name) if not constructor else ("init" + ("With" + (args[0].name[0].upper() + args[0].name[1:]) if len(args) > 0 else ""))
