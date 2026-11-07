@@ -28,9 +28,6 @@ if [[ "$OPENCV_VERSION" == "5.0.0" ]]; then
 	patch -p1 -d "$opencv_src" < "$(dirname "$0")/patches/swift_name-attr.patch"
 	patch -p1 -d "$opencv_src" < "$(dirname "$0")/patches/enum-redefinition.patch"
 fi
-if [[ "$OPENCV_VERSION" == "5.1.0" ]]; then
-	patch -p1 -d "$opencv_src" < "$(dirname "$0")/patches/swift_name-attr-5.1.patch"
-fi
 if [[ "$OPENCV_VERSION" == "5.1.0" || "$OPENCV_VERSION" == "5.0.0" || "$OPENCV_VERSION" == "4.14.0" ]]; then
 	# handling of the `doc_hosting_base_path` is properly broken in 5.1.0, 5.0.0 and 4.14.0:
 	# 1. it's a store_true flag, so it can't be set to a string value

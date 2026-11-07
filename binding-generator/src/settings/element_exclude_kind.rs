@@ -18,6 +18,8 @@ pub static ELEMENT_EXCLUDE_KIND: LazyLock<HashMap<&str, ExcludeKind>> = LazyLock
 		("cv::MatExpr::op", ExcludeKind::Ignored),     // fixme implement PointerOf types
 		("cv::NAryMatIterator", ExcludeKind::Ignored), // uses pointers of pointers
 		("cv::Node", ExcludeKind::Ignored),            // template class
+		("cv::slam::KeyFrame::mapPoints", ExcludeKind::Ignored), // vector of pointers to boxed objects
+		("cv::slam::KeyFrame::orderedCovisibility", ExcludeKind::Ignored), // vector of pairs with pointers
 		("cv::gapi::own::Mat", ExcludeKind::Ignored),  // internal alias to Mat
 		("cv::text::ERStat::pixels", ExcludeKind::Ignored), // fixme: reference to a vector, we don't handle it too well yet
 		("std::exception_ptr", ExcludeKind::Ignored),
