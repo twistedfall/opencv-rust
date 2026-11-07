@@ -1,11 +1,28 @@
 pub mod ptcloud {
-	//! # Point Clound Processing
+	//! # Point Cloud Processing
+	//!
+	//! Point-cloud and mesh processing: reading/writing point clouds and meshes,
+	//! triangle rasterization, octree partitioning, and RGB-D / volumetric 3D
+	//! reconstruction (odometry, TSDF volumes).
+	//!    # RGB-D and Volumetric Reconstruction
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{OctreeTrait, OctreeTraitConst, OdometryFrameTrait, OdometryFrameTraitConst, OdometrySettingsTrait, OdometrySettingsTraitConst, OdometryTrait, OdometryTraitConst, RgbdNormalsTrait, RgbdNormalsTraitConst, VolumeSettingsTrait, VolumeSettingsTraitConst, VolumeTrait, VolumeTraitConst};
+		pub use super::{KeyFrameTrait, KeyFrameTraitConst, MapPointTrait, MapPointTraitConst, MapTrait, MapTraitConst, OctreeTrait, OctreeTraitConst, OdometryFrameTrait, OdometryFrameTraitConst, OdometrySettingsTrait, OdometrySettingsTraitConst, OdometryTrait, OdometryTraitConst, RgbdNormalsTrait, RgbdNormalsTraitConst, VisualOdometryTrait, VisualOdometryTraitConst, VolumeSettingsTrait, VolumeSettingsTraitConst, VolumeTrait, VolumeTraitConst};
 	}
 
+	/// Column of the opacity, 1 float in [0, 1].
+	pub const GAUSSIAN_SPLAT_ALPHA: i32 = 12;
+	/// First column of the covariance upper triangle, 6 floats: xx, xy, xz, yy, yz, zz.
+	pub const GAUSSIAN_SPLAT_COV: i32 = 3;
+	/// First column of the position, 3 floats: x, y, z.
+	pub const GAUSSIAN_SPLAT_POS: i32 = 0;
+	/// First column of the color, 3 floats in [0, 1].
+	pub const GAUSSIAN_SPLAT_RGB: i32 = 9;
+	/// Floats per Gaussian, i.e. the width of a decoded scene.
+	pub const GAUSSIAN_SPLAT_STRIDE: i32 = 13;
+	pub const INITIALIZING: i32 = 1;
+	pub const NOT_INITIALIZED: i32 = 0;
 	pub const N_PYRAMIDS: i32 = 9;
 	pub const OdometryAlgoType_COMMON: i32 = 0;
 	pub const OdometryAlgoType_FAST: i32 = 1;
@@ -50,16 +67,41 @@ pub mod ptcloud {
 	pub const RASTERIZE_SHADING_SHADED: i32 = 2;
 	/// a white color is used for the whole triangle
 	pub const RASTERIZE_SHADING_WHITE: i32 = 0;
+	pub const RENDER_SHADING: i32 = 1;
+	pub const RENDER_SIMPLE: i32 = 0;
+	pub const RENDER_WIREFRAME: i32 = 2;
 	pub const RGBD_PLANE_METHOD_DEFAULT: i32 = 0;
 	pub const RgbdNormals_RGBD_NORMALS_METHOD_CROSS_PRODUCT: i32 = 3;
 	pub const RgbdNormals_RGBD_NORMALS_METHOD_FALS: i32 = 0;
 	pub const RgbdNormals_RGBD_NORMALS_METHOD_LINEMOD: i32 = 1;
 	pub const RgbdNormals_RGBD_NORMALS_METHOD_SRI: i32 = 2;
+	pub const TRACKING: i32 = 2;
+	pub const VolumeType_ColorHashTSDF: i32 = 3;
 	pub const VolumeType_ColorTSDF: i32 = 2;
 	pub const VolumeType_HashTSDF: i32 = 1;
 	pub const VolumeType_TSDF: i32 = 0;
 	pub const Volume_VOLUME_UNIT: i32 = 0;
 	pub const Volume_VOXEL: i32 = 1;
+	/// Column layout of a decoded 3D Gaussian Splatting scene.
+	///
+	/// A decoded scene is a CV_32F matrix with one row per Gaussian and [GAUSSIAN_SPLAT_STRIDE] columns.
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum GaussianSplatLayout {
+		/// Floats per Gaussian, i.e. the width of a decoded scene.
+		GAUSSIAN_SPLAT_STRIDE = 13,
+		/// First column of the position, 3 floats: x, y, z.
+		GAUSSIAN_SPLAT_POS = 0,
+		/// First column of the covariance upper triangle, 6 floats: xx, xy, xz, yy, yz, zz.
+		GAUSSIAN_SPLAT_COV = 3,
+		/// First column of the color, 3 floats in [0, 1].
+		GAUSSIAN_SPLAT_RGB = 9,
+		/// Column of the opacity, 1 float in [0, 1].
+		GAUSSIAN_SPLAT_ALPHA = 12,
+	}
+
+	opencv_type_enum! { crate::ptcloud::GaussianSplatLayout { GAUSSIAN_SPLAT_STRIDE, GAUSSIAN_SPLAT_POS, GAUSSIAN_SPLAT_COV, GAUSSIAN_SPLAT_RGB, GAUSSIAN_SPLAT_ALPHA } }
+
 	/// These constants are used to set the speed and accuracy of odometry
 	/// ## Parameters
 	/// * COMMON: accurate but not so fast
@@ -100,6 +142,16 @@ pub mod ptcloud {
 
 	opencv_type_enum! { crate::ptcloud::OdometryFramePyramidType { PYR_IMAGE, PYR_DEPTH, PYR_MASK, PYR_CLOUD, PYR_DIX, PYR_DIY, PYR_TEXMASK, PYR_NORM, PYR_NORMMASK, N_PYRAMIDS } }
 
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum OdometryState {
+		NOT_INITIALIZED = 0,
+		INITIALIZING = 1,
+		TRACKING = 2,
+	}
+
+	opencv_type_enum! { crate::ptcloud::OdometryState { NOT_INITIALIZED, INITIALIZING, TRACKING } }
+
 	/// These constants are used to set a type of data which odometry will use
 	/// ## Parameters
 	/// * DEPTH: only depth data
@@ -114,6 +166,17 @@ pub mod ptcloud {
 	}
 
 	opencv_type_enum! { crate::ptcloud::OdometryType { DEPTH, RGB, RGB_DEPTH } }
+
+	/// Render modes for cv::viz3d::showBox / cv::viz3d::showPlane / cv::viz3d::showSphere
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum RenderMode {
+		RENDER_SIMPLE = 0,
+		RENDER_SHADING = 1,
+		RENDER_WIREFRAME = 2,
+	}
+
+	opencv_type_enum! { crate::ptcloud::RenderMode { RENDER_SIMPLE, RENDER_SHADING, RENDER_WIREFRAME } }
 
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -184,9 +247,10 @@ pub mod ptcloud {
 		TSDF = 0,
 		HashTSDF = 1,
 		ColorTSDF = 2,
+		ColorHashTSDF = 3,
 	}
 
-	opencv_type_enum! { crate::ptcloud::VolumeType { TSDF, HashTSDF, ColorTSDF } }
+	opencv_type_enum! { crate::ptcloud::VolumeType { TSDF, HashTSDF, ColorTSDF, ColorHashTSDF } }
 
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -196,6 +260,151 @@ pub mod ptcloud {
 	}
 
 	opencv_type_enum! { crate::ptcloud::Volume_BoundingBoxPrecision { VOLUME_UNIT, VOXEL } }
+
+	/// Computes an approximate minimum enclosing sphere of a point cloud (Ritter's algorithm).
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * center: Output sphere center (x,y,z), 3x1 CV_32F.
+	/// ## Returns
+	/// Sphere radius, or 0 if the cloud is empty.
+	#[inline]
+	pub fn approx_enclosing_sphere_3d(input_cloud: &impl ToInputArray, center: &mut impl ToOutputArray) -> Result<f64> {
+		input_array_arg!(input_cloud);
+		output_array_arg!(center);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_approxEnclosingSphere3D_const__InputArrayR_const__OutputArrayR(input_cloud.as_raw__InputArray(), center.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes the axis-aligned bounding box (AABB) of a point cloud.
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * minBound: Output minimum corner (x,y,z), 3x1 CV_32F.
+	/// * maxBound: Output maximum corner (x,y,z), 3x1 CV_32F.
+	#[inline]
+	pub fn bounding_box_3d(input_cloud: &impl ToInputArray, min_bound: &mut impl ToOutputArray, max_bound: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(input_cloud);
+		output_array_arg!(min_bound);
+		output_array_arg!(max_bound);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_boundingBox3D_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(input_cloud.as_raw__InputArray(), min_bound.as_raw__OutputArray(), max_bound.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Reconstructs a triangle mesh from an oriented point cloud using Ball-Pivoting.
+	///
+	/// Implements the Ball-Pivoting Algorithm [Bernardini1999](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Bernardini1999) : a ball of a given radius is
+	/// rolled over the points; whenever it rests on three points without containing any other, those
+	/// points form a triangle. Several radii are used in ascending order so larger balls bridge the
+	/// gaps left by smaller ones. The algorithm is interpolating — the mesh vertices are the input
+	/// points — so estimate and orient the normals first (cv::normalEstimate, cv::orientNormalsConsistent).
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * normals: Per-point normals, Nx1 CV_32FC3 (same count as the cloud).
+	/// * vertices: Output mesh vertices (a copy of the input points), Nx1 CV_32FC3.
+	/// * triangles: Output triangle vertex indices, Mx3 CV_32S.
+	/// * radii: Optional ball radii (1D CV_32F/CV_64F). If empty, radii are derived from
+	///              cv::estimateMedianSpacing as {1x, 2x, 4x} the median spacing.
+	///
+	/// ## Note
+	/// This alternative version of [create_mesh_bpa] function uses the following default values for its arguments:
+	/// * radii: noArray()
+	#[inline]
+	pub fn create_mesh_bpa_def(input_cloud: &impl ToInputArray, normals: &impl ToInputArray, vertices: &mut impl ToOutputArray, triangles: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(input_cloud);
+		input_array_arg!(normals);
+		output_array_arg!(vertices);
+		output_array_arg!(triangles);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createMeshBPA_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(input_cloud.as_raw__InputArray(), normals.as_raw__InputArray(), vertices.as_raw__OutputArray(), triangles.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Reconstructs a triangle mesh from an oriented point cloud using Ball-Pivoting.
+	///
+	/// Implements the Ball-Pivoting Algorithm [Bernardini1999](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Bernardini1999) : a ball of a given radius is
+	/// rolled over the points; whenever it rests on three points without containing any other, those
+	/// points form a triangle. Several radii are used in ascending order so larger balls bridge the
+	/// gaps left by smaller ones. The algorithm is interpolating — the mesh vertices are the input
+	/// points — so estimate and orient the normals first (cv::normalEstimate, cv::orientNormalsConsistent).
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * normals: Per-point normals, Nx1 CV_32FC3 (same count as the cloud).
+	/// * vertices: Output mesh vertices (a copy of the input points), Nx1 CV_32FC3.
+	/// * triangles: Output triangle vertex indices, Mx3 CV_32S.
+	/// * radii: Optional ball radii (1D CV_32F/CV_64F). If empty, radii are derived from
+	///              cv::estimateMedianSpacing as {1x, 2x, 4x} the median spacing.
+	///
+	/// ## C++ default parameters
+	/// * radii: noArray()
+	#[inline]
+	pub fn create_mesh_bpa(input_cloud: &impl ToInputArray, normals: &impl ToInputArray, vertices: &mut impl ToOutputArray, triangles: &mut impl ToOutputArray, radii: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(input_cloud);
+		input_array_arg!(normals);
+		output_array_arg!(vertices);
+		output_array_arg!(triangles);
+		input_array_arg!(radii);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createMeshBPA_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(input_cloud.as_raw__InputArray(), normals.as_raw__InputArray(), vertices.as_raw__OutputArray(), triangles.as_raw__OutputArray(), radii.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Decodes the contents of a `.splat` file into a renderable scene.
+	///
+	/// A `.splat` file is a headerless array of 32 byte records, one per Gaussian, holding position,
+	/// scale, color and rotation. The values are already activated, so only the covariance is built.
+	/// Being headerless makes this the in memory counterpart of cv::loadGaussianSplats for platforms
+	/// without filesystem access, or for scenes shipped as application resources.
+	///
+	/// ## Parameters
+	/// * buf: CV_8U buffer holding the bytes of a `.splat` file.
+	/// * splats: Decoded scene, see #GaussianSplatLayout.
+	#[inline]
+	pub fn decode_gaussian_splats_packed(buf: &impl ToInputArray, splats: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(buf);
+		output_array_arg!(splats);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_decodeGaussianSplatsPacked_const__InputArrayR_const__OutputArrayR(buf.as_raw__InputArray(), splats.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Decodes 3D Gaussian Splatting attributes into a renderable scene.
+	///
+	/// Scales are exponentiated, opacity is put through a sigmoid, the quaternion and scales are
+	/// combined into a 3D covariance, and the zeroth order harmonic is evaluated to an RGB color.
+	///
+	/// Use this when the attributes do not come from a file cv::loadGaussianSplats can open, for
+	/// instance when they are held in memory, arrive from a training run, or are read from a resource
+	/// on a platform without filesystem access.
+	///
+	/// ## Parameters
+	/// * attributes: CV_32F matrix with one row per Gaussian and one column per name of
+	/// cv::getGaussianSplatPlyPropNames, in that order.
+	/// * splats: Decoded scene, see #GaussianSplatLayout.
+	#[inline]
+	pub fn decode_gaussian_splats(attributes: &impl ToInputArray, splats: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(attributes);
+		output_array_arg!(splats);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_decodeGaussianSplats_const__InputArrayR_const__OutputArrayR(attributes.as_raw__InputArray(), splats.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
 
 	/// ## Parameters
 	/// * depth: the depth image
@@ -262,6 +471,25 @@ pub mod ptcloud {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_depthTo3d_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(depth.as_raw__InputArray(), k.as_raw__InputArray(), points3d.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Estimates the median spacing between neighboring points of a point cloud.
+	///
+	/// Returns the median distance from a sampled set of points to their nearest neighbor. Useful for
+	/// picking a ball radius for cv::createMeshBPA.
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// ## Returns
+	/// Median nearest-neighbor distance, or 0 if the cloud has fewer than 2 points.
+	#[inline]
+	pub fn estimate_median_spacing(input_cloud: &impl ToInputArray) -> Result<f32> {
+		input_array_arg!(input_cloud);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_estimateMedianSpacing_const__InputArrayR(input_cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -337,6 +565,80 @@ pub mod ptcloud {
 		output_array_arg!(plane_coefficients);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findPlanes_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_double_double_double_double_RgbdPlaneMethod(points3d.as_raw__InputArray(), normals.as_raw__InputArray(), mask.as_raw__OutputArray(), plane_coefficients.as_raw__OutputArray(), block_size, min_size, threshold, sensor_error_a, sensor_error_b, sensor_error_c, method, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Returns the PLY vertex property names cv::loadGaussianSplats reads by default.
+	///
+	/// The order of the names is the column order cv::decodeGaussianSplats expects. Pass a renamed copy
+	/// of this list to cv::loadGaussianSplats to read a scene whose exporter spells the properties
+	/// differently, keeping the same order.
+	#[inline]
+	pub fn get_gaussian_splat_ply_prop_names() -> Result<core::Vector<String>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_getGaussianSplatPlyPropNames(ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Loads a 3D Gaussian Splatting scene from a PLY or `.splat` file.
+	///
+	/// Requires a trained scene, i.e. a PLY whose vertices carry `f_dc_0..2`, `opacity`, `scale_0..2`
+	/// and `rot_0..3` alongside `x`, `y`, `z`, or a `.splat` file of 32 byte records. Higher order
+	/// `f_rest_*` harmonics are ignored.
+	///
+	/// The attributes are decoded on load, see cv::decodeGaussianSplats and
+	/// cv::decodeGaussianSplatsPacked.
+	///
+	/// ## Parameters
+	/// * filename: Name of the file, the format is chosen from its extension.
+	/// * splats: Decoded scene in the layout cv::viz3d::showGaussianSplats expects, see
+	/// #GaussianSplatLayout, or empty on failure.
+	/// * ply_properties: Vertex property names to read from a PLY file, in the column order of
+	/// cv::getGaussianSplatPlyPropNames. Empty selects that default list. Unused for `.splat` files.
+	///
+	/// ## Note
+	/// This alternative version of [load_gaussian_splats] function uses the following default values for its arguments:
+	/// * ply_properties: std::vector<String>()
+	#[inline]
+	pub fn load_gaussian_splats_def(filename: impl AsRef<OsStr>, splats: &mut impl ToOutputArray) -> Result<()> {
+		path_arg!(filename);
+		output_array_arg!(splats);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_loadGaussianSplats_const_StringR_const__OutputArrayR(filename.opencv_as_extern(), splats.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Loads a 3D Gaussian Splatting scene from a PLY or `.splat` file.
+	///
+	/// Requires a trained scene, i.e. a PLY whose vertices carry `f_dc_0..2`, `opacity`, `scale_0..2`
+	/// and `rot_0..3` alongside `x`, `y`, `z`, or a `.splat` file of 32 byte records. Higher order
+	/// `f_rest_*` harmonics are ignored.
+	///
+	/// The attributes are decoded on load, see cv::decodeGaussianSplats and
+	/// cv::decodeGaussianSplatsPacked.
+	///
+	/// ## Parameters
+	/// * filename: Name of the file, the format is chosen from its extension.
+	/// * splats: Decoded scene in the layout cv::viz3d::showGaussianSplats expects, see
+	/// #GaussianSplatLayout, or empty on failure.
+	/// * ply_properties: Vertex property names to read from a PLY file, in the column order of
+	/// cv::getGaussianSplatPlyPropNames. Empty selects that default list. Unused for `.splat` files.
+	///
+	/// ## C++ default parameters
+	/// * ply_properties: std::vector<String>()
+	#[inline]
+	pub fn load_gaussian_splats(filename: impl AsRef<OsStr>, splats: &mut impl ToOutputArray, ply_properties: &core::Vector<String>) -> Result<()> {
+		path_arg!(filename);
+		output_array_arg!(splats);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_loadGaussianSplats_const_StringR_const__OutputArrayR_const_vectorLStringGR(filename.opencv_as_extern(), splats.as_raw__OutputArray(), ply_properties.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -485,6 +787,101 @@ pub mod ptcloud {
 		Ok(ret)
 	}
 
+	/// Orients point-cloud normals consistently across the whole cloud.
+	///
+	/// Builds a Riemannian graph over the k nearest neighbors (edge weight 1 - |n_i . n_j|), computes
+	/// its minimum spanning tree with cv::buildMST, and propagates a consistent sign along the tree
+	/// from a seed point (Hoppe et al. 1992). If the neighbor graph is disconnected the normals are
+	/// oriented outward about the centroid instead. Estimate the normals first with cv::normalEstimate.
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * normals: Per-point normals to orient in place, Nx1 CV_32FC3 (as from cv::normalEstimate).
+	/// * k: Number of nearest neighbors used to build the graph.
+	///
+	/// ## Note
+	/// This alternative version of [orient_normals_consistent] function uses the following default values for its arguments:
+	/// * k: 30
+	#[inline]
+	pub fn orient_normals_consistent_def(input_cloud: &impl ToInputArray, normals: &mut impl ToInputOutputArray) -> Result<()> {
+		input_array_arg!(input_cloud);
+		input_output_array_arg!(normals);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_orientNormalsConsistent_const__InputArrayR_const__InputOutputArrayR(input_cloud.as_raw__InputArray(), normals.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Orients point-cloud normals consistently across the whole cloud.
+	///
+	/// Builds a Riemannian graph over the k nearest neighbors (edge weight 1 - |n_i . n_j|), computes
+	/// its minimum spanning tree with cv::buildMST, and propagates a consistent sign along the tree
+	/// from a seed point (Hoppe et al. 1992). If the neighbor graph is disconnected the normals are
+	/// oriented outward about the centroid instead. Estimate the normals first with cv::normalEstimate.
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * normals: Per-point normals to orient in place, Nx1 CV_32FC3 (as from cv::normalEstimate).
+	/// * k: Number of nearest neighbors used to build the graph.
+	///
+	/// ## C++ default parameters
+	/// * k: 30
+	#[inline]
+	pub fn orient_normals_consistent(input_cloud: &impl ToInputArray, normals: &mut impl ToInputOutputArray, k: i32) -> Result<()> {
+		input_array_arg!(input_cloud);
+		input_output_array_arg!(normals);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_orientNormalsConsistent_const__InputArrayR_const__InputOutputArrayR_int(input_cloud.as_raw__InputArray(), normals.as_raw__InputOutputArray(), k, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Flips point-cloud normals so that they face a given viewpoint.
+	///
+	/// Each normal whose direction points away from @p viewpoint is negated. Useful when the sensor
+	/// position is known. Estimate the normals first with cv::normalEstimate.
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * normals: Per-point normals to orient in place, Nx1 CV_32FC3 (as from cv::normalEstimate).
+	/// * viewpoint: Point the normals should face towards (e.g. the camera center).
+	#[inline]
+	pub fn orient_normals(input_cloud: &impl ToInputArray, normals: &mut impl ToInputOutputArray, viewpoint: core::Point3f) -> Result<()> {
+		input_array_arg!(input_cloud);
+		input_output_array_arg!(normals);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_orientNormals_const__InputArrayR_const__InputOutputArrayR_const_Point3fR(input_cloud.as_raw__InputArray(), normals.as_raw__InputOutputArray(), &viewpoint, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes a PCA-based oriented bounding box (OBB) of a point cloud.
+	///
+	/// The box axes are the principal axes of the cloud (covariance eigenvectors). This is the common
+	/// practical OBB (as in Open3D); it is not guaranteed to be the minimum-volume OBB.
+	/// A point p is inside the box iff `abs(axes * (p - center))` is `<= halfExtents` component-wise.
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * center: Output box center (x,y,z), 3x1 CV_32F.
+	/// * axes: Output 3x3 CV_32F; each row is a unit box axis.
+	/// * halfExtents: Output half-size along each axis, 3x1 CV_32F.
+	#[inline]
+	pub fn oriented_bounding_box_3d(input_cloud: &impl ToInputArray, center: &mut impl ToOutputArray, axes: &mut impl ToOutputArray, half_extents: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(input_cloud);
+		output_array_arg!(center);
+		output_array_arg!(axes);
+		output_array_arg!(half_extents);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_orientedBoundingBox3D_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(input_cloud.as_raw__InputArray(), center.as_raw__OutputArray(), axes.as_raw__OutputArray(), half_extents.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Registers depth data to an external camera
 	/// Registration is performed by creating a depth cloud, transforming the cloud by
 	/// the rigid body transformation between the cameras, and then projecting the
@@ -553,6 +950,118 @@ pub mod ptcloud {
 		output_array_arg!(registered_depth);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_registerDepth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__OutputArrayR_bool(unregistered_camera_matrix.as_raw__InputArray(), registered_camera_matrix.as_raw__InputArray(), registered_dist_coeffs.as_raw__InputArray(), rt.as_raw__InputArray(), unregistered_depth.as_raw__InputArray(), &output_image_plane_size, registered_depth.as_raw__OutputArray(), depth_dilation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Removes radius outliers from a point cloud.
+	///
+	/// Any point that has fewer than @p minNeighbors other points within @p radius is treated as an
+	/// isolated outlier and dropped.
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * outputCloud: Output filtered point cloud, Nx1 CV_32FC3.
+	/// * radius: Search radius.
+	/// * minNeighbors: Minimum number of neighbors (not counting the point itself) required to keep a point.
+	/// * keptIndices: Optional output, indices (CV_32S) into the input cloud of the points that were kept.
+	///
+	/// ## Note
+	/// This alternative version of [remove_radius_outliers] function uses the following default values for its arguments:
+	/// * min_neighbors: 16
+	/// * kept_indices: noArray()
+	#[inline]
+	pub fn remove_radius_outliers_def(input_cloud: &impl ToInputArray, output_cloud: &mut impl ToOutputArray, radius: f64) -> Result<()> {
+		input_array_arg!(input_cloud);
+		output_array_arg!(output_cloud);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_removeRadiusOutliers_const__InputArrayR_const__OutputArrayR_double(input_cloud.as_raw__InputArray(), output_cloud.as_raw__OutputArray(), radius, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Removes radius outliers from a point cloud.
+	///
+	/// Any point that has fewer than @p minNeighbors other points within @p radius is treated as an
+	/// isolated outlier and dropped.
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * outputCloud: Output filtered point cloud, Nx1 CV_32FC3.
+	/// * radius: Search radius.
+	/// * minNeighbors: Minimum number of neighbors (not counting the point itself) required to keep a point.
+	/// * keptIndices: Optional output, indices (CV_32S) into the input cloud of the points that were kept.
+	///
+	/// ## C++ default parameters
+	/// * min_neighbors: 16
+	/// * kept_indices: noArray()
+	#[inline]
+	pub fn remove_radius_outliers(input_cloud: &impl ToInputArray, output_cloud: &mut impl ToOutputArray, radius: f64, min_neighbors: i32, kept_indices: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(input_cloud);
+		output_array_arg!(output_cloud);
+		output_array_arg!(kept_indices);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_removeRadiusOutliers_const__InputArrayR_const__OutputArrayR_double_int_const__OutputArrayR(input_cloud.as_raw__InputArray(), output_cloud.as_raw__OutputArray(), radius, min_neighbors, kept_indices.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Removes statistical outliers from a point cloud.
+	///
+	/// For each point the mean distance to its @p meanK nearest neighbors is computed. Points whose
+	/// mean distance exceeds `global_mean + stddevMulThresh * global_stddev` are treated as outliers
+	/// and dropped. This targets sparse noise scattered around the surface.
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * outputCloud: Output filtered point cloud, Nx1 CV_32FC3.
+	/// * meanK: Number of nearest neighbors used to estimate the mean distance of each point.
+	/// * stddevMulThresh: Standard-deviation multiplier for the distance threshold.
+	/// * keptIndices: Optional output, indices (CV_32S) into the input cloud of the points that were kept.
+	///
+	/// ## Note
+	/// This alternative version of [remove_statistical_outliers] function uses the following default values for its arguments:
+	/// * mean_k: 20
+	/// * stddev_mul_thresh: 2.0
+	/// * kept_indices: noArray()
+	#[inline]
+	pub fn remove_statistical_outliers_def(input_cloud: &impl ToInputArray, output_cloud: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(input_cloud);
+		output_array_arg!(output_cloud);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_removeStatisticalOutliers_const__InputArrayR_const__OutputArrayR(input_cloud.as_raw__InputArray(), output_cloud.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Removes statistical outliers from a point cloud.
+	///
+	/// For each point the mean distance to its @p meanK nearest neighbors is computed. Points whose
+	/// mean distance exceeds `global_mean + stddevMulThresh * global_stddev` are treated as outliers
+	/// and dropped. This targets sparse noise scattered around the surface.
+	///
+	/// ## Parameters
+	/// * inputCloud: Input point cloud, 3-channel float array (CV_32FC3), or an Nx3 / 3xN CV_32F matrix.
+	/// * outputCloud: Output filtered point cloud, Nx1 CV_32FC3.
+	/// * meanK: Number of nearest neighbors used to estimate the mean distance of each point.
+	/// * stddevMulThresh: Standard-deviation multiplier for the distance threshold.
+	/// * keptIndices: Optional output, indices (CV_32S) into the input cloud of the points that were kept.
+	///
+	/// ## C++ default parameters
+	/// * mean_k: 20
+	/// * stddev_mul_thresh: 2.0
+	/// * kept_indices: noArray()
+	#[inline]
+	pub fn remove_statistical_outliers(input_cloud: &impl ToInputArray, output_cloud: &mut impl ToOutputArray, mean_k: i32, stddev_mul_thresh: f64, kept_indices: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(input_cloud);
+		output_array_arg!(output_cloud);
+		output_array_arg!(kept_indices);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_removeStatisticalOutliers_const__InputArrayR_const__OutputArrayR_int_double_const__OutputArrayR(input_cloud.as_raw__InputArray(), output_cloud.as_raw__OutputArray(), mean_k, stddev_mul_thresh, kept_indices.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -966,6 +1475,498 @@ pub mod ptcloud {
 		input_array_arg!(world2cam);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_triangleRasterize_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputArrayR_double_double_double_const_TriangleRasterizeSettingsR(vertices.as_raw__InputArray(), indices.as_raw__InputArray(), colors.as_raw__InputArray(), color_buf.as_raw__InputOutputArray(), depth_buf.as_raw__InputOutputArray(), world2cam.as_raw__InputArray(), fov_y, z_near, z_far, &settings, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Destroys an object created with cv::viz3d::showMesh or cv::viz3d::showPoints.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	#[inline]
+	pub fn destroy_object(win_name: &str, obj_name: &str) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_destroyObject_const_StringR_const_StringR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Hides or shows the grid on a viz3d window.
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * visible: Should the grid be shown?
+	#[inline]
+	pub fn set_grid_visible(win_name: &str, visible: bool) -> Result<()> {
+		extern_container_arg!(win_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_setGridVisible_const_StringR_bool(win_name.opencv_as_extern(), visible, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets an object's position in the specified viz3d window.
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * position: New position.
+	#[inline]
+	pub fn set_object_position(win_name: &str, obj_name: &str, position: core::Vec3f) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_setObjectPosition_const_StringR_const_StringR_const_Vec3fR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), &position, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets an object's rotation in the specified viz3d window.
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * rotation: New rotation in euler angles (radians).
+	#[inline]
+	pub fn set_object_rotation(win_name: &str, obj_name: &str, rotation: core::Vec3f) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_setObjectRotation_const_StringR_const_StringR_const_Vec3fR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), &rotation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets the view's perspective on a viz3d window.
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * fov: Vertical field of view in radians.
+	/// * z_near: Minimum clip distance.
+	/// * z_far: Maximum clip distance.
+	#[inline]
+	pub fn set_perspective(win_name: &str, fov: f32, z_near: f32, z_far: f32) -> Result<()> {
+		extern_container_arg!(win_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_setPerspective_const_StringR_float_float_float(win_name.opencv_as_extern(), fov, z_near, z_far, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets the properties of the sky used on a viz3d window.
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * color: Sky color.
+	#[inline]
+	pub fn set_sky(win_name: &str, color: core::Vec3f) -> Result<()> {
+		extern_container_arg!(win_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_setSky_const_StringR_const_Vec3fR(win_name.opencv_as_extern(), &color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets the properties of the light used on a viz3d window.
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * direction: Direction any point to the sun.
+	/// * ambient: Ambient light color.
+	/// * diffuse: Diffuse light color.
+	#[inline]
+	pub fn set_sun(win_name: &str, direction: core::Vec3f, ambient: core::Vec3f, diffuse: core::Vec3f) -> Result<()> {
+		extern_container_arg!(win_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_setSun_const_StringR_const_Vec3fR_const_Vec3fR_const_Vec3fR(win_name.opencv_as_extern(), &direction, &ambient, &diffuse, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a box object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * size: Box size.
+	/// * color: Box color.
+	/// * mode: Render mode.
+	///
+	/// ## Note
+	/// This alternative version of [show_box] function uses the following default values for its arguments:
+	/// * mode: RENDER_SIMPLE
+	#[inline]
+	pub fn show_box_def(win_name: &str, obj_name: &str, size: core::Vec3f, color: core::Vec3f) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showBox_const_StringR_const_StringR_const_Vec3fR_const_Vec3fR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), &size, &color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a box object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * size: Box size.
+	/// * color: Box color.
+	/// * mode: Render mode.
+	///
+	/// ## C++ default parameters
+	/// * mode: RENDER_SIMPLE
+	#[inline]
+	pub fn show_box(win_name: &str, obj_name: &str, size: core::Vec3f, color: core::Vec3f, mode: crate::ptcloud::RenderMode) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showBox_const_StringR_const_StringR_const_Vec3fR_const_Vec3fR_RenderMode(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), &size, &color, mode, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a camera trajectory object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// The camera trajectory data array must be 2D. Each row has a width of 6, where the first
+	/// 3 components are the position and the second 3 components are the direction of the camera.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * trajectory: Camera trajectory data.
+	/// * aspect: Aspect ratio of the camera frustum.
+	/// * scale: Scale applied to camera frustums.
+	/// * frustum_color: Color of the frustums.
+	/// * line_color: Color of the line.
+	///
+	/// ## Note
+	/// This alternative version of [show_camera_trajectory] function uses the following default values for its arguments:
+	/// * frustum_color: Vec3f(1.0f,1.0f,1.0f)
+	/// * line_color: Vec3f(0.5f,0.5f,0.5f)
+	#[inline]
+	pub fn show_camera_trajectory_def(win_name: &str, obj_name: &str, trajectory: &impl ToInputArray, aspect: f32, scale: f32) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		input_array_arg!(trajectory);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showCameraTrajectory_const_StringR_const_StringR_const__InputArrayR_float_float(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), trajectory.as_raw__InputArray(), aspect, scale, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a camera trajectory object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// The camera trajectory data array must be 2D. Each row has a width of 6, where the first
+	/// 3 components are the position and the second 3 components are the direction of the camera.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * trajectory: Camera trajectory data.
+	/// * aspect: Aspect ratio of the camera frustum.
+	/// * scale: Scale applied to camera frustums.
+	/// * frustum_color: Color of the frustums.
+	/// * line_color: Color of the line.
+	///
+	/// ## C++ default parameters
+	/// * frustum_color: Vec3f(1.0f,1.0f,1.0f)
+	/// * line_color: Vec3f(0.5f,0.5f,0.5f)
+	#[inline]
+	pub fn show_camera_trajectory(win_name: &str, obj_name: &str, trajectory: &impl ToInputArray, aspect: f32, scale: f32, frustum_color: core::Vec3f, line_color: core::Vec3f) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		input_array_arg!(trajectory);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showCameraTrajectory_const_StringR_const_StringR_const__InputArrayR_float_float_Vec3f_Vec3f(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), trajectory.as_raw__InputArray(), aspect, scale, &frustum_color, &line_color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a 3D Gaussian Splatting scene in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// Splats are alpha blended, sorted back to front by camera-space depth on the CPU whenever the view
+	/// changes, and drawn after all opaque objects in the same window.
+	///
+	/// Several splat objects in one window are drawn back to front by the depth of their centers. This is
+	/// correct for scenes that are apart from each other, but scenes that interpenetrate can blend in the
+	/// wrong order where they overlap. Merge such scenes into a single object instead.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * splats: One row per Gaussian, 13 floats wide: position (3), upper triangle of the symmetric
+	/// 3D covariance (6: xx, xy, xz, yy, yz, zz), color (3), opacity (1). As produced by
+	/// cv::loadGaussianSplats or cv::decodeGaussianSplats, see cv::GaussianSplatLayout.
+	#[inline]
+	pub fn show_gaussian_splats(win_name: &str, obj_name: &str, splats: &impl ToInputArray) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		input_array_arg!(splats);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showGaussianSplats_const_StringR_const_StringR_const__InputArrayR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), splats.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a lines object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// The points array must be 2D, where each row has either a width of 6 (xyz, rgb), so that
+	/// each row represents a point. Points are grouped in pairs to make lines (points 1 and 2,
+	/// points 3 and 4, etc).
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * points: Vertices input array.
+	#[inline]
+	pub fn show_lines(win_name: &str, obj_name: &str, points: &impl ToInputArray) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		input_array_arg!(points);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showLines_const_StringR_const_StringR_const__InputArrayR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a mesh object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// The vertices array must be 2D. If shading is disabled (the default option), each row has a width of
+	/// 3 (xyz), 6 (xyz, rgb) or 9 (xyz, rgb, uvw) where uvw is the normal, so that each row represents a vertex.
+	/// Shading is only enabled when using normals.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * verts: Vertices input array.
+	/// * indices: Indices input array.
+	///
+	/// ## Overloaded parameters
+	///  Shows a mesh object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// The vertices array must be 2D, where each row has a width of 3 (xyz), 6 (xyz, rgb) or 9 (xyz, rgb, uvw)
+	/// where uvw is the normal, so that each row represents a vertex. Shading is only enabled when using normals.
+	/// Points are grouped in triplets to make triangles (points 1, 2 and 3, points 4, 5 and 6, etc).
+	///
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * verts: Vertices input array.
+	/// * indices: Indices input array.
+	#[inline]
+	pub fn show_mesh2(win_name: &str, obj_name: &str, verts: &impl ToInputArray) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		input_array_arg!(verts);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showMesh_const_StringR_const_StringR_const__InputArrayR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), verts.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a mesh object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// The vertices array must be 2D. If shading is disabled (the default option), each row has a width of
+	/// 3 (xyz), 6 (xyz, rgb) or 9 (xyz, rgb, uvw) where uvw is the normal, so that each row represents a vertex.
+	/// Shading is only enabled when using normals.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * verts: Vertices input array.
+	/// * indices: Indices input array.
+	#[inline]
+	pub fn show_mesh(win_name: &str, obj_name: &str, verts: &impl ToInputArray, indices: &impl ToInputArray) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		input_array_arg!(verts);
+		input_array_arg!(indices);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showMesh_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), verts.as_raw__InputArray(), indices.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a plane object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// The place faces the positive Y axis by default.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * size: Plane size.
+	/// * color: Plane color.
+	/// * mode: Render mode.
+	///
+	/// ## Note
+	/// This alternative version of [show_plane] function uses the following default values for its arguments:
+	/// * mode: RENDER_SIMPLE
+	#[inline]
+	pub fn show_plane_def(win_name: &str, obj_name: &str, size: core::Vec2f, color: core::Vec3f) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showPlane_const_StringR_const_StringR_const_Vec2fR_const_Vec3fR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), &size, &color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a plane object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// The place faces the positive Y axis by default.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * size: Plane size.
+	/// * color: Plane color.
+	/// * mode: Render mode.
+	///
+	/// ## C++ default parameters
+	/// * mode: RENDER_SIMPLE
+	#[inline]
+	pub fn show_plane(win_name: &str, obj_name: &str, size: core::Vec2f, color: core::Vec3f, mode: crate::ptcloud::RenderMode) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showPlane_const_StringR_const_StringR_const_Vec2fR_const_Vec3fR_RenderMode(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), &size, &color, mode, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a point cloud object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// The points array must be 2D, where each row has either a width of 6 (xyz, rgb), so that
+	/// each row represents a point.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * points: Vertices input array.
+	#[inline]
+	pub fn show_points(win_name: &str, obj_name: &str, points: &impl ToInputArray) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		input_array_arg!(points);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showPoints_const_StringR_const_StringR_const__InputArrayR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a colored depth map as a point cloud in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// The colored depth map must be a 2D image with 4 channels (RGBD). The points are created assuming
+	/// that positive depth means positive position in the Z axis.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * img: Input colored depth map.
+	/// * intrinsics: Camera intrinsics matrix.
+	/// * scale: Scale applied to the coordinates of the points.
+	///
+	/// ## Note
+	/// This alternative version of [show_rgbd] function uses the following default values for its arguments:
+	/// * scale: 1.0f
+	#[inline]
+	pub fn show_rgbd_def(win_name: &str, obj_name: &str, img: &impl ToInputArray, intrinsics: core::Matx33f) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		input_array_arg!(img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showRGBD_const_StringR_const_StringR_const__InputArrayR_const_Matx33fR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), img.as_raw__InputArray(), &intrinsics, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a colored depth map as a point cloud in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// The colored depth map must be a 2D image with 4 channels (RGBD). The points are created assuming
+	/// that positive depth means positive position in the Z axis.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * img: Input colored depth map.
+	/// * intrinsics: Camera intrinsics matrix.
+	/// * scale: Scale applied to the coordinates of the points.
+	///
+	/// ## C++ default parameters
+	/// * scale: 1.0f
+	#[inline]
+	pub fn show_rgbd(win_name: &str, obj_name: &str, img: &impl ToInputArray, intrinsics: core::Matx33f, scale: f32) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		input_array_arg!(img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showRGBD_const_StringR_const_StringR_const__InputArrayR_const_Matx33fR_float(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), img.as_raw__InputArray(), &intrinsics, scale, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a sphere object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * radius: Sphere radius.
+	/// * color: Sphere color.
+	/// * mode: Render mode.
+	/// * divs: The higher this integer is the more detail (triangles) the sphere has.
+	///
+	/// ## Note
+	/// This alternative version of [show_sphere] function uses the following default values for its arguments:
+	/// * mode: RENDER_SIMPLE
+	/// * divs: 3
+	#[inline]
+	pub fn show_sphere_def(win_name: &str, obj_name: &str, radius: f32, color: core::Vec3f) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showSphere_const_StringR_const_StringR_float_const_Vec3fR(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), radius, &color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a sphere object in the specified viz3d window. See cv::viz3d::destroyObject.
+	///
+	/// ## Parameters
+	/// * win_name: Name of the viz3d window.
+	/// * obj_name: Name of the object.
+	/// * radius: Sphere radius.
+	/// * color: Sphere color.
+	/// * mode: Render mode.
+	/// * divs: The higher this integer is the more detail (triangles) the sphere has.
+	///
+	/// ## C++ default parameters
+	/// * mode: RENDER_SIMPLE
+	/// * divs: 3
+	#[inline]
+	pub fn show_sphere(win_name: &str, obj_name: &str, radius: f32, color: core::Vec3f, mode: crate::ptcloud::RenderMode, divs: i32) -> Result<()> {
+		extern_container_arg!(win_name);
+		extern_container_arg!(obj_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz3d_showSphere_const_StringR_const_StringR_float_const_Vec3fR_RenderMode_int(win_name.opencv_as_extern(), obj_name.opencv_as_extern(), radius, &color, mode, divs, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2733,7 +3734,7 @@ pub mod ptcloud {
 	impl Volume {
 		/// Constructor of custom volume.
 		/// ## Parameters
-		/// * vtype: the volume type [TSDF, HashTSDF, ColorTSDF].
+		/// * vtype: the volume type [TSDF, HashTSDF, ColorTSDF, ColorHashTSDF].
 		/// * settings: the custom settings for volume.
 		///
 		/// ## C++ default parameters
@@ -2751,7 +3752,7 @@ pub mod ptcloud {
 
 		/// Constructor of custom volume.
 		/// ## Parameters
-		/// * vtype: the volume type [TSDF, HashTSDF, ColorTSDF].
+		/// * vtype: the volume type [TSDF, HashTSDF, ColorTSDF, ColorHashTSDF].
 		/// * settings: the custom settings for volume.
 		///
 		/// ## Note
@@ -2802,7 +3803,7 @@ pub mod ptcloud {
 		/// * cameraPose: the pose of camera in global coordinates.
 		/// * points: image to store rendered points.
 		/// * normals: image to store rendered normals corresponding to points.
-		/// * colors: image to store rendered colors corresponding to points (only for ColorTSDF).
+		/// * colors: image to store rendered colors corresponding to points (only for ColorTSDF and ColorHashTSDF).
 		#[inline]
 		fn raycast_color(&self, camera_pose: &impl ToInputArray, points: &mut impl ToOutputArray, normals: &mut impl ToOutputArray, colors: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(camera_pose);
@@ -2851,7 +3852,7 @@ pub mod ptcloud {
 		/// * K: camera raycast intrinsics
 		/// * points: image to store rendered points.
 		/// * normals: image to store rendered normals corresponding to points.
-		/// * colors: image to store rendered colors corresponding to points (only for ColorTSDF).
+		/// * colors: image to store rendered colors corresponding to points (only for ColorTSDF and ColorHashTSDF).
 		#[inline]
 		fn raycast_ex_color(&self, camera_pose: &impl ToInputArray, height: i32, width: i32, k: &impl ToInputArray, points: &mut impl ToOutputArray, normals: &mut impl ToOutputArray, colors: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(camera_pose);
@@ -2900,7 +3901,7 @@ pub mod ptcloud {
 		/// ## Parameters
 		/// * points: the storage of all points.
 		/// * normals: the storage of all normals, corresponding to points.
-		/// * colors: the storage of all colors, corresponding to points (only for ColorTSDF).
+		/// * colors: the storage of all colors, corresponding to points (only for ColorTSDF and ColorHashTSDF).
 		#[inline]
 		fn fetch_points_normals_colors(&self, points: &mut impl ToOutputArray, normals: &mut impl ToOutputArray, colors: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(points);
@@ -2950,7 +3951,7 @@ pub mod ptcloud {
 		}
 
 		/// Returns if new volume units are allocated during integration or not.
-		/// Makes sense for HashTSDF only.
+		/// Makes sense for HashTSDF and ColorHashTSDF only.
 		#[inline]
 		fn get_enable_growth(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -3009,7 +4010,7 @@ pub mod ptcloud {
 		///
 		/// ## Parameters
 		/// * depth: the depth image.
-		/// * image: the color image (only for ColorTSDF).
+		/// * image: the color image (only for ColorTSDF and ColorHashTSDF).
 		///   For color TSDF a depth data should be registered with color data, i.e. have the same intrinsics & camera pose.
 		///   This can be done using function registerDepth() from 3d module.
 		/// * pose: the pose of camera in global coordinates.
@@ -3036,7 +4037,7 @@ pub mod ptcloud {
 		}
 
 		/// Enables or disables new volume unit allocation during integration.
-		/// Makes sense for HashTSDF only.
+		/// Makes sense for HashTSDF and ColorHashTSDF only.
 		#[inline]
 		fn set_enable_growth(&mut self, v: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -3201,6 +4202,27 @@ pub mod ptcloud {
 			Ok(ret)
 		}
 
+		/// Returns gradient delta factor used for normal estimation in TSDF volumes.
+		#[inline]
+		fn get_gradient_delta_factor(&self) -> Result<f32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_VolumeSettings_getGradientDeltaFactor_const(self.as_raw_VolumeSettings(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Returns threshold for number of frames after which invisible volume units are hidden/removed.
+		/// For HashTSDF and ColorHashTSDF volumes, units that haven't been visible for this many frames will be removed.
+		#[inline]
+		fn get_volume_unit_hide_threshold(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_VolumeSettings_getVolumeUnitHideThreshold_const(self.as_raw_VolumeSettings(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 		/// Returns threshold for depth truncation in meters. Truncates the depth greater than threshold to 0.
 		#[inline]
 		fn get_max_depth(&self) -> Result<f32> {
@@ -3248,8 +4270,8 @@ pub mod ptcloud {
 
 		/// Resolution of voxel space.
 		///    Number of voxels in each dimension.
-		///    Applicable only for TSDF Volume.
-		///    HashTSDF volume only supports equal resolution in all three dimensions.
+		///    Applicable only for TSDF and ColorTSDF volumes.
+		///    HashTSDF and ColorHashTSDF volumes only support equal resolution in all three dimensions.
 		/// ## Parameters
 		/// * val: output value.
 		#[inline]
@@ -3411,6 +4433,31 @@ pub mod ptcloud {
 			Ok(ret)
 		}
 
+		/// Sets gradient delta factor used for normal estimation in TSDF volumes.
+		/// ## Parameters
+		/// * val: input value.
+		#[inline]
+		fn set_gradient_delta_factor(&mut self, val: f32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_VolumeSettings_setGradientDeltaFactor_float(self.as_raw_mut_VolumeSettings(), val, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets threshold for number of frames after which invisible volume units are hidden/removed.
+		/// For HashTSDF and ColorHashTSDF volumes, units that haven't been visible for this many frames will be removed.
+		/// ## Parameters
+		/// * val: input value.
+		#[inline]
+		fn set_volume_unit_hide_threshold(&mut self, val: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_VolumeSettings_setVolumeUnitHideThreshold_int(self.as_raw_mut_VolumeSettings(), val, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 		/// Sets threshold for depth truncation in meters. Truncates the depth greater than threshold to 0.
 		/// ## Parameters
 		/// * val: input value.
@@ -3464,8 +4511,8 @@ pub mod ptcloud {
 
 		/// Resolution of voxel space.
 		///    Number of voxels in each dimension.
-		///    Applicable only for TSDF Volume.
-		///    HashTSDF volume only supports equal resolution in all three dimensions.
+		///    Applicable only for TSDF and ColorTSDF volumes.
+		///    HashTSDF and ColorHashTSDF volumes only support equal resolution in all three dimensions.
 		/// ## Parameters
 		/// * val: input value.
 		#[inline]
@@ -3540,5 +4587,796 @@ pub mod ptcloud {
 	}
 
 	boxed_ref! { VolumeSettings, crate::ptcloud::VolumeSettingsTraitConst, as_raw_VolumeSettings, crate::ptcloud::VolumeSettingsTrait, as_raw_mut_VolumeSettings }
+
+	pub struct KeyFrame {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { KeyFrame }
+
+	impl Drop for KeyFrame {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_slam_KeyFrame_delete(self.as_raw_mut_KeyFrame()) };
+		}
+	}
+
+	unsafe impl Send for KeyFrame {}
+
+	impl KeyFrame {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::ptcloud::KeyFrame {
+			let ret = unsafe { sys::cv_slam_KeyFrame_defaultNew_const() };
+			let ret = unsafe { crate::ptcloud::KeyFrame::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
+	/// Constant methods for [crate::ptcloud::KeyFrame]
+	pub trait KeyFrameTraitConst {
+		fn as_raw_KeyFrame(&self) -> *const c_void;
+
+		#[inline]
+		fn id(&self) -> i32 {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propId_const(self.as_raw_KeyFrame()) };
+			ret
+		}
+
+		#[inline]
+		fn pose_cw(&self) -> core::Matx44d {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_KeyFrame_propPoseCw_const(self.as_raw_KeyFrame(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			ret
+		}
+
+		#[inline]
+		fn keypoints(&self) -> core::Vector<core::KeyPoint> {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propKeypoints_const(self.as_raw_KeyFrame()) };
+			let ret = unsafe { core::Vector::<core::KeyPoint>::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		fn descriptors(&self) -> core::Mat {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propDescriptors_const(self.as_raw_KeyFrame()) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		fn undist_kpts(&self) -> core::Vector<core::Point2f> {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propUndistKpts_const(self.as_raw_KeyFrame()) };
+			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		fn image_size(&self) -> core::Size {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_KeyFrame_propImageSize_const(self.as_raw_KeyFrame(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			ret
+		}
+
+		#[inline]
+		fn global_desc(&self) -> core::Mat {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propGlobalDesc_const(self.as_raw_KeyFrame()) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
+	/// Mutable methods for [crate::ptcloud::KeyFrame]
+	pub trait KeyFrameTrait: crate::ptcloud::KeyFrameTraitConst {
+		fn as_raw_mut_KeyFrame(&mut self) -> *mut c_void;
+
+		/// ## C++ default parameters
+		/// * val: -1
+		#[inline]
+		fn set_id(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propId_int(self.as_raw_mut_KeyFrame(), val) };
+			ret
+		}
+
+		/// ## C++ default parameters
+		/// * val: Matx44d::eye()
+		#[inline]
+		fn set_pose_cw(&mut self, val: core::Matx44d) {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propPoseCw_Matx44d(self.as_raw_mut_KeyFrame(), &val) };
+			ret
+		}
+
+		#[inline]
+		fn set_keypoints(&mut self, mut val: core::Vector<core::KeyPoint>) {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propKeypoints_vectorLKeyPointG(self.as_raw_mut_KeyFrame(), val.as_raw_mut_VectorOfKeyPoint()) };
+			ret
+		}
+
+		#[inline]
+		fn set_descriptors(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propDescriptors_Mat(self.as_raw_mut_KeyFrame(), val.as_raw_mut_Mat()) };
+			ret
+		}
+
+		#[inline]
+		fn set_undist_kpts(&mut self, mut val: core::Vector<core::Point2f>) {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propUndistKpts_vectorLPoint2fG(self.as_raw_mut_KeyFrame(), val.as_raw_mut_VectorOfPoint2f()) };
+			ret
+		}
+
+		#[inline]
+		fn set_image_size(&mut self, val: core::Size) {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propImageSize_Size(self.as_raw_mut_KeyFrame(), &val) };
+			ret
+		}
+
+		#[inline]
+		fn parent(&mut self) -> crate::ptcloud::KeyFrame {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propParent(self.as_raw_mut_KeyFrame()) };
+			let ret = unsafe { crate::ptcloud::KeyFrame::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// ## C++ default parameters
+		/// * val: nullptr
+		#[inline]
+		unsafe fn set_parent(&mut self, val: *mut crate::ptcloud::KeyFrame) {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propParent_KeyFrameX(self.as_raw_mut_KeyFrame(), val.cast()) };
+			ret
+		}
+
+		#[inline]
+		fn set_global_desc(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_slam_KeyFrame_propGlobalDesc_Mat(self.as_raw_mut_KeyFrame(), val.as_raw_mut_Mat()) };
+			ret
+		}
+
+	}
+
+	impl Default for KeyFrame {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+
+	impl fmt::Debug for KeyFrame {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("KeyFrame")
+				.field("id", &crate::ptcloud::KeyFrameTraitConst::id(self))
+				.field("pose_cw", &crate::ptcloud::KeyFrameTraitConst::pose_cw(self))
+				.field("keypoints", &crate::ptcloud::KeyFrameTraitConst::keypoints(self))
+				.field("descriptors", &crate::ptcloud::KeyFrameTraitConst::descriptors(self))
+				.field("undist_kpts", &crate::ptcloud::KeyFrameTraitConst::undist_kpts(self))
+				.field("image_size", &crate::ptcloud::KeyFrameTraitConst::image_size(self))
+				.field("global_desc", &crate::ptcloud::KeyFrameTraitConst::global_desc(self))
+				.finish()
+		}
+	}
+
+	impl crate::ptcloud::KeyFrameTraitConst for KeyFrame {
+		#[inline] fn as_raw_KeyFrame(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::ptcloud::KeyFrameTrait for KeyFrame {
+		#[inline] fn as_raw_mut_KeyFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { KeyFrame, crate::ptcloud::KeyFrameTraitConst, as_raw_KeyFrame, crate::ptcloud::KeyFrameTrait, as_raw_mut_KeyFrame }
+
+	/// Owns all persistent SLAM state (KeyFrames and MapPoints).
+	/// Pointers from addKeyframe / addMapPoint are valid until removeMapPoint / clear.
+	pub struct Map {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Map }
+
+	impl Drop for Map {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_slam_Map_delete(self.as_raw_mut_Map()) };
+		}
+	}
+
+	unsafe impl Send for Map {}
+
+	impl Map {
+		#[inline]
+		pub fn default() -> Result<crate::ptcloud::Map> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_Map(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ptcloud::Map::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::ptcloud::Map]
+	pub trait MapTraitConst {
+		fn as_raw_Map(&self) -> *const c_void;
+
+		#[inline]
+		fn get_keyframe(&self, id: i32) -> Result<crate::ptcloud::KeyFrame> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_getKeyframe_const_int(self.as_raw_Map(), id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ptcloud::KeyFrame::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn num_keyframes(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_numKeyframes_const(self.as_raw_Map(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_map_point(&self, id: i32) -> Result<crate::ptcloud::MapPoint> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_getMapPoint_const_int(self.as_raw_Map(), id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ptcloud::MapPoint::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn num_map_points(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_numMapPoints_const(self.as_raw_Map(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_ref_keyframe(&self) -> Result<crate::ptcloud::KeyFrame> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_getRefKeyframe_const(self.as_raw_Map(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ptcloud::KeyFrame::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_current_keyframe(&self) -> Result<crate::ptcloud::KeyFrame> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_getCurrentKeyframe_const(self.as_raw_Map(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ptcloud::KeyFrame::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn trajectory(&self) -> Result<core::Vector<core::Matx44d>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_trajectory_const(self.as_raw_Map(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<core::Matx44d>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::ptcloud::Map]
+	pub trait MapTrait: crate::ptcloud::MapTraitConst {
+		fn as_raw_mut_Map(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn add_keyframe(&mut self, kf: &mut impl crate::ptcloud::KeyFrameTrait) -> Result<crate::ptcloud::KeyFrame> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_addKeyframe_KeyFrameX(self.as_raw_mut_Map(), kf.as_raw_mut_KeyFrame(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ptcloud::KeyFrame::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn add_map_point(&mut self, mp: &mut impl crate::ptcloud::MapPointTrait) -> Result<crate::ptcloud::MapPoint> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_addMapPoint_MapPointX(self.as_raw_mut_Map(), mp.as_raw_mut_MapPoint(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ptcloud::MapPoint::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn add_observation(&mut self, kf: &mut impl crate::ptcloud::KeyFrameTrait, kp_idx: size_t, mp: &mut impl crate::ptcloud::MapPointTrait) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_addObservation_KeyFrameX_size_t_MapPointX(self.as_raw_mut_Map(), kf.as_raw_mut_KeyFrame(), kp_idx, mp.as_raw_mut_MapPoint(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn remove_observation(&mut self, kf: &mut impl crate::ptcloud::KeyFrameTrait, mp: &mut impl crate::ptcloud::MapPointTrait) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_removeObservation_KeyFrameX_MapPointX(self.as_raw_mut_Map(), kf.as_raw_mut_KeyFrame(), mp.as_raw_mut_MapPoint(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn remove_map_point(&mut self, mp: &mut impl crate::ptcloud::MapPointTrait) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_removeMapPoint_MapPointX(self.as_raw_mut_Map(), mp.as_raw_mut_MapPoint(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_ref_keyframe(&mut self, kf: &mut impl crate::ptcloud::KeyFrameTrait) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_setRefKeyframe_KeyFrameX(self.as_raw_mut_Map(), kf.as_raw_mut_KeyFrame(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_current_keyframe(&mut self, kf: &mut impl crate::ptcloud::KeyFrameTrait) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_setCurrentKeyframe_KeyFrameX(self.as_raw_mut_Map(), kf.as_raw_mut_KeyFrame(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn append_pose(&mut self, t_cw: core::Matx44d) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_appendPose_const_Matx44dR(self.as_raw_mut_Map(), &t_cw, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn clear(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_Map_clear(self.as_raw_mut_Map(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl fmt::Debug for Map {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("Map")
+				.finish()
+		}
+	}
+
+	impl crate::ptcloud::MapTraitConst for Map {
+		#[inline] fn as_raw_Map(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::ptcloud::MapTrait for Map {
+		#[inline] fn as_raw_mut_Map(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Map, crate::ptcloud::MapTraitConst, as_raw_Map, crate::ptcloud::MapTrait, as_raw_mut_Map }
+
+	pub struct MapPoint {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MapPoint }
+
+	impl Drop for MapPoint {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_slam_MapPoint_delete(self.as_raw_mut_MapPoint()) };
+		}
+	}
+
+	unsafe impl Send for MapPoint {}
+
+	impl MapPoint {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::ptcloud::MapPoint {
+			let ret = unsafe { sys::cv_slam_MapPoint_defaultNew_const() };
+			let ret = unsafe { crate::ptcloud::MapPoint::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
+	/// Constant methods for [crate::ptcloud::MapPoint]
+	pub trait MapPointTraitConst {
+		fn as_raw_MapPoint(&self) -> *const c_void;
+
+		#[inline]
+		fn id(&self) -> i32 {
+			let ret = unsafe { sys::cv_slam_MapPoint_propId_const(self.as_raw_MapPoint()) };
+			ret
+		}
+
+		#[inline]
+		fn pos(&self) -> core::Point3d {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_MapPoint_propPos_const(self.as_raw_MapPoint(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			ret
+		}
+
+		#[inline]
+		fn ref_desc(&self) -> core::Mat {
+			let ret = unsafe { sys::cv_slam_MapPoint_propRefDesc_const(self.as_raw_MapPoint()) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		fn visible_count(&self) -> i32 {
+			let ret = unsafe { sys::cv_slam_MapPoint_propVisibleCount_const(self.as_raw_MapPoint()) };
+			ret
+		}
+
+		#[inline]
+		fn found_count(&self) -> i32 {
+			let ret = unsafe { sys::cv_slam_MapPoint_propFoundCount_const(self.as_raw_MapPoint()) };
+			ret
+		}
+
+		#[inline]
+		fn bad(&self) -> bool {
+			let ret = unsafe { sys::cv_slam_MapPoint_propBad_const(self.as_raw_MapPoint()) };
+			ret
+		}
+
+	}
+
+	/// Mutable methods for [crate::ptcloud::MapPoint]
+	pub trait MapPointTrait: crate::ptcloud::MapPointTraitConst {
+		fn as_raw_mut_MapPoint(&mut self) -> *mut c_void;
+
+		/// ## C++ default parameters
+		/// * val: -1
+		#[inline]
+		fn set_id(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_slam_MapPoint_propId_int(self.as_raw_mut_MapPoint(), val) };
+			ret
+		}
+
+		#[inline]
+		fn set_pos(&mut self, val: core::Point3d) {
+			let ret = unsafe { sys::cv_slam_MapPoint_propPos_Point3d(self.as_raw_mut_MapPoint(), &val) };
+			ret
+		}
+
+		#[inline]
+		fn set_ref_desc(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_slam_MapPoint_propRefDesc_Mat(self.as_raw_mut_MapPoint(), val.as_raw_mut_Mat()) };
+			ret
+		}
+
+		/// ## C++ default parameters
+		/// * val: 0
+		#[inline]
+		fn set_visible_count(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_slam_MapPoint_propVisibleCount_int(self.as_raw_mut_MapPoint(), val) };
+			ret
+		}
+
+		/// ## C++ default parameters
+		/// * val: 0
+		#[inline]
+		fn set_found_count(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_slam_MapPoint_propFoundCount_int(self.as_raw_mut_MapPoint(), val) };
+			ret
+		}
+
+		/// ## C++ default parameters
+		/// * val: false
+		#[inline]
+		fn set_bad(&mut self, val: bool) {
+			let ret = unsafe { sys::cv_slam_MapPoint_propBad_bool(self.as_raw_mut_MapPoint(), val) };
+			ret
+		}
+
+	}
+
+	impl Default for MapPoint {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+
+	impl fmt::Debug for MapPoint {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("MapPoint")
+				.field("id", &crate::ptcloud::MapPointTraitConst::id(self))
+				.field("pos", &crate::ptcloud::MapPointTraitConst::pos(self))
+				.field("ref_desc", &crate::ptcloud::MapPointTraitConst::ref_desc(self))
+				.field("visible_count", &crate::ptcloud::MapPointTraitConst::visible_count(self))
+				.field("found_count", &crate::ptcloud::MapPointTraitConst::found_count(self))
+				.field("bad", &crate::ptcloud::MapPointTraitConst::bad(self))
+				.finish()
+		}
+	}
+
+	impl crate::ptcloud::MapPointTraitConst for MapPoint {
+		#[inline] fn as_raw_MapPoint(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::ptcloud::MapPointTrait for MapPoint {
+		#[inline] fn as_raw_mut_MapPoint(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { MapPoint, crate::ptcloud::MapPointTraitConst, as_raw_MapPoint, crate::ptcloud::MapPointTrait, as_raw_mut_MapPoint }
+
+	/// Tunable parameters for visual odometry: initialization, tracking, keyframe selection, and local-map refinement.
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq)]
+	pub struct OdometryParams {
+		/// Minimum match/inlier count at each bootstrap stage.
+		pub min_init_inliers: i32,
+		/// Minimum parallax (deg) to trigger initialization.
+		pub min_init_parallax_deg: f64,
+		/// Minimum triangulated points to seed the map.
+		pub min_init_points: i32,
+		/// Homography/fundamental score ratio above which homography is chosen.
+		pub hf_ratio_thresh: f64,
+		/// Minimum parallax (deg) to triangulate new points during map growth.
+		pub min_growth_parallax_deg: f64,
+		/// RANSAC reprojection threshold (px) for essential-matrix/homography estimation.
+		pub essential_ransac_thresh: f64,
+		/// RANSAC confidence for essential-matrix estimation.
+		pub essential_ransac_confidence: f64,
+		/// PnP RANSAC reprojection threshold (px).
+		pub pnp_reproj_thresh: f64,
+		/// Minimum PnP inliers to accept a pose.
+		pub pnp_min_inliers: i32,
+		/// Maximum PnP RANSAC iterations.
+		pub pnp_ransac_iters: i32,
+		/// PnP RANSAC confidence.
+		pub pnp_confidence: f64,
+		/// Guided-match search radius (px).
+		pub motion_model_radius: f64,
+		/// Wider fallback search radius (px) when the narrow search finds too few.
+		pub motion_model_radius_wide: f64,
+		/// Matches below which the wider search runs.
+		pub motion_model_min_matches: i32,
+		/// Descriptor-distance cutoff for a projected map-point match.
+		pub desc_proj_thresh: f64,
+		/// Minimum correspondences for the optical-flow fallback.
+		pub optical_flow_min_inliers: i32,
+		/// Minimum frames since last keyframe before inserting one.
+		pub kf_min_frames: i32,
+		/// Frames since last keyframe after which one is forced.
+		pub kf_max_frames: i32,
+		/// Insert a keyframe when inliers drop below this fraction of the last keyframe's.
+		pub kf_inlier_ratio: f64,
+		/// Absolute inlier floor: max(kfMinInliers, kfInlierRatio * lastKfInliers).
+		pub kf_min_inliers: i32,
+		/// Rotation (deg) from last keyframe that forces a new one.
+		pub kf_rot_thresh_deg: f64,
+		/// Translation from last keyframe that forces a new one.
+		pub kf_trans_thresh: f64,
+		/// Top co-visible keyframes forming the local map.
+		pub local_map_top_k: i32,
+		/// Covisibility neighbors expanded per local-map keyframe.
+		pub local_map_neighbor_k: i32,
+		/// Reprojection search radius (px) for local-map points.
+		pub local_map_radius: f64,
+	}
+
+	opencv_type_simple! { crate::ptcloud::OdometryParams }
+
+	impl OdometryParams {
+		#[inline]
+		pub fn default() -> Result<crate::ptcloud::OdometryParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_OdometryParams_OdometryParams(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Monocular visual odometry pipeline.
+	///
+	/// State machine: NOT_INITIALIZED → INITIALIZING (H/F two-view bootstrap) → TRACKING
+	/// (per-frame PnP + local-map refinement). Tracking failure rewinds to INITIALIZING.
+	///
+	/// Purely in-memory: feed images with [processFrame] and read back the trajectory
+	/// and map with [getTrajectory] / [getMap]. See samples/slam for driving this
+	/// from a directory of images and writing the result to disk (e.g. COLMAP format).
+	pub struct VisualOdometry {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { VisualOdometry }
+
+	impl Drop for VisualOdometry {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_slam_VisualOdometry_delete(self.as_raw_mut_VisualOdometry()) };
+		}
+	}
+
+	unsafe impl Send for VisualOdometry {}
+
+	impl VisualOdometry {
+		/// ## C++ default parameters
+		/// * dist_coeffs: noArray()
+		/// * params: OdometryParams()
+		#[inline]
+		pub fn create(detector: &core::Ptr<crate::features::Feature2D>, matcher: &core::Ptr<crate::features::DescriptorMatcher>, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, params: crate::ptcloud::OdometryParams) -> Result<core::Ptr<crate::ptcloud::VisualOdometry>> {
+			input_array_arg!(camera_matrix);
+			input_array_arg!(dist_coeffs);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_VisualOdometry_create_const_PtrLFeature2DGR_const_PtrLDescriptorMatcherGR_const__InputArrayR_const__InputArrayR_const_OdometryParamsR(detector.as_raw_PtrOfFeature2D(), matcher.as_raw_PtrOfDescriptorMatcher(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &params, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ptcloud::VisualOdometry>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [VisualOdometry::create] function uses the following default values for its arguments:
+		/// * dist_coeffs: noArray()
+		/// * params: OdometryParams()
+		#[inline]
+		pub fn create_def(detector: &core::Ptr<crate::features::Feature2D>, matcher: &core::Ptr<crate::features::DescriptorMatcher>, camera_matrix: &impl ToInputArray) -> Result<core::Ptr<crate::ptcloud::VisualOdometry>> {
+			input_array_arg!(camera_matrix);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_VisualOdometry_create_const_PtrLFeature2DGR_const_PtrLDescriptorMatcherGR_const__InputArrayR(detector.as_raw_PtrOfFeature2D(), matcher.as_raw_PtrOfDescriptorMatcher(), camera_matrix.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ptcloud::VisualOdometry>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::ptcloud::VisualOdometry]
+	pub trait VisualOdometryTraitConst {
+		fn as_raw_VisualOdometry(&self) -> *const c_void;
+
+		#[inline]
+		fn get_state(&self) -> Result<crate::ptcloud::OdometryState> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_VisualOdometry_getState_const(self.as_raw_VisualOdometry(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_last_pose(&self) -> Result<core::Matx44d> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_VisualOdometry_getLastPose_const(self.as_raw_VisualOdometry(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Number of keyframes in the map. Convenience for callers (e.g. Python) that
+		/// can't use [getMap] directly.
+		#[inline]
+		fn get_num_keyframes(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_VisualOdometry_getNumKeyframes_const(self.as_raw_VisualOdometry(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Number of map points in the map. Convenience for callers (e.g. Python) that
+		/// can't use [getMap] directly.
+		#[inline]
+		fn get_num_map_points(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_VisualOdometry_getNumMapPoints_const(self.as_raw_VisualOdometry(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_trajectory(&self) -> Result<core::Vector<core::Matx44d>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_VisualOdometry_getTrajectory_const(self.as_raw_VisualOdometry(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<core::Matx44d>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_params(&self) -> Result<crate::ptcloud::OdometryParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_VisualOdometry_getParams_const(self.as_raw_VisualOdometry(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::ptcloud::VisualOdometry]
+	pub trait VisualOdometryTrait: crate::ptcloud::VisualOdometryTraitConst {
+		fn as_raw_mut_VisualOdometry(&mut self) -> *mut c_void;
+
+		/// Feed one image. Returns true if a pose was emitted.
+		#[inline]
+		fn process_frame(&mut self, image: &impl ToInputArray) -> Result<bool> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_VisualOdometry_processFrame_const__InputArrayR(self.as_raw_mut_VisualOdometry(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Reset to NOT_INITIALIZED, clearing map and trajectory.
+		#[inline]
+		fn reset(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_VisualOdometry_reset(self.as_raw_mut_VisualOdometry(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_params(&mut self, params: crate::ptcloud::OdometryParams) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_slam_VisualOdometry_setParams_const_OdometryParamsR(self.as_raw_mut_VisualOdometry(), &params, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl fmt::Debug for VisualOdometry {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("VisualOdometry")
+				.finish()
+		}
+	}
+
+	impl crate::ptcloud::VisualOdometryTraitConst for VisualOdometry {
+		#[inline] fn as_raw_VisualOdometry(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::ptcloud::VisualOdometryTrait for VisualOdometry {
+		#[inline] fn as_raw_mut_VisualOdometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { VisualOdometry, crate::ptcloud::VisualOdometryTraitConst, as_raw_VisualOdometry, crate::ptcloud::VisualOdometryTrait, as_raw_mut_VisualOdometry }
 
 }

@@ -45,9 +45,11 @@ pub mod imgcodecs {
 	pub const IMREAD_REDUCED_GRAYSCALE_8: i32 = 64;
 	/// If set, return the loaded image as is (with alpha channel, otherwise it gets cropped). Ignore EXIF orientation.
 	pub const IMREAD_UNCHANGED: i32 = -1;
-	/// For AVIF, it can be 8, 10 or 12. If >8, it is stored/read as CV_16U. Default is 8.
+	/// For AVIF, it can be an **alpha-plane** quality between 0 and 100 (the higher the better). If not specified, it is synced with the color plane quality. Default is 95.
+	pub const IMWRITE_AVIF_ALPHA_QUALITY: i32 = 515;
+	/// For AVIF, it can be 8, 10, 12 or 16. 16 requires libavif v1.4.0 or later (for a single still image only, not animation). If >8, it is stored/read as CV_16U. Default is 8.
 	pub const IMWRITE_AVIF_DEPTH: i32 = 513;
-	/// For AVIF, it can be a quality between 0 and 100 (the higher the better). Default is 95.
+	/// For AVIF, it can be a **color-planes** quality between 0 and 100 (the higher the better). Default is 95.
 	pub const IMWRITE_AVIF_QUALITY: i32 = 512;
 	/// For AVIF, it is between 0 (slowest) and 10(fastest). Default is 9.
 	pub const IMWRITE_AVIF_SPEED: i32 = 514;
@@ -227,6 +229,8 @@ pub mod imgcodecs {
 	pub const IMWRITE_TIFF_COMPRESSION_JXL: i32 = 50002;
 	/// ESRI Lerc codec: <https://github.com/Esri/lerc>
 	pub const IMWRITE_TIFF_COMPRESSION_LERC: i32 = 34887;
+	/// For TIFF, if IMWRITE_TIFF_COMPRESSION was used and supports it, sets a compression level. Valid range and meaning depends on the compression scheme. It is currently 1-9 for DEFLATE, 0-9 for LZMA, 1-22 for ZSTD, 1-100 for WEBP. -1 can be used as default.
+	pub const IMWRITE_TIFF_COMPRESSION_LEVEL: i32 = 260;
 	/// LZMA2
 	pub const IMWRITE_TIFF_COMPRESSION_LZMA: i32 = 34925;
 	/// Lempel-Ziv  & Welch
@@ -448,18 +452,22 @@ pub mod imgcodecs {
 		IMWRITE_TIFF_YDPI = 258,
 		/// For TIFF, use to specify the image compression scheme. See cv::ImwriteTiffCompressionFlags. The compression scheme can be specified by this flag; the default is LZW compression, except for 32F depth where it is NONE
 		IMWRITE_TIFF_COMPRESSION = 259,
+		/// For TIFF, if IMWRITE_TIFF_COMPRESSION was used and supports it, sets a compression level. Valid range and meaning depends on the compression scheme. It is currently 1-9 for DEFLATE, 0-9 for LZMA, 1-22 for ZSTD, 1-100 for WEBP. -1 can be used as default.
+		IMWRITE_TIFF_COMPRESSION_LEVEL = 260,
 		/// For TIFF, use to specify the number of rows per strip.
 		IMWRITE_TIFF_ROWSPERSTRIP = 278,
 		/// For TIFF, use to specify predictor. See cv::ImwriteTiffPredictorFlags. Default is IMWRITE_TIFF_PREDICTOR_HORIZONTAL .
 		IMWRITE_TIFF_PREDICTOR = 317,
 		/// For JPEG2000, use to specify the target compression rate (multiplied by 1000). The value can be from 0 to 1000. Default is 1000.
 		IMWRITE_JPEG2000_COMPRESSION_X1000 = 272,
-		/// For AVIF, it can be a quality between 0 and 100 (the higher the better). Default is 95.
+		/// For AVIF, it can be a **color-planes** quality between 0 and 100 (the higher the better). Default is 95.
 		IMWRITE_AVIF_QUALITY = 512,
-		/// For AVIF, it can be 8, 10 or 12. If >8, it is stored/read as CV_16U. Default is 8.
+		/// For AVIF, it can be 8, 10, 12 or 16. 16 requires libavif v1.4.0 or later (for a single still image only, not animation). If >8, it is stored/read as CV_16U. Default is 8.
 		IMWRITE_AVIF_DEPTH = 513,
 		/// For AVIF, it is between 0 (slowest) and 10(fastest). Default is 9.
 		IMWRITE_AVIF_SPEED = 514,
+		/// For AVIF, it can be an **alpha-plane** quality between 0 and 100 (the higher the better). If not specified, it is synced with the color plane quality. Default is 95.
+		IMWRITE_AVIF_ALPHA_QUALITY = 515,
 		/// For JPEG XL, it can be a quality from 0 to 100 (the higher is the better). Default value is 95. If set, distance parameter is re-calicurated from quality level automatically. This parameter request libjxl v0.10 or later.
 		IMWRITE_JPEGXL_QUALITY = 640,
 		/// For JPEG XL, encoder effort/speed level without affecting decoding speed; it is between 1 (fastest) and 10 (slowest). Default is 7.
@@ -484,7 +492,7 @@ pub mod imgcodecs {
 		IMWRITE_GIF_COLORTABLE = 1029,
 	}
 
-	opencv_type_enum! { crate::imgcodecs::ImwriteFlags { IMWRITE_JPEG_QUALITY, IMWRITE_JPEG_PROGRESSIVE, IMWRITE_JPEG_OPTIMIZE, IMWRITE_JPEG_RST_INTERVAL, IMWRITE_JPEG_LUMA_QUALITY, IMWRITE_JPEG_CHROMA_QUALITY, IMWRITE_JPEG_SAMPLING_FACTOR, IMWRITE_PNG_COMPRESSION, IMWRITE_PNG_STRATEGY, IMWRITE_PNG_BILEVEL, IMWRITE_PNG_FILTER, IMWRITE_PNG_ZLIBBUFFER_SIZE, IMWRITE_PXM_BINARY, IMWRITE_EXR_TYPE, IMWRITE_EXR_COMPRESSION, IMWRITE_EXR_DWA_COMPRESSION_LEVEL, IMWRITE_WEBP_QUALITY, IMWRITE_WEBP_LOSSLESS_MODE, IMWRITE_HDR_COMPRESSION, IMWRITE_PAM_TUPLETYPE, IMWRITE_TIFF_RESUNIT, IMWRITE_TIFF_XDPI, IMWRITE_TIFF_YDPI, IMWRITE_TIFF_COMPRESSION, IMWRITE_TIFF_ROWSPERSTRIP, IMWRITE_TIFF_PREDICTOR, IMWRITE_JPEG2000_COMPRESSION_X1000, IMWRITE_AVIF_QUALITY, IMWRITE_AVIF_DEPTH, IMWRITE_AVIF_SPEED, IMWRITE_JPEGXL_QUALITY, IMWRITE_JPEGXL_EFFORT, IMWRITE_JPEGXL_DISTANCE, IMWRITE_JPEGXL_DECODING_SPEED, IMWRITE_BMP_COMPRESSION, IMWRITE_GIF_LOOP, IMWRITE_GIF_SPEED, IMWRITE_GIF_QUALITY, IMWRITE_GIF_DITHER, IMWRITE_GIF_TRANSPARENCY, IMWRITE_GIF_COLORTABLE } }
+	opencv_type_enum! { crate::imgcodecs::ImwriteFlags { IMWRITE_JPEG_QUALITY, IMWRITE_JPEG_PROGRESSIVE, IMWRITE_JPEG_OPTIMIZE, IMWRITE_JPEG_RST_INTERVAL, IMWRITE_JPEG_LUMA_QUALITY, IMWRITE_JPEG_CHROMA_QUALITY, IMWRITE_JPEG_SAMPLING_FACTOR, IMWRITE_PNG_COMPRESSION, IMWRITE_PNG_STRATEGY, IMWRITE_PNG_BILEVEL, IMWRITE_PNG_FILTER, IMWRITE_PNG_ZLIBBUFFER_SIZE, IMWRITE_PXM_BINARY, IMWRITE_EXR_TYPE, IMWRITE_EXR_COMPRESSION, IMWRITE_EXR_DWA_COMPRESSION_LEVEL, IMWRITE_WEBP_QUALITY, IMWRITE_WEBP_LOSSLESS_MODE, IMWRITE_HDR_COMPRESSION, IMWRITE_PAM_TUPLETYPE, IMWRITE_TIFF_RESUNIT, IMWRITE_TIFF_XDPI, IMWRITE_TIFF_YDPI, IMWRITE_TIFF_COMPRESSION, IMWRITE_TIFF_COMPRESSION_LEVEL, IMWRITE_TIFF_ROWSPERSTRIP, IMWRITE_TIFF_PREDICTOR, IMWRITE_JPEG2000_COMPRESSION_X1000, IMWRITE_AVIF_QUALITY, IMWRITE_AVIF_DEPTH, IMWRITE_AVIF_SPEED, IMWRITE_AVIF_ALPHA_QUALITY, IMWRITE_JPEGXL_QUALITY, IMWRITE_JPEGXL_EFFORT, IMWRITE_JPEGXL_DISTANCE, IMWRITE_JPEGXL_DECODING_SPEED, IMWRITE_BMP_COMPRESSION, IMWRITE_GIF_LOOP, IMWRITE_GIF_SPEED, IMWRITE_GIF_QUALITY, IMWRITE_GIF_DITHER, IMWRITE_GIF_TRANSPARENCY, IMWRITE_GIF_COLORTABLE } }
 
 	/// Imwrite GIF specific values for IMWRITE_GIF_QUALITY parameter key, if larger than 3, then its related to the size of the color table.
 	#[repr(i32)]
@@ -1670,10 +1678,11 @@ pub mod imgcodecs {
 	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255.
 	///   - 8-bit single-channel images (CV_8UC1) are not supported due to GIF's limitation to indexed color formats.
 	/// - With AVIF encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
-	///   - CV_16U images can be saved as only 10-bit or 12-bit (not 16-bit). See IMWRITE_AVIF_DEPTH.
+	///   - CV_16U images can be saved as only 10-bit or 12-bit (and 16-bit with libavif 1.4.0+). See [IMWRITE_AVIF_DEPTH].
 	///   - AVIF images with an alpha channel can be saved using this function.
 	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) / 16-bit 4-channel (CV_16UC4) BGRA image, ensuring the alpha channel is the last component.
-	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255 (8-bit) / 1023 (10-bit) / 4095 (12-bit) (see the code sample below).
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255 (8-bit) / 1023 (10-bit) / 4095 (12-bit) / 65535 (16-bit) (see the code sample below).
+	///    Note that if the alpha plane contains only fully opaque pixels, the destination saves only color channels due to a libavif limitation.
 	///
 	/// If the image format is not supported, the image will be converted to 8-bit unsigned (CV_8U) and saved that way.
 	///
@@ -1749,10 +1758,11 @@ pub mod imgcodecs {
 	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255.
 	///   - 8-bit single-channel images (CV_8UC1) are not supported due to GIF's limitation to indexed color formats.
 	/// - With AVIF encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
-	///   - CV_16U images can be saved as only 10-bit or 12-bit (not 16-bit). See IMWRITE_AVIF_DEPTH.
+	///   - CV_16U images can be saved as only 10-bit or 12-bit (and 16-bit with libavif 1.4.0+). See [IMWRITE_AVIF_DEPTH].
 	///   - AVIF images with an alpha channel can be saved using this function.
 	///    To achieve this, create an 8-bit 4-channel (CV_8UC4) / 16-bit 4-channel (CV_16UC4) BGRA image, ensuring the alpha channel is the last component.
-	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255 (8-bit) / 1023 (10-bit) / 4095 (12-bit) (see the code sample below).
+	///    Fully transparent pixels should have an alpha value of 0, while fully opaque pixels should have an alpha value of 255 (8-bit) / 1023 (10-bit) / 4095 (12-bit) / 65535 (16-bit) (see the code sample below).
+	///    Note that if the alpha plane contains only fully opaque pixels, the destination saves only color channels due to a libavif limitation.
 	///
 	/// If the image format is not supported, the image will be converted to 8-bit unsigned (CV_8U) and saved that way.
 	///
@@ -2009,14 +2019,14 @@ pub mod imgcodecs {
 		///      *  - (WebP) See <https://issues.chromium.org/issues/41276895>
 		#[inline]
 		fn set_loop_count(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Animation_propLoop_count_const_int(self.as_raw_mut_Animation(), val) };
+			let ret = unsafe { sys::cv_Animation_propLoop_count_int(self.as_raw_mut_Animation(), val) };
 			ret
 		}
 
 		/// Background color of the animation in BGRA format.
 		#[inline]
 		fn set_bgcolor(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_Animation_propBgcolor_const_Scalar(self.as_raw_mut_Animation(), &val) };
+			let ret = unsafe { sys::cv_Animation_propBgcolor_Scalar(self.as_raw_mut_Animation(), &val) };
 			ret
 		}
 
@@ -2027,22 +2037,22 @@ pub mod imgcodecs {
 		///      *  - 0ms(or smaller than expected in user application) duration may cause undefined behavior, e.g. it is handled with default duration.
 		///      *  - Over 65535 * 10 milliseconds duration is not supported.
 		#[inline]
-		fn set_durations(&mut self, val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_Animation_propDurations_const_vectorLintG(self.as_raw_mut_Animation(), val.as_raw_VectorOfi32()) };
+		fn set_durations(&mut self, mut val: core::Vector<i32>) {
+			let ret = unsafe { sys::cv_Animation_propDurations_vectorLintG(self.as_raw_mut_Animation(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 
 		/// Vector of frames, where each Mat represents a single frame.
 		#[inline]
-		fn set_frames(&mut self, val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_Animation_propFrames_const_vectorLMatG(self.as_raw_mut_Animation(), val.as_raw_VectorOfMat()) };
+		fn set_frames(&mut self, mut val: core::Vector<core::Mat>) {
+			let ret = unsafe { sys::cv_Animation_propFrames_vectorLMatG(self.as_raw_mut_Animation(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 
 		/// image that can be used for the format in addition to the animation or if animation is not supported in the reader (like in PNG).
 		#[inline]
-		fn set_still_image(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_Animation_propStill_image_const_Mat(self.as_raw_mut_Animation(), val.as_raw_Mat()) };
+		fn set_still_image(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_Animation_propStill_image_Mat(self.as_raw_mut_Animation(), val.as_raw_mut_Mat()) };
 			ret
 		}
 

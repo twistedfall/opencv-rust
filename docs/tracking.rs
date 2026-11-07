@@ -86,13 +86,13 @@ pub mod tracking {
 	pub type TrackerKCF_FeatureExtractorCallbackFN = Option<unsafe extern "C" fn(*const c_void, core::Rect, *mut c_void) -> ()>;
 	/// Represents the model of the target at frame ![inline formula](https://latex.codecogs.com/png.latex?k) (all states and scores)
 	///
-	/// See [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) The set of the pair ![inline formula](https://latex.codecogs.com/png.latex?%5Clangle%20%5Chat%7Bx%7D%5E%7Bi%7D%5F%7Bk%7D%2C%20C%5E%7Bi%7D%5F%7Bk%7D%20%5Crangle)
+	/// See [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) The set of the pair ![inline formula](https://latex.codecogs.com/png.latex?%5Clangle%20%5Chat%7Bx%7D%5E%7Bi%7D%5F%7Bk%7D%2C%20C%5E%7Bi%7D%5F%7Bk%7D%20%5Crangle)
 	/// ## See also
 	/// TrackerTargetState
 	pub type Detail_ConfidenceMap = core::Vector<core::Tuple<(core::Ptr<crate::tracking::Detail_TrackerTargetState>, f32)>>;
 	/// Represents the estimate states for all frames
 	///
-	/// [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) ![inline formula](https://latex.codecogs.com/png.latex?x%5F%7Bk%7D) is the trajectory of the target up to time ![inline formula](https://latex.codecogs.com/png.latex?k)
+	/// [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) ![inline formula](https://latex.codecogs.com/png.latex?x%5F%7Bk%7D) is the trajectory of the target up to time ![inline formula](https://latex.codecogs.com/png.latex?k)
 	/// ## See also
 	/// TrackerTargetState
 	pub type Detail_Trajectory = core::Vector<core::Ptr<crate::tracking::Detail_TrackerTargetState>>;
@@ -113,7 +113,7 @@ pub mod tracking {
 
 	/// the CSRT tracker
 	///
-	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
+	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
 	pub struct TrackerCSRT {
 		ptr: *mut c_void,
 	}
@@ -422,37 +422,37 @@ pub mod tracking {
 
 		#[inline]
 		fn set_use_hog(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_hog_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_hog_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_use_color_names(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_color_names_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_color_names_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_use_gray(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_gray_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_gray_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_use_rgb(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_rgb_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_rgb_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_use_channel_weights(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_channel_weights_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_channel_weights_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_use_segmentation(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_segmentation_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propUse_segmentation_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
@@ -460,128 +460,128 @@ pub mod tracking {
 		#[inline]
 		fn set_window_function(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propWindow_function_const_string(self.as_raw_mut_TrackerCSRT_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propWindow_function_string(self.as_raw_mut_TrackerCSRT_Params(), val.opencv_as_extern()) };
 			ret
 		}
 
 		#[inline]
 		fn set_kaiser_alpha(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propKaiser_alpha_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propKaiser_alpha_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_cheb_attenuation(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propCheb_attenuation_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propCheb_attenuation_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_template_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propTemplate_size_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propTemplate_size_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_gsl_sigma(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propGsl_sigma_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propGsl_sigma_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_hog_orientations(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propHog_orientations_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propHog_orientations_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_hog_clip(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propHog_clip_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propHog_clip_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_padding(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propPadding_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propPadding_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_filter_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propFilter_lr_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propFilter_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_weights_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propWeights_lr_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propWeights_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_num_hog_channels_used(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propNum_hog_channels_used_const_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propNum_hog_channels_used_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_admm_iterations(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propAdmm_iterations_const_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propAdmm_iterations_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_histogram_bins(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propHistogram_bins_const_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propHistogram_bins_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_histogram_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propHistogram_lr_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propHistogram_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_background_ratio(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propBackground_ratio_const_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propBackground_ratio_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_number_of_scales(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propNumber_of_scales_const_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propNumber_of_scales_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_scale_sigma_factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propScale_sigma_factor_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propScale_sigma_factor_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_scale_model_max_area(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propScale_model_max_area_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propScale_model_max_area_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_scale_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propScale_lr_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propScale_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_scale_step(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propScale_step_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propScale_step_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
 		/// we lost the target, if the psr is lower than this.
 		#[inline]
 		fn set_psr_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerCSRT_Params_propPsr_threshold_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerCSRT_Params_propPsr_threshold_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 
@@ -642,7 +642,7 @@ pub mod tracking {
 	/// the KCF (Kernelized Correlation Filter) tracker
 	///
 	/// * KCF is a novel tracking framework that utilizes properties of circulant matrix to enhance the processing speed.
-	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
+	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
 	/// * The original paper of KCF is available at <http://www.robots.ox.ac.uk/~joao/publications/henriques_tpami2015.pdf>
 	/// * as well as the matlab implementation. For more information about KCF with color-names features, please refer to
 	/// * <http://www.cvl.isy.liu.se/research/objrec/visualtracking/colvistrack/index.html>.
@@ -1144,21 +1144,21 @@ pub mod tracking {
 		/// # of rects
 		#[inline]
 		fn set_num_features(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_TrackerContribFeatureHAAR_Params_propNumFeatures_const_int(self.as_raw_mut_Detail_TrackerContribFeatureHAAR_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerContribFeatureHAAR_Params_propNumFeatures_int(self.as_raw_mut_Detail_TrackerContribFeatureHAAR_Params(), val) };
 			ret
 		}
 
 		/// rect size
 		#[inline]
 		fn set_rect_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_detail_TrackerContribFeatureHAAR_Params_propRectSize_const_Size(self.as_raw_mut_Detail_TrackerContribFeatureHAAR_Params(), &val) };
+			let ret = unsafe { sys::cv_detail_TrackerContribFeatureHAAR_Params_propRectSize_Size(self.as_raw_mut_Detail_TrackerContribFeatureHAAR_Params(), &val) };
 			ret
 		}
 
 		/// true if input images are integral, false otherwise
 		#[inline]
 		fn set_is_integral(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_detail_TrackerContribFeatureHAAR_Params_propIsIntegral_const_bool(self.as_raw_mut_Detail_TrackerContribFeatureHAAR_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerContribFeatureHAAR_Params_propIsIntegral_bool(self.as_raw_mut_Detail_TrackerContribFeatureHAAR_Params(), val) };
 			ret
 		}
 
@@ -1187,8 +1187,8 @@ pub mod tracking {
 
 	/// Class that manages the extraction and selection of features
 	///
-	/// [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) Feature Extraction and Feature Set Refinement (Feature Processing and Feature Selection).
-	/// See table I and section III C [AMVOT](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AMVOT) Appearance modelling -\> Visual representation (Table II,
+	/// [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) Feature Extraction and Feature Set Refinement (Feature Processing and Feature Selection).
+	/// See table I and section III C [AMVOT](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AMVOT) Appearance modelling -\> Visual representation (Table II,
 	/// section 3.1 - 3.2)
 	///
 	/// TrackerContribFeatureSet is an aggregation of TrackerContribFeature
@@ -1388,7 +1388,7 @@ pub mod tracking {
 
 	/// Class that manages the sampler in order to select regions for the update the model of the tracker
 	///
-	/// [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) Sampling e Labeling. See table I and section III B
+	/// [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) Sampling e Labeling. See table I and section III B
 	///
 	/// TrackerContribSampler is an aggregation of TrackerContribSamplerAlgorithm
 	/// ## See also
@@ -1437,7 +1437,7 @@ pub mod tracking {
 			Ok(ret)
 		}
 
-		/// Return the samples from all TrackerContribSamplerAlgorithm, [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
+		/// Return the samples from all TrackerContribSamplerAlgorithm, [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
 		#[inline]
 		fn get_samples(&self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
@@ -1624,7 +1624,7 @@ pub mod tracking {
 		/// * image: The current frame
 		/// * boundingBox: The bounding box from which regions can be calculated
 		///
-		/// * sample: The computed samples [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
+		/// * sample: The computed samples [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
 		#[inline]
 		fn sampling(&mut self, image: &impl core::MatTraitConst, bounding_box: core::Rect, sample: &mut core::Vector<core::Mat>) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -1881,42 +1881,42 @@ pub mod tracking {
 		/// radius for gathering positive instances during init
 		#[inline]
 		fn set_init_in_rad(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propInitInRad_const_float(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propInitInRad_float(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
 			ret
 		}
 
 		/// radius for gathering positive instances during tracking
 		#[inline]
 		fn set_track_in_pos_rad(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propTrackInPosRad_const_float(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propTrackInPosRad_float(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
 			ret
 		}
 
 		/// size of search window
 		#[inline]
 		fn set_search_win_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propSearchWinSize_const_float(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propSearchWinSize_float(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
 			ret
 		}
 
 		/// # negative samples to use during init
 		#[inline]
 		fn set_init_max_neg_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propInitMaxNegNum_const_int(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propInitMaxNegNum_int(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
 			ret
 		}
 
 		/// # positive samples to use during training
 		#[inline]
 		fn set_track_max_pos_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propTrackMaxPosNum_const_int(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propTrackMaxPosNum_int(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
 			ret
 		}
 
 		/// # negative samples to use during training
 		#[inline]
 		fn set_track_max_neg_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propTrackMaxNegNum_const_int(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerContribSamplerCSC_Params_propTrackMaxNegNum_int(self.as_raw_mut_Detail_TrackerContribSamplerCSC_Params(), val) };
 			ret
 		}
 
@@ -2298,8 +2298,8 @@ pub mod tracking {
 
 	/// Class that manages the extraction and selection of features
 	///
-	/// [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) Feature Extraction and Feature Set Refinement (Feature Processing and Feature Selection).
-	/// See table I and section III C [AMVOT](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AMVOT) Appearance modelling -\> Visual representation (Table II,
+	/// [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) Feature Extraction and Feature Set Refinement (Feature Processing and Feature Selection).
+	/// See table I and section III C [AMVOT](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AMVOT) Appearance modelling -\> Visual representation (Table II,
 	/// section 3.1 - 3.2)
 	///
 	/// TrackerFeatureSet is an aggregation of TrackerFeature
@@ -2415,7 +2415,7 @@ pub mod tracking {
 	///
 	/// It must be instantiated by specialized tracker
 	///
-	/// See [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) Ak
+	/// See [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) Ak
 	///
 	/// Inherits this with your TrackerModel
 	pub struct Detail_TrackerModel {
@@ -2503,7 +2503,7 @@ pub mod tracking {
 
 		/// Estimate the most likely target location
 		///
-		/// [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) ME, Model Estimation table I
+		/// [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) ME, Model Estimation table I
 		/// ## Parameters
 		/// * responses: Features extracted from TrackerFeatureSet
 		#[inline]
@@ -2517,7 +2517,7 @@ pub mod tracking {
 
 		/// Update the model
 		///
-		/// [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) MU, Model Update table I
+		/// [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) MU, Model Update table I
 		#[inline]
 		fn model_update(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2571,7 +2571,7 @@ pub mod tracking {
 
 	/// Class that manages the sampler in order to select regions for the update the model of the tracker
 	///
-	/// [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) Sampling e Labeling. See table I and section III B
+	/// [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) Sampling e Labeling. See table I and section III B
 	///
 	/// TrackerSampler is an aggregation of TrackerSamplerAlgorithm
 	/// ## See also
@@ -2619,7 +2619,7 @@ pub mod tracking {
 			Ok(ret)
 		}
 
-		/// Return the samples from all TrackerSamplerAlgorithm, [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
+		/// Return the samples from all TrackerSamplerAlgorithm, [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
 		#[inline]
 		fn get_samples(&self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
@@ -2716,7 +2716,7 @@ pub mod tracking {
 		/// * image: The current frame
 		/// * boundingBox: The bounding box from which regions can be calculated
 		///
-		/// * sample: The computed samples [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
+		/// * sample: The computed samples [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) Fig. 1 variable Sk
 		#[inline]
 		fn sampling(&mut self, image: &impl core::MatTraitConst, bounding_box: core::Rect, sample: &mut core::Vector<core::Mat>) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -2953,14 +2953,14 @@ pub mod tracking {
 		/// overlapping for the search windows
 		#[inline]
 		fn set_overlap(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerCS_Params_propOverlap_const_float(self.as_raw_mut_Detail_TrackerSamplerCS_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCS_Params_propOverlap_float(self.as_raw_mut_Detail_TrackerSamplerCS_Params(), val) };
 			ret
 		}
 
 		/// search region parameter
 		#[inline]
 		fn set_search_factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerCS_Params_propSearchFactor_const_float(self.as_raw_mut_Detail_TrackerSamplerCS_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCS_Params_propSearchFactor_float(self.as_raw_mut_Detail_TrackerSamplerCS_Params(), val) };
 			ret
 		}
 
@@ -3192,42 +3192,42 @@ pub mod tracking {
 		/// radius for gathering positive instances during init
 		#[inline]
 		fn set_init_in_rad(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propInitInRad_const_float(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propInitInRad_float(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
 			ret
 		}
 
 		/// radius for gathering positive instances during tracking
 		#[inline]
 		fn set_track_in_pos_rad(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackInPosRad_const_float(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackInPosRad_float(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
 			ret
 		}
 
 		/// size of search window
 		#[inline]
 		fn set_search_win_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propSearchWinSize_const_float(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propSearchWinSize_float(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
 			ret
 		}
 
 		/// # negative samples to use during init
 		#[inline]
 		fn set_init_max_neg_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propInitMaxNegNum_const_int(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propInitMaxNegNum_int(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
 			ret
 		}
 
 		/// # positive samples to use during training
 		#[inline]
 		fn set_track_max_pos_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackMaxPosNum_const_int(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackMaxPosNum_int(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
 			ret
 		}
 
 		/// # negative samples to use during training
 		#[inline]
 		fn set_track_max_neg_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackMaxNegNum_const_int(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerSamplerCSC_Params_propTrackMaxNegNum_int(self.as_raw_mut_Detail_TrackerSamplerCSC_Params(), val) };
 			ret
 		}
 
@@ -3455,14 +3455,14 @@ pub mod tracking {
 		/// number of selection rounds
 		#[inline]
 		fn set_iteration_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerPF_Params_propIterationNum_const_int(self.as_raw_mut_Detail_TrackerSamplerPF_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerSamplerPF_Params_propIterationNum_int(self.as_raw_mut_Detail_TrackerSamplerPF_Params(), val) };
 			ret
 		}
 
 		/// number of "perturbed" boxes on each round
 		#[inline]
 		fn set_particles_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerPF_Params_propParticlesNum_const_int(self.as_raw_mut_Detail_TrackerSamplerPF_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerSamplerPF_Params_propParticlesNum_int(self.as_raw_mut_Detail_TrackerSamplerPF_Params(), val) };
 			ret
 		}
 
@@ -3470,15 +3470,15 @@ pub mod tracking {
 		/// and this very alpha controls how fast annealing happens, ie. how fast perturbing decreases
 		#[inline]
 		fn set_alpha(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerPF_Params_propAlpha_const_double(self.as_raw_mut_Detail_TrackerSamplerPF_Params(), val) };
+			let ret = unsafe { sys::cv_detail_TrackerSamplerPF_Params_propAlpha_double(self.as_raw_mut_Detail_TrackerSamplerPF_Params(), val) };
 			ret
 		}
 
 		/// initial values for perturbing (1-by-4 array, as each rectangle is given by 4 values -- coordinates of opposite vertices,
 		/// hence we have 4 values to perturb)
 		#[inline]
-		fn set_std(&mut self, val: core::Mat_<f64>) {
-			let ret = unsafe { sys::cv_detail_TrackerSamplerPF_Params_propStd_const_Mat_LdoubleG(self.as_raw_mut_Detail_TrackerSamplerPF_Params(), val.as_raw_Mat_()) };
+		fn set_std(&mut self, mut val: core::Mat_<f64>) {
+			let ret = unsafe { sys::cv_detail_TrackerSamplerPF_Params_propStd_Mat_LdoubleG(self.as_raw_mut_Detail_TrackerSamplerPF_Params(), val.as_raw_mut_Mat_()) };
 			ret
 		}
 
@@ -3508,9 +3508,9 @@ pub mod tracking {
 
 	/// Abstract base class for TrackerStateEstimator that estimates the most likely target state.
 	///
-	/// See [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) State estimator
+	/// See [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) State estimator
 	///
-	/// See [AMVOT](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AMVOT) Statistical modeling (Fig. 3), Table III (generative) - IV (discriminative) - V (hybrid)
+	/// See [AMVOT](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AMVOT) Statistical modeling (Fig. 3), Table III (generative) - IV (discriminative) - V (hybrid)
 	pub struct Detail_TrackerStateEstimator {
 		ptr: *mut c_void,
 	}
@@ -3533,11 +3533,11 @@ pub mod tracking {
 		///
 		/// The modes available now:
 		///
-		/// *   "BOOSTING" -- Boosting-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.4
+		/// *   "BOOSTING" -- Boosting-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.4
 		///
 		/// The modes available soon:
 		///
-		/// *   "SVM" -- SVM-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.5
+		/// *   "SVM" -- SVM-based discriminative appearance models. See [AMVOT](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AMVOT) section 4.5
 		#[inline]
 		pub fn create(tracke_state_estimator_type: &str) -> Result<core::Ptr<crate::tracking::Detail_TrackerStateEstimator>> {
 			extern_container_arg!(tracke_state_estimator_type);
@@ -3961,7 +3961,7 @@ pub mod tracking {
 
 	/// Abstract base class for TrackerTargetState that represents a possible state of the target.
 	///
-	/// See [AAM](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_AAM) ![inline formula](https://latex.codecogs.com/png.latex?%5Chat%7Bx%7D%5E%7Bi%7D%5F%7Bk%7D) all the states candidates.
+	/// See [AAM](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_AAM) ![inline formula](https://latex.codecogs.com/png.latex?%5Chat%7Bx%7D%5E%7Bi%7D%5F%7Bk%7D) all the states candidates.
 	///
 	/// Inherits this class with your Target state, In own implementation you can add scale variation,
 	/// width, height, orientation, etc.
@@ -4265,7 +4265,7 @@ pub mod tracking {
 	///
 	/// The tracker follows the object from frame to frame. The detector localizes all appearances that
 	/// have been observed so far and corrects the tracker if necessary. The learning estimates detector's
-	/// errors and updates it to avoid these errors in the future. The implementation is based on [TLD](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_TLD) .
+	/// errors and updates it to avoid these errors in the future. The implementation is based on [TLD](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_TLD) .
 	///
 	/// The Median Flow algorithm (see cv::TrackerMedianFlow) was chosen as a tracking component in this
 	/// implementation, following authors. The tracker is supposed to be able to handle rapid motions, partial
@@ -4449,28 +4449,28 @@ pub mod tracking {
 		/// Current number of targets in tracking-list
 		#[inline]
 		fn set_target_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_legacy_MultiTracker_Alt_propTargetNum_const_int(self.as_raw_mut_Legacy_MultiTracker_Alt(), val) };
+			let ret = unsafe { sys::cv_legacy_MultiTracker_Alt_propTargetNum_int(self.as_raw_mut_Legacy_MultiTracker_Alt(), val) };
 			ret
 		}
 
 		/// Trackers list for Multi-Object-Tracker
 		#[inline]
-		fn set_trackers(&mut self, val: core::Vector<core::Ptr<crate::tracking::Legacy_Tracker>>) {
-			let ret = unsafe { sys::cv_legacy_MultiTracker_Alt_propTrackers_const_vectorLPtrLTrackerGG(self.as_raw_mut_Legacy_MultiTracker_Alt(), val.as_raw_VectorOfPtrOfLegacy_Tracker()) };
+		fn set_trackers(&mut self, mut val: core::Vector<core::Ptr<crate::tracking::Legacy_Tracker>>) {
+			let ret = unsafe { sys::cv_legacy_MultiTracker_Alt_propTrackers_vectorLPtrLTrackerGG(self.as_raw_mut_Legacy_MultiTracker_Alt(), val.as_raw_mut_VectorOfPtrOfLegacy_Tracker()) };
 			ret
 		}
 
 		/// Bounding Boxes list for Multi-Object-Tracker
 		#[inline]
-		fn set_bounding_boxes(&mut self, val: core::Vector<core::Rect2d>) {
-			let ret = unsafe { sys::cv_legacy_MultiTracker_Alt_propBoundingBoxes_const_vectorLRect2dG(self.as_raw_mut_Legacy_MultiTracker_Alt(), val.as_raw_VectorOfRect2d()) };
+		fn set_bounding_boxes(&mut self, mut val: core::Vector<core::Rect2d>) {
+			let ret = unsafe { sys::cv_legacy_MultiTracker_Alt_propBoundingBoxes_vectorLRect2dG(self.as_raw_mut_Legacy_MultiTracker_Alt(), val.as_raw_mut_VectorOfRect2d()) };
 			ret
 		}
 
 		/// List of randomly generated colors for bounding boxes display
 		#[inline]
-		fn set_colors(&mut self, val: core::Vector<core::Scalar>) {
-			let ret = unsafe { sys::cv_legacy_MultiTracker_Alt_propColors_const_vectorLScalarG(self.as_raw_mut_Legacy_MultiTracker_Alt(), val.as_raw_VectorOfScalar()) };
+		fn set_colors(&mut self, mut val: core::Vector<core::Scalar>) {
+			let ret = unsafe { sys::cv_legacy_MultiTracker_Alt_propColors_vectorLScalarG(self.as_raw_mut_Legacy_MultiTracker_Alt(), val.as_raw_mut_VectorOfScalar()) };
 			ret
 		}
 
@@ -4665,7 +4665,7 @@ pub mod tracking {
 	///
 	/// This is a real-time object tracking based on a novel on-line version of the AdaBoost algorithm.
 	/// The classifier uses the surrounding background as negative examples in update step to avoid the
-	/// drifting problem. The implementation is based on [OLB](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_OLB) .
+	/// drifting problem. The implementation is based on [OLB](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_OLB) .
 	pub struct Legacy_TrackerBoosting {
 		ptr: *mut c_void,
 	}
@@ -4847,35 +4847,35 @@ pub mod tracking {
 		/// the number of classifiers to use in a OnlineBoosting algorithm
 		#[inline]
 		fn set_num_classifiers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_legacy_TrackerBoosting_Params_propNumClassifiers_const_int(self.as_raw_mut_Legacy_TrackerBoosting_Params(), val) };
+			let ret = unsafe { sys::cv_legacy_TrackerBoosting_Params_propNumClassifiers_int(self.as_raw_mut_Legacy_TrackerBoosting_Params(), val) };
 			ret
 		}
 
 		/// search region parameters to use in a OnlineBoosting algorithm
 		#[inline]
 		fn set_sampler_overlap(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_legacy_TrackerBoosting_Params_propSamplerOverlap_const_float(self.as_raw_mut_Legacy_TrackerBoosting_Params(), val) };
+			let ret = unsafe { sys::cv_legacy_TrackerBoosting_Params_propSamplerOverlap_float(self.as_raw_mut_Legacy_TrackerBoosting_Params(), val) };
 			ret
 		}
 
 		/// search region parameters to use in a OnlineBoosting algorithm
 		#[inline]
 		fn set_sampler_search_factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_legacy_TrackerBoosting_Params_propSamplerSearchFactor_const_float(self.as_raw_mut_Legacy_TrackerBoosting_Params(), val) };
+			let ret = unsafe { sys::cv_legacy_TrackerBoosting_Params_propSamplerSearchFactor_float(self.as_raw_mut_Legacy_TrackerBoosting_Params(), val) };
 			ret
 		}
 
 		/// the initial iterations
 		#[inline]
 		fn set_iteration_init(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_legacy_TrackerBoosting_Params_propIterationInit_const_int(self.as_raw_mut_Legacy_TrackerBoosting_Params(), val) };
+			let ret = unsafe { sys::cv_legacy_TrackerBoosting_Params_propIterationInit_int(self.as_raw_mut_Legacy_TrackerBoosting_Params(), val) };
 			ret
 		}
 
 		/// # features
 		#[inline]
 		fn set_feature_set_num_features(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_legacy_TrackerBoosting_Params_propFeatureSetNumFeatures_const_int(self.as_raw_mut_Legacy_TrackerBoosting_Params(), val) };
+			let ret = unsafe { sys::cv_legacy_TrackerBoosting_Params_propFeatureSetNumFeatures_int(self.as_raw_mut_Legacy_TrackerBoosting_Params(), val) };
 			ret
 		}
 
@@ -4917,7 +4917,7 @@ pub mod tracking {
 	/// ********************************* CSRT ***********************************
 	/// the CSRT tracker
 	///
-	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
+	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
 	pub struct Legacy_TrackerCSRT {
 		ptr: *mut c_void,
 	}
@@ -5149,7 +5149,7 @@ pub mod tracking {
 	/// the KCF (Kernelized Correlation Filter) tracker
 	///
 	/// * KCF is a novel tracking framework that utilizes properties of circulant matrix to enhance the processing speed.
-	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
+	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
 	/// * The original paper of KCF is available at <http://www.robots.ox.ac.uk/~joao/publications/henriques_tpami2015.pdf>
 	/// * as well as the matlab implementation. For more information about KCF with color-names features, please refer to
 	/// * <http://www.cvl.isy.liu.se/research/objrec/visualtracking/colvistrack/index.html>.
@@ -5357,7 +5357,7 @@ pub mod tracking {
 	/// background.
 	///
 	/// Multiple Instance Learning avoids the drift problem for a robust tracking. The implementation is
-	/// based on [MIL](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MIL) .
+	/// based on [MIL](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_MIL) .
 	///
 	/// Original code can be found here <http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml>
 	pub struct Legacy_TrackerMIL {
@@ -5539,7 +5539,7 @@ pub mod tracking {
 
 	/// the MOSSE (Minimum Output Sum of Squared %Error) tracker
 	///
-	/// The implementation is based on [MOSSE](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MOSSE) Visual Object Tracking using Adaptive Correlation Filters
+	/// The implementation is based on [MOSSE](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_MOSSE) Visual Object Tracking using Adaptive Correlation Filters
 	///
 	/// Note: this tracker works with grayscale images, if passed bgr ones, they will get converted internally.
 	pub struct Legacy_TrackerMOSSE {
@@ -5627,7 +5627,7 @@ pub mod tracking {
 
 	/// the Median Flow tracker
 	///
-	/// Implementation of a paper [MedianFlow](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MedianFlow) .
+	/// Implementation of a paper [MedianFlow](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_MedianFlow) .
 	///
 	/// The tracker is suitable for very smooth and predictable movements when object is visible throughout
 	/// the whole sequence. It's quite and accurate for this type of problems (in particular, it was shown
@@ -5829,42 +5829,42 @@ pub mod tracking {
 		/// accurateness for speed
 		#[inline]
 		fn set_points_in_grid(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propPointsInGrid_const_int(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), val) };
+			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propPointsInGrid_int(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), val) };
 			ret
 		}
 
 		/// window size parameter for Lucas-Kanade optical flow
 		#[inline]
 		fn set_win_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propWinSize_const_Size(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), &val) };
+			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propWinSize_Size(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), &val) };
 			ret
 		}
 
 		/// maximal pyramid level number for Lucas-Kanade optical flow
 		#[inline]
 		fn set_max_level(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propMaxLevel_const_int(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), val) };
+			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propMaxLevel_int(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), val) };
 			ret
 		}
 
 		/// termination criteria for Lucas-Kanade optical flow
 		#[inline]
 		fn set_term_criteria(&mut self, val: core::TermCriteria) {
-			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propTermCriteria_const_TermCriteria(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), &val) };
+			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propTermCriteria_TermCriteria(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), &val) };
 			ret
 		}
 
 		/// window size around a point for normalized cross-correlation check
 		#[inline]
 		fn set_win_size_ncc(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propWinSizeNCC_const_Size(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), &val) };
+			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propWinSizeNCC_Size(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), &val) };
 			ret
 		}
 
 		/// criterion for loosing the tracked object
 		#[inline]
 		fn set_max_median_length_of_displacement_difference(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propMaxMedianLengthOfDisplacementDifference_const_double(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), val) };
+			let ret = unsafe { sys::cv_legacy_TrackerMedianFlow_Params_propMaxMedianLengthOfDisplacementDifference_double(self.as_raw_mut_Legacy_TrackerMedianFlow_Params(), val) };
 			ret
 		}
 
@@ -5910,7 +5910,7 @@ pub mod tracking {
 	///
 	/// The tracker follows the object from frame to frame. The detector localizes all appearances that
 	/// have been observed so far and corrects the tracker if necessary. The learning estimates detector's
-	/// errors and updates it to avoid these errors in the future. The implementation is based on [TLD](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_TLD) .
+	/// errors and updates it to avoid these errors in the future. The implementation is based on [TLD](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_TLD) .
 	///
 	/// The Median Flow algorithm (see cv::TrackerMedianFlow) was chosen as a tracking component in this
 	/// implementation, following authors. The tracker is supposed to be able to handle rapid motions, partial

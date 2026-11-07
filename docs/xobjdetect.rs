@@ -2,8 +2,8 @@ pub mod xobjdetect {
 	//! # Object Detection
 	//!    # Cascade Classifier for Object Detection
 	//!
-	//!    The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Viola01) and
-	//!    improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
+	//!    The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Viola01) and
+	//!    improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
 	//!
 	//!    First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 	//!    trained with a few hundred sample views of a particular object (i.e., a face or a car), called
@@ -29,7 +29,7 @@ pub mod xobjdetect {
 	//!    classifiers, and are calculated as described below. The current algorithm uses the following
 	//!    Haar-like features:
 	//!
-	//!    ![image](https://docs.opencv.org/5.0.0/haarfeatures.png)
+	//!    ![image](https://docs.opencv.org/5.1.0/haarfeatures.png)
 	//!
 	//!    The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 	//!    the region of interest and the scale (this scale is not the same as the scale used at the detection
@@ -683,8 +683,8 @@ pub mod xobjdetect {
 		}
 
 		#[inline]
-		fn set_cc(&mut self, val: core::Ptr<crate::xobjdetect::BaseCascadeClassifier>) {
-			let ret = unsafe { sys::cv_CascadeClassifier_propCc_const_PtrLBaseCascadeClassifierG(self.as_raw_mut_CascadeClassifier(), val.as_raw_PtrOfBaseCascadeClassifier()) };
+		fn set_cc(&mut self, mut val: core::Ptr<crate::xobjdetect::BaseCascadeClassifier>) {
+			let ret = unsafe { sys::cv_CascadeClassifier_propCc_PtrLBaseCascadeClassifierG(self.as_raw_mut_CascadeClassifier(), val.as_raw_mut_PtrOfBaseCascadeClassifier()) };
 			ret
 		}
 
@@ -1237,19 +1237,19 @@ pub mod xobjdetect {
 
 		#[inline]
 		fn set_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propId_const_int(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propId_int(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_location(&mut self, val: core::Rect) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propLocation_const_Rect(self.as_raw_mut_DetectionBasedTracker_ExtObject(), &val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propLocation_Rect(self.as_raw_mut_DetectionBasedTracker_ExtObject(), &val) };
 			ret
 		}
 
 		#[inline]
 		fn set_status(&mut self, val: crate::xobjdetect::DetectionBasedTracker_ObjectStatus) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propStatus_const_ObjectStatus(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propStatus_ObjectStatus(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
 			ret
 		}
 
@@ -1461,13 +1461,13 @@ pub mod xobjdetect {
 
 		#[inline]
 		fn set_max_track_lifetime(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMaxTrackLifetime_const_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMaxTrackLifetime_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_min_detection_period(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMinDetectionPeriod_const_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMinDetectionPeriod_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
 			ret
 		}
 
@@ -1556,21 +1556,21 @@ pub mod xobjdetect {
 		/// scale(size) of the bounding box
 		#[inline]
 		fn set_scale(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_DetectionROI_propScale_const_double(self.as_raw_mut_DetectionROI(), val) };
+			let ret = unsafe { sys::cv_DetectionROI_propScale_double(self.as_raw_mut_DetectionROI(), val) };
 			ret
 		}
 
 		/// set of requested locations to be evaluated
 		#[inline]
-		fn set_locations(&mut self, val: core::Vector<core::Point>) {
-			let ret = unsafe { sys::cv_DetectionROI_propLocations_const_vectorLPointG(self.as_raw_mut_DetectionROI(), val.as_raw_VectorOfPoint()) };
+		fn set_locations(&mut self, mut val: core::Vector<core::Point>) {
+			let ret = unsafe { sys::cv_DetectionROI_propLocations_vectorLPointG(self.as_raw_mut_DetectionROI(), val.as_raw_mut_VectorOfPoint()) };
 			ret
 		}
 
 		/// vector that will contain confidence values for each location
 		#[inline]
-		fn set_confidences(&mut self, val: core::Vector<f64>) {
-			let ret = unsafe { sys::cv_DetectionROI_propConfidences_const_vectorLdoubleG(self.as_raw_mut_DetectionROI(), val.as_raw_VectorOff64()) };
+		fn set_confidences(&mut self, mut val: core::Vector<f64>) {
+			let ret = unsafe { sys::cv_DetectionROI_propConfidences_vectorLdoubleG(self.as_raw_mut_DetectionROI(), val.as_raw_mut_VectorOff64()) };
 			ret
 		}
 
@@ -1607,7 +1607,7 @@ pub mod xobjdetect {
 
 	/// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 	///
-	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
+	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
 	///
 	/// useful links:
 	///
@@ -2469,105 +2469,105 @@ pub mod xobjdetect {
 		/// Detection window size. Align to block size and block stride. Default value is Size(64,128).
 		#[inline]
 		fn set_win_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propWinSize_const_Size(self.as_raw_mut_HOGDescriptor(), &val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propWinSize_Size(self.as_raw_mut_HOGDescriptor(), &val) };
 			ret
 		}
 
 		/// Block size in pixels. Align to cell size. Default value is Size(16,16).
 		#[inline]
 		fn set_block_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propBlockSize_const_Size(self.as_raw_mut_HOGDescriptor(), &val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propBlockSize_Size(self.as_raw_mut_HOGDescriptor(), &val) };
 			ret
 		}
 
 		/// Block stride. It must be a multiple of cell size. Default value is Size(8,8).
 		#[inline]
 		fn set_block_stride(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propBlockStride_const_Size(self.as_raw_mut_HOGDescriptor(), &val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propBlockStride_Size(self.as_raw_mut_HOGDescriptor(), &val) };
 			ret
 		}
 
 		/// Cell size. Default value is Size(8,8).
 		#[inline]
 		fn set_cell_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propCellSize_const_Size(self.as_raw_mut_HOGDescriptor(), &val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propCellSize_Size(self.as_raw_mut_HOGDescriptor(), &val) };
 			ret
 		}
 
 		/// Number of bins used in the calculation of histogram of gradients. Default value is 9.
 		#[inline]
 		fn set_nbins(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propNbins_const_int(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propNbins_int(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 
 		/// not documented
 		#[inline]
 		fn set_deriv_aperture(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propDerivAperture_const_int(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propDerivAperture_int(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 
 		/// Gaussian smoothing window parameter.
 		#[inline]
 		fn set_win_sigma(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propWinSigma_const_double(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propWinSigma_double(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 
 		/// histogramNormType
 		#[inline]
 		fn set_histogram_norm_type(&mut self, val: crate::xobjdetect::HOGDescriptor_HistogramNormType) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propHistogramNormType_const_HistogramNormType(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propHistogramNormType_HistogramNormType(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 
 		/// L2-Hys normalization method shrinkage.
 		#[inline]
 		fn set_l2_hys_threshold(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propL2HysThreshold_const_double(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propL2HysThreshold_double(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 
 		/// Flag to specify whether the gamma correction preprocessing is required or not.
 		#[inline]
 		fn set_gamma_correction(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propGammaCorrection_const_bool(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propGammaCorrection_bool(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 
 		/// coefficients for the linear SVM classifier.
 		#[inline]
-		fn set_svm_detector(&mut self, val: core::Vector<f32>) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propSvmDetector_const_vectorLfloatG(self.as_raw_mut_HOGDescriptor(), val.as_raw_VectorOff32()) };
+		fn set_svm_detector(&mut self, mut val: core::Vector<f32>) {
+			let ret = unsafe { sys::cv_HOGDescriptor_propSvmDetector_vectorLfloatG(self.as_raw_mut_HOGDescriptor(), val.as_raw_mut_VectorOff32()) };
 			ret
 		}
 
 		/// coefficients for the linear SVM classifier used when OpenCL is enabled
 		#[inline]
-		fn set_ocl_svm_detector(&mut self, val: core::UMat) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propOclSvmDetector_const_UMat(self.as_raw_mut_HOGDescriptor(), val.as_raw_UMat()) };
+		fn set_ocl_svm_detector(&mut self, mut val: core::UMat) {
+			let ret = unsafe { sys::cv_HOGDescriptor_propOclSvmDetector_UMat(self.as_raw_mut_HOGDescriptor(), val.as_raw_mut_UMat()) };
 			ret
 		}
 
 		/// not documented
 		#[inline]
 		fn set_free_coef(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propFree_coef_const_float(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propFree_coef_float(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 
 		/// Maximum number of detection window increases. Default value is 64
 		#[inline]
 		fn set_nlevels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propNlevels_const_int(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propNlevels_int(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 
 		/// Indicates signed gradient will be used or not
 		#[inline]
 		fn set_signed_gradient(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propSignedGradient_const_bool(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propSignedGradient_bool(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 
@@ -2727,7 +2727,7 @@ pub mod xobjdetect {
 
 		#[inline]
 		fn set_eps(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_SimilarRects_propEps_const_double(self.as_raw_mut_SimilarRects(), val) };
+			let ret = unsafe { sys::cv_SimilarRects_propEps_double(self.as_raw_mut_SimilarRects(), val) };
 			ret
 		}
 

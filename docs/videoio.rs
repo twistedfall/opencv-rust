@@ -15,7 +15,7 @@ pub mod videoio {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{IStreamReaderTrait, IStreamReaderTraitConst, VideoCaptureTrait, VideoCaptureTraitConst, VideoWriterTrait, VideoWriterTraitConst};
+		pub use super::{IStreamReaderTrait, IStreamReaderTraitConst, VideoCaptureTrait, VideoCaptureTraitConst, VideoDeviceInfoTrait, VideoDeviceInfoTraitConst, VideoWriterTrait, VideoWriterTraitConst};
 	}
 
 	/// MediaNDK (API Level 21+) and NDK Camera (API level 24+) for Android
@@ -702,9 +702,26 @@ pub mod videoio {
 	/// XINE engine (Linux)
 	pub const CAP_XINE: i32 = 2400;
 	pub const CV__CAP_PROP_LATEST: i32 = 74;
-	pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 16;
-	/// (**open-only**) GStreamer backend only. Pixel format for the encoding profile. Default is "I420". Other values: "NV12", "BGRx". See GStreamer raw video formats for more options.
+	pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 20;
+	pub const VIDEOWRITER_PRESET_FAST: i32 = 4;
+	pub const VIDEOWRITER_PRESET_FASTER: i32 = 3;
+	/// Encoder default.
+	pub const VIDEOWRITER_PRESET_MEDIUM: i32 = 5;
+	/// Slowest encoding, highest compression efficiency.
+	pub const VIDEOWRITER_PRESET_PLACEBO: i32 = 9;
+	pub const VIDEOWRITER_PRESET_SLOW: i32 = 6;
+	pub const VIDEOWRITER_PRESET_SLOWER: i32 = 7;
+	pub const VIDEOWRITER_PRESET_SUPERFAST: i32 = 1;
+	/// Fastest encoding, lowest compression efficiency.
+	pub const VIDEOWRITER_PRESET_ULTRAFAST: i32 = 0;
+	pub const VIDEOWRITER_PRESET_VERYFAST: i32 = 2;
+	pub const VIDEOWRITER_PRESET_VERYSLOW: i32 = 8;
+	/// (**open-only**) Target bitrate of the encoded video stream in bits per second. Ignored when \ref VIDEOWRITER_PROP_CRF is set. VideoWriter::open() fails if the selected encoder does not support it. GStreamer supports `x264enc`, `x265enc`, `vp8enc`, `vp9enc`, `openh264enc`, `vaapih264enc`, `vah264enc`, `svtav1enc` and `avenc_*`, for other encoders set the bitrate in the pipeline string. VideoWriter::get() returns the value passed to open(), or 0 if it was not set. FFmpeg and GStreamer back-ends.
+	pub const VIDEOWRITER_PROP_BITRATE: i32 = 16;
+	/// (**open-only**) Pixel format of the encoded stream as a 4-character code, see VideoWriter::fourcc. GStreamer: raw format the encoder input is restricted to, for example "I420", "NV12" or "BGRx", see GStreamer raw video formats for more options. When not set, the encoder picks its own input format. FFmpeg: uses the same encoding as the read-only \ref CAP_PROP_CODEC_PIXEL_FORMAT, VideoWriter::open() fails if the code is unknown or the selected encoder does not support it, hardware accelerated encoding accepts only "NV12", VideoWriter::get() returns the pixel format in use. FFmpeg and GStreamer back-ends.
 	pub const VIDEOWRITER_PROP_COLOR_SPACE: i32 = 14;
+	/// (**open-only**) Constant Rate Factor, lower values give better quality and larger files. Only supported by encoders exposing a constant-quality control - `crf` for libx264, libx265, libvpx and libaom in FFmpeg; `quantizer` for `x264enc`, `crf` through `option-string` for `x265enc`, and `cq-level` in constant quality mode for `vp8enc`/`vp9enc` in GStreamer. The useful range is codec specific, 0..51 for FFmpeg libx264 and 0..50 for GStreamer `x264enc`. Takes precedence over \ref VIDEOWRITER_PROP_BITRATE. VideoWriter::open() fails if the selected encoder does not support it. VideoWriter::get() returns the value passed to open(), or -1 if it was not set. FFmpeg and GStreamer back-ends.
+	pub const VIDEOWRITER_PROP_CRF: i32 = 17;
 	/// Defaults to \ref CV_8U.
 	pub const VIDEOWRITER_PROP_DEPTH: i32 = 5;
 	/// Specifies the maximum difference between presentation (pts) and decompression timestamps (dts) using the FPS time base. This property is necessary **only** when encapsulating **externally** encoded video where the decoding order differs from the presentation order, such as in GOP patterns with bi-directional B-frames. The value should be calculated based on the specific GOP pattern used during encoding. For example, in a GOP with presentation order IBP and decoding order IPB, this value would be 1, as the B-frame is the second frame presented but the third to be decoded. It can be queried from the resulting encapsulated video file using VideoCapture::get(\ref CAP_PROP_DTS_DELAY). Non-zero values usually imply the stream is encoded using B-frames. FFmpeg back-end only.
@@ -713,6 +730,8 @@ pub mod videoio {
 	pub const VIDEOWRITER_PROP_ENABLE_ALPHA: i32 = 15;
 	/// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
 	pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
+	/// (**open-only**) Group Of Pictures size, i.e. the maximum interval between key frames. VideoWriter::open() fails if the selected encoder does not support it. VideoWriter::get() returns the value passed to open(), or 0 if it was not set. FFmpeg and GStreamer back-ends.
+	pub const VIDEOWRITER_PROP_GOP_SIZE: i32 = 19;
 	/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in VideoWriter constructor / .open() method. Default value is backend-specific.
 	pub const VIDEOWRITER_PROP_HW_ACCELERATION: i32 = 6;
 	/// (**open-only**) If non-zero, create new OpenCL context and bind it to current thread. The OpenCL context created with Video Acceleration context attached it (if not attached yet) for optimized GPU data copy between cv::UMat and HW accelerated encoder.
@@ -728,6 +747,8 @@ pub mod videoio {
 	pub const VIDEOWRITER_PROP_KEY_INTERVAL: i32 = 10;
 	/// Number of stripes for parallel encoding. -1 for auto detection.
 	pub const VIDEOWRITER_PROP_NSTRIPES: i32 = 3;
+	/// (**open-only**) Encoding speed/compression trade-off, one of #VideoWriterPresets. Only supported by encoders exposing a preset control (libx264 and libx265, or the `x264enc`/`x265enc` GStreamer elements). VideoWriter::open() fails if the selected encoder does not support it, or if the value is not a valid #VideoWriterPresets. VideoWriter::get() returns the value passed to open(), or -1 if it was not set. FFmpeg and GStreamer back-ends.
+	pub const VIDEOWRITER_PROP_PRESET: i32 = 18;
 	/// Specifies the frame presentation timestamp for each frame using the FPS time base. This property is **only** necessary when encapsulating **externally** encoded video where the decoding order differs from the presentation order, such as in GOP patterns with bi-directional B-frames. The value should be provided by your external encoder and for video sources with fixed frame rates it is equivalent to dividing the current frame's presentation time (\ref CAP_PROP_POS_MSEC) by the frame duration (1000.0 / VideoCapture::get(\ref CAP_PROP_FPS)). It can be queried from the resulting encapsulated video file using VideoCapture::get(\ref CAP_PROP_PTS). FFmpeg back-end only.
 	pub const VIDEOWRITER_PROP_PTS: i32 = 12;
 	/// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
@@ -1069,6 +1090,30 @@ pub mod videoio {
 
 	opencv_type_enum! { crate::videoio::VideoCaptureProperties { CAP_PROP_UNKNOWN, CAP_PROP_POS_MSEC, CAP_PROP_POS_FRAMES, CAP_PROP_POS_AVI_RATIO, CAP_PROP_FRAME_WIDTH, CAP_PROP_FRAME_HEIGHT, CAP_PROP_FPS, CAP_PROP_FOURCC, CAP_PROP_FRAME_COUNT, CAP_PROP_FORMAT, CAP_PROP_MODE, CAP_PROP_BRIGHTNESS, CAP_PROP_CONTRAST, CAP_PROP_SATURATION, CAP_PROP_HUE, CAP_PROP_GAIN, CAP_PROP_EXPOSURE, CAP_PROP_CONVERT_RGB, CAP_PROP_WHITE_BALANCE_BLUE_U, CAP_PROP_RECTIFICATION, CAP_PROP_MONOCHROME, CAP_PROP_SHARPNESS, CAP_PROP_AUTO_EXPOSURE, CAP_PROP_GAMMA, CAP_PROP_TEMPERATURE, CAP_PROP_TRIGGER, CAP_PROP_TRIGGER_DELAY, CAP_PROP_WHITE_BALANCE_RED_V, CAP_PROP_ZOOM, CAP_PROP_FOCUS, CAP_PROP_GUID, CAP_PROP_ISO_SPEED, CAP_PROP_BACKLIGHT, CAP_PROP_PAN, CAP_PROP_TILT, CAP_PROP_ROLL, CAP_PROP_IRIS, CAP_PROP_SETTINGS, CAP_PROP_BUFFERSIZE, CAP_PROP_AUTOFOCUS, CAP_PROP_SAR_NUM, CAP_PROP_SAR_DEN, CAP_PROP_BACKEND, CAP_PROP_CHANNEL, CAP_PROP_AUTO_WB, CAP_PROP_WB_TEMPERATURE, CAP_PROP_CODEC_PIXEL_FORMAT, CAP_PROP_BITRATE, CAP_PROP_ORIENTATION_META, CAP_PROP_ORIENTATION_AUTO, CAP_PROP_HW_ACCELERATION, CAP_PROP_HW_DEVICE, CAP_PROP_HW_ACCELERATION_USE_OPENCL, CAP_PROP_OPEN_TIMEOUT_MSEC, CAP_PROP_READ_TIMEOUT_MSEC, CAP_PROP_STREAM_OPEN_TIME_USEC, CAP_PROP_VIDEO_TOTAL_CHANNELS, CAP_PROP_VIDEO_STREAM, CAP_PROP_AUDIO_STREAM, CAP_PROP_AUDIO_POS, CAP_PROP_AUDIO_SHIFT_NSEC, CAP_PROP_AUDIO_DATA_DEPTH, CAP_PROP_AUDIO_SAMPLES_PER_SECOND, CAP_PROP_AUDIO_BASE_INDEX, CAP_PROP_AUDIO_TOTAL_CHANNELS, CAP_PROP_AUDIO_TOTAL_STREAMS, CAP_PROP_AUDIO_SYNCHRONIZE, CAP_PROP_LRF_HAS_KEY_FRAME, CAP_PROP_CODEC_EXTRADATA_INDEX, CAP_PROP_FRAME_TYPE, CAP_PROP_N_THREADS, CAP_PROP_PTS, CAP_PROP_DTS_DELAY, CAP_PROP_IMAGE_SEQ_START, CV__CAP_PROP_LATEST } }
 
+	/// cv::VideoWriter encoder presets for \ref cv::VIDEOWRITER_PROP_PRESET.
+	///
+	/// Ordered from fastest encoding / lowest compression to slowest / highest. Names match the
+	/// preset system used by libx264 and libx265.
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum VideoWriterPresets {
+		/// Fastest encoding, lowest compression efficiency.
+		VIDEOWRITER_PRESET_ULTRAFAST = 0,
+		VIDEOWRITER_PRESET_SUPERFAST = 1,
+		VIDEOWRITER_PRESET_VERYFAST = 2,
+		VIDEOWRITER_PRESET_FASTER = 3,
+		VIDEOWRITER_PRESET_FAST = 4,
+		/// Encoder default.
+		VIDEOWRITER_PRESET_MEDIUM = 5,
+		VIDEOWRITER_PRESET_SLOW = 6,
+		VIDEOWRITER_PRESET_SLOWER = 7,
+		VIDEOWRITER_PRESET_VERYSLOW = 8,
+		/// Slowest encoding, highest compression efficiency.
+		VIDEOWRITER_PRESET_PLACEBO = 9,
+	}
+
+	opencv_type_enum! { crate::videoio::VideoWriterPresets { VIDEOWRITER_PRESET_ULTRAFAST, VIDEOWRITER_PRESET_SUPERFAST, VIDEOWRITER_PRESET_VERYFAST, VIDEOWRITER_PRESET_FASTER, VIDEOWRITER_PRESET_FAST, VIDEOWRITER_PRESET_MEDIUM, VIDEOWRITER_PRESET_SLOW, VIDEOWRITER_PRESET_SLOWER, VIDEOWRITER_PRESET_VERYSLOW, VIDEOWRITER_PRESET_PLACEBO } }
+
 	/// cv::VideoWriter generic properties identifier.
 	/// ## See also
 	/// VideoWriter::get(), VideoWriter::set()
@@ -1104,14 +1149,73 @@ pub mod videoio {
 		VIDEOWRITER_PROP_PTS = 12,
 		/// Specifies the maximum difference between presentation (pts) and decompression timestamps (dts) using the FPS time base. This property is necessary **only** when encapsulating **externally** encoded video where the decoding order differs from the presentation order, such as in GOP patterns with bi-directional B-frames. The value should be calculated based on the specific GOP pattern used during encoding. For example, in a GOP with presentation order IBP and decoding order IPB, this value would be 1, as the B-frame is the second frame presented but the third to be decoded. It can be queried from the resulting encapsulated video file using VideoCapture::get(\ref CAP_PROP_DTS_DELAY). Non-zero values usually imply the stream is encoded using B-frames. FFmpeg back-end only.
 		VIDEOWRITER_PROP_DTS_DELAY = 13,
-		/// (**open-only**) GStreamer backend only. Pixel format for the encoding profile. Default is "I420". Other values: "NV12", "BGRx". See GStreamer raw video formats for more options.
+		/// (**open-only**) Pixel format of the encoded stream as a 4-character code, see VideoWriter::fourcc. GStreamer: raw format the encoder input is restricted to, for example "I420", "NV12" or "BGRx", see GStreamer raw video formats for more options. When not set, the encoder picks its own input format. FFmpeg: uses the same encoding as the read-only \ref CAP_PROP_CODEC_PIXEL_FORMAT, VideoWriter::open() fails if the code is unknown or the selected encoder does not support it, hardware accelerated encoding accepts only "NV12", VideoWriter::get() returns the pixel format in use. FFmpeg and GStreamer back-ends.
 		VIDEOWRITER_PROP_COLOR_SPACE = 14,
 		/// (**open-only**) FFmpeg backend only. Defines that input frames contain alpha channel.
 		VIDEOWRITER_PROP_ENABLE_ALPHA = 15,
-		CV__VIDEOWRITER_PROP_LATEST = 16,
+		/// (**open-only**) Target bitrate of the encoded video stream in bits per second. Ignored when \ref VIDEOWRITER_PROP_CRF is set. VideoWriter::open() fails if the selected encoder does not support it. GStreamer supports `x264enc`, `x265enc`, `vp8enc`, `vp9enc`, `openh264enc`, `vaapih264enc`, `vah264enc`, `svtav1enc` and `avenc_*`, for other encoders set the bitrate in the pipeline string. VideoWriter::get() returns the value passed to open(), or 0 if it was not set. FFmpeg and GStreamer back-ends.
+		VIDEOWRITER_PROP_BITRATE = 16,
+		/// (**open-only**) Constant Rate Factor, lower values give better quality and larger files. Only supported by encoders exposing a constant-quality control - `crf` for libx264, libx265, libvpx and libaom in FFmpeg; `quantizer` for `x264enc`, `crf` through `option-string` for `x265enc`, and `cq-level` in constant quality mode for `vp8enc`/`vp9enc` in GStreamer. The useful range is codec specific, 0..51 for FFmpeg libx264 and 0..50 for GStreamer `x264enc`. Takes precedence over \ref VIDEOWRITER_PROP_BITRATE. VideoWriter::open() fails if the selected encoder does not support it. VideoWriter::get() returns the value passed to open(), or -1 if it was not set. FFmpeg and GStreamer back-ends.
+		VIDEOWRITER_PROP_CRF = 17,
+		/// (**open-only**) Encoding speed/compression trade-off, one of #VideoWriterPresets. Only supported by encoders exposing a preset control (libx264 and libx265, or the `x264enc`/`x265enc` GStreamer elements). VideoWriter::open() fails if the selected encoder does not support it, or if the value is not a valid #VideoWriterPresets. VideoWriter::get() returns the value passed to open(), or -1 if it was not set. FFmpeg and GStreamer back-ends.
+		VIDEOWRITER_PROP_PRESET = 18,
+		/// (**open-only**) Group Of Pictures size, i.e. the maximum interval between key frames. VideoWriter::open() fails if the selected encoder does not support it. VideoWriter::get() returns the value passed to open(), or 0 if it was not set. FFmpeg and GStreamer back-ends.
+		VIDEOWRITER_PROP_GOP_SIZE = 19,
+		CV__VIDEOWRITER_PROP_LATEST = 20,
 	}
 
-	opencv_type_enum! { crate::videoio::VideoWriterProperties { VIDEOWRITER_PROP_UNKNOWN, VIDEOWRITER_PROP_QUALITY, VIDEOWRITER_PROP_FRAMEBYTES, VIDEOWRITER_PROP_NSTRIPES, VIDEOWRITER_PROP_IS_COLOR, VIDEOWRITER_PROP_DEPTH, VIDEOWRITER_PROP_HW_ACCELERATION, VIDEOWRITER_PROP_HW_DEVICE, VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL, VIDEOWRITER_PROP_RAW_VIDEO, VIDEOWRITER_PROP_KEY_INTERVAL, VIDEOWRITER_PROP_KEY_FLAG, VIDEOWRITER_PROP_PTS, VIDEOWRITER_PROP_DTS_DELAY, VIDEOWRITER_PROP_COLOR_SPACE, VIDEOWRITER_PROP_ENABLE_ALPHA, CV__VIDEOWRITER_PROP_LATEST } }
+	opencv_type_enum! { crate::videoio::VideoWriterProperties { VIDEOWRITER_PROP_UNKNOWN, VIDEOWRITER_PROP_QUALITY, VIDEOWRITER_PROP_FRAMEBYTES, VIDEOWRITER_PROP_NSTRIPES, VIDEOWRITER_PROP_IS_COLOR, VIDEOWRITER_PROP_DEPTH, VIDEOWRITER_PROP_HW_ACCELERATION, VIDEOWRITER_PROP_HW_DEVICE, VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL, VIDEOWRITER_PROP_RAW_VIDEO, VIDEOWRITER_PROP_KEY_INTERVAL, VIDEOWRITER_PROP_KEY_FLAG, VIDEOWRITER_PROP_PTS, VIDEOWRITER_PROP_DTS_DELAY, VIDEOWRITER_PROP_COLOR_SPACE, VIDEOWRITER_PROP_ENABLE_ALPHA, VIDEOWRITER_PROP_BITRATE, VIDEOWRITER_PROP_CRF, VIDEOWRITER_PROP_PRESET, VIDEOWRITER_PROP_GOP_SIZE, CV__VIDEOWRITER_PROP_LATEST } }
+
+	/// Returns list of camera devices available via `cv::VideoCapture(int index, int apiPreference)`
+	///
+	/// Devices are returned in backend priority order. With [CAP_ANY] the same physical camera may be
+	/// reported by more than one backend; use VideoDeviceInfo::backend to tell those entries apart.
+	///
+	/// Only the built-in #CAP_V4L2, #CAP_MSMF, #CAP_DSHOW, [CAP_AVFOUNDATION] and [CAP_ARAVIS] backends,
+	/// and plugins implementing the API-v3 `Capture_enumerate_devices` callback, can list devices. Other
+	/// built-in backends, older plugins, and plugins without that callback report nothing, even when
+	/// `cv::VideoCapture(index, apiPreference)` can open a camera through them.
+	///
+	/// ## Parameters
+	/// * apiPreference: backend to query (#VideoCaptureAPIs), or [CAP_ANY] for all camera backends
+	///
+	/// ## Note
+	/// This alternative version of [enumerate_devices] function uses the following default values for its arguments:
+	/// * api_preference: CAP_ANY
+	#[inline]
+	pub fn enumerate_devices_def() -> Result<core::Vector<crate::videoio::VideoDeviceInfo>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_videoio_registry_enumerateDevices(ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<crate::videoio::VideoDeviceInfo>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Returns list of camera devices available via `cv::VideoCapture(int index, int apiPreference)`
+	///
+	/// Devices are returned in backend priority order. With [CAP_ANY] the same physical camera may be
+	/// reported by more than one backend; use VideoDeviceInfo::backend to tell those entries apart.
+	///
+	/// Only the built-in #CAP_V4L2, #CAP_MSMF, #CAP_DSHOW, [CAP_AVFOUNDATION] and [CAP_ARAVIS] backends,
+	/// and plugins implementing the API-v3 `Capture_enumerate_devices` callback, can list devices. Other
+	/// built-in backends, older plugins, and plugins without that callback report nothing, even when
+	/// `cv::VideoCapture(index, apiPreference)` can open a camera through them.
+	///
+	/// ## Parameters
+	/// * apiPreference: backend to query (#VideoCaptureAPIs), or [CAP_ANY] for all camera backends
+	///
+	/// ## C++ default parameters
+	/// * api_preference: CAP_ANY
+	#[inline]
+	pub fn enumerate_devices(api_preference: crate::videoio::VideoCaptureAPIs) -> Result<core::Vector<crate::videoio::VideoDeviceInfo>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_videoio_registry_enumerateDevices_VideoCaptureAPIs(api_preference, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<crate::videoio::VideoDeviceInfo>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
 
 	/// Returns backend API name or "UnknownVideoAPI(xxx)"
 	/// ## Parameters
@@ -1992,6 +2096,125 @@ pub mod videoio {
 	}
 
 	boxed_ref! { VideoCapture, crate::videoio::VideoCaptureTraitConst, as_raw_VideoCapture, crate::videoio::VideoCaptureTrait, as_raw_mut_VideoCapture }
+
+	/// Camera device reported by a videoio backend
+	pub struct VideoDeviceInfo {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { VideoDeviceInfo }
+
+	impl Drop for VideoDeviceInfo {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_VideoDeviceInfo_delete(self.as_raw_mut_VideoDeviceInfo()) };
+		}
+	}
+
+	unsafe impl Send for VideoDeviceInfo {}
+
+	impl VideoDeviceInfo {
+		#[inline]
+		pub fn default() -> Result<crate::videoio::VideoDeviceInfo> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_VideoDeviceInfo_VideoDeviceInfo(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videoio::VideoDeviceInfo::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::videoio::VideoDeviceInfo]
+	pub trait VideoDeviceInfoTraitConst {
+		fn as_raw_VideoDeviceInfo(&self) -> *const c_void;
+
+		/// Index to pass to cv::VideoCapture together with VideoDeviceInfo::backend to open this device.
+		/// Under #CAP_ANY, an index of 100 or more is reinterpreted as a backend selector (see cv::VideoCapture::open),
+		/// so cam_idx alone does not reliably identify the device.
+		#[inline]
+		fn cam_idx(&self) -> i32 {
+			let ret = unsafe { sys::cv_VideoDeviceInfo_propCam_idx_const(self.as_raw_VideoDeviceInfo()) };
+			ret
+		}
+
+		/// Device name reported by the backend, or "cam: <index>" if unavailable
+		#[inline]
+		fn cam_name(&self) -> String {
+			let ret = unsafe { sys::cv_VideoDeviceInfo_propCam_name_const(self.as_raw_VideoDeviceInfo()) };
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// Backend that reported this device
+		#[inline]
+		fn backend(&self) -> crate::videoio::VideoCaptureAPIs {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_VideoDeviceInfo_propBackend_const(self.as_raw_VideoDeviceInfo(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			ret
+		}
+
+	}
+
+	/// Mutable methods for [crate::videoio::VideoDeviceInfo]
+	pub trait VideoDeviceInfoTrait: crate::videoio::VideoDeviceInfoTraitConst {
+		fn as_raw_mut_VideoDeviceInfo(&mut self) -> *mut c_void;
+
+		/// Index to pass to cv::VideoCapture together with VideoDeviceInfo::backend to open this device.
+		/// Under #CAP_ANY, an index of 100 or more is reinterpreted as a backend selector (see cv::VideoCapture::open),
+		/// so cam_idx alone does not reliably identify the device.
+		#[inline]
+		fn set_cam_idx(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_VideoDeviceInfo_propCam_idx_int(self.as_raw_mut_VideoDeviceInfo(), val) };
+			ret
+		}
+
+		/// Device name reported by the backend, or "cam: <index>" if unavailable
+		#[inline]
+		fn set_cam_name(&mut self, val: &str) {
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_VideoDeviceInfo_propCam_name_string(self.as_raw_mut_VideoDeviceInfo(), val.opencv_as_extern()) };
+			ret
+		}
+
+		/// Backend that reported this device
+		#[inline]
+		fn set_backend(&mut self, val: crate::videoio::VideoCaptureAPIs) {
+			let ret = unsafe { sys::cv_VideoDeviceInfo_propBackend_VideoCaptureAPIs(self.as_raw_mut_VideoDeviceInfo(), val) };
+			ret
+		}
+
+	}
+
+	impl Clone for VideoDeviceInfo {
+		#[inline]
+		fn clone(&self) -> Self {
+			unsafe { Self::from_raw(sys::cv_VideoDeviceInfo_implicitClone_const(self.as_raw_VideoDeviceInfo())) }
+		}
+	}
+
+	impl fmt::Debug for VideoDeviceInfo {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("VideoDeviceInfo")
+				.field("cam_idx", &crate::videoio::VideoDeviceInfoTraitConst::cam_idx(self))
+				.field("cam_name", &crate::videoio::VideoDeviceInfoTraitConst::cam_name(self))
+				.field("backend", &crate::videoio::VideoDeviceInfoTraitConst::backend(self))
+				.finish()
+		}
+	}
+
+	impl crate::videoio::VideoDeviceInfoTraitConst for VideoDeviceInfo {
+		#[inline] fn as_raw_VideoDeviceInfo(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::videoio::VideoDeviceInfoTrait for VideoDeviceInfo {
+		#[inline] fn as_raw_mut_VideoDeviceInfo(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { VideoDeviceInfo, crate::videoio::VideoDeviceInfoTraitConst, as_raw_VideoDeviceInfo, crate::videoio::VideoDeviceInfoTrait, as_raw_mut_VideoDeviceInfo }
 
 	/// Video writer class.
 	///

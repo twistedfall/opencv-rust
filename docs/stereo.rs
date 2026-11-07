@@ -325,7 +325,7 @@ pub mod stereo {
 	/// cameras and their relative position in the space, which explains the suffix "uncalibrated". Another
 	/// related difference from [stereo_rectify] is that the function outputs not the rectification
 	/// transformations in the object (3D) space, but the planar perspective transformations encoded by the
-	/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Hartley99) .
+	/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Hartley99) .
 	///
 	///
 	/// Note:
@@ -373,7 +373,7 @@ pub mod stereo {
 	/// cameras and their relative position in the space, which explains the suffix "uncalibrated". Another
 	/// related difference from [stereo_rectify] is that the function outputs not the rectification
 	/// transformations in the object (3D) space, but the planar perspective transformations encoded by the
-	/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Hartley99) .
+	/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Hartley99) .
 	///
 	///
 	/// Note:
@@ -492,7 +492,7 @@ pub mod stereo {
 	/// stereo correspondence algorithms rely on. The green rectangles are roi1 and roi2 . You see that
 	/// their interiors are all valid pixels.
 	///
-	/// ![image](https://docs.opencv.org/5.0.0/stereo_undistort.jpg)
+	/// ![image](https://docs.opencv.org/5.1.0/stereo_undistort.jpg)
 	///
 	/// ## Note
 	/// This alternative version of [stereo_rectify] function uses the following default values for its arguments:
@@ -613,7 +613,7 @@ pub mod stereo {
 	/// stereo correspondence algorithms rely on. The green rectangles are roi1 and roi2 . You see that
 	/// their interiors are all valid pixels.
 	///
-	/// ![image](https://docs.opencv.org/5.0.0/stereo_undistort.jpg)
+	/// ![image](https://docs.opencv.org/5.1.0/stereo_undistort.jpg)
 	///
 	/// ## C++ default parameters
 	/// * flags: STEREO_ZERO_DISPARITY
@@ -1135,7 +1135,7 @@ pub mod stereo {
 
 	boxed_ref! { StereoMatcher, crate::stereo::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::stereo::StereoMatcherTrait, as_raw_mut_StereoMatcher }
 
-	/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
+	/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
 	/// one as follows:
 	///
 	/// *   By default, the algorithm is single-pass, which means that you consider only 5 directions
@@ -1144,7 +1144,7 @@ pub mod stereo {
 	/// *   The algorithm matches blocks, not individual pixels. Though, setting blockSize=1 reduces the
 	/// blocks to single pixels.
 	/// *   Mutual information cost function is not implemented. Instead, a simpler Birchfield-Tomasi
-	/// sub-pixel metric from [BT98](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BT98) is used. Though, the color images are supported as well.
+	/// sub-pixel metric from [BT98](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_BT98) is used. Though, the color images are supported as well.
 	/// *   Some pre- and post- processing steps from K. Konolige algorithm StereoBM are included, for
 	/// example: pre-filtering (StereoBM::PREFILTER_XSOBEL type) and post-filtering (uniqueness
 	/// check, quadratic interpolation and speckle filtering).

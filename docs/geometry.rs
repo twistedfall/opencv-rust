@@ -1,5 +1,11 @@
 pub mod geometry {
 	//! # Computational geometry primitives module.
+	//!
+	//! Coordinate geometry: 2D shape analysis and fitting, planar subdivision,
+	//! multi-view 3D vision, and point-cloud sampling and segmentation.
+	//!    #    Shape analysis and fitting
+	//!    # Planar subdivision
+	//!    #               Point-cloud sampling and segmentation
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
@@ -57,7 +63,7 @@ pub mod geometry {
 	pub const RANSAC: i32 = 8;
 	/// RHO algorithm
 	pub const RHO: i32 = 16;
-	/// The RANSAC algorithm described in [fischler1981random](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_fischler1981random).
+	/// The RANSAC algorithm described in [fischler1981random](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_fischler1981random).
 	pub const SAC_METHOD_RANSAC: i32 = 0;
 	/// The 3D PLANE model coefficients in list **[a, b, c, d]**,
 	/// corresponding to the coefficients of equation
@@ -75,15 +81,15 @@ pub mod geometry {
 	pub const SCORE_METHOD_MAGSAC: i32 = 2;
 	pub const SCORE_METHOD_MSAC: i32 = 1;
 	pub const SCORE_METHOD_RANSAC: i32 = 0;
-	/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Ke17)
+	/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Ke17)
 	pub const SOLVEPNP_AP3P: i32 = 3;
-	/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
+	/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
 	pub const SOLVEPNP_EPNP: i32 = 1;
-	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Collins14) 
+	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Collins14) 
 	///
 	/// Object points must be coplanar.
 	pub const SOLVEPNP_IPPE: i32 = 4;
-	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Collins14) 
+	/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Collins14) 
 	///
 	/// This is a special case suitable for marker pose estimation.
 	///
@@ -93,7 +99,7 @@ pub mod geometry {
 	///   - point 2: [ squareLength / 2, -squareLength / 2, 0]
 	///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
 	pub const SOLVEPNP_IPPE_SQUARE: i32 = 5;
-	/// Pose refinement using non-linear Levenberg-Marquardt minimization scheme [Madsen04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Eade13) 
+	/// Pose refinement using non-linear Levenberg-Marquardt minimization scheme [Madsen04](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Eade13) 
 	///
 	/// Initial solution for non-planar "objectPoints" needs at least 6 points and uses the DLT algorithm. 
 	///
@@ -101,9 +107,9 @@ pub mod geometry {
 	pub const SOLVEPNP_ITERATIVE: i32 = 0;
 	/// Used for count
 	pub const SOLVEPNP_MAX_COUNT: i32 = 7;
-	/// Revisiting the P3P Problem [ding2023revisiting](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ding2023revisiting)
+	/// Revisiting the P3P Problem [ding2023revisiting](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_ding2023revisiting)
 	pub const SOLVEPNP_P3P: i32 = 2;
-	/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis2020SQPnP](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Terzakis2020SQPnP)
+	/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis2020SQPnP](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Terzakis2020SQPnP)
 	pub const SOLVEPNP_SQPNP: i32 = 6;
 	pub const Subdiv2D_NEXT_AROUND_DST: i32 = 34;
 	pub const Subdiv2D_NEXT_AROUND_LEFT: i32 = 19;
@@ -232,7 +238,7 @@ pub mod geometry {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SacMethod {
-		/// The RANSAC algorithm described in [fischler1981random](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_fischler1981random).
+		/// The RANSAC algorithm described in [fischler1981random](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_fischler1981random).
 		SAC_METHOD_RANSAC = 0,
 	}
 
@@ -278,23 +284,23 @@ pub mod geometry {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SolvePnPMethod {
-		/// Pose refinement using non-linear Levenberg-Marquardt minimization scheme [Madsen04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Eade13) 
+		/// Pose refinement using non-linear Levenberg-Marquardt minimization scheme [Madsen04](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Eade13) 
 		///
 		/// Initial solution for non-planar "objectPoints" needs at least 6 points and uses the DLT algorithm. 
 		///
 		/// Initial solution for planar "objectPoints" needs at least 4 points and uses pose from homography decomposition.
 		SOLVEPNP_ITERATIVE = 0,
-		/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
+		/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
 		SOLVEPNP_EPNP = 1,
-		/// Revisiting the P3P Problem [ding2023revisiting](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ding2023revisiting)
+		/// Revisiting the P3P Problem [ding2023revisiting](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_ding2023revisiting)
 		SOLVEPNP_P3P = 2,
-		/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Ke17)
+		/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Ke17)
 		SOLVEPNP_AP3P = 3,
-		/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Collins14) 
+		/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Collins14) 
 		///
 		/// Object points must be coplanar.
 		SOLVEPNP_IPPE = 4,
-		/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Collins14) 
+		/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Collins14) 
 		///
 		/// This is a special case suitable for marker pose estimation.
 		///
@@ -304,7 +310,7 @@ pub mod geometry {
 		///   - point 2: [ squareLength / 2, -squareLength / 2, 0]
 		///   - point 3: [-squareLength / 2, -squareLength / 2, 0]
 		SOLVEPNP_IPPE_SQUARE = 5,
-		/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis2020SQPnP](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Terzakis2020SQPnP)
+		/// SQPnP: A Consistently Fast and Globally OptimalSolution to the Perspective-n-Point Problem [Terzakis2020SQPnP](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Terzakis2020SQPnP)
 		SOLVEPNP_SQPNP = 6,
 		/// Used for count
 		SOLVEPNP_MAX_COUNT = 7,
@@ -329,7 +335,7 @@ pub mod geometry {
 
 	/// Calculates seven Hu invariants.
 	///
-	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Hu62); see also
+	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Hu62); see also
 	/// <https://en.wikipedia.org/wiki/Image_moment>) defined as:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20hu%5B0%5D%3D%20%5Ceta%20%5F%7B20%7D%2B%20%5Ceta%20%5F%7B02%7D%20%5C%5C%20hu%5B1%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5E%7B2%7D%2B4%20%5Ceta%20%5F%7B11%7D%5E%7B2%7D%20%5C%5C%20hu%5B2%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B3%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B4%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D3%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20hu%5B5%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B4%20%5Ceta%20%5F%7B11%7D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%20%5C%5C%20hu%5B6%5D%3D%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20%5Cend%7Barray%7D)
@@ -360,7 +366,7 @@ pub mod geometry {
 
 	/// Calculates seven Hu invariants.
 	///
-	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Hu62); see also
+	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Hu62); see also
 	/// <https://en.wikipedia.org/wiki/Image_moment>) defined as:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20hu%5B0%5D%3D%20%5Ceta%20%5F%7B20%7D%2B%20%5Ceta%20%5F%7B02%7D%20%5C%5C%20hu%5B1%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5E%7B2%7D%2B4%20%5Ceta%20%5F%7B11%7D%5E%7B2%7D%20%5C%5C%20hu%5B2%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B3%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B4%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D3%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20hu%5B5%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B4%20%5Ceta%20%5F%7B11%7D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%20%5C%5C%20hu%5B6%5D%3D%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20%5Cend%7Barray%7D)
@@ -403,7 +409,7 @@ pub mod geometry {
 	/// It optionally returns three rotation matrices, one for each axis, and the three Euler angles in
 	/// degrees (as the return value) that could be used in OpenGL. Note, there is always more than one
 	/// sequence of rotations about the three principal axes that results in the same orientation of an
-	/// object, e.g. see [Slabaugh](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned three rotation matrices and corresponding three Euler angles
+	/// object, e.g. see [Slabaugh](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned three rotation matrices and corresponding three Euler angles
 	/// are only one of the possible solutions.
 	///
 	/// ## Note
@@ -440,7 +446,7 @@ pub mod geometry {
 	/// It optionally returns three rotation matrices, one for each axis, and the three Euler angles in
 	/// degrees (as the return value) that could be used in OpenGL. Note, there is always more than one
 	/// sequence of rotations about the three principal axes that results in the same orientation of an
-	/// object, e.g. see [Slabaugh](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned three rotation matrices and corresponding three Euler angles
+	/// object, e.g. see [Slabaugh](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned three rotation matrices and corresponding three Euler angles
 	/// are only one of the possible solutions.
 	///
 	/// ## C++ default parameters
@@ -483,13 +489,13 @@ pub mod geometry {
 	///
 	/// Note: More information about the computation of the derivative of a 3D rotation matrix with respect to its exponential coordinate
 	/// can be found in:
-	///    - A Compact Formula for the Derivative of a 3-D Rotation in Exponential Coordinates, Guillermo Gallego, Anthony J. Yezzi [Gallego2014ACF](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Gallego2014ACF)
+	///    - A Compact Formula for the Derivative of a 3-D Rotation in Exponential Coordinates, Guillermo Gallego, Anthony J. Yezzi [Gallego2014ACF](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Gallego2014ACF)
 	///
 	///
 	/// Note: Useful information on SE(3) and Lie Groups can be found in:
-	///    - A tutorial on SE(3) transformation parameterizations and on-manifold optimization, Jose-Luis Blanco [blanco2010tutorial](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_blanco2010tutorial)
-	///    - Lie Groups for 2D and 3D Transformation, Ethan Eade [Eade17](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Eade17)
-	///    - A micro Lie theory for state estimation in robotics, Joan Solà, Jérémie Deray, Dinesh Atchuthan [Sol2018AML](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Sol2018AML)
+	///    - A tutorial on SE(3) transformation parameterizations and on-manifold optimization, Jose-Luis Blanco [blanco2010tutorial](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_blanco2010tutorial)
+	///    - Lie Groups for 2D and 3D Transformation, Ethan Eade [Eade17](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Eade17)
+	///    - A micro Lie theory for state estimation in robotics, Joan Solà, Jérémie Deray, Dinesh Atchuthan [Sol2018AML](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Sol2018AML)
 	///
 	/// ## Note
 	/// This alternative version of [rodrigues] function uses the following default values for its arguments:
@@ -526,13 +532,13 @@ pub mod geometry {
 	///
 	/// Note: More information about the computation of the derivative of a 3D rotation matrix with respect to its exponential coordinate
 	/// can be found in:
-	///    - A Compact Formula for the Derivative of a 3-D Rotation in Exponential Coordinates, Guillermo Gallego, Anthony J. Yezzi [Gallego2014ACF](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Gallego2014ACF)
+	///    - A Compact Formula for the Derivative of a 3-D Rotation in Exponential Coordinates, Guillermo Gallego, Anthony J. Yezzi [Gallego2014ACF](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Gallego2014ACF)
 	///
 	///
 	/// Note: Useful information on SE(3) and Lie Groups can be found in:
-	///    - A tutorial on SE(3) transformation parameterizations and on-manifold optimization, Jose-Luis Blanco [blanco2010tutorial](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_blanco2010tutorial)
-	///    - Lie Groups for 2D and 3D Transformation, Ethan Eade [Eade17](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Eade17)
-	///    - A micro Lie theory for state estimation in robotics, Joan Solà, Jérémie Deray, Dinesh Atchuthan [Sol2018AML](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Sol2018AML)
+	///    - A tutorial on SE(3) transformation parameterizations and on-manifold optimization, Jose-Luis Blanco [blanco2010tutorial](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_blanco2010tutorial)
+	///    - Lie Groups for 2D and 3D Transformation, Ethan Eade [Eade17](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Eade17)
+	///    - A micro Lie theory for state estimation in robotics, Joan Solà, Jérémie Deray, Dinesh Atchuthan [Sol2018AML](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Sol2018AML)
 	///
 	/// ## C++ default parameters
 	/// * jacobian: noArray()
@@ -580,7 +586,7 @@ pub mod geometry {
 	/// Straight lines formed by each edge of the convex contour are drawn and the areas of the resulting triangles are considered.
 	/// Each vertex will lie either on the original contour or outside it.
 	///
-	/// The algorithm based on the paper [LowIlie2003](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_LowIlie2003) .
+	/// The algorithm based on the paper [LowIlie2003](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_LowIlie2003) .
 	///
 	/// ## Parameters
 	/// * curve: Input vector of a 2D points stored in std::vector or Mat, points must be float or integer.
@@ -614,7 +620,7 @@ pub mod geometry {
 	/// Straight lines formed by each edge of the convex contour are drawn and the areas of the resulting triangles are considered.
 	/// Each vertex will lie either on the original contour or outside it.
 	///
-	/// The algorithm based on the paper [LowIlie2003](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_LowIlie2003) .
+	/// The algorithm based on the paper [LowIlie2003](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_LowIlie2003) .
 	///
 	/// ## Parameters
 	/// * curve: Input vector of a 2D points stored in std::vector or Mat, points must be float or integer.
@@ -663,6 +669,10 @@ pub mod geometry {
 	///
 	/// ## Parameters
 	/// * array: Input gray-scale image or 2D point set, stored in std::vector or Mat.
+	///
+	///
+	/// Note: Point coordinates that the resulting Rect cannot represent - outside of the int range,
+	/// or infinite - are saturated to INT_MIN / INT_MAX, and its width and height are clamped to INT_MAX.
 	#[inline]
 	pub fn bounding_rect(array: &impl ToInputArray) -> Result<core::Rect> {
 		input_array_arg!(array);
@@ -1091,7 +1101,7 @@ pub mod geometry {
 
 	/// Finds the convex hull of a point set.
 	///
-	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Sklansky82)
+	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Sklansky82)
 	/// that has *O(N logN)* complexity in the current implementation.
 	///
 	/// ## Parameters
@@ -1135,7 +1145,7 @@ pub mod geometry {
 
 	/// Finds the convex hull of a point set.
 	///
-	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Sklansky82)
+	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Sklansky82)
 	/// that has *O(N logN)* complexity in the current implementation.
 	///
 	/// ## Parameters
@@ -1180,7 +1190,7 @@ pub mod geometry {
 	///
 	/// The figure below displays convexity defects of a hand contour:
 	///
-	/// ![image](https://docs.opencv.org/5.0.0/defects.png)
+	/// ![image](https://docs.opencv.org/5.1.0/defects.png)
 	///
 	/// ## Parameters
 	/// * contour: Input contour.
@@ -1214,7 +1224,7 @@ pub mod geometry {
 	/// * newPoints1: The optimized points1.
 	/// * newPoints2: The optimized points2.
 	///
-	/// The function implements the Optimal Triangulation Method (see Multiple View Geometry [HartleyZ00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_HartleyZ00) for details).
+	/// The function implements the Optimal Triangulation Method (see Multiple View Geometry [HartleyZ00](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_HartleyZ00) for details).
 	/// For each given point correspondence points1[i] \<-\> points2[i], and a fundamental matrix F, it
 	/// computes the corrected correspondences newPoints1[i] \<-\> newPoints2[i] that minimize the geometric
 	/// error ![inline formula](https://latex.codecogs.com/png.latex?d%28points1%5Bi%5D%2C%20newPoints1%5Bi%5D%29%5E2%20%2B%20d%28points2%5Bi%5D%2CnewPoints2%5Bi%5D%29%5E2) (where ![inline formula](https://latex.codecogs.com/png.latex?d%28a%2Cb%29) is the
@@ -1242,7 +1252,7 @@ pub mod geometry {
 	/// * R2: Another possible rotation matrix.
 	/// * t: One possible translation.
 	///
-	/// This function decomposes the essential matrix E using svd decomposition [HartleyZ00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_HartleyZ00). In
+	/// This function decomposes the essential matrix E using svd decomposition [HartleyZ00](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_HartleyZ00). In
 	/// general, four possible poses exist for the decomposition of E. They are ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F1%2C%20t%5D),
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F1%2C%20%2Dt%5D), ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F2%2C%20t%5D), ![inline formula](https://latex.codecogs.com/png.latex?%5BR%5F2%2C%20%2Dt%5D).
 	///
@@ -1276,7 +1286,7 @@ pub mod geometry {
 	///
 	/// This function extracts relative camera motion between two views of a planar object and returns up to
 	/// four mathematical solution tuples of rotation, translation, and plane normal. The decomposition of
-	/// the homography matrix H is described in detail in [Malis2007](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Malis2007).
+	/// the homography matrix H is described in detail in [Malis2007](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Malis2007).
 	///
 	/// If the homography H, induced by the plane, gives the constraint
 	/// ![block formula](https://latex.codecogs.com/png.latex?s%5Fi%20%5Cbegin%7Bbmatrix%7D%20x%27%5Fi%5C%5C%20y%27%5Fi%5C%5C%201%20%5Cend%7Bbmatrix%7D%20%5Csim%20H%20%5Cbegin%7Bbmatrix%7D%20x%5Fi%5C%5C%20y%5Fi%5C%5C%201%20%5Cend%7Bbmatrix%7D) on the source image points
@@ -1307,7 +1317,8 @@ pub mod geometry {
 	/// * projMatrix: 3x4 input projection matrix P.
 	/// * cameraMatrix: Output 3x3 camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D).
 	/// * rotMatrix: Output 3x3 external rotation matrix R.
-	/// * transVect: Output 4x1 translation vector T.
+	/// * transVect: Output 4x1 vector representing the camera position in homogeneous coordinates.
+	/// To obtain the translation vector, use t = -rotMatrix * transVect[:3]
 	/// * rotMatrixX: Optional 3x3 rotation matrix around x-axis.
 	/// * rotMatrixY: Optional 3x3 rotation matrix around y-axis.
 	/// * rotMatrixZ: Optional 3x3 rotation matrix around z-axis.
@@ -1319,7 +1330,7 @@ pub mod geometry {
 	///
 	/// It optionally returns three rotation matrices, one for each axis, and three Euler angles that could
 	/// be used in OpenGL. Note, there is always more than one sequence of rotations about the three
-	/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
+	/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
 	/// three rotation matrices and corresponding three Euler angles are only one of the possible solutions.
 	///
 	/// The function is based on [rq_decomp3x3] .
@@ -1349,7 +1360,8 @@ pub mod geometry {
 	/// * projMatrix: 3x4 input projection matrix P.
 	/// * cameraMatrix: Output 3x3 camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D).
 	/// * rotMatrix: Output 3x3 external rotation matrix R.
-	/// * transVect: Output 4x1 translation vector T.
+	/// * transVect: Output 4x1 vector representing the camera position in homogeneous coordinates.
+	/// To obtain the translation vector, use t = -rotMatrix * transVect[:3]
 	/// * rotMatrixX: Optional 3x3 rotation matrix around x-axis.
 	/// * rotMatrixY: Optional 3x3 rotation matrix around y-axis.
 	/// * rotMatrixZ: Optional 3x3 rotation matrix around z-axis.
@@ -1361,7 +1373,7 @@ pub mod geometry {
 	///
 	/// It optionally returns three rotation matrices, one for each axis, and three Euler angles that could
 	/// be used in OpenGL. Note, there is always more than one sequence of rotations about the three
-	/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
+	/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
 	/// three rotation matrices and corresponding three Euler angles are only one of the possible solutions.
 	///
 	/// The function is based on [rq_decomp3x3] .
@@ -1834,7 +1846,7 @@ pub mod geometry {
 	///
 	/// ```C++
 	/// cv::Vec2d t = cv::estimateTranslation2D(from, to, inliers);
-	/// cv::Mat T = (cv::Mat_<double>(2,3) << 1,0,t[0], 0,1,t[1]);
+	/// cv::Mat T = cv::Mat_<double>({2,3}, {1,0,t[0], 0,1,t[1]});
 	/// ```
 	///
 	///
@@ -1899,7 +1911,7 @@ pub mod geometry {
 	///
 	/// ```C++
 	/// cv::Vec2d t = cv::estimateTranslation2D(from, to, inliers);
-	/// cv::Mat T = (cv::Mat_<double>(2,3) << 1,0,t[0], 0,1,t[1]);
+	/// cv::Mat T = cv::Mat_<double>({2,3}, {1,0,t[0], 0,1,t[1]});
 	/// ```
 	///
 	///
@@ -2212,7 +2224,7 @@ pub mod geometry {
 	/// as given by the [find_homography] function
 	///
 	/// This function is intended to filter the output of the [decompose_homography_mat] based on additional
-	/// information as described in [Malis2007](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Malis2007) . The summary of the method: the [decompose_homography_mat] function
+	/// information as described in [Malis2007](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Malis2007) . The summary of the method: the [decompose_homography_mat] function
 	/// returns 2 unique solutions and their "opposites" for a total of 4 solutions. If we have access to the
 	/// sets of points visible in the camera frame before and after the homography transformation is applied,
 	/// we can determine which are the true potential solutions and which are the opposites by verifying which
@@ -2248,7 +2260,7 @@ pub mod geometry {
 	/// as given by the [find_homography] function
 	///
 	/// This function is intended to filter the output of the [decompose_homography_mat] based on additional
-	/// information as described in [Malis2007](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Malis2007) . The summary of the method: the [decompose_homography_mat] function
+	/// information as described in [Malis2007](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Malis2007) . The summary of the method: the [decompose_homography_mat] function
 	/// returns 2 unique solutions and their "opposites" for a total of 4 solutions. If we have access to the
 	/// sets of points visible in the camera frame before and after the homography transformation is applied,
 	/// we can determine which are the true potential solutions and which are the opposites by verifying which
@@ -2297,8 +2309,8 @@ pub mod geometry {
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	/// * maxIters: The maximum number of robust method iterations.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -2378,8 +2390,8 @@ pub mod geometry {
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	/// * maxIters: The maximum number of robust method iterations.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -2433,8 +2445,8 @@ pub mod geometry {
 	/// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -2507,8 +2519,8 @@ pub mod geometry {
 	/// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -2563,8 +2575,8 @@ pub mod geometry {
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	/// * maxIters: The maximum number of robust method iterations.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -2617,8 +2629,8 @@ pub mod geometry {
 	/// for the other points. The array is computed only in the RANSAC and LMedS methods.
 	/// * maxIters: The maximum number of robust method iterations.
 	///
-	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03) .
-	/// [SteweniusCFS](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+	/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03) .
+	/// [SteweniusCFS](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Bp%5F2%3B%201%5D%5ET%20K%5E%7B%2DT%7D%20E%20K%5E%7B%2D1%7D%20%5Bp%5F1%3B%201%5D%20%3D%200)
 	///
@@ -4156,7 +4168,7 @@ pub mod geometry {
 	///
 	/// The function calculates the ellipse that fits a set of 2D points.
 	/// It returns the rotated rectangle in which the ellipse is inscribed.
-	/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
+	/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
 	///
 	/// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
 	/// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA%5F%7B%5Ctext%7Bxx%7D%7D%2CA%5F%7B%5Ctext%7Bxy%7D%7D%2CA%5F%7B%5Ctext%7Byy%7D%7D%2CA%5Fx%2CA%5Fy%2CA%5F0%5Cright%5C%7D%20).
@@ -4206,7 +4218,7 @@ pub mod geometry {
 	///
 	/// The function calculates the ellipse that fits a set of 2D points.
 	/// It returns the rotated rectangle in which the ellipse is inscribed.
-	/// The Direct least square (Direct) method by [oy1998NumericallySD](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_oy1998NumericallySD) is used.
+	/// The Direct least square (Direct) method by [oy1998NumericallySD](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_oy1998NumericallySD) is used.
 	///
 	/// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
 	/// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA%5F%7B%5Ctext%7Bxx%7D%7D%2CA%5F%7B%5Ctext%7Bxy%7D%7D%2CA%5F%7B%5Ctext%7Byy%7D%7D%2CA%5Fx%2CA%5Fy%2CA%5F0%5Cright%5C%7D%20).
@@ -4262,7 +4274,7 @@ pub mod geometry {
 	/// Fits an ellipse around a set of 2D points.
 	///
 	/// The function calculates the ellipse that fits (in a least-squares sense) a set of 2D points best of
-	/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
+	/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
 	/// is used. Developer should keep in mind that it is possible that the returned
 	/// ellipse/rotatedRect data contains negative indices, due to the data points being close to the
 	/// border of the containing Mat element.
@@ -4368,7 +4380,7 @@ pub mod geometry {
 
 	/// Compute for each 2d point the nearest 2d point located on a given ellipse.
 	///
-	/// The function computes the nearest 2d location on a given ellipse for a vector of 2d points and is based on [Chatfield2017](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Chatfield2017) code.
+	/// The function computes the nearest 2d location on a given ellipse for a vector of 2d points and is based on [Chatfield2017](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Chatfield2017) code.
 	/// This function can be used to compute for instance the ellipse fitting error.
 	///
 	/// ## Parameters
@@ -4947,7 +4959,7 @@ pub mod geometry {
 	/// area. It takes the set of points and the parameter k as input and returns the area of the minimal
 	/// enclosing polygon.
 	///
-	/// The Implementation is based on a paper by Aggarwal, Chang and Yap [Aggarwal1985](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Aggarwal1985). They
+	/// The Implementation is based on a paper by Aggarwal, Chang and Yap [Aggarwal1985](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Aggarwal1985). They
 	/// provide a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%C2%B2log%28n%29log%28k%29%29) algorithm for finding the minimal convex polygon with k
 	/// vertices enclosing a 2D convex polygon with n vertices (k < n). Since the [min_enclosing_convex_polygon]
 	/// function takes a 2D point set as input, an additional preprocessing step of computing the convex hull
@@ -4976,10 +4988,10 @@ pub mod geometry {
 	///  area. The output for a given 2D point set is shown in the image below. 2D points are depicted in
 	/// red* and the enclosing triangle in *yellow*.
 	///
-	///  ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/5.0.0/minenclosingtriangle.png)
+	///  ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/5.1.0/minenclosingtriangle.png)
 	///
-	///  The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
-	///  [KleeLaskowski85](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
+	///  The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
+	///  [KleeLaskowski85](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
 	///  enclosing triangle of a 2D convex polygon with n vertices. Since the [min_enclosing_triangle] function
 	///  takes a 2D point set as input an additional preprocessing step of computing the convex hull of the
 	///  2D point set is required. The complexity of the [convex_hull] function is ![inline formula](https://latex.codecogs.com/png.latex?O%28n%20log%28n%29%29) which is higher
@@ -5110,9 +5122,11 @@ pub mod geometry {
 	///               each point is itself. Support vector<vector<int>>, vector<Mat> and Mat of size NxK.
 	///               If the information in a row is [0, 2, 1, -5, -1, 4, 7 ... negative number], it will
 	///               use only non-negative indexes until it meets a negative number or bound of this row
-	///               i.e. [0, 2, 1].
+	///               i.e. [0, 2, 1]. If left empty (noArray()), the neighbors are computed internally with
+	///               a kd-tree and @p max_neighbor_num is used as the number of neighbors k (must be >= 2).
 	/// * max_neighbor_num: The maximum number of neighbors want to use including itself. Setting to
-	///               a non-positive number or default will use the information from nn_idx.
+	///               a non-positive number or default will use the information from nn_idx. When @p nn_idx
+	///               is empty this is the number of neighbors k to search for and must be >= 2.
 	///
 	/// ## Note
 	/// This alternative version of [normal_estimate] function uses the following default values for its arguments:
@@ -5151,9 +5165,11 @@ pub mod geometry {
 	///               each point is itself. Support vector<vector<int>>, vector<Mat> and Mat of size NxK.
 	///               If the information in a row is [0, 2, 1, -5, -1, 4, 7 ... negative number], it will
 	///               use only non-negative indexes until it meets a negative number or bound of this row
-	///               i.e. [0, 2, 1].
+	///               i.e. [0, 2, 1]. If left empty (noArray()), the neighbors are computed internally with
+	///               a kd-tree and @p max_neighbor_num is used as the number of neighbors k (must be >= 2).
 	/// * max_neighbor_num: The maximum number of neighbors want to use including itself. Setting to
-	///               a non-positive number or default will use the information from nn_idx.
+	///               a non-positive number or default will use the information from nn_idx. When @p nn_idx
+	///               is empty this is the number of neighbors k to search for and must be >= 2.
 	///
 	/// ## C++ default parameters
 	/// * max_neighbor_num: 0
@@ -5179,7 +5195,7 @@ pub mod geometry {
 	///
 	/// See below a sample output of the function where each image pixel is tested against the contour:
 	///
-	/// ![sample output](https://docs.opencv.org/5.0.0/pointpolygon.png)
+	/// ![sample output](https://docs.opencv.org/5.1.0/pointpolygon.png)
 	///
 	/// ## Parameters
 	/// * contour: Input contour.
@@ -5632,7 +5648,7 @@ pub mod geometry {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for findEssentialMat.:
@@ -5721,7 +5737,7 @@ pub mod geometry {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for findEssentialMat.:
@@ -5797,7 +5813,7 @@ pub mod geometry {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for [find_essential_mat] :
@@ -5867,7 +5883,7 @@ pub mod geometry {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for [find_essential_mat] :
@@ -5937,7 +5953,7 @@ pub mod geometry {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for [find_essential_mat] :
@@ -6034,7 +6050,7 @@ pub mod geometry {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for [find_essential_mat] :
@@ -6132,7 +6148,7 @@ pub mod geometry {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for [find_essential_mat] :
@@ -6228,7 +6244,7 @@ pub mod geometry {
 	///
 	/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 	/// possible pose hypotheses by doing chirality check. The chirality check means that the
-	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Nister03).
+	/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Nister03).
 	///
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for [find_essential_mat] :
@@ -6306,7 +6322,7 @@ pub mod geometry {
 	/// Below are some examples of intersection configurations. The hatched pattern indicates the
 	/// intersecting region and the red vertices are returned by the function.
 	///
-	/// ![intersection examples](https://docs.opencv.org/5.0.0/intersection.png)
+	/// ![intersection examples](https://docs.opencv.org/5.1.0/intersection.png)
 	///
 	/// ## Parameters
 	/// * rect1: First rectangle
@@ -6329,7 +6345,7 @@ pub mod geometry {
 	///
 	/// The function cv::sampsonDistance calculates and returns the first order approximation of the geometric error as:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Asd%28%20%5Ctexttt%7Bpt1%7D%20%2C%20%5Ctexttt%7Bpt2%7D%20%29%3D%0A%5Cfrac%7B%28%5Ctexttt%7Bpt2%7D%5Et%20%5Ccdot%20%5Ctexttt%7BF%7D%20%5Ccdot%20%5Ctexttt%7Bpt1%7D%29%5E2%7D%0A%7B%28%28%5Ctexttt%7BF%7D%20%5Ccdot%20%5Ctexttt%7Bpt1%7D%29%280%29%29%5E2%20%2B%0A%28%28%5Ctexttt%7BF%7D%20%5Ccdot%20%5Ctexttt%7Bpt1%7D%29%281%29%29%5E2%20%2B%0A%28%28%5Ctexttt%7BF%7D%5Et%20%5Ccdot%20%5Ctexttt%7Bpt2%7D%29%280%29%29%5E2%20%2B%0A%28%28%5Ctexttt%7BF%7D%5Et%20%5Ccdot%20%5Ctexttt%7Bpt2%7D%29%281%29%29%5E2%7D%0A)
-	/// The fundamental matrix may be calculated using the [find_fundamental_mat] function. See [HartleyZ00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.4.3 for details.
+	/// The fundamental matrix may be calculated using the [find_fundamental_mat] function. See [HartleyZ00](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.4.3 for details.
 	/// ## Parameters
 	/// * pt1: first homogeneous 2d point
 	/// * pt2: second homogeneous 2d point
@@ -6350,7 +6366,7 @@ pub mod geometry {
 
 	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from **3** 3D-2D point correspondences.
 	///
-	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.0.0/pinhole_homogeneous_transformation.jpg){ width=50% }
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.1.0/pinhole_homogeneous_transformation.jpg){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -6368,9 +6384,9 @@ pub mod geometry {
 	/// * tvecs: Output translation vectors.
 	/// * flags: Method for solving a P3P problem:
 	/// *   [SOLVEPNP_P3P] Method is based on the paper of Ding, Y., Yang, J., Larsson, V., Olsson, C., & Åstrom, K.
-	/// "Revisiting the P3P Problem" ([ding2023revisiting](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ding2023revisiting)).
+	/// "Revisiting the P3P Problem" ([ding2023revisiting](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_ding2023revisiting)).
 	/// *   [SOLVEPNP_AP3P] Method is based on the paper of T. Ke and S. Roumeliotis.
-	/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Ke17)).
+	/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Ke17)).
 	///
 	/// The function estimates the object pose given 3 object points, their corresponding image
 	/// projections, as well as the camera intrinsic matrix and the distortion coefficients.
@@ -6395,7 +6411,7 @@ pub mod geometry {
 
 	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences.
 	///
-	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.0.0/pinhole_homogeneous_transformation.jpg){ width=50% }
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.1.0/pinhole_homogeneous_transformation.jpg){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -6491,7 +6507,7 @@ pub mod geometry {
 
 	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences.
 	///
-	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.0.0/pinhole_homogeneous_transformation.jpg){ width=50% }
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.1.0/pinhole_homogeneous_transformation.jpg){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -6589,7 +6605,7 @@ pub mod geometry {
 
 	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences using the RANSAC scheme to deal with bad matches.
 	///
-	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.0.0/pinhole_homogeneous_transformation.jpg){ width=50% }
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.1.0/pinhole_homogeneous_transformation.jpg){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -6659,7 +6675,7 @@ pub mod geometry {
 
 	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences using the RANSAC scheme to deal with bad matches.
 	///
-	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.0.0/pinhole_homogeneous_transformation.jpg){ width=50% }
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.1.0/pinhole_homogeneous_transformation.jpg){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -6787,7 +6803,7 @@ pub mod geometry {
 	/// projections, an initial solution for the rotation and translation vector,
 	/// as well as the camera intrinsic matrix and the distortion coefficients.
 	/// The function minimizes the projection error with respect to the rotation and the translation vectors, according
-	/// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Eade13) process.
+	/// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Eade13) process.
 	///
 	/// ## Note
 	/// This alternative version of [solve_pnp_refine_lm] function uses the following default values for its arguments:
@@ -6830,7 +6846,7 @@ pub mod geometry {
 	/// projections, an initial solution for the rotation and translation vector,
 	/// as well as the camera intrinsic matrix and the distortion coefficients.
 	/// The function minimizes the projection error with respect to the rotation and the translation vectors, according
-	/// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Eade13) process.
+	/// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Eade13) process.
 	///
 	/// ## C++ default parameters
 	/// * criteria: TermCriteria(TermCriteria::EPS+TermCriteria::COUNT,20,FLT_EPSILON)
@@ -6874,7 +6890,7 @@ pub mod geometry {
 	/// projections, an initial solution for the rotation and translation vector,
 	/// as well as the camera intrinsic matrix and the distortion coefficients.
 	/// The function minimizes the projection error with respect to the rotation and the translation vectors, using a
-	/// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
+	/// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
 	///
 	/// ## Note
 	/// This alternative version of [solve_pnp_refine_vvs] function uses the following default values for its arguments:
@@ -6920,7 +6936,7 @@ pub mod geometry {
 	/// projections, an initial solution for the rotation and translation vector,
 	/// as well as the camera intrinsic matrix and the distortion coefficients.
 	/// The function minimizes the projection error with respect to the rotation and the translation vectors, using a
-	/// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
+	/// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
 	///
 	/// ## C++ default parameters
 	/// * criteria: TermCriteria(TermCriteria::EPS+TermCriteria::COUNT,20,FLT_EPSILON)
@@ -6942,7 +6958,7 @@ pub mod geometry {
 
 	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences:
 	///
-	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.0.0/pinhole_homogeneous_transformation.jpg){ width=50% }
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.1.0/pinhole_homogeneous_transformation.jpg){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -7028,7 +7044,7 @@ pub mod geometry {
 
 	/// Finds an object pose ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) from 3D-2D point correspondences:
 	///
-	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.0.0/pinhole_homogeneous_transformation.jpg){ width=50% }
+	/// ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.1.0/pinhole_homogeneous_transformation.jpg){ width=50% }
 	/// ## See also
 	/// [calib3d_solvePnP]
 	///
@@ -7157,10 +7173,12 @@ pub mod geometry {
 	/// * dst: Output undistorted points position (1xN/Nx1 2-channel or vector\<Point2f\> ).
 	/// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
 	/// * distCoeffs: Distortion coefficients
+	/// * criteria: Termination criteria for the iterative undistortion, as in #undistortPoints.
+	/// The default runs a fixed 5 iterations and ignores epsilon.
 	///
 	/// ## Note
 	/// This alternative version of [undistort_image_points] function uses the following default values for its arguments:
-	/// * unnamed: TermCriteria(TermCriteria::MAX_ITER,5,0.01)
+	/// * criteria: TermCriteria(TermCriteria::MAX_ITER,5,0.01)
 	#[inline]
 	pub fn undistort_image_points_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(src);
@@ -7181,17 +7199,19 @@ pub mod geometry {
 	/// * dst: Output undistorted points position (1xN/Nx1 2-channel or vector\<Point2f\> ).
 	/// * cameraMatrix: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
 	/// * distCoeffs: Distortion coefficients
+	/// * criteria: Termination criteria for the iterative undistortion, as in #undistortPoints.
+	/// The default runs a fixed 5 iterations and ignores epsilon.
 	///
 	/// ## C++ default parameters
-	/// * unnamed: TermCriteria(TermCriteria::MAX_ITER,5,0.01)
+	/// * criteria: TermCriteria(TermCriteria::MAX_ITER,5,0.01)
 	#[inline]
-	pub fn undistort_image_points(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, unnamed: core::TermCriteria) -> Result<()> {
+	pub fn undistort_image_points(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, criteria: core::TermCriteria) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_undistortImagePoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &unnamed, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_undistortImagePoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7212,6 +7232,15 @@ pub mod geometry {
 	/// coordinates do not depend on the camera matrix).
 	///
 	/// The function can be used for both a stereo camera head or a monocular camera (when R is empty).
+	///
+	///
+	/// Note: By default the function runs exactly 5 iterations and does not check convergence: the
+	/// error is computed only when TermCriteria::EPS is set, so the 0.01 in the default criteria is not
+	/// used. With strong distortion this leaves a visible error towards the image corners. To iterate
+	/// until convergence, pass for example `TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 20, 1e-6)`.
+	/// #fisheye::undistortPoints uses `TermCriteria(TermCriteria::MAX_ITER + TermCriteria::EPS, 10, 1e-8)`
+	/// by default; note that its epsilon is a threshold on the angle ![inline formula](https://latex.codecogs.com/png.latex?%20%5Ctheta%20) (radians), not a pixel
+	/// reprojection error like this function's, so the two numbers are not directly comparable.
 	///
 	///
 	/// Note: **Coordinate Systems:**
@@ -7236,7 +7265,9 @@ pub mod geometry {
 	/// [stereo_rectify] can be passed here. If the matrix is empty, the identity transformation is used.
 	/// * P: New camera matrix (3x3) or new projection matrix (3x4) ![inline formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20%7Bf%27%7D%5Fx%20%26%200%20%26%20%7Bc%27%7D%5Fx%20%26%20t%5Fx%20%5C%5C%200%20%26%20%7Bf%27%7D%5Fy%20%26%20%7Bc%27%7D%5Fy%20%26%20t%5Fy%20%5C%5C%200%20%26%200%20%26%201%20%26%20t%5Fz%20%5Cend%7Bbmatrix%7D). P1 or P2 computed by
 	/// [stereo_rectify] can be passed here. If the matrix is empty, the identity new camera matrix is used and output will be in normalized coordinates.
-	/// * criteria: termination criteria for the iterative point undistortion algorithm
+	/// * criteria: Termination criteria for the iterative point undistortion algorithm. The default runs a
+	/// fixed 5 iterations, see the note above. Keep TermCriteria::COUNT in the type when using
+	/// TermCriteria::EPS: with EPS alone there is no iteration limit.
 	///
 	/// ## Note
 	/// This alternative version of [undistort_points] function uses the following default values for its arguments:
@@ -7273,6 +7304,15 @@ pub mod geometry {
 	/// The function can be used for both a stereo camera head or a monocular camera (when R is empty).
 	///
 	///
+	/// Note: By default the function runs exactly 5 iterations and does not check convergence: the
+	/// error is computed only when TermCriteria::EPS is set, so the 0.01 in the default criteria is not
+	/// used. With strong distortion this leaves a visible error towards the image corners. To iterate
+	/// until convergence, pass for example `TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 20, 1e-6)`.
+	/// #fisheye::undistortPoints uses `TermCriteria(TermCriteria::MAX_ITER + TermCriteria::EPS, 10, 1e-8)`
+	/// by default; note that its epsilon is a threshold on the angle ![inline formula](https://latex.codecogs.com/png.latex?%20%5Ctheta%20) (radians), not a pixel
+	/// reprojection error like this function's, so the two numbers are not directly comparable.
+	///
+	///
 	/// Note: **Coordinate Systems:**
 	/// - **Input (`src`)**: Points are expected in **pixel coordinates** of the distorted image, i.e.,
 	///   coordinates ![inline formula](https://latex.codecogs.com/png.latex?%28u%2C%20v%29) measured in pixels from the top-left corner of the image.
@@ -7295,7 +7335,9 @@ pub mod geometry {
 	/// [stereo_rectify] can be passed here. If the matrix is empty, the identity transformation is used.
 	/// * P: New camera matrix (3x3) or new projection matrix (3x4) ![inline formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20%7Bf%27%7D%5Fx%20%26%200%20%26%20%7Bc%27%7D%5Fx%20%26%20t%5Fx%20%5C%5C%200%20%26%20%7Bf%27%7D%5Fy%20%26%20%7Bc%27%7D%5Fy%20%26%20t%5Fy%20%5C%5C%200%20%26%200%20%26%201%20%26%20t%5Fz%20%5Cend%7Bbmatrix%7D). P1 or P2 computed by
 	/// [stereo_rectify] can be passed here. If the matrix is empty, the identity new camera matrix is used and output will be in normalized coordinates.
-	/// * criteria: termination criteria for the iterative point undistortion algorithm
+	/// * criteria: Termination criteria for the iterative point undistortion algorithm. The default runs a
+	/// fixed 5 iterations, see the note above. Keep TermCriteria::COUNT in the type when using
+	/// TermCriteria::EPS: with EPS alone there is no iteration limit.
 	///
 	/// ## C++ default parameters
 	/// * r: noArray()
@@ -7501,19 +7543,19 @@ pub mod geometry {
 
 		#[inline]
 		fn set_found(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LevMarq_Report_propFound_const_bool(self.as_raw_mut_LevMarq_Report(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Report_propFound_bool(self.as_raw_mut_LevMarq_Report(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_iters(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LevMarq_Report_propIters_const_int(self.as_raw_mut_LevMarq_Report(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Report_propIters_int(self.as_raw_mut_LevMarq_Report(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_energy(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_LevMarq_Report_propEnergy_const_double(self.as_raw_mut_LevMarq_Report(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Report_propEnergy_double(self.as_raw_mut_LevMarq_Report(), val) };
 			ret
 		}
 
@@ -7701,115 +7743,115 @@ pub mod geometry {
 
 		#[inline]
 		fn set_jacobi_scaling(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propJacobiScaling_const_bool(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propJacobiScaling_bool(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_up_double(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propUpDouble_const_bool(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propUpDouble_bool(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_use_step_quality(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propUseStepQuality_const_bool(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propUseStepQuality_bool(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_clamp_diagonal(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propClampDiagonal_const_bool(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propClampDiagonal_bool(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_step_norm_inf(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propStepNormInf_const_bool(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propStepNormInf_bool(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_check_rel_energy_change(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propCheckRelEnergyChange_const_bool(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propCheckRelEnergyChange_bool(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_check_min_gradient(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propCheckMinGradient_const_bool(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propCheckMinGradient_bool(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_check_step_norm(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propCheckStepNorm_const_bool(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propCheckStepNorm_bool(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_geodesic(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propGeodesic_const_bool(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propGeodesic_bool(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_h_geo(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propHGeo_const_double(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propHGeo_double(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_geo_scale(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propGeoScale_const_double(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propGeoScale_double(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_step_norm_tolerance(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propStepNormTolerance_const_double(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propStepNormTolerance_double(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_rel_energy_delta_tolerance(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propRelEnergyDeltaTolerance_const_double(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propRelEnergyDeltaTolerance_double(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_min_gradient_tolerance(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propMinGradientTolerance_const_double(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propMinGradientTolerance_double(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_small_energy_tolerance(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propSmallEnergyTolerance_const_double(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propSmallEnergyTolerance_double(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_max_iterations(&mut self, val: u32) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propMaxIterations_const_unsigned_int(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propMaxIterations_unsigned_int(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_initial_lambda(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propInitialLambda_const_double(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propInitialLambda_double(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_initial_lm_up_factor(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propInitialLmUpFactor_const_double(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propInitialLmUpFactor_double(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_initial_lm_down_factor(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_LevMarq_Settings_propInitialLmDownFactor_const_double(self.as_raw_mut_LevMarq_Settings(), val) };
+			let ret = unsafe { sys::cv_LevMarq_Settings_propInitialLmDownFactor_double(self.as_raw_mut_LevMarq_Settings(), val) };
 			ret
 		}
 
@@ -8046,7 +8088,7 @@ pub mod geometry {
 	///
 	/// The key idea of region growing is to merge the nearest neighbor points that satisfy a certain
 	/// angle threshold into the same region according to the normal between the two points, so as to
-	/// achieve the purpose of segmentation. For more details, please refer to [Rabbani2006SegmentationOP](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Rabbani2006SegmentationOP).
+	/// achieve the purpose of segmentation. For more details, please refer to [Rabbani2006SegmentationOP](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Rabbani2006SegmentationOP).
 	pub struct RegionGrowing3D {
 		ptr: *mut c_void,
 	}
@@ -8352,7 +8394,7 @@ pub mod geometry {
 	/// Sample Consensus algorithm segmentation of 3D point cloud model.
 	///
 	/// Example of segmenting plane from a 3D point cloud using the RANSAC algorithm:
-	/// [planeSegmentationUsingRANSAC](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/3d_sac_segmentation.cpp#L1)
+	/// [planeSegmentationUsingRANSAC](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/3d_sac_segmentation.cpp#L1)
 	/// ## See also
 	/// 1. Supported algorithms: enum SacMethod in ptcloud.hpp.
 	/// 2. Supported models: enum SacModelType in ptcloud.hpp.
@@ -8814,7 +8856,7 @@ pub mod geometry {
 		/// *   PREV_AROUND_LEFT previous around the left facet (reversed eOnext )
 		/// *   PREV_AROUND_RIGHT previous around the right facet (reversed eDnext )
 		///
-		/// ![sample output](https://docs.opencv.org/5.0.0/quadedge.png)
+		/// ![sample output](https://docs.opencv.org/5.1.0/quadedge.png)
 		///
 		/// ## Returns
 		/// edge ID related to the input edge.

@@ -1,3 +1,10 @@
+* 0.102.0
+  * Fix binding generation with OpenCV 5.1.
+  * The items generated from the `cv::ogl` namespace now have `OGL` prefix to avoid name conflicts with the `cv::ocl` module.
+  * C++ `std::move` is used in more places which should avoid unnecessary copies and improve performance.
+  * Property setters for class pointer types now receive proper pointers (instead of references) and are unsafe. Previously that
+    applied only to primitive types.
+
 * 0.101.0
   * Function arguments that default to `NULL` in C++ are now typed as `Option`, e.g. `core::rand_shuffle()`, `text::OCRTesseract::create()`.
   * "objdetect" feature now also enables "dnn" and "features" features (kudos to de-vri-es).

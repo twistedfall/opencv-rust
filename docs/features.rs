@@ -22,7 +22,7 @@ pub mod features {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{ALIKEDTrait, ALIKEDTraitConst, ANNIndexTrait, ANNIndexTraitConst, AffineFeatureTrait, AffineFeatureTraitConst, BFMatcherTrait, BFMatcherTraitConst, DISKTrait, DISKTraitConst, DescriptorMatcherTrait, DescriptorMatcherTraitConst, FastFeatureDetectorTrait, FastFeatureDetectorTraitConst, Feature2DTrait, Feature2DTraitConst, FlannBasedMatcherTrait, FlannBasedMatcherTraitConst, GFTTDetectorTrait, GFTTDetectorTraitConst, KeyPointsFilterTrait, KeyPointsFilterTraitConst, LightGlueMatcherTrait, LightGlueMatcherTraitConst, MSERTrait, MSERTraitConst, ORBTrait, ORBTraitConst, SIFTTrait, SIFTTraitConst, SimpleBlobDetectorTrait, SimpleBlobDetectorTraitConst};
+		pub use super::{ALIKEDTrait, ALIKEDTraitConst, ANNIndexTrait, ANNIndexTraitConst, AffineFeatureTrait, AffineFeatureTraitConst, BFMatcherTrait, BFMatcherTraitConst, DISKTrait, DISKTraitConst, DescriptorMatcherTrait, DescriptorMatcherTraitConst, FastFeatureDetectorTrait, FastFeatureDetectorTraitConst, Feature2DTrait, Feature2DTraitConst, FlannBasedMatcherTrait, FlannBasedMatcherTraitConst, GFTTDetectorTrait, GFTTDetectorTraitConst, KeyPointsFilterTrait, KeyPointsFilterTraitConst, LightGlueMatcherTrait, LightGlueMatcherTraitConst, MSERTrait, MSERTraitConst, ORBTrait, ORBTraitConst, SIFTTrait, SIFTTraitConst, SimpleBlobDetectorTrait, SimpleBlobDetectorTraitConst, XFeatTrait, XFeatTraitConst};
 	}
 
 	pub const ANNIndex_DIST_ANGULAR: i32 = 2;
@@ -56,6 +56,14 @@ pub mod features {
 	pub const FastFeatureDetector_TYPE_5_8: i32 = 0;
 	pub const FastFeatureDetector_TYPE_7_12: i32 = 1;
 	pub const FastFeatureDetector_TYPE_9_16: i32 = 2;
+	/// ALIKED model: keypoints normalized to [-1, 1]
+	pub const LG_ALIKED: i32 = 0;
+	/// DISK model:  keypoints normalized to [ 0, 1]
+	pub const LG_DISK: i32 = 1;
+	/// LightGlue reference mapping ![inline formula](https://latex.codecogs.com/png.latex?%28p%20%2D%20size%20%2F%202%29%20%2F%20%28%5Cmax%28W%2C%20H%29%20%2F%202%29), keeps the image aspect ratio
+	pub const LG_NORM_MAX_SIDE: i32 = 1;
+	/// Per-axis mapping implied by the LightGlueType given at creation (default)
+	pub const LG_NORM_MODEL: i32 = 0;
 	pub const ORB_FAST_SCORE: i32 = 1;
 	pub const ORB_HARRIS_SCORE: i32 = 0;
 	/// Metrics used to calculate the distance between two feature vectors.
@@ -117,6 +125,30 @@ pub mod features {
 
 	opencv_type_enum! { crate::features::FastFeatureDetector_DetectorType { TYPE_5_8, TYPE_7_12, TYPE_9_16 } }
 
+	/// Keypoint normalization applied by LightGlueMatcher to pixel coordinates, see LightGlueMatcher::setKeypointNormalization()
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum LightGlueNormalization {
+		/// Per-axis mapping implied by the LightGlueType given at creation (default)
+		LG_NORM_MODEL = 0,
+		/// LightGlue reference mapping ![inline formula](https://latex.codecogs.com/png.latex?%28p%20%2D%20size%20%2F%202%29%20%2F%20%28%5Cmax%28W%2C%20H%29%20%2F%202%29), keeps the image aspect ratio
+		LG_NORM_MAX_SIDE = 1,
+	}
+
+	opencv_type_enum! { crate::features::LightGlueNormalization { LG_NORM_MODEL, LG_NORM_MAX_SIDE } }
+
+	/// LightGlue model variant (namespace-scoped like dnn::EngineType)
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum LightGlueType {
+		/// ALIKED model: keypoints normalized to [-1, 1]
+		LG_ALIKED = 0,
+		/// DISK model:  keypoints normalized to [ 0, 1]
+		LG_DISK = 1,
+	}
+
+	opencv_type_enum! { crate::features::LightGlueType { LG_ALIKED, LG_DISK } }
+
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ORB_ScoreType {
@@ -151,7 +183,7 @@ pub mod features {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	///
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Rosten06) .
 	///
 	/// Check [tutorial_py_fast] "the corresponding tutorial" for more details.
 	///
@@ -181,7 +213,7 @@ pub mod features {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	///
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Rosten06) .
 	///
 	/// Check [tutorial_py_fast] "the corresponding tutorial" for more details.
 	///
@@ -516,7 +548,7 @@ pub mod features {
 	/// Determines strong corners on an image.
 	///
 	/// The function finds the most prominent corners in the image or in the specified image region, as
-	/// described in [Shi94](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Shi94)
+	/// described in [Shi94](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Shi94)
 	///
 	/// *   Function calculates the corner quality measure at every source image pixel using the
 	///    [corner_min_eigen_val] or [corner_harris] .
@@ -667,7 +699,7 @@ pub mod features {
 	/// Determines strong corners on an image.
 	///
 	/// The function finds the most prominent corners in the image or in the specified image region, as
-	/// described in [Shi94](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Shi94)
+	/// described in [Shi94](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Shi94)
 	///
 	/// *   Function calculates the corner quality measure at every source image pixel using the
 	///    [corner_min_eigen_val] or [corner_harris] .
@@ -760,7 +792,7 @@ pub mod features {
 	/// ALIKED feature detector and descriptor extractor.
 	///
 	/// ALIKED (A Lightweight Image KEYpoint Detector) is a CNN-based feature detector and descriptor
-	/// extractor, as described in [Zhao23](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zhao23) . It produces 128-dimensional float descriptors and
+	/// extractor, as described in [Zhao23](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Zhao23) . It produces 128-dimensional float descriptors and
 	/// keypoints with sub-pixel accuracy.
 	///
 	/// The model expects RGB input [1,3,H,W] and internally converts BGR images to RGB.
@@ -915,7 +947,7 @@ pub mod features {
 		pub input_size: core::Size,
 		/// Whether to L2-normalize descriptors, default true
 		pub normalize_descriptors: bool,
-		/// DNN engine type (dnn::EngineType), default ENGINE_NEW
+		/// DNN engine type (dnn::EngineType), default ENGINE_AUTO
 		pub engine: i32,
 		/// DNN backend, default DNN_BACKEND_DEFAULT
 		pub backend: i32,
@@ -1249,7 +1281,7 @@ pub mod features {
 	boxed_ref! { ANNIndex, crate::features::ANNIndexTraitConst, as_raw_ANNIndex, crate::features::ANNIndexTrait, as_raw_mut_ANNIndex }
 
 	/// Class for implementing the wrapper which makes detectors and extractors to be affine invariant,
-	/// described as ASIFT in [YM11](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_YM11) .
+	/// described as ASIFT in [YM11](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_YM11) .
 	pub struct AffineFeature {
 		ptr: *mut c_void,
 	}
@@ -2270,6 +2302,53 @@ pub mod features {
 			Ok(ret)
 		}
 
+		/// Provides keypoint and image-size context for matchers that need it (e.g. LightGlueMatcher).
+		///
+		/// Must be called before match()/knnMatch()/radiusMatch() for matchers that require this context.
+		/// Matchers that don't need it (e.g. BFMatcher, FlannBasedMatcher) ignore the call.
+		///
+		/// ## Parameters
+		/// * queryKpts: Query image keypoints.
+		/// * trainKpts: Train image keypoints.
+		/// * queryImageSize: Size of the query image (width, height).
+		/// * trainImageSize: Size of the train image (width, height).
+		///
+		/// ## C++ default parameters
+		/// * query_image_size: Size()
+		/// * train_image_size: Size()
+		#[inline]
+		fn set_image_pair_info(&mut self, query_kpts: &core::Vector<core::KeyPoint>, train_kpts: &core::Vector<core::KeyPoint>, query_image_size: core::Size, train_image_size: core::Size) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DescriptorMatcher_setImagePairInfo_const_vectorLKeyPointGR_const_vectorLKeyPointGR_Size_Size(self.as_raw_mut_DescriptorMatcher(), query_kpts.as_raw_VectorOfKeyPoint(), train_kpts.as_raw_VectorOfKeyPoint(), &query_image_size, &train_image_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Provides keypoint and image-size context for matchers that need it (e.g. LightGlueMatcher).
+		///
+		/// Must be called before match()/knnMatch()/radiusMatch() for matchers that require this context.
+		/// Matchers that don't need it (e.g. BFMatcher, FlannBasedMatcher) ignore the call.
+		///
+		/// ## Parameters
+		/// * queryKpts: Query image keypoints.
+		/// * trainKpts: Train image keypoints.
+		/// * queryImageSize: Size of the query image (width, height).
+		/// * trainImageSize: Size of the train image (width, height).
+		///
+		/// ## Note
+		/// This alternative version of [DescriptorMatcherTrait::set_image_pair_info] function uses the following default values for its arguments:
+		/// * query_image_size: Size()
+		/// * train_image_size: Size()
+		#[inline]
+		fn set_image_pair_info_def(&mut self, query_kpts: &core::Vector<core::KeyPoint>, train_kpts: &core::Vector<core::KeyPoint>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DescriptorMatcher_setImagePairInfo_const_vectorLKeyPointGR_const_vectorLKeyPointGR(self.as_raw_mut_DescriptorMatcher(), query_kpts.as_raw_VectorOfKeyPoint(), train_kpts.as_raw_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 		/// Trains a descriptor matcher
 		///
 		/// Trains a descriptor matcher (for example, the flann index). In all methods to match, the method
@@ -3132,6 +3211,8 @@ pub mod features {
 
 	boxed_cast_descendant! { Feature2D, crate::features::SimpleBlobDetector, cv_Feature2D_to_SimpleBlobDetector }
 
+	boxed_cast_descendant! { Feature2D, crate::features::XFeat, cv_Feature2D_to_XFeat }
+
 	impl core::AlgorithmTraitConst for Feature2D {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3760,14 +3841,14 @@ pub mod features {
 
 	/// LightGlue feature matcher.
 	///
-	/// LightGlue is a CNN-based feature matcher, as described in [Lindenberger23](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Lindenberger23) . It takes
+	/// LightGlue is an attention-based feature matcher, as described in [Lindenberger23](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Lindenberger23) . It takes
 	/// keypoint locations and descriptors from two images and directly predicts match pairs. Unlike
-	/// traditional matchers that compute descriptor distances, LightGlue uses attention mechanisms
-	/// to produce confidence scores for each potential match pair.
+	/// traditional matchers that compute descriptor distances, LightGlue produces confidence scores
+	/// for each potential match pair.
 	///
-	/// The matcher extends DescriptorMatcher and supports the standard match(), knnMatch(), and
-	/// radiusMatch() interfaces. Context (keypoints and image sizes) must be provided via
-	/// setPairInfo() before matching.
+	/// The matcher extends DescriptorMatcher and supports match() and knnMatch() with k=1.
+	/// Context (keypoints and image sizes) must be provided via setPairInfo() or setImagePairInfo()
+	/// before matching. radiusMatch() is not supported.
 	pub struct LightGlueMatcher {
 		ptr: *mut c_void,
 	}
@@ -3790,16 +3871,18 @@ pub mod features {
 		/// * scoreThreshold: Match confidence threshold.
 		/// * backend: DNN backend
 		/// * target: DNN target
+		/// * type: Model variant: LG_ALIKED (default) or LG_DISK.
 		///
 		/// ## C++ default parameters
 		/// * score_threshold: 0.0f
 		/// * backend: 0
 		/// * target: 0
+		/// * typ: LG_ALIKED
 		#[inline]
-		pub fn create(model_path: impl AsRef<OsStr>, score_threshold: f32, backend: i32, target: i32) -> Result<core::Ptr<crate::features::LightGlueMatcher>> {
+		pub fn create(model_path: impl AsRef<OsStr>, score_threshold: f32, backend: i32, target: i32, typ: i32) -> Result<core::Ptr<crate::features::LightGlueMatcher>> {
 			path_arg!(model_path);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LightGlueMatcher_create_const_StringR_float_int_int(model_path.opencv_as_extern(), score_threshold, backend, target, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_LightGlueMatcher_create_const_StringR_float_int_int_int(model_path.opencv_as_extern(), score_threshold, backend, target, typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features::LightGlueMatcher>::opencv_from_extern(ret) };
@@ -3812,12 +3895,14 @@ pub mod features {
 		/// * scoreThreshold: Match confidence threshold.
 		/// * backend: DNN backend
 		/// * target: DNN target
+		/// * type: Model variant: LG_ALIKED (default) or LG_DISK.
 		///
 		/// ## Note
 		/// This alternative version of [LightGlueMatcher::create] function uses the following default values for its arguments:
 		/// * score_threshold: 0.0f
 		/// * backend: 0
 		/// * target: 0
+		/// * typ: LG_ALIKED
 		#[inline]
 		pub fn create_def(model_path: impl AsRef<OsStr>) -> Result<core::Ptr<crate::features::LightGlueMatcher>> {
 			path_arg!(model_path);
@@ -3835,15 +3920,17 @@ pub mod features {
 		/// * scoreThreshold: Match confidence threshold.
 		/// * backend: DNN backend
 		/// * target: DNN target
+		/// * type: Model variant: LG_ALIKED (default) or LG_DISK.
 		///
 		/// ## C++ default parameters
 		/// * score_threshold: 0.0f
 		/// * backend: 0
 		/// * target: 0
+		/// * typ: LG_ALIKED
 		#[inline]
-		pub fn create_from_memory(model_data: &core::Vector<u8>, score_threshold: f32, backend: i32, target: i32) -> Result<core::Ptr<crate::features::LightGlueMatcher>> {
+		pub fn create_from_memory(model_data: &core::Vector<u8>, score_threshold: f32, backend: i32, target: i32, typ: i32) -> Result<core::Ptr<crate::features::LightGlueMatcher>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LightGlueMatcher_create_const_vectorLunsigned_charGR_float_int_int(model_data.as_raw_VectorOfu8(), score_threshold, backend, target, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_LightGlueMatcher_create_const_vectorLunsigned_charGR_float_int_int_int(model_data.as_raw_VectorOfu8(), score_threshold, backend, target, typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features::LightGlueMatcher>::opencv_from_extern(ret) };
@@ -3856,12 +3943,14 @@ pub mod features {
 		/// * scoreThreshold: Match confidence threshold.
 		/// * backend: DNN backend
 		/// * target: DNN target
+		/// * type: Model variant: LG_ALIKED (default) or LG_DISK.
 		///
 		/// ## Note
 		/// This alternative version of [LightGlueMatcher::create_from_memory] function uses the following default values for its arguments:
 		/// * score_threshold: 0.0f
 		/// * backend: 0
 		/// * target: 0
+		/// * typ: LG_ALIKED
 		#[inline]
 		pub fn create_from_memory_def(model_data: &core::Vector<u8>) -> Result<core::Ptr<crate::features::LightGlueMatcher>> {
 			return_send!(via ocvrs_return);
@@ -3878,6 +3967,16 @@ pub mod features {
 	pub trait LightGlueMatcherTraitConst: crate::features::DescriptorMatcherTraitConst {
 		fn as_raw_LightGlueMatcher(&self) -> *const c_void;
 
+		/// Returns the keypoint normalization, one of LightGlueNormalization.
+		#[inline]
+		fn get_keypoint_normalization(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LightGlueMatcher_getKeypointNormalization_const(self.as_raw_LightGlueMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 	}
 
 	/// Mutable methods for [crate::features::LightGlueMatcher]
@@ -3887,14 +3986,16 @@ pub mod features {
 		/// Sets the keypoint and image size context for the next match() call.
 		///
 		/// This provides the spatial context that LightGlue needs in addition to descriptors.
-		/// Must be called before match()/knnMatch()/radiusMatch() unless using automatic context
-		/// from in-process ALIKED instances.
+		/// Must be called before match()/knnMatch(), or use setImagePairInfo().
+		/// Pixel coordinates are normalized according to the LightGlueType selected at creation, or as
+		/// selected by setKeypointNormalization().
+		/// For keypoints already normalized for that model, leave the corresponding image size empty.
 		///
 		/// ## Parameters
 		/// * queryKpts: Query image keypoints (Nx2 float matrix with x,y coordinates).
 		/// * trainKpts: Train image keypoints (Nx2 float matrix with x,y coordinates).
-		/// * queryImageSize: Size of the query image (width, height).
-		/// * trainImageSize: Size of the train image (width, height).
+		/// * queryImageSize: Size of the query image, or Size() for normalized query keypoints.
+		/// * trainImageSize: Size of the train image, or Size() for normalized train keypoints.
 		///
 		/// ## C++ default parameters
 		/// * query_image_size: Size()
@@ -3913,14 +4014,16 @@ pub mod features {
 		/// Sets the keypoint and image size context for the next match() call.
 		///
 		/// This provides the spatial context that LightGlue needs in addition to descriptors.
-		/// Must be called before match()/knnMatch()/radiusMatch() unless using automatic context
-		/// from in-process ALIKED instances.
+		/// Must be called before match()/knnMatch(), or use setImagePairInfo().
+		/// Pixel coordinates are normalized according to the LightGlueType selected at creation, or as
+		/// selected by setKeypointNormalization().
+		/// For keypoints already normalized for that model, leave the corresponding image size empty.
 		///
 		/// ## Parameters
 		/// * queryKpts: Query image keypoints (Nx2 float matrix with x,y coordinates).
 		/// * trainKpts: Train image keypoints (Nx2 float matrix with x,y coordinates).
-		/// * queryImageSize: Size of the query image (width, height).
-		/// * trainImageSize: Size of the train image (width, height).
+		/// * queryImageSize: Size of the query image, or Size() for normalized query keypoints.
+		/// * trainImageSize: Size of the train image, or Size() for normalized train keypoints.
 		///
 		/// ## Note
 		/// This alternative version of [LightGlueMatcherTrait::set_pair_info] function uses the following default values for its arguments:
@@ -3942,6 +4045,57 @@ pub mod features {
 		fn clear_pair_info(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LightGlueMatcher_clearPairInfo(self.as_raw_mut_LightGlueMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Selects how pixel keypoints passed with an image size are normalized.
+		///
+		/// The default, LG_NORM_MODEL, keeps the per-axis mapping implied by the LightGlueType given at
+		/// creation. LG_NORM_MAX_SIDE applies the mapping of the LightGlue reference implementation, which
+		/// shifts by half the image size and divides both axes by half the longer side. Use it for models
+		/// exported from the reference forward without their own normalization, e.g. XFeat's LighterGlue.
+		/// For square images the two mappings coincide for LG_ALIKED.
+		///
+		/// The setting does not affect keypoints passed with an empty image size, and it is kept by clone().
+		/// ## Parameters
+		/// * normalization: One of LightGlueNormalization.
+		#[inline]
+		fn set_keypoint_normalization(&mut self, normalization: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LightGlueMatcher_setKeypointNormalization_int(self.as_raw_mut_LightGlueMatcher(), normalization, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Convenience overload of setPairInfo() taking keypoints directly.
+		/// Uses the same model-specific normalization and image size convention as setPairInfo().
+		///
+		/// ## C++ default parameters
+		/// * query_image_size: Size()
+		/// * train_image_size: Size()
+		#[inline]
+		fn set_image_pair_info(&mut self, query_kpts: &core::Vector<core::KeyPoint>, train_kpts: &core::Vector<core::KeyPoint>, query_image_size: core::Size, train_image_size: core::Size) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LightGlueMatcher_setImagePairInfo_const_vectorLKeyPointGR_const_vectorLKeyPointGR_Size_Size(self.as_raw_mut_LightGlueMatcher(), query_kpts.as_raw_VectorOfKeyPoint(), train_kpts.as_raw_VectorOfKeyPoint(), &query_image_size, &train_image_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Convenience overload of setPairInfo() taking keypoints directly.
+		/// Uses the same model-specific normalization and image size convention as setPairInfo().
+		///
+		/// ## Note
+		/// This alternative version of [LightGlueMatcherTrait::set_image_pair_info] function uses the following default values for its arguments:
+		/// * query_image_size: Size()
+		/// * train_image_size: Size()
+		#[inline]
+		fn set_image_pair_info_def(&mut self, query_kpts: &core::Vector<core::KeyPoint>, train_kpts: &core::Vector<core::KeyPoint>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LightGlueMatcher_setImagePairInfo_const_vectorLKeyPointGR_const_vectorLKeyPointGR(self.as_raw_mut_LightGlueMatcher(), query_kpts.as_raw_VectorOfKeyPoint(), train_kpts.as_raw_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3998,10 +4152,10 @@ pub mod features {
 	///
 	/// - there are two different implementation of %MSER: one for grey image, one for color image
 	///
-	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
+	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
 	/// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
 	///
-	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
+	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
 	/// than grey image method ( 3~4 times )
 	///
 	/// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
@@ -4352,7 +4506,7 @@ pub mod features {
 
 	/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
 	///
-	/// described in [RRKB11](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
+	/// described in [RRKB11](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
 	/// the strongest features using FAST or Harris response, finds their orientation using first-order
 	/// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
 	/// k-tuples) are rotated according to the measured orientation).
@@ -4707,7 +4861,7 @@ pub mod features {
 	boxed_ref! { ORB, crate::features::ORBTraitConst, as_raw_ORB, crate::features::ORBTrait, as_raw_mut_ORB }
 
 	/// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
-	/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Lowe04) .
+	/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Lowe04) .
 	pub struct SIFT {
 		ptr: *mut c_void,
 	}
@@ -5280,5 +5434,244 @@ pub mod features {
 		}
 
 	}
+
+	/// XFeat feature detector and descriptor, based on a DNN model.
+	///
+	/// XFeat is a compact learned local-feature extractor. This class wraps an ONNX export through
+	/// cv::dnn::Net and exposes score-map detections with 64-D float descriptors under the standard
+	/// cv::Feature2D interface.
+	///
+	/// The class assumes the ONNX model has a single grayscale input tensor N×1×H×W in [0, 1] and
+	/// returns descriptor and score maps. The descriptor map must have 64 channels, and the keypoint
+	/// logit map must have either 64 channels (no extra class) or 65 channels, where the last channel
+	/// is treated as a dustbin/background class used only in softmax normalization. Images are resized
+	/// with preserved aspect ratio and padded to the configured network input size.
+	pub struct XFeat {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { XFeat }
+
+	impl Drop for XFeat {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_XFeat_delete(self.as_raw_mut_XFeat()) };
+		}
+	}
+
+	unsafe impl Send for XFeat {}
+
+	impl XFeat {
+		/// Creates an XFeat detector.
+		/// ## Parameters
+		/// * modelPath: Path to the XFeat ONNX model.
+		/// * maxKeypoints: Maximum number of keypoints to return per image. The strongest
+		///                    responses are kept; -1 keeps all detections.
+		/// * scoreThreshold: Discard keypoints with network score not greater than this value.
+		/// * inputSize: Input size fed to the network, default Size(640, 640).
+		/// * backendId: DNN backend identifier (see cv::dnn::Backend); 0 = DNN_BACKEND_DEFAULT.
+		/// * targetId: DNN target identifier (see cv::dnn::Target);  0 = DNN_TARGET_CPU.
+		///
+		/// ## C++ default parameters
+		/// * max_keypoints: -1
+		/// * score_threshold: 0.5f
+		/// * input_size: Size(640,640)
+		/// * backend_id: 0
+		/// * target_id: 0
+		#[inline]
+		pub fn create(model_path: impl AsRef<OsStr>, max_keypoints: i32, score_threshold: f32, input_size: core::Size, backend_id: i32, target_id: i32) -> Result<core::Ptr<crate::features::XFeat>> {
+			path_arg!(model_path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_XFeat_create_const_StringR_int_float_const_SizeR_int_int(model_path.opencv_as_extern(), max_keypoints, score_threshold, &input_size, backend_id, target_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features::XFeat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates an XFeat detector.
+		/// ## Parameters
+		/// * modelPath: Path to the XFeat ONNX model.
+		/// * maxKeypoints: Maximum number of keypoints to return per image. The strongest
+		///                    responses are kept; -1 keeps all detections.
+		/// * scoreThreshold: Discard keypoints with network score not greater than this value.
+		/// * inputSize: Input size fed to the network, default Size(640, 640).
+		/// * backendId: DNN backend identifier (see cv::dnn::Backend); 0 = DNN_BACKEND_DEFAULT.
+		/// * targetId: DNN target identifier (see cv::dnn::Target);  0 = DNN_TARGET_CPU.
+		///
+		/// ## Note
+		/// This alternative version of [XFeat::create] function uses the following default values for its arguments:
+		/// * max_keypoints: -1
+		/// * score_threshold: 0.5f
+		/// * input_size: Size(640,640)
+		/// * backend_id: 0
+		/// * target_id: 0
+		#[inline]
+		pub fn create_def(model_path: impl AsRef<OsStr>) -> Result<core::Ptr<crate::features::XFeat>> {
+			path_arg!(model_path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_XFeat_create_const_StringR(model_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features::XFeat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates an XFeat detector from an in-memory model buffer.
+		///
+		/// ## C++ default parameters
+		/// * max_keypoints: -1
+		/// * score_threshold: 0.5f
+		/// * input_size: Size(640,640)
+		/// * backend_id: 0
+		/// * target_id: 0
+		#[inline]
+		pub fn create_from_memory(buffer_model: &core::Vector<u8>, max_keypoints: i32, score_threshold: f32, input_size: core::Size, backend_id: i32, target_id: i32) -> Result<core::Ptr<crate::features::XFeat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_XFeat_create_const_vectorLunsigned_charGR_int_float_const_SizeR_int_int(buffer_model.as_raw_VectorOfu8(), max_keypoints, score_threshold, &input_size, backend_id, target_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features::XFeat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates an XFeat detector from an in-memory model buffer.
+		///
+		/// ## Note
+		/// This alternative version of [XFeat::create_from_memory] function uses the following default values for its arguments:
+		/// * max_keypoints: -1
+		/// * score_threshold: 0.5f
+		/// * input_size: Size(640,640)
+		/// * backend_id: 0
+		/// * target_id: 0
+		#[inline]
+		pub fn create_from_memory_def(buffer_model: &core::Vector<u8>) -> Result<core::Ptr<crate::features::XFeat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_XFeat_create_const_vectorLunsigned_charGR(buffer_model.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features::XFeat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::features::XFeat]
+	pub trait XFeatTraitConst: crate::features::Feature2DTraitConst {
+		fn as_raw_XFeat(&self) -> *const c_void;
+
+		#[inline]
+		fn get_max_keypoints(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_XFeat_getMaxKeypoints_const(self.as_raw_XFeat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_score_threshold(&self) -> Result<f32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_XFeat_getScoreThreshold_const(self.as_raw_XFeat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_input_size(&self) -> Result<core::Size> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_XFeat_getInputSize_const(self.as_raw_XFeat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_default_name(&self) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_XFeat_getDefaultName_const(self.as_raw_XFeat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::features::XFeat]
+	pub trait XFeatTrait: crate::features::Feature2DTrait + crate::features::XFeatTraitConst {
+		fn as_raw_mut_XFeat(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn set_max_keypoints(&mut self, max_keypoints: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_XFeat_setMaxKeypoints_int(self.as_raw_mut_XFeat(), max_keypoints, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_score_threshold(&mut self, threshold: f32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_XFeat_setScoreThreshold_float(self.as_raw_mut_XFeat(), threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_input_size(&mut self, input_size: core::Size) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_XFeat_setInputSize_const_SizeR(self.as_raw_mut_XFeat(), &input_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl fmt::Debug for XFeat {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("XFeat")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { XFeat, core::Algorithm, cv_XFeat_to_Algorithm }
+
+	boxed_cast_base! { XFeat, crate::features::Feature2D, cv_XFeat_to_Feature2D }
+
+	impl core::AlgorithmTraitConst for XFeat {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for XFeat {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { XFeat, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::features::Feature2DTraitConst for XFeat {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features::Feature2DTrait for XFeat {
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { XFeat, crate::features::Feature2DTraitConst, as_raw_Feature2D, crate::features::Feature2DTrait, as_raw_mut_Feature2D }
+
+	impl crate::features::XFeatTraitConst for XFeat {
+		#[inline] fn as_raw_XFeat(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features::XFeatTrait for XFeat {
+		#[inline] fn as_raw_mut_XFeat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { XFeat, crate::features::XFeatTraitConst, as_raw_XFeat, crate::features::XFeatTrait, as_raw_mut_XFeat }
 
 }

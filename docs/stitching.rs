@@ -6,9 +6,9 @@ pub mod stitching {
 	//! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 	//! one can combine and use them separately.
 	//!
-	//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BL07) .
+	//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_BL07) .
 	//!
-	//! ![stitching pipeline](https://docs.opencv.org/5.0.0/StitchingPipeline.jpg)
+	//! ![stitching pipeline](https://docs.opencv.org/5.1.0/StitchingPipeline.jpg)
 	//!
 	//! Camera models
 	//! -------------
@@ -3915,7 +3915,7 @@ pub mod stitching {
 	boxed_ref! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksCompensatorTraitConst, as_raw_Detail_BlocksCompensator, crate::stitching::Detail_BlocksCompensatorTrait, as_raw_mut_Detail_BlocksCompensator }
 
 	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-	/// intensities, see [UES01](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_UES01) for details.
+	/// intensities, see [UES01](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_UES01) for details.
 	pub struct Detail_BlocksGainCompensator {
 		ptr: *mut c_void,
 	}
@@ -4641,37 +4641,37 @@ pub mod stitching {
 
 		#[inline]
 		fn set_focal(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propFocal_const_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propFocal_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_aspect(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propAspect_const_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propAspect_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_ppx(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propPpx_const_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propPpx_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_ppy(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propPpy_const_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propPpy_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 
 		#[inline]
-		fn set_r(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propR_const_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_Mat()) };
+		fn set_r(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_detail_CameraParams_propR_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		#[inline]
-		fn set_t(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propT_const_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_Mat()) };
+		fn set_t(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_detail_CameraParams_propT_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
@@ -4938,13 +4938,13 @@ pub mod stitching {
 
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propA_const_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propA_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propB_const_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propB_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
 			ret
 		}
 
@@ -5151,13 +5151,13 @@ pub mod stitching {
 
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propA_const_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propA_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propB_const_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propB_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
 			ret
 		}
 
@@ -5885,14 +5885,14 @@ pub mod stitching {
 		fn as_raw_mut_Detail_DisjointSets(&mut self) -> *mut c_void;
 
 		#[inline]
-		fn set_parent(&mut self, val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_detail_DisjointSets_propParent_const_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_VectorOfi32()) };
+		fn set_parent(&mut self, mut val: core::Vector<i32>) {
+			let ret = unsafe { sys::cv_detail_DisjointSets_propParent_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 
 		#[inline]
-		fn set_size(&mut self, val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_detail_DisjointSets_propSize_const_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_VectorOfi32()) };
+		fn set_size(&mut self, mut val: core::Vector<i32>) {
+			let ret = unsafe { sys::cv_detail_DisjointSets_propSize_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 
@@ -5945,6 +5945,7 @@ pub mod stitching {
 
 	boxed_ref! { Detail_DisjointSets, crate::stitching::Detail_DisjointSetsTraitConst, as_raw_Detail_DisjointSets, crate::stitching::Detail_DisjointSetsTrait, as_raw_mut_Detail_DisjointSets }
 
+	/// Dynamic programming-based seam estimator. See [MillsD09](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_MillsD09) for a related approach.
 	pub struct Detail_DpSeamFinder {
 		ptr: *mut c_void,
 	}
@@ -6781,7 +6782,7 @@ pub mod stitching {
 	boxed_ref! { Detail_FisheyeWarper, crate::stitching::Detail_FisheyeWarperTraitConst, as_raw_Detail_FisheyeWarper, crate::stitching::Detail_FisheyeWarperTrait, as_raw_mut_Detail_FisheyeWarper }
 
 	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-	/// intensities, see [BL07](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
+	/// intensities, see [BL07](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
 	pub struct Detail_GainCompensator {
 		ptr: *mut c_void,
 	}
@@ -7064,7 +7065,7 @@ pub mod stitching {
 
 	boxed_ref! { Detail_Graph, crate::stitching::Detail_GraphTraitConst, as_raw_Detail_Graph, crate::stitching::Detail_GraphTrait, as_raw_mut_Detail_Graph }
 
-	/// Minimum graph cut-based seam estimator. See details in [Kwatra03](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Kwatra03) .
+	/// Minimum graph cut-based seam estimator. See details in [Kwatra03](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Kwatra03) .
 	pub struct Detail_GraphCutSeamFinder {
 		ptr: *mut c_void,
 	}
@@ -7476,19 +7477,19 @@ pub mod stitching {
 
 		#[inline]
 		fn set_from(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_GraphEdge_propFrom_const_int(self.as_raw_mut_Detail_GraphEdge(), val) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propFrom_int(self.as_raw_mut_Detail_GraphEdge(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_to(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_GraphEdge_propTo_const_int(self.as_raw_mut_Detail_GraphEdge(), val) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propTo_int(self.as_raw_mut_Detail_GraphEdge(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_weight(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_GraphEdge_propWeight_const_float(self.as_raw_mut_Detail_GraphEdge(), val) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propWeight_float(self.as_raw_mut_Detail_GraphEdge(), val) };
 			ret
 		}
 
@@ -7668,25 +7669,25 @@ pub mod stitching {
 
 		#[inline]
 		fn set_img_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_propImg_idx_const_int(self.as_raw_mut_Detail_ImageFeatures(), val) };
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propImg_idx_int(self.as_raw_mut_Detail_ImageFeatures(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_img_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_propImg_size_const_Size(self.as_raw_mut_Detail_ImageFeatures(), &val) };
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propImg_size_Size(self.as_raw_mut_Detail_ImageFeatures(), &val) };
 			ret
 		}
 
 		#[inline]
-		fn set_keypoints(&mut self, val: core::Vector<core::KeyPoint>) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_propKeypoints_const_vectorLKeyPointG(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_VectorOfKeyPoint()) };
+		fn set_keypoints(&mut self, mut val: core::Vector<core::KeyPoint>) {
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propKeypoints_vectorLKeyPointG(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_VectorOfKeyPoint()) };
 			ret
 		}
 
 		#[inline]
-		fn set_descriptors(&mut self, val: core::UMat) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_propDescriptors_const_UMat(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_UMat()) };
+		fn set_descriptors(&mut self, mut val: core::UMat) {
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propDescriptors_UMat(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_UMat()) };
 			ret
 		}
 
@@ -7742,8 +7743,10 @@ pub mod stitching {
 	/// Features matcher that adapts LightGlueMatcher (DescriptorMatcher) to the
 	/// stitching pipeline's FeaturesMatcher interface.
 	///
-	/// This matcher uses DNN-based LightGlue for feature matching, requiring ALIKED-style
-	/// keypoints with spatial context for positional encoding.
+	/// This matcher uses DNN-based LightGlue for feature matching. The wrapped
+	/// LightGlueMatcher controls which feature type and keypoint normalization are used.
+	/// ImageFeatures must contain compatible descriptors, keypoints, and image sizes for
+	/// the selected LightGlue model.
 	/// ## See also
 	/// cv::detail::FeaturesMatcher cv::LightGlueMatcher
 	pub struct Detail_LightGlueFeaturesMatcher {
@@ -7971,48 +7974,48 @@ pub mod stitching {
 
 		#[inline]
 		fn set_src_img_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propSrc_img_idx_const_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propSrc_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 
 		/// Images indices (optional)
 		#[inline]
 		fn set_dst_img_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propDst_img_idx_const_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propDst_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 
 		#[inline]
-		fn set_matches(&mut self, val: core::Vector<core::DMatch>) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propMatches_const_vectorLDMatchG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_VectorOfDMatch()) };
+		fn set_matches(&mut self, mut val: core::Vector<core::DMatch>) {
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propMatches_vectorLDMatchG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfDMatch()) };
 			ret
 		}
 
 		/// Geometrically consistent matches mask
 		#[inline]
-		fn set_inliers_mask(&mut self, val: core::Vector<u8>) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propInliers_mask_const_vectorLunsigned_charG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_VectorOfu8()) };
+		fn set_inliers_mask(&mut self, mut val: core::Vector<u8>) {
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propInliers_mask_vectorLunsigned_charG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfu8()) };
 			ret
 		}
 
 		/// Number of geometrically consistent matches
 		#[inline]
 		fn set_num_inliers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propNum_inliers_const_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propNum_inliers_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 
 		/// Estimated transformation
 		#[inline]
-		fn set_h(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propH_const_Mat(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_Mat()) };
+		fn set_h(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propH_Mat(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// Confidence two images are from the same panorama
 		#[inline]
 		fn set_confidence(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propConfidence_const_double(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propConfidence_double(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 
@@ -8249,7 +8252,7 @@ pub mod stitching {
 
 	boxed_ref! { Detail_MercatorWarper, crate::stitching::Detail_MercatorWarperTraitConst, as_raw_Detail_MercatorWarper, crate::stitching::Detail_MercatorWarperTrait, as_raw_mut_Detail_MercatorWarper }
 
-	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BA83)).
+	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_BA83)).
 	pub struct Detail_MultiBandBlender {
 		ptr: *mut c_void,
 	}
@@ -8793,13 +8796,13 @@ pub mod stitching {
 
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propA_const_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propA_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propB_const_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propB_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
 			ret
 		}
 
@@ -9006,13 +9009,13 @@ pub mod stitching {
 
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniProjector_propA_const_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniProjector_propA_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniProjector_propB_const_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniProjector_propB_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
 			ret
 		}
 
@@ -9939,7 +9942,7 @@ pub mod stitching {
 
 		#[inline]
 		fn set_scale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_ProjectorBase_propScale_const_float(self.as_raw_mut_Detail_ProjectorBase(), val) };
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propScale_float(self.as_raw_mut_Detail_ProjectorBase(), val) };
 			ret
 		}
 

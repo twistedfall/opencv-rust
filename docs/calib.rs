@@ -19,7 +19,7 @@ pub mod calib {
 	//! world to camera coordinate systems (or camera frame) and ![inline formula](https://latex.codecogs.com/png.latex?s) is the projective transformation's
 	//! arbitrary scaling and not part of the camera model.
 	//!
-	//! The camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?A) (notation used as in [Zhang2000](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zhang2000) and also generally notated
+	//! The camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?A) (notation used as in [Zhang2000](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Zhang2000) and also generally notated
 	//! as ![inline formula](https://latex.codecogs.com/png.latex?K)) projects 3D points given in the camera coordinate system to 2D pixel coordinates, i.e.
 	//!
 	//! ![block formula](https://latex.codecogs.com/png.latex?p%20%3D%20A%20P%5Fc%2E)
@@ -83,7 +83,7 @@ pub mod calib {
 	//!
 	//! The following figure illustrates the pinhole camera model.
 	//!
-	//! ![Pinhole camera model](https://docs.opencv.org/5.0.0/pinhole_camera_model.png) { width=70% }
+	//! ![Pinhole camera model](https://docs.opencv.org/5.1.0/pinhole_camera_model.png) { width=70% }
 	//!
 	//! Real lenses usually have some distortion, mostly radial distortion, and slight tangential distortion.
 	//! So, the above model is extended as:
@@ -121,13 +121,13 @@ pub mod calib {
 	//! the framework does not support the required integer programming and polynomial inequalities.
 	//! See [issue #15992](https://github.com/opencv/opencv/issues/15992) for additional information.
 	//!
-	//! ![](https://docs.opencv.org/5.0.0/distortion_examples.png)
-	//! ![](https://docs.opencv.org/5.0.0/distortion_examples2.png)
+	//! ![](https://docs.opencv.org/5.1.0/distortion_examples.png)
+	//! ![](https://docs.opencv.org/5.1.0/distortion_examples2.png)
 	//!
 	//! In some cases, the image sensor may be tilted in order to focus an oblique plane in front of the
 	//! camera (Scheimpflug principle). This can be useful for particle image velocimetry (PIV) or
 	//! triangulation with a laser fan. The tilt causes a perspective distortion of ![inline formula](https://latex.codecogs.com/png.latex?x%27%27) and
-	//! ![inline formula](https://latex.codecogs.com/png.latex?y%27%27). This distortion can be modeled in the following way, see e.g. [Louhichi07](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Louhichi07).
+	//! ![inline formula](https://latex.codecogs.com/png.latex?y%27%27). This distortion can be modeled in the following way, see e.g. [Louhichi07](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Louhichi07).
 	//!
 	//! ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%0Au%20%5C%5C%0Av%0A%5Cend%7Bbmatrix%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%0Af%5Fx%20x%27%27%27%20%2B%20c%5Fx%20%5C%5C%0Af%5Fy%20y%27%27%27%20%2B%20c%5Fy%0A%5Cend%7Bbmatrix%7D%2C)
 	//!
@@ -212,7 +212,7 @@ pub mod calib {
 	//! The inverse of an homogeneous transformation matrix is then:
 	//! ![block formula](https://latex.codecogs.com/png.latex?%0A%7B%7D%5E%7Bo%7D%5Cmathbf%7BT%7D%5Fc%20%3D%20%5Cleft%28%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20%5Cright%29%5E%7B%2D1%7D%20%3D%0A%5Cbegin%7Bbmatrix%7D%0A%7B%7D%5E%7Bc%7D%5Cmathbf%7BR%7D%5E%7B%5Ctop%7D%5Fo%20%26%20%2D%20%5Chspace%7B0%2E2em%7D%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BR%7D%5E%7B%5Ctop%7D%5Fo%20%5Chspace%7B0%2E2em%7D%20%7B%7D%5E%7Bc%7D%5Cmathbf%7Bt%7D%5Fo%20%5C%5C%0A0%5F%7B1%20%5Ctimes%203%7D%20%26%201%0A%5Cend%7Bbmatrix%7D%0A)
 	//! One can note that the inverse of a 3x3 rotation matrix is directly its matrix transpose.
-	//! ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.0.0/pinhole_homogeneous_transformation.png)
+	//! ![Perspective projection, from object to camera frame](https://docs.opencv.org/5.1.0/pinhole_homogeneous_transformation.png)
 	//! This figure summarizes the whole process. The object pose returned for instance by the [solvePnP] function
 	//! or pose from fiducial marker detection is this ![inline formula](https://latex.codecogs.com/png.latex?%20%7B%7D%5E%7Bc%7D%5Cmathbf%7BT%7D%5Fo%20) transformation.
 	//! The camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cmathbf%7BK%7D%20) allows projecting the 3D point expressed in the camera frame onto the image plane
@@ -287,7 +287,7 @@ pub mod calib {
 	//!    ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20u%20%3D%20f%5Fx%20%28x%27%20%2B%20%5Calpha%20y%27%29%20%2B%20c%5Fx%20%5C%5C%0A%20%20%20%20v%20%3D%20f%5Fy%20y%27%20%2B%20c%5Fy%20%5Cend%7Barray%7D%20)
 	//!
 	//!    Summary:
-	//!    Generic camera model [Kannala2006](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Kannala2006) with perspective projection and without distortion correction
+	//!    Generic camera model [Kannala2006](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Kannala2006) with perspective projection and without distortion correction
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
@@ -296,20 +296,20 @@ pub mod calib {
 	/// For fisheye model only. Check SVD decomposition quality for each frame during extrinsics estimation
 	pub const CALIB_CHECK_COND: i32 = 16777216;
 	/// disable Schur complement (use Bouguet calibration engine)
-	pub const CALIB_DISABLE_SCHUR_COMPLEMENT: i32 = 262144;
+	pub const CALIB_DISABLE_SCHUR_COMPLEMENT: i32 = 134217728;
 	/// Use with CALIB_USE_INTRINSIC_GUESS. The ratio fx/fy stays the same as in the input cameraMatrix.
 	pub const CALIB_FIX_ASPECT_RATIO: i32 = 2;
 	/// Use with CALIB_USE_INTRINSIC_GUESS. The focal length (fx, fy) stays the same as in the input cameraMatrix.
 	pub const CALIB_FIX_FOCAL_LENGTH: i32 = 16;
 	/// For stereo and milti-camera calibration only. Do not optimize cameras intrinsics
 	pub const CALIB_FIX_INTRINSIC: i32 = 256;
-	/// The corresponding distortion coefficient is not changed during the optimization. 0 value is used, if CALIB_USE_INTRINSIC_GUESS is not set.
+	/// The corresponding distortion coefficient is not changed during the optimization. 0 value is used, if CALIB_USE_INTRINSIC_GUESS is not set. For #fisheye::calibrate, the coefficient is set to 0 and stays 0 even if CALIB_USE_INTRINSIC_GUESS is set.
 	pub const CALIB_FIX_K1: i32 = 32;
-	/// The corresponding distortion coefficient is not changed during the optimization. 0 value is used, if CALIB_USE_INTRINSIC_GUESS is not set.
+	/// The corresponding distortion coefficient is not changed during the optimization. 0 value is used, if CALIB_USE_INTRINSIC_GUESS is not set. For #fisheye::calibrate, the coefficient is set to 0 and stays 0 even if CALIB_USE_INTRINSIC_GUESS is set.
 	pub const CALIB_FIX_K2: i32 = 64;
-	/// The corresponding distortion coefficient is not changed during the optimization. 0 value is used, if CALIB_USE_INTRINSIC_GUESS is not set.
+	/// The corresponding distortion coefficient is not changed during the optimization. 0 value is used, if CALIB_USE_INTRINSIC_GUESS is not set. For #fisheye::calibrate, the coefficient is set to 0 and stays 0 even if CALIB_USE_INTRINSIC_GUESS is set.
 	pub const CALIB_FIX_K3: i32 = 128;
-	/// The corresponding distortion coefficient is not changed during the optimization. 0 value is used, if CALIB_USE_INTRINSIC_GUESS is not set.
+	/// The corresponding distortion coefficient is not changed during the optimization. 0 value is used, if CALIB_USE_INTRINSIC_GUESS is not set. For #fisheye::calibrate, the coefficient is set to 0 and stays 0 even if CALIB_USE_INTRINSIC_GUESS is set.
 	pub const CALIB_FIX_K4: i32 = 2048;
 	/// For pinhole model only. The corresponding distortion coefficient is not changed during the optimization. 0 value is used, if CALIB_USE_INTRINSIC_GUESS is not set.
 	pub const CALIB_FIX_K5: i32 = 4096;
@@ -325,15 +325,15 @@ pub mod calib {
 	pub const CALIB_FIX_TANGENT_DIST: i32 = 2097152;
 	/// For pinhole model only. The tauX and tauY coefficients are not changed during the optimization. 0 value is used, if CALIB_USE_INTRINSIC_GUESS is not set.
 	pub const CALIB_FIX_TAUX_TAUY: i32 = 524288;
-	/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Andreff99)
+	/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Andreff99)
 	pub const CALIB_HAND_EYE_ANDREFF: i32 = 3;
-	/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Daniilidis98)
+	/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Daniilidis98)
 	pub const CALIB_HAND_EYE_DANIILIDIS: i32 = 4;
-	/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Horaud95)
+	/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Horaud95)
 	pub const CALIB_HAND_EYE_HORAUD: i32 = 2;
-	/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Park94)
+	/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Park94)
 	pub const CALIB_HAND_EYE_PARK: i32 = 1;
-	/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Tsai89)
+	/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Tsai89)
 	pub const CALIB_HAND_EYE_TSAI: i32 = 0;
 	/// Fisheye camera model
 	pub const CALIB_MODEL_FISHEYE: i32 = 1;
@@ -344,9 +344,9 @@ pub mod calib {
 	pub const CALIB_RATIONAL_MODEL: i32 = 16384;
 	/// For fisheye model only. Recompute board position on each calibration iteration
 	pub const CALIB_RECOMPUTE_EXTRINSIC: i32 = 8388608;
-	/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
+	/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
 	pub const CALIB_ROBOT_WORLD_HAND_EYE_LI: i32 = 1;
-	/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
+	/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
 	pub const CALIB_ROBOT_WORLD_HAND_EYE_SHAH: i32 = 0;
 	/// For stereo calibration only. Use the same focal length for cameras in pair.
 	pub const CALIB_SAME_FOCAL_LENGTH: i32 = 512;
@@ -382,15 +382,15 @@ pub mod calib {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum HandEyeCalibrationMethod {
-		/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Tsai89)
+		/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Tsai89)
 		CALIB_HAND_EYE_TSAI = 0,
-		/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Park94)
+		/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Park94)
 		CALIB_HAND_EYE_PARK = 1,
-		/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Horaud95)
+		/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Horaud95)
 		CALIB_HAND_EYE_HORAUD = 2,
-		/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Andreff99)
+		/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Andreff99)
 		CALIB_HAND_EYE_ANDREFF = 3,
-		/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Daniilidis98)
+		/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Daniilidis98)
 		CALIB_HAND_EYE_DANIILIDIS = 4,
 	}
 
@@ -399,9 +399,9 @@ pub mod calib {
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum RobotWorldHandEyeCalibrationMethod {
-		/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
+		/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
 		CALIB_ROBOT_WORLD_HAND_EYE_SHAH = 0,
-		/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
+		/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
 		CALIB_ROBOT_WORLD_HAND_EYE_LI = 1,
 	}
 
@@ -410,7 +410,7 @@ pub mod calib {
 	/// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 	///
 	/// This function is an extension of [calibrate_camera] with the method of releasing object which was
-	/// proposed in [strobl2011iccv](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
+	/// proposed in [strobl2011iccv](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
 	/// targets (calibration plates), this method can dramatically improve the precision of the estimated
 	/// camera parameters. Both the object-releasing method and standard method are supported by this
 	/// function. Use the parameter **iFixedPoint** for method selection. In the internal implementation,
@@ -442,7 +442,8 @@ pub mod calib {
 	/// * newObjPoints: The updated output vector of calibration pattern points. The coordinates might
 	/// be scaled based on three fixed points. The returned coordinates are accurate only if the above
 	/// mentioned three fixed points are accurate. If not needed, noArray() can be passed in. This parameter
-	/// is ignored with standard calibration method.
+	/// is ignored with standard calibration method. The output has the same depth as objectPoints[0]
+	/// (CV_32F or CV_64F).
 	/// * stdDeviationsIntrinsics: Output vector of standard deviations estimated for intrinsic parameters.
 	/// See [calibrate_camera] for details.
 	/// * stdDeviationsExtrinsics: Output vector of standard deviations estimated for extrinsic parameters.
@@ -461,7 +462,7 @@ pub mod calib {
 	/// the overall RMS re-projection error.
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-	/// views. The object-releasing extension follows [strobl2011iccv](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_strobl2011iccv) and uses the same optimization
+	/// views. The object-releasing extension follows [strobl2011iccv](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_strobl2011iccv) and uses the same optimization
 	/// core as #calibrateCamera. See [calibrate_camera] for other detailed explanations.
 	/// ## See also
 	/// calibrateCamera, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
@@ -492,7 +493,7 @@ pub mod calib {
 	/// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 	///
 	/// This function is an extension of [calibrate_camera] with the method of releasing object which was
-	/// proposed in [strobl2011iccv](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
+	/// proposed in [strobl2011iccv](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
 	/// targets (calibration plates), this method can dramatically improve the precision of the estimated
 	/// camera parameters. Both the object-releasing method and standard method are supported by this
 	/// function. Use the parameter **iFixedPoint** for method selection. In the internal implementation,
@@ -524,7 +525,8 @@ pub mod calib {
 	/// * newObjPoints: The updated output vector of calibration pattern points. The coordinates might
 	/// be scaled based on three fixed points. The returned coordinates are accurate only if the above
 	/// mentioned three fixed points are accurate. If not needed, noArray() can be passed in. This parameter
-	/// is ignored with standard calibration method.
+	/// is ignored with standard calibration method. The output has the same depth as objectPoints[0]
+	/// (CV_32F or CV_64F).
 	/// * stdDeviationsIntrinsics: Output vector of standard deviations estimated for intrinsic parameters.
 	/// See [calibrate_camera] for details.
 	/// * stdDeviationsExtrinsics: Output vector of standard deviations estimated for extrinsic parameters.
@@ -543,7 +545,7 @@ pub mod calib {
 	/// the overall RMS re-projection error.
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-	/// views. The object-releasing extension follows [strobl2011iccv](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_strobl2011iccv) and uses the same optimization
+	/// views. The object-releasing extension follows [strobl2011iccv](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_strobl2011iccv) and uses the same optimization
 	/// core as #calibrateCamera. See [calibrate_camera] for other detailed explanations.
 	/// ## See also
 	/// calibrateCamera, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
@@ -575,7 +577,7 @@ pub mod calib {
 	/// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 	///
 	/// This function is an extension of [calibrate_camera] with the method of releasing object which was
-	/// proposed in [strobl2011iccv](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
+	/// proposed in [strobl2011iccv](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
 	/// targets (calibration plates), this method can dramatically improve the precision of the estimated
 	/// camera parameters. Both the object-releasing method and standard method are supported by this
 	/// function. Use the parameter **iFixedPoint** for method selection. In the internal implementation,
@@ -607,7 +609,8 @@ pub mod calib {
 	/// * newObjPoints: The updated output vector of calibration pattern points. The coordinates might
 	/// be scaled based on three fixed points. The returned coordinates are accurate only if the above
 	/// mentioned three fixed points are accurate. If not needed, noArray() can be passed in. This parameter
-	/// is ignored with standard calibration method.
+	/// is ignored with standard calibration method. The output has the same depth as objectPoints[0]
+	/// (CV_32F or CV_64F).
 	/// * stdDeviationsIntrinsics: Output vector of standard deviations estimated for intrinsic parameters.
 	/// See [calibrate_camera] for details.
 	/// * stdDeviationsExtrinsics: Output vector of standard deviations estimated for extrinsic parameters.
@@ -626,7 +629,7 @@ pub mod calib {
 	/// the overall RMS re-projection error.
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-	/// views. The object-releasing extension follows [strobl2011iccv](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_strobl2011iccv) and uses the same optimization
+	/// views. The object-releasing extension follows [strobl2011iccv](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_strobl2011iccv) and uses the same optimization
 	/// core as #calibrateCamera. See [calibrate_camera] for other detailed explanations.
 	/// ## See also
 	/// calibrateCamera, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
@@ -657,7 +660,7 @@ pub mod calib {
 	/// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 	///
 	/// This function is an extension of [calibrate_camera] with the method of releasing object which was
-	/// proposed in [strobl2011iccv](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
+	/// proposed in [strobl2011iccv](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_strobl2011iccv). In many common cases with inaccurate, unmeasured, roughly planar
 	/// targets (calibration plates), this method can dramatically improve the precision of the estimated
 	/// camera parameters. Both the object-releasing method and standard method are supported by this
 	/// function. Use the parameter **iFixedPoint** for method selection. In the internal implementation,
@@ -689,7 +692,8 @@ pub mod calib {
 	/// * newObjPoints: The updated output vector of calibration pattern points. The coordinates might
 	/// be scaled based on three fixed points. The returned coordinates are accurate only if the above
 	/// mentioned three fixed points are accurate. If not needed, noArray() can be passed in. This parameter
-	/// is ignored with standard calibration method.
+	/// is ignored with standard calibration method. The output has the same depth as objectPoints[0]
+	/// (CV_32F or CV_64F).
 	/// * stdDeviationsIntrinsics: Output vector of standard deviations estimated for intrinsic parameters.
 	/// See [calibrate_camera] for details.
 	/// * stdDeviationsExtrinsics: Output vector of standard deviations estimated for extrinsic parameters.
@@ -708,7 +712,7 @@ pub mod calib {
 	/// the overall RMS re-projection error.
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-	/// views. The object-releasing extension follows [strobl2011iccv](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_strobl2011iccv) and uses the same optimization
+	/// views. The object-releasing extension follows [strobl2011iccv](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_strobl2011iccv) and uses the same optimization
 	/// core as #calibrateCamera. See [calibrate_camera] for other detailed explanations.
 	/// ## See also
 	/// calibrateCamera, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
@@ -739,7 +743,8 @@ pub mod calib {
 	///
 	/// ## Parameters
 	/// * objectPoints: In the new interface it is a vector of vectors of calibration pattern points in
-	/// the calibration pattern coordinate space (e.g. std::vector<std::vector<cv::Vec3f>>). The outer
+	/// the calibration pattern coordinate space (e.g. std::vector<std::vector<cv::Vec3f>> or
+	/// std::vector<std::vector<cv::Vec3d>>). Both single and double precision points are accepted. The outer
 	/// vector contains as many elements as the number of pattern views. If the same calibration pattern
 	/// is shown in each view and it is fully visible, all the vectors will be the same. Although, it is
 	/// possible to use partially occluded patterns or even different patterns in different views. Then,
@@ -748,7 +753,8 @@ pub mod calib {
 	/// In the old interface all the vectors of object points from different views are concatenated
 	/// together.
 	/// * imagePoints: In the new interface it is a vector of vectors of the projections of calibration
-	/// pattern points (e.g. std::vector<std::vector<cv::Vec2f>>). imagePoints.size() and
+	/// pattern points (e.g. std::vector<std::vector<cv::Vec2f>> or std::vector<std::vector<cv::Vec2d>>).
+	/// Both single and double precision points are accepted. imagePoints.size() and
 	/// objectPoints.size(), and imagePoints[i].size() and objectPoints[i].size() for each i, must be equal,
 	/// respectively. In the old interface all the vectors of object points from different views are
 	/// concatenated together.
@@ -782,7 +788,7 @@ pub mod calib {
 	/// center ( imageSize is used), and focal distances are computed in a least-squares fashion.
 	/// Note, that if intrinsic parameters are known, there is no need to use this function just to
 	/// estimate extrinsic parameters. Use [solvePnP] instead.
-	/// *   [CALIB_DISABLE_SCHUR_COMPLEMENT] Disable Schur complement and use the Bouguet calibration engine ([Zhang2000](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BouguetMCT)).
+	/// *   [CALIB_DISABLE_SCHUR_COMPLEMENT] Disable Schur complement and use the Bouguet calibration engine ([Zhang2000](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_BouguetMCT)).
 	/// *   [CALIB_FIX_PRINCIPAL_POINT] The principal point is not changed during the global
 	/// optimization. It stays at the center or at a different location specified when
 	///  [CALIB_USE_INTRINSIC_GUESS] is set too.
@@ -819,7 +825,7 @@ pub mod calib {
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
 	/// views. By default, the optimization follows a sparse bundle adjustment formulation with Schur
-	/// complement; see [Triggs2000_bundle_adjustment](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Triggs2000_bundle_adjustment) and [Lourakis2009_sba](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Lourakis2009_sba) for background. Use
+	/// complement; see [Triggs2000_bundle_adjustment](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Triggs2000_bundle_adjustment) and [Lourakis2009_sba](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Lourakis2009_sba) for background. Use
 	/// [CALIB_DISABLE_SCHUR_COMPLEMENT] to switch to the Bouguet calibration engine. The coordinates of 3D object
 	/// points and their corresponding 2D projections in each view must be specified. That may be achieved
 	/// by using an object with known geometry and easily detectable feature points. Such an object is
@@ -859,6 +865,13 @@ pub mod calib {
 	/// Note:
 	///    The function may throw exceptions, if unsupported combination of parameters is provided or
 	///    the system is underconstrained.
+	///
+	///
+	/// Note:
+	///    With the default Schur complement engine, the per-view contributions are summed in parallel in
+	///    an order that depends on thread scheduling, so repeated calls with the same input can return
+	///    results that differ in the last bits. For repeatable results, call cv::setNumThreads(1) before
+	///    calibrating. The engine selected by [CALIB_DISABLE_SCHUR_COMPLEMENT] does not sum in parallel.
 	/// ## See also
 	/// calibrateCameraRO, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate,
 	///    undistort
@@ -890,7 +903,8 @@ pub mod calib {
 	///
 	/// ## Parameters
 	/// * objectPoints: In the new interface it is a vector of vectors of calibration pattern points in
-	/// the calibration pattern coordinate space (e.g. std::vector<std::vector<cv::Vec3f>>). The outer
+	/// the calibration pattern coordinate space (e.g. std::vector<std::vector<cv::Vec3f>> or
+	/// std::vector<std::vector<cv::Vec3d>>). Both single and double precision points are accepted. The outer
 	/// vector contains as many elements as the number of pattern views. If the same calibration pattern
 	/// is shown in each view and it is fully visible, all the vectors will be the same. Although, it is
 	/// possible to use partially occluded patterns or even different patterns in different views. Then,
@@ -899,7 +913,8 @@ pub mod calib {
 	/// In the old interface all the vectors of object points from different views are concatenated
 	/// together.
 	/// * imagePoints: In the new interface it is a vector of vectors of the projections of calibration
-	/// pattern points (e.g. std::vector<std::vector<cv::Vec2f>>). imagePoints.size() and
+	/// pattern points (e.g. std::vector<std::vector<cv::Vec2f>> or std::vector<std::vector<cv::Vec2d>>).
+	/// Both single and double precision points are accepted. imagePoints.size() and
 	/// objectPoints.size(), and imagePoints[i].size() and objectPoints[i].size() for each i, must be equal,
 	/// respectively. In the old interface all the vectors of object points from different views are
 	/// concatenated together.
@@ -933,7 +948,7 @@ pub mod calib {
 	/// center ( imageSize is used), and focal distances are computed in a least-squares fashion.
 	/// Note, that if intrinsic parameters are known, there is no need to use this function just to
 	/// estimate extrinsic parameters. Use [solvePnP] instead.
-	/// *   [CALIB_DISABLE_SCHUR_COMPLEMENT] Disable Schur complement and use the Bouguet calibration engine ([Zhang2000](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BouguetMCT)).
+	/// *   [CALIB_DISABLE_SCHUR_COMPLEMENT] Disable Schur complement and use the Bouguet calibration engine ([Zhang2000](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_BouguetMCT)).
 	/// *   [CALIB_FIX_PRINCIPAL_POINT] The principal point is not changed during the global
 	/// optimization. It stays at the center or at a different location specified when
 	///  [CALIB_USE_INTRINSIC_GUESS] is set too.
@@ -970,7 +985,7 @@ pub mod calib {
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
 	/// views. By default, the optimization follows a sparse bundle adjustment formulation with Schur
-	/// complement; see [Triggs2000_bundle_adjustment](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Triggs2000_bundle_adjustment) and [Lourakis2009_sba](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Lourakis2009_sba) for background. Use
+	/// complement; see [Triggs2000_bundle_adjustment](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Triggs2000_bundle_adjustment) and [Lourakis2009_sba](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Lourakis2009_sba) for background. Use
 	/// [CALIB_DISABLE_SCHUR_COMPLEMENT] to switch to the Bouguet calibration engine. The coordinates of 3D object
 	/// points and their corresponding 2D projections in each view must be specified. That may be achieved
 	/// by using an object with known geometry and easily detectable feature points. Such an object is
@@ -1010,6 +1025,13 @@ pub mod calib {
 	/// Note:
 	///    The function may throw exceptions, if unsupported combination of parameters is provided or
 	///    the system is underconstrained.
+	///
+	///
+	/// Note:
+	///    With the default Schur complement engine, the per-view contributions are summed in parallel in
+	///    an order that depends on thread scheduling, so repeated calls with the same input can return
+	///    results that differ in the last bits. For repeatable results, call cv::setNumThreads(1) before
+	///    calibrating. The engine selected by [CALIB_DISABLE_SCHUR_COMPLEMENT] does not sum in parallel.
 	/// ## See also
 	/// calibrateCameraRO, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate,
 	///    undistort
@@ -1041,7 +1063,8 @@ pub mod calib {
 	///
 	/// ## Parameters
 	/// * objectPoints: In the new interface it is a vector of vectors of calibration pattern points in
-	/// the calibration pattern coordinate space (e.g. std::vector<std::vector<cv::Vec3f>>). The outer
+	/// the calibration pattern coordinate space (e.g. std::vector<std::vector<cv::Vec3f>> or
+	/// std::vector<std::vector<cv::Vec3d>>). Both single and double precision points are accepted. The outer
 	/// vector contains as many elements as the number of pattern views. If the same calibration pattern
 	/// is shown in each view and it is fully visible, all the vectors will be the same. Although, it is
 	/// possible to use partially occluded patterns or even different patterns in different views. Then,
@@ -1050,7 +1073,8 @@ pub mod calib {
 	/// In the old interface all the vectors of object points from different views are concatenated
 	/// together.
 	/// * imagePoints: In the new interface it is a vector of vectors of the projections of calibration
-	/// pattern points (e.g. std::vector<std::vector<cv::Vec2f>>). imagePoints.size() and
+	/// pattern points (e.g. std::vector<std::vector<cv::Vec2f>> or std::vector<std::vector<cv::Vec2d>>).
+	/// Both single and double precision points are accepted. imagePoints.size() and
 	/// objectPoints.size(), and imagePoints[i].size() and objectPoints[i].size() for each i, must be equal,
 	/// respectively. In the old interface all the vectors of object points from different views are
 	/// concatenated together.
@@ -1084,7 +1108,7 @@ pub mod calib {
 	/// center ( imageSize is used), and focal distances are computed in a least-squares fashion.
 	/// Note, that if intrinsic parameters are known, there is no need to use this function just to
 	/// estimate extrinsic parameters. Use [solvePnP] instead.
-	/// *   [CALIB_DISABLE_SCHUR_COMPLEMENT] Disable Schur complement and use the Bouguet calibration engine ([Zhang2000](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BouguetMCT)).
+	/// *   [CALIB_DISABLE_SCHUR_COMPLEMENT] Disable Schur complement and use the Bouguet calibration engine ([Zhang2000](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_BouguetMCT)).
 	/// *   [CALIB_FIX_PRINCIPAL_POINT] The principal point is not changed during the global
 	/// optimization. It stays at the center or at a different location specified when
 	///  [CALIB_USE_INTRINSIC_GUESS] is set too.
@@ -1121,7 +1145,7 @@ pub mod calib {
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
 	/// views. By default, the optimization follows a sparse bundle adjustment formulation with Schur
-	/// complement; see [Triggs2000_bundle_adjustment](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Triggs2000_bundle_adjustment) and [Lourakis2009_sba](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Lourakis2009_sba) for background. Use
+	/// complement; see [Triggs2000_bundle_adjustment](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Triggs2000_bundle_adjustment) and [Lourakis2009_sba](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Lourakis2009_sba) for background. Use
 	/// [CALIB_DISABLE_SCHUR_COMPLEMENT] to switch to the Bouguet calibration engine. The coordinates of 3D object
 	/// points and their corresponding 2D projections in each view must be specified. That may be achieved
 	/// by using an object with known geometry and easily detectable feature points. Such an object is
@@ -1161,6 +1185,13 @@ pub mod calib {
 	/// Note:
 	///    The function may throw exceptions, if unsupported combination of parameters is provided or
 	///    the system is underconstrained.
+	///
+	///
+	/// Note:
+	///    With the default Schur complement engine, the per-view contributions are summed in parallel in
+	///    an order that depends on thread scheduling, so repeated calls with the same input can return
+	///    results that differ in the last bits. For repeatable results, call cv::setNumThreads(1) before
+	///    calibrating. The engine selected by [CALIB_DISABLE_SCHUR_COMPLEMENT] does not sum in parallel.
 	/// ## See also
 	/// calibrateCameraRO, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate,
 	///    undistort
@@ -1191,7 +1222,8 @@ pub mod calib {
 	///
 	/// ## Parameters
 	/// * objectPoints: In the new interface it is a vector of vectors of calibration pattern points in
-	/// the calibration pattern coordinate space (e.g. std::vector<std::vector<cv::Vec3f>>). The outer
+	/// the calibration pattern coordinate space (e.g. std::vector<std::vector<cv::Vec3f>> or
+	/// std::vector<std::vector<cv::Vec3d>>). Both single and double precision points are accepted. The outer
 	/// vector contains as many elements as the number of pattern views. If the same calibration pattern
 	/// is shown in each view and it is fully visible, all the vectors will be the same. Although, it is
 	/// possible to use partially occluded patterns or even different patterns in different views. Then,
@@ -1200,7 +1232,8 @@ pub mod calib {
 	/// In the old interface all the vectors of object points from different views are concatenated
 	/// together.
 	/// * imagePoints: In the new interface it is a vector of vectors of the projections of calibration
-	/// pattern points (e.g. std::vector<std::vector<cv::Vec2f>>). imagePoints.size() and
+	/// pattern points (e.g. std::vector<std::vector<cv::Vec2f>> or std::vector<std::vector<cv::Vec2d>>).
+	/// Both single and double precision points are accepted. imagePoints.size() and
 	/// objectPoints.size(), and imagePoints[i].size() and objectPoints[i].size() for each i, must be equal,
 	/// respectively. In the old interface all the vectors of object points from different views are
 	/// concatenated together.
@@ -1234,7 +1267,7 @@ pub mod calib {
 	/// center ( imageSize is used), and focal distances are computed in a least-squares fashion.
 	/// Note, that if intrinsic parameters are known, there is no need to use this function just to
 	/// estimate extrinsic parameters. Use [solvePnP] instead.
-	/// *   [CALIB_DISABLE_SCHUR_COMPLEMENT] Disable Schur complement and use the Bouguet calibration engine ([Zhang2000](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_BouguetMCT)).
+	/// *   [CALIB_DISABLE_SCHUR_COMPLEMENT] Disable Schur complement and use the Bouguet calibration engine ([Zhang2000](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Zhang2000), [BouguetMCT](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_BouguetMCT)).
 	/// *   [CALIB_FIX_PRINCIPAL_POINT] The principal point is not changed during the global
 	/// optimization. It stays at the center or at a different location specified when
 	///  [CALIB_USE_INTRINSIC_GUESS] is set too.
@@ -1271,7 +1304,7 @@ pub mod calib {
 	///
 	/// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
 	/// views. By default, the optimization follows a sparse bundle adjustment formulation with Schur
-	/// complement; see [Triggs2000_bundle_adjustment](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Triggs2000_bundle_adjustment) and [Lourakis2009_sba](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Lourakis2009_sba) for background. Use
+	/// complement; see [Triggs2000_bundle_adjustment](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Triggs2000_bundle_adjustment) and [Lourakis2009_sba](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Lourakis2009_sba) for background. Use
 	/// [CALIB_DISABLE_SCHUR_COMPLEMENT] to switch to the Bouguet calibration engine. The coordinates of 3D object
 	/// points and their corresponding 2D projections in each view must be specified. That may be achieved
 	/// by using an object with known geometry and easily detectable feature points. Such an object is
@@ -1311,6 +1344,13 @@ pub mod calib {
 	/// Note:
 	///    The function may throw exceptions, if unsupported combination of parameters is provided or
 	///    the system is underconstrained.
+	///
+	///
+	/// Note:
+	///    With the default Schur complement engine, the per-view contributions are summed in parallel in
+	///    an order that depends on thread scheduling, so repeated calls with the same input can return
+	///    results that differ in the last bits. For repeatable results, call cv::setNumThreads(1) before
+	///    calibrating. The engine selected by [CALIB_DISABLE_SCHUR_COMPLEMENT] does not sum in parallel.
 	/// ## See also
 	/// calibrateCameraRO, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate,
 	///    undistort
@@ -1378,7 +1418,7 @@ pub mod calib {
 	/// end-effector. The transformation from the camera to the robot base frame can then be estimated by inputting
 	/// the suitable transformations to the function, see below.
 	///
-	/// ![](https://docs.opencv.org/5.0.0/hand-eye_figure.png)
+	/// ![](https://docs.opencv.org/5.1.0/hand-eye_figure.png)
 	///
 	/// The calibration procedure is the following:
 	///   - a static calibration pattern is used to estimate the transformation between the target frame
@@ -1468,7 +1508,7 @@ pub mod calib {
 	/// end-effector. The transformation from the camera to the robot base frame can then be estimated by inputting
 	/// the suitable transformations to the function, see below.
 	///
-	/// ![](https://docs.opencv.org/5.0.0/hand-eye_figure.png)
+	/// ![](https://docs.opencv.org/5.1.0/hand-eye_figure.png)
 	///
 	/// The calibration procedure is the following:
 	///   - a static calibration pattern is used to estimate the transformation between the target frame
@@ -1548,7 +1588,7 @@ pub mod calib {
 	/// The fundamental assumption is that relative camera poses are fixed,
 	/// and then for each frame, only the absolute camera pose for a single camera is needed to fix the camera pose for the multiple cameras
 	///
-	/// ![multiview calibration](https://docs.opencv.org/5.0.0/multiview_calib.png)
+	/// ![multiview calibration](https://docs.opencv.org/5.1.0/multiview_calib.png)
 	/// The above illustration shows an example setting for multiview camera calibration.
 	///
 	/// For each frame, suppose the absolute camera pose for camera ![inline formula](https://latex.codecogs.com/png.latex?i) is ![inline formula](https://latex.codecogs.com/png.latex?R%5Fi%2C%20t%5Fi),
@@ -1631,7 +1671,7 @@ pub mod calib {
 	/// The fundamental assumption is that relative camera poses are fixed,
 	/// and then for each frame, only the absolute camera pose for a single camera is needed to fix the camera pose for the multiple cameras
 	///
-	/// ![multiview calibration](https://docs.opencv.org/5.0.0/multiview_calib.png)
+	/// ![multiview calibration](https://docs.opencv.org/5.1.0/multiview_calib.png)
 	/// The above illustration shows an example setting for multiview camera calibration.
 	///
 	/// For each frame, suppose the absolute camera pose for camera ![inline formula](https://latex.codecogs.com/png.latex?i) is ![inline formula](https://latex.codecogs.com/png.latex?R%5Fi%2C%20t%5Fi),
@@ -1713,7 +1753,7 @@ pub mod calib {
 	/// The fundamental assumption is that relative camera poses are fixed,
 	/// and then for each frame, only the absolute camera pose for a single camera is needed to fix the camera pose for the multiple cameras
 	///
-	/// ![multiview calibration](https://docs.opencv.org/5.0.0/multiview_calib.png)
+	/// ![multiview calibration](https://docs.opencv.org/5.1.0/multiview_calib.png)
 	/// The above illustration shows an example setting for multiview camera calibration.
 	///
 	/// For each frame, suppose the absolute camera pose for camera ![inline formula](https://latex.codecogs.com/png.latex?i) is ![inline formula](https://latex.codecogs.com/png.latex?R%5Fi%2C%20t%5Fi),
@@ -1797,7 +1837,7 @@ pub mod calib {
 	/// The fundamental assumption is that relative camera poses are fixed,
 	/// and then for each frame, only the absolute camera pose for a single camera is needed to fix the camera pose for the multiple cameras
 	///
-	/// ![multiview calibration](https://docs.opencv.org/5.0.0/multiview_calib.png)
+	/// ![multiview calibration](https://docs.opencv.org/5.1.0/multiview_calib.png)
 	/// The above illustration shows an example setting for multiview camera calibration.
 	///
 	/// For each frame, suppose the absolute camera pose for camera ![inline formula](https://latex.codecogs.com/png.latex?i) is ![inline formula](https://latex.codecogs.com/png.latex?R%5Fi%2C%20t%5Fi),
@@ -1887,7 +1927,7 @@ pub mod calib {
 	/// The following picture describes the Robot-World/Hand-Eye calibration problem where the transformations between a robot and a world frame
 	/// and between a robot gripper ("hand") and a camera ("eye") mounted at the robot end-effector have to be estimated.
 	///
-	/// ![](https://docs.opencv.org/5.0.0/robot-world_hand-eye_figure.png)
+	/// ![](https://docs.opencv.org/5.1.0/robot-world_hand-eye_figure.png)
 	///
 	/// The calibration procedure is the following:
 	///   - a static calibration pattern is used to estimate the transformation between the target frame
@@ -1973,7 +2013,7 @@ pub mod calib {
 	/// The following picture describes the Robot-World/Hand-Eye calibration problem where the transformations between a robot and a world frame
 	/// and between a robot gripper ("hand") and a camera ("eye") mounted at the robot end-effector have to be estimated.
 	///
-	/// ![](https://docs.opencv.org/5.0.0/robot-world_hand-eye_figure.png)
+	/// ![](https://docs.opencv.org/5.1.0/robot-world_hand-eye_figure.png)
 	///
 	/// The calibration procedure is the following:
 	///   - a static calibration pattern is used to estimate the transformation between the target frame
@@ -2029,7 +2069,7 @@ pub mod calib {
 	/// * image_size: Size of the image used only to initialize the camera intrinsic matrix.
 	/// * K: Output 3x3 floating-point camera intrinsic matrix
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If
-	/// [cv::CALIB_USE_INTRINSIC_GUESS] is specified, some or all of fx, fy, cx, cy must be
+	/// [cv::CALIB_USE_INTRINSIC_GUESS] is specified, fx, fy, cx, cy and the skew must be
 	/// initialized before calling the function.
 	/// * D: Output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
 	/// * rvecs: Output vector of rotation vectors (see Rodrigues ) estimated for each pattern view.
@@ -2039,9 +2079,9 @@ pub mod calib {
 	/// position of the calibration pattern in the k-th pattern view (k=0.. *M* -1).
 	/// * tvecs: Output vector of translation vectors estimated for each pattern view.
 	/// * flags: Different flags that may be zero or a combination of the following values:
-	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  cameraMatrix contains valid initial values of
-	/// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
-	/// center ( imageSize is used), and focal distances are computed in a least-squares fashion.
+	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  K and D contain valid initial values of
+	/// fx, fy, cx, cy, skew and k1..k4 that are optimized further. Otherwise, (cx, cy) is initially set to the image
+	/// center (imageSize is used), and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%20%3D%20f%5Fy%20%3D%20max%28width%2Cheight%29%2F2).
 	/// *   [cv::CALIB_RECOMPUTE_EXTRINSIC]  Extrinsic will be recomputed after each iteration
 	/// of intrinsic optimization.
 	/// *   [cv::CALIB_CHECK_COND]  The functions will check validity of condition number.
@@ -2051,7 +2091,7 @@ pub mod calib {
 	/// *   [cv::CALIB_FIX_PRINCIPAL_POINT]  The principal point is not changed during the global
 	/// optimization. It stays at the center or at a different location specified when [cv::CALIB_USE_INTRINSIC_GUESS] is set too.
 	/// *   [cv::CALIB_FIX_FOCAL_LENGTH] The focal length is not changed during the global
-	/// optimization. It is the ![inline formula](https://latex.codecogs.com/png.latex?max%28width%2Cheight%29%2F%5Cpi) or the provided ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx), ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy) when [cv::CALIB_USE_INTRINSIC_GUESS] is set too.
+	/// optimization. It is the ![inline formula](https://latex.codecogs.com/png.latex?max%28width%2Cheight%29%2F2) or the provided ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx), ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy) when [cv::CALIB_USE_INTRINSIC_GUESS] is set too.
 	/// * criteria: Termination criteria for the iterative optimization algorithm.
 	///
 	/// ## Note
@@ -2084,7 +2124,7 @@ pub mod calib {
 	/// * image_size: Size of the image used only to initialize the camera intrinsic matrix.
 	/// * K: Output 3x3 floating-point camera intrinsic matrix
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If
-	/// [cv::CALIB_USE_INTRINSIC_GUESS] is specified, some or all of fx, fy, cx, cy must be
+	/// [cv::CALIB_USE_INTRINSIC_GUESS] is specified, fx, fy, cx, cy and the skew must be
 	/// initialized before calling the function.
 	/// * D: Output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
 	/// * rvecs: Output vector of rotation vectors (see Rodrigues ) estimated for each pattern view.
@@ -2094,9 +2134,9 @@ pub mod calib {
 	/// position of the calibration pattern in the k-th pattern view (k=0.. *M* -1).
 	/// * tvecs: Output vector of translation vectors estimated for each pattern view.
 	/// * flags: Different flags that may be zero or a combination of the following values:
-	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  cameraMatrix contains valid initial values of
-	/// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
-	/// center ( imageSize is used), and focal distances are computed in a least-squares fashion.
+	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  K and D contain valid initial values of
+	/// fx, fy, cx, cy, skew and k1..k4 that are optimized further. Otherwise, (cx, cy) is initially set to the image
+	/// center (imageSize is used), and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%20%3D%20f%5Fy%20%3D%20max%28width%2Cheight%29%2F2).
 	/// *   [cv::CALIB_RECOMPUTE_EXTRINSIC]  Extrinsic will be recomputed after each iteration
 	/// of intrinsic optimization.
 	/// *   [cv::CALIB_CHECK_COND]  The functions will check validity of condition number.
@@ -2106,7 +2146,7 @@ pub mod calib {
 	/// *   [cv::CALIB_FIX_PRINCIPAL_POINT]  The principal point is not changed during the global
 	/// optimization. It stays at the center or at a different location specified when [cv::CALIB_USE_INTRINSIC_GUESS] is set too.
 	/// *   [cv::CALIB_FIX_FOCAL_LENGTH] The focal length is not changed during the global
-	/// optimization. It is the ![inline formula](https://latex.codecogs.com/png.latex?max%28width%2Cheight%29%2F%5Cpi) or the provided ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx), ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy) when [cv::CALIB_USE_INTRINSIC_GUESS] is set too.
+	/// optimization. It is the ![inline formula](https://latex.codecogs.com/png.latex?max%28width%2Cheight%29%2F2) or the provided ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx), ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy) when [cv::CALIB_USE_INTRINSIC_GUESS] is set too.
 	/// * criteria: Termination criteria for the iterative optimization algorithm.
 	///
 	/// ## C++ default parameters
@@ -2138,7 +2178,7 @@ pub mod calib {
 	/// * K1: Input/output first camera intrinsic matrix:
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cvecthreethree%7Bf%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bc%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bf%5Fy%5E%7B%28j%29%7D%7D%7Bc%5Fy%5E%7B%28j%29%7D%7D%7B0%7D%7B0%7D%7B1%7D) , ![inline formula](https://latex.codecogs.com/png.latex?j%20%3D%200%2C%5C%2C%201) . If
 	/// any of [cv::CALIB_USE_INTRINSIC_GUESS] , [cv::CALIB_FIX_INTRINSIC] are specified,
-	/// some or all of the matrix components must be initialized.
+	/// all of the matrix components must be initialized.
 	/// * D1: Input/output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye) of 4 elements.
 	/// * K2: Input/output second camera intrinsic matrix. The parameter is similar to K1 .
 	/// * D2: Input/output lens distortion coefficients for the second camera. The parameter is
@@ -2158,15 +2198,15 @@ pub mod calib {
 	/// * flags: Different flags that may be zero or a combination of the following values:
 	/// *   [cv::CALIB_FIX_INTRINSIC]  Fix K1, K2? and D1, D2? so that only R, T matrices
 	/// are estimated.
-	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  K1, K2 contains valid initial values of
-	/// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
-	/// center (imageSize is used), and focal distances are computed in a least-squares fashion.
+	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  K1, K2, D1, D2 contain valid initial values of
+	/// fx, fy, cx, cy, skew and k1..k4 that are optimized further. Otherwise, (cx, cy) is initially set to the image
+	/// center (imageSize is used), and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%20%3D%20f%5Fy%20%3D%20max%28width%2Cheight%29%2F2).
 	/// *   [cv::CALIB_RECOMPUTE_EXTRINSIC]  Extrinsic will be recomputed after each iteration
 	/// of intrinsic optimization.
 	/// *   [cv::CALIB_CHECK_COND]  The functions will check validity of condition number.
 	/// *   [cv::CALIB_FIX_SKEW]  Skew coefficient (alpha) is set to zero and stay zero.
 	/// *   [cv::CALIB_FIX_K1],..., [cv::CALIB_FIX_K4] Selected distortion coefficients are set to zeros and stay
-	/// zero.
+	/// zero. They have no effect with [cv::CALIB_FIX_INTRINSIC], which keeps D1 and D2 as given.
 	/// * criteria: Termination criteria for the iterative optimization algorithm.
 	///
 	/// ## Overloaded parameters
@@ -2205,7 +2245,7 @@ pub mod calib {
 	/// * K1: Input/output first camera intrinsic matrix:
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cvecthreethree%7Bf%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bc%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bf%5Fy%5E%7B%28j%29%7D%7D%7Bc%5Fy%5E%7B%28j%29%7D%7D%7B0%7D%7B0%7D%7B1%7D) , ![inline formula](https://latex.codecogs.com/png.latex?j%20%3D%200%2C%5C%2C%201) . If
 	/// any of [cv::CALIB_USE_INTRINSIC_GUESS] , [cv::CALIB_FIX_INTRINSIC] are specified,
-	/// some or all of the matrix components must be initialized.
+	/// all of the matrix components must be initialized.
 	/// * D1: Input/output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye) of 4 elements.
 	/// * K2: Input/output second camera intrinsic matrix. The parameter is similar to K1 .
 	/// * D2: Input/output lens distortion coefficients for the second camera. The parameter is
@@ -2225,15 +2265,15 @@ pub mod calib {
 	/// * flags: Different flags that may be zero or a combination of the following values:
 	/// *   [cv::CALIB_FIX_INTRINSIC]  Fix K1, K2? and D1, D2? so that only R, T matrices
 	/// are estimated.
-	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  K1, K2 contains valid initial values of
-	/// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
-	/// center (imageSize is used), and focal distances are computed in a least-squares fashion.
+	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  K1, K2, D1, D2 contain valid initial values of
+	/// fx, fy, cx, cy, skew and k1..k4 that are optimized further. Otherwise, (cx, cy) is initially set to the image
+	/// center (imageSize is used), and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%20%3D%20f%5Fy%20%3D%20max%28width%2Cheight%29%2F2).
 	/// *   [cv::CALIB_RECOMPUTE_EXTRINSIC]  Extrinsic will be recomputed after each iteration
 	/// of intrinsic optimization.
 	/// *   [cv::CALIB_CHECK_COND]  The functions will check validity of condition number.
 	/// *   [cv::CALIB_FIX_SKEW]  Skew coefficient (alpha) is set to zero and stay zero.
 	/// *   [cv::CALIB_FIX_K1],..., [cv::CALIB_FIX_K4] Selected distortion coefficients are set to zeros and stay
-	/// zero.
+	/// zero. They have no effect with [cv::CALIB_FIX_INTRINSIC], which keeps D1 and D2 as given.
 	/// * criteria: Termination criteria for the iterative optimization algorithm.
 	///
 	/// ## Note
@@ -2271,7 +2311,7 @@ pub mod calib {
 	/// * K1: Input/output first camera intrinsic matrix:
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cvecthreethree%7Bf%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bc%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bf%5Fy%5E%7B%28j%29%7D%7D%7Bc%5Fy%5E%7B%28j%29%7D%7D%7B0%7D%7B0%7D%7B1%7D) , ![inline formula](https://latex.codecogs.com/png.latex?j%20%3D%200%2C%5C%2C%201) . If
 	/// any of [cv::CALIB_USE_INTRINSIC_GUESS] , [cv::CALIB_FIX_INTRINSIC] are specified,
-	/// some or all of the matrix components must be initialized.
+	/// all of the matrix components must be initialized.
 	/// * D1: Input/output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye) of 4 elements.
 	/// * K2: Input/output second camera intrinsic matrix. The parameter is similar to K1 .
 	/// * D2: Input/output lens distortion coefficients for the second camera. The parameter is
@@ -2291,15 +2331,15 @@ pub mod calib {
 	/// * flags: Different flags that may be zero or a combination of the following values:
 	/// *   [cv::CALIB_FIX_INTRINSIC]  Fix K1, K2? and D1, D2? so that only R, T matrices
 	/// are estimated.
-	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  K1, K2 contains valid initial values of
-	/// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
-	/// center (imageSize is used), and focal distances are computed in a least-squares fashion.
+	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  K1, K2, D1, D2 contain valid initial values of
+	/// fx, fy, cx, cy, skew and k1..k4 that are optimized further. Otherwise, (cx, cy) is initially set to the image
+	/// center (imageSize is used), and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%20%3D%20f%5Fy%20%3D%20max%28width%2Cheight%29%2F2).
 	/// *   [cv::CALIB_RECOMPUTE_EXTRINSIC]  Extrinsic will be recomputed after each iteration
 	/// of intrinsic optimization.
 	/// *   [cv::CALIB_CHECK_COND]  The functions will check validity of condition number.
 	/// *   [cv::CALIB_FIX_SKEW]  Skew coefficient (alpha) is set to zero and stay zero.
 	/// *   [cv::CALIB_FIX_K1],..., [cv::CALIB_FIX_K4] Selected distortion coefficients are set to zeros and stay
-	/// zero.
+	/// zero. They have no effect with [cv::CALIB_FIX_INTRINSIC], which keeps D1 and D2 as given.
 	/// * criteria: Termination criteria for the iterative optimization algorithm.
 	///
 	/// ## C++ default parameters
@@ -2336,7 +2376,7 @@ pub mod calib {
 	/// * K1: Input/output first camera intrinsic matrix:
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cvecthreethree%7Bf%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bc%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bf%5Fy%5E%7B%28j%29%7D%7D%7Bc%5Fy%5E%7B%28j%29%7D%7D%7B0%7D%7B0%7D%7B1%7D) , ![inline formula](https://latex.codecogs.com/png.latex?j%20%3D%200%2C%5C%2C%201) . If
 	/// any of [cv::CALIB_USE_INTRINSIC_GUESS] , [cv::CALIB_FIX_INTRINSIC] are specified,
-	/// some or all of the matrix components must be initialized.
+	/// all of the matrix components must be initialized.
 	/// * D1: Input/output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye) of 4 elements.
 	/// * K2: Input/output second camera intrinsic matrix. The parameter is similar to K1 .
 	/// * D2: Input/output lens distortion coefficients for the second camera. The parameter is
@@ -2356,15 +2396,15 @@ pub mod calib {
 	/// * flags: Different flags that may be zero or a combination of the following values:
 	/// *   [cv::CALIB_FIX_INTRINSIC]  Fix K1, K2? and D1, D2? so that only R, T matrices
 	/// are estimated.
-	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  K1, K2 contains valid initial values of
-	/// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
-	/// center (imageSize is used), and focal distances are computed in a least-squares fashion.
+	/// *   [cv::CALIB_USE_INTRINSIC_GUESS]  K1, K2, D1, D2 contain valid initial values of
+	/// fx, fy, cx, cy, skew and k1..k4 that are optimized further. Otherwise, (cx, cy) is initially set to the image
+	/// center (imageSize is used), and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%20%3D%20f%5Fy%20%3D%20max%28width%2Cheight%29%2F2).
 	/// *   [cv::CALIB_RECOMPUTE_EXTRINSIC]  Extrinsic will be recomputed after each iteration
 	/// of intrinsic optimization.
 	/// *   [cv::CALIB_CHECK_COND]  The functions will check validity of condition number.
 	/// *   [cv::CALIB_FIX_SKEW]  Skew coefficient (alpha) is set to zero and stay zero.
 	/// *   [cv::CALIB_FIX_K1],..., [cv::CALIB_FIX_K4] Selected distortion coefficients are set to zeros and stay
-	/// zero.
+	/// zero. They have no effect with [cv::CALIB_FIX_INTRINSIC], which keeps D1 and D2 as given.
 	/// * criteria: Termination criteria for the iterative optimization algorithm.
 	///
 	/// ## Overloaded parameters
@@ -2508,7 +2548,7 @@ pub mod calib {
 	/// this function is that, camera intrinsics are not optimized and two cameras are not required
 	/// to have overlapping fields of view as long as they are observing the same calibration target
 	/// and the absolute positions of each object point are known.
-	/// ![](https://docs.opencv.org/5.0.0/register_pair.png)
+	/// ![](https://docs.opencv.org/5.1.0/register_pair.png)
 	/// The above illustration shows an example where such a case may become relevant.
 	/// Additionally, it supports a camera pair with the mixed model (pinhole / fisheye).
 	/// Similarly to #calibrateCamera, the function minimizes the total re-projection error for all the
@@ -2604,7 +2644,7 @@ pub mod calib {
 	/// this function is that, camera intrinsics are not optimized and two cameras are not required
 	/// to have overlapping fields of view as long as they are observing the same calibration target
 	/// and the absolute positions of each object point are known.
-	/// ![](https://docs.opencv.org/5.0.0/register_pair.png)
+	/// ![](https://docs.opencv.org/5.1.0/register_pair.png)
 	/// The above illustration shows an example where such a case may become relevant.
 	/// Additionally, it supports a camera pair with the mixed model (pinhole / fisheye).
 	/// Similarly to #calibrateCamera, the function minimizes the total re-projection error for all the
@@ -2699,7 +2739,7 @@ pub mod calib {
 	/// this function is that, camera intrinsics are not optimized and two cameras are not required
 	/// to have overlapping fields of view as long as they are observing the same calibration target
 	/// and the absolute positions of each object point are known.
-	/// ![](https://docs.opencv.org/5.0.0/register_pair.png)
+	/// ![](https://docs.opencv.org/5.1.0/register_pair.png)
 	/// The above illustration shows an example where such a case may become relevant.
 	/// Additionally, it supports a camera pair with the mixed model (pinhole / fisheye).
 	/// Similarly to #calibrateCamera, the function minimizes the total re-projection error for all the
@@ -2793,7 +2833,7 @@ pub mod calib {
 	/// this function is that, camera intrinsics are not optimized and two cameras are not required
 	/// to have overlapping fields of view as long as they are observing the same calibration target
 	/// and the absolute positions of each object point are known.
-	/// ![](https://docs.opencv.org/5.0.0/register_pair.png)
+	/// ![](https://docs.opencv.org/5.1.0/register_pair.png)
 	/// The above illustration shows an example where such a case may become relevant.
 	/// Additionally, it supports a camera pair with the mixed model (pinhole / fisheye).
 	/// Similarly to #calibrateCamera, the function minimizes the total re-projection error for all the

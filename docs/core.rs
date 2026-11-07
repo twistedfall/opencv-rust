@@ -34,7 +34,7 @@ pub mod core {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{AlgorithmTrait, AlgorithmTraitConst, ArraysTrait, ArraysTraitConst, AsyncArrayTrait, AsyncArrayTraitConst, AsyncPromiseTrait, AsyncPromiseTraitConst, BufferPoolTrait, BufferPoolTraitConst, BufferTrait, BufferTraitConst, CommandLineParserTrait, CommandLineParserTraitConst, ConjGradSolverTrait, ConjGradSolverTraitConst, ContextTrait, ContextTraitConst, Context_UserContextTrait, Context_UserContextTraitConst, Detail_CheckContextTrait, Detail_CheckContextTraitConst, DeviceInfoTrait, DeviceInfoTraitConst, DeviceTrait, DeviceTraitConst, DownhillSolverTrait, DownhillSolverTraitConst, EventTrait, EventTraitConst, ExceptionTrait, ExceptionTraitConst, FileNodeIteratorTrait, FileNodeIteratorTraitConst, FileNodeTrait, FileNodeTraitConst, FileStorageTrait, FileStorageTraitConst, FormattedTrait, FormattedTraitConst, FormatterTrait, FormatterTraitConst, GpuDataTrait, GpuDataTraitConst, GpuMatNDTrait, GpuMatNDTraitConst, GpuMatTrait, GpuMatTraitConst, GpuMat_AllocatorTrait, GpuMat_AllocatorTraitConst, HammingTrait, HammingTraitConst, HostMemTrait, HostMemTraitConst, Image2DTrait, Image2DTraitConst, KernelArgTrait, KernelArgTraitConst, KernelTrait, KernelTraitConst, KeyPointTrait, KeyPointTraitConst, LDATrait, LDATraitConst, LogTagTrait, LogTagTraitConst, MatConstIteratorTrait, MatConstIteratorTraitConst, MatExprTrait, MatExprTraitConst, MatOpTrait, MatOpTraitConst, MatStepTrait, MatStepTraitConst, MatTrait, MatTraitConst, Matx_AddOpTrait, Matx_AddOpTraitConst, Matx_DivOpTrait, Matx_DivOpTraitConst, Matx_MatMulOpTrait, Matx_MatMulOpTraitConst, Matx_MulOpTrait, Matx_MulOpTraitConst, Matx_ScaleOpTrait, Matx_ScaleOpTraitConst, Matx_SubOpTrait, Matx_SubOpTraitConst, Matx_TOpTrait, Matx_TOpTraitConst, MinProblemSolverTrait, MinProblemSolverTraitConst, MinProblemSolver_FunctionTrait, MinProblemSolver_FunctionTraitConst, NodeDataTrait, NodeDataTraitConst, OpenCLExecutionContextTrait, OpenCLExecutionContextTraitConst, OriginalClassNameTrait, OriginalClassNameTraitConst, PCATrait, PCATraitConst, ParallelLoopBodyTrait, ParallelLoopBodyTraitConst, PlatformInfoTrait, PlatformInfoTraitConst, PlatformTrait, PlatformTraitConst, ProgramSourceTrait, ProgramSourceTraitConst, ProgramTrait, ProgramTraitConst, QueueTrait, QueueTraitConst, RNGTrait, RNGTraitConst, RNG_MT19937Trait, RNG_MT19937TraitConst, RangeTrait, RangeTraitConst, SVDTrait, SVDTraitConst, SparseMatConstIteratorTrait, SparseMatConstIteratorTraitConst, SparseMatIteratorTrait, SparseMatIteratorTraitConst, SparseMatTrait, SparseMatTraitConst, SparseMat_HdrTrait, SparseMat_HdrTraitConst, SparseMat_NodeTrait, SparseMat_NodeTraitConst, StreamTrait, StreamTraitConst, TargetArchsTrait, TargetArchsTraitConst, Texture2DTrait, Texture2DTraitConst, TickMeterTrait, TickMeterTraitConst, TimerTrait, TimerTraitConst, UMatDataTrait, UMatDataTraitConst, UMatTrait, UMatTraitConst, WriteStructContextTrait, WriteStructContextTraitConst, _InputArrayTrait, _InputArrayTraitConst, _InputOutputArrayTrait, _InputOutputArrayTraitConst, _OutputArrayTrait, _OutputArrayTraitConst};
+		pub use super::{AlgorithmTrait, AlgorithmTraitConst, AsyncArrayTrait, AsyncArrayTraitConst, AsyncPromiseTrait, AsyncPromiseTraitConst, BufferPoolTrait, BufferPoolTraitConst, CommandLineParserTrait, CommandLineParserTraitConst, ConjGradSolverTrait, ConjGradSolverTraitConst, ContextTrait, ContextTraitConst, Context_UserContextTrait, Context_UserContextTraitConst, Detail_CheckContextTrait, Detail_CheckContextTraitConst, DeviceInfoTrait, DeviceInfoTraitConst, DeviceTrait, DeviceTraitConst, DownhillSolverTrait, DownhillSolverTraitConst, EventTrait, EventTraitConst, ExceptionTrait, ExceptionTraitConst, FileNodeIteratorTrait, FileNodeIteratorTraitConst, FileNodeTrait, FileNodeTraitConst, FileStorageTrait, FileStorageTraitConst, FormattedTrait, FormattedTraitConst, FormatterTrait, FormatterTraitConst, GpuDataTrait, GpuDataTraitConst, GpuMatNDTrait, GpuMatNDTraitConst, GpuMatTrait, GpuMatTraitConst, GpuMat_AllocatorTrait, GpuMat_AllocatorTraitConst, HammingTrait, HammingTraitConst, HostMemTrait, HostMemTraitConst, Image2DTrait, Image2DTraitConst, KernelArgTrait, KernelArgTraitConst, KernelTrait, KernelTraitConst, KeyPointTrait, KeyPointTraitConst, LDATrait, LDATraitConst, LogTagTrait, LogTagTraitConst, MatConstIteratorTrait, MatConstIteratorTraitConst, MatExprTrait, MatExprTraitConst, MatOpTrait, MatOpTraitConst, MatStepTrait, MatStepTraitConst, MatTrait, MatTraitConst, Matx_AddOpTrait, Matx_AddOpTraitConst, Matx_DivOpTrait, Matx_DivOpTraitConst, Matx_MatMulOpTrait, Matx_MatMulOpTraitConst, Matx_MulOpTrait, Matx_MulOpTraitConst, Matx_ScaleOpTrait, Matx_ScaleOpTraitConst, Matx_SubOpTrait, Matx_SubOpTraitConst, Matx_TOpTrait, Matx_TOpTraitConst, MinProblemSolverTrait, MinProblemSolverTraitConst, MinProblemSolver_FunctionTrait, MinProblemSolver_FunctionTraitConst, NodeDataTrait, NodeDataTraitConst, OGL_ArraysTrait, OGL_ArraysTraitConst, OGL_AttributeTrait, OGL_AttributeTraitConst, OGL_BufferTrait, OGL_BufferTraitConst, OGL_ProgramTrait, OGL_ProgramTraitConst, OGL_ShaderTrait, OGL_ShaderTraitConst, OGL_Texture2DTrait, OGL_Texture2DTraitConst, OGL_TextureBufferTrait, OGL_TextureBufferTraitConst, OGL_VertexArrayTrait, OGL_VertexArrayTraitConst, OpenCLExecutionContextTrait, OpenCLExecutionContextTraitConst, OriginalClassNameTrait, OriginalClassNameTraitConst, PCATrait, PCATraitConst, ParallelLoopBodyTrait, ParallelLoopBodyTraitConst, PlatformInfoTrait, PlatformInfoTraitConst, PlatformTrait, PlatformTraitConst, ProgramSourceTrait, ProgramSourceTraitConst, ProgramTrait, ProgramTraitConst, QueueTrait, QueueTraitConst, RNGTrait, RNGTraitConst, RNG_MT19937Trait, RNG_MT19937TraitConst, RangeTrait, RangeTraitConst, ReduceParamsTrait, ReduceParamsTraitConst, SVDTrait, SVDTraitConst, SparseMatConstIteratorTrait, SparseMatConstIteratorTraitConst, SparseMatIteratorTrait, SparseMatIteratorTraitConst, SparseMatTrait, SparseMatTraitConst, SparseMat_HdrTrait, SparseMat_HdrTraitConst, SparseMat_NodeTrait, SparseMat_NodeTraitConst, StreamTrait, StreamTraitConst, TargetArchsTrait, TargetArchsTraitConst, TickMeterTrait, TickMeterTraitConst, TimerTrait, TimerTraitConst, UMatDataTrait, UMatDataTraitConst, UMatTrait, UMatTraitConst, WriteStructContextTrait, WriteStructContextTraitConst, _InputArrayTrait, _InputArrayTraitConst, _InputOutputArrayTrait, _InputOutputArrayTraitConst, _OutputArrayTrait, _OutputArrayTraitConst};
 	}
 
 	pub const ACCESS_FAST: i32 = 67108864;
@@ -92,17 +92,6 @@ pub mod core {
 	/// image step is wrong, this may happen for a non-continuous matrix.
 	pub const BadStep: i32 = -13;
 	pub const BadTileSize: i32 = -23;
-	/// The buffer will be used as a source for vertex data
-	pub const Buffer_ARRAY_BUFFER: i32 = 34962;
-	/// The buffer will be used for indices (in glDrawElements, for example)
-	pub const Buffer_ELEMENT_ARRAY_BUFFER: i32 = 34963;
-	/// The buffer will be used for reading from OpenGL textures
-	pub const Buffer_PIXEL_PACK_BUFFER: i32 = 35051;
-	/// The buffer will be used for writing to OpenGL textures
-	pub const Buffer_PIXEL_UNPACK_BUFFER: i32 = 35052;
-	pub const Buffer_READ_ONLY: i32 = 35000;
-	pub const Buffer_READ_WRITE: i32 = 35002;
-	pub const Buffer_WRITE_ONLY: i32 = 35001;
 	/// src1 is equal to src2.
 	pub const CMP_EQ: i32 = 0;
 	/// src1 is greater than or equal to src2.
@@ -255,6 +244,21 @@ pub mod core {
 	pub const CV_64UC2: i32 = CV_MAKETYPE(CV_64U,2);
 	pub const CV_64UC3: i32 = CV_MAKETYPE(CV_64U,3);
 	pub const CV_64UC4: i32 = CV_MAKETYPE(CV_64U,4);
+	pub const CV_8F: i32 = CV_8F_E4M3FN;
+	pub const CV_8FC1: i32 = CV_MAKETYPE(CV_8F,1);
+	pub const CV_8FC2: i32 = CV_MAKETYPE(CV_8F,2);
+	pub const CV_8FC3: i32 = CV_MAKETYPE(CV_8F,3);
+	pub const CV_8FC4: i32 = CV_MAKETYPE(CV_8F,4);
+	pub const CV_8F_E4M3FN: i32 = 13;
+	pub const CV_8F_E4M3FNC1: i32 = CV_MAKETYPE(CV_8F_E4M3FN,1);
+	pub const CV_8F_E4M3FNC2: i32 = CV_MAKETYPE(CV_8F_E4M3FN,2);
+	pub const CV_8F_E4M3FNC3: i32 = CV_MAKETYPE(CV_8F_E4M3FN,3);
+	pub const CV_8F_E4M3FNC4: i32 = CV_MAKETYPE(CV_8F_E4M3FN,4);
+	pub const CV_8F_E4M3FNUZ: i32 = 14;
+	pub const CV_8F_E4M3FNUZC1: i32 = CV_MAKETYPE(CV_8F_E4M3FNUZ,1);
+	pub const CV_8F_E4M3FNUZC2: i32 = CV_MAKETYPE(CV_8F_E4M3FNUZ,2);
+	pub const CV_8F_E4M3FNUZC3: i32 = CV_MAKETYPE(CV_8F_E4M3FNUZ,3);
+	pub const CV_8F_E4M3FNUZC4: i32 = CV_MAKETYPE(CV_8F_E4M3FNUZ,4);
 	pub const CV_8S: i32 = 1;
 	pub const CV_8SC1: i32 = CV_MAKETYPE(CV_8S,1);
 	pub const CV_8SC2: i32 = CV_MAKETYPE(CV_8S,2);
@@ -291,6 +295,7 @@ pub mod core {
 	pub const CV_AVX_512VL: i32 = 0;
 	pub const CV_AVX_512VNNI: i32 = 0;
 	pub const CV_AVX_512VPOPCNTDQ: i32 = 0;
+	pub const CV_AVX_VNNI: i32 = 0;
 	pub const CV_Bool: i32 = 9;
 	pub const CV_BoolC1: i32 = CV_MAKETYPE(CV_Bool,1);
 	pub const CV_BoolC2: i32 = CV_MAKETYPE(CV_Bool,2);
@@ -348,8 +353,7 @@ pub mod core {
 	pub const CV_CPU_SVE: i32 = 104;
 	pub const CV_CPU_VSX: i32 = 200;
 	pub const CV_CPU_VSX3: i32 = 201;
-	pub const CV_CXX11: i32 = 1;
-	pub const CV_DEPTH_CURR_MAX: i32 = 13;
+	pub const CV_DEPTH_CURR_MAX: i32 = 15;
 	pub const CV_DEPTH_MAX: i32 = (1<<CV_CN_SHIFT);
 	pub const CV_ENABLE_UNROLLED: i32 = 1;
 	pub const CV_FMA3: i32 = 0;
@@ -429,15 +433,23 @@ pub mod core {
 	pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 	pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
 	pub const CV_SVE: i32 = 0;
-	pub const CV_VERSION: &str = "5.0.0";
+	pub const CV_VERSION: &str = "5.1.0";
 	pub const CV_VERSION_MAJOR: i32 = 5;
-	pub const CV_VERSION_MINOR: i32 = 0;
+	pub const CV_VERSION_MINOR: i32 = 1;
 	pub const CV_VERSION_REVISION: i32 = 0;
 	pub const CV_VERSION_STATUS: &str = "";
 	pub const CV_VSX: i32 = 0;
 	pub const CV_VSX3: i32 = 0;
 	pub const CV_WASM_SIMD: i32 = 0;
 	pub const CV__EXCEPTION_PTR: i32 = 1;
+	pub const CV__FASTMATH_HAVE_SSE2: i32 = 1;
+	pub const CV__FASTMATH_HAVE_SSE2_X64: i32 = 1;
+	pub const CV__FLT2INT_2P63_D: f64 = 9223372036854775808.0;
+	pub const CV__FLT2INT_2P63_F: f32 = 9223372036854775808.;
+	pub const CV__FLT2INT_MAX_D: f64 = 2147483647.0;
+	pub const CV__FLT2INT_MAX_F: f32 = 2147483520.;
+	pub const CV__FLT2INT_MIN_D: f64 = -2147483648.0;
+	pub const CV__FLT2INT_MIN_F: f32 = -2147483648.;
 	/// Block layout (also referred to as 'NC1HWC0'), which some accelerators need and even on CPU a better performance may be achieved.
 	pub const DATA_LAYOUT_BLOCK: i32 = 7;
 	/// OpenCV data layout for 5D data.
@@ -690,9 +702,6 @@ pub mod core {
 	pub const KernelArg_READ_ONLY: i32 = 2;
 	pub const KernelArg_READ_WRITE: i32 = 6;
 	pub const KernelArg_WRITE_ONLY: i32 = 4;
-	pub const LINES: i32 = 1;
-	pub const LINE_LOOP: i32 = 2;
-	pub const LINE_STRIP: i32 = 3;
 	/// Debug message. Disabled in the "Release" build.
 	pub const LOG_LEVEL_DEBUG: i32 = 5;
 	/// Error message
@@ -740,6 +749,83 @@ pub mod core {
 	pub const OCL_VECTOR_DEFAULT: i32 = 0;
 	pub const OCL_VECTOR_MAX: i32 = 1;
 	pub const OCL_VECTOR_OWN: i32 = 0;
+	/// 8-bit integer.
+	pub const OGL_Attribute_BYTE: i32 = 5120;
+	/// 32-bit floating point.
+	pub const OGL_Attribute_FLOAT: i32 = 5126;
+	/// 32-bit integer.
+	pub const OGL_Attribute_INT: i32 = 5124;
+	/// 16-bit integer.
+	pub const OGL_Attribute_SHORT: i32 = 5122;
+	/// 8-bit unsigned integer.
+	pub const OGL_Attribute_UNSIGNED_BYTE: i32 = 5121;
+	/// 32-bit unsigned integer.
+	pub const OGL_Attribute_UNSIGNED_INT: i32 = 5125;
+	/// 16-bit unsigned integer.
+	pub const OGL_Attribute_UNSIGNED_SHORT: i32 = 5123;
+	pub const OGL_BLEND: i32 = 3042;
+	pub const OGL_BLEND_DST_ALPHA: i32 = 772;
+	pub const OGL_BLEND_DST_COLOR: i32 = 774;
+	pub const OGL_BLEND_ONE: i32 = 1;
+	pub const OGL_BLEND_ONE_MINUS_DST_ALPHA: i32 = 773;
+	pub const OGL_BLEND_ONE_MINUS_DST_COLOR: i32 = 775;
+	pub const OGL_BLEND_ONE_MINUS_SRC_ALPHA: i32 = 771;
+	pub const OGL_BLEND_ONE_MINUS_SRC_COLOR: i32 = 769;
+	pub const OGL_BLEND_SRC_ALPHA: i32 = 770;
+	pub const OGL_BLEND_SRC_COLOR: i32 = 768;
+	pub const OGL_BLEND_ZERO: i32 = 0;
+	/// The buffer will be used as a source for vertex data
+	pub const OGL_Buffer_ARRAY_BUFFER: i32 = 34962;
+	/// The buffer will be used for indices (in glDrawElements, for example)
+	pub const OGL_Buffer_ELEMENT_ARRAY_BUFFER: i32 = 34963;
+	/// The buffer will be used for reading from OpenGL textures
+	pub const OGL_Buffer_PIXEL_PACK_BUFFER: i32 = 35051;
+	/// The buffer will be used for writing to OpenGL textures
+	pub const OGL_Buffer_PIXEL_UNPACK_BUFFER: i32 = 35052;
+	pub const OGL_Buffer_READ_ONLY: i32 = 35000;
+	pub const OGL_Buffer_READ_WRITE: i32 = 35002;
+	/// The buffer will be sampled by a shader through ogl::TextureBuffer
+	pub const OGL_Buffer_TEXTURE_BUFFER: i32 = 35882;
+	pub const OGL_Buffer_WRITE_ONLY: i32 = 35001;
+	pub const OGL_CULL_FACE: i32 = 2884;
+	pub const OGL_DEPTH_TEST: i32 = 2929;
+	pub const OGL_LINES: i32 = 1;
+	pub const OGL_LINE_LOOP: i32 = 2;
+	pub const OGL_LINE_STRIP: i32 = 3;
+	pub const OGL_POINTS: i32 = 0;
+	pub const OGL_POLYGON: i32 = 9;
+	pub const OGL_QUADS: i32 = 7;
+	pub const OGL_QUAD_STRIP: i32 = 8;
+	/// The shader will be a fragment shader
+	pub const OGL_Shader_FRAGMENT: i32 = 35632;
+	/// The shader will be a vertex shader
+	pub const OGL_Shader_VERTEX: i32 = 35633;
+	pub const OGL_TRIANGLES: i32 = 4;
+	pub const OGL_TRIANGLE_FAN: i32 = 6;
+	pub const OGL_TRIANGLE_STRIP: i32 = 5;
+	/// Depth
+	pub const OGL_Texture2D_DEPTH_COMPONENT: i32 = 6402;
+	pub const OGL_Texture2D_NONE: i32 = 0;
+	/// Red, Green, Blue
+	pub const OGL_Texture2D_RGB: i32 = 6407;
+	/// Red, Green, Blue, Alpha
+	pub const OGL_Texture2D_RGBA: i32 = 6408;
+	pub const OGL_TextureBuffer_NONE: i32 = 0;
+	/// 1 x 32-bit float
+	pub const OGL_TextureBuffer_R32F: i32 = 33326;
+	/// 1 x 32-bit signed int
+	pub const OGL_TextureBuffer_R32I: i32 = 33333;
+	/// 2 x 32-bit float
+	pub const OGL_TextureBuffer_RG32F: i32 = 33328;
+	/// 2 x 32-bit signed int
+	pub const OGL_TextureBuffer_RG32I: i32 = 33339;
+	/// 4 x 32-bit float
+	pub const OGL_TextureBuffer_RGBA32F: i32 = 34836;
+	/// 4 x 32-bit signed int
+	pub const OGL_TextureBuffer_RGBA32I: i32 = 36226;
+	pub const OGL_UNSIGNED_BYTE: i32 = 5121;
+	pub const OGL_UNSIGNED_INT: i32 = 5125;
+	pub const OGL_UNSIGNED_SHORT: i32 = 5123;
 	pub const OPENCV_ABI_COMPATIBILITY: i32 = 500;
 	pub const OPENCV_USE_FASTMATH_BUILTINS: i32 = 1;
 	/// OpenCL API call error
@@ -757,8 +843,6 @@ pub mod core {
 	/// indicates that the input samples are stored as matrix rows
 	pub const PCA_DATA_AS_ROW: i32 = 0;
 	pub const PCA_USE_AVG: i32 = 2;
-	pub const POINTS: i32 = 0;
-	pub const POLYGON: i32 = 9;
 	pub const Param_ALGORITHM: i32 = 6;
 	pub const Param_BOOLEAN: i32 = 1;
 	pub const Param_FLOAT: i32 = 7;
@@ -771,14 +855,22 @@ pub mod core {
 	pub const Param_UCHAR: i32 = 11;
 	pub const Param_UINT64: i32 = 9;
 	pub const Param_UNSIGNED_INT: i32 = 8;
-	pub const QUADS: i32 = 7;
-	pub const QUAD_STRIP: i32 = 8;
 	/// the output is the mean vector of all rows/columns of the matrix.
 	pub const REDUCE_AVG: i32 = 1;
+	/// the output is the sum of the absolute values.
+	pub const REDUCE_L1: i32 = 6;
+	/// the output is the square root of the sum of the squares.
+	pub const REDUCE_L2: i32 = 7;
+	/// the output is the logarithm of the sum.
+	pub const REDUCE_LOG_SUM: i32 = 8;
+	/// the output is log(sum(exp(x))), computed without overflow.
+	pub const REDUCE_LOG_SUM_EXP: i32 = 9;
 	/// the output is the maximum (column/row-wise) of all rows/columns of the matrix.
 	pub const REDUCE_MAX: i32 = 2;
 	/// the output is the minimum (column/row-wise) of all rows/columns of the matrix.
 	pub const REDUCE_MIN: i32 = 3;
+	/// the output is the product of the elements.
+	pub const REDUCE_PROD: i32 = 5;
 	/// the output is the sum of all rows/columns of the matrix.
 	pub const REDUCE_SUM: i32 = 0;
 	/// the output is the sum of all squared rows/columns of the matrix.
@@ -887,9 +979,6 @@ pub mod core {
 	pub const StsUnsupportedFormat: i32 = -210;
 	/// incorrect vector length
 	pub const StsVecLengthErr: i32 = -28;
-	pub const TRIANGLES: i32 = 4;
-	pub const TRIANGLE_FAN: i32 = 6;
-	pub const TRIANGLE_STRIP: i32 = 5;
 	pub const TYPE_FUN: i32 = 3;
 	pub const TYPE_GENERAL: i32 = 0;
 	pub const TYPE_MARKER: i32 = 1;
@@ -900,13 +989,6 @@ pub mod core {
 	pub const TermCriteria_EPS: i32 = 2;
 	/// ditto
 	pub const TermCriteria_MAX_ITER: i32 = 1;
-	/// Depth
-	pub const Texture2D_DEPTH_COMPONENT: i32 = 6402;
-	pub const Texture2D_NONE: i32 = 0;
-	/// Red, Green, Blue
-	pub const Texture2D_RGB: i32 = 6407;
-	/// Red, Green, Blue, Alpha
-	pub const Texture2D_RGBA: i32 = 6408;
 	pub const UMatData_ASYNC_CLEANUP: i32 = 128;
 	pub const UMatData_COPY_ON_MAP: i32 = 1;
 	pub const UMatData_DEVICE_COPY_OBSOLETE: i32 = 4;
@@ -959,9 +1041,9 @@ pub mod core {
 	pub const _OutputArray_DEPTH_MASK_64U: i32 = 1024;
 	pub const _OutputArray_DEPTH_MASK_8S: i32 = 2;
 	pub const _OutputArray_DEPTH_MASK_8U: i32 = 1;
-	pub const _OutputArray_DEPTH_MASK_ALL: i32 = 8191;
-	pub const _OutputArray_DEPTH_MASK_ALL_16F: i32 = 8191;
-	pub const _OutputArray_DEPTH_MASK_ALL_BUT_8S: i32 = 8189;
+	pub const _OutputArray_DEPTH_MASK_ALL: i32 = 32767;
+	pub const _OutputArray_DEPTH_MASK_ALL_16F: i32 = 32767;
+	pub const _OutputArray_DEPTH_MASK_ALL_BUT_8S: i32 = 32765;
 	pub const _OutputArray_DEPTH_MASK_BOOL: i32 = 512;
 	pub const _OutputArray_DEPTH_MASK_FLT: i32 = 96;
 	pub const __UMAT_USAGE_FLAGS_32BIT: i32 = 2147483647;
@@ -1083,32 +1165,6 @@ pub mod core {
 	}
 
 	opencv_type_enum! { core::BorderTypes { BORDER_CONSTANT, BORDER_REPLICATE, BORDER_REFLECT, BORDER_WRAP, BORDER_REFLECT_101, BORDER_TRANSPARENT, BORDER_ISOLATED } }
-
-	#[repr(i32)]
-	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum Buffer_Access {
-		READ_ONLY = 35000,
-		WRITE_ONLY = 35001,
-		READ_WRITE = 35002,
-	}
-
-	opencv_type_enum! { core::Buffer_Access { READ_ONLY, WRITE_ONLY, READ_WRITE } }
-
-	/// The target defines how you intend to use the buffer object.
-	#[repr(i32)]
-	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum Buffer_Target {
-		/// The buffer will be used as a source for vertex data
-		ARRAY_BUFFER = 34962,
-		/// The buffer will be used for indices (in glDrawElements, for example)
-		ELEMENT_ARRAY_BUFFER = 34963,
-		/// The buffer will be used for reading from OpenGL textures
-		PIXEL_PACK_BUFFER = 35051,
-		/// The buffer will be used for writing to OpenGL textures
-		PIXEL_UNPACK_BUFFER = 35052,
-	}
-
-	opencv_type_enum! { core::Buffer_Target { ARRAY_BUFFER, ELEMENT_ARRAY_BUFFER, PIXEL_PACK_BUFFER, PIXEL_UNPACK_BUFFER } }
 
 	/// comparison types
 	#[repr(i32)]
@@ -1730,6 +1786,162 @@ pub mod core {
 
 	opencv_type_enum! { core::NormTypes { NORM_INF, NORM_L1, NORM_L2, NORM_L2SQR, NORM_HAMMING, NORM_HAMMING2, NORM_RELATIVE, NORM_MINMAX } }
 
+	/// The target defines how you intend to use the buffer object.
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum OGL_Attribute_Type {
+		/// 8-bit integer.
+		BYTE = 5120,
+		/// 8-bit unsigned integer.
+		UNSIGNED_BYTE = 5121,
+		/// 16-bit integer.
+		SHORT = 5122,
+		/// 16-bit unsigned integer.
+		UNSIGNED_SHORT = 5123,
+		/// 32-bit integer.
+		INT = 5124,
+		/// 32-bit unsigned integer.
+		UNSIGNED_INT = 5125,
+		/// 32-bit floating point.
+		FLOAT = 5126,
+	}
+
+	opencv_type_enum! { core::OGL_Attribute_Type { BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT, INT, UNSIGNED_INT, FLOAT } }
+
+	/// blend factor
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum OGL_BlendFactor {
+		BLEND_ZERO = 0,
+		BLEND_ONE = 1,
+		BLEND_SRC_COLOR = 768,
+		BLEND_ONE_MINUS_SRC_COLOR = 769,
+		BLEND_SRC_ALPHA = 770,
+		BLEND_ONE_MINUS_SRC_ALPHA = 771,
+		BLEND_DST_ALPHA = 772,
+		BLEND_ONE_MINUS_DST_ALPHA = 773,
+		BLEND_DST_COLOR = 774,
+		BLEND_ONE_MINUS_DST_COLOR = 775,
+	}
+
+	opencv_type_enum! { core::OGL_BlendFactor { BLEND_ZERO, BLEND_ONE, BLEND_SRC_COLOR, BLEND_ONE_MINUS_SRC_COLOR, BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA, BLEND_DST_ALPHA, BLEND_ONE_MINUS_DST_ALPHA, BLEND_DST_COLOR, BLEND_ONE_MINUS_DST_COLOR } }
+
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum OGL_Buffer_Access {
+		READ_ONLY = 35000,
+		WRITE_ONLY = 35001,
+		READ_WRITE = 35002,
+	}
+
+	opencv_type_enum! { core::OGL_Buffer_Access { READ_ONLY, WRITE_ONLY, READ_WRITE } }
+
+	/// The target defines how you intend to use the buffer object.
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum OGL_Buffer_Target {
+		/// The buffer will be used as a source for vertex data
+		ARRAY_BUFFER = 34962,
+		/// The buffer will be used for indices (in glDrawElements, for example)
+		ELEMENT_ARRAY_BUFFER = 34963,
+		/// The buffer will be used for reading from OpenGL textures
+		PIXEL_PACK_BUFFER = 35051,
+		/// The buffer will be used for writing to OpenGL textures
+		PIXEL_UNPACK_BUFFER = 35052,
+		/// The buffer will be sampled by a shader through ogl::TextureBuffer
+		TEXTURE_BUFFER = 35882,
+	}
+
+	opencv_type_enum! { core::OGL_Buffer_Target { ARRAY_BUFFER, ELEMENT_ARRAY_BUFFER, PIXEL_PACK_BUFFER, PIXEL_UNPACK_BUFFER, TEXTURE_BUFFER } }
+
+	/// capability
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum OGL_Capability {
+		DEPTH_TEST = 2929,
+		CULL_FACE = 2884,
+		BLEND = 3042,
+	}
+
+	opencv_type_enum! { core::OGL_Capability { DEPTH_TEST, CULL_FACE, BLEND } }
+
+	/// index type
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum OGL_IndexType {
+		UNSIGNED_BYTE = 5121,
+		UNSIGNED_SHORT = 5123,
+		UNSIGNED_INT = 5125,
+	}
+
+	opencv_type_enum! { core::OGL_IndexType { UNSIGNED_BYTE, UNSIGNED_SHORT, UNSIGNED_INT } }
+
+	/// render mode
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum OGL_RenderModes {
+		POINTS = 0,
+		LINES = 1,
+		LINE_LOOP = 2,
+		LINE_STRIP = 3,
+		TRIANGLES = 4,
+		TRIANGLE_STRIP = 5,
+		TRIANGLE_FAN = 6,
+		QUADS = 7,
+		QUAD_STRIP = 8,
+		POLYGON = 9,
+	}
+
+	opencv_type_enum! { core::OGL_RenderModes { POINTS, LINES, LINE_LOOP, LINE_STRIP, TRIANGLES, TRIANGLE_STRIP, TRIANGLE_FAN, QUADS, QUAD_STRIP, POLYGON } }
+
+	/// The target defines how you intend to use the buffer object.
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum OGL_Shader_ShaderType {
+		/// The shader will be a fragment shader
+		FRAGMENT = 35632,
+		/// The shader will be a vertex shader
+		VERTEX = 35633,
+	}
+
+	opencv_type_enum! { core::OGL_Shader_ShaderType { FRAGMENT, VERTEX } }
+
+	/// An Image Format describes the way that the images in Textures store their data.
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum OGL_Texture2D_Format {
+		NONE = 0,
+		/// Depth
+		DEPTH_COMPONENT = 6402,
+		/// Red, Green, Blue
+		RGB = 6407,
+		/// Red, Green, Blue, Alpha
+		RGBA = 6408,
+	}
+
+	opencv_type_enum! { core::OGL_Texture2D_Format { NONE, DEPTH_COMPONENT, RGB, RGBA } }
+
+	/// The internal format the shader sees, i.e. component count and type per element.
+	#[repr(i32)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum OGL_TextureBuffer_Format {
+		NONE = 0,
+		/// 1 x 32-bit float
+		R32F = 33326,
+		/// 2 x 32-bit float
+		RG32F = 33328,
+		/// 4 x 32-bit float
+		RGBA32F = 34836,
+		/// 1 x 32-bit signed int
+		R32I = 33333,
+		/// 2 x 32-bit signed int
+		RG32I = 33339,
+		/// 4 x 32-bit signed int
+		RGBA32I = 36226,
+	}
+
+	opencv_type_enum! { core::OGL_TextureBuffer_Format { NONE, R32F, RG32F, RGBA32F, R32I, RG32I, RGBA32I } }
+
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum OclVectorStrategy {
@@ -1787,27 +1999,19 @@ pub mod core {
 		REDUCE_MIN = 3,
 		/// the output is the sum of all squared rows/columns of the matrix.
 		REDUCE_SUM2 = 4,
+		/// the output is the product of the elements.
+		REDUCE_PROD = 5,
+		/// the output is the sum of the absolute values.
+		REDUCE_L1 = 6,
+		/// the output is the square root of the sum of the squares.
+		REDUCE_L2 = 7,
+		/// the output is the logarithm of the sum.
+		REDUCE_LOG_SUM = 8,
+		/// the output is log(sum(exp(x))), computed without overflow.
+		REDUCE_LOG_SUM_EXP = 9,
 	}
 
-	opencv_type_enum! { core::ReduceTypes { REDUCE_SUM, REDUCE_AVG, REDUCE_MAX, REDUCE_MIN, REDUCE_SUM2 } }
-
-	/// render mode
-	#[repr(i32)]
-	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum RenderModes {
-		POINTS = 0,
-		LINES = 1,
-		LINE_LOOP = 2,
-		LINE_STRIP = 3,
-		TRIANGLES = 4,
-		TRIANGLE_STRIP = 5,
-		TRIANGLE_FAN = 6,
-		QUADS = 7,
-		QUAD_STRIP = 8,
-		POLYGON = 9,
-	}
-
-	opencv_type_enum! { core::RenderModes { POINTS, LINES, LINE_LOOP, LINE_STRIP, TRIANGLES, TRIANGLE_STRIP, TRIANGLE_FAN, QUADS, QUAD_STRIP, POLYGON } }
+	opencv_type_enum! { core::ReduceTypes { REDUCE_SUM, REDUCE_AVG, REDUCE_MAX, REDUCE_MIN, REDUCE_SUM2, REDUCE_PROD, REDUCE_L1, REDUCE_L2, REDUCE_LOG_SUM, REDUCE_LOG_SUM_EXP } }
 
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -1909,21 +2113,6 @@ pub mod core {
 
 	opencv_type_enum! { core::TermCriteria_Type { COUNT, EPS } }
 
-	/// An Image Format describes the way that the images in Textures store their data.
-	#[repr(i32)]
-	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum Texture2D_Format {
-		NONE = 0,
-		/// Depth
-		DEPTH_COMPONENT = 6402,
-		/// Red, Green, Blue
-		RGB = 6407,
-		/// Red, Green, Blue, Alpha
-		RGBA = 6408,
-	}
-
-	opencv_type_enum! { core::Texture2D_Format { NONE, DEPTH_COMPONENT, RGB, RGBA } }
-
 	#[repr(i32)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum UMatData_MemoryFlag {
@@ -2003,10 +2192,10 @@ pub mod core {
 		DEPTH_MASK_64U = 1024,
 		DEPTH_MASK_64S = 2048,
 		DEPTH_MASK_32U = 4096,
-		DEPTH_MASK_ALL = 8191,
-		DEPTH_MASK_ALL_BUT_8S = 8189,
+		DEPTH_MASK_ALL = 32767,
+		DEPTH_MASK_ALL_BUT_8S = 32765,
 		// Duplicate, use DEPTH_MASK_ALL instead
-		// DEPTH_MASK_ALL_16F = 8191,
+		// DEPTH_MASK_ALL_16F = 32767,
 		DEPTH_MASK_FLT = 96,
 	}
 
@@ -3502,6 +3691,29 @@ pub mod core {
 		input_output_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_completeSymm_const__InputOutputArrayR_bool(m.as_raw__InputOutputArray(), lower_to_upper, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Concatenates n-dimensional arrays along the given axis.
+	///
+	/// All the arrays must have the same type and number of dimensions, and the same size along every
+	/// axis except @p axis. The arrays may be multi-channel and non-continuous; the channels of each
+	/// element are kept together, so @p axis refers to the array dimensions, not to the channels.
+	/// For 2D arrays concat(src, 0, dst) is equivalent to vconcat() and concat(src, 1, dst) to hconcat().
+	/// ## Parameters
+	/// * src: input arrays
+	/// * axis: axis to concatenate along; -dims <= axis < dims
+	/// * dst: output array
+	/// ## See also
+	/// split, hconcat, vconcat
+	#[inline]
+	pub fn concat(src: &impl ToInputArray, axis: i32, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_concat_const__InputArrayR_int_const__OutputArrayR(src.as_raw__InputArray(), axis, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5374,7 +5586,7 @@ pub mod core {
 
 	/// Generates a mask of finite float values, i.e. not NaNs nor Infs.
 	///
-	/// An element is set to to 255 (all 1-bits) if all channels are finite.
+	/// An element is set to 255 (all 1-bits) if all channels are finite.
 	/// ## Parameters
 	/// * src: Input matrix, should contain float or double elements of 1 to 4 channels
 	/// * mask: Output matrix of the same size as input of type CV_8UC1
@@ -5389,11 +5601,65 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Merges consecutive axes of an n-dimensional array into one.
+	///
+	/// With the default arguments the result is 1-dimensional.
+	/// ## Parameters
+	/// * src: input array
+	/// * dst: output array
+	/// * startAxis: first axis to merge; negative values count from the end.
+	/// * endAxis: last axis to merge (inclusive); negative values count from the end.
+	/// ## See also
+	/// MatShape::flatten
+	///
+	/// ## Note
+	/// This alternative version of [flatten] function uses the following default values for its arguments:
+	/// * start_axis: 0
+	/// * end_axis: -1
+	#[inline]
+	pub fn flatten_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_flatten_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Merges consecutive axes of an n-dimensional array into one.
+	///
+	/// With the default arguments the result is 1-dimensional.
+	/// ## Parameters
+	/// * src: input array
+	/// * dst: output array
+	/// * startAxis: first axis to merge; negative values count from the end.
+	/// * endAxis: last axis to merge (inclusive); negative values count from the end.
+	/// ## See also
+	/// MatShape::flatten
+	///
+	/// ## C++ default parameters
+	/// * start_axis: 0
+	/// * end_axis: -1
+	#[inline]
+	pub fn flatten(src: &impl ToInputArray, dst: &mut impl ToOutputArray, start_axis: i32, end_axis: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_flatten_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), start_axis, end_axis, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Flips a n-dimensional at given axis
+	///
+	/// The input may be multi-channel and non-continuous (e.g. a sub-array); the channels of each
+	/// element are kept together. In-place operation (src and dst sharing data) is supported.
 	/// ## Parameters
 	/// * src: input array
 	/// * dst: output array that has the same shape of src
-	/// * axis: axis that performs a flip on. 0 <= axis < src.dims.
+	/// * axis: axis that performs a flip on. -src.dims <= axis < src.dims.
 	#[inline]
 	pub fn flip_nd(src: &impl ToInputArray, dst: &mut impl ToOutputArray, axis: i32) -> Result<()> {
 		input_array_arg!(src);
@@ -5599,6 +5865,10 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Returns matrix element size.
+	/// Returns matrix element size including channels. Analog of CV_ELEM_SIZE macro. Example: getElemSize(CV_32SC3) returns 12.
+	/// ## Parameters
+	/// * type: Matrix data type, e.g. CV_8UC3.
 	#[inline]
 	pub fn get_elem_size(typ: i32) -> Result<size_t> {
 		return_send!(via ocvrs_return);
@@ -5897,12 +6167,12 @@ pub mod core {
 	/// ## Overloaded parameters
 	///
 	/// ```C++
-	///    cv::Mat_<float> A = (cv::Mat_<float>(3, 2) << 1, 4,
+	///    cv::Mat_<float> A = cv::Mat_<float>({3, 2}, { 1, 4,
 	///                                                  2, 5,
-	///                                                  3, 6);
-	///    cv::Mat_<float> B = (cv::Mat_<float>(3, 2) << 7, 10,
+	///                                                  3, 6 });
+	///    cv::Mat_<float> B = cv::Mat_<float>({3, 2}, { 7, 10,
 	///                                                  8, 11,
-	///                                                  9, 12);
+	///                                                  9, 12 });
 	///
 	///   cv::Mat C;
 	///    cv::hconcat(A, B, C);
@@ -6400,7 +6670,8 @@ pub mod core {
 	/// compactness value are returned by the function. Basically, you can use only the core of the
 	/// function, set the number of attempts to 1, initialize labels each time using a custom algorithm,
 	/// pass them with the ( flags = [KMEANS_USE_INITIAL_LABELS] ) flag, and then choose the best
-	/// (most-compact) clustering.
+	/// (most-compact) clustering. If the value is negative, the algorithm did not succeed, most likely
+	/// because the input contains NaN or Inf.
 	///
 	/// ## Note
 	/// This alternative version of [kmeans] function uses the following default values for its arguments:
@@ -6450,7 +6721,8 @@ pub mod core {
 	/// compactness value are returned by the function. Basically, you can use only the core of the
 	/// function, set the number of attempts to 1, initialize labels each time using a custom algorithm,
 	/// pass them with the ( flags = [KMEANS_USE_INITIAL_LABELS] ) flag, and then choose the best
-	/// (most-compact) clustering.
+	/// (most-compact) clustering. If the value is negative, the algorithm did not succeed, most likely
+	/// because the input contains NaN or Inf.
 	///
 	/// ## C++ default parameters
 	/// * centers: noArray()
@@ -6473,6 +6745,103 @@ pub mod core {
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Solves the rectangular linear assignment problem.
+	///
+	/// Pairs the rows of a cost matrix with its columns at the lowest total cost, each row taking at most
+	/// one column and each column at most one row. Costs may be negative.
+	///
+	/// @p costThreshold is the price of leaving a row unmatched, not a filter applied afterwards. The
+	/// function minimises
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%5F%7B%28i%2Cj%29%5C%2C%5Cin%5C%2C%5Cmathcal%7BM%7D%7D%5Ctexttt%7Bcost%7D%28i%2Cj%29%5C%3B%2B%5C%3B%5Ctexttt%7BcostThreshold%7D%5Ccdot%5Cbigl%28%5Cmin%28M%2CN%29%2D%7C%5Cmathcal%7BM%7D%7C%5Cbigr%29)
+	///
+	/// so a pair is made only when it costs less than leaving it unmade, and any pair above the threshold
+	/// is forbidden. The default threshold forbids nothing and gives the plain optimal assignment.
+	///
+	/// A cell that is infinite or NaN marks a pair that may not be matched, whatever @p costThreshold is.
+	/// Both are treated the same way and for the same reason: neither is a cost the solver can compare, so
+	/// the pair is excluded rather than guessed at. Infinity is the natural way for a caller to say "these
+	/// two cannot go together"; NaN usually means the cost could not be computed, and excluding it keeps
+	/// one bad cell from turning the whole result into NaN. A row left with no usable cell simply reports
+	/// -1, and a matrix of nothing but non-finite cells returns an empty matching with a total of 0.
+	///
+	/// Several matchings can share the lowest total, as in a matrix of repeated columns. Any one of them
+	/// may be returned, so tests should compare the total rather than the pairing.
+	///
+	/// ## Parameters
+	/// * cost: `M`-by-`N` cost matrix, CV_32FC1, CV_64FC1 or CV_32SC1. Must not be empty. Infinite
+	/// and NaN cells are forbidden pairs; an integer matrix has none, so only @p costThreshold can forbid
+	/// a pair there.
+	/// * assignment: Output vector of size `M`. Element `i` is the column matched to row `i`, or -1.
+	/// * costThreshold: Maximum cost of a pair, and the price of each pair left unmade.
+	/// ## Returns
+	/// Sum of @p cost over the matched pairs only, without the unassignment term; 0 if no pair was
+	/// made.
+	///
+	///
+	/// Note: Implemented from [Crouse2016](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Crouse2016), which extends [Jonker1987](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Jonker1987) to rectangular matrices.
+	///
+	/// ## Note
+	/// This alternative version of [linear_assignment] function uses the following default values for its arguments:
+	/// * cost_threshold: DBL_MAX
+	#[inline]
+	pub fn linear_assignment_def(cost: &impl ToInputArray, assignment: &mut core::Vector<i32>) -> Result<f64> {
+		input_array_arg!(cost);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_linearAssignment_const__InputArrayR_vectorLintGR(cost.as_raw__InputArray(), assignment.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Solves the rectangular linear assignment problem.
+	///
+	/// Pairs the rows of a cost matrix with its columns at the lowest total cost, each row taking at most
+	/// one column and each column at most one row. Costs may be negative.
+	///
+	/// @p costThreshold is the price of leaving a row unmatched, not a filter applied afterwards. The
+	/// function minimises
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%5F%7B%28i%2Cj%29%5C%2C%5Cin%5C%2C%5Cmathcal%7BM%7D%7D%5Ctexttt%7Bcost%7D%28i%2Cj%29%5C%3B%2B%5C%3B%5Ctexttt%7BcostThreshold%7D%5Ccdot%5Cbigl%28%5Cmin%28M%2CN%29%2D%7C%5Cmathcal%7BM%7D%7C%5Cbigr%29)
+	///
+	/// so a pair is made only when it costs less than leaving it unmade, and any pair above the threshold
+	/// is forbidden. The default threshold forbids nothing and gives the plain optimal assignment.
+	///
+	/// A cell that is infinite or NaN marks a pair that may not be matched, whatever @p costThreshold is.
+	/// Both are treated the same way and for the same reason: neither is a cost the solver can compare, so
+	/// the pair is excluded rather than guessed at. Infinity is the natural way for a caller to say "these
+	/// two cannot go together"; NaN usually means the cost could not be computed, and excluding it keeps
+	/// one bad cell from turning the whole result into NaN. A row left with no usable cell simply reports
+	/// -1, and a matrix of nothing but non-finite cells returns an empty matching with a total of 0.
+	///
+	/// Several matchings can share the lowest total, as in a matrix of repeated columns. Any one of them
+	/// may be returned, so tests should compare the total rather than the pairing.
+	///
+	/// ## Parameters
+	/// * cost: `M`-by-`N` cost matrix, CV_32FC1, CV_64FC1 or CV_32SC1. Must not be empty. Infinite
+	/// and NaN cells are forbidden pairs; an integer matrix has none, so only @p costThreshold can forbid
+	/// a pair there.
+	/// * assignment: Output vector of size `M`. Element `i` is the column matched to row `i`, or -1.
+	/// * costThreshold: Maximum cost of a pair, and the price of each pair left unmade.
+	/// ## Returns
+	/// Sum of @p cost over the matched pairs only, without the unassignment term; 0 if no pair was
+	/// made.
+	///
+	///
+	/// Note: Implemented from [Crouse2016](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Crouse2016), which extends [Jonker1987](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Jonker1987) to rectangular matrices.
+	///
+	/// ## C++ default parameters
+	/// * cost_threshold: DBL_MAX
+	#[inline]
+	pub fn linear_assignment(cost: &impl ToInputArray, assignment: &mut core::Vector<i32>, cost_threshold: f64) -> Result<f64> {
+		input_array_arg!(cost);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_linearAssignment_const__InputArrayR_vectorLintGR_double(cost.as_raw__InputArray(), assignment.as_raw_mut_VectorOfi32(), cost_threshold, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 
@@ -6765,7 +7134,7 @@ pub mod core {
 	/// advanced way, use cv::mixChannels.
 	///
 	/// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 	///
 	/// ## Parameters
 	/// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -6805,8 +7174,6 @@ pub mod core {
 	/// dimensions, i.e. single-column matrix is Mx1 matrix (and therefore minIdx/maxIdx will be
 	/// (i1,0)/(i2,0)) and single-row matrix is 1xN matrix (and therefore minIdx/maxIdx will be
 	/// (0,j1)/(0,j2)).
-	///
-	/// Note: CV_16F/CV_16BF/CV_Bool/CV_64U/CV_64S/CV_32U are not supported for src.
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -6845,8 +7212,6 @@ pub mod core {
 	/// dimensions, i.e. single-column matrix is Mx1 matrix (and therefore minIdx/maxIdx will be
 	/// (i1,0)/(i2,0)) and single-row matrix is 1xN matrix (and therefore minIdx/maxIdx will be
 	/// (0,j1)/(0,j2)).
-	///
-	/// Note: CV_16F/CV_16BF/CV_Bool/CV_64U/CV_64S/CV_32U are not supported for src.
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -6890,8 +7255,6 @@ pub mod core {
 	/// binding generation process (there is no way to set minLoc and maxLoc to NULL). A
 	/// workaround is to operate on each channel individually or to use NumPy to achieve the same
 	/// functionality.
-	///
-	/// Note: CV_16F/CV_16BF/CV_Bool/CV_64U/CV_64S/CV_32U are not supported for src.
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -6942,8 +7305,6 @@ pub mod core {
 	/// binding generation process (there is no way to set minLoc and maxLoc to NULL). A
 	/// workaround is to operate on each channel individually or to use NumPy to achieve the same
 	/// functionality.
-	///
-	/// Note: CV_16F/CV_16BF/CV_Bool/CV_64U/CV_64S/CV_32U are not supported for src.
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -6993,8 +7354,6 @@ pub mod core {
 	/// binding generation process (there is no way to set minLoc and maxLoc to NULL). A
 	/// workaround is to operate on each channel individually or to use NumPy to achieve the same
 	/// functionality.
-	///
-	/// Note: CV_16F/CV_16BF/CV_Bool/CV_64U/CV_64S/CV_32U are not supported for src.
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -7038,8 +7397,6 @@ pub mod core {
 	/// binding generation process (there is no way to set minLoc and maxLoc to NULL). A
 	/// workaround is to operate on each channel individually or to use NumPy to achieve the same
 	/// functionality.
-	///
-	/// Note: CV_16F/CV_16BF/CV_Bool/CV_64U/CV_64S/CV_32U are not supported for src.
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -7622,7 +7979,7 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/5.0.0/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/5.1.0/NormTypes_OneArray_1-2-INF.png)
 	///
 	/// When the mask parameter is specified and it is not empty, the norm is
 	///
@@ -7727,7 +8084,7 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/5.0.0/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/5.1.0/NormTypes_OneArray_1-2-INF.png)
 	///
 	/// When the mask parameter is specified and it is not empty, the norm is
 	///
@@ -8395,15 +8752,71 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Sets the blend function for the current target.
+	/// ## Parameters
+	/// * sfactor: Source blend factor. See cv::ogl::BlendFactor.
+	/// * dfactor: Destination blend factor. See cv::ogl::BlendFactor.
+	#[inline]
+	pub fn blend_func(sfactor: i32, dfactor: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_blendFunc_int_int(sfactor, dfactor, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Clears the current target to a single color.
+	/// ## Parameters
+	/// * color: New color.
+	///
+	/// ## Note
+	/// This alternative version of [clear_color] function uses the following default values for its arguments:
+	/// * color: Scalar::all(0)
+	#[inline]
+	pub fn clear_color_def() -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_clearColor(ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Clears the current target to a single color.
+	/// ## Parameters
+	/// * color: New color.
+	///
+	/// ## C++ default parameters
+	/// * color: Scalar::all(0)
+	#[inline]
+	pub fn clear_color(color: core::Scalar) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_clearColor_Scalar(&color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Clears the current target depth to a single value.
+	/// ## Parameters
+	/// * depth: New depth.
+	#[inline]
+	pub fn clear_depth(depth: f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_clearDepth_float(depth, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Converts Texture2D object to OutputArray.
 	/// ## Parameters
 	/// * texture: - source Texture2D object.
 	/// * dst: - destination OutputArray.
 	#[inline]
-	pub fn convert_from_gl_texture_2d(texture: &impl core::Texture2DTraitConst, dst: &mut impl ToOutputArray) -> Result<()> {
+	pub fn convert_from_gl_texture_2d(texture: &impl core::OGL_Texture2DTraitConst, dst: &mut impl ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ogl_convertFromGLTexture2D_const_Texture2DR_const__OutputArrayR(texture.as_raw_Texture2D(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ogl_convertFromGLTexture2D_const_Texture2DR_const__OutputArrayR(texture.as_raw_OGL_Texture2D(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8414,10 +8827,91 @@ pub mod core {
 	/// * src: - source InputArray.
 	/// * texture: - destination Texture2D object.
 	#[inline]
-	pub fn convert_to_gl_texture_2d(src: &impl ToInputArray, texture: &mut impl core::Texture2DTrait) -> Result<()> {
+	pub fn convert_to_gl_texture_2d(src: &impl ToInputArray, texture: &mut impl core::OGL_Texture2DTrait) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ogl_convertToGLTexture2D_const__InputArrayR_Texture2DR(src.as_raw__InputArray(), texture.as_raw_mut_Texture2D(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ogl_convertToGLTexture2D_const__InputArrayR_Texture2DR(src.as_raw__InputArray(), texture.as_raw_mut_OGL_Texture2D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Enables or disables writing to the depth buffer.
+	/// ## Parameters
+	/// * flag: If false, depth testing still happens but no depth value is written.
+	#[inline]
+	pub fn depth_mask(flag: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_depthMask_bool(flag, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Disable server-side GL capabilities.
+	/// ## Parameters
+	/// * cap: The capability to disable.
+	#[inline]
+	pub fn disable(cap: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_disable_int(cap, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Renders primitives from array data.
+	/// ## Parameters
+	/// * first: Index of the first vertex to draw.
+	/// * count: Number of vertices to draw.
+	/// * mode: Rendering mode. See cv::ogl::RenderModes.
+	#[inline]
+	pub fn draw_arrays(first: i32, count: i32, mode: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_drawArrays_int_int_int(first, count, mode, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Renders multiple instances of primitives from array data with index buffer set.
+	/// ## Parameters
+	/// * first: Byte offset of the first index in the bound element buffer.
+	/// * count: Number of indices to draw.
+	/// * type: Index type. See cv::ogl::IndexType.
+	/// * mode: Rendering mode. See cv::ogl::RenderModes.
+	/// * instanceCount: Number of instances to draw. Each instance sees its own gl_InstanceID.
+	#[inline]
+	pub fn draw_elements_instanced(first: i32, count: i32, typ: i32, mode: i32, instance_count: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_drawElementsInstanced_int_int_int_int_int(first, count, typ, mode, instance_count, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Renders primitives from array data with index buffer set.
+	/// ## Parameters
+	/// * first: Byte offset of the first index in the bound element buffer.
+	/// * count: Number of indices to draw.
+	/// * type: Index type. See cv::ogl::IndexType.
+	/// * mode: Rendering mode. See cv::ogl::RenderModes.
+	#[inline]
+	pub fn draw_elements(first: i32, count: i32, typ: i32, mode: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_drawElements_int_int_int_int(first, count, typ, mode, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Enable server-side GL capabilities.
+	/// ## Parameters
+	/// * cap: The capability to enable.
+	#[inline]
+	pub fn enable(cap: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_enable_int(cap, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8440,9 +8934,9 @@ pub mod core {
 	/// This alternative version of [map_gl_buffer] function uses the following default values for its arguments:
 	/// * access_flags: ACCESS_READ|ACCESS_WRITE
 	#[inline]
-	pub fn map_gl_buffer_def(buffer: &impl core::BufferTraitConst) -> Result<core::UMat> {
+	pub fn map_gl_buffer_def(buffer: &impl core::OGL_BufferTraitConst) -> Result<core::UMat> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ogl_mapGLBuffer_const_BufferR(buffer.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ogl_mapGLBuffer_const_BufferR(buffer.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -8465,9 +8959,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * access_flags: ACCESS_READ|ACCESS_WRITE
 	#[inline]
-	pub fn map_gl_buffer(buffer: &impl core::BufferTraitConst, access_flags: core::AccessFlag) -> Result<core::UMat> {
+	pub fn map_gl_buffer(buffer: &impl core::OGL_BufferTraitConst, access_flags: core::AccessFlag) -> Result<core::UMat> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ogl_mapGLBuffer_const_BufferR_AccessFlag(buffer.as_raw_Buffer(), access_flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ogl_mapGLBuffer_const_BufferR_AccessFlag(buffer.as_raw_OGL_Buffer(), access_flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -8504,9 +8998,9 @@ pub mod core {
 	/// * mode: POINTS
 	/// * color: Scalar::all(255)
 	#[inline]
-	pub fn render_1_def(arr: &impl core::ArraysTraitConst) -> Result<()> {
+	pub fn render_1_def(arr: &impl core::OGL_ArraysTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ogl_render_const_ArraysR(arr.as_raw_Arrays(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ogl_render_const_ArraysR(arr.as_raw_OGL_Arrays(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8530,10 +9024,10 @@ pub mod core {
 	/// * mode: POINTS
 	/// * color: Scalar::all(255)
 	#[inline]
-	pub fn render_2_def(arr: &impl core::ArraysTraitConst, indices: &impl ToInputArray) -> Result<()> {
+	pub fn render_2_def(arr: &impl core::OGL_ArraysTraitConst, indices: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(indices);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR(arr.as_raw_Arrays(), indices.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR(arr.as_raw_OGL_Arrays(), indices.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8556,10 +9050,10 @@ pub mod core {
 	/// * mode: POINTS
 	/// * color: Scalar::all(255)
 	#[inline]
-	pub fn render_2(arr: &impl core::ArraysTraitConst, indices: &impl ToInputArray, mode: i32, color: core::Scalar) -> Result<()> {
+	pub fn render_2(arr: &impl core::OGL_ArraysTraitConst, indices: &impl ToInputArray, mode: i32, color: core::Scalar) -> Result<()> {
 		input_array_arg!(indices);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR_int_Scalar(arr.as_raw_Arrays(), indices.as_raw__InputArray(), mode, &color, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR_int_Scalar(arr.as_raw_OGL_Arrays(), indices.as_raw__InputArray(), mode, &color, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8581,9 +9075,9 @@ pub mod core {
 	/// * mode: POINTS
 	/// * color: Scalar::all(255)
 	#[inline]
-	pub fn render_1(arr: &impl core::ArraysTraitConst, mode: i32, color: core::Scalar) -> Result<()> {
+	pub fn render_1(arr: &impl core::OGL_ArraysTraitConst, mode: i32, color: core::Scalar) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ogl_render_const_ArraysR_int_Scalar(arr.as_raw_Arrays(), mode, &color, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ogl_render_const_ArraysR_int_Scalar(arr.as_raw_OGL_Arrays(), mode, &color, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8600,9 +9094,9 @@ pub mod core {
 	/// * wnd_rect: Rect_<double>(0.0,0.0,1.0,1.0)
 	/// * tex_rect: Rect_<double>(0.0,0.0,1.0,1.0)
 	#[inline]
-	pub fn render_def(tex: &impl core::Texture2DTraitConst) -> Result<()> {
+	pub fn render_def(tex: &impl core::OGL_Texture2DTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ogl_render_const_Texture2DR(tex.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ogl_render_const_Texture2DR(tex.as_raw_OGL_Texture2D(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8618,9 +9112,9 @@ pub mod core {
 	/// * wnd_rect: Rect_<double>(0.0,0.0,1.0,1.0)
 	/// * tex_rect: Rect_<double>(0.0,0.0,1.0,1.0)
 	#[inline]
-	pub fn render(tex: &impl core::Texture2DTraitConst, wnd_rect: core::Rect_<f64>, tex_rect: core::Rect_<f64>) -> Result<()> {
+	pub fn render(tex: &impl core::OGL_Texture2DTraitConst, wnd_rect: core::Rect_<f64>, tex_rect: core::Rect_<f64>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ogl_render_const_Texture2DR_Rect_LdoubleG_Rect_LdoubleG(tex.as_raw_Texture2D(), &wnd_rect, &tex_rect, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ogl_render_const_Texture2DR_Rect_LdoubleG_Rect_LdoubleG(tex.as_raw_OGL_Texture2D(), &wnd_rect, &tex_rect, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -9332,10 +9826,10 @@ pub mod core {
 	/// Replaces NaNs (Not-a-Number values) in a matrix with the specified value.
 	///
 	/// This function modifies the input matrix in-place.
-	/// The input matrix must be of type `CV_32F` or `CV_64F`; other types are not supported.
+	/// The input matrix must be of type `CV_16F`, `CV_16BF`, `CV_32F` or `CV_64F`; other types are not supported.
 	///
 	/// ## Parameters
-	/// * a: Input/output matrix (CV_32F or CV_64F type).
+	/// * a: Input/output matrix (CV_16F, CV_16BF, CV_32F or CV_64F type).
 	/// * val: Value used to replace NaNs (defaults to 0).
 	///
 	/// ## Note
@@ -9354,10 +9848,10 @@ pub mod core {
 	/// Replaces NaNs (Not-a-Number values) in a matrix with the specified value.
 	///
 	/// This function modifies the input matrix in-place.
-	/// The input matrix must be of type `CV_32F` or `CV_64F`; other types are not supported.
+	/// The input matrix must be of type `CV_16F`, `CV_16BF`, `CV_32F` or `CV_64F`; other types are not supported.
 	///
 	/// ## Parameters
-	/// * a: Input/output matrix (CV_32F or CV_64F type).
+	/// * a: Input/output matrix (CV_16F, CV_16BF, CV_32F or CV_64F type).
 	/// * val: Value used to replace NaNs (defaults to 0).
 	///
 	/// ## C++ default parameters
@@ -9954,6 +10448,41 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Reduces an n-dimensional array over the given axes.
+	///
+	/// Every output element is the reduction (see #ReduceTypes) of the input elements that differ only in
+	/// the reduced axes. The channels are reduced independently, so the output has as many channels as the
+	/// input. The input may be non-continuous (e.g. a sub-array) and of any depth.
+	///
+	/// The accumulation is done in the source type for [REDUCE_MAX] and [REDUCE_MIN] (in float for 16-bit
+	/// floating-point types) and in float or double for the other operations (double for 32- and 64-bit
+	/// integers, for CV_64F, and when the output depth is CV_64F).
+	///
+	/// ```C++
+	///    Mat blob(std::vector<int>{1, 256, 80, 80}, CV_32F), channelMeans;
+	///    cv::reduce(blob, channelMeans, {REDUCE_AVG, {2, 3}});   // -> 1x256x1x1
+	/// ```
+	///
+	///
+	/// ## Parameters
+	/// * src: input array.
+	/// * dst: output array. With ReduceParams::keepdims, it has the shape of src with the reduced axes
+	/// set to 1; otherwise the reduced axes are removed (reducing all the axes then gives a 0-dimensional
+	/// array).
+	/// * params: the reduction operation and the axes to reduce over, see cv::ReduceParams.
+	/// ## See also
+	/// ReduceParams, sum, mean, minMaxIdx
+	#[inline]
+	pub fn reduce_1(src: &impl ToInputArray, dst: &mut impl ToOutputArray, params: &impl core::ReduceParamsTraitConst) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_reduce_const__InputArrayR_const__OutputArrayR_const_ReduceParamsR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), params.as_raw_ReduceParams(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Reduces a matrix to a vector.
 	///
 	/// The function [reduce] reduces the matrix to a vector by treating the matrix rows/columns as a set of
@@ -9964,13 +10493,14 @@ pub mod core {
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	///
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// ## Parameters
-	/// * src: input 2D matrix.
+	/// * src: input matrix. It may also be n-dimensional, then @p dim is the axis to reduce and the
+	/// output keeps it with size 1 (see the cv::ReduceParams overload).
 	/// * dst: output vector. Its size and type is defined by dim and dtype parameters.
 	/// * dim: dimension index along which the matrix is reduced. 0 means that the matrix is reduced to
 	/// a single row. 1 means that the matrix is reduced to a single column.
@@ -10004,13 +10534,14 @@ pub mod core {
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	///
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// ## Parameters
-	/// * src: input 2D matrix.
+	/// * src: input matrix. It may also be n-dimensional, then @p dim is the axis to reduce and the
+	/// output keeps it with size 1 (see the cv::ReduceParams overload).
 	/// * dst: output vector. Its size and type is defined by dim and dtype parameters.
 	/// * dim: dimension index along which the matrix is reduced. 0 means that the matrix is reduced to
 	/// a single row. 1 means that the matrix is reduced to a single column.
@@ -10065,6 +10596,25 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Repeats an n-dimensional array along each axis.
+	///
+	/// dst.size[i] == src.size[i]*repeats[i], the n-dimensional counterpart of the two-axis form above.
+	/// It matches numpy.tile and ONNX Tile for arrays of the same rank.
+	/// ## Parameters
+	/// * src: input array; may be multi-channel and non-continuous
+	/// * repeats: number of copies along each axis; must have src.dims non-negative elements
+	/// * dst: output array of the same type as src
+	#[inline]
+	pub fn repeat_1(src: &impl ToInputArray, repeats: &core::Vector<i32>, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_repeat_const__InputArrayR_const_vectorLintGR_const__OutputArrayR(src.as_raw__InputArray(), repeats.as_raw_VectorOfi32(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Fills the output array with repeated copies of the input array.
 	///
 	/// The function cv::repeat duplicates the input array one or more times along each of the two axes:
@@ -10085,6 +10635,59 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_repeat_const__InputArrayR_int_int_const__OutputArrayR(src.as_raw__InputArray(), ny, nx, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Changes the shape of an n-dimensional array.
+	///
+	/// One element of newShape may be -1, it is then inferred from the number of elements. An element
+	/// equal to 0 copies the corresponding axis of src, unless allowZero is set, in which case it is a
+	/// zero-size axis (the ONNX Reshape convention).
+	/// ## Parameters
+	/// * src: input array
+	/// * dst: output array
+	/// * newShape: the new shape
+	/// * allowZero: treat 0 in newShape as a size instead of "same as src"
+	/// ## See also
+	/// MatShape::reshape, Mat::reshape
+	///
+	/// ## Note
+	/// This alternative version of [reshape] function uses the following default values for its arguments:
+	/// * allow_zero: false
+	#[inline]
+	pub fn reshape_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, new_shape: &core::Vector<i32>) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_reshape_const__InputArrayR_const__OutputArrayR_const_vectorLintGR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), new_shape.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Changes the shape of an n-dimensional array.
+	///
+	/// One element of newShape may be -1, it is then inferred from the number of elements. An element
+	/// equal to 0 copies the corresponding axis of src, unless allowZero is set, in which case it is a
+	/// zero-size axis (the ONNX Reshape convention).
+	/// ## Parameters
+	/// * src: input array
+	/// * dst: output array
+	/// * newShape: the new shape
+	/// * allowZero: treat 0 in newShape as a size instead of "same as src"
+	/// ## See also
+	/// MatShape::reshape, Mat::reshape
+	///
+	/// ## C++ default parameters
+	/// * allow_zero: false
+	#[inline]
+	pub fn reshape(src: &impl ToInputArray, dst: &mut impl ToOutputArray, new_shape: &core::Vector<i32>, allow_zero: bool) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_reshape_const__InputArrayR_const__OutputArrayR_const_vectorLintGR_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), new_shape.as_raw_VectorOfi32(), allow_zero, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -10427,6 +11030,31 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Copies a strided slice of an n-dimensional array.
+	///
+	/// Along axis i the output takes the elements src[starts[i]], src[starts[i] + steps[i]], ...
+	/// up to, but not including, ends[i]. Axes past starts.size() are copied whole.
+	/// Unlike Python, the indices are absolute: negative values are not counted from the end.
+	/// For a positive step, 0 <= start, end <= src.size[i]. For a negative step,
+	/// -1 <= start, end < src.size[i], and end == -1 means "down to and including element 0".
+	/// When all the steps are 1, `Mat(src, ranges)` gives the same result without copying.
+	/// ## Parameters
+	/// * src: input array; may be multi-channel and non-continuous
+	/// * starts: first index along each sliced axis
+	/// * ends: end index (exclusive) along each sliced axis
+	/// * steps: step along each sliced axis (non-zero, may be negative); empty means all ones
+	/// * dst: output array of the same type as src
+	#[inline]
+	pub fn slice(src: &impl ToInputArray, starts: &core::Vector<i32>, ends: &core::Vector<i32>, steps: &core::Vector<i32>, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_slice_const__InputArrayR_const_vectorLintGR_const_vectorLintGR_const_vectorLintGR_const__OutputArrayR(src.as_raw__InputArray(), starts.as_raw_VectorOfi32(), ends.as_raw_VectorOfi32(), steps.as_raw_VectorOfi32(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Finds the real roots of a cubic equation.
 	///
 	/// The function solveCubic finds the real roots of a cubic equation:
@@ -10726,7 +11354,7 @@ pub mod core {
 	/// mixChannels.
 	///
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	///
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -10751,7 +11379,7 @@ pub mod core {
 	/// mixChannels.
 	///
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	///
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -10775,6 +11403,28 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Splits an n-dimensional array into several arrays along the given axis.
+	///
+	/// This is the inverse of concat(). The two-argument split() is a different operation: it separates
+	/// the channels of the elements, while this one cuts the array along one of its dimensions.
+	/// ## Parameters
+	/// * src: input array; may be multi-channel and non-continuous
+	/// * axis: axis to split along; -src.dims <= axis < src.dims
+	/// * sizes: size of each output array along @p axis; the values must sum up to src.size[axis]
+	/// * dst: output arrays, one per element of @p sizes
+	/// ## See also
+	/// concat
+	#[inline]
+	pub fn split_1(src: &impl ToInputArray, axis: i32, sizes: &core::Vector<i32>, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_split_const__InputArrayR_int_const_vectorLintGR_const__OutputArrayR(src.as_raw__InputArray(), axis, sizes.as_raw_VectorOfi32(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Calculates a square root of array elements.
 	///
 	/// The function cv::sqrt calculates a square root of each input array element.
@@ -10790,6 +11440,61 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sqrt_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Removes axes of size 1 from an n-dimensional array.
+	///
+	/// The elements are not changed. When called in place (dst is src) on a continuous array, only the
+	/// header changes; otherwise the elements are copied into dst (Mat::reshape gives a view without
+	/// copying). The channels of the elements are kept, the axes are the array dimensions. The same holds
+	/// for unsqueeze, flatten and reshape.
+	/// ## Parameters
+	/// * src: input array
+	/// * dst: output array
+	/// * axes: axes to remove, each of size 1; negative values count from the end.
+	/// When empty, all the axes of size 1 are removed.
+	/// ## See also
+	/// unsqueeze, MatShape::squeeze
+	///
+	/// ## Note
+	/// This alternative version of [squeeze] function uses the following default values for its arguments:
+	/// * axes: std::vector<int>()
+	#[inline]
+	pub fn squeeze_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_squeeze_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Removes axes of size 1 from an n-dimensional array.
+	///
+	/// The elements are not changed. When called in place (dst is src) on a continuous array, only the
+	/// header changes; otherwise the elements are copied into dst (Mat::reshape gives a view without
+	/// copying). The channels of the elements are kept, the axes are the array dimensions. The same holds
+	/// for unsqueeze, flatten and reshape.
+	/// ## Parameters
+	/// * src: input array
+	/// * dst: output array
+	/// * axes: axes to remove, each of size 1; negative values count from the end.
+	/// When empty, all the axes of size 1 are removed.
+	/// ## See also
+	/// unsqueeze, MatShape::squeeze
+	///
+	/// ## C++ default parameters
+	/// * axes: std::vector<int>()
+	#[inline]
+	pub fn squeeze(src: &impl ToInputArray, dst: &mut impl ToOutputArray, axes: &core::Vector<i32>) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_squeeze_const__InputArrayR_const__OutputArrayR_const_vectorLintGR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axes.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -11041,6 +11746,30 @@ pub mod core {
 		ret
 	}
 
+	/// Evaluate a broadcasting element-wise expression over the input arrays.
+	///
+	/// The expression is a small std::format-like string over placeholders `{0}`, `{1}`, ... (the entries of
+	/// @p inputs), C-style arithmetic / comparison / bitwise operators, type-cast and math function calls
+	/// (`uint8(...)`, `min`, `max`, `absdiff`, `pow`, ...), `;`-separated named temporaries and a
+	/// parenthesized tuple for multiple results. All operands broadcast against each other (numpy rules,
+	/// channels innermost) and the whole expression is fused into a single traversal of the data.
+	///
+	/// ## Parameters
+	/// * expr: the expression string, e.g. `"{0} * 2.5 + {1}"` or `"({0} + {1}, {0} - {1})"`.
+	/// * inputs: the arrays bound to `{0}`, `{1}`, ...
+	/// * outputs: receives one array per top-level result (one entry, or several for a tuple).
+	#[inline]
+	pub fn texpr(expr: &str, inputs: &impl ToInputArray, outputs: &mut impl ToOutputArray) -> Result<()> {
+		extern_container_arg!(expr);
+		input_array_arg!(inputs);
+		output_array_arg!(outputs);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_texpr_const_StringR_const__InputArrayR_const__OutputArrayR(expr.opencv_as_extern(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Returns the default random number generator.
 	///
 	/// The function cv::theRNG returns the default random number generator. For each thread, there is a
@@ -11114,15 +11843,9 @@ pub mod core {
 		Ok(ret)
 	}
 
-	/// Transpose for n-dimensional matrices.
 	///
-	///
-	/// Note: Input should be continuous single-channel matrix.
-	/// ## Parameters
-	/// * src: input array.
-	/// * order: a permutation of [0,1,..,N-1] where N is the number of axes of src.
-	/// The i'th axis of dst will correspond to the axis numbered order[i] of the input.
-	/// * dst: output array of the same type as src.
+	/// **Deprecated**: Use transpose(InputArray, const std::vector<int>&, OutputArray) instead.
+	#[deprecated = "Use transpose(InputArray, const std::vector<int>&, OutputArray) instead."]
 	#[inline]
 	pub fn transpose_nd(src: &impl ToInputArray, order: &core::Vector<i32>, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
@@ -11155,6 +11878,26 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Transpose for n-dimensional matrices.
+	///
+	/// The input may be multi-channel and non-continuous (e.g. a sub-array); the channels of each
+	/// element are kept together, so @p order permutes the array dimensions only.
+	/// ## Parameters
+	/// * src: input array.
+	/// * order: a permutation of [0,1,..,N-1] where N is the number of axes of src.
+	/// The i'th axis of dst will correspond to the axis numbered order[i] of the input.
+	/// * dst: output array of the same type as src.
+	#[inline]
+	pub fn transpose_1(src: &impl ToInputArray, order: &core::Vector<i32>, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_transpose_const__InputArrayR_const_vectorLintGR_const__OutputArrayR(src.as_raw__InputArray(), order.as_raw_VectorOfi32(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Returns string of cv::Mat depth value: CV_8UC3 -> "CV_8UC3" or "<invalid type>"
 	#[inline]
 	pub fn type_to_string(typ: i32) -> Result<String> {
@@ -11163,6 +11906,24 @@ pub mod core {
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Inserts axes of size 1 into an n-dimensional array.
+	/// ## Parameters
+	/// * src: input array
+	/// * dst: output array with src.dims + axes.size() dimensions
+	/// * axes: positions of the new axes in dst; negative values count from the end of dst.
+	/// ## See also
+	/// squeeze, MatShape::unsqueeze
+	#[inline]
+	pub fn unsqueeze(src: &impl ToInputArray, dst: &mut impl ToOutputArray, axes: &core::Vector<i32>) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_unsqueeze_const__InputArrayR_const__OutputArrayR_const_vectorLintGR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axes.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 
@@ -11841,12 +12602,12 @@ pub mod core {
 	/// ## Overloaded parameters
 	///
 	/// ```C++
-	///    cv::Mat_<float> A = (cv::Mat_<float>(3, 2) << 1, 7,
+	///    cv::Mat_<float> A = cv::Mat_<float>({3, 2}, { 1, 7,
 	///                                                  2, 8,
-	///                                                  3, 9);
-	///    cv::Mat_<float> B = (cv::Mat_<float>(3, 2) << 4, 10,
+	///                                                  3, 9 });
+	///    cv::Mat_<float> B = cv::Mat_<float>({3, 2}, { 4, 10,
 	///                                                  5, 11,
-	///                                                  6, 12);
+	///                                                  6, 12 });
 	///
 	///   cv::Mat C;
 	///    cv::vconcat(A, B, C);
@@ -12083,7 +12844,7 @@ pub mod core {
 	/// etc.).
 	///
 	/// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-	/// [Algorithm](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [Algorithm](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	pub struct Algorithm {
 		ptr: *mut c_void,
 	}
@@ -14260,14 +15021,14 @@ pub mod core {
 		#[inline]
 		fn set_msg(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_Exception_propMsg_const_string(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_Exception_propMsg_string(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
 			ret
 		}
 
 		/// error code see also: CVStatus
 		#[inline]
 		fn set_code(&mut self, val: core::Code) {
-			let ret = unsafe { sys::cv_Exception_propCode_const_Code(self.as_raw_mut_Exception(), val) };
+			let ret = unsafe { sys::cv_Exception_propCode_Code(self.as_raw_mut_Exception(), val) };
 			ret
 		}
 
@@ -14275,7 +15036,7 @@ pub mod core {
 		#[inline]
 		fn set_err(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_Exception_propErr_const_string(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_Exception_propErr_string(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
 			ret
 		}
 
@@ -14283,7 +15044,7 @@ pub mod core {
 		#[inline]
 		fn set_func(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_Exception_propFunc_const_string(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_Exception_propFunc_string(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
 			ret
 		}
 
@@ -14291,14 +15052,14 @@ pub mod core {
 		#[inline]
 		fn set_file(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_Exception_propFile_const_string(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_Exception_propFile_string(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
 			ret
 		}
 
 		/// line number in the source file where the error has occurred
 		#[inline]
 		fn set_line(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Exception_propLine_const_int(self.as_raw_mut_Exception(), val) };
+			let ret = unsafe { sys::cv_Exception_propLine_int(self.as_raw_mut_Exception(), val) };
 			ret
 		}
 
@@ -14814,13 +15575,13 @@ pub mod core {
 
 		#[inline]
 		fn set_block_idx(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_FileNode_propBlockIdx_const_size_t(self.as_raw_mut_FileNode(), val) };
+			let ret = unsafe { sys::cv_FileNode_propBlockIdx_size_t(self.as_raw_mut_FileNode(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_ofs(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_FileNode_propOfs_const_size_t(self.as_raw_mut_FileNode(), val) };
+			let ret = unsafe { sys::cv_FileNode_propOfs_size_t(self.as_raw_mut_FileNode(), val) };
 			ret
 		}
 
@@ -15293,14 +16054,14 @@ pub mod core {
 
 		#[inline]
 		fn set_state(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_FileStorage_propState_const_int(self.as_raw_mut_FileStorage(), val) };
+			let ret = unsafe { sys::cv_FileStorage_propState_int(self.as_raw_mut_FileStorage(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_elname(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_FileStorage_propElname_const_string(self.as_raw_mut_FileStorage(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_FileStorage_propElname_string(self.as_raw_mut_FileStorage(), val.opencv_as_extern()) };
 			ret
 		}
 
@@ -16274,14 +17035,14 @@ pub mod core {
 		/// coordinates of the keypoints
 		#[inline]
 		fn set_pt(&mut self, val: core::Point2f) {
-			let ret = unsafe { sys::cv_KeyPoint_propPt_const_Point2f(self.as_raw_mut_KeyPoint(), &val) };
+			let ret = unsafe { sys::cv_KeyPoint_propPt_Point2f(self.as_raw_mut_KeyPoint(), &val) };
 			ret
 		}
 
 		/// diameter of the meaningful keypoint neighborhood
 		#[inline]
 		fn set_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_propSize_const_float(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propSize_float(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 
@@ -16290,28 +17051,28 @@ pub mod core {
 		/// image coordinate system, ie in clockwise.
 		#[inline]
 		fn set_angle(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_propAngle_const_float(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propAngle_float(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 
 		/// the response by which the most strong keypoints have been selected. Can be used for the further sorting or subsampling
 		#[inline]
 		fn set_response(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_propResponse_const_float(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propResponse_float(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 
 		/// octave (pyramid layer) from which the keypoint has been extracted
 		#[inline]
 		fn set_octave(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_KeyPoint_propOctave_const_int(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propOctave_int(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 
 		/// object class (if the keypoints need to be clustered by an object they belong to)
 		#[inline]
 		fn set_class_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_KeyPoint_propClass_id_const_int(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propClass_id_int(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 
@@ -16722,7 +17483,7 @@ pub mod core {
 	/// - Use a comma-separated initializer:
 	/// ```C++
 	///    // create a 3x3 double-precision identity matrix
-	///    Mat M = (Mat_<double>(3,3) << 1, 0, 0, 0, 1, 0, 0, 0, 1);
+	///    Mat M = Mat_<double>({3,3}, {1, 0, 0, 0, 1, 0, 0, 0, 1});
 	/// ```
 	///
 	/// With this approach, you first call a constructor of the Mat class with the proper parameters, and
@@ -18240,10 +19001,10 @@ pub mod core {
 		///   immediately above the main one.
 		/// For example:
 		/// ```C++
-		///    Mat m = (Mat_<int>(3,3) <<
+		///    Mat m = Mat_<int>({3,3}, {
 		///                1,2,3,
 		///                4,5,6,
-		///                7,8,9);
+		///                7,8,9});
 		///    Mat d0 = m.diag(0);
 		///    Mat d1 = m.diag(1);
 		///    Mat d_1 = m.diag(-1);
@@ -18289,10 +19050,10 @@ pub mod core {
 		///   immediately above the main one.
 		/// For example:
 		/// ```C++
-		///    Mat m = (Mat_<int>(3,3) <<
+		///    Mat m = Mat_<int>({3,3}, {
 		///                1,2,3,
 		///                4,5,6,
-		///                7,8,9);
+		///                7,8,9});
 		///    Mat d0 = m.diag(0);
 		///    Mat d1 = m.diag(1);
 		///    Mat d_1 = m.diag(-1);
@@ -19203,6 +19964,27 @@ pub mod core {
 		///
 		/// The method returns a matrix element type. This is an identifier compatible with the CvMat type
 		/// system, like CV_16SC3 or 16-bit signed 3-channel array, and so on.
+		///
+		/// The returned value is a packed bit-field that encodes two fields in the lowest 12 bits
+		/// (`CV_MAT_TYPE_MASK`):
+		/// *   bits 0-4 (`CV_MAT_DEPTH_MASK`) store the element depth, one of the CV_8U, CV_8S, CV_16U,
+		///    CV_16S, CV_32S, CV_32F, CV_64F, CV_16F, ... constants;
+		/// *   bits 5-11 (`CV_MAT_CN_MASK`) store the number of channels minus one, so a matrix may have
+		///    between 1 and CV_CN_MAX (128) channels.
+		///
+		/// The macros CV_MAT_DEPTH(type) and CV_MAT_CN(type) extract these fields, while
+		/// CV_MAKETYPE(depth, cn) assembles a type from a depth and a channel count; for example,
+		/// CV_MAKETYPE(CV_16S, 3) is CV_16SC3.
+		///
+		///
+		/// Note: The exact bit layout is an implementation detail and is subject to change in future
+		/// releases. Users should not rely on the description above and should use the corresponding
+		/// macros (CV_MAT_DEPTH(type), CV_MAT_CN(type), CV_MAT_TYPE(depth, cn)) or the depth() and
+		/// channels() methods instead.
+		///
+		///
+		/// Note: Only the packed type is returned. The other bits of Mat::flags, such as the continuity
+		/// flag (CV_MAT_CONT_FLAG) and the submatrix flag (CV_SUBMAT_FLAG), are not part of the value.
 		#[inline]
 		fn typ(&self) -> i32 {
 			let ret = unsafe { sys::cv_Mat_type_const(self.as_raw_Mat()) };
@@ -19347,10 +20129,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		///
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// ## C++ default parameters
 		/// * depth: -1
@@ -19381,10 +20163,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		///
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// ## Note
 		/// This alternative version of [MatTraitConst::check_vector] function uses the following default values for its arguments:
@@ -19779,28 +20561,28 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_propFlags_const_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propFlags_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 
 		/// the matrix dimensionality, >= 2
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_propDims_const_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propDims_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 
 		/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_propRows_const_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propRows_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 
 		/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_propCols_const_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propCols_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 
@@ -19808,7 +20590,7 @@ pub mod core {
 		/// * val: 153
 		#[inline]
 		fn set_dummy(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_propDummy_const_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propDummy_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 
@@ -19821,7 +20603,7 @@ pub mod core {
 
 		/// pointer to the data
 		#[inline]
-		unsafe fn set_data(&mut self, val: *const u8) {
+		unsafe fn set_data(&mut self, val: *mut u8) {
 			let ret = unsafe { sys::cv_Mat_propData_unsigned_charX(self.as_raw_mut_Mat(), val) };
 			ret
 		}
@@ -19836,14 +20618,14 @@ pub mod core {
 
 		/// interaction with UMat
 		#[inline]
-		fn set_u(&mut self, val: &impl core::UMatDataTraitConst) {
-			let ret = unsafe { sys::cv_Mat_propU_UMatDataX(self.as_raw_mut_Mat(), val.as_raw_UMatData()) };
+		unsafe fn set_u(&mut self, val: *mut core::UMatData) {
+			let ret = unsafe { sys::cv_Mat_propU_UMatDataX(self.as_raw_mut_Mat(), val.cast()) };
 			ret
 		}
 
 		#[inline]
 		fn set_mat_size(&mut self, val: core::MatSize) {
-			let ret = unsafe { sys::cv_Mat_propSize_const_MatSize(self.as_raw_mut_Mat(), &val) };
+			let ret = unsafe { sys::cv_Mat_propSize_MatSize(self.as_raw_mut_Mat(), &val) };
 			ret
 		}
 
@@ -20025,10 +20807,10 @@ pub mod core {
 		///   immediately above the main one.
 		/// For example:
 		/// ```C++
-		///    Mat m = (Mat_<int>(3,3) <<
+		///    Mat m = Mat_<int>({3,3}, {
 		///                1,2,3,
 		///                4,5,6,
-		///                7,8,9);
+		///                7,8,9});
 		///    Mat d0 = m.diag(0);
 		///    Mat d1 = m.diag(1);
 		///    Mat d_1 = m.diag(-1);
@@ -20075,10 +20857,10 @@ pub mod core {
 		///   immediately above the main one.
 		/// For example:
 		/// ```C++
-		///    Mat m = (Mat_<int>(3,3) <<
+		///    Mat m = Mat_<int>({3,3}, {
 		///                1,2,3,
 		///                4,5,6,
-		///                7,8,9);
+		///                7,8,9});
 		///    Mat d0 = m.diag(0);
 		///    Mat d1 = m.diag(1);
 		///    Mat d_1 = m.diag(-1);
@@ -21667,7 +22449,7 @@ pub mod core {
 
 		#[inline]
 		fn set_elem_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_MatConstIterator_propElemSize_const_size_t(self.as_raw_mut_MatConstIterator(), val) };
+			let ret = unsafe { sys::cv_MatConstIterator_propElemSize_size_t(self.as_raw_mut_MatConstIterator(), val) };
 			ret
 		}
 
@@ -22150,43 +22932,43 @@ pub mod core {
 
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_MatExpr_propFlags_const_int(self.as_raw_mut_MatExpr(), val) };
+			let ret = unsafe { sys::cv_MatExpr_propFlags_int(self.as_raw_mut_MatExpr(), val) };
 			ret
 		}
 
 		#[inline]
-		fn set_a(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_MatExpr_propA_const_Mat(self.as_raw_mut_MatExpr(), val.as_raw_Mat()) };
+		fn set_a(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_MatExpr_propA_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		#[inline]
-		fn set_b(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_MatExpr_propB_const_Mat(self.as_raw_mut_MatExpr(), val.as_raw_Mat()) };
+		fn set_b(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_MatExpr_propB_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		#[inline]
-		fn set_c(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_MatExpr_propC_const_Mat(self.as_raw_mut_MatExpr(), val.as_raw_Mat()) };
+		fn set_c(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_MatExpr_propC_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		#[inline]
 		fn set_alpha(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_MatExpr_propAlpha_const_double(self.as_raw_mut_MatExpr(), val) };
+			let ret = unsafe { sys::cv_MatExpr_propAlpha_double(self.as_raw_mut_MatExpr(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_beta(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_MatExpr_propBeta_const_double(self.as_raw_mut_MatExpr(), val) };
+			let ret = unsafe { sys::cv_MatExpr_propBeta_double(self.as_raw_mut_MatExpr(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_s(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_MatExpr_propS_const_Scalar(self.as_raw_mut_MatExpr(), &val) };
+			let ret = unsafe { sys::cv_MatExpr_propS_Scalar(self.as_raw_mut_MatExpr(), &val) };
 			ret
 		}
 
@@ -22661,6 +23443,86 @@ pub mod core {
 		pub fn expand(self, another: core::MatShape) -> Result<core::MatShape> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatShape_expand_const_const_MatShapeR(&self, &another, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * axes: std::vector<int>()
+		#[inline]
+		pub fn squeeze(self, axes: &core::Vector<i32>) -> Result<core::MatShape> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatShape_squeeze_const_const_vectorLintGR(&self, axes.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [MatShape::squeeze] function uses the following default values for its arguments:
+		/// * axes: std::vector<int>()
+		#[inline]
+		pub fn squeeze_def(self) -> Result<core::MatShape> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatShape_squeeze_const(&self, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn unsqueeze(self, axes: &core::Vector<i32>) -> Result<core::MatShape> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatShape_unsqueeze_const_const_vectorLintGR(&self, axes.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * start_axis: 0
+		/// * end_axis: -1
+		#[inline]
+		pub fn flatten(self, start_axis: i32, end_axis: i32) -> Result<core::MatShape> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatShape_flatten_const_int_int(&self, start_axis, end_axis, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [MatShape::flatten] function uses the following default values for its arguments:
+		/// * start_axis: 0
+		/// * end_axis: -1
+		#[inline]
+		pub fn flatten_def(self) -> Result<core::MatShape> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatShape_flatten_const(&self, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * allow_zero: false
+		#[inline]
+		pub fn reshape(self, new_shape: core::MatShape, allow_zero: bool) -> Result<core::MatShape> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatShape_reshape_const_const_MatShapeR_bool(&self, &new_shape, allow_zero, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [MatShape::reshape] function uses the following default values for its arguments:
+		/// * allow_zero: false
+		#[inline]
+		pub fn reshape_def(self, new_shape: core::MatShape) -> Result<core::MatShape> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatShape_reshape_const_const_MatShapeR(&self, &new_shape, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -24345,22 +25207,22 @@ pub mod core {
 
 		/// eigenvectors of the covariation matrix
 		#[inline]
-		fn set_eigenvectors(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_PCA_propEigenvectors_const_Mat(self.as_raw_mut_PCA(), val.as_raw_Mat()) };
+		fn set_eigenvectors(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_PCA_propEigenvectors_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// eigenvalues of the covariation matrix
 		#[inline]
-		fn set_eigenvalues(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_PCA_propEigenvalues_const_Mat(self.as_raw_mut_PCA(), val.as_raw_Mat()) };
+		fn set_eigenvalues(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_PCA_propEigenvalues_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// mean value subtracted before the projection and added after the back projection
 		#[inline]
-		fn set_mean(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_PCA_propMean_const_Mat(self.as_raw_mut_PCA(), val.as_raw_Mat()) };
+		fn set_mean(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_PCA_propMean_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
@@ -24663,7 +25525,7 @@ pub mod core {
 
 		#[inline]
 		fn set_state(&mut self, val: u64) {
-			let ret = unsafe { sys::cv_RNG_propState_const_uint64_t(self.as_raw_mut_RNG(), val) };
+			let ret = unsafe { sys::cv_RNG_propState_uint64_t(self.as_raw_mut_RNG(), val) };
 			ret
 		}
 
@@ -25355,13 +26217,13 @@ pub mod core {
 
 		#[inline]
 		fn set_start(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Range_propStart_const_int(self.as_raw_mut_Range(), val) };
+			let ret = unsafe { sys::cv_Range_propStart_int(self.as_raw_mut_Range(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_end(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Range_propEnd_const_int(self.as_raw_mut_Range(), val) };
+			let ret = unsafe { sys::cv_Range_propEnd_int(self.as_raw_mut_Range(), val) };
 			ret
 		}
 
@@ -25387,14 +26249,169 @@ pub mod core {
 
 	boxed_ref! { Range, core::RangeTraitConst, as_raw_Range, core::RangeTrait, as_raw_mut_Range }
 
+	/// The reduction that the n-dimensional [reduce] performs.
+	///
+	/// Everything the call needs besides the input and the output arrays, in one struct, so that further
+	/// options can be added without changing the signature.
+	/// ## See also
+	/// reduce
+	pub struct ReduceParams {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { ReduceParams }
+
+	impl Drop for ReduceParams {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ReduceParams_delete(self.as_raw_mut_ReduceParams()) };
+		}
+	}
+
+	unsafe impl Send for ReduceParams {}
+
+	impl ReduceParams {
+		/// ## C++ default parameters
+		/// * rtype: REDUCE_SUM
+		/// * axes: std::vector<int>()
+		/// * keepdims: true
+		/// * dtype: -1
+		#[inline]
+		pub fn new(rtype: i32, axes: &core::Vector<i32>, keepdims: bool, dtype: i32) -> Result<core::ReduceParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ReduceParams_ReduceParams_int_const_vectorLintGR_bool_int(rtype, axes.as_raw_VectorOfi32(), keepdims, dtype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::ReduceParams::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * rtype: REDUCE_SUM
+		/// * axes: std::vector<int>()
+		/// * keepdims: true
+		/// * dtype: -1
+		#[inline]
+		pub fn new_def() -> Result<core::ReduceParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ReduceParams_ReduceParams(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::ReduceParams::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [core::ReduceParams]
+	pub trait ReduceParamsTraitConst {
+		fn as_raw_ReduceParams(&self) -> *const c_void;
+
+		/// reduction operation, one of #ReduceTypes.
+		#[inline]
+		fn rtype(&self) -> i32 {
+			let ret = unsafe { sys::cv_ReduceParams_propRtype_const(self.as_raw_ReduceParams()) };
+			ret
+		}
+
+		/// axes to reduce; negative values count from the end; an empty vector means all the axes.
+		#[inline]
+		fn axes(&self) -> core::Vector<i32> {
+			let ret = unsafe { sys::cv_ReduceParams_propAxes_const(self.as_raw_ReduceParams()) };
+			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// whether to keep the reduced axes as axes of size 1.
+		#[inline]
+		fn keepdims(&self) -> bool {
+			let ret = unsafe { sys::cv_ReduceParams_propKeepdims_const(self.as_raw_ReduceParams()) };
+			ret
+		}
+
+		/// depth of the output; when negative, the output has the depth of the input. The result is
+		/// converted to it with saturation.
+		#[inline]
+		fn dtype(&self) -> i32 {
+			let ret = unsafe { sys::cv_ReduceParams_propDtype_const(self.as_raw_ReduceParams()) };
+			ret
+		}
+
+	}
+
+	/// Mutable methods for [core::ReduceParams]
+	pub trait ReduceParamsTrait: core::ReduceParamsTraitConst {
+		fn as_raw_mut_ReduceParams(&mut self) -> *mut c_void;
+
+		/// reduction operation, one of #ReduceTypes.
+		#[inline]
+		fn set_rtype(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_ReduceParams_propRtype_int(self.as_raw_mut_ReduceParams(), val) };
+			ret
+		}
+
+		/// axes to reduce; negative values count from the end; an empty vector means all the axes.
+		#[inline]
+		fn set_axes(&mut self, mut val: core::Vector<i32>) {
+			let ret = unsafe { sys::cv_ReduceParams_propAxes_vectorLintG(self.as_raw_mut_ReduceParams(), val.as_raw_mut_VectorOfi32()) };
+			ret
+		}
+
+		/// whether to keep the reduced axes as axes of size 1.
+		#[inline]
+		fn set_keepdims(&mut self, val: bool) {
+			let ret = unsafe { sys::cv_ReduceParams_propKeepdims_bool(self.as_raw_mut_ReduceParams(), val) };
+			ret
+		}
+
+		/// depth of the output; when negative, the output has the depth of the input. The result is
+		/// converted to it with saturation.
+		#[inline]
+		fn set_dtype(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_ReduceParams_propDtype_int(self.as_raw_mut_ReduceParams(), val) };
+			ret
+		}
+
+	}
+
+	impl Clone for ReduceParams {
+		#[inline]
+		fn clone(&self) -> Self {
+			unsafe { Self::from_raw(sys::cv_ReduceParams_implicitClone_const(self.as_raw_ReduceParams())) }
+		}
+	}
+
+	impl fmt::Debug for ReduceParams {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("ReduceParams")
+				.field("rtype", &core::ReduceParamsTraitConst::rtype(self))
+				.field("axes", &core::ReduceParamsTraitConst::axes(self))
+				.field("keepdims", &core::ReduceParamsTraitConst::keepdims(self))
+				.field("dtype", &core::ReduceParamsTraitConst::dtype(self))
+				.finish()
+		}
+	}
+
+	impl core::ReduceParamsTraitConst for ReduceParams {
+		#[inline] fn as_raw_ReduceParams(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::ReduceParamsTrait for ReduceParams {
+		#[inline] fn as_raw_mut_ReduceParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { ReduceParams, core::ReduceParamsTraitConst, as_raw_ReduceParams, core::ReduceParamsTrait, as_raw_mut_ReduceParams }
+
 	/// The class represents rotated (i.e. not up-right) rectangles on a plane.
 	///
 	/// Each rectangle is specified by the center point (mass center), length of each side (represented by
 	/// [size2f] structure) and the rotation angle in degrees.
 	///
 	/// The sample below demonstrates how to use RotatedRect:
-	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-	/// ![image](https://docs.opencv.org/5.0.0/rotatedrect.png)
+	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// ![image](https://docs.opencv.org/5.1.0/rotatedrect.png)
 	/// ## See also
 	/// CamShift, fitEllipse, minAreaRect, CvBox2D
 	#[repr(C)]
@@ -25837,20 +26854,20 @@ pub mod core {
 		fn as_raw_mut_SVD(&mut self) -> *mut c_void;
 
 		#[inline]
-		fn set_u(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_propU_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
+		fn set_u(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_SVD_propU_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		#[inline]
-		fn set_w(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_propW_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
+		fn set_w(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_SVD_propW_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		#[inline]
-		fn set_vt(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_propVt_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
+		fn set_vt(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_SVD_propVt_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
@@ -26384,7 +27401,7 @@ pub mod core {
 
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_propFlags_const_int(self.as_raw_mut_SparseMat(), val) };
+			let ret = unsafe { sys::cv_SparseMat_propFlags_int(self.as_raw_mut_SparseMat(), val) };
 			ret
 		}
 
@@ -26396,8 +27413,8 @@ pub mod core {
 		}
 
 		#[inline]
-		fn set_hdr(&mut self, val: &impl core::SparseMat_HdrTraitConst) {
-			let ret = unsafe { sys::cv_SparseMat_propHdr_HdrX(self.as_raw_mut_SparseMat(), val.as_raw_SparseMat_Hdr()) };
+		unsafe fn set_hdr(&mut self, val: *mut core::SparseMat_Hdr) {
+			let ret = unsafe { sys::cv_SparseMat_propHdr_HdrX(self.as_raw_mut_SparseMat(), val.cast()) };
 			ret
 		}
 
@@ -26862,49 +27879,49 @@ pub mod core {
 
 		#[inline]
 		fn set_refcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propRefcount_const_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propRefcount_int(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propDims_const_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propDims_int(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_value_offset(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propValueOffset_const_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propValueOffset_int(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_node_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeSize_const_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeSize_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_node_count(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeCount_const_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeCount_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_free_list(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propFreeList_const_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propFreeList_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 
 		#[inline]
-		fn set_pool(&mut self, val: core::Vector<u8>) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propPool_const_vectorLunsigned_charG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_VectorOfu8()) };
+		fn set_pool(&mut self, mut val: core::Vector<u8>) {
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propPool_vectorLunsigned_charG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfu8()) };
 			ret
 		}
 
 		#[inline]
-		fn set_hashtab(&mut self, val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propHashtab_const_vectorLsize_tG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_VectorOfsize_t()) };
+		fn set_hashtab(&mut self, mut val: core::Vector<size_t>) {
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propHashtab_vectorLsize_tG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 
@@ -27015,14 +28032,14 @@ pub mod core {
 		/// hash value
 		#[inline]
 		fn set_hashval(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Node_propHashval_const_size_t(self.as_raw_mut_SparseMat_Node(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Node_propHashval_size_t(self.as_raw_mut_SparseMat_Node(), val) };
 			ret
 		}
 
 		/// index of the next node in the same hash table entry
 		#[inline]
 		fn set_next(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Node_propNext_const_size_t(self.as_raw_mut_SparseMat_Node(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Node_propNext_size_t(self.as_raw_mut_SparseMat_Node(), val) };
 			ret
 		}
 
@@ -27169,7 +28186,7 @@ pub mod core {
 
 		#[inline]
 		fn set_hashidx(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMatConstIterator_propHashidx_const_size_t(self.as_raw_mut_SparseMatConstIterator(), val) };
+			let ret = unsafe { sys::cv_SparseMatConstIterator_propHashidx_size_t(self.as_raw_mut_SparseMatConstIterator(), val) };
 			ret
 		}
 
@@ -27180,7 +28197,7 @@ pub mod core {
 		}
 
 		#[inline]
-		unsafe fn set_ptr(&mut self, val: *const u8) {
+		unsafe fn set_ptr(&mut self, val: *mut u8) {
 			let ret = unsafe { sys::cv_SparseMatConstIterator_propPtr_unsigned_charX(self.as_raw_mut_SparseMatConstIterator(), val) };
 			ret
 		}
@@ -27436,10 +28453,10 @@ pub mod core {
 	///
 	/// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 	/// execution time in seconds:
-	/// [TickMeter_total](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_total](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	///
 	/// It is also possible to compute the average time over multiple runs:
-	/// [TickMeter_average](https://github.com/opencv/opencv/blob/5.0.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_average](https://github.com/opencv/opencv/blob/5.1.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	/// ## See also
 	/// getTickCount, getTickFrequency
 	pub struct TickMeter {
@@ -27651,7 +28668,31 @@ pub mod core {
 
 	boxed_ref! { TickMeter, core::TickMeterTraitConst, as_raw_TickMeter, core::TickMeterTrait, as_raw_mut_TickMeter }
 
-	/// @todo document
+	/// Matrix class whose data may reside outside host memory. \anchor UMat_Details
+	///
+	/// UMat repeats the Mat interface, but the buffer is owned by a MatAllocator, and it is the
+	/// allocator that decides where the data physically resides: in host memory, in an OpenCL
+	/// device buffer (see cv::ocl::getOpenCLAllocator) or in CUDA device memory (see
+	/// cv::cuda::getCudaAllocator). Headers, reference counting, ROIs and submatrices and
+	/// n-dimensional shapes behave as they do in Mat.
+	///
+	/// Passing UMat instead of Mat to a cv:: function is the basis of the Transparent API
+	/// (T-API). The dispatch is not keyed on the allocator: a cv:: call takes its OpenCL branch
+	/// when OpenCL is active and the arguments are UMat objects, and otherwise maps the data
+	/// back to host memory and runs the CPU implementation. UMat has no `data` pointer and no
+	/// element accessors, because there may be no host address to expose; host access goes
+	/// through UMat::getMat.
+	///
+	///
+	/// Note:
+	///   A non-default allocator must be assigned to [cv::UMat::allocator] "UMat::allocator"
+	///   before the data is allocated. OpenCL is the only allocator with accelerated cv::
+	///   implementations, and because the T-API branch tests only whether OpenCL is active, a
+	///   UMat backed by any other device allocator must not be passed to cv:: functions while
+	///   OpenCL is enabled.
+	/// ## See also
+	/// Mat, MatAllocator, UMatUsageFlags, cv::ocl::getOpenCLAllocator,
+	/// cv::cuda::getCudaAllocator
 	pub struct UMat {
 		ptr: *mut c_void,
 	}
@@ -28379,6 +29420,15 @@ pub mod core {
 			ret
 		}
 
+		/// Returns a Mat header giving host access to the same data
+		///
+		/// Note:
+		///   The data is mapped into host memory on the first such view and unmapped when the
+		///   returned Mat is destroyed. @p flags is widened to ACCESS_RW internally, so the
+		///   mapping is always read-write and the allocator may write back even after
+		///   read-only use.
+		/// ## Parameters
+		/// * flags: combination of AccessFlag values
 		#[inline]
 		fn get_mat(&self, flags: core::AccessFlag) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -28881,7 +29931,9 @@ pub mod core {
 			Ok(ret)
 		}
 
-		/// ! Returns the OpenCL buffer handle on which UMat operates on.
+		/// ! Returns the device buffer handle on which UMat operates on.
+		/// The concrete type depends on the allocator: a `cl_mem` for the OpenCL allocator,
+		/// a CUDA device pointer for cv::cuda::getCudaAllocator().
 		/// The UMat instance should be kept alive during the use of the handle to prevent the buffer to be
 		/// returned to the OpenCV buffer pool.
 		#[inline]
@@ -28924,35 +29976,35 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_propFlags_const_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propFlags_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 
 		/// the matrix dimensionality, >= 2
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_propDims_const_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propDims_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 
 		/// number of rows in the matrix; -1 when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_propRows_const_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propRows_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 
 		/// number of columns in the matrix; -1 when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_propCols_const_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propCols_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 
 		/// usage flags for allocator; recommend do not set directly, instead set during construct/create/getUMat
 		#[inline]
 		fn set_usage_flags(&mut self, val: core::UMatUsageFlags) {
-			let ret = unsafe { sys::cv_UMat_propUsageFlags_const_UMatUsageFlags(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propUsageFlags_UMatUsageFlags(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 
@@ -28966,22 +30018,22 @@ pub mod core {
 
 		/// black-box container of UMat data
 		#[inline]
-		fn set_u(&mut self, val: &impl core::UMatDataTraitConst) {
-			let ret = unsafe { sys::cv_UMat_propU_UMatDataX(self.as_raw_mut_UMat(), val.as_raw_UMatData()) };
+		unsafe fn set_u(&mut self, val: *mut core::UMatData) {
+			let ret = unsafe { sys::cv_UMat_propU_UMatDataX(self.as_raw_mut_UMat(), val.cast()) };
 			ret
 		}
 
 		/// offset of the submatrix (or 0)
 		#[inline]
 		fn set_offset(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_UMat_propOffset_const_size_t(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propOffset_size_t(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 
 		/// dimensional size of the matrix; accessible in various formats
 		#[inline]
 		fn set_mat_size(&mut self, val: core::MatSize) {
-			let ret = unsafe { sys::cv_UMat_propSize_const_MatSize(self.as_raw_mut_UMat(), &val) };
+			let ret = unsafe { sys::cv_UMat_propSize_MatSize(self.as_raw_mut_UMat(), &val) };
 			ret
 		}
 
@@ -29709,13 +30761,13 @@ pub mod core {
 
 		#[inline]
 		fn set_urefcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_propUrefcount_const_int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propUrefcount_int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_refcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_propRefcount_const_int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propRefcount_int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
@@ -29726,7 +30778,7 @@ pub mod core {
 		}
 
 		#[inline]
-		unsafe fn set_data(&mut self, val: *const u8) {
+		unsafe fn set_data(&mut self, val: *mut u8) {
 			let ret = unsafe { sys::cv_UMatData_propData_unsigned_charX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
@@ -29738,20 +30790,20 @@ pub mod core {
 		}
 
 		#[inline]
-		unsafe fn set_origdata(&mut self, val: *const u8) {
+		unsafe fn set_origdata(&mut self, val: *mut u8) {
 			let ret = unsafe { sys::cv_UMatData_propOrigdata_unsigned_charX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_UMatData_propSize_const_size_t(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propSize_size_t(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_flags(&mut self, val: core::UMatData_MemoryFlag) {
-			let ret = unsafe { sys::cv_UMatData_propFlags_const_MemoryFlag(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propFlags_MemoryFlag(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
@@ -29762,7 +30814,7 @@ pub mod core {
 		}
 
 		#[inline]
-		unsafe fn set_handle(&mut self, val: *const c_void) {
+		unsafe fn set_handle(&mut self, val: *mut c_void) {
 			let ret = unsafe { sys::cv_UMatData_propHandle_voidX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
@@ -29774,20 +30826,20 @@ pub mod core {
 		}
 
 		#[inline]
-		unsafe fn set_userdata(&mut self, val: *const c_void) {
+		unsafe fn set_userdata(&mut self, val: *mut c_void) {
 			let ret = unsafe { sys::cv_UMatData_propUserdata_voidX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_allocator_flags_(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_propAllocatorFlags__const_int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propAllocatorFlags__int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_mapcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_propMapcount_const_int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propMapcount_int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 
@@ -29799,8 +30851,8 @@ pub mod core {
 		}
 
 		#[inline]
-		fn set_original_umat_data(&mut self, val: &impl core::UMatDataTraitConst) {
-			let ret = unsafe { sys::cv_UMatData_propOriginalUMatData_UMatDataX(self.as_raw_mut_UMatData(), val.as_raw_UMatData()) };
+		unsafe fn set_original_umat_data(&mut self, val: *mut core::UMatData) {
+			let ret = unsafe { sys::cv_UMatData_propOriginalUMatData_UMatDataX(self.as_raw_mut_UMatData(), val.cast()) };
 			ret
 		}
 
@@ -30091,9 +31143,9 @@ pub mod core {
 		}
 
 		#[inline]
-		pub fn from_opengl(buf: &impl core::BufferTraitConst) -> Result<BoxedRef<'_, core::_InputArray>> {
+		pub fn from_opengl(buf: &impl core::OGL_BufferTraitConst) -> Result<BoxedRef<'_, core::_InputArray>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv__InputArray__InputArray_const_BufferR(buf.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<'_, core::_InputArray>::opencv_from_extern(ret) };
@@ -30278,12 +31330,12 @@ pub mod core {
 		}
 
 		#[inline]
-		fn get_o_gl_buffer(&self) -> Result<core::Buffer> {
+		fn get_o_gl_buffer(&self) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getOGlBuffer_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -30908,9 +31960,9 @@ pub mod core {
 		}
 
 		#[inline]
-		pub fn from_opengl_mut(buf: &mut impl core::BufferTrait) -> Result<BoxedRefMut<'_, core::_InputOutputArray>> {
+		pub fn from_opengl_mut(buf: &mut impl core::OGL_BufferTrait) -> Result<BoxedRefMut<'_, core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputOutputArray__InputOutputArray_BufferR(buf.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv__InputOutputArray__InputOutputArray_BufferR(buf.as_raw_mut_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<'_, core::_InputOutputArray>::opencv_from_extern(ret) };
@@ -31008,9 +32060,9 @@ pub mod core {
 		}
 
 		#[inline]
-		pub fn from_opengl(buf: &impl core::BufferTraitConst) -> Result<BoxedRef<'_, core::_InputOutputArray>> {
+		pub fn from_opengl(buf: &impl core::OGL_BufferTraitConst) -> Result<BoxedRef<'_, core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputOutputArray__InputOutputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv__InputOutputArray__InputOutputArray_const_BufferR(buf.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<'_, core::_InputOutputArray>::opencv_from_extern(ret) };
@@ -31226,9 +32278,9 @@ pub mod core {
 		}
 
 		#[inline]
-		pub fn from_opengl_mut(buf: &mut impl core::BufferTrait) -> Result<BoxedRefMut<'_, core::_OutputArray>> {
+		pub fn from_opengl_mut(buf: &mut impl core::OGL_BufferTrait) -> Result<BoxedRefMut<'_, core::_OutputArray>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_BufferR(buf.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv__OutputArray__OutputArray_BufferR(buf.as_raw_mut_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRefMut::<'_, core::_OutputArray>::opencv_from_extern(ret) };
@@ -31316,9 +32368,9 @@ pub mod core {
 		}
 
 		#[inline]
-		pub fn from_opengl(buf: &impl core::BufferTraitConst) -> Result<BoxedRef<'_, core::_OutputArray>> {
+		pub fn from_opengl(buf: &impl core::OGL_BufferTraitConst) -> Result<BoxedRef<'_, core::_OutputArray>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv__OutputArray__OutputArray_const_BufferR(buf.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { BoxedRef::<'_, core::_OutputArray>::opencv_from_extern(ret) };
@@ -31499,12 +32551,12 @@ pub mod core {
 		}
 
 		#[inline]
-		fn get_o_gl_buffer_ref(&self) -> Result<core::Buffer> {
+		fn get_o_gl_buffer_ref(&self) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_getOGlBufferRef_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -32922,14 +33974,14 @@ pub mod core {
 		}
 
 		#[inline]
-		unsafe fn set_data(&mut self, val: *const u8) {
+		unsafe fn set_data(&mut self, val: *mut u8) {
 			let ret = unsafe { sys::cv_cuda_GpuData_propData_unsigned_charX(self.as_raw_mut_GpuData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_cuda_GpuData_propSize_const_size_t(self.as_raw_mut_GpuData(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuData_propSize_size_t(self.as_raw_mut_GpuData(), val) };
 			ret
 		}
 
@@ -33890,28 +34942,28 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_propFlags_const_int(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propFlags_int(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 
 		/// the number of rows and columns
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_propRows_const_int(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propRows_int(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 
 		/// the number of rows and columns
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_propCols_const_int(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propCols_int(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 
 		/// a distance between successive rows in bytes; includes the gap if any
 		#[inline]
 		fn set_step(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_propStep_const_size_t(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propStep_size_t(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 
@@ -33924,7 +34976,7 @@ pub mod core {
 
 		/// pointer to the data
 		#[inline]
-		unsafe fn set_data(&mut self, val: *const u8) {
+		unsafe fn set_data(&mut self, val: *mut u8) {
 			let ret = unsafe { sys::cv_cuda_GpuMat_propData_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
@@ -33940,7 +34992,7 @@ pub mod core {
 		/// pointer to the reference counter;
 		/// when GpuMat points to user-allocated data, the pointer is NULL
 		#[inline]
-		unsafe fn set_refcount(&mut self, val: *const i32) {
+		unsafe fn set_refcount(&mut self, val: *mut i32) {
 			let ret = unsafe { sys::cv_cuda_GpuMat_propRefcount_intX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
@@ -33954,7 +35006,7 @@ pub mod core {
 
 		/// helper fields used in locateROI and adjustROI
 		#[inline]
-		unsafe fn set_datastart(&mut self, val: *const u8) {
+		unsafe fn set_datastart(&mut self, val: *mut u8) {
 			let ret = unsafe { sys::cv_cuda_GpuMat_propDatastart_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
@@ -33969,8 +35021,8 @@ pub mod core {
 
 		/// allocator
 		#[inline]
-		fn set_allocator(&mut self, val: &'static impl core::GpuMat_AllocatorTraitConst) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_propAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_GpuMat_Allocator()) };
+		fn set_allocator(&mut self, val: &'static mut impl core::GpuMat_AllocatorTrait) {
+			let ret = unsafe { sys::cv_cuda_GpuMat_propAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_mut_GpuMat_Allocator()) };
 			ret
 		}
 
@@ -34793,29 +35845,29 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_propFlags_const_int(self.as_raw_mut_GpuMatND(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propFlags_int(self.as_raw_mut_GpuMatND(), val) };
 			ret
 		}
 
 		/// matrix dimensionality
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_propDims_const_int(self.as_raw_mut_GpuMatND(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propDims_int(self.as_raw_mut_GpuMatND(), val) };
 			ret
 		}
 
 		/// shape of this array
 		#[inline]
 		fn set_size(&mut self, val: core::MatShape) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_propSize_const_MatShape(self.as_raw_mut_GpuMatND(), &val) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propSize_MatShape(self.as_raw_mut_GpuMatND(), &val) };
 			ret
 		}
 
 		/// ! step values
 		/// Their semantics is identical to the semantics of step for Mat.
 		#[inline]
-		fn set_step(&mut self, val: core::GpuMatND_StepArray) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_propStep_const_StepArray(self.as_raw_mut_GpuMatND(), val.as_raw_VectorOfsize_t()) };
+		fn set_step(&mut self, mut val: core::GpuMatND_StepArray) {
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propStep_StepArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 
@@ -35364,25 +36416,25 @@ pub mod core {
 
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_HostMem_propFlags_const_int(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propFlags_int(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_HostMem_propRows_const_int(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propRows_int(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_HostMem_propCols_const_int(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propCols_int(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_step(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_cuda_HostMem_propStep_const_size_t(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propStep_size_t(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 
@@ -35393,7 +36445,7 @@ pub mod core {
 		}
 
 		#[inline]
-		unsafe fn set_data(&mut self, val: *const u8) {
+		unsafe fn set_data(&mut self, val: *mut u8) {
 			let ret = unsafe { sys::cv_cuda_HostMem_propData_unsigned_charX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
@@ -35405,7 +36457,7 @@ pub mod core {
 		}
 
 		#[inline]
-		unsafe fn set_refcount(&mut self, val: *const i32) {
+		unsafe fn set_refcount(&mut self, val: *mut i32) {
 			let ret = unsafe { sys::cv_cuda_HostMem_propRefcount_intX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
@@ -35417,14 +36469,14 @@ pub mod core {
 		}
 
 		#[inline]
-		unsafe fn set_datastart(&mut self, val: *const u8) {
+		unsafe fn set_datastart(&mut self, val: *mut u8) {
 			let ret = unsafe { sys::cv_cuda_HostMem_propDatastart_unsigned_charX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_alloc_type(&mut self, val: core::HostMem_AllocType) {
-			let ret = unsafe { sys::cv_cuda_HostMem_propAlloc_type_const_AllocType(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propAlloc_type_AllocType(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 
@@ -35942,13 +36994,13 @@ pub mod core {
 
 		#[inline]
 		fn set_line(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_CheckContext_propLine_const_int(self.as_raw_mut_Detail_CheckContext(), val) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propLine_int(self.as_raw_mut_Detail_CheckContext(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_test_op(&mut self, val: core::Detail_TestOp) {
-			let ret = unsafe { sys::cv_detail_CheckContext_propTestOp_const_TestOp(self.as_raw_mut_Detail_CheckContext(), val) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propTestOp_TestOp(self.as_raw_mut_Detail_CheckContext(), val) };
 			ret
 		}
 
@@ -36187,25 +37239,25 @@ pub mod core {
 		#[inline]
 		fn set_m_fun_name(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_instr_NodeData_propM_funName_const_String(self.as_raw_mut_NodeData(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_funName_String(self.as_raw_mut_NodeData(), val.opencv_as_extern()) };
 			ret
 		}
 
 		#[inline]
 		fn set_m_instr_type(&mut self, val: core::TYPE) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_instrType_const_TYPE(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_instrType_TYPE(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_m_impl_type(&mut self, val: core::IMPL) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_implType_const_IMPL(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_implType_IMPL(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_m_line_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_lineNum_const_int(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_lineNum_int(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 
@@ -36216,38 +37268,38 @@ pub mod core {
 		}
 
 		#[inline]
-		unsafe fn set_m_ret_address(&mut self, val: *const c_void) {
+		unsafe fn set_m_ret_address(&mut self, val: *mut c_void) {
 			let ret = unsafe { sys::cv_instr_NodeData_propM_retAddress_voidX(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_m_always_expand(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_alwaysExpand_const_bool(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_alwaysExpand_bool(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_m_fun_error(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_funError_const_bool(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_funError_bool(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_m_counter(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_counter_const_int(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_counter_int(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_m_ticks_total(&mut self, val: u64) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_ticksTotal_const_uint64_t(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_ticksTotal_uint64_t(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_m_threads(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_threads_const_int(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_threads_int(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 
@@ -38446,7 +39498,7 @@ pub mod core {
 
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propFlags_const_int(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propFlags_int(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 
@@ -38458,26 +39510,26 @@ pub mod core {
 		}
 
 		#[inline]
-		fn set_m(&mut self, val: &impl core::UMatTraitConst) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propM_UMatX(self.as_raw_mut_KernelArg(), val.as_raw_UMat()) };
+		unsafe fn set_m(&mut self, val: *mut core::UMat) {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propM_UMatX(self.as_raw_mut_KernelArg(), val.cast()) };
 			ret
 		}
 
 		#[inline]
 		fn set_sz(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propSz_const_size_t(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propSz_size_t(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_wscale(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propWscale_const_int(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propWscale_int(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_iwscale(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propIwscale_const_int(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propIwscale_int(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 
@@ -39887,44 +40939,44 @@ pub mod core {
 	/// Wrapper for OpenGL Client-Side Vertex arrays.
 	///
 	/// ogl::Arrays stores vertex data in ogl::Buffer objects.
-	pub struct Arrays {
+	pub struct OGL_Arrays {
 		ptr: *mut c_void,
 	}
 
-	opencv_type_boxed! { Arrays }
+	opencv_type_boxed! { OGL_Arrays }
 
-	impl Drop for Arrays {
+	impl Drop for OGL_Arrays {
 		#[inline]
 		fn drop(&mut self) {
-			unsafe { sys::cv_ogl_Arrays_delete(self.as_raw_mut_Arrays()) };
+			unsafe { sys::cv_ogl_Arrays_delete(self.as_raw_mut_OGL_Arrays()) };
 		}
 	}
 
-	unsafe impl Send for Arrays {}
+	unsafe impl Send for OGL_Arrays {}
 
-	impl Arrays {
+	impl OGL_Arrays {
 		/// Default constructor
 		#[inline]
-		pub fn default() -> Result<core::Arrays> {
+		pub fn default() -> Result<core::OGL_Arrays> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_Arrays(ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Arrays::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Arrays::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
 	}
 
-	/// Constant methods for [core::Arrays]
-	pub trait ArraysTraitConst {
-		fn as_raw_Arrays(&self) -> *const c_void;
+	/// Constant methods for [core::OGL_Arrays]
+	pub trait OGL_ArraysTraitConst {
+		fn as_raw_OGL_Arrays(&self) -> *const c_void;
 
 		/// Binds all vertex arrays.
 		#[inline]
 		fn bind(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_bind_const(self.as_raw_Arrays(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_bind_const(self.as_raw_OGL_Arrays(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -39934,7 +40986,7 @@ pub mod core {
 		#[inline]
 		fn size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_size_const(self.as_raw_Arrays(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_size_const(self.as_raw_OGL_Arrays(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -39943,7 +40995,7 @@ pub mod core {
 		#[inline]
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_empty_const(self.as_raw_Arrays(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_empty_const(self.as_raw_OGL_Arrays(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -39951,9 +41003,9 @@ pub mod core {
 
 	}
 
-	/// Mutable methods for [core::Arrays]
-	pub trait ArraysTrait: core::ArraysTraitConst {
-		fn as_raw_mut_Arrays(&mut self) -> *mut c_void;
+	/// Mutable methods for [core::OGL_Arrays]
+	pub trait OGL_ArraysTrait: core::OGL_ArraysTraitConst {
+		fn as_raw_mut_OGL_Arrays(&mut self) -> *mut c_void;
 
 		/// Sets an array of vertex coordinates.
 		/// ## Parameters
@@ -39962,7 +41014,7 @@ pub mod core {
 		fn set_vertex_array(&mut self, vertex: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(vertex);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_setVertexArray_const__InputArrayR(self.as_raw_mut_Arrays(), vertex.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_setVertexArray_const__InputArrayR(self.as_raw_mut_OGL_Arrays(), vertex.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -39972,7 +41024,7 @@ pub mod core {
 		#[inline]
 		fn reset_vertex_array(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_resetVertexArray(self.as_raw_mut_Arrays(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_resetVertexArray(self.as_raw_mut_OGL_Arrays(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -39985,7 +41037,7 @@ pub mod core {
 		fn set_color_array(&mut self, color: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(color);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_setColorArray_const__InputArrayR(self.as_raw_mut_Arrays(), color.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_setColorArray_const__InputArrayR(self.as_raw_mut_OGL_Arrays(), color.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -39995,7 +41047,7 @@ pub mod core {
 		#[inline]
 		fn reset_color_array(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_resetColorArray(self.as_raw_mut_Arrays(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_resetColorArray(self.as_raw_mut_OGL_Arrays(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40008,7 +41060,7 @@ pub mod core {
 		fn set_normal_array(&mut self, normal: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(normal);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_setNormalArray_const__InputArrayR(self.as_raw_mut_Arrays(), normal.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_setNormalArray_const__InputArrayR(self.as_raw_mut_OGL_Arrays(), normal.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40018,7 +41070,7 @@ pub mod core {
 		#[inline]
 		fn reset_normal_array(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_resetNormalArray(self.as_raw_mut_Arrays(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_resetNormalArray(self.as_raw_mut_OGL_Arrays(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40031,7 +41083,7 @@ pub mod core {
 		fn set_tex_coord_array(&mut self, tex_coord: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(tex_coord);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_setTexCoordArray_const__InputArrayR(self.as_raw_mut_Arrays(), tex_coord.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_setTexCoordArray_const__InputArrayR(self.as_raw_mut_OGL_Arrays(), tex_coord.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40041,7 +41093,7 @@ pub mod core {
 		#[inline]
 		fn reset_tex_coord_array(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_resetTexCoordArray(self.as_raw_mut_Arrays(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_resetTexCoordArray(self.as_raw_mut_OGL_Arrays(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40051,7 +41103,7 @@ pub mod core {
 		#[inline]
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_release(self.as_raw_mut_Arrays(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_release(self.as_raw_mut_OGL_Arrays(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40063,7 +41115,7 @@ pub mod core {
 		#[inline]
 		fn set_auto_release(&mut self, flag: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_setAutoRelease_bool(self.as_raw_mut_Arrays(), flag, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_setAutoRelease_bool(self.as_raw_mut_OGL_Arrays(), flag, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40071,23 +41123,211 @@ pub mod core {
 
 	}
 
-	impl fmt::Debug for Arrays {
+	impl fmt::Debug for OGL_Arrays {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-			f.debug_struct("Arrays")
+			f.debug_struct("OGL_Arrays")
 				.finish()
 		}
 	}
 
-	impl core::ArraysTraitConst for Arrays {
-		#[inline] fn as_raw_Arrays(&self) -> *const c_void { self.as_raw() }
+	impl core::OGL_ArraysTraitConst for OGL_Arrays {
+		#[inline] fn as_raw_OGL_Arrays(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl core::ArraysTrait for Arrays {
-		#[inline] fn as_raw_mut_Arrays(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl core::OGL_ArraysTrait for OGL_Arrays {
+		#[inline] fn as_raw_mut_OGL_Arrays(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { Arrays, core::ArraysTraitConst, as_raw_Arrays, core::ArraysTrait, as_raw_mut_Arrays }
+	boxed_ref! { OGL_Arrays, core::OGL_ArraysTraitConst, as_raw_OGL_Arrays, core::OGL_ArraysTrait, as_raw_mut_OGL_Arrays }
+
+	/// Struct used to describe a vertex array attribute.
+	pub struct OGL_Attribute {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { OGL_Attribute }
+
+	impl Drop for OGL_Attribute {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ogl_Attribute_delete(self.as_raw_mut_OGL_Attribute()) };
+		}
+	}
+
+	unsafe impl Send for OGL_Attribute {}
+
+	impl OGL_Attribute {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> core::OGL_Attribute {
+			let ret = unsafe { sys::cv_ogl_Attribute_defaultNew_const() };
+			let ret = unsafe { core::OGL_Attribute::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
+	/// Constant methods for [core::OGL_Attribute]
+	pub trait OGL_AttributeTraitConst {
+		fn as_raw_OGL_Attribute(&self) -> *const c_void;
+
+		/// The buffer this attribute takes data from.
+		#[inline]
+		fn buffer_(&self) -> core::OGL_Buffer {
+			let ret = unsafe { sys::cv_ogl_Attribute_propBuffer__const(self.as_raw_OGL_Attribute()) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// Number of bytes between each element described by this attribute.
+		#[inline]
+		fn stride_(&self) -> size_t {
+			let ret = unsafe { sys::cv_ogl_Attribute_propStride__const(self.as_raw_OGL_Attribute()) };
+			ret
+		}
+
+		/// Position of the first element in the buffer in bytes.
+		#[inline]
+		fn offset_(&self) -> size_t {
+			let ret = unsafe { sys::cv_ogl_Attribute_propOffset__const(self.as_raw_OGL_Attribute()) };
+			ret
+		}
+
+		/// Number of components of the type (eg.: float = 1 component, vec3 = 3 components).
+		#[inline]
+		fn size_(&self) -> i32 {
+			let ret = unsafe { sys::cv_ogl_Attribute_propSize__const(self.as_raw_OGL_Attribute()) };
+			ret
+		}
+
+		/// Type of the vertex attribute. See cv::ogl::Attribute::Type.
+		#[inline]
+		fn type_(&self) -> core::OGL_Attribute_Type {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Attribute_propType__const(self.as_raw_OGL_Attribute(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			ret
+		}
+
+		/// Is the vertex attribute an integer?
+		#[inline]
+		fn integer_(&self) -> bool {
+			let ret = unsafe { sys::cv_ogl_Attribute_propInteger__const(self.as_raw_OGL_Attribute()) };
+			ret
+		}
+
+		/// If the vertex attribute isn't an integer, should it be normalized?
+		#[inline]
+		fn normalized_(&self) -> bool {
+			let ret = unsafe { sys::cv_ogl_Attribute_propNormalized__const(self.as_raw_OGL_Attribute()) };
+			ret
+		}
+
+		/// Location of the attribute in the program. See cv::ogl::Program::getAttributeLocation.
+		#[inline]
+		fn shader_loc_(&self) -> u32 {
+			let ret = unsafe { sys::cv_ogl_Attribute_propShader_loc__const(self.as_raw_OGL_Attribute()) };
+			ret
+		}
+
+	}
+
+	/// Mutable methods for [core::OGL_Attribute]
+	pub trait OGL_AttributeTrait: core::OGL_AttributeTraitConst {
+		fn as_raw_mut_OGL_Attribute(&mut self) -> *mut c_void;
+
+		/// The buffer this attribute takes data from.
+		#[inline]
+		fn set_buffer_(&mut self, mut val: core::OGL_Buffer) {
+			let ret = unsafe { sys::cv_ogl_Attribute_propBuffer__Buffer(self.as_raw_mut_OGL_Attribute(), val.as_raw_mut_OGL_Buffer()) };
+			ret
+		}
+
+		/// Number of bytes between each element described by this attribute.
+		#[inline]
+		fn set_stride_(&mut self, val: size_t) {
+			let ret = unsafe { sys::cv_ogl_Attribute_propStride__size_t(self.as_raw_mut_OGL_Attribute(), val) };
+			ret
+		}
+
+		/// Position of the first element in the buffer in bytes.
+		#[inline]
+		fn set_offset_(&mut self, val: size_t) {
+			let ret = unsafe { sys::cv_ogl_Attribute_propOffset__size_t(self.as_raw_mut_OGL_Attribute(), val) };
+			ret
+		}
+
+		/// Number of components of the type (eg.: float = 1 component, vec3 = 3 components).
+		#[inline]
+		fn set_size_(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_ogl_Attribute_propSize__int(self.as_raw_mut_OGL_Attribute(), val) };
+			ret
+		}
+
+		/// Type of the vertex attribute. See cv::ogl::Attribute::Type.
+		#[inline]
+		fn set_type_(&mut self, val: core::OGL_Attribute_Type) {
+			let ret = unsafe { sys::cv_ogl_Attribute_propType__Type(self.as_raw_mut_OGL_Attribute(), val) };
+			ret
+		}
+
+		/// Is the vertex attribute an integer?
+		#[inline]
+		fn set_integer_(&mut self, val: bool) {
+			let ret = unsafe { sys::cv_ogl_Attribute_propInteger__bool(self.as_raw_mut_OGL_Attribute(), val) };
+			ret
+		}
+
+		/// If the vertex attribute isn't an integer, should it be normalized?
+		#[inline]
+		fn set_normalized_(&mut self, val: bool) {
+			let ret = unsafe { sys::cv_ogl_Attribute_propNormalized__bool(self.as_raw_mut_OGL_Attribute(), val) };
+			ret
+		}
+
+		/// Location of the attribute in the program. See cv::ogl::Program::getAttributeLocation.
+		#[inline]
+		fn set_shader_loc_(&mut self, val: u32) {
+			let ret = unsafe { sys::cv_ogl_Attribute_propShader_loc__unsigned_int(self.as_raw_mut_OGL_Attribute(), val) };
+			ret
+		}
+
+	}
+
+	impl Default for OGL_Attribute {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+
+	impl fmt::Debug for OGL_Attribute {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("OGL_Attribute")
+				.field("buffer_", &core::OGL_AttributeTraitConst::buffer_(self))
+				.field("stride_", &core::OGL_AttributeTraitConst::stride_(self))
+				.field("offset_", &core::OGL_AttributeTraitConst::offset_(self))
+				.field("size_", &core::OGL_AttributeTraitConst::size_(self))
+				.field("type_", &core::OGL_AttributeTraitConst::type_(self))
+				.field("integer_", &core::OGL_AttributeTraitConst::integer_(self))
+				.field("normalized_", &core::OGL_AttributeTraitConst::normalized_(self))
+				.field("shader_loc_", &core::OGL_AttributeTraitConst::shader_loc_(self))
+				.finish()
+		}
+	}
+
+	impl core::OGL_AttributeTraitConst for OGL_Attribute {
+		#[inline] fn as_raw_OGL_Attribute(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::OGL_AttributeTrait for OGL_Attribute {
+		#[inline] fn as_raw_mut_OGL_Attribute(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { OGL_Attribute, core::OGL_AttributeTraitConst, as_raw_OGL_Attribute, core::OGL_AttributeTrait, as_raw_mut_OGL_Attribute }
 
 	/// Smart pointer for OpenGL buffer object with reference counting.
 	///
@@ -40098,33 +41338,33 @@ pub mod core {
 	/// ogl::Buffer has interface similar with Mat interface and represents 2D array memory.
 	///
 	/// ogl::Buffer supports memory transfers between host and device and also can be mapped to CUDA memory.
-	pub struct Buffer {
+	pub struct OGL_Buffer {
 		ptr: *mut c_void,
 	}
 
-	opencv_type_boxed! { Buffer }
+	opencv_type_boxed! { OGL_Buffer }
 
-	impl Drop for Buffer {
+	impl Drop for OGL_Buffer {
 		#[inline]
 		fn drop(&mut self) {
-			unsafe { sys::cv_ogl_Buffer_delete(self.as_raw_mut_Buffer()) };
+			unsafe { sys::cv_ogl_Buffer_delete(self.as_raw_mut_OGL_Buffer()) };
 		}
 	}
 
-	unsafe impl Send for Buffer {}
+	unsafe impl Send for OGL_Buffer {}
 
-	impl Buffer {
+	impl OGL_Buffer {
 		/// The constructors.
 		///
 		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
 		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
 		#[inline]
-		pub fn default() -> Result<core::Buffer> {
+		pub fn default() -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer(ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40145,12 +41385,12 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * auto_release: false
 		#[inline]
-		pub fn new(arows: i32, acols: i32, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
+		pub fn new(arows: i32, acols: i32, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int_bool(arows, acols, atype, abuf_id, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40172,12 +41412,12 @@ pub mod core {
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
-		pub fn new_def(arows: i32, acols: i32, atype: i32, abuf_id: u32) -> Result<core::Buffer> {
+		pub fn new_def(arows: i32, acols: i32, atype: i32, abuf_id: u32) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int(arows, acols, atype, abuf_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40197,12 +41437,12 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * auto_release: false
 		#[inline]
-		pub fn new_1(asize: core::Size, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
+		pub fn new_1(asize: core::Size, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int_bool(&asize, atype, abuf_id, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40223,12 +41463,12 @@ pub mod core {
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
-		pub fn new_def_1(asize: core::Size, atype: i32, abuf_id: u32) -> Result<core::Buffer> {
+		pub fn new_def_1(asize: core::Size, atype: i32, abuf_id: u32) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int(&asize, atype, abuf_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40250,12 +41490,12 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		pub fn new_2(arows: i32, acols: i32, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+		pub fn new_2(arows: i32, acols: i32, atype: i32, target: core::OGL_Buffer_Target, auto_release: bool) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_Target_bool(arows, acols, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40278,12 +41518,12 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		pub fn new_def_2(arows: i32, acols: i32, atype: i32) -> Result<core::Buffer> {
+		pub fn new_def_2(arows: i32, acols: i32, atype: i32) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int(arows, acols, atype, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40304,12 +41544,12 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		pub fn new_3(asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+		pub fn new_3(asize: core::Size, atype: i32, target: core::OGL_Buffer_Target, auto_release: bool) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_Target_bool(&asize, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40331,12 +41571,12 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		pub fn new_def_3(asize: core::Size, atype: i32) -> Result<core::Buffer> {
+		pub fn new_def_3(asize: core::Size, atype: i32) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int(&asize, atype, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40356,13 +41596,13 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		pub fn new_4(arr: &impl ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+		pub fn new_4(arr: &impl ToInputArray, target: core::OGL_Buffer_Target, auto_release: bool) -> Result<core::OGL_Buffer> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR_Target_bool(arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40383,13 +41623,13 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		pub fn new_def_4(arr: &impl ToInputArray) -> Result<core::Buffer> {
+		pub fn new_def_4(arr: &impl ToInputArray) -> Result<core::OGL_Buffer> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40398,7 +41638,7 @@ pub mod core {
 		/// ## Parameters
 		/// * target: Binding point. See cv::ogl::Buffer::Target .
 		#[inline]
-		pub fn unbind(target: core::Buffer_Target) -> Result<()> {
+		pub fn unbind(target: core::OGL_Buffer_Target) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_unbind_Target(target, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -40408,9 +41648,9 @@ pub mod core {
 
 	}
 
-	/// Constant methods for [core::Buffer]
-	pub trait BufferTraitConst {
-		fn as_raw_Buffer(&self) -> *const c_void;
+	/// Constant methods for [core::OGL_Buffer]
+	pub trait OGL_BufferTraitConst {
+		fn as_raw_OGL_Buffer(&self) -> *const c_void;
 
 		/// Copies from OpenGL buffer to host/device memory or another OpenGL buffer object.
 		///
@@ -40421,7 +41661,7 @@ pub mod core {
 		fn copy_to(&self, arr: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR(self.as_raw_Buffer(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR(self.as_raw_OGL_Buffer(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40438,7 +41678,7 @@ pub mod core {
 		fn copy_to_1(&self, arr: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_Buffer(), arr.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_OGL_Buffer(), arr.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40454,12 +41694,12 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		fn clone(&self, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+		fn clone(&self, target: core::OGL_Buffer_Target, auto_release: bool) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_clone_const_Target_bool(self.as_raw_Buffer(), target, auto_release, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_clone_const_Target_bool(self.as_raw_OGL_Buffer(), target, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40470,16 +41710,16 @@ pub mod core {
 		/// * autoRelease: Auto release mode for destination buffer.
 		///
 		/// ## Note
-		/// This alternative version of [BufferTraitConst::clone] function uses the following default values for its arguments:
+		/// This alternative version of [OGL_BufferTraitConst::clone] function uses the following default values for its arguments:
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		fn clone_def(&self) -> Result<core::Buffer> {
+		fn clone_def(&self) -> Result<core::OGL_Buffer> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_clone_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_clone_const(self.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40488,9 +41728,9 @@ pub mod core {
 		/// ## Parameters
 		/// * target: Binding point. See cv::ogl::Buffer::Target .
 		#[inline]
-		fn bind(&self, target: core::Buffer_Target) -> Result<()> {
+		fn bind(&self, target: core::OGL_Buffer_Target) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_bind_const_Target(self.as_raw_Buffer(), target, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_bind_const_Target(self.as_raw_OGL_Buffer(), target, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40499,7 +41739,7 @@ pub mod core {
 		#[inline]
 		fn rows(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_rows_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_rows_const(self.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40508,7 +41748,7 @@ pub mod core {
 		#[inline]
 		fn cols(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_cols_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_cols_const(self.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40517,7 +41757,7 @@ pub mod core {
 		#[inline]
 		fn size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_size_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_size_const(self.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40526,7 +41766,7 @@ pub mod core {
 		#[inline]
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_empty_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_empty_const(self.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40535,7 +41775,7 @@ pub mod core {
 		#[inline]
 		fn typ(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_type_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_type_const(self.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40544,7 +41784,7 @@ pub mod core {
 		#[inline]
 		fn depth(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_depth_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_depth_const(self.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40553,7 +41793,7 @@ pub mod core {
 		#[inline]
 		fn channels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_channels_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_channels_const(self.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40562,7 +41802,7 @@ pub mod core {
 		#[inline]
 		fn elem_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_elemSize_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_elemSize_const(self.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40571,7 +41811,7 @@ pub mod core {
 		#[inline]
 		fn elem_size1(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_elemSize1_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_elemSize1_const(self.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40581,7 +41821,7 @@ pub mod core {
 		#[inline]
 		fn buf_id(&self) -> Result<u32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_bufId_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_bufId_const(self.as_raw_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40589,9 +41829,9 @@ pub mod core {
 
 	}
 
-	/// Mutable methods for [core::Buffer]
-	pub trait BufferTrait: core::BufferTraitConst {
-		fn as_raw_mut_Buffer(&mut self) -> *mut c_void;
+	/// Mutable methods for [core::OGL_Buffer]
+	pub trait OGL_BufferTrait: core::OGL_BufferTraitConst {
+		fn as_raw_mut_OGL_Buffer(&mut self) -> *mut c_void;
 
 		/// Allocates memory for ogl::Buffer object.
 		///
@@ -40606,9 +41846,9 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		fn create(&mut self, arows: i32, acols: i32, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
+		fn create(&mut self, arows: i32, acols: i32, atype: i32, target: core::OGL_Buffer_Target, auto_release: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_create_int_int_int_Target_bool(self.as_raw_mut_Buffer(), arows, acols, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_create_int_int_int_Target_bool(self.as_raw_mut_OGL_Buffer(), arows, acols, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40624,13 +41864,13 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		///
 		/// ## Note
-		/// This alternative version of [BufferTrait::create] function uses the following default values for its arguments:
+		/// This alternative version of [OGL_BufferTrait::create] function uses the following default values for its arguments:
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
 		fn create_def(&mut self, arows: i32, acols: i32, atype: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_create_int_int_int(self.as_raw_mut_Buffer(), arows, acols, atype, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_create_int_int_int(self.as_raw_mut_OGL_Buffer(), arows, acols, atype, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40656,9 +41896,9 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		fn create_size(&mut self, asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
+		fn create_size(&mut self, asize: core::Size, atype: i32, target: core::OGL_Buffer_Target, auto_release: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_create_Size_int_Target_bool(self.as_raw_mut_Buffer(), &asize, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_create_Size_int_Target_bool(self.as_raw_mut_OGL_Buffer(), &asize, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40681,13 +41921,13 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		///
 		/// ## Note
-		/// This alternative version of [BufferTrait::create_size] function uses the following default values for its arguments:
+		/// This alternative version of [OGL_BufferTrait::create_size] function uses the following default values for its arguments:
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
 		fn create_size_def(&mut self, asize: core::Size, atype: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_create_Size_int(self.as_raw_mut_Buffer(), &asize, atype, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_create_Size_int(self.as_raw_mut_OGL_Buffer(), &asize, atype, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40699,7 +41939,7 @@ pub mod core {
 		#[inline]
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_release(self.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_release(self.as_raw_mut_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40717,7 +41957,7 @@ pub mod core {
 		#[inline]
 		fn set_auto_release(&mut self, flag: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_setAutoRelease_bool(self.as_raw_mut_Buffer(), flag, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_setAutoRelease_bool(self.as_raw_mut_OGL_Buffer(), flag, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40733,10 +41973,10 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		fn copy_from(&mut self, arr: &impl ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
+		fn copy_from(&mut self, arr: &impl ToInputArray, target: core::OGL_Buffer_Target, auto_release: bool) -> Result<()> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_Target_bool(self.as_raw_mut_OGL_Buffer(), arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40749,14 +41989,14 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		///
 		/// ## Note
-		/// This alternative version of [BufferTrait::copy_from] function uses the following default values for its arguments:
+		/// This alternative version of [OGL_BufferTrait::copy_from] function uses the following default values for its arguments:
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
 		fn copy_from_def(&mut self, arr: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR(self.as_raw_mut_OGL_Buffer(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40774,10 +42014,10 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		fn copy_from_1(&mut self, arr: &impl ToInputArray, stream: &mut impl core::StreamTrait, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
+		fn copy_from_1(&mut self, arr: &impl ToInputArray, stream: &mut impl core::StreamTrait, target: core::OGL_Buffer_Target, auto_release: bool) -> Result<()> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), target, auto_release, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR_Target_bool(self.as_raw_mut_OGL_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), target, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40793,14 +42033,14 @@ pub mod core {
 		///
 		///
 		/// ## Note
-		/// This alternative version of [BufferTrait::copy_from] function uses the following default values for its arguments:
+		/// This alternative version of [OGL_BufferTrait::copy_from] function uses the following default values for its arguments:
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
 		fn copy_from_def_1(&mut self, arr: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR(self.as_raw_mut_OGL_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40822,9 +42062,9 @@ pub mod core {
 		/// read from and write to the buffer object's mapped data store. The symbolic constant must be
 		/// ogl::Buffer::READ_ONLY , ogl::Buffer::WRITE_ONLY or ogl::Buffer::READ_WRITE .
 		#[inline]
-		fn map_host(&mut self, access: core::Buffer_Access) -> Result<core::Mat> {
+		fn map_host(&mut self, access: core::OGL_Buffer_Access) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_mapHost_Access(self.as_raw_mut_Buffer(), access, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_mapHost_Access(self.as_raw_mut_OGL_Buffer(), access, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -40835,7 +42075,7 @@ pub mod core {
 		#[inline]
 		fn unmap_host(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_unmapHost(self.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_unmapHost(self.as_raw_mut_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40845,7 +42085,7 @@ pub mod core {
 		#[inline]
 		fn map_device(&mut self) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_mapDevice(self.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_mapDevice(self.as_raw_mut_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
@@ -40855,7 +42095,7 @@ pub mod core {
 		#[inline]
 		fn unmap_device(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_unmapDevice(self.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_unmapDevice(self.as_raw_mut_OGL_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40869,7 +42109,7 @@ pub mod core {
 		#[inline]
 		fn map_device_1(&mut self, stream: &mut impl core::StreamTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_mapDevice_StreamR(self.as_raw_mut_Buffer(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_mapDevice_StreamR(self.as_raw_mut_OGL_Buffer(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
@@ -40880,7 +42120,7 @@ pub mod core {
 		#[inline]
 		fn unmap_device_1(&mut self, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_unmapDevice_StreamR(self.as_raw_mut_Buffer(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_unmapDevice_StreamR(self.as_raw_mut_OGL_Buffer(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -40888,52 +42128,561 @@ pub mod core {
 
 	}
 
-	impl fmt::Debug for Buffer {
+	impl fmt::Debug for OGL_Buffer {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-			f.debug_struct("Buffer")
+			f.debug_struct("OGL_Buffer")
 				.finish()
 		}
 	}
 
-	impl core::BufferTraitConst for Buffer {
-		#[inline] fn as_raw_Buffer(&self) -> *const c_void { self.as_raw() }
+	impl core::OGL_BufferTraitConst for OGL_Buffer {
+		#[inline] fn as_raw_OGL_Buffer(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl core::BufferTrait for Buffer {
-		#[inline] fn as_raw_mut_Buffer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl core::OGL_BufferTrait for OGL_Buffer {
+		#[inline] fn as_raw_mut_OGL_Buffer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { Buffer, core::BufferTraitConst, as_raw_Buffer, core::BufferTrait, as_raw_mut_Buffer }
+	boxed_ref! { OGL_Buffer, core::OGL_BufferTraitConst, as_raw_OGL_Buffer, core::OGL_BufferTrait, as_raw_mut_OGL_Buffer }
 
-	/// Smart pointer for OpenGL 2D texture memory with reference counting.
-	pub struct Texture2D {
+	/// Smart pointer for OpenGL program with reference counting.
+	pub struct OGL_Program {
 		ptr: *mut c_void,
 	}
 
-	opencv_type_boxed! { Texture2D }
+	opencv_type_boxed! { OGL_Program }
 
-	impl Drop for Texture2D {
+	impl Drop for OGL_Program {
 		#[inline]
 		fn drop(&mut self) {
-			unsafe { sys::cv_ogl_Texture2D_delete(self.as_raw_mut_Texture2D()) };
+			unsafe { sys::cv_ogl_Program_delete(self.as_raw_mut_OGL_Program()) };
 		}
 	}
 
-	unsafe impl Send for Texture2D {}
+	unsafe impl Send for OGL_Program {}
 
-	impl Texture2D {
+	impl OGL_Program {
+		/// The constructors.
+		///
+		/// Creates empty ogl::Program object, creates ogl::Program object from a group of shader objects.
+		#[inline]
+		pub fn default() -> Result<core::OGL_Program> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_Program(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OGL_Program::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Program object, creates ogl::Program object from a group of shader objects.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * vert: Vertex shader. See cv::ogl::Shader.
+		/// * frag: Fragment shader. See cv::ogl::Shader.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		pub fn new(vert: &impl core::OGL_ShaderTraitConst, frag: &impl core::OGL_ShaderTraitConst, auto_release: bool) -> Result<core::OGL_Program> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_Program_const_ShaderR_const_ShaderR_bool(vert.as_raw_OGL_Shader(), frag.as_raw_OGL_Shader(), auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OGL_Program::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Program object, creates ogl::Program object from a group of shader objects.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * vert: Vertex shader. See cv::ogl::Shader.
+		/// * frag: Fragment shader. See cv::ogl::Shader.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def(vert: &impl core::OGL_ShaderTraitConst, frag: &impl core::OGL_ShaderTraitConst) -> Result<core::OGL_Program> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_Program_const_ShaderR_const_ShaderR(vert.as_raw_OGL_Shader(), frag.as_raw_OGL_Shader(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OGL_Program::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Unbind any shader program.
+		#[inline]
+		pub fn unbind() -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_unbind(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets a uniform vector value.
+		/// ## Parameters
+		/// * location: Uniform location.
+		/// * vec: Vector value.
+		#[inline]
+		pub fn set_uniform_vec3(location: i32, vec: core::Vec3f) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_setUniformVec3_int_Vec3f(location, &vec, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets a uniform vector value.
+		/// ## Parameters
+		/// * location: Uniform location.
+		/// * vec: Vector value.
+		#[inline]
+		pub fn set_uniform_vec2(location: i32, vec: core::Vec2f) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_setUniformVec2_int_Vec2f(location, &vec, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets a uniform vector value.
+		/// ## Parameters
+		/// * location: Uniform location.
+		/// * vec: Vector value.
+		#[inline]
+		pub fn set_uniform_vec4(location: i32, vec: core::Vec4f) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_setUniformVec4_int_Vec4f(location, &vec, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets a uniform matrix value.
+		/// ## Parameters
+		/// * location: Uniform location.
+		/// * mat: Matrix value.
+		#[inline]
+		pub fn set_uniform_mat4x4(location: i32, mat: core::Matx44f) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_setUniformMat4x4_int_Matx44f(location, &mat, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets a uniform scalar value.
+		/// ## Parameters
+		/// * location: Uniform location.
+		/// * value: Float value.
+		#[inline]
+		pub fn set_uniform1f(location: i32, value: f32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_setUniform1f_int_float(location, value, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets a uniform scalar value.
+		/// ## Parameters
+		/// * location: Uniform location.
+		/// * value: Integer value. Also used for sampler uniforms, where it is the texture unit index.
+		#[inline]
+		pub fn set_uniform1i(location: i32, value: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_setUniform1i_int_int(location, value, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [core::OGL_Program]
+	pub trait OGL_ProgramTraitConst {
+		fn as_raw_OGL_Program(&self) -> *const c_void;
+
+		/// Binds OpenGL shader program.
+		#[inline]
+		fn bind(&self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_bind_const(self.as_raw_OGL_Program(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Returns the shader location of an attribute from its name.
+		/// ## Parameters
+		/// * name: Attribute name.
+		#[inline]
+		fn get_attribute_location(&self, name: &str) -> Result<i32> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_getAttributeLocation_const_const_charX(self.as_raw_OGL_Program(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Returns the shader location of an uniform from its name.
+		/// ## Parameters
+		/// * name: Uniform name.
+		#[inline]
+		fn get_uniform_location(&self, name: &str) -> Result<i32> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_getUniformLocation_const_const_charX(self.as_raw_OGL_Program(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// get OpenGL object id
+		#[inline]
+		fn program_id(&self) -> Result<u32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_programId_const(self.as_raw_OGL_Program(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [core::OGL_Program]
+	pub trait OGL_ProgramTrait: core::OGL_ProgramTraitConst {
+		fn as_raw_mut_OGL_Program(&mut self) -> *mut c_void;
+
+		/// Creates ogl::Program object from a group of shader objects.
+		///
+		/// ## Parameters
+		/// * vert: Vertex shader. See cv::ogl::Shader.
+		/// * frag: Fragment shader. See cv::ogl::Shader.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		fn create(&mut self, vert: &impl core::OGL_ShaderTraitConst, frag: &impl core::OGL_ShaderTraitConst, auto_release: bool) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_create_const_ShaderR_const_ShaderR_bool(self.as_raw_mut_OGL_Program(), vert.as_raw_OGL_Shader(), frag.as_raw_OGL_Shader(), auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Creates ogl::Program object from a group of shader objects.
+		///
+		/// ## Parameters
+		/// * vert: Vertex shader. See cv::ogl::Shader.
+		/// * frag: Fragment shader. See cv::ogl::Shader.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [OGL_ProgramTrait::create] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		fn create_def(&mut self, vert: &impl core::OGL_ShaderTraitConst, frag: &impl core::OGL_ShaderTraitConst) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_create_const_ShaderR_const_ShaderR(self.as_raw_mut_OGL_Program(), vert.as_raw_OGL_Shader(), frag.as_raw_OGL_Shader(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Decrements the reference counter and destroys the program object if needed.
+		///
+		/// The function will call setAutoRelease(true) .
+		#[inline]
+		fn release(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_release(self.as_raw_mut_OGL_Program(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets auto release mode.
+		///
+		/// The lifetime of the OpenGL object is tied to the lifetime of the context. If OpenGL context was
+		/// bound to a window it could be released at any time (user can close a window). If object's destructor
+		/// is called after destruction of the context it will cause an error. Thus ogl::Program doesn't destroy
+		/// OpenGL object in destructor by default (all OpenGL resources will be released with OpenGL context).
+		/// This function can force ogl::Program destructor to destroy OpenGL object.
+		/// ## Parameters
+		/// * flag: Auto release mode (if true, release will be called in object's destructor).
+		#[inline]
+		fn set_auto_release(&mut self, flag: bool) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Program_setAutoRelease_bool(self.as_raw_mut_OGL_Program(), flag, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl fmt::Debug for OGL_Program {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("OGL_Program")
+				.finish()
+		}
+	}
+
+	impl core::OGL_ProgramTraitConst for OGL_Program {
+		#[inline] fn as_raw_OGL_Program(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::OGL_ProgramTrait for OGL_Program {
+		#[inline] fn as_raw_mut_OGL_Program(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { OGL_Program, core::OGL_ProgramTraitConst, as_raw_OGL_Program, core::OGL_ProgramTrait, as_raw_mut_OGL_Program }
+
+	/// Smart pointer for OpenGL shader with reference counting.
+	pub struct OGL_Shader {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { OGL_Shader }
+
+	impl Drop for OGL_Shader {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ogl_Shader_delete(self.as_raw_mut_OGL_Shader()) };
+		}
+	}
+
+	unsafe impl Send for OGL_Shader {}
+
+	impl OGL_Shader {
+		/// The constructors.
+		///
+		/// Creates empty ogl::Shader object, creates ogl::Shader object from source code.
+		#[inline]
+		pub fn default() -> Result<core::OGL_Shader> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Shader_Shader(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OGL_Shader::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Shader object, creates ogl::Shader object from source code.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * src: Shader source code.
+		/// * type: Shader type. See cv::ogl::Shader::ShaderType.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		pub fn new(src: &str, typ: core::OGL_Shader_ShaderType, auto_release: bool) -> Result<core::OGL_Shader> {
+			extern_container_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Shader_Shader_const_charX_ShaderType_bool(src.opencv_as_extern(), typ, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OGL_Shader::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Shader object, creates ogl::Shader object from source code.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * src: Shader source code.
+		/// * type: Shader type. See cv::ogl::Shader::ShaderType.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def(src: &str, typ: core::OGL_Shader_ShaderType) -> Result<core::OGL_Shader> {
+			extern_container_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Shader_Shader_const_charX_ShaderType(src.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OGL_Shader::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [core::OGL_Shader]
+	pub trait OGL_ShaderTraitConst {
+		fn as_raw_OGL_Shader(&self) -> *const c_void;
+
+		#[inline]
+		fn typ(&self) -> Result<core::OGL_Shader_ShaderType> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Shader_type_const(self.as_raw_OGL_Shader(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// get OpenGL object id
+		#[inline]
+		fn shader_id(&self) -> Result<u32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Shader_shaderId_const(self.as_raw_OGL_Shader(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [core::OGL_Shader]
+	pub trait OGL_ShaderTrait: core::OGL_ShaderTraitConst {
+		fn as_raw_mut_OGL_Shader(&mut self) -> *mut c_void;
+
+		/// Creates ogl::Shader object from source code.
+		///
+		/// ## Parameters
+		/// * src: Shader source code.
+		/// * type: Shader type. See cv::ogl::Shader::ShaderType.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		fn create(&mut self, src: &str, typ: core::OGL_Shader_ShaderType, auto_release: bool) -> Result<()> {
+			extern_container_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Shader_create_const_charX_ShaderType_bool(self.as_raw_mut_OGL_Shader(), src.opencv_as_extern(), typ, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Creates ogl::Shader object from source code.
+		///
+		/// ## Parameters
+		/// * src: Shader source code.
+		/// * type: Shader type. See cv::ogl::Shader::ShaderType.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [OGL_ShaderTrait::create] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		fn create_def(&mut self, src: &str, typ: core::OGL_Shader_ShaderType) -> Result<()> {
+			extern_container_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Shader_create_const_charX_ShaderType(self.as_raw_mut_OGL_Shader(), src.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Decrements the reference counter and destroys the shader object if needed.
+		///
+		/// The function will call setAutoRelease(true) .
+		#[inline]
+		fn release(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Shader_release(self.as_raw_mut_OGL_Shader(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets auto release mode.
+		///
+		/// The lifetime of the OpenGL object is tied to the lifetime of the context. If OpenGL context was
+		/// bound to a window it could be released at any time (user can close a window). If object's destructor
+		/// is called after destruction of the context it will cause an error. Thus ogl::Shader doesn't destroy
+		/// OpenGL object in destructor by default (all OpenGL resources will be released with OpenGL context).
+		/// This function can force ogl::Shader destructor to destroy OpenGL object.
+		/// ## Parameters
+		/// * flag: Auto release mode (if true, release will be called in object's destructor).
+		#[inline]
+		fn set_auto_release(&mut self, flag: bool) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Shader_setAutoRelease_bool(self.as_raw_mut_OGL_Shader(), flag, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl fmt::Debug for OGL_Shader {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("OGL_Shader")
+				.finish()
+		}
+	}
+
+	impl core::OGL_ShaderTraitConst for OGL_Shader {
+		#[inline] fn as_raw_OGL_Shader(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::OGL_ShaderTrait for OGL_Shader {
+		#[inline] fn as_raw_mut_OGL_Shader(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { OGL_Shader, core::OGL_ShaderTraitConst, as_raw_OGL_Shader, core::OGL_ShaderTrait, as_raw_mut_OGL_Shader }
+
+	/// Smart pointer for OpenGL 2D texture memory with reference counting.
+	pub struct OGL_Texture2D {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { OGL_Texture2D }
+
+	impl Drop for OGL_Texture2D {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ogl_Texture2D_delete(self.as_raw_mut_OGL_Texture2D()) };
+		}
+	}
+
+	unsafe impl Send for OGL_Texture2D {}
+
+	impl OGL_Texture2D {
 		/// The constructors.
 		///
 		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
 		/// host/device memory.
 		#[inline]
-		pub fn default() -> Result<core::Texture2D> {
+		pub fn default() -> Result<core::OGL_Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D(ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40947,12 +42696,12 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * auto_release: false
 		#[inline]
-		pub fn new(arows: i32, acols: i32, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
+		pub fn new(arows: i32, acols: i32, aformat: core::OGL_Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::OGL_Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int_bool(arows, acols, aformat, atex_id, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40968,12 +42717,12 @@ pub mod core {
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
-		pub fn new_def(arows: i32, acols: i32, aformat: core::Texture2D_Format, atex_id: u32) -> Result<core::Texture2D> {
+		pub fn new_def(arows: i32, acols: i32, aformat: core::OGL_Texture2D_Format, atex_id: u32) -> Result<core::OGL_Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int(arows, acols, aformat, atex_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -40987,12 +42736,12 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * auto_release: false
 		#[inline]
-		pub fn new_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
+		pub fn new_1(asize: core::Size, aformat: core::OGL_Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::OGL_Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int_bool(&asize, aformat, atex_id, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -41008,12 +42757,12 @@ pub mod core {
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
-		pub fn new_def_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32) -> Result<core::Texture2D> {
+		pub fn new_def_1(asize: core::Size, aformat: core::OGL_Texture2D_Format, atex_id: u32) -> Result<core::OGL_Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int(&asize, aformat, atex_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -41033,12 +42782,12 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * auto_release: false
 		#[inline]
-		pub fn new_2(arows: i32, acols: i32, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
+		pub fn new_2(arows: i32, acols: i32, aformat: core::OGL_Texture2D_Format, auto_release: bool) -> Result<core::OGL_Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_bool(arows, acols, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -41059,12 +42808,12 @@ pub mod core {
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
-		pub fn new_def_2(arows: i32, acols: i32, aformat: core::Texture2D_Format) -> Result<core::Texture2D> {
+		pub fn new_def_2(arows: i32, acols: i32, aformat: core::OGL_Texture2D_Format) -> Result<core::OGL_Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format(arows, acols, aformat, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -41083,12 +42832,12 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * auto_release: false
 		#[inline]
-		pub fn new_3(asize: core::Size, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
+		pub fn new_3(asize: core::Size, aformat: core::OGL_Texture2D_Format, auto_release: bool) -> Result<core::OGL_Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_bool(&asize, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -41108,12 +42857,12 @@ pub mod core {
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
-		pub fn new_def_3(asize: core::Size, aformat: core::Texture2D_Format) -> Result<core::Texture2D> {
+		pub fn new_def_3(asize: core::Size, aformat: core::OGL_Texture2D_Format) -> Result<core::OGL_Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format(&asize, aformat, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -41131,13 +42880,13 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * auto_release: false
 		#[inline]
-		pub fn new_4(arr: &impl ToInputArray, auto_release: bool) -> Result<core::Texture2D> {
+		pub fn new_4(arr: &impl ToInputArray, auto_release: bool) -> Result<core::OGL_Texture2D> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR_bool(arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -41156,21 +42905,21 @@ pub mod core {
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
-		pub fn new_def_4(arr: &impl ToInputArray) -> Result<core::Texture2D> {
+		pub fn new_def_4(arr: &impl ToInputArray) -> Result<core::OGL_Texture2D> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			let ret = unsafe { core::OGL_Texture2D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
 	}
 
-	/// Constant methods for [core::Texture2D]
-	pub trait Texture2DTraitConst {
-		fn as_raw_Texture2D(&self) -> *const c_void;
+	/// Constant methods for [core::OGL_Texture2D]
+	pub trait OGL_Texture2DTraitConst {
+		fn as_raw_OGL_Texture2D(&self) -> *const c_void;
 
 		/// Copies from OpenGL texture to host/device memory or another OpenGL texture object.
 		///
@@ -41187,7 +42936,7 @@ pub mod core {
 		fn copy_to(&self, arr: &mut impl ToOutputArray, ddepth: i32, auto_release: bool) -> Result<()> {
 			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR_int_bool(self.as_raw_Texture2D(), arr.as_raw__OutputArray(), ddepth, auto_release, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR_int_bool(self.as_raw_OGL_Texture2D(), arr.as_raw__OutputArray(), ddepth, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41202,14 +42951,14 @@ pub mod core {
 		/// * autoRelease: Auto release mode for destination buffer (if arr is OpenGL buffer or texture).
 		///
 		/// ## Note
-		/// This alternative version of [Texture2DTraitConst::copy_to] function uses the following default values for its arguments:
+		/// This alternative version of [OGL_Texture2DTraitConst::copy_to] function uses the following default values for its arguments:
 		/// * ddepth: CV_32F
 		/// * auto_release: false
 		#[inline]
 		fn copy_to_def(&self, arr: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR(self.as_raw_Texture2D(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR(self.as_raw_OGL_Texture2D(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41219,7 +42968,7 @@ pub mod core {
 		#[inline]
 		fn bind(&self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_bind_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_bind_const(self.as_raw_OGL_Texture2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41228,7 +42977,7 @@ pub mod core {
 		#[inline]
 		fn rows(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_rows_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_rows_const(self.as_raw_OGL_Texture2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41237,7 +42986,7 @@ pub mod core {
 		#[inline]
 		fn cols(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_cols_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_cols_const(self.as_raw_OGL_Texture2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41246,7 +42995,7 @@ pub mod core {
 		#[inline]
 		fn size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_size_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_size_const(self.as_raw_OGL_Texture2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41255,16 +43004,16 @@ pub mod core {
 		#[inline]
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_empty_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_empty_const(self.as_raw_OGL_Texture2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
 
 		#[inline]
-		fn format(&self) -> Result<core::Texture2D_Format> {
+		fn format(&self) -> Result<core::OGL_Texture2D_Format> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_format_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_format_const(self.as_raw_OGL_Texture2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41274,7 +43023,7 @@ pub mod core {
 		#[inline]
 		fn tex_id(&self) -> Result<u32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_texId_const(self.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_texId_const(self.as_raw_OGL_Texture2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41282,9 +43031,9 @@ pub mod core {
 
 	}
 
-	/// Mutable methods for [core::Texture2D]
-	pub trait Texture2DTrait: core::Texture2DTraitConst {
-		fn as_raw_mut_Texture2D(&mut self) -> *mut c_void;
+	/// Mutable methods for [core::OGL_Texture2D]
+	pub trait OGL_Texture2DTrait: core::OGL_Texture2DTraitConst {
+		fn as_raw_mut_OGL_Texture2D(&mut self) -> *mut c_void;
 
 		/// Allocates memory for ogl::Texture2D object.
 		///
@@ -41297,9 +43046,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * auto_release: false
 		#[inline]
-		fn create(&mut self, arows: i32, acols: i32, aformat: core::Texture2D_Format, auto_release: bool) -> Result<()> {
+		fn create(&mut self, arows: i32, acols: i32, aformat: core::OGL_Texture2D_Format, auto_release: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_create_int_int_Format_bool(self.as_raw_mut_Texture2D(), arows, acols, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_create_int_int_Format_bool(self.as_raw_mut_OGL_Texture2D(), arows, acols, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41314,12 +43063,12 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		///
 		/// ## Note
-		/// This alternative version of [Texture2DTrait::create] function uses the following default values for its arguments:
+		/// This alternative version of [OGL_Texture2DTrait::create] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
-		fn create_def(&mut self, arows: i32, acols: i32, aformat: core::Texture2D_Format) -> Result<()> {
+		fn create_def(&mut self, arows: i32, acols: i32, aformat: core::OGL_Texture2D_Format) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_create_int_int_Format(self.as_raw_mut_Texture2D(), arows, acols, aformat, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_create_int_int_Format(self.as_raw_mut_OGL_Texture2D(), arows, acols, aformat, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41342,9 +43091,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * auto_release: false
 		#[inline]
-		fn create_1(&mut self, asize: core::Size, aformat: core::Texture2D_Format, auto_release: bool) -> Result<()> {
+		fn create_1(&mut self, asize: core::Size, aformat: core::OGL_Texture2D_Format, auto_release: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_create_Size_Format_bool(self.as_raw_mut_Texture2D(), &asize, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_create_Size_Format_bool(self.as_raw_mut_OGL_Texture2D(), &asize, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41365,12 +43114,12 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		///
 		/// ## Note
-		/// This alternative version of [Texture2DTrait::create] function uses the following default values for its arguments:
+		/// This alternative version of [OGL_Texture2DTrait::create] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
-		fn create_def_1(&mut self, asize: core::Size, aformat: core::Texture2D_Format) -> Result<()> {
+		fn create_def_1(&mut self, asize: core::Size, aformat: core::OGL_Texture2D_Format) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_create_Size_Format(self.as_raw_mut_Texture2D(), &asize, aformat, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_create_Size_Format(self.as_raw_mut_OGL_Texture2D(), &asize, aformat, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41382,7 +43131,7 @@ pub mod core {
 		#[inline]
 		fn release(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_release(self.as_raw_mut_Texture2D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_release(self.as_raw_mut_OGL_Texture2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41401,7 +43150,7 @@ pub mod core {
 		#[inline]
 		fn set_auto_release(&mut self, flag: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_setAutoRelease_bool(self.as_raw_mut_Texture2D(), flag, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_setAutoRelease_bool(self.as_raw_mut_OGL_Texture2D(), flag, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41419,7 +43168,7 @@ pub mod core {
 		fn copy_from(&mut self, arr: &impl ToInputArray, auto_release: bool) -> Result<()> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR_bool(self.as_raw_mut_Texture2D(), arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR_bool(self.as_raw_mut_OGL_Texture2D(), arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41432,13 +43181,13 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		///
 		/// ## Note
-		/// This alternative version of [Texture2DTrait::copy_from] function uses the following default values for its arguments:
+		/// This alternative version of [OGL_Texture2DTrait::copy_from] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
 		fn copy_from_def(&mut self, arr: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR(self.as_raw_mut_Texture2D(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR(self.as_raw_mut_OGL_Texture2D(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -41446,23 +43195,410 @@ pub mod core {
 
 	}
 
-	impl fmt::Debug for Texture2D {
+	impl fmt::Debug for OGL_Texture2D {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-			f.debug_struct("Texture2D")
+			f.debug_struct("OGL_Texture2D")
 				.finish()
 		}
 	}
 
-	impl core::Texture2DTraitConst for Texture2D {
-		#[inline] fn as_raw_Texture2D(&self) -> *const c_void { self.as_raw() }
+	impl core::OGL_Texture2DTraitConst for OGL_Texture2D {
+		#[inline] fn as_raw_OGL_Texture2D(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl core::Texture2DTrait for Texture2D {
-		#[inline] fn as_raw_mut_Texture2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl core::OGL_Texture2DTrait for OGL_Texture2D {
+		#[inline] fn as_raw_mut_OGL_Texture2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { Texture2D, core::Texture2DTraitConst, as_raw_Texture2D, core::Texture2DTrait, as_raw_mut_Texture2D }
+	boxed_ref! { OGL_Texture2D, core::OGL_Texture2DTraitConst, as_raw_OGL_Texture2D, core::OGL_Texture2DTrait, as_raw_mut_OGL_Texture2D }
+
+	/// Smart pointer for an OpenGL buffer texture with reference counting.
+	///
+	/// A buffer texture is a read-only, one-dimensional view of an ogl::Buffer that a shader samples with
+	/// `samplerBuffer` (float formats) or `isamplerBuffer` (integer formats). Unlike ogl::Texture2D it has
+	/// no filtering, no mipmaps and no normalized coordinates: the shader indexes it by element with
+	/// `texelFetch`. It is the way to feed a shader more data than uniforms can hold.
+	///
+	/// The object keeps a reference to the source buffer, so the buffer stays alive as long as the texture
+	/// does. The attachment records the buffer's id at create() time, so re-creating or resizing the source
+	/// buffer needs a matching create() call to re-attach.
+	///
+	/// Requires OpenGL 3.1 or later.
+	pub struct OGL_TextureBuffer {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { OGL_TextureBuffer }
+
+	impl Drop for OGL_TextureBuffer {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ogl_TextureBuffer_delete(self.as_raw_mut_OGL_TextureBuffer()) };
+		}
+	}
+
+	unsafe impl Send for OGL_TextureBuffer {}
+
+	impl OGL_TextureBuffer {
+		/// The constructors.
+		///
+		/// Creates an empty ogl::TextureBuffer object or attaches one to an existing buffer.
+		#[inline]
+		pub fn default() -> Result<core::OGL_TextureBuffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_TextureBuffer(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OGL_TextureBuffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates an empty ogl::TextureBuffer object or attaches one to an existing buffer.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * buf: Source buffer, must be non-empty. Should have been created with the
+		/// ogl::Buffer::TEXTURE_BUFFER target.
+		/// * aformat: Element format. See cv::ogl::TextureBuffer::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		pub fn new(buf: &impl core::OGL_BufferTraitConst, aformat: core::OGL_TextureBuffer_Format, auto_release: bool) -> Result<core::OGL_TextureBuffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_TextureBuffer_const_BufferR_Format_bool(buf.as_raw_OGL_Buffer(), aformat, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OGL_TextureBuffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates an empty ogl::TextureBuffer object or attaches one to an existing buffer.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * buf: Source buffer, must be non-empty. Should have been created with the
+		/// ogl::Buffer::TEXTURE_BUFFER target.
+		/// * aformat: Element format. See cv::ogl::TextureBuffer::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def(buf: &impl core::OGL_BufferTraitConst, aformat: core::OGL_TextureBuffer_Format) -> Result<core::OGL_TextureBuffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_TextureBuffer_const_BufferR_Format(buf.as_raw_OGL_Buffer(), aformat, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OGL_TextureBuffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [core::OGL_TextureBuffer]
+	pub trait OGL_TextureBufferTraitConst {
+		fn as_raw_OGL_TextureBuffer(&self) -> *const c_void;
+
+		/// Binds the texture to a texture unit for the GL_TEXTURE_BUFFER target.
+		///
+		/// ## Parameters
+		/// * unit: Texture unit index to bind to, must be non-negative. Pass the same index to the
+		/// shader's sampler uniform.
+		///
+		/// Leaves that unit active, so bind the unit a caller expects to stay current last.
+		///
+		/// ## C++ default parameters
+		/// * unit: 0
+		#[inline]
+		fn bind(&self, unit: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_bind_const_int(self.as_raw_OGL_TextureBuffer(), unit, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Binds the texture to a texture unit for the GL_TEXTURE_BUFFER target.
+		///
+		/// ## Parameters
+		/// * unit: Texture unit index to bind to, must be non-negative. Pass the same index to the
+		/// shader's sampler uniform.
+		///
+		/// Leaves that unit active, so bind the unit a caller expects to stay current last.
+		///
+		/// ## Note
+		/// This alternative version of [OGL_TextureBufferTraitConst::bind] function uses the following default values for its arguments:
+		/// * unit: 0
+		#[inline]
+		fn bind_def(&self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_bind_const(self.as_raw_OGL_TextureBuffer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// element format, NONE if not attached
+		#[inline]
+		fn format(&self) -> Result<core::OGL_TextureBuffer_Format> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_format_const(self.as_raw_OGL_TextureBuffer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// true if the texture is not attached to any buffer
+		#[inline]
+		fn empty(&self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_empty_const(self.as_raw_OGL_TextureBuffer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// get OpenGL object id
+		#[inline]
+		fn tex_id(&self) -> Result<u32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_texId_const(self.as_raw_OGL_TextureBuffer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [core::OGL_TextureBuffer]
+	pub trait OGL_TextureBufferTrait: core::OGL_TextureBufferTraitConst {
+		fn as_raw_mut_OGL_TextureBuffer(&mut self) -> *mut c_void;
+
+		/// Attaches the texture to an OpenGL buffer.
+		///
+		/// ## Parameters
+		/// * buf: Source buffer, must be non-empty. Should have been created with the
+		/// ogl::Buffer::TEXTURE_BUFFER target.
+		/// * aformat: Element format, must not be NONE. See cv::ogl::TextureBuffer::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// No data is copied - the texture reads whatever the buffer holds at draw time, so writing to the
+		/// buffer is enough to update what the shader samples.
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		fn create(&mut self, buf: &impl core::OGL_BufferTraitConst, aformat: core::OGL_TextureBuffer_Format, auto_release: bool) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_create_const_BufferR_Format_bool(self.as_raw_mut_OGL_TextureBuffer(), buf.as_raw_OGL_Buffer(), aformat, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Attaches the texture to an OpenGL buffer.
+		///
+		/// ## Parameters
+		/// * buf: Source buffer, must be non-empty. Should have been created with the
+		/// ogl::Buffer::TEXTURE_BUFFER target.
+		/// * aformat: Element format, must not be NONE. See cv::ogl::TextureBuffer::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// No data is copied - the texture reads whatever the buffer holds at draw time, so writing to the
+		/// buffer is enough to update what the shader samples.
+		///
+		/// ## Note
+		/// This alternative version of [OGL_TextureBufferTrait::create] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		fn create_def(&mut self, buf: &impl core::OGL_BufferTraitConst, aformat: core::OGL_TextureBuffer_Format) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_create_const_BufferR_Format(self.as_raw_mut_OGL_TextureBuffer(), buf.as_raw_OGL_Buffer(), aformat, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Detaches from the buffer and destroys the texture object if needed.
+		///
+		/// The function will call setAutoRelease(true) .
+		#[inline]
+		fn release(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_release(self.as_raw_mut_OGL_TextureBuffer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets auto release mode.
+		///
+		/// ## Parameters
+		/// * flag: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// The lifetime of the OpenGL object is tied to the lifetime of the context, so ogl::TextureBuffer
+		/// doesn't destroy the OpenGL object in its destructor by default. See
+		/// ogl::Texture2D::setAutoRelease for the full rationale.
+		#[inline]
+		fn set_auto_release(&mut self, flag: bool) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_TextureBuffer_setAutoRelease_bool(self.as_raw_mut_OGL_TextureBuffer(), flag, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl fmt::Debug for OGL_TextureBuffer {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("OGL_TextureBuffer")
+				.finish()
+		}
+	}
+
+	impl core::OGL_TextureBufferTraitConst for OGL_TextureBuffer {
+		#[inline] fn as_raw_OGL_TextureBuffer(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::OGL_TextureBufferTrait for OGL_TextureBuffer {
+		#[inline] fn as_raw_mut_OGL_TextureBuffer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { OGL_TextureBuffer, core::OGL_TextureBufferTraitConst, as_raw_OGL_TextureBuffer, core::OGL_TextureBufferTrait, as_raw_mut_OGL_TextureBuffer }
+
+	/// Smart pointer for OpenGL vertex arrays with reference counting.
+	pub struct OGL_VertexArray {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { OGL_VertexArray }
+
+	impl Drop for OGL_VertexArray {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ogl_VertexArray_delete(self.as_raw_mut_OGL_VertexArray()) };
+		}
+	}
+
+	unsafe impl Send for OGL_VertexArray {}
+
+	impl OGL_VertexArray {
+		/// The constructors.
+		///
+		/// Creates empty ogl::VertexArray object, creates ogl::VertexArray object from a list of attributes.
+		#[inline]
+		pub fn default() -> Result<core::OGL_VertexArray> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_VertexArray_VertexArray(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OGL_VertexArray::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Unbind any vertex array.
+		#[inline]
+		pub fn unbind() -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_VertexArray_unbind(ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [core::OGL_VertexArray]
+	pub trait OGL_VertexArrayTraitConst {
+		fn as_raw_OGL_VertexArray(&self) -> *const c_void;
+
+		/// Binds OpenGL vertex array.
+		#[inline]
+		fn bind(&self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_VertexArray_bind_const(self.as_raw_OGL_VertexArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// get OpenGL object id
+		#[inline]
+		fn va_id(&self) -> Result<u32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_VertexArray_vaId_const(self.as_raw_OGL_VertexArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [core::OGL_VertexArray]
+	pub trait OGL_VertexArrayTrait: core::OGL_VertexArrayTraitConst {
+		fn as_raw_mut_OGL_VertexArray(&mut self) -> *mut c_void;
+
+		/// Decrements the reference counter and destroys the vertex array object if needed.
+		///
+		/// The function will call setAutoRelease(true) .
+		#[inline]
+		fn release(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_VertexArray_release(self.as_raw_mut_OGL_VertexArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Sets auto release mode.
+		///
+		/// The lifetime of the OpenGL object is tied to the lifetime of the context. If OpenGL context was
+		/// bound to a window it could be released at any time (user can close a window). If object's destructor
+		/// is called after destruction of the context it will cause an error. Thus ogl::VertexArray doesn't destroy
+		/// OpenGL object in destructor by default (all OpenGL resources will be released with OpenGL context).
+		/// This function can force ogl::VertexArray destructor to destroy OpenGL object.
+		/// ## Parameters
+		/// * flag: Auto release mode (if true, release will be called in object's destructor).
+		#[inline]
+		fn set_auto_release(&mut self, flag: bool) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_VertexArray_setAutoRelease_bool(self.as_raw_mut_OGL_VertexArray(), flag, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	impl fmt::Debug for OGL_VertexArray {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("OGL_VertexArray")
+				.finish()
+		}
+	}
+
+	impl core::OGL_VertexArrayTraitConst for OGL_VertexArray {
+		#[inline] fn as_raw_OGL_VertexArray(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::OGL_VertexArrayTrait for OGL_VertexArray {
+		#[inline] fn as_raw_mut_OGL_VertexArray(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { OGL_VertexArray, core::OGL_VertexArrayTraitConst, as_raw_OGL_VertexArray, core::OGL_VertexArrayTrait, as_raw_mut_OGL_VertexArray }
 
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -41585,7 +43721,7 @@ pub mod core {
 
 		#[inline]
 		fn set_level(&mut self, val: core::LogLevel) {
-			let ret = unsafe { sys::cv_utils_logging_LogTag_propLevel_const_LogLevel(self.as_raw_mut_LogTag(), val) };
+			let ret = unsafe { sys::cv_utils_logging_LogTag_propLevel_LogLevel(self.as_raw_mut_LogTag(), val) };
 			ret
 		}
 

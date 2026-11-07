@@ -15,7 +15,7 @@ pub mod highgui {
 	//!    # OpenGL support
 	//!    # Qt New Functions
 	//!
-	//!    ![image](https://docs.opencv.org/5.0.0/qtgui.png)
+	//!    ![image](https://docs.opencv.org/5.1.0/qtgui.png)
 	//!
 	//!    This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 	//!    a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.
@@ -297,6 +297,10 @@ pub mod highgui {
 	/// ## Parameters
 	/// * userdata: The optional parameter.
 	pub type OpenGlDrawCallback = Option<Box<dyn FnMut() -> () + Send + Sync + 'static>>;
+	/// Callback function defined to be called when a window's resources should be freed. See cv::setOpenGlFreeCallback
+	/// ## Parameters
+	/// * userdata: The window's OpenGL user data to be freed.
+	pub type OpenGlFreeCallback = Option<Box<dyn FnMut() -> () + Send + Sync + 'static>>;
 	/// Callback function for Trackbar see cv::createTrackbar
 	/// ## Parameters
 	/// * pos: current position of the specified trackbar.
@@ -766,6 +770,34 @@ pub mod highgui {
 	pub fn get_mouse_wheel_delta(flags: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getMouseWheelDelta_int(flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// This function returns the pointer to the function associated to a window to be called every frame. See cv::setOpenGlDrawCallback.
+	///
+	/// ## Parameters
+	/// * winname: Name of the window.
+	#[inline]
+	pub fn get_opengl_draw_callback(winname: &str) -> Result<crate::highgui::OpenGlDrawCallback> {
+		extern_container_arg!(winname);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_getOpenGlDrawCallback_const_StringR(winname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// This function returns the pointer to the OpenGL user data associated to a window.
+	///
+	/// ## Parameters
+	/// * winname: Name of the window.
+	#[inline]
+	pub fn get_opengl_user_data(winname: &str) -> Result<*mut c_void> {
+		extern_container_arg!(winname);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_getOpenGlUserData_const_StringR(winname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1380,6 +1412,23 @@ pub mod highgui {
 		Ok(ret)
 	}
 
+	/// Sets a callback function to be called when OpenGL resources related to a window should be freed.
+	///
+	/// ## Parameters
+	/// * winname: Name of the window.
+	/// * onOpenGlFree: Pointer to the function to be called when resources should be freed. This
+	/// function should be prototyped as void Foo(void\*) .
+	#[inline]
+	pub fn set_opengl_free_callback(winname: &str, on_opengl_free: crate::highgui::OpenGlFreeCallback) -> Result<()> {
+		extern_container_arg!(winname);
+		callback_arg!(on_opengl_free_trampoline(userdata: *mut c_void) -> () => userdata in on_opengl_free() -> ());
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_setOpenGlFreeCallback_const_StringR_OpenGlFreeCallback(winname.opencv_as_extern(), on_opengl_free_trampoline, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Sets the trackbar maximum position.
 	///
 	/// The function sets the maximum position of the specified trackbar in the specified window.
@@ -1748,54 +1797,54 @@ pub mod highgui {
 		/// Color of the font. Scalar(blue_component, green_component, red_component[, alpha_component])
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_QtFont_propColor_const_Scalar(self.as_raw_mut_QtFont(), &val) };
+			let ret = unsafe { sys::cv_QtFont_propColor_Scalar(self.as_raw_mut_QtFont(), &val) };
 			ret
 		}
 
 		/// See cv::QtFontStyles
 		#[inline]
 		fn set_font_face(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_propFont_face_const_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propFont_face_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_hscale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propHscale_const_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propHscale_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_vscale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propVscale_const_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propVscale_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 
 		/// slope coefficient: 0 - normal, >0 - italic
 		#[inline]
 		fn set_shear(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propShear_const_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propShear_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 
 		/// See cv::QtFontWeights
 		#[inline]
 		fn set_thickness(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_propThickness_const_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propThickness_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 
 		/// horizontal interval between letters
 		#[inline]
 		fn set_dx(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propDx_const_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propDx_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 
 		/// PointSize
 		#[inline]
 		fn set_line_type(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_propLine_type_const_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propLine_type_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 

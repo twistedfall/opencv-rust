@@ -72,6 +72,18 @@ pub mod wechat_qrcode {
 			Ok(ret)
 		}
 
+		#[inline]
+		pub fn new_1(detector_model_buffer: &str, detector_model_len: size_t, super_resolution_model_buffer: &str, super_resolution_model_len: size_t) -> Result<crate::wechat_qrcode::WeChatQRCode> {
+			extern_container_arg!(detector_model_buffer);
+			extern_container_arg!(super_resolution_model_buffer);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode_const_charX_size_t_const_charX_size_t(detector_model_buffer.opencv_as_extern(), detector_model_len, super_resolution_model_buffer.opencv_as_extern(), super_resolution_model_len, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::wechat_qrcode::WeChatQRCode]

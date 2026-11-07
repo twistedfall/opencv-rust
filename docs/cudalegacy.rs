@@ -213,7 +213,7 @@ pub mod cudalegacy {
 	/// Creates FGD Background Subtractor
 	///
 	/// ## Parameters
-	/// * params: Algorithm's parameters. See [FGD2003](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_FGD2003) for explanation.
+	/// * params: Algorithm's parameters. See [FGD2003](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_FGD2003) for explanation.
 	///
 	/// ## Note
 	/// This alternative version of [create_background_subtractor_fgd] function uses the following default values for its arguments:
@@ -231,7 +231,7 @@ pub mod cudalegacy {
 	/// Creates FGD Background Subtractor
 	///
 	/// ## Parameters
-	/// * params: Algorithm's parameters. See [FGD2003](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_FGD2003) for explanation.
+	/// * params: Algorithm's parameters. See [FGD2003](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_FGD2003) for explanation.
 	///
 	/// ## C++ default parameters
 	/// * params: FGDParams()
@@ -577,7 +577,7 @@ pub mod cudalegacy {
 	/// of the background.
 	///
 	/// Any pixel which does not fit this model is then deemed to be foreground. The class implements
-	/// algorithm described in [FGD2003](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_FGD2003) .
+	/// algorithm described in [FGD2003](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_FGD2003) .
 	/// ## See also
 	/// BackgroundSubtractor
 	pub struct CUDA_BackgroundSubtractorFGD {
@@ -667,7 +667,7 @@ pub mod cudalegacy {
 	///
 	/// The class discriminates between foreground and background pixels by building and maintaining a model
 	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-	/// class implements algorithm described in [Gold2012](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Gold2012) .
+	/// class implements algorithm described in [Gold2012](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Gold2012) .
 	pub struct CUDA_BackgroundSubtractorGMG {
 		ptr: *mut c_void,
 	}
@@ -1083,14 +1083,14 @@ pub mod cudalegacy {
 		/// Quantized levels per 'color' component. Power of two, typically 32, 64 or 128.
 		#[inline]
 		fn set_lc(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propLc_const_int(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propLc_int(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
 		/// Number of color vectors used to model normal background color variation at a given pixel.
 		#[inline]
 		fn set_n1c(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propN1c_const_int(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propN1c_int(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
@@ -1098,21 +1098,21 @@ pub mod cudalegacy {
 		/// Used to allow the first N1c vectors to adapt over time to changing background.
 		#[inline]
 		fn set_n2c(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propN2c_const_int(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propN2c_int(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
 		/// Quantized levels per 'color co-occurrence' component.  Power of two, typically 16, 32 or 64.
 		#[inline]
 		fn set_lcc(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propLcc_const_int(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propLcc_int(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
 		/// Number of color co-occurrence vectors used to model normal background color variation at a given pixel.
 		#[inline]
 		fn set_n1cc(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propN1cc_const_int(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propN1cc_int(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
@@ -1120,14 +1120,14 @@ pub mod cudalegacy {
 		/// Used to allow the first N1cc vectors to adapt over time to changing background.
 		#[inline]
 		fn set_n2cc(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propN2cc_const_int(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propN2cc_int(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
 		/// If TRUE we ignore holes within foreground blobs. Defaults to TRUE.
 		#[inline]
 		fn set_is_obj_without_holes(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propIs_obj_without_holes_const_bool(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propIs_obj_without_holes_bool(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
@@ -1135,49 +1135,49 @@ pub mod cudalegacy {
 		/// These erase one-pixel junk blobs and merge almost-touching blobs. Default value is 1.
 		#[inline]
 		fn set_perform_morphing(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propPerform_morphing_const_int(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propPerform_morphing_int(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
 		/// How quickly we forget old background pixel values seen. Typically set to 0.1.
 		#[inline]
 		fn set_alpha1(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propAlpha1_const_float(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propAlpha1_float(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
 		/// "Controls speed of feature learning". Depends on T. Typical value circa 0.005.
 		#[inline]
 		fn set_alpha2(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propAlpha2_const_float(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propAlpha2_float(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
 		/// Alternate to alpha2, used (e.g.) for quicker initial convergence. Typical value 0.1.
 		#[inline]
 		fn set_alpha3(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propAlpha3_const_float(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propAlpha3_float(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
 		/// Affects color and color co-occurrence quantization, typically set to 2.
 		#[inline]
 		fn set_delta(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propDelta_const_float(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propDelta_float(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
 		/// A percentage value which determines when new features can be recognized as new background. (Typically 0.9).
 		#[inline]
 		fn set_t(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propT_const_float(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propT_float(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 
 		/// Discard foreground blobs whose bounding box is smaller than this threshold.
 		#[inline]
 		fn set_min_area(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_cuda_FGDParams_propMinArea_const_float(self.as_raw_mut_CUDA_FGDParams(), val) };
+			let ret = unsafe { sys::cv_cuda_FGDParams_propMinArea_float(self.as_raw_mut_CUDA_FGDParams(), val) };
 			ret
 		}
 

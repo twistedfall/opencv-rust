@@ -17,11 +17,11 @@ pub mod objdetect {
 	//!        ArUco markers can also be used for advanced chessboard corner finding. To do this, group the markers in the
 	//!        CharucoBoard and find the corners of the chessboard with the CharucoDetector::detectBoard().
 	//!
-	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Aruco2014).
+	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Aruco2014).
 	//!
-	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial marker detection method.
+	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial marker detection method.
 	//! ## See also
-	//! [Aruco2014](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Aruco2014)
+	//! [Aruco2014](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Aruco2014)
 	//!        This code has been originally developed by Sergio Garrido-Jurado as a project
 	//!        for Google Summer of Code 2015 (GSoC 15).
 	//!
@@ -30,17 +30,17 @@ pub mod objdetect {
 	//!        @warning In OpenCV, the order of the returned corners locations for the AprilTag family is not aligned with the ArUco one.
 	//!
 	//!        Note that this order is also different from the convention adopted by the official [AprilTag library](https://github.com/AprilRobotics/apriltag/).
-	//!        ![](https://docs.opencv.org/5.0.0/AprilTag_corners_comparison_opencv_april.png) { width=80% }
+	//!        ![](https://docs.opencv.org/5.1.0/AprilTag_corners_comparison_opencv_april.png) { width=80% }
 	//!
 	//!        <br>
 	//!
 	//!        An overview of the supported ArUco markers family is visible in the following image:
-	//!        ![](https://docs.opencv.org/5.0.0/ArUco_family.png) { width=80% }
+	//!        ![](https://docs.opencv.org/5.1.0/ArUco_family.png) { width=80% }
 	//!
 	//!        <br>
 	//!
 	//!        An overview of the supported AprilTag markers family is visible in the following image:
-	//!        ![](https://docs.opencv.org/5.0.0/AprilTag_family.png) { width=80% }
+	//!        ![](https://docs.opencv.org/5.1.0/AprilTag_family.png) { width=80% }
 	//!
 	//!         
 	//! Note: The generated images (in the above picture) using [aruco::generateImageMarker] for the AprilTag markers have been
@@ -104,7 +104,7 @@ pub mod objdetect {
 	pub const CALIB_CB_NORMALIZE_IMAGE: i32 = 2;
 	pub const CALIB_CB_PLAIN: i32 = 256;
 	pub const CALIB_CB_SYMMETRIC_GRID: i32 = 1;
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 	pub const CORNER_REFINE_APRILTAG: i32 = 3;
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -214,7 +214,7 @@ pub mod objdetect {
 		CORNER_REFINE_SUBPIX = 1,
 		/// ArUco approach and refine the corners locations using the contour-points line fitting
 		CORNER_REFINE_CONTOUR = 2,
-		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 		CORNER_REFINE_APRILTAG = 3,
 	}
 
@@ -791,7 +791,7 @@ pub mod objdetect {
 	/// transformation approximated by box filters being more robust to all sort of
 	/// noise, faster on larger images and is able to directly return the sub-pixel
 	/// position of the internal chessboard corners. The Method is based on the paper
-	/// [duda2018](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
+	/// [duda2018](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
 	/// Calibration" demonstrating that the returned sub-pixel positions are more
 	/// accurate than the one returned by cornerSubPix allowing a precise camera
 	/// calibration for demanding applications.
@@ -861,7 +861,7 @@ pub mod objdetect {
 	/// transformation approximated by box filters being more robust to all sort of
 	/// noise, faster on larger images and is able to directly return the sub-pixel
 	/// position of the internal chessboard corners. The Method is based on the paper
-	/// [duda2018](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
+	/// [duda2018](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
 	/// Calibration" demonstrating that the returned sub-pixel positions are more
 	/// accurate than the one returned by cornerSubPix allowing a precise camera
 	/// calibration for demanding applications.
@@ -929,7 +929,7 @@ pub mod objdetect {
 	/// transformation approximated by box filters being more robust to all sort of
 	/// noise, faster on larger images and is able to directly return the sub-pixel
 	/// position of the internal chessboard corners. The Method is based on the paper
-	/// [duda2018](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
+	/// [duda2018](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_duda2018) "Accurate Detection and Localization of Checkerboard Corners for
 	/// Calibration" demonstrating that the returned sub-pixel positions are more
 	/// accurate than the one returned by cornerSubPix allowing a precise camera
 	/// calibration for demanding applications.
@@ -1026,6 +1026,26 @@ pub mod objdetect {
 	/// border and the background is dark, the outer black squares cannot be segmented properly and so the
 	/// square grouping and ordering algorithm fails.
 	///
+	///
+	/// Note: The corners are returned row by row and left to right within each row, but whether that order
+	/// pins down a unique physical corner of the board depends on `patternSize`. The detector builds its
+	/// grid from the dark squares only, so it recognises a rotated board only when the rotation maps dark
+	/// squares onto dark squares. For a `patternSize` of w x h interior corners the squares form a
+	/// (w+1) x (h+1) grid, and a rotation by 180 degrees preserves that colouring exactly when w and h have
+	/// the same parity. Three cases follow. If w and h have different parity, as on the common 9x6 board,
+	/// the origin is unique and the ordering is repeatable across views. If w and h have the same parity
+	/// but differ, as on the 8x6 board used in the example above, the order is fixed only up to a rotation
+	/// by 180 degrees. If w equals h, the detector cannot tell rows from columns either, and the order is
+	/// fixed only up to a rotation by 90 degrees. Where the order is ambiguous, which one you get depends
+	/// on how the board happens to lie in the image. That does not affect camera calibration, since each
+	/// view absorbs the rotation into its own pose and the intrinsics come out the same, but it breaks
+	/// anything that assumes a fixed board coordinate frame across views, hand-eye calibration being the
+	/// usual case, where a flipped view silently corrupts the estimated transform. A plain chessboard image
+	/// does not carry the information needed to resolve the rotation, so it has to come from the pattern:
+	/// choose a board whose two dimensions have different parity, or use [find_chessboard_corners_sb] with
+	/// [CALIB_CB_MARKER], whose `meta` output identifies the origin, or a ChArUco board, where the
+	/// markers make the orientation unambiguous.
+	///
 	/// Use the `generate_pattern.py` Python script ([tutorial_camera_calibration_pattern])
 	/// to create the desired checkerboard pattern.
 	///
@@ -1102,6 +1122,26 @@ pub mod objdetect {
 	/// border and the background is dark, the outer black squares cannot be segmented properly and so the
 	/// square grouping and ordering algorithm fails.
 	///
+	///
+	/// Note: The corners are returned row by row and left to right within each row, but whether that order
+	/// pins down a unique physical corner of the board depends on `patternSize`. The detector builds its
+	/// grid from the dark squares only, so it recognises a rotated board only when the rotation maps dark
+	/// squares onto dark squares. For a `patternSize` of w x h interior corners the squares form a
+	/// (w+1) x (h+1) grid, and a rotation by 180 degrees preserves that colouring exactly when w and h have
+	/// the same parity. Three cases follow. If w and h have different parity, as on the common 9x6 board,
+	/// the origin is unique and the ordering is repeatable across views. If w and h have the same parity
+	/// but differ, as on the 8x6 board used in the example above, the order is fixed only up to a rotation
+	/// by 180 degrees. If w equals h, the detector cannot tell rows from columns either, and the order is
+	/// fixed only up to a rotation by 90 degrees. Where the order is ambiguous, which one you get depends
+	/// on how the board happens to lie in the image. That does not affect camera calibration, since each
+	/// view absorbs the rotation into its own pose and the intrinsics come out the same, but it breaks
+	/// anything that assumes a fixed board coordinate frame across views, hand-eye calibration being the
+	/// usual case, where a flipped view silently corrupts the estimated transform. A plain chessboard image
+	/// does not carry the information needed to resolve the rotation, so it has to come from the pattern:
+	/// choose a board whose two dimensions have different parity, or use [find_chessboard_corners_sb] with
+	/// [CALIB_CB_MARKER], whose `meta` output identifies the origin, or a ChArUco board, where the
+	/// markers make the orientation unambiguous.
+	///
 	/// Use the `generate_pattern.py` Python script ([tutorial_camera_calibration_pattern])
 	/// to create the desired checkerboard pattern.
 	///
@@ -1134,12 +1174,19 @@ pub mod objdetect {
 	///                    If `blobDetector` is NULL then `image` represents Point2f array of candidates.
 	/// * parameters: struct for finding circles in a grid pattern.
 	///
-	/// return True if all of the centers have been found and they have been placed in a certain order
-	/// (row by row, left to right in every row). Otherwise, if the function fails to find all the corners
-	/// or reorder them, it returns false.
+	/// ## Returns
+	/// True if all of the centers have been found and ordered, false if the function fails to find
+	/// all of them or to reorder them.
+	///
+	/// The returned centers are ordered row by row and left to right within each row, but that order is
+	/// relative to the grid as it appears in the image, which need not match the physical board: depending
+	/// on how the board is held, the detected grid may be flipped or rotated by 180 degrees with respect to
+	/// it. A symmetric pattern cannot resolve this ambiguity on its own, so if the correspondence to
+	/// physical board coordinates matters, fix the orientation yourself from an asymmetric pattern or from
+	/// an external cue.
 	///
 	/// The function attempts to determine whether the input image contains a grid of circles. If it is, the
-	/// function locates centers of the circles.
+	/// function estimates the centers of the circles.
 	///
 	/// Sample usage of detecting and drawing the centers of circles: :
 	/// ```C++
@@ -1155,6 +1202,20 @@ pub mod objdetect {
 	///
 	/// Note: The function requires white space (like a square-thick border, the wider the better) around
 	/// the board to make the detection more robust in various environments.
+	///
+	///
+	/// Note: The returned points are not the exact projections of the circle centers. The function uses the
+	/// keypoint locations reported by `blobDetector` as they are, without refining them; cv::SimpleBlobDetector
+	/// is only the default choice. Any such detector locates a blob from the image region it occupies, which
+	/// describes the circle as it appears in the image rather than the projection of its center. Under
+	/// perspective projection the two need not coincide: the apparent center of a projected circle can be
+	/// displaced from the projection of the physical center, by an amount that depends on the viewing
+	/// geometry and on the circle's size relative to its distance. The displacement vanishes when the board
+	/// is parallel to the image plane, since the projection is then an exact scaled copy of the pattern.
+	/// Fitting an ellipse does not remove it, as the ellipse center is subject to the same effect. For
+	/// calibration at ordinary accuracy this bias is usually acceptable; for high-accuracy work, compute
+	/// corrected centers yourself and pass them in as a Point2f array of candidates with
+	/// `blobDetector = NULL`.
 	///
 	/// ## Overloaded parameters
 	///
@@ -1190,12 +1251,19 @@ pub mod objdetect {
 	///                    If `blobDetector` is NULL then `image` represents Point2f array of candidates.
 	/// * parameters: struct for finding circles in a grid pattern.
 	///
-	/// return True if all of the centers have been found and they have been placed in a certain order
-	/// (row by row, left to right in every row). Otherwise, if the function fails to find all the corners
-	/// or reorder them, it returns false.
+	/// ## Returns
+	/// True if all of the centers have been found and ordered, false if the function fails to find
+	/// all of them or to reorder them.
+	///
+	/// The returned centers are ordered row by row and left to right within each row, but that order is
+	/// relative to the grid as it appears in the image, which need not match the physical board: depending
+	/// on how the board is held, the detected grid may be flipped or rotated by 180 degrees with respect to
+	/// it. A symmetric pattern cannot resolve this ambiguity on its own, so if the correspondence to
+	/// physical board coordinates matters, fix the orientation yourself from an asymmetric pattern or from
+	/// an external cue.
 	///
 	/// The function attempts to determine whether the input image contains a grid of circles. If it is, the
-	/// function locates centers of the circles.
+	/// function estimates the centers of the circles.
 	///
 	/// Sample usage of detecting and drawing the centers of circles: :
 	/// ```C++
@@ -1211,6 +1279,20 @@ pub mod objdetect {
 	///
 	/// Note: The function requires white space (like a square-thick border, the wider the better) around
 	/// the board to make the detection more robust in various environments.
+	///
+	///
+	/// Note: The returned points are not the exact projections of the circle centers. The function uses the
+	/// keypoint locations reported by `blobDetector` as they are, without refining them; cv::SimpleBlobDetector
+	/// is only the default choice. Any such detector locates a blob from the image region it occupies, which
+	/// describes the circle as it appears in the image rather than the projection of its center. Under
+	/// perspective projection the two need not coincide: the apparent center of a projected circle can be
+	/// displaced from the projection of the physical center, by an amount that depends on the viewing
+	/// geometry and on the circle's size relative to its distance. The displacement vanishes when the board
+	/// is parallel to the image plane, since the projection is then an exact scaled copy of the pattern.
+	/// Fitting an ellipse does not remove it, as the ellipse center is subject to the same effect. For
+	/// calibration at ordinary accuracy this bias is usually acceptable; for high-accuracy work, compute
+	/// corrected centers yourself and pass them in as a Point2f array of candidates with
+	/// `blobDetector = NULL`.
 	///
 	/// ## Overloaded parameters
 	///
@@ -1245,12 +1327,19 @@ pub mod objdetect {
 	///                    If `blobDetector` is NULL then `image` represents Point2f array of candidates.
 	/// * parameters: struct for finding circles in a grid pattern.
 	///
-	/// return True if all of the centers have been found and they have been placed in a certain order
-	/// (row by row, left to right in every row). Otherwise, if the function fails to find all the corners
-	/// or reorder them, it returns false.
+	/// ## Returns
+	/// True if all of the centers have been found and ordered, false if the function fails to find
+	/// all of them or to reorder them.
+	///
+	/// The returned centers are ordered row by row and left to right within each row, but that order is
+	/// relative to the grid as it appears in the image, which need not match the physical board: depending
+	/// on how the board is held, the detected grid may be flipped or rotated by 180 degrees with respect to
+	/// it. A symmetric pattern cannot resolve this ambiguity on its own, so if the correspondence to
+	/// physical board coordinates matters, fix the orientation yourself from an asymmetric pattern or from
+	/// an external cue.
 	///
 	/// The function attempts to determine whether the input image contains a grid of circles. If it is, the
-	/// function locates centers of the circles.
+	/// function estimates the centers of the circles.
 	///
 	/// Sample usage of detecting and drawing the centers of circles: :
 	/// ```C++
@@ -1266,6 +1355,20 @@ pub mod objdetect {
 	///
 	/// Note: The function requires white space (like a square-thick border, the wider the better) around
 	/// the board to make the detection more robust in various environments.
+	///
+	///
+	/// Note: The returned points are not the exact projections of the circle centers. The function uses the
+	/// keypoint locations reported by `blobDetector` as they are, without refining them; cv::SimpleBlobDetector
+	/// is only the default choice. Any such detector locates a blob from the image region it occupies, which
+	/// describes the circle as it appears in the image rather than the projection of its center. Under
+	/// perspective projection the two need not coincide: the apparent center of a projected circle can be
+	/// displaced from the projection of the physical center, by an amount that depends on the viewing
+	/// geometry and on the circle's size relative to its distance. The displacement vanishes when the board
+	/// is parallel to the image plane, since the projection is then an exact scaled copy of the pattern.
+	/// Fitting an ellipse does not remove it, as the ellipse center is subject to the same effect. For
+	/// calibration at ordinary accuracy this bias is usually acceptable; for high-accuracy work, compute
+	/// corrected centers yourself and pass them in as a Point2f array of candidates with
+	/// `blobDetector = NULL`.
 	#[inline]
 	pub fn find_circles_grid_with_params(image: &impl ToInputArray, pattern_size: core::Size, centers: &mut impl ToOutputArray, flags: i32, blob_detector: Option<&core::Ptr<crate::features::Feature2D>>, parameters: crate::objdetect::CirclesGridFinderParameters) -> Result<bool> {
 		input_array_arg!(image);
@@ -1582,7 +1685,7 @@ pub mod objdetect {
 
 		/// Detects faces in the input image. Following is an example output.
 		///
-		/// * ![image](https://docs.opencv.org/5.0.0/lena-face-detection.jpg)
+		/// * ![image](https://docs.opencv.org/5.1.0/lena-face-detection.jpg)
 		///
 		/// ## Parameters
 		/// * image: an image to detect
@@ -3722,9 +3825,24 @@ pub mod objdetect {
 
 		/// set legacy chessboard pattern.
 		///
-		/// Legacy setting creates chessboard patterns starting with a white box in the upper left corner
-		/// if there is an even row count of chessboard boxes, otherwise it starts with a black box.
-		/// This setting ensures compatibility to patterns created with OpenCV versions prior OpenCV 4.6.0.
+		/// In OpenCV 4.6.0 the ChArUco pattern generation algorithm changed in an incompatible way for
+		/// boards with an even number of rows. Enable this setting to interpret a board that was created
+		/// with an OpenCV version older than 4.6.0, or with a third-party generator that follows the same
+		/// convention; boards from calib.io, for example, use the legacy layout.
+		///
+		/// The legacy layout starts the chessboard with a white box in the upper left corner when the row
+		/// count is even, whereas the current layout starts with a black box. The two layouts differ only
+		/// in that case: when `size.height` is odd they are identical, so this setting has no effect on
+		/// boards with an odd number of rows.
+		///
+		///
+		/// Note: Getting this wrong fails quietly. The ArUco markers are still detected normally, but the
+		/// corners they imply do not match the board, so CharucoDetector::detectBoard() returns zero
+		/// ChArUco corners while reporting a full set of marker detections. The only trace is a
+		/// `CV_LOG_DEBUG` message, which is not shown at the default log level. If you see detected
+		/// markers and no corners on a board with an even row count, try toggling this setting before
+		/// looking anywhere else.
+		///
 		/// See <https://github.com/opencv/opencv/issues/23152>.
 		///
 		/// Default value: false.
@@ -3905,8 +4023,11 @@ pub mod objdetect {
 		/// ## See also
 		/// findChessboardCorners
 		///
-		/// Note: After OpenCV 4.6.0, there was an incompatible change in the ChArUco pattern generation algorithm for even row counts.
-		/// Use cv::aruco::CharucoBoard::setLegacyPattern() to ensure compatibility with patterns created using OpenCV versions prior to 4.6.0.
+		/// Note: In OpenCV 4.6.0 there was an incompatible change in the ChArUco pattern generation algorithm for even row counts.
+		/// Use cv::aruco::CharucoBoard::setLegacyPattern() to ensure compatibility with patterns created using OpenCV versions
+		/// older than 4.6.0, or with third-party generators such as calib.io that follow the same convention. Boards with an odd
+		/// number of rows are unaffected. A mismatch is silent: the markers are still detected, but this function returns zero
+		/// ChArUco corners and logs only a CV_LOG_DEBUG message.
 		/// For more information, see the issue: <https://github.com/opencv/opencv/issues/23152>
 		///
 		/// ## C++ default parameters
@@ -3949,8 +4070,11 @@ pub mod objdetect {
 		/// ## See also
 		/// findChessboardCorners
 		///
-		/// Note: After OpenCV 4.6.0, there was an incompatible change in the ChArUco pattern generation algorithm for even row counts.
-		/// Use cv::aruco::CharucoBoard::setLegacyPattern() to ensure compatibility with patterns created using OpenCV versions prior to 4.6.0.
+		/// Note: In OpenCV 4.6.0 there was an incompatible change in the ChArUco pattern generation algorithm for even row counts.
+		/// Use cv::aruco::CharucoBoard::setLegacyPattern() to ensure compatibility with patterns created using OpenCV versions
+		/// older than 4.6.0, or with third-party generators such as calib.io that follow the same convention. Boards with an odd
+		/// number of rows are unaffected. A mismatch is silent: the markers are still detected, but this function returns zero
+		/// ChArUco corners and logs only a CV_LOG_DEBUG message.
 		/// For more information, see the issue: <https://github.com/opencv/opencv/issues/23152>
 		///
 		/// ## Note
@@ -4193,36 +4317,36 @@ pub mod objdetect {
 
 		/// cameraMatrix optional 3x3 floating-point camera matrix
 		#[inline]
-		fn set_camera_matrix(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propCameraMatrix_const_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_Mat()) };
+		fn set_camera_matrix(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propCameraMatrix_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// distCoeffs optional vector of distortion coefficients
 		#[inline]
-		fn set_dist_coeffs(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propDistCoeffs_const_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_Mat()) };
+		fn set_dist_coeffs(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propDistCoeffs_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// minMarkers number of adjacent markers that must be detected to return a charuco corner, default = 2
 		#[inline]
 		fn set_min_markers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propMinMarkers_const_int(self.as_raw_mut_CharucoParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propMinMarkers_int(self.as_raw_mut_CharucoParameters(), val) };
 			ret
 		}
 
 		/// try to use refine board, default false
 		#[inline]
 		fn set_try_refine_markers(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propTryRefineMarkers_const_bool(self.as_raw_mut_CharucoParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propTryRefineMarkers_bool(self.as_raw_mut_CharucoParameters(), val) };
 			ret
 		}
 
 		/// run check to verify that markers belong to the same board, default true
 		#[inline]
 		fn set_check_markers(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propCheckMarkers_const_bool(self.as_raw_mut_CharucoParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propCheckMarkers_bool(self.as_raw_mut_CharucoParameters(), val) };
 			ret
 		}
 
@@ -4595,28 +4719,28 @@ pub mod objdetect {
 		/// minimum window size for adaptive thresholding before finding contours (default 3).
 		#[inline]
 		fn set_adaptive_thresh_win_size_min(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMin_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMin_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// maximum window size for adaptive thresholding before finding contours (default 23).
 		#[inline]
 		fn set_adaptive_thresh_win_size_max(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMax_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMax_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// increments from adaptiveThreshWinSizeMin to adaptiveThreshWinSizeMax during the thresholding (default 10).
 		#[inline]
 		fn set_adaptive_thresh_win_size_step(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeStep_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeStep_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// constant for adaptive thresholding before finding contours (default 7)
 		#[inline]
 		fn set_adaptive_thresh_constant(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshConstant_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshConstant_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4625,7 +4749,7 @@ pub mod objdetect {
 		/// This is defined as a rate respect to the maximum dimension of the input image (default 0.03).
 		#[inline]
 		fn set_min_marker_perimeter_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerPerimeterRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerPerimeterRate_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4634,28 +4758,28 @@ pub mod objdetect {
 		/// This is defined as a rate respect to the maximum dimension of the input image (default 4.0).
 		#[inline]
 		fn set_max_marker_perimeter_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxMarkerPerimeterRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxMarkerPerimeterRate_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// minimum accuracy during the polygonal approximation process to determine which contours are squares. (default 0.03)
 		#[inline]
 		fn set_polygonal_approx_accuracy_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPolygonalApproxAccuracyRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPolygonalApproxAccuracyRate_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// minimum distance between corners for detected markers relative to its perimeter (default 0.05)
 		#[inline]
 		fn set_min_corner_distance_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinCornerDistanceRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinCornerDistanceRate_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// minimum distance of any corner to the image border for detected markers (in pixels) (default 3)
 		#[inline]
 		fn set_min_distance_to_border(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinDistanceToBorder_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinDistanceToBorder_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4674,7 +4798,7 @@ pub mod objdetect {
 		/// minGroupDistance.
 		#[inline]
 		fn set_min_marker_distance_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerDistanceRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerDistanceRate_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4686,14 +4810,14 @@ pub mod objdetect {
 		/// * val: 0.21f
 		#[inline]
 		fn set_min_group_distance(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinGroupDistance_const_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinGroupDistance_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// default value CORNER_REFINE_NONE
 		#[inline]
 		fn set_corner_refinement_method(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMethod_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMethod_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4706,7 +4830,7 @@ pub mod objdetect {
 		/// (ArUco marker is composed of black and white modules)
 		#[inline]
 		fn set_corner_refinement_win_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementWinSize_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementWinSize_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4720,35 +4844,35 @@ pub mod objdetect {
 		/// In the case of markers located close to each other, it may be useful to decrease the parameter value to 0.1-0.2.
 		#[inline]
 		fn set_relative_corner_refinment_win_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propRelativeCornerRefinmentWinSize_const_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propRelativeCornerRefinmentWinSize_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// maximum number of iterations for stop criteria of the corner refinement process (default 30).
 		#[inline]
 		fn set_corner_refinement_max_iterations(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMaxIterations_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMaxIterations_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// minimum error for the stop cristeria of the corner refinement process (default: 0.1)
 		#[inline]
 		fn set_corner_refinement_min_accuracy(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMinAccuracy_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMinAccuracy_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// number of bits of the marker border, i.e. marker border width (default 1).
 		#[inline]
 		fn set_marker_border_bits(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMarkerBorderBits_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMarkerBorderBits_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// number of bits (per dimension) for each cell of the marker when removing the perspective (default 4).
 		#[inline]
 		fn set_perspective_remove_pixel_per_cell(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemovePixelPerCell_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemovePixelPerCell_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4757,7 +4881,7 @@ pub mod objdetect {
 		/// Represents the rate respect to the total size of the cell, i.e. perspectiveRemovePixelPerCell (default 0.13)
 		#[inline]
 		fn set_perspective_remove_ignored_margin_per_cell(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemoveIgnoredMarginPerCell_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemoveIgnoredMarginPerCell_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4766,7 +4890,7 @@ pub mod objdetect {
 		/// Represented as a rate respect to the total number of bits per marker (default 0.35).
 		#[inline]
 		fn set_max_erroneous_bits_in_border_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxErroneousBitsInBorderRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxErroneousBitsInBorderRate_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4774,14 +4898,14 @@ pub mod objdetect {
 		/// thresholding (otherwise, all the bits are set to 0 or 1 depending on mean higher than 128 or not) (default 5.0)
 		#[inline]
 		fn set_min_otsu_std_dev(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinOtsuStdDev_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinOtsuStdDev_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// error correction rate respect to the maximum error correction capability for each dictionary (default 0.6).
 		#[inline]
 		fn set_error_correction_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propErrorCorrectionRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propErrorCorrectionRate_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4791,28 +4915,28 @@ pub mod objdetect {
 		/// pose accuracy and a slight decrease in detection rate. Decoding the binary payload is still
 		#[inline]
 		fn set_april_tag_quad_decimate(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadDecimate_const_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadDecimate_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// what Gaussian blur should be applied to the segmented image (used for quad detection?)
 		#[inline]
 		fn set_april_tag_quad_sigma(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadSigma_const_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadSigma_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// reject quads containing too few pixels (default 5).
 		#[inline]
 		fn set_april_tag_min_cluster_pixels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinClusterPixels_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinClusterPixels_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// how many corner candidates to consider when segmenting a group of pixels into a quad (default 10).
 		#[inline]
 		fn set_april_tag_max_nmaxima(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxNmaxima_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxNmaxima_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4821,14 +4945,14 @@ pub mod objdetect {
 		/// Zero means that no quads are rejected. (In radians) (default 10*PI/180)
 		#[inline]
 		fn set_april_tag_critical_rad(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagCriticalRad_const_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagCriticalRad_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// when fitting lines to the contours, what is the maximum mean squared error
 		#[inline]
 		fn set_april_tag_max_line_fit_mse(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxLineFitMse_const_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxLineFitMse_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4838,14 +4962,14 @@ pub mod objdetect {
 		/// brighter than the black model. How much brighter? (in pixel values, [0,255]), (default 5)
 		#[inline]
 		fn set_april_tag_min_white_black_diff(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinWhiteBlackDiff_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinWhiteBlackDiff_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// should the thresholded image be deglitched? Only useful for very noisy images (default 0).
 		#[inline]
 		fn set_april_tag_deglitch(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagDeglitch_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagDeglitch_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4854,7 +4978,7 @@ pub mod objdetect {
 		/// In order to generate a "white" marker just invert a normal marker by using a tilde, ~markerImage. (default false)
 		#[inline]
 		fn set_detect_inverted_marker(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propDetectInvertedMarker_const_bool(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propDetectInvertedMarker_bool(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -4865,28 +4989,28 @@ pub mod objdetect {
 		/// <https://www.researchgate.net/publication/325787310_Speeded_Up_Detection_of_Squared_Fiducial_Markers>
 		#[inline]
 		fn set_use_aruco3_detection(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propUseAruco3Detection_const_bool(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propUseAruco3Detection_bool(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// minimum side length of a marker in the canonical image. Latter is the binarized image in which contours are searched.
 		#[inline]
 		fn set_min_side_length_canonical_img(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinSideLengthCanonicalImg_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinSideLengthCanonicalImg_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// range [0,1], eq (2) from paper. The parameter tau_i has a direct influence on the processing speed.
 		#[inline]
 		fn set_min_marker_length_ratio_original_img(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerLengthRatioOriginalImg_const_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerLengthRatioOriginalImg_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
 		/// range [0,1], define the acceptable threshold when comparing the detected marker to the dictionary during marker identification.
 		#[inline]
 		fn set_valid_bit_id_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propValidBitIdThreshold_const_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propValidBitIdThreshold_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 
@@ -5148,7 +5272,7 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
-		/// Given a matrix of pixel ratio raging from 0 to 1. Returns whether if marker is identified or not.
+		/// Given a matrix of pixel ratio ranging from 0 to 1. Returns whether the marker is identified or not.
 		///
 		/// Returns reference to the marker id in the dictionary (if any) and its rotation.
 		#[inline]
@@ -5188,6 +5312,30 @@ pub mod objdetect {
 			input_array_arg!(bits);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_Dictionary_getDistanceToId_const_const__InputArrayR_int(self.as_raw_Dictionary(), bits.as_raw__InputArray(), id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Returns number of cells that differ from the specific id.
+		///
+		/// For each cell, the distance is increased when the difference between the detected
+		/// cell pixel ratio and the dictionary bit value is greater than `validBitIdThreshold`.
+		/// If `allRotations` is set, the four possible marker rotations are considered.
+		///
+		/// ## Parameters
+		/// * onlyCellPixelRatio: markerSize x markerSize matrix (CV_32FC1) holding, for each cell,
+		/// the ratio of white pixels ranging from 0 to 1
+		/// * id: marker id in the dictionary to compute the distance to
+		/// * allRotations: if set, the four possible marker rotations are considered and the
+		/// smallest distance is returned
+		/// * validBitIdThreshold: maximum allowed difference between a cell pixel ratio and the
+		/// dictionary bit value; cells exceeding it are counted as differing
+		#[inline]
+		fn get_distance_to_id_1(&self, only_cell_pixel_ratio: &impl ToInputArray, id: i32, all_rotations: bool, valid_bit_id_threshold: f32) -> Result<i32> {
+			input_array_arg!(only_cell_pixel_ratio);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_Dictionary_getDistanceToId_const_const__InputArrayR_int_bool_float(self.as_raw_Dictionary(), only_cell_pixel_ratio.as_raw__InputArray(), id, all_rotations, valid_bit_id_threshold, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5259,22 +5407,22 @@ pub mod objdetect {
 
 		/// marker code information. See class description for more details
 		#[inline]
-		fn set_bytes_list(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_aruco_Dictionary_propBytesList_const_Mat(self.as_raw_mut_Dictionary(), val.as_raw_Mat()) };
+		fn set_bytes_list(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_aruco_Dictionary_propBytesList_Mat(self.as_raw_mut_Dictionary(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// number of bits per dimension
 		#[inline]
 		fn set_marker_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_Dictionary_propMarkerSize_const_int(self.as_raw_mut_Dictionary(), val) };
+			let ret = unsafe { sys::cv_aruco_Dictionary_propMarkerSize_int(self.as_raw_mut_Dictionary(), val) };
 			ret
 		}
 
 		/// maximum number of bits that can be corrected
 		#[inline]
 		fn set_max_correction_bits(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_Dictionary_propMaxCorrectionBits_const_int(self.as_raw_mut_Dictionary(), val) };
+			let ret = unsafe { sys::cv_aruco_Dictionary_propMaxCorrectionBits_int(self.as_raw_mut_Dictionary(), val) };
 			ret
 		}
 

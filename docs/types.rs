@@ -981,6 +981,27 @@ mod core_types {
 	}
 
 
+	impl core::Vector<core::Matx44d> {
+		pub fn as_raw_VectorOfMatx44d(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfMatx44d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { core::Matx44d,
+		std_vectorLcv_Matx44dG_new_const, std_vectorLcv_Matx44dG_delete,
+		std_vectorLcv_Matx44dG_len_const, std_vectorLcv_Matx44dG_isEmpty_const,
+		std_vectorLcv_Matx44dG_capacity_const, std_vectorLcv_Matx44dG_shrinkToFit,
+		std_vectorLcv_Matx44dG_reserve_size_t, std_vectorLcv_Matx44dG_remove_size_t,
+		std_vectorLcv_Matx44dG_swap_size_t_size_t, std_vectorLcv_Matx44dG_clear,
+		std_vectorLcv_Matx44dG_get_const_size_t, std_vectorLcv_Matx44dG_set_size_t_const_Matx44d,
+		std_vectorLcv_Matx44dG_push_const_Matx44d, std_vectorLcv_Matx44dG_insert_size_t_const_Matx44d,
+	}
+
+	vector_copy_non_bool! { core::Matx44d,
+		std_vectorLcv_Matx44dG_data_const, std_vectorLcv_Matx44dG_dataMut, cv_fromSlice_const_const_Matx44dX_size_t,
+		std_vectorLcv_Matx44dG_clone_const,
+	}
+
+
 	impl core::Vector<core::PlatformInfo> {
 		pub fn as_raw_VectorOfPlatformInfo(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfPlatformInfo(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -5510,16 +5531,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AbsLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AbsLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AbsLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AbsLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AbsLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AbsLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -5540,16 +5551,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AbsLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AbsLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AbsLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AbsLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AbsLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AbsLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::AbsLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfAbsLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -5572,16 +5598,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AccumLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AccumLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AccumLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AccumLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AccumLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AccumLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -5592,16 +5608,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AccumLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AccumLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AccumLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AccumLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AccumLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AccumLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::AccumLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfAccumLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -5624,16 +5655,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AcosLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AcosLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AcosLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AcosLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AcosLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AcosLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -5654,16 +5675,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AcosLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AcosLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AcosLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AcosLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AcosLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AcosLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::AcosLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfAcosLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -5686,16 +5722,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AcoshLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AcoshLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AcoshLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AcoshLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AcoshLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AcoshLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -5716,16 +5742,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AcoshLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AcoshLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AcoshLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AcoshLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AcoshLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AcoshLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::AcoshLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfAcoshLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -5748,16 +5789,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ActivationLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ActivationLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ActivationLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ActivationLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -5768,16 +5799,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ActivationLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ActivationLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ActivationLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ActivationLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ActivationLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfActivationLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -5800,16 +5846,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ActivationLayerInt8> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ActivationLayerInt8> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ActivationLayerInt8G_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ActivationLayerInt8> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -5830,6 +5866,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ActivationLayerInt8G_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ActivationLayerInt8> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ActivationLayerInt8> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayerInt8>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ActivationLayerInt8G_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ActivationLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -5839,12 +5885,17 @@ mod dnn_types {
 				.field("input_sc", &crate::dnn::ActivationLayerInt8TraitConst::input_sc(self))
 				.field("output_sc", &crate::dnn::ActivationLayerInt8TraitConst::output_sc(self))
 				.field("activation_lut", &crate::dnn::ActivationLayerInt8TraitConst::activation_lut(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -5867,16 +5918,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AffineGridLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AffineGridLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AffineGridLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AffineGridLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AffineGridLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AffineGridLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -5887,17 +5928,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AffineGridLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AffineGridLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AffineGridLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AffineGridLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AffineGridLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AffineGridLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::AffineGridLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfAffineGridLayer")
 				.field("align_corners", &crate::dnn::AffineGridLayerTraitConst::align_corners(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -5920,16 +5976,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ArgLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ArgLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ArgLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ArgLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ArgLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ArgLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -5940,16 +5986,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ArgLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ArgLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ArgLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ArgLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ArgLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ArgLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ArgLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfArgLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -5972,16 +6033,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AsinLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AsinLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AsinLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AsinLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AsinLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AsinLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6002,16 +6053,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AsinLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AsinLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AsinLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AsinLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AsinLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AsinLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::AsinLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfAsinLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6034,16 +6100,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AsinhLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AsinhLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AsinhLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AsinhLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AsinhLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AsinhLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6064,16 +6120,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AsinhLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AsinhLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AsinhLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AsinhLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AsinhLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AsinhLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::AsinhLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfAsinhLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6096,16 +6167,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AtanLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AtanLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AtanLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AtanLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AtanLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AtanLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6126,16 +6187,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AtanLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AtanLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AtanLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AtanLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AtanLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AtanLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::AtanLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfAtanLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6158,16 +6234,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AtanhLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AtanhLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AtanhLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AtanhLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AtanhLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AtanhLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6188,16 +6254,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AtanhLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AtanhLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AtanhLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AtanhLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AtanhLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AtanhLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::AtanhLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfAtanhLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6220,16 +6301,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AttentionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AttentionLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AttentionLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AttentionLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AttentionLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AttentionLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6240,16 +6311,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AttentionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AttentionLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AttentionLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AttentionLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AttentionLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AttentionLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::AttentionLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfAttentionLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6272,16 +6358,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AttentionOnnxAiLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AttentionOnnxAiLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AttentionOnnxAiLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AttentionOnnxAiLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AttentionOnnxAiLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AttentionOnnxAiLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6292,17 +6368,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AttentionOnnxAiLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AttentionOnnxAiLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AttentionOnnxAiLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AttentionOnnxAiLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AttentionOnnxAiLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AttentionOnnxAiLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::AttentionOnnxAiLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfAttentionOnnxAiLayer")
 				.field("kv_num_heads", &crate::dnn::AttentionOnnxAiLayerTraitConst::kv_num_heads(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("paged_cache_supported", &crate::dnn::AttentionOnnxAiLayerTraitConst::paged_cache_supported(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6325,16 +6417,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_AveragePoolLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AveragePoolLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AveragePoolLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::AveragePoolLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AveragePoolLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AveragePoolLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6344,6 +6426,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::AveragePoolLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AveragePoolLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::AveragePoolLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::AveragePoolLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::AveragePoolLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_AveragePoolLayerG_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::AveragePoolLayer> {
 		#[inline]
@@ -6356,12 +6448,17 @@ mod dnn_types {
 				.field("auto_pad", &crate::dnn::AveragePoolLayerTraitConst::auto_pad(self))
 				.field("ceil_mode", &crate::dnn::AveragePoolLayerTraitConst::ceil_mode(self))
 				.field("count_include_pad", &crate::dnn::AveragePoolLayerTraitConst::count_include_pad(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6384,16 +6481,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BNLLLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::BNLLLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::BNLLLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::BNLLLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BNLLLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::BNLLLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6414,16 +6501,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BNLLLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BNLLLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::BNLLLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::BNLLLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::BNLLLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_BNLLLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::BNLLLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfBNLLLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6500,16 +6602,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BaseConvolutionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::BaseConvolutionLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::BaseConvolutionLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::BaseConvolutionLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BaseConvolutionLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::BaseConvolutionLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6519,6 +6611,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BaseConvolutionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BaseConvolutionLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::BaseConvolutionLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::BaseConvolutionLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::BaseConvolutionLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_BaseConvolutionLayerG_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::BaseConvolutionLayer> {
 		#[inline]
@@ -6537,12 +6639,17 @@ mod dnn_types {
 				.field("pads_end", &crate::dnn::BaseConvolutionLayerTraitConst::pads_end(self))
 				.field("pad_mode", &crate::dnn::BaseConvolutionLayerTraitConst::pad_mode(self))
 				.field("num_output", &crate::dnn::BaseConvolutionLayerTraitConst::num_output(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6564,16 +6671,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BatchNorm2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::BatchNorm2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::BatchNorm2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::BatchNorm2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BatchNorm2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::BatchNorm2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6584,17 +6681,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BatchNorm2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BatchNorm2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::BatchNorm2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::BatchNorm2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::BatchNorm2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_BatchNorm2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::BatchNorm2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfBatchNorm2Layer")
 				.field("epsilon", &crate::dnn::BatchNorm2LayerTraitConst::epsilon(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6617,16 +6729,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BatchNormLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::BatchNormLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::BatchNormLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BatchNormLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::BatchNormLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6647,6 +6749,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BatchNormLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::BatchNormLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::BatchNormLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_BatchNormLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::BatchNormLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -6654,12 +6766,17 @@ mod dnn_types {
 				.field("has_weights", &crate::dnn::BatchNormLayerTraitConst::has_weights(self))
 				.field("has_bias", &crate::dnn::BatchNormLayerTraitConst::has_bias(self))
 				.field("epsilon", &crate::dnn::BatchNormLayerTraitConst::epsilon(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6681,16 +6798,6 @@ mod dnn_types {
 	impl crate::dnn::BatchNormLayerInt8Trait for core::Ptr<crate::dnn::BatchNormLayerInt8> {
 		#[inline] fn as_raw_mut_BatchNormLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
-
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::BatchNormLayerInt8> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::BatchNormLayerInt8> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfAlgorithm }
 
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::BatchNormLayerInt8> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6722,6 +6829,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::BatchNormLayerInt8> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::BatchNormLayerInt8> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayerInt8>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::BatchNormLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -6733,12 +6850,74 @@ mod dnn_types {
 				.field("has_weights", &crate::dnn::BatchNormLayerTraitConst::has_weights(self))
 				.field("has_bias", &crate::dnn::BatchNormLayerTraitConst::has_bias(self))
 				.field("epsilon", &crate::dnn::BatchNormLayerTraitConst::epsilon(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::BitCastLayer,
+		cv_PtrLcv_dnn_BitCastLayerG_new_null_const, cv_PtrLcv_dnn_BitCastLayerG_delete, cv_PtrLcv_dnn_BitCastLayerG_getInnerPtr_const, cv_PtrLcv_dnn_BitCastLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::BitCastLayer, cv_PtrLcv_dnn_BitCastLayerG_new_const_BitCastLayer }
+	impl core::Ptr<crate::dnn::BitCastLayer> {
+		#[inline] pub fn as_raw_PtrOfBitCastLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfBitCastLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::BitCastLayerTraitConst for core::Ptr<crate::dnn::BitCastLayer> {
+		#[inline] fn as_raw_BitCastLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::BitCastLayerTrait for core::Ptr<crate::dnn::BitCastLayer> {
+		#[inline] fn as_raw_mut_BitCastLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::BitCastLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::BitCastLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::BitCastLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BitCastLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::BitCastLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::BitCastLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::BitCastLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_BitCastLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::BitCastLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfBitCastLayer")
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6761,16 +6940,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BitShiftLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::BitShiftLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::BitShiftLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::BitShiftLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BitShiftLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::BitShiftLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6781,16 +6950,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BitShiftLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BitShiftLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::BitShiftLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::BitShiftLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::BitShiftLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_BitShiftLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::BitShiftLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfBitShiftLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6813,16 +6997,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BlackmanWindowLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::BlackmanWindowLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::BlackmanWindowLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::BlackmanWindowLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BlackmanWindowLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::BlackmanWindowLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6833,16 +7007,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BlackmanWindowLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BlackmanWindowLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::BlackmanWindowLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::BlackmanWindowLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::BlackmanWindowLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_BlackmanWindowLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::BlackmanWindowLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfBlackmanWindowLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6865,16 +7054,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BlankLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::BlankLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::BlankLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::BlankLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BlankLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::BlankLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6885,16 +7064,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::BlankLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BlankLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::BlankLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::BlankLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::BlankLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_BlankLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::BlankLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfBlankLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6917,16 +7111,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Cast2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Cast2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Cast2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Cast2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Cast2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Cast2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6937,16 +7121,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Cast2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Cast2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Cast2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Cast2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Cast2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Cast2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Cast2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCast2Layer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -6969,16 +7168,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_CastLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::CastLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::CastLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::CastLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CastLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CastLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -6989,16 +7178,88 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CastLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CastLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CastLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CastLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CastLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CastLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::CastLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCastLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::CausalConvWithStateLayer,
+		cv_PtrLcv_dnn_CausalConvWithStateLayerG_new_null_const, cv_PtrLcv_dnn_CausalConvWithStateLayerG_delete, cv_PtrLcv_dnn_CausalConvWithStateLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CausalConvWithStateLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::CausalConvWithStateLayer, cv_PtrLcv_dnn_CausalConvWithStateLayerG_new_const_CausalConvWithStateLayer }
+	impl core::Ptr<crate::dnn::CausalConvWithStateLayer> {
+		#[inline] pub fn as_raw_PtrOfCausalConvWithStateLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCausalConvWithStateLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::CausalConvWithStateLayerTraitConst for core::Ptr<crate::dnn::CausalConvWithStateLayer> {
+		#[inline] fn as_raw_CausalConvWithStateLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::CausalConvWithStateLayerTrait for core::Ptr<crate::dnn::CausalConvWithStateLayer> {
+		#[inline] fn as_raw_mut_CausalConvWithStateLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CausalConvWithStateLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::CausalConvWithStateLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CausalConvWithStateLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CausalConvWithStateLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CausalConvWithStateLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CausalConvWithStateLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CausalConvWithStateLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CausalConvWithStateLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::CausalConvWithStateLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfCausalConvWithStateLayer")
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7021,16 +7282,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_CeilLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::CeilLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::CeilLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::CeilLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CeilLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::CeilLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7051,16 +7302,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CeilLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CeilLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CeilLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CeilLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CeilLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CeilLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::CeilLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCeilLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7083,16 +7349,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_CeluLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::CeluLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::CeluLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::CeluLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CeluLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::CeluLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7113,17 +7369,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CeluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CeluLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CeluLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CeluLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CeluLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CeluLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::CeluLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCeluLayer")
 				.field("alpha", &crate::dnn::CeluLayerTraitConst::alpha(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7146,16 +7417,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_CenterCropPadLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::CenterCropPadLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::CenterCropPadLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::CenterCropPadLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CenterCropPadLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CenterCropPadLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7166,16 +7427,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CenterCropPadLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CenterCropPadLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CenterCropPadLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CenterCropPadLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CenterCropPadLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CenterCropPadLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::CenterCropPadLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCenterCropPadLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7198,16 +7474,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ChannelsPReLULayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ChannelsPReLULayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ChannelsPReLULayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ChannelsPReLULayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ChannelsPReLULayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ChannelsPReLULayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7228,16 +7494,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ChannelsPReLULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ChannelsPReLULayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ChannelsPReLULayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ChannelsPReLULayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ChannelsPReLULayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ChannelsPReLULayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ChannelsPReLULayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfChannelsPReLULayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7260,16 +7541,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ClipLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ClipLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ClipLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ClipLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ClipLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ClipLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7280,16 +7551,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ClipLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ClipLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ClipLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ClipLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ClipLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ClipLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ClipLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfClipLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7312,16 +7598,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_CompareLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::CompareLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::CompareLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::CompareLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CompareLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CompareLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7332,16 +7608,88 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CompareLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CompareLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CompareLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CompareLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CompareLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CompareLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::CompareLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCompareLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::CompressLayer,
+		cv_PtrLcv_dnn_CompressLayerG_new_null_const, cv_PtrLcv_dnn_CompressLayerG_delete, cv_PtrLcv_dnn_CompressLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CompressLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::CompressLayer, cv_PtrLcv_dnn_CompressLayerG_new_const_CompressLayer }
+	impl core::Ptr<crate::dnn::CompressLayer> {
+		#[inline] pub fn as_raw_PtrOfCompressLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCompressLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::CompressLayerTraitConst for core::Ptr<crate::dnn::CompressLayer> {
+		#[inline] fn as_raw_CompressLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::CompressLayerTrait for core::Ptr<crate::dnn::CompressLayer> {
+		#[inline] fn as_raw_mut_CompressLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CompressLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::CompressLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CompressLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CompressLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CompressLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CompressLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CompressLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CompressLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::CompressLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfCompressLayer")
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7364,16 +7712,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Concat2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Concat2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Concat2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Concat2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Concat2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Concat2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7384,17 +7722,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Concat2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Concat2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Concat2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Concat2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Concat2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Concat2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Concat2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfConcat2Layer")
 				.field("axis", &crate::dnn::Concat2LayerTraitConst::axis(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7417,16 +7770,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ConcatLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ConcatLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ConcatLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ConcatLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConcatLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ConcatLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7437,6 +7780,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConcatLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConcatLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ConcatLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ConcatLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ConcatLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ConcatLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ConcatLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -7444,12 +7797,17 @@ mod dnn_types {
 				.field("axis", &crate::dnn::ConcatLayerTraitConst::axis(self))
 				.field("padding", &crate::dnn::ConcatLayerTraitConst::padding(self))
 				.field("padding_value", &crate::dnn::ConcatLayerTraitConst::padding_value(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7472,16 +7830,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ConstLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ConstLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ConstLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ConstLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConstLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ConstLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7492,16 +7840,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConstLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConstLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ConstLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ConstLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ConstLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ConstLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ConstLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfConstLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7524,16 +7887,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ConstantOfShapeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ConstantOfShapeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ConstantOfShapeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ConstantOfShapeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConstantOfShapeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ConstantOfShapeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7544,16 +7897,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConstantOfShapeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConstantOfShapeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ConstantOfShapeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ConstantOfShapeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ConstantOfShapeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ConstantOfShapeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ConstantOfShapeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfConstantOfShapeLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7576,16 +7944,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Conv2Int8Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Conv2Int8Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Conv2Int8Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Conv2Int8Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Conv2Int8LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Conv2Int8Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7595,6 +7953,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Conv2Int8Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Conv2Int8LayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Conv2Int8Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Conv2Int8Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Conv2Int8Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Conv2Int8LayerG_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::Conv2Int8Layer> {
 		#[inline]
@@ -7606,18 +7974,24 @@ mod dnn_types {
 				.field("output_sc", &crate::dnn::Conv2Int8LayerTraitConst::output_sc(self))
 				.field("per_channel", &crate::dnn::Conv2Int8LayerTraitConst::per_channel(self))
 				.field("float_input", &crate::dnn::Conv2Int8LayerTraitConst::float_input(self))
+				.field("int32_output", &crate::dnn::Conv2Int8LayerTraitConst::int32_output(self))
 				.field("strides", &crate::dnn::Conv2Int8LayerTraitConst::strides(self))
 				.field("dilations", &crate::dnn::Conv2Int8LayerTraitConst::dilations(self))
 				.field("pads", &crate::dnn::Conv2Int8LayerTraitConst::pads(self))
 				.field("ngroups", &crate::dnn::Conv2Int8LayerTraitConst::ngroups(self))
 				.field("auto_pad", &crate::dnn::Conv2Int8LayerTraitConst::auto_pad(self))
 				.field("ceil_mode", &crate::dnn::Conv2Int8LayerTraitConst::ceil_mode(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7639,16 +8013,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Conv2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Conv2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Conv2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Conv2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Conv2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Conv2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7658,6 +8022,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Conv2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Conv2LayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Conv2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Conv2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Conv2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Conv2LayerG_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::Conv2Layer> {
 		#[inline]
@@ -7669,12 +8043,17 @@ mod dnn_types {
 				.field("ngroups", &crate::dnn::Conv2LayerTraitConst::ngroups(self))
 				.field("auto_pad", &crate::dnn::Conv2LayerTraitConst::auto_pad(self))
 				.field("ceil_mode", &crate::dnn::Conv2LayerTraitConst::ceil_mode(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7696,16 +8075,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ConvTranspose2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ConvTranspose2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ConvTranspose2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ConvTranspose2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConvTranspose2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ConvTranspose2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7715,6 +8084,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConvTranspose2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConvTranspose2LayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ConvTranspose2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ConvTranspose2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ConvTranspose2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ConvTranspose2LayerG_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::ConvTranspose2Layer> {
 		#[inline]
@@ -7726,12 +8105,17 @@ mod dnn_types {
 				.field("adjust_pads", &crate::dnn::ConvTranspose2LayerTraitConst::adjust_pads(self))
 				.field("ngroups", &crate::dnn::ConvTranspose2LayerTraitConst::ngroups(self))
 				.field("auto_pad", &crate::dnn::ConvTranspose2LayerTraitConst::auto_pad(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7754,16 +8138,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ConvolutionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ConvolutionLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ConvolutionLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConvolutionLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::BaseConvolutionLayerTraitConst for core::Ptr<crate::dnn::ConvolutionLayer> {
 		#[inline] fn as_raw_BaseConvolutionLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7783,6 +8157,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConvolutionLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ConvolutionLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ConvolutionLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ConvolutionLayerG_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::ConvolutionLayer> {
 		#[inline]
@@ -7804,12 +8188,17 @@ mod dnn_types {
 				.field("pads_end", &crate::dnn::BaseConvolutionLayerTraitConst::pads_end(self))
 				.field("pad_mode", &crate::dnn::BaseConvolutionLayerTraitConst::pad_mode(self))
 				.field("num_output", &crate::dnn::BaseConvolutionLayerTraitConst::num_output(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7832,16 +8221,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ConvolutionLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ConvolutionLayerInt8> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ConvolutionLayerInt8> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConvolutionLayerInt8G_to_PtrOfAlgorithm }
-
 	impl crate::dnn::BaseConvolutionLayerTraitConst for core::Ptr<crate::dnn::ConvolutionLayerInt8> {
 		#[inline] fn as_raw_BaseConvolutionLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7861,6 +8240,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConvolutionLayerInt8G_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ConvolutionLayerInt8> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ConvolutionLayerInt8> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayerInt8>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ConvolutionLayerInt8G_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::ConvolutionLayerInt8> {
 		#[inline]
@@ -7885,12 +8274,17 @@ mod dnn_types {
 				.field("pads_end", &crate::dnn::BaseConvolutionLayerTraitConst::pads_end(self))
 				.field("pad_mode", &crate::dnn::BaseConvolutionLayerTraitConst::pad_mode(self))
 				.field("num_output", &crate::dnn::BaseConvolutionLayerTraitConst::num_output(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7913,16 +8307,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_CorrelationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::CorrelationLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::CorrelationLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::CorrelationLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CorrelationLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CorrelationLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7933,16 +8317,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CorrelationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CorrelationLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CorrelationLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CorrelationLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CorrelationLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CorrelationLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::CorrelationLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCorrelationLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -7965,16 +8364,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_CosLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::CosLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::CosLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::CosLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CosLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::CosLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -7995,16 +8384,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CosLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CosLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CosLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CosLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CosLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CosLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::CosLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCosLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8027,16 +8431,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_CoshLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::CoshLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::CoshLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::CoshLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CoshLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::CoshLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8057,16 +8451,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CoshLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CoshLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CoshLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CoshLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CoshLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CoshLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::CoshLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCoshLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8089,16 +8498,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_CropAndResizeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::CropAndResizeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::CropAndResizeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::CropAndResizeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CropAndResizeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CropAndResizeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8109,16 +8508,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CropAndResizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CropAndResizeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CropAndResizeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CropAndResizeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CropAndResizeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CropAndResizeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::CropAndResizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCropAndResizeLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8141,16 +8555,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_CropLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::CropLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::CropLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::CropLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CropLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CropLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8161,16 +8565,88 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CropLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CropLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CropLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CropLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CropLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CropLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::CropLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCropLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::CumProdLayer,
+		cv_PtrLcv_dnn_CumProdLayerG_new_null_const, cv_PtrLcv_dnn_CumProdLayerG_delete, cv_PtrLcv_dnn_CumProdLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CumProdLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::CumProdLayer, cv_PtrLcv_dnn_CumProdLayerG_new_const_CumProdLayer }
+	impl core::Ptr<crate::dnn::CumProdLayer> {
+		#[inline] pub fn as_raw_PtrOfCumProdLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCumProdLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::CumProdLayerTraitConst for core::Ptr<crate::dnn::CumProdLayer> {
+		#[inline] fn as_raw_CumProdLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::CumProdLayerTrait for core::Ptr<crate::dnn::CumProdLayer> {
+		#[inline] fn as_raw_mut_CumProdLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CumProdLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::CumProdLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CumProdLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CumProdLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CumProdLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CumProdLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CumProdLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CumProdLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::CumProdLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfCumProdLayer")
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8193,16 +8669,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_CumSumLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::CumSumLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::CumSumLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::CumSumLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CumSumLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CumSumLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8213,18 +8679,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::CumSumLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CumSumLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::CumSumLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::CumSumLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::CumSumLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_CumSumLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::CumSumLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfCumSumLayer")
 				.field("exclusive", &crate::dnn::CumSumLayerTraitConst::exclusive(self))
 				.field("reverse", &crate::dnn::CumSumLayerTraitConst::reverse(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8247,16 +8728,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_DFTLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::DFTLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::DFTLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::DFTLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DFTLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DFTLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8267,6 +8738,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DFTLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DFTLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::DFTLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::DFTLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DFTLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_DFTLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::DFTLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -8275,12 +8756,17 @@ mod dnn_types {
 				.field("onesided", &crate::dnn::DFTLayerTraitConst::onesided(self))
 				.field("axis_attr", &crate::dnn::DFTLayerTraitConst::axis_attr(self))
 				.field("axes", &crate::dnn::DFTLayerTraitConst::axes(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8303,16 +8789,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_DataAugmentationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::DataAugmentationLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::DataAugmentationLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::DataAugmentationLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DataAugmentationLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DataAugmentationLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8323,16 +8799,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DataAugmentationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DataAugmentationLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::DataAugmentationLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::DataAugmentationLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DataAugmentationLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_DataAugmentationLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::DataAugmentationLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfDataAugmentationLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8355,16 +8846,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_DeconvolutionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::DeconvolutionLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::DeconvolutionLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::DeconvolutionLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::BaseConvolutionLayerTraitConst for core::Ptr<crate::dnn::DeconvolutionLayer> {
 		#[inline] fn as_raw_BaseConvolutionLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8385,6 +8866,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DeconvolutionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::DeconvolutionLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::DeconvolutionLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DeconvolutionLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::DeconvolutionLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -8402,12 +8893,17 @@ mod dnn_types {
 				.field("pads_end", &crate::dnn::BaseConvolutionLayerTraitConst::pads_end(self))
 				.field("pad_mode", &crate::dnn::BaseConvolutionLayerTraitConst::pad_mode(self))
 				.field("num_output", &crate::dnn::BaseConvolutionLayerTraitConst::num_output(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8430,16 +8926,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_DepthToSpaceLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::DepthToSpaceLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::DepthToSpaceLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::DepthToSpaceLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DepthToSpaceLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DepthToSpaceLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8450,16 +8936,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DepthToSpaceLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DepthToSpaceLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::DepthToSpaceLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::DepthToSpaceLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DepthToSpaceLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_DepthToSpaceLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::DepthToSpaceLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfDepthToSpaceLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8482,16 +8983,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_DequantizeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::DequantizeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::DequantizeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::DequantizeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DequantizeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DequantizeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8502,18 +8993,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DequantizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DequantizeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::DequantizeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::DequantizeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DequantizeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_DequantizeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::DequantizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfDequantizeLayer")
 				.field("scales", &crate::dnn::DequantizeLayerTraitConst::scales(self))
 				.field("zeropoints", &crate::dnn::DequantizeLayerTraitConst::zeropoints(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8536,16 +9042,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_DequantizeLinearLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::DequantizeLinearLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::DequantizeLinearLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::DequantizeLinearLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DequantizeLinearLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DequantizeLinearLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8556,18 +9052,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DequantizeLinearLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DequantizeLinearLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::DequantizeLinearLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::DequantizeLinearLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DequantizeLinearLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_DequantizeLinearLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::DequantizeLinearLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfDequantizeLinearLayer")
 				.field("axis", &crate::dnn::DequantizeLinearLayerTraitConst::axis(self))
 				.field("block_size", &crate::dnn::DequantizeLinearLayerTraitConst::block_size(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8590,16 +9101,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_DetLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::DetLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::DetLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::DetLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DetLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DetLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8610,16 +9111,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DetLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DetLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::DetLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::DetLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DetLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_DetLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::DetLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfDetLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8642,16 +9158,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_DetectionOutputLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::DetectionOutputLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::DetectionOutputLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::DetectionOutputLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DetectionOutputLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DetectionOutputLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8662,16 +9168,145 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::DetectionOutputLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DetectionOutputLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::DetectionOutputLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::DetectionOutputLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DetectionOutputLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_DetectionOutputLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::DetectionOutputLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfDetectionOutputLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::DropoutMaskLayer,
+		cv_PtrLcv_dnn_DropoutMaskLayerG_new_null_const, cv_PtrLcv_dnn_DropoutMaskLayerG_delete, cv_PtrLcv_dnn_DropoutMaskLayerG_getInnerPtr_const, cv_PtrLcv_dnn_DropoutMaskLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::DropoutMaskLayer, cv_PtrLcv_dnn_DropoutMaskLayerG_new_const_DropoutMaskLayer }
+	impl core::Ptr<crate::dnn::DropoutMaskLayer> {
+		#[inline] pub fn as_raw_PtrOfDropoutMaskLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDropoutMaskLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::DropoutMaskLayerTraitConst for core::Ptr<crate::dnn::DropoutMaskLayer> {
+		#[inline] fn as_raw_DropoutMaskLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::DropoutMaskLayerTrait for core::Ptr<crate::dnn::DropoutMaskLayer> {
+		#[inline] fn as_raw_mut_DropoutMaskLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DropoutMaskLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::DropoutMaskLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DropoutMaskLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DropoutMaskLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::DropoutMaskLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::DropoutMaskLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DropoutMaskLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_DropoutMaskLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::DropoutMaskLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfDropoutMaskLayer")
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::DynamicQuantizeLinearLayer,
+		cv_PtrLcv_dnn_DynamicQuantizeLinearLayerG_new_null_const, cv_PtrLcv_dnn_DynamicQuantizeLinearLayerG_delete, cv_PtrLcv_dnn_DynamicQuantizeLinearLayerG_getInnerPtr_const, cv_PtrLcv_dnn_DynamicQuantizeLinearLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::DynamicQuantizeLinearLayer, cv_PtrLcv_dnn_DynamicQuantizeLinearLayerG_new_const_DynamicQuantizeLinearLayer }
+	impl core::Ptr<crate::dnn::DynamicQuantizeLinearLayer> {
+		#[inline] pub fn as_raw_PtrOfDynamicQuantizeLinearLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDynamicQuantizeLinearLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::DynamicQuantizeLinearLayerTraitConst for core::Ptr<crate::dnn::DynamicQuantizeLinearLayer> {
+		#[inline] fn as_raw_DynamicQuantizeLinearLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::DynamicQuantizeLinearLayerTrait for core::Ptr<crate::dnn::DynamicQuantizeLinearLayer> {
+		#[inline] fn as_raw_mut_DynamicQuantizeLinearLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DynamicQuantizeLinearLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::DynamicQuantizeLinearLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DynamicQuantizeLinearLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DynamicQuantizeLinearLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::DynamicQuantizeLinearLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::DynamicQuantizeLinearLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DynamicQuantizeLinearLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_DynamicQuantizeLinearLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::DynamicQuantizeLinearLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfDynamicQuantizeLinearLayer")
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8694,16 +9329,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ELULayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ELULayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ELULayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ELULayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ELULayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ELULayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8724,17 +9349,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ELULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ELULayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ELULayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ELULayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ELULayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ELULayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ELULayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfELULayer")
 				.field("alpha", &crate::dnn::ELULayerTraitConst::alpha(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8757,16 +9397,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_EinsumLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::EinsumLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::EinsumLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::EinsumLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_EinsumLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::EinsumLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8777,16 +9407,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::EinsumLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EinsumLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::EinsumLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::EinsumLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::EinsumLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_EinsumLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::EinsumLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfEinsumLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8809,16 +9454,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Eltwise2Int8Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Eltwise2Int8Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Eltwise2Int8Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Eltwise2Int8Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Eltwise2Int8LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Eltwise2Int8Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8829,6 +9464,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Eltwise2Int8Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Eltwise2Int8LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Eltwise2Int8Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Eltwise2Int8Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Eltwise2Int8Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Eltwise2Int8LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Eltwise2Int8Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -8837,12 +9482,17 @@ mod dnn_types {
 				.field("zeropoints", &crate::dnn::Eltwise2Int8LayerTraitConst::zeropoints(self))
 				.field("output_sc", &crate::dnn::Eltwise2Int8LayerTraitConst::output_sc(self))
 				.field("output_zp", &crate::dnn::Eltwise2Int8LayerTraitConst::output_zp(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8865,16 +9515,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_EltwiseLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::EltwiseLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::EltwiseLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_EltwiseLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::EltwiseLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8885,16 +9525,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EltwiseLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::EltwiseLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::EltwiseLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_EltwiseLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::EltwiseLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfEltwiseLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8917,16 +9572,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_EltwiseLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::EltwiseLayerInt8> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::EltwiseLayerInt8> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_EltwiseLayerInt8G_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::EltwiseLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -8936,6 +9581,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EltwiseLayerInt8G_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::EltwiseLayerInt8> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::EltwiseLayerInt8> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayerInt8>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_EltwiseLayerInt8G_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::EltwiseLayerInt8> {
 		#[inline]
@@ -8947,12 +9602,17 @@ mod dnn_types {
 				.field("output_sc", &crate::dnn::EltwiseLayerInt8TraitConst::output_sc(self))
 				.field("output_zp", &crate::dnn::EltwiseLayerInt8TraitConst::output_zp(self))
 				.field("offset", &crate::dnn::EltwiseLayerInt8TraitConst::offset(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -8975,16 +9635,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ErfLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ErfLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ErfLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ErfLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ErfLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ErfLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9005,16 +9655,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ErfLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ErfLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ErfLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ErfLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ErfLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ErfLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ErfLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfErfLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9037,16 +9702,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ExpLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ExpLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ExpLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ExpLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ExpLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ExpLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9067,6 +9722,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ExpLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ExpLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ExpLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ExpLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ExpLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ExpLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ExpLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -9074,12 +9739,17 @@ mod dnn_types {
 				.field("base", &crate::dnn::ExpLayerTraitConst::base(self))
 				.field("scale", &crate::dnn::ExpLayerTraitConst::scale(self))
 				.field("shift", &crate::dnn::ExpLayerTraitConst::shift(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9102,16 +9772,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Expand2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Expand2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Expand2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Expand2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Expand2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Expand2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9122,16 +9782,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Expand2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Expand2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Expand2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Expand2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Expand2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Expand2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Expand2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfExpand2Layer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9154,16 +9829,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ExpandLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ExpandLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ExpandLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ExpandLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ExpandLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ExpandLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9174,16 +9839,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ExpandLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ExpandLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ExpandLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ExpandLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ExpandLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ExpandLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ExpandLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfExpandLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9206,16 +9886,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_EyeLikeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::EyeLikeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::EyeLikeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::EyeLikeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_EyeLikeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::EyeLikeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9226,16 +9896,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::EyeLikeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EyeLikeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::EyeLikeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::EyeLikeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::EyeLikeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_EyeLikeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::EyeLikeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfEyeLikeLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9258,16 +9943,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_FlattenLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::FlattenLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::FlattenLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::FlattenLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_FlattenLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::FlattenLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9278,16 +9953,88 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::FlattenLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FlattenLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::FlattenLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::FlattenLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::FlattenLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_FlattenLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::FlattenLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfFlattenLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::FlexAttentionLayer,
+		cv_PtrLcv_dnn_FlexAttentionLayerG_new_null_const, cv_PtrLcv_dnn_FlexAttentionLayerG_delete, cv_PtrLcv_dnn_FlexAttentionLayerG_getInnerPtr_const, cv_PtrLcv_dnn_FlexAttentionLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::FlexAttentionLayer, cv_PtrLcv_dnn_FlexAttentionLayerG_new_const_FlexAttentionLayer }
+	impl core::Ptr<crate::dnn::FlexAttentionLayer> {
+		#[inline] pub fn as_raw_PtrOfFlexAttentionLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfFlexAttentionLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::FlexAttentionLayerTraitConst for core::Ptr<crate::dnn::FlexAttentionLayer> {
+		#[inline] fn as_raw_FlexAttentionLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::FlexAttentionLayerTrait for core::Ptr<crate::dnn::FlexAttentionLayer> {
+		#[inline] fn as_raw_mut_FlexAttentionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::FlexAttentionLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::FlexAttentionLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::FlexAttentionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FlexAttentionLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::FlexAttentionLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::FlexAttentionLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::FlexAttentionLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_FlexAttentionLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::FlexAttentionLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfFlexAttentionLayer")
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9310,16 +10057,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_FloorLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::FloorLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::FloorLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::FloorLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_FloorLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::FloorLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9340,16 +10077,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::FloorLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FloorLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::FloorLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::FloorLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::FloorLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_FloorLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::FloorLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfFloorLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9372,16 +10124,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_FlowWarpLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::FlowWarpLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::FlowWarpLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::FlowWarpLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_FlowWarpLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::FlowWarpLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9392,16 +10134,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::FlowWarpLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FlowWarpLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::FlowWarpLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::FlowWarpLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::FlowWarpLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_FlowWarpLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::FlowWarpLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfFlowWarpLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9424,16 +10181,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_GRULayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GRULayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GRULayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::GRULayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GRULayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GRULayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9444,16 +10191,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GRULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GRULayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::GRULayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::GRULayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::GRULayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_GRULayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::GRULayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfGRULayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9476,16 +10238,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Gather2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Gather2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Gather2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Gather2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Gather2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Gather2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9496,17 +10248,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Gather2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Gather2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Gather2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Gather2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Gather2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Gather2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Gather2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfGather2Layer")
 				.field("axis", &crate::dnn::Gather2LayerTraitConst::axis(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9529,16 +10296,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_GatherElementsLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GatherElementsLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GatherElementsLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::GatherElementsLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GatherElementsLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GatherElementsLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9549,16 +10306,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GatherElementsLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GatherElementsLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::GatherElementsLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::GatherElementsLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::GatherElementsLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_GatherElementsLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::GatherElementsLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfGatherElementsLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9581,16 +10353,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_GatherLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GatherLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GatherLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::GatherLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GatherLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GatherLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9601,16 +10363,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GatherLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GatherLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::GatherLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::GatherLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::GatherLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_GatherLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::GatherLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfGatherLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9633,16 +10410,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_GatherNDLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GatherNDLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GatherNDLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::GatherNDLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GatherNDLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GatherNDLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9653,16 +10420,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GatherNDLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GatherNDLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::GatherNDLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::GatherNDLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::GatherNDLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_GatherNDLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::GatherNDLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfGatherNDLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9685,16 +10467,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_GeluApproximationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GeluApproximationLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GeluApproximationLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::GeluApproximationLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GeluApproximationLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::GeluApproximationLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9715,16 +10487,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GeluApproximationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GeluApproximationLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::GeluApproximationLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::GeluApproximationLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::GeluApproximationLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_GeluApproximationLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::GeluApproximationLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfGeluApproximationLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9747,16 +10534,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_GeluLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GeluLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GeluLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::GeluLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GeluLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::GeluLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9777,16 +10554,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GeluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GeluLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::GeluLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::GeluLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::GeluLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_GeluLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::GeluLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfGeluLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9809,16 +10601,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_GemmLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GemmLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GemmLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::GemmLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GemmLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GemmLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9829,6 +10611,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GemmLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GemmLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::GemmLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::GemmLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::GemmLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_GemmLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::GemmLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -9838,12 +10630,17 @@ mod dnn_types {
 				.field("alpha", &crate::dnn::GemmLayerTraitConst::alpha(self))
 				.field("beta", &crate::dnn::GemmLayerTraitConst::beta(self))
 				.field("flatten_a", &crate::dnn::GemmLayerTraitConst::flatten_a(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9866,16 +10663,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_GlobalAveragePoolLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GlobalAveragePoolLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GlobalAveragePoolLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::GlobalAveragePoolLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GlobalAveragePoolLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GlobalAveragePoolLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9886,16 +10673,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GlobalAveragePoolLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GlobalAveragePoolLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::GlobalAveragePoolLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::GlobalAveragePoolLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::GlobalAveragePoolLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_GlobalAveragePoolLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::GlobalAveragePoolLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfGlobalAveragePoolLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9943,16 +10745,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_GridSampleLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GridSampleLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GridSampleLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::GridSampleLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GridSampleLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GridSampleLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -9963,16 +10755,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GridSampleLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GridSampleLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::GridSampleLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::GridSampleLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::GridSampleLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_GridSampleLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::GridSampleLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfGridSampleLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -9995,16 +10802,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_GroupNormLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GroupNormLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GroupNormLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::GroupNormLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GroupNormLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GroupNormLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10015,16 +10812,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::GroupNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GroupNormLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::GroupNormLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::GroupNormLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::GroupNormLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_GroupNormLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::GroupNormLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfGroupNormLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10047,16 +10859,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_HammingWindowLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::HammingWindowLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::HammingWindowLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::HammingWindowLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_HammingWindowLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::HammingWindowLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10067,16 +10869,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::HammingWindowLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HammingWindowLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::HammingWindowLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::HammingWindowLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::HammingWindowLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_HammingWindowLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::HammingWindowLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfHammingWindowLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10099,16 +10916,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_HannWindowLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::HannWindowLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::HannWindowLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::HannWindowLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_HannWindowLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::HannWindowLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10119,16 +10926,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::HannWindowLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HannWindowLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::HannWindowLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::HannWindowLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::HannWindowLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_HannWindowLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::HannWindowLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfHannWindowLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10151,16 +10973,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_HardSigmoidLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::HardSigmoidLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::HardSigmoidLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::HardSigmoidLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_HardSigmoidLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::HardSigmoidLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10181,18 +10993,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::HardSigmoidLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HardSigmoidLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::HardSigmoidLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::HardSigmoidLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::HardSigmoidLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_HardSigmoidLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::HardSigmoidLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfHardSigmoidLayer")
 				.field("alpha", &crate::dnn::HardSigmoidLayerTraitConst::alpha(self))
 				.field("beta", &crate::dnn::HardSigmoidLayerTraitConst::beta(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10215,16 +11042,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_HardSwishLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::HardSwishLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::HardSwishLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::HardSwishLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_HardSwishLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::HardSwishLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10245,16 +11062,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::HardSwishLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HardSwishLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::HardSwishLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::HardSwishLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::HardSwishLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_HardSwishLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::HardSwishLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfHardSwishLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10277,16 +11109,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_HardmaxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::HardmaxLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::HardmaxLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::HardmaxLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_HardmaxLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::HardmaxLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10297,16 +11119,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::HardmaxLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HardmaxLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::HardmaxLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::HardmaxLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::HardmaxLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_HardmaxLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::HardmaxLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfHardmaxLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10328,16 +11165,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_IfLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::IfLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::IfLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::IfLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_IfLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::IfLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10348,16 +11175,88 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::IfLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_IfLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::IfLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::IfLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::IfLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_IfLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::IfLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfIfLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::ImageDecoderLayer,
+		cv_PtrLcv_dnn_ImageDecoderLayerG_new_null_const, cv_PtrLcv_dnn_ImageDecoderLayerG_delete, cv_PtrLcv_dnn_ImageDecoderLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ImageDecoderLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::ImageDecoderLayer, cv_PtrLcv_dnn_ImageDecoderLayerG_new_const_ImageDecoderLayer }
+	impl core::Ptr<crate::dnn::ImageDecoderLayer> {
+		#[inline] pub fn as_raw_PtrOfImageDecoderLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfImageDecoderLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::ImageDecoderLayerTraitConst for core::Ptr<crate::dnn::ImageDecoderLayer> {
+		#[inline] fn as_raw_ImageDecoderLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::ImageDecoderLayerTrait for core::Ptr<crate::dnn::ImageDecoderLayer> {
+		#[inline] fn as_raw_mut_ImageDecoderLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ImageDecoderLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::ImageDecoderLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ImageDecoderLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ImageDecoderLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ImageDecoderLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ImageDecoderLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ImageDecoderLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ImageDecoderLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::ImageDecoderLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfImageDecoderLayer")
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10380,16 +11279,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_InnerProductLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::InnerProductLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::InnerProductLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InnerProductLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::InnerProductLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10400,17 +11289,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InnerProductLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::InnerProductLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::InnerProductLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_InnerProductLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::InnerProductLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfInnerProductLayer")
 				.field("axis", &crate::dnn::InnerProductLayerTraitConst::axis(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10433,16 +11337,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_InnerProductLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::InnerProductLayerInt8> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::InnerProductLayerInt8> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InnerProductLayerInt8G_to_PtrOfAlgorithm }
-
 	impl crate::dnn::InnerProductLayerTraitConst for core::Ptr<crate::dnn::InnerProductLayerInt8> {
 		#[inline] fn as_raw_InnerProductLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10463,6 +11357,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InnerProductLayerInt8G_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::InnerProductLayerInt8> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::InnerProductLayerInt8> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayerInt8>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_InnerProductLayerInt8G_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::InnerProductLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -10474,12 +11378,17 @@ mod dnn_types {
 				.field("output_type", &crate::dnn::InnerProductLayerInt8TraitConst::output_type(self))
 				.field("per_channel", &crate::dnn::InnerProductLayerInt8TraitConst::per_channel(self))
 				.field("axis", &crate::dnn::InnerProductLayerTraitConst::axis(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10502,16 +11411,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_InstanceNormLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::InstanceNormLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::InstanceNormLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::InstanceNormLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InstanceNormLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::InstanceNormLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10522,17 +11421,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::InstanceNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InstanceNormLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::InstanceNormLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::InstanceNormLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::InstanceNormLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_InstanceNormLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::InstanceNormLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfInstanceNormLayer")
 				.field("epsilon", &crate::dnn::InstanceNormLayerTraitConst::epsilon(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10555,16 +11469,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_InterpLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::InterpLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::InterpLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::InterpLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InterpLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::InterpLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10575,16 +11479,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::InterpLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InterpLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::InterpLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::InterpLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::InterpLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_InterpLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::InterpLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfInterpLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10607,16 +11526,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_IsInfLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::IsInfLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::IsInfLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::IsInfLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_IsInfLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::IsInfLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10627,16 +11536,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::IsInfLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_IsInfLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::IsInfLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::IsInfLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::IsInfLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_IsInfLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::IsInfLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfIsInfLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10659,16 +11583,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_IsNaNLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::IsNaNLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::IsNaNLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::IsNaNLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_IsNaNLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::IsNaNLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10679,16 +11593,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::IsNaNLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_IsNaNLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::IsNaNLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::IsNaNLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::IsNaNLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_IsNaNLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::IsNaNLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfIsNaNLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10711,16 +11640,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_LRNLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::LRNLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::LRNLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::LRNLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LRNLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LRNLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10730,6 +11649,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LRNLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LRNLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::LRNLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::LRNLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::LRNLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_LRNLayerG_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::LRNLayer> {
 		#[inline]
@@ -10741,12 +11670,17 @@ mod dnn_types {
 				.field("beta", &crate::dnn::LRNLayerTraitConst::beta(self))
 				.field("bias", &crate::dnn::LRNLayerTraitConst::bias(self))
 				.field("norm_by_size", &crate::dnn::LRNLayerTraitConst::norm_by_size(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10769,16 +11703,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_LSTM2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::LSTM2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::LSTM2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::LSTM2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LSTM2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LSTM2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10789,16 +11713,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LSTM2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LSTM2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::LSTM2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::LSTM2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::LSTM2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_LSTM2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::LSTM2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfLSTM2Layer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10820,16 +11759,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_LSTMLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::LSTMLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::LSTMLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::LSTMLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LSTMLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LSTMLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10840,16 +11769,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LSTMLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LSTMLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::LSTMLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::LSTMLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::LSTMLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_LSTMLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::LSTMLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfLSTMLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10872,26 +11816,63 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
 	}
 
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	ptr_cast_base! { core::Ptr<crate::dnn::Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_LayerG_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::LayerInfo,
+		cv_PtrLcv_dnn_LayerInfoG_new_null_const, cv_PtrLcv_dnn_LayerInfoG_delete, cv_PtrLcv_dnn_LayerInfoG_getInnerPtr_const, cv_PtrLcv_dnn_LayerInfoG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::LayerInfo, cv_PtrLcv_dnn_LayerInfoG_new_const_LayerInfo }
+	impl core::Ptr<crate::dnn::LayerInfo> {
+		#[inline] pub fn as_raw_PtrOfLayerInfo(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLayerInfo(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::LayerInfo> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::LayerInfo> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl fmt::Debug for core::Ptr<crate::dnn::LayerInfo> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfLayerInfo")
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10914,16 +11895,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_LayerNorm2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::LayerNorm2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::LayerNorm2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::LayerNorm2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LayerNorm2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LayerNorm2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10934,18 +11905,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LayerNorm2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LayerNorm2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::LayerNorm2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::LayerNorm2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::LayerNorm2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_LayerNorm2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::LayerNorm2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfLayerNorm2Layer")
 				.field("axis", &crate::dnn::LayerNorm2LayerTraitConst::axis(self))
 				.field("epsilon", &crate::dnn::LayerNorm2LayerTraitConst::epsilon(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -10968,16 +11954,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_LayerNormLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::LayerNormLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::LayerNormLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::LayerNormLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LayerNormLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LayerNormLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -10988,6 +11964,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LayerNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LayerNormLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::LayerNormLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::LayerNormLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::LayerNormLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_LayerNormLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::LayerNormLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -10995,12 +11981,74 @@ mod dnn_types {
 				.field("has_bias", &crate::dnn::LayerNormLayerTraitConst::has_bias(self))
 				.field("axis", &crate::dnn::LayerNormLayerTraitConst::axis(self))
 				.field("epsilon", &crate::dnn::LayerNormLayerTraitConst::epsilon(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::LinearAttentionLayer,
+		cv_PtrLcv_dnn_LinearAttentionLayerG_new_null_const, cv_PtrLcv_dnn_LinearAttentionLayerG_delete, cv_PtrLcv_dnn_LinearAttentionLayerG_getInnerPtr_const, cv_PtrLcv_dnn_LinearAttentionLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::LinearAttentionLayer, cv_PtrLcv_dnn_LinearAttentionLayerG_new_const_LinearAttentionLayer }
+	impl core::Ptr<crate::dnn::LinearAttentionLayer> {
+		#[inline] pub fn as_raw_PtrOfLinearAttentionLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLinearAttentionLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::LinearAttentionLayerTraitConst for core::Ptr<crate::dnn::LinearAttentionLayer> {
+		#[inline] fn as_raw_LinearAttentionLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LinearAttentionLayerTrait for core::Ptr<crate::dnn::LinearAttentionLayer> {
+		#[inline] fn as_raw_mut_LinearAttentionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LinearAttentionLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::LinearAttentionLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::LinearAttentionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LinearAttentionLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::LinearAttentionLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::LinearAttentionLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::LinearAttentionLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_LinearAttentionLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::LinearAttentionLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfLinearAttentionLayer")
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11023,16 +12071,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_LogLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::LogLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::LogLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::LogLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LogLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::LogLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11053,16 +12091,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LogLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LogLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::LogLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::LogLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::LogLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_LogLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::LogLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfLogLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11084,16 +12137,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_LoopLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::LoopLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::LoopLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::LoopLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LoopLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LoopLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11104,16 +12147,95 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::LoopLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LoopLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::LoopLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::LoopLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::LoopLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_LoopLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::LoopLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfLoopLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::LpPoolLayer,
+		cv_PtrLcv_dnn_LpPoolLayerG_new_null_const, cv_PtrLcv_dnn_LpPoolLayerG_delete, cv_PtrLcv_dnn_LpPoolLayerG_getInnerPtr_const, cv_PtrLcv_dnn_LpPoolLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::LpPoolLayer, cv_PtrLcv_dnn_LpPoolLayerG_new_const_LpPoolLayer }
+	impl core::Ptr<crate::dnn::LpPoolLayer> {
+		#[inline] pub fn as_raw_PtrOfLpPoolLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfLpPoolLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::LpPoolLayerTraitConst for core::Ptr<crate::dnn::LpPoolLayer> {
+		#[inline] fn as_raw_LpPoolLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LpPoolLayerTrait for core::Ptr<crate::dnn::LpPoolLayer> {
+		#[inline] fn as_raw_mut_LpPoolLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LpPoolLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::LpPoolLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::LpPoolLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LpPoolLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::LpPoolLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::LpPoolLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::LpPoolLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_LpPoolLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::LpPoolLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfLpPoolLayer")
+				.field("kernel_shape", &crate::dnn::LpPoolLayerTraitConst::kernel_shape(self))
+				.field("strides", &crate::dnn::LpPoolLayerTraitConst::strides(self))
+				.field("dilations", &crate::dnn::LpPoolLayerTraitConst::dilations(self))
+				.field("pads", &crate::dnn::LpPoolLayerTraitConst::pads(self))
+				.field("auto_pad", &crate::dnn::LpPoolLayerTraitConst::auto_pad(self))
+				.field("ceil_mode", &crate::dnn::LpPoolLayerTraitConst::ceil_mode(self))
+				.field("p", &crate::dnn::LpPoolLayerTraitConst::p(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11136,16 +12258,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_MVNLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::MVNLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::MVNLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::MVNLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MVNLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::MVNLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11156,6 +12268,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MVNLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MVNLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::MVNLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::MVNLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::MVNLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_MVNLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::MVNLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -11163,12 +12285,17 @@ mod dnn_types {
 				.field("eps", &crate::dnn::MVNLayerTraitConst::eps(self))
 				.field("norm_variance", &crate::dnn::MVNLayerTraitConst::norm_variance(self))
 				.field("across_channels", &crate::dnn::MVNLayerTraitConst::across_channels(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11191,16 +12318,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_MatMulInt8Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::MatMulInt8Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::MatMulInt8Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::MatMulInt8Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MatMulInt8LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::MatMulInt8Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11210,6 +12327,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MatMulInt8Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MatMulInt8LayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::MatMulInt8Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::MatMulInt8Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::MatMulInt8Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_MatMulInt8LayerG_to_PtrOfLayerInfo }
 
 	impl crate::dnn::MatMulLayerTraitConst for core::Ptr<crate::dnn::MatMulInt8Layer> {
 		#[inline] fn as_raw_MatMulLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11231,12 +12358,18 @@ mod dnn_types {
 				.field("output_sc", &crate::dnn::MatMulInt8LayerTraitConst::output_sc(self))
 				.field("output_type", &crate::dnn::MatMulInt8LayerTraitConst::output_type(self))
 				.field("per_channel", &crate::dnn::MatMulInt8LayerTraitConst::per_channel(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("int32_output", &crate::dnn::MatMulInt8LayerTraitConst::int32_output(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.field("trans_a", &crate::dnn::MatMulLayerTraitConst::trans_a(self))
 				.field("trans_b", &crate::dnn::MatMulLayerTraitConst::trans_b(self))
 				.field("alpha", &crate::dnn::MatMulLayerTraitConst::alpha(self))
@@ -11263,16 +12396,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_MatMulLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::MatMulLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::MatMulLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::MatMulLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MatMulLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::MatMulLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11283,6 +12406,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MatMulLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MatMulLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::MatMulLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::MatMulLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::MatMulLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_MatMulLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::MatMulLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -11291,12 +12424,78 @@ mod dnn_types {
 				.field("trans_b", &crate::dnn::MatMulLayerTraitConst::trans_b(self))
 				.field("alpha", &crate::dnn::MatMulLayerTraitConst::alpha(self))
 				.field("beta", &crate::dnn::MatMulLayerTraitConst::beta(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::MatMulNBitsLayer,
+		cv_PtrLcv_dnn_MatMulNBitsLayerG_new_null_const, cv_PtrLcv_dnn_MatMulNBitsLayerG_delete, cv_PtrLcv_dnn_MatMulNBitsLayerG_getInnerPtr_const, cv_PtrLcv_dnn_MatMulNBitsLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::MatMulNBitsLayer, cv_PtrLcv_dnn_MatMulNBitsLayerG_new_const_MatMulNBitsLayer }
+	impl core::Ptr<crate::dnn::MatMulNBitsLayer> {
+		#[inline] pub fn as_raw_PtrOfMatMulNBitsLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMatMulNBitsLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::MatMulNBitsLayerTraitConst for core::Ptr<crate::dnn::MatMulNBitsLayer> {
+		#[inline] fn as_raw_MatMulNBitsLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::MatMulNBitsLayerTrait for core::Ptr<crate::dnn::MatMulNBitsLayer> {
+		#[inline] fn as_raw_mut_MatMulNBitsLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::MatMulNBitsLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::MatMulNBitsLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::MatMulNBitsLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MatMulNBitsLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::MatMulNBitsLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::MatMulNBitsLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::MatMulNBitsLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_MatMulNBitsLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::MatMulNBitsLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfMatMulNBitsLayer")
+				.field("k", &crate::dnn::MatMulNBitsLayerTraitConst::k(self))
+				.field("n", &crate::dnn::MatMulNBitsLayerTraitConst::n(self))
+				.field("bits", &crate::dnn::MatMulNBitsLayerTraitConst::bits(self))
+				.field("block_size", &crate::dnn::MatMulNBitsLayerTraitConst::block_size(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11319,16 +12518,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_MaxPoolLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::MaxPoolLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::MaxPoolLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::MaxPoolLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MaxPoolLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::MaxPoolLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11338,6 +12527,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MaxPoolLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MaxPoolLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::MaxPoolLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::MaxPoolLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::MaxPoolLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_MaxPoolLayerG_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::MaxPoolLayer> {
 		#[inline]
@@ -11350,12 +12549,17 @@ mod dnn_types {
 				.field("auto_pad", &crate::dnn::MaxPoolLayerTraitConst::auto_pad(self))
 				.field("ceil_mode", &crate::dnn::MaxPoolLayerTraitConst::ceil_mode(self))
 				.field("storage_order", &crate::dnn::MaxPoolLayerTraitConst::storage_order(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11378,16 +12582,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_MaxUnpoolLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::MaxUnpoolLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::MaxUnpoolLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::MaxUnpoolLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MaxUnpoolLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::MaxUnpoolLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11398,6 +12592,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MaxUnpoolLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MaxUnpoolLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::MaxUnpoolLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::MaxUnpoolLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::MaxUnpoolLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_MaxUnpoolLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::MaxUnpoolLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -11405,12 +12609,17 @@ mod dnn_types {
 				.field("pool_kernel", &crate::dnn::MaxUnpoolLayerTraitConst::pool_kernel(self))
 				.field("pool_pad", &crate::dnn::MaxUnpoolLayerTraitConst::pool_pad(self))
 				.field("pool_stride", &crate::dnn::MaxUnpoolLayerTraitConst::pool_stride(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11433,16 +12642,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_MishLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::MishLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::MishLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::MishLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MishLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::MishLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11463,16 +12662,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::MishLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MishLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::MishLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::MishLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::MishLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_MishLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::MishLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfMishLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11495,16 +12709,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_NaryEltwiseLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::NaryEltwiseLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::NaryEltwiseLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::NaryEltwiseLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NaryEltwiseLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::NaryEltwiseLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11515,17 +12719,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NaryEltwiseLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NaryEltwiseLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::NaryEltwiseLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::NaryEltwiseLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::NaryEltwiseLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_NaryEltwiseLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::NaryEltwiseLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfNaryEltwiseLayer")
 				.field("op", &crate::dnn::NaryEltwiseLayerTraitConst::op(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11548,16 +12767,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_NegativeLogLikelihoodLossLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NegativeLogLikelihoodLossLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11568,18 +12777,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NegativeLogLikelihoodLossLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_NegativeLogLikelihoodLossLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::NegativeLogLikelihoodLossLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfNegativeLogLikelihoodLossLayer")
 				.field("reduction", &crate::dnn::NegativeLogLikelihoodLossLayerTraitConst::reduction(self))
 				.field("ignore_index", &crate::dnn::NegativeLogLikelihoodLossLayerTraitConst::ignore_index(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11602,16 +12826,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_NonMaxSuppressionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::NonMaxSuppressionLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::NonMaxSuppressionLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::NonMaxSuppressionLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NonMaxSuppressionLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::NonMaxSuppressionLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11622,16 +12836,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NonMaxSuppressionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NonMaxSuppressionLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::NonMaxSuppressionLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::NonMaxSuppressionLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::NonMaxSuppressionLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_NonMaxSuppressionLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::NonMaxSuppressionLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfNonMaxSuppressionLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11654,16 +12883,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_NonZeroLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::NonZeroLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::NonZeroLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::NonZeroLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NonZeroLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::NonZeroLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11674,16 +12893,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NonZeroLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NonZeroLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::NonZeroLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::NonZeroLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::NonZeroLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_NonZeroLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::NonZeroLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfNonZeroLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11706,16 +12940,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_NormalizeBBoxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::NormalizeBBoxLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::NormalizeBBoxLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::NormalizeBBoxLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NormalizeBBoxLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::NormalizeBBoxLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11726,6 +12950,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NormalizeBBoxLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NormalizeBBoxLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::NormalizeBBoxLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::NormalizeBBoxLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::NormalizeBBoxLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_NormalizeBBoxLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::NormalizeBBoxLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -11733,12 +12967,17 @@ mod dnn_types {
 				.field("pnorm", &crate::dnn::NormalizeBBoxLayerTraitConst::pnorm(self))
 				.field("epsilon", &crate::dnn::NormalizeBBoxLayerTraitConst::epsilon(self))
 				.field("across_spatial", &crate::dnn::NormalizeBBoxLayerTraitConst::across_spatial(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11761,16 +13000,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_NotLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::NotLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::NotLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::NotLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NotLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::NotLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11781,16 +13010,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::NotLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NotLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::NotLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::NotLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::NotLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_NotLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::NotLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfNotLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11813,16 +13057,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_OneHotLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::OneHotLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::OneHotLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::OneHotLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_OneHotLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::OneHotLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11833,17 +13067,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::OneHotLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_OneHotLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::OneHotLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::OneHotLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::OneHotLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_OneHotLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::OneHotLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfOneHotLayer")
 				.field("axis", &crate::dnn::OneHotLayerTraitConst::axis(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11866,16 +13115,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Pad2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Pad2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Pad2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Pad2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Pad2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Pad2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11886,16 +13125,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Pad2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Pad2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Pad2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Pad2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Pad2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Pad2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Pad2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfPad2Layer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11918,16 +13172,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_PaddingLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::PaddingLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::PaddingLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::PaddingLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PaddingLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::PaddingLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11938,16 +13182,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PaddingLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PaddingLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::PaddingLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::PaddingLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::PaddingLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_PaddingLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::PaddingLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfPaddingLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -11970,16 +13229,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_PermuteLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::PermuteLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::PermuteLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::PermuteLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PermuteLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::PermuteLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -11990,16 +13239,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PermuteLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PermuteLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::PermuteLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::PermuteLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::PermuteLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_PermuteLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::PermuteLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfPermuteLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12022,16 +13286,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Pool2Int8Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Pool2Int8Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Pool2Int8Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Pool2Int8Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Pool2Int8LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Pool2Int8Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12041,6 +13295,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Pool2Int8Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Pool2Int8LayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Pool2Int8Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Pool2Int8Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Pool2Int8Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Pool2Int8LayerG_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::Pool2Int8Layer> {
 		#[inline]
@@ -12058,12 +13322,17 @@ mod dnn_types {
 				.field("ceil_mode", &crate::dnn::Pool2Int8LayerTraitConst::ceil_mode(self))
 				.field("is_global_pooling", &crate::dnn::Pool2Int8LayerTraitConst::is_global_pooling(self))
 				.field("is_max_pool", &crate::dnn::Pool2Int8LayerTraitConst::is_max_pool(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12086,16 +13355,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_PoolingLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::PoolingLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::PoolingLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PoolingLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::PoolingLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12105,6 +13364,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PoolingLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::PoolingLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::PoolingLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_PoolingLayerG_to_PtrOfLayerInfo }
 
 	impl fmt::Debug for core::Ptr<crate::dnn::PoolingLayer> {
 		#[inline]
@@ -12124,12 +13393,17 @@ mod dnn_types {
 				.field("pooled_size", &crate::dnn::PoolingLayerTraitConst::pooled_size(self))
 				.field("spatial_scale", &crate::dnn::PoolingLayerTraitConst::spatial_scale(self))
 				.field("ps_roi_out_channels", &crate::dnn::PoolingLayerTraitConst::ps_roi_out_channels(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12152,16 +13426,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_PoolingLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::PoolingLayerInt8> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::PoolingLayerInt8> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PoolingLayerInt8G_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::PoolingLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12171,6 +13435,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PoolingLayerInt8G_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::PoolingLayerInt8> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::PoolingLayerInt8> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayerInt8>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_PoolingLayerInt8G_to_PtrOfLayerInfo }
 
 	impl crate::dnn::PoolingLayerTraitConst for core::Ptr<crate::dnn::PoolingLayerInt8> {
 		#[inline] fn as_raw_PoolingLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12190,12 +13464,17 @@ mod dnn_types {
 				.field("output_zp", &crate::dnn::PoolingLayerInt8TraitConst::output_zp(self))
 				.field("input_sc", &crate::dnn::PoolingLayerInt8TraitConst::input_sc(self))
 				.field("output_sc", &crate::dnn::PoolingLayerInt8TraitConst::output_sc(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.field("typ", &crate::dnn::PoolingLayerTraitConst::typ(self))
 				.field("kernel_size", &crate::dnn::PoolingLayerTraitConst::kernel_size(self))
 				.field("strides", &crate::dnn::PoolingLayerTraitConst::strides(self))
@@ -12232,16 +13511,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_PowerLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::PowerLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::PowerLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::PowerLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PowerLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::PowerLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12262,6 +13531,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PowerLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PowerLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::PowerLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::PowerLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::PowerLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_PowerLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::PowerLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -12269,12 +13548,17 @@ mod dnn_types {
 				.field("power", &crate::dnn::PowerLayerTraitConst::power(self))
 				.field("scale", &crate::dnn::PowerLayerTraitConst::scale(self))
 				.field("shift", &crate::dnn::PowerLayerTraitConst::shift(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12297,16 +13581,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_PriorBoxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::PriorBoxLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::PriorBoxLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::PriorBoxLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PriorBoxLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::PriorBoxLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12317,16 +13591,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::PriorBoxLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PriorBoxLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::PriorBoxLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::PriorBoxLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::PriorBoxLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_PriorBoxLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::PriorBoxLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfPriorBoxLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12349,16 +13638,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ProposalLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ProposalLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ProposalLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ProposalLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ProposalLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ProposalLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12369,16 +13648,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ProposalLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ProposalLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ProposalLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ProposalLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ProposalLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ProposalLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ProposalLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfProposalLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12401,16 +13695,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_QuantizeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::QuantizeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::QuantizeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::QuantizeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_QuantizeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::QuantizeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12421,18 +13705,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::QuantizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_QuantizeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::QuantizeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::QuantizeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::QuantizeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_QuantizeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::QuantizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfQuantizeLayer")
 				.field("scales", &crate::dnn::QuantizeLayerTraitConst::scales(self))
 				.field("zeropoints", &crate::dnn::QuantizeLayerTraitConst::zeropoints(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12455,16 +13754,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_QuantizeLinearLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::QuantizeLinearLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::QuantizeLinearLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::QuantizeLinearLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_QuantizeLinearLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::QuantizeLinearLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12475,6 +13764,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::QuantizeLinearLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_QuantizeLinearLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::QuantizeLinearLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::QuantizeLinearLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::QuantizeLinearLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_QuantizeLinearLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::QuantizeLinearLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -12482,13 +13781,19 @@ mod dnn_types {
 				.field("axis", &crate::dnn::QuantizeLinearLayerTraitConst::axis(self))
 				.field("block_size", &crate::dnn::QuantizeLinearLayerTraitConst::block_size(self))
 				.field("output_dtype", &crate::dnn::QuantizeLinearLayerTraitConst::output_dtype(self))
+				.field("output_onnx_dtype", &crate::dnn::QuantizeLinearLayerTraitConst::output_onnx_dtype(self))
 				.field("saturate", &crate::dnn::QuantizeLinearLayerTraitConst::saturate(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12511,16 +13816,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_RMSNormLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::RMSNormLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::RMSNormLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::RMSNormLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RMSNormLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RMSNormLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12531,16 +13826,88 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RMSNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RMSNormLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::RMSNormLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::RMSNormLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::RMSNormLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_RMSNormLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::RMSNormLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfRMSNormLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::RNN2Layer,
+		cv_PtrLcv_dnn_RNN2LayerG_new_null_const, cv_PtrLcv_dnn_RNN2LayerG_delete, cv_PtrLcv_dnn_RNN2LayerG_getInnerPtr_const, cv_PtrLcv_dnn_RNN2LayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::RNN2Layer, cv_PtrLcv_dnn_RNN2LayerG_new_const_RNN2Layer }
+	impl core::Ptr<crate::dnn::RNN2Layer> {
+		#[inline] pub fn as_raw_PtrOfRNN2Layer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfRNN2Layer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::RNN2LayerTraitConst for core::Ptr<crate::dnn::RNN2Layer> {
+		#[inline] fn as_raw_RNN2Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::RNN2LayerTrait for core::Ptr<crate::dnn::RNN2Layer> {
+		#[inline] fn as_raw_mut_RNN2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RNN2Layer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::RNN2Layer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::RNN2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RNN2LayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::RNN2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::RNN2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::RNN2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_RNN2LayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::RNN2Layer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfRNN2Layer")
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12562,16 +13929,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_RNNLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::RNNLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::RNNLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::RNNLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RNNLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RNNLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12582,16 +13939,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RNNLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RNNLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::RNNLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::RNNLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::RNNLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_RNNLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::RNNLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfRNNLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12614,16 +13986,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_RandomNormalLikeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::RandomNormalLikeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::RandomNormalLikeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::RandomNormalLikeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RandomNormalLikeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RandomNormalLikeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12634,6 +13996,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RandomNormalLikeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RandomNormalLikeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::RandomNormalLikeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::RandomNormalLikeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::RandomNormalLikeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_RandomNormalLikeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::RandomNormalLikeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -12642,12 +14014,17 @@ mod dnn_types {
 				.field("scale", &crate::dnn::RandomNormalLikeLayerTraitConst::scale(self))
 				.field("has_seed", &crate::dnn::RandomNormalLikeLayerTraitConst::has_seed(self))
 				.field("seed", &crate::dnn::RandomNormalLikeLayerTraitConst::seed(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12670,16 +14047,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_RangeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::RangeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::RangeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::RangeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RangeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RangeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12690,16 +14057,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RangeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RangeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::RangeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::RangeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::RangeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_RangeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::RangeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfRangeLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12722,16 +14104,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ReLU6Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ReLU6Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ReLU6Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ReLU6Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReLU6LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ReLU6Layer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12752,18 +14124,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReLU6Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReLU6LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ReLU6Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ReLU6Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ReLU6Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ReLU6LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ReLU6Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfReLU6Layer")
 				.field("min_value", &crate::dnn::ReLU6LayerTraitConst::min_value(self))
 				.field("max_value", &crate::dnn::ReLU6LayerTraitConst::max_value(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12786,16 +14173,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ReLULayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ReLULayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ReLULayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ReLULayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReLULayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ReLULayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12816,17 +14193,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReLULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReLULayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ReLULayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ReLULayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ReLULayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ReLULayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ReLULayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfReLULayer")
 				.field("negative_slope", &crate::dnn::ReLULayerTraitConst::negative_slope(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12849,16 +14241,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ReciprocalLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ReciprocalLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ReciprocalLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ReciprocalLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReciprocalLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ReciprocalLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12879,16 +14261,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReciprocalLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReciprocalLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ReciprocalLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ReciprocalLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ReciprocalLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ReciprocalLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ReciprocalLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfReciprocalLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12911,16 +14308,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Reduce2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Reduce2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Reduce2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Reduce2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Reduce2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Reduce2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12931,6 +14318,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Reduce2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Reduce2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Reduce2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Reduce2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Reduce2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Reduce2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Reduce2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -12939,12 +14336,17 @@ mod dnn_types {
 				.field("keepdims", &crate::dnn::Reduce2LayerTraitConst::keepdims(self))
 				.field("noop_with_empty_axes", &crate::dnn::Reduce2LayerTraitConst::noop_with_empty_axes(self))
 				.field("axes", &crate::dnn::Reduce2LayerTraitConst::axes(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -12967,16 +14369,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ReduceLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ReduceLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ReduceLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ReduceLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReduceLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ReduceLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -12987,16 +14379,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReduceLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReduceLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ReduceLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ReduceLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ReduceLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ReduceLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ReduceLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfReduceLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13019,16 +14426,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_RegionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::RegionLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::RegionLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::RegionLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RegionLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RegionLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13039,17 +14436,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RegionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RegionLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::RegionLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::RegionLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::RegionLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_RegionLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::RegionLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfRegionLayer")
 				.field("nms_threshold", &crate::dnn::RegionLayerTraitConst::nms_threshold(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13072,16 +14484,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ReorgLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ReorgLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ReorgLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ReorgLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReorgLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ReorgLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13092,16 +14494,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReorgLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReorgLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ReorgLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ReorgLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ReorgLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ReorgLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ReorgLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfReorgLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13124,16 +14541,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_RequantizeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::RequantizeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::RequantizeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::RequantizeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RequantizeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RequantizeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13144,18 +14551,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RequantizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RequantizeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::RequantizeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::RequantizeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::RequantizeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_RequantizeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::RequantizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfRequantizeLayer")
 				.field("scale", &crate::dnn::RequantizeLayerTraitConst::scale(self))
 				.field("shift", &crate::dnn::RequantizeLayerTraitConst::shift(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13178,16 +14600,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Reshape2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Reshape2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Reshape2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Reshape2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Reshape2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Reshape2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13198,17 +14610,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Reshape2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Reshape2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Reshape2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Reshape2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Reshape2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Reshape2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Reshape2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfReshape2Layer")
 				.field("new_shape_desc", &crate::dnn::Reshape2LayerTraitConst::new_shape_desc(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13231,16 +14658,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ReshapeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ReshapeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ReshapeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ReshapeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReshapeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ReshapeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13251,18 +14668,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ReshapeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReshapeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ReshapeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ReshapeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ReshapeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ReshapeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ReshapeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfReshapeLayer")
 				.field("new_shape_desc", &crate::dnn::ReshapeLayerTraitConst::new_shape_desc(self))
 				.field("new_shape_range", &crate::dnn::ReshapeLayerTraitConst::new_shape_range(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13285,16 +14717,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Resize2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Resize2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Resize2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Resize2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Resize2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Resize2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13305,16 +14727,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Resize2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Resize2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Resize2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Resize2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Resize2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Resize2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Resize2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfResize2Layer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13337,16 +14774,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ResizeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ResizeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ResizeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ResizeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ResizeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ResizeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13357,16 +14784,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ResizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ResizeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ResizeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ResizeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ResizeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ResizeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ResizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfResizeLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13389,16 +14831,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_RoiAlignLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::RoiAlignLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::RoiAlignLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::RoiAlignLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RoiAlignLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RoiAlignLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13409,16 +14841,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RoiAlignLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RoiAlignLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::RoiAlignLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::RoiAlignLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::RoiAlignLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_RoiAlignLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::RoiAlignLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfRoiAlignLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13441,16 +14888,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_RotaryEmbeddingLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::RotaryEmbeddingLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::RotaryEmbeddingLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::RotaryEmbeddingLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RotaryEmbeddingLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RotaryEmbeddingLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13461,16 +14898,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RotaryEmbeddingLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RotaryEmbeddingLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::RotaryEmbeddingLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::RotaryEmbeddingLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::RotaryEmbeddingLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_RotaryEmbeddingLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::RotaryEmbeddingLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfRotaryEmbeddingLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13493,16 +14945,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_RoundLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::RoundLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::RoundLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::RoundLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RoundLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::RoundLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13523,16 +14965,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::RoundLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RoundLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::RoundLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::RoundLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::RoundLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_RoundLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::RoundLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfRoundLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13555,16 +15012,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SDPALayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SDPALayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SDPALayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SDPALayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SDPALayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SDPALayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13575,16 +15022,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SDPALayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SDPALayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SDPALayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SDPALayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SDPALayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SDPALayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SDPALayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSDPALayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13607,16 +15069,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ScaleLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ScaleLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ScaleLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScaleLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ScaleLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13627,6 +15079,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScaleLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ScaleLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ScaleLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ScaleLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ScaleLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -13634,12 +15096,17 @@ mod dnn_types {
 				.field("has_bias", &crate::dnn::ScaleLayerTraitConst::has_bias(self))
 				.field("axis", &crate::dnn::ScaleLayerTraitConst::axis(self))
 				.field("mode", &crate::dnn::ScaleLayerTraitConst::mode(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13662,16 +15129,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ScaleLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ScaleLayerInt8> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ScaleLayerInt8> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScaleLayerInt8G_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ScaleLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13681,6 +15138,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScaleLayerInt8G_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ScaleLayerInt8> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ScaleLayerInt8> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayerInt8>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ScaleLayerInt8G_to_PtrOfLayerInfo }
 
 	impl crate::dnn::ScaleLayerTraitConst for core::Ptr<crate::dnn::ScaleLayerInt8> {
 		#[inline] fn as_raw_ScaleLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -13698,15 +15165,76 @@ mod dnn_types {
 			f.debug_struct("PtrOfScaleLayerInt8")
 				.field("output_sc", &crate::dnn::ScaleLayerInt8TraitConst::output_sc(self))
 				.field("output_zp", &crate::dnn::ScaleLayerInt8TraitConst::output_zp(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.field("has_bias", &crate::dnn::ScaleLayerTraitConst::has_bias(self))
 				.field("axis", &crate::dnn::ScaleLayerTraitConst::axis(self))
 				.field("mode", &crate::dnn::ScaleLayerTraitConst::mode(self))
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::dnn::ScanLayer,
+		cv_PtrLcv_dnn_ScanLayerG_new_null_const, cv_PtrLcv_dnn_ScanLayerG_delete, cv_PtrLcv_dnn_ScanLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ScanLayerG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::dnn::ScanLayer> {
+		#[inline] pub fn as_raw_PtrOfScanLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfScanLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::ScanLayerTraitConst for core::Ptr<crate::dnn::ScanLayer> {
+		#[inline] fn as_raw_ScanLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::ScanLayerTrait for core::Ptr<crate::dnn::ScanLayer> {
+		#[inline] fn as_raw_mut_ScanLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ScanLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::ScanLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ScanLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScanLayerG_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ScanLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ScanLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ScanLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ScanLayerG_to_PtrOfLayerInfo }
+
+	impl fmt::Debug for core::Ptr<crate::dnn::ScanLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfScanLayer")
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13729,16 +15257,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ScatterLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ScatterLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ScatterLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ScatterLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScatterLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ScatterLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13749,16 +15267,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ScatterLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScatterLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ScatterLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ScatterLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ScatterLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ScatterLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ScatterLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfScatterLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13781,16 +15314,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ScatterNDLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ScatterNDLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ScatterNDLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ScatterNDLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScatterNDLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ScatterNDLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13801,16 +15324,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ScatterNDLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScatterNDLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ScatterNDLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ScatterNDLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ScatterNDLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ScatterNDLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ScatterNDLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfScatterNDLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13833,16 +15371,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SeluLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SeluLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SeluLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SeluLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SeluLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SeluLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13863,18 +15391,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SeluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SeluLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SeluLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SeluLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SeluLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SeluLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SeluLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSeluLayer")
 				.field("alpha", &crate::dnn::SeluLayerTraitConst::alpha(self))
 				.field("gamma", &crate::dnn::SeluLayerTraitConst::gamma(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13897,16 +15440,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ShapeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ShapeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ShapeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ShapeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShapeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ShapeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13917,18 +15450,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ShapeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShapeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ShapeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ShapeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ShapeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ShapeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ShapeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfShapeLayer")
 				.field("start", &crate::dnn::ShapeLayerTraitConst::start(self))
 				.field("end", &crate::dnn::ShapeLayerTraitConst::end(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -13951,16 +15499,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ShiftLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ShiftLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ShiftLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShiftLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ShiftLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -13971,16 +15509,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShiftLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ShiftLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ShiftLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ShiftLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ShiftLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfShiftLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14003,16 +15556,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ShiftLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ShiftLayerInt8> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ShiftLayerInt8> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShiftLayerInt8G_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ShiftLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14023,16 +15566,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShiftLayerInt8G_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ShiftLayerInt8> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ShiftLayerInt8> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayerInt8>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ShiftLayerInt8G_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ShiftLayerInt8> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfShiftLayerInt8")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14055,16 +15613,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ShrinkLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ShrinkLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ShrinkLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ShrinkLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShrinkLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ShrinkLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14085,18 +15633,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ShrinkLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShrinkLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ShrinkLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ShrinkLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ShrinkLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ShrinkLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ShrinkLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfShrinkLayer")
 				.field("bias", &crate::dnn::ShrinkLayerTraitConst::bias(self))
 				.field("lambd", &crate::dnn::ShrinkLayerTraitConst::lambd(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14119,16 +15682,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ShuffleChannelLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ShuffleChannelLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ShuffleChannelLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ShuffleChannelLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShuffleChannelLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ShuffleChannelLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14139,17 +15692,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ShuffleChannelLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShuffleChannelLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ShuffleChannelLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ShuffleChannelLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ShuffleChannelLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ShuffleChannelLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ShuffleChannelLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfShuffleChannelLayer")
 				.field("group", &crate::dnn::ShuffleChannelLayerTraitConst::group(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14172,16 +15740,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SigmoidLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SigmoidLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SigmoidLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SigmoidLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SigmoidLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SigmoidLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14202,16 +15760,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SigmoidLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SigmoidLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SigmoidLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SigmoidLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SigmoidLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SigmoidLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SigmoidLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSigmoidLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14234,16 +15807,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SignLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SignLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SignLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SignLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SignLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SignLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14264,16 +15827,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SignLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SignLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SignLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SignLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SignLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SignLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SignLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSignLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14296,16 +15874,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SinLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SinLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SinLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SinLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SinLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SinLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14326,16 +15894,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SinLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SinLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SinLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SinLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SinLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SinLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SinLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSinLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14358,16 +15941,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SinhLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SinhLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SinhLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SinhLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SinhLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SinhLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14388,16 +15961,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SinhLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SinhLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SinhLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SinhLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SinhLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SinhLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SinhLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSinhLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14420,16 +16008,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SizeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SizeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SizeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SizeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SizeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SizeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14440,16 +16018,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SizeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SizeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SizeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SizeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SizeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SizeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSizeLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14472,16 +16065,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Slice2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Slice2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Slice2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Slice2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Slice2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Slice2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14492,6 +16075,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Slice2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Slice2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Slice2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Slice2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Slice2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Slice2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Slice2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -14499,12 +16092,17 @@ mod dnn_types {
 				.field("starts", &crate::dnn::Slice2LayerTraitConst::starts(self))
 				.field("ends", &crate::dnn::Slice2LayerTraitConst::ends(self))
 				.field("axes", &crate::dnn::Slice2LayerTraitConst::axes(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14527,16 +16125,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SliceLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SliceLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SliceLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SliceLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SliceLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SliceLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14547,6 +16135,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SliceLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SliceLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SliceLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SliceLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SliceLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SliceLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SliceLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -14555,12 +16153,17 @@ mod dnn_types {
 				.field("slice_steps", &crate::dnn::SliceLayerTraitConst::slice_steps(self))
 				.field("axis", &crate::dnn::SliceLayerTraitConst::axis(self))
 				.field("num_split", &crate::dnn::SliceLayerTraitConst::num_split(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14583,16 +16186,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SoftmaxCrossEntropyLossLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftmaxCrossEntropyLossLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14603,6 +16196,16 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftmaxCrossEntropyLossLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SoftmaxCrossEntropyLossLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SoftmaxCrossEntropyLossLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -14611,12 +16214,17 @@ mod dnn_types {
 				.field("ignore_index", &crate::dnn::SoftmaxCrossEntropyLossLayerTraitConst::ignore_index(self))
 				.field("label_smoothing", &crate::dnn::SoftmaxCrossEntropyLossLayerTraitConst::label_smoothing(self))
 				.field("soft_label", &crate::dnn::SoftmaxCrossEntropyLossLayerTraitConst::soft_label(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14639,16 +16247,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SoftmaxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SoftmaxLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SoftmaxLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftmaxLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SoftmaxLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14659,18 +16257,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftmaxLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SoftmaxLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SoftmaxLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SoftmaxLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SoftmaxLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSoftmaxLayer")
 				.field("log_soft_max", &crate::dnn::SoftmaxLayerTraitConst::log_soft_max(self))
 				.field("scale", &crate::dnn::SoftmaxLayerTraitConst::scale(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14693,16 +16306,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SoftmaxLayerInt8(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SoftmaxLayerInt8> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SoftmaxLayerInt8> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftmaxLayerInt8G_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SoftmaxLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14712,6 +16315,16 @@ mod dnn_types {
 	}
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftmaxLayerInt8G_to_PtrOfLayer }
+
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SoftmaxLayerInt8> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SoftmaxLayerInt8> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayerInt8>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SoftmaxLayerInt8G_to_PtrOfLayerInfo }
 
 	impl crate::dnn::SoftmaxLayerTraitConst for core::Ptr<crate::dnn::SoftmaxLayerInt8> {
 		#[inline] fn as_raw_SoftmaxLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -14729,12 +16342,17 @@ mod dnn_types {
 			f.debug_struct("PtrOfSoftmaxLayerInt8")
 				.field("output_sc", &crate::dnn::SoftmaxLayerInt8TraitConst::output_sc(self))
 				.field("output_zp", &crate::dnn::SoftmaxLayerInt8TraitConst::output_zp(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.field("log_soft_max", &crate::dnn::SoftmaxLayerTraitConst::log_soft_max(self))
 				.field("scale", &crate::dnn::SoftmaxLayerTraitConst::scale(self))
 				.finish()
@@ -14759,16 +16377,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SoftplusLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SoftplusLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SoftplusLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SoftplusLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftplusLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SoftplusLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14789,16 +16397,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SoftplusLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftplusLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SoftplusLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SoftplusLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftplusLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SoftplusLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SoftplusLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSoftplusLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14821,16 +16444,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SoftsignLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SoftsignLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SoftsignLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SoftsignLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SoftsignLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14851,16 +16464,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SoftsignLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SoftsignLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SoftsignLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftsignLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SoftsignLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSoftsignLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14883,16 +16511,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SpaceToDepthLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SpaceToDepthLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SpaceToDepthLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SpaceToDepthLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SpaceToDepthLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SpaceToDepthLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14903,16 +16521,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SpaceToDepthLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SpaceToDepthLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SpaceToDepthLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SpaceToDepthLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SpaceToDepthLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SpaceToDepthLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SpaceToDepthLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSpaceToDepthLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14935,16 +16568,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Split2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Split2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Split2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Split2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Split2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Split2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -14955,18 +16578,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Split2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Split2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Split2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Split2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Split2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Split2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Split2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSplit2Layer")
 				.field("axis", &crate::dnn::Split2LayerTraitConst::axis(self))
 				.field("split", &crate::dnn::Split2LayerTraitConst::split(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -14989,16 +16627,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SplitLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SplitLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SplitLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SplitLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SplitLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SplitLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15009,17 +16637,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SplitLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SplitLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SplitLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SplitLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SplitLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SplitLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SplitLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSplitLayer")
 				.field("outputs_count", &crate::dnn::SplitLayerTraitConst::outputs_count(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15042,16 +16685,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SqrtLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SqrtLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SqrtLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SqrtLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SqrtLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SqrtLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15072,16 +16705,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SqrtLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SqrtLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SqrtLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SqrtLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SqrtLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SqrtLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SqrtLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSqrtLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15104,16 +16752,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SqueezeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SqueezeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SqueezeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SqueezeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SqueezeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SqueezeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15124,17 +16762,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SqueezeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SqueezeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SqueezeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SqueezeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SqueezeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SqueezeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SqueezeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSqueezeLayer")
 				.field("axes", &crate::dnn::SqueezeLayerTraitConst::axes(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15157,16 +16810,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SwishLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SwishLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SwishLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::SwishLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SwishLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SwishLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15187,16 +16830,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::SwishLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SwishLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::SwishLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::SwishLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SwishLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_SwishLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::SwishLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSwishLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15219,16 +16877,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_TanHLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::TanHLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::TanHLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::TanHLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TanHLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::TanHLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15249,16 +16897,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TanHLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TanHLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::TanHLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::TanHLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::TanHLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_TanHLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::TanHLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfTanHLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15281,16 +16944,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_TanLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::TanLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::TanLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::TanLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TanLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::TanLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15311,16 +16964,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TanLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TanLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::TanLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::TanLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::TanLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_TanLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::TanLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfTanLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15343,16 +17011,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ThresholdedReluLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ThresholdedReluLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ThresholdedReluLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::ThresholdedReluLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ThresholdedReluLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ThresholdedReluLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15373,17 +17031,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::ThresholdedReluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ThresholdedReluLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::ThresholdedReluLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::ThresholdedReluLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::ThresholdedReluLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_ThresholdedReluLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::ThresholdedReluLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfThresholdedReluLayer")
 				.field("alpha", &crate::dnn::ThresholdedReluLayerTraitConst::alpha(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15406,16 +17079,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Tile2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::Tile2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::Tile2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::Tile2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_Tile2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::Tile2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15426,16 +17089,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::Tile2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_Tile2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::Tile2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::Tile2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::Tile2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_Tile2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::Tile2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfTile2Layer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15458,16 +17136,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_TileLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::TileLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::TileLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::TileLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TileLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::TileLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15478,16 +17146,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TileLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TileLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::TileLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::TileLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::TileLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_TileLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::TileLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfTileLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15510,16 +17193,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_TopK2Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::TopK2Layer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::TopK2Layer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::TopK2Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TopK2LayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::TopK2Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15530,16 +17203,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TopK2Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TopK2LayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::TopK2Layer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::TopK2Layer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::TopK2Layer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_TopK2LayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::TopK2Layer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfTopK2Layer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15562,16 +17250,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_TopKLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::TopKLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::TopKLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::TopKLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TopKLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::TopKLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15582,16 +17260,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TopKLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TopKLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::TopKLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::TopKLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::TopKLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_TopKLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::TopKLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfTopKLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15614,16 +17307,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_TransformLayoutLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::TransformLayoutLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::TransformLayoutLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::TransformLayoutLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TransformLayoutLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::TransformLayoutLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15634,18 +17317,33 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TransformLayoutLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TransformLayoutLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::TransformLayoutLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::TransformLayoutLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::TransformLayoutLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_TransformLayoutLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::TransformLayoutLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfTransformLayoutLayer")
 				.field("layout", &crate::dnn::TransformLayoutLayerTraitConst::layout(self))
 				.field("c0", &crate::dnn::TransformLayoutLayerTraitConst::c0(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15668,16 +17366,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_TransposeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::TransposeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::TransposeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::TransposeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TransposeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::TransposeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15688,17 +17376,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TransposeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TransposeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::TransposeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::TransposeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::TransposeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_TransposeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::TransposeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfTransposeLayer")
 				.field("perm", &crate::dnn::TransposeLayerTraitConst::perm(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15721,16 +17424,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_TriluLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::TriluLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::TriluLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::TriluLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TriluLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::TriluLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15741,16 +17434,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::TriluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TriluLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::TriluLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::TriluLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::TriluLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_TriluLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::TriluLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfTriluLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15773,16 +17481,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_UniqueLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::UniqueLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::UniqueLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::UniqueLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_UniqueLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::UniqueLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15793,16 +17491,31 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::UniqueLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_UniqueLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::UniqueLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::UniqueLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::UniqueLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_UniqueLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::UniqueLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfUniqueLayer")
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15825,16 +17538,6 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_UnsqueezeLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 
-	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::UnsqueezeLayer> {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
-	}
-
-	impl core::AlgorithmTrait for core::Ptr<crate::dnn::UnsqueezeLayer> {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
-	}
-
-	ptr_cast_base! { core::Ptr<crate::dnn::UnsqueezeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_UnsqueezeLayerG_to_PtrOfAlgorithm }
-
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::UnsqueezeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
 	}
@@ -15845,17 +17548,32 @@ mod dnn_types {
 
 	ptr_cast_base! { core::Ptr<crate::dnn::UnsqueezeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_UnsqueezeLayerG_to_PtrOfLayer }
 
+	impl crate::dnn::LayerInfoTraitConst for core::Ptr<crate::dnn::UnsqueezeLayer> {
+		#[inline] fn as_raw_LayerInfo(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerInfoTrait for core::Ptr<crate::dnn::UnsqueezeLayer> {
+		#[inline] fn as_raw_mut_LayerInfo(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::UnsqueezeLayer>, core::Ptr<crate::dnn::LayerInfo>, cv_PtrLcv_dnn_UnsqueezeLayerG_to_PtrOfLayerInfo }
+
 	impl fmt::Debug for core::Ptr<crate::dnn::UnsqueezeLayer> {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfUnsqueezeLayer")
 				.field("axes", &crate::dnn::UnsqueezeLayerTraitConst::axes(self))
-				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
-				.field("inputs", &crate::dnn::LayerTraitConst::inputs(self))
-				.field("outputs", &crate::dnn::LayerTraitConst::outputs(self))
-				.field("name", &crate::dnn::LayerTraitConst::name(self))
-				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("packed_weight_epoch", &crate::dnn::LayerTraitConst::packed_weight_epoch(self))
+				.field("finalized_once", &crate::dnn::LayerTraitConst::finalized_once(self))
+				.field("last_inp_shapes", &crate::dnn::LayerTraitConst::last_inp_shapes(self))
+				.field("last_inp_types", &crate::dnn::LayerTraitConst::last_inp_types(self))
+				.field("blobs", &crate::dnn::LayerInfoTraitConst::blobs(self))
+				.field("weight_epoch", &crate::dnn::LayerInfoTraitConst::weight_epoch(self))
+				.field("inputs", &crate::dnn::LayerInfoTraitConst::inputs(self))
+				.field("outputs", &crate::dnn::LayerInfoTraitConst::outputs(self))
+				.field("name", &crate::dnn::LayerInfoTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerInfoTraitConst::typ(self))
 				.finish()
 		}
 	}
@@ -15976,6 +17694,24 @@ mod dnn_types {
 	}
 
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::Layer> }
+
+
+	impl core::Vector<core::Ptr<crate::dnn::LayerInfo>> {
+		pub fn as_raw_VectorOfPtrOfLayerInfo(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfPtrOfLayerInfo(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { core::Ptr<crate::dnn::LayerInfo>,
+		std_vectorLcv_PtrLcv_dnn_LayerInfoGG_new_const, std_vectorLcv_PtrLcv_dnn_LayerInfoGG_delete,
+		std_vectorLcv_PtrLcv_dnn_LayerInfoGG_len_const, std_vectorLcv_PtrLcv_dnn_LayerInfoGG_isEmpty_const,
+		std_vectorLcv_PtrLcv_dnn_LayerInfoGG_capacity_const, std_vectorLcv_PtrLcv_dnn_LayerInfoGG_shrinkToFit,
+		std_vectorLcv_PtrLcv_dnn_LayerInfoGG_reserve_size_t, std_vectorLcv_PtrLcv_dnn_LayerInfoGG_remove_size_t,
+		std_vectorLcv_PtrLcv_dnn_LayerInfoGG_swap_size_t_size_t, std_vectorLcv_PtrLcv_dnn_LayerInfoGG_clear,
+		std_vectorLcv_PtrLcv_dnn_LayerInfoGG_get_const_size_t, std_vectorLcv_PtrLcv_dnn_LayerInfoGG_set_size_t_const_PtrLLayerInfoG,
+		std_vectorLcv_PtrLcv_dnn_LayerInfoGG_push_const_PtrLLayerInfoG, std_vectorLcv_PtrLcv_dnn_LayerInfoGG_insert_size_t_const_PtrLLayerInfoG,
+	}
+
+	vector_non_copy_or_bool! { core::Ptr<crate::dnn::LayerInfo> }
 
 
 	impl core::Vector<crate::dnn::Target> {
@@ -17418,6 +19154,51 @@ mod features_types {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfSimpleBlobDetector")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::features::XFeat,
+		cv_PtrLcv_XFeatG_new_null_const, cv_PtrLcv_XFeatG_delete, cv_PtrLcv_XFeatG_getInnerPtr_const, cv_PtrLcv_XFeatG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::features::XFeat> {
+		#[inline] pub fn as_raw_PtrOfXFeat(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfXFeat(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::features::XFeatTraitConst for core::Ptr<crate::features::XFeat> {
+		#[inline] fn as_raw_XFeat(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::features::XFeatTrait for core::Ptr<crate::features::XFeat> {
+		#[inline] fn as_raw_mut_XFeat(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::features::XFeat> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::features::XFeat> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::features::XFeat>, core::Ptr<core::Algorithm>, cv_PtrLcv_XFeatG_to_PtrOfAlgorithm }
+
+	impl crate::features::Feature2DTraitConst for core::Ptr<crate::features::XFeat> {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::features::Feature2DTrait for core::Ptr<crate::features::XFeat> {
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::features::XFeat>, core::Ptr<crate::features::Feature2D>, cv_PtrLcv_XFeatG_to_PtrOfFeature2D }
+
+	impl fmt::Debug for core::Ptr<crate::features::XFeat> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfXFeat")
 				.finish()
 		}
 	}
@@ -21092,6 +22873,31 @@ mod ptcloud_types {
 		#[inline]
 		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 			f.debug_struct("PtrOfRgbdNormals")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::ptcloud::VisualOdometry,
+		cv_PtrLcv_slam_VisualOdometryG_new_null_const, cv_PtrLcv_slam_VisualOdometryG_delete, cv_PtrLcv_slam_VisualOdometryG_getInnerPtr_const, cv_PtrLcv_slam_VisualOdometryG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::ptcloud::VisualOdometry> {
+		#[inline] pub fn as_raw_PtrOfVisualOdometry(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfVisualOdometry(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::ptcloud::VisualOdometryTraitConst for core::Ptr<crate::ptcloud::VisualOdometry> {
+		#[inline] fn as_raw_VisualOdometry(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::ptcloud::VisualOdometryTrait for core::Ptr<crate::ptcloud::VisualOdometry> {
+		#[inline] fn as_raw_mut_VisualOdometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl fmt::Debug for core::Ptr<crate::ptcloud::VisualOdometry> {
+		#[inline]
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("PtrOfVisualOdometry")
 				.finish()
 		}
 	}
@@ -27874,6 +29680,36 @@ mod videoio_types {
 	vector_copy_non_bool! { crate::videoio::VideoCaptureAPIs,
 		std_vectorLcv_VideoCaptureAPIsG_data_const, std_vectorLcv_VideoCaptureAPIsG_dataMut, cv_fromSlice_const_const_VideoCaptureAPIsX_size_t,
 		std_vectorLcv_VideoCaptureAPIsG_clone_const,
+	}
+
+
+	impl core::Vector<crate::videoio::VideoDeviceInfo> {
+		pub fn as_raw_VectorOfVideoDeviceInfo(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfVideoDeviceInfo(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { crate::videoio::VideoDeviceInfo,
+		std_vectorLcv_VideoDeviceInfoG_new_const, std_vectorLcv_VideoDeviceInfoG_delete,
+		std_vectorLcv_VideoDeviceInfoG_len_const, std_vectorLcv_VideoDeviceInfoG_isEmpty_const,
+		std_vectorLcv_VideoDeviceInfoG_capacity_const, std_vectorLcv_VideoDeviceInfoG_shrinkToFit,
+		std_vectorLcv_VideoDeviceInfoG_reserve_size_t, std_vectorLcv_VideoDeviceInfoG_remove_size_t,
+		std_vectorLcv_VideoDeviceInfoG_swap_size_t_size_t, std_vectorLcv_VideoDeviceInfoG_clear,
+		std_vectorLcv_VideoDeviceInfoG_get_const_size_t, std_vectorLcv_VideoDeviceInfoG_set_size_t_const_VideoDeviceInfo,
+		std_vectorLcv_VideoDeviceInfoG_push_const_VideoDeviceInfo, std_vectorLcv_VideoDeviceInfoG_insert_size_t_const_VideoDeviceInfo,
+	}
+
+	vector_non_copy_or_bool! { clone crate::videoio::VideoDeviceInfo }
+
+	vector_boxed_ref! { crate::videoio::VideoDeviceInfo }
+
+	vector_extern! { BoxedRef<'t, crate::videoio::VideoDeviceInfo>,
+		std_vectorLcv_VideoDeviceInfoG_new_const, std_vectorLcv_VideoDeviceInfoG_delete,
+		std_vectorLcv_VideoDeviceInfoG_len_const, std_vectorLcv_VideoDeviceInfoG_isEmpty_const,
+		std_vectorLcv_VideoDeviceInfoG_capacity_const, std_vectorLcv_VideoDeviceInfoG_shrinkToFit,
+		std_vectorLcv_VideoDeviceInfoG_reserve_size_t, std_vectorLcv_VideoDeviceInfoG_remove_size_t,
+		std_vectorLcv_VideoDeviceInfoG_swap_size_t_size_t, std_vectorLcv_VideoDeviceInfoG_clear,
+		std_vectorLcv_VideoDeviceInfoG_get_const_size_t, std_vectorLcv_VideoDeviceInfoG_set_size_t_const_VideoDeviceInfo,
+		std_vectorLcv_VideoDeviceInfoG_push_const_VideoDeviceInfo, std_vectorLcv_VideoDeviceInfoG_insert_size_t_const_VideoDeviceInfo,
 	}
 
 

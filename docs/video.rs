@@ -26,7 +26,7 @@ pub mod video {
 	/// * criteria: Stop criteria for the underlying meanShift.
 	/// returns
 	/// (in old interfaces) Number of iterations CAMSHIFT took to converge
-	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
+	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
 	/// object center using meanShift and then adjusts the window size and finds the optimal rotation. The
 	/// function returns the rotated rectangle structure that includes the object position, size, and
 	/// orientation. The next position of the search window can be obtained with RotatedRect::boundingRect()
@@ -142,7 +142,7 @@ pub mod video {
 	///      normally, winsize for a Gaussian window should be set to a larger value to achieve the same
 	///      level of robustness.
 	///
-	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
+	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bprev%7D%20%28y%2Cx%29%20%20%5Csim%20%5Ctexttt%7Bnext%7D%20%28%20y%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B1%5D%2C%20%20x%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B0%5D%29)
 	///
@@ -196,13 +196,13 @@ pub mod video {
 	///      around the original and a moved point, divided by number of pixels in a window, is used as a
 	///      error measure.
 	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 	/// performance boost.
 	///
 	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-	/// [Bouguet00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// [Bouguet00](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 	///
 	///
 	/// Note: Some examples:
@@ -267,13 +267,13 @@ pub mod video {
 	///      around the original and a moved point, divided by number of pixels in a window, is used as a
 	///      error measure.
 	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 	/// performance boost.
 	///
 	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-	/// [Bouguet00](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// [Bouguet00](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 	///
 	///
 	/// Note: Some examples:
@@ -308,7 +308,7 @@ pub mod video {
 
 	/// Computes the Enhanced Correlation Coefficient (ECC) value between two images
 	///
-	/// The Enhanced Correlation Coefficient (ECC) is a normalized measure of similarity between two images [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08).
+	/// The Enhanced Correlation Coefficient (ECC) is a normalized measure of similarity between two images [EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08).
 	/// The result lies in the range [-1, 1], where 1 corresponds to perfect similarity (modulo affine shift and scale),
 	/// 0 indicates no correlation, and -1 indicates perfect negative correlation.
 	///
@@ -352,7 +352,7 @@ pub mod video {
 
 	/// Computes the Enhanced Correlation Coefficient (ECC) value between two images
 	///
-	/// The Enhanced Correlation Coefficient (ECC) is a normalized measure of similarity between two images [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08).
+	/// The Enhanced Correlation Coefficient (ECC) is a normalized measure of similarity between two images [EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08).
 	/// The result lies in the range [-1, 1], where 1 corresponds to perfect similarity (modulo affine shift and scale),
 	/// 0 indicates no correlation, and -1 indicates perfect negative correlation.
 	///
@@ -533,7 +533,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08). Uses pyramids.
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08). Uses pyramids.
 	///
 	/// ## Parameters
 	/// * reference: Single channel reference image; CV_8U, CV_16U, CV_32F, CV_64F type.
@@ -545,7 +545,7 @@ pub mod video {
 	/// * sampleMask: An optional single channel mask to indicate valid values of sample.
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -590,7 +590,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08). Uses pyramids.
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08). Uses pyramids.
 	///
 	/// ## Parameters
 	/// * reference: Single channel reference image; CV_8U, CV_16U, CV_32F, CV_64F type.
@@ -602,7 +602,7 @@ pub mod video {
 	/// * sampleMask: An optional single channel mask to indicate valid values of sample.
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -648,7 +648,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08)
 	/// using validity masks for both the template and the input images.
 	///
 	/// This function extends findTransformECC() by adding a mask for the template image.
@@ -703,7 +703,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08)
 	/// using validity masks for both the template and the input images.
 	///
 	/// This function extends findTransformECC() by adding a mask for the template image.
@@ -757,7 +757,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
 	/// * templateImage: 1 or 3 channel template image; CV_8U, CV_16U, CV_32F, CV_64F type.
@@ -782,7 +782,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -828,7 +828,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
 	/// * templateImage: 1 or 3 channel template image; CV_8U, CV_16U, CV_32F, CV_64F type.
@@ -853,7 +853,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -898,7 +898,7 @@ pub mod video {
 		Ok(ret)
 	}
 
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08) .
 	///
 	/// ## Parameters
 	/// * templateImage: 1 or 3 channel template image; CV_8U, CV_16U, CV_32F, CV_64F type.
@@ -923,7 +923,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	///
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	///
@@ -1219,7 +1219,7 @@ pub mod video {
 
 	/// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
 	///
-	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	/// Very efficient if number of foreground pixels is low.
 	pub struct BackgroundSubtractorKNN {
 		ptr: *mut c_void,
@@ -1451,8 +1451,8 @@ pub mod video {
 
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 	///
-	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
-	/// and [Zivkovic2006](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
+	/// and [Zivkovic2006](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	pub struct BackgroundSubtractorMOG2 {
 		ptr: *mut c_void,
 	}
@@ -1889,7 +1889,7 @@ pub mod video {
 	/// DIS optical flow algorithm.
 	///
 	/// This class implements the Dense Inverse Search (DIS) optical flow algorithm. More
-	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
+	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
 	/// parameters to provide reasonable trade-off between speed and quality. However, even the slowest preset is
 	/// still relatively fast, use DeepFlow if you need better quality and don't care about speed.
 	///
@@ -2510,19 +2510,19 @@ pub mod video {
 		/// * val: MOTION_AFFINE
 		#[inline]
 		fn set_motion_type(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ECCParameters_propMotionType_const_int(self.as_raw_mut_ECCParameters(), val) };
+			let ret = unsafe { sys::cv_ECCParameters_propMotionType_int(self.as_raw_mut_ECCParameters(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_criteria(&mut self, val: core::TermCriteria) {
-			let ret = unsafe { sys::cv_ECCParameters_propCriteria_const_TermCriteria(self.as_raw_mut_ECCParameters(), &val) };
+			let ret = unsafe { sys::cv_ECCParameters_propCriteria_TermCriteria(self.as_raw_mut_ECCParameters(), &val) };
 			ret
 		}
 
 		#[inline]
-		fn set_iters_per_level(&mut self, val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_ECCParameters_propItersPerLevel_const_vectorLintG(self.as_raw_mut_ECCParameters(), val.as_raw_VectorOfi32()) };
+		fn set_iters_per_level(&mut self, mut val: core::Vector<i32>) {
+			let ret = unsafe { sys::cv_ECCParameters_propItersPerLevel_vectorLintG(self.as_raw_mut_ECCParameters(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 
@@ -2530,7 +2530,7 @@ pub mod video {
 		/// * val: 5
 		#[inline]
 		fn set_gauss_filt_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ECCParameters_propGaussFiltSize_const_int(self.as_raw_mut_ECCParameters(), val) };
+			let ret = unsafe { sys::cv_ECCParameters_propGaussFiltSize_int(self.as_raw_mut_ECCParameters(), val) };
 			ret
 		}
 
@@ -2538,7 +2538,7 @@ pub mod video {
 		/// * val: 4
 		#[inline]
 		fn set_nlevels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ECCParameters_propNlevels_const_int(self.as_raw_mut_ECCParameters(), val) };
+			let ret = unsafe { sys::cv_ECCParameters_propNlevels_int(self.as_raw_mut_ECCParameters(), val) };
 			ret
 		}
 
@@ -2546,7 +2546,7 @@ pub mod video {
 		/// * val: INTER_LINEAR
 		#[inline]
 		fn set_interpolation(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ECCParameters_propInterpolation_const_int(self.as_raw_mut_ECCParameters(), val) };
+			let ret = unsafe { sys::cv_ECCParameters_propInterpolation_int(self.as_raw_mut_ECCParameters(), val) };
 			ret
 		}
 
@@ -2842,7 +2842,7 @@ pub mod video {
 	/// Kalman filter class.
 	///
 	/// The class implements a standard Kalman filter <http://en.wikipedia.org/wiki/Kalman_filter>,
-	/// [Welch95](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
+	/// [Welch95](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
 	/// an extended Kalman filter functionality.
 	///
 	/// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
@@ -3043,101 +3043,101 @@ pub mod video {
 
 		/// predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
 		#[inline]
-		fn set_state_pre(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propStatePre_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_state_pre(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propStatePre_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
 		#[inline]
-		fn set_state_post(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propStatePost_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_state_post(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propStatePost_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// state transition matrix (A)
 		#[inline]
-		fn set_transition_matrix(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTransitionMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_transition_matrix(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTransitionMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// control matrix (B) (not used if there is no control)
 		#[inline]
-		fn set_control_matrix(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propControlMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_control_matrix(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propControlMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// measurement matrix (H)
 		#[inline]
-		fn set_measurement_matrix(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_measurement_matrix(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// process noise covariance matrix (Q)
 		#[inline]
-		fn set_process_noise_cov(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propProcessNoiseCov_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_process_noise_cov(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propProcessNoiseCov_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// measurement noise covariance matrix (R)
 		#[inline]
-		fn set_measurement_noise_cov(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementNoiseCov_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_measurement_noise_cov(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementNoiseCov_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)
 		#[inline]
-		fn set_error_cov_pre(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPre_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_error_cov_pre(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPre_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
 		#[inline]
-		fn set_gain(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propGain_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_gain(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propGain_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		/// posteriori error estimate covariance matrix (P(k)): P(k)=(I-K(k)*H)*P'(k)
 		#[inline]
-		fn set_error_cov_post(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPost_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_error_cov_post(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPost_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		#[inline]
-		fn set_temp1(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp1_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_temp1(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp1_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		#[inline]
-		fn set_temp2(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp2_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_temp2(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp2_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		#[inline]
-		fn set_temp3(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp3_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_temp3(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp3_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		#[inline]
-		fn set_temp4(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp4_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_temp4(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp4_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
 		#[inline]
-		fn set_temp5(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp5_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
+		fn set_temp5(&mut self, mut val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp5_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
 			ret
 		}
 
@@ -3863,33 +3863,33 @@ pub mod video {
 		#[inline]
 		fn set_model(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propModel_const_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propModel_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 
 		#[inline]
 		fn set_kernel_cls1(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_cls1_const_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_cls1_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 
 		#[inline]
 		fn set_kernel_r1(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_r1_const_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_r1_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 
 		#[inline]
 		fn set_backend(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propBackend_const_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propBackend_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_target(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propTarget_const_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propTarget_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
 			ret
 		}
 
@@ -3929,7 +3929,7 @@ pub mod video {
 	/// background.
 	///
 	/// Multiple Instance Learning avoids the drift problem for a robust tracking. The implementation is
-	/// based on [MIL](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_MIL) .
+	/// based on [MIL](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_MIL) .
 	///
 	/// Original code can be found here <http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml>
 	pub struct TrackerMIL {
@@ -4239,26 +4239,26 @@ pub mod video {
 		#[inline]
 		fn set_backbone(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_TrackerNano_Params_propBackbone_const_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_TrackerNano_Params_propBackbone_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern()) };
 			ret
 		}
 
 		#[inline]
 		fn set_neckhead(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_TrackerNano_Params_propNeckhead_const_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_TrackerNano_Params_propNeckhead_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern()) };
 			ret
 		}
 
 		#[inline]
 		fn set_backend(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerNano_Params_propBackend_const_int(self.as_raw_mut_TrackerNano_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerNano_Params_propBackend_int(self.as_raw_mut_TrackerNano_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_target(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerNano_Params_propTarget_const_int(self.as_raw_mut_TrackerNano_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerNano_Params_propTarget_int(self.as_raw_mut_TrackerNano_Params(), val) };
 			ret
 		}
 
@@ -4516,37 +4516,37 @@ pub mod video {
 		#[inline]
 		fn set_net(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
-			let ret = unsafe { sys::cv_TrackerVit_Params_propNet_const_string(self.as_raw_mut_TrackerVit_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_TrackerVit_Params_propNet_string(self.as_raw_mut_TrackerVit_Params(), val.opencv_as_extern()) };
 			ret
 		}
 
 		#[inline]
 		fn set_backend(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerVit_Params_propBackend_const_int(self.as_raw_mut_TrackerVit_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerVit_Params_propBackend_int(self.as_raw_mut_TrackerVit_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_target(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerVit_Params_propTarget_const_int(self.as_raw_mut_TrackerVit_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerVit_Params_propTarget_int(self.as_raw_mut_TrackerVit_Params(), val) };
 			ret
 		}
 
 		#[inline]
 		fn set_meanvalue(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_TrackerVit_Params_propMeanvalue_const_Scalar(self.as_raw_mut_TrackerVit_Params(), &val) };
+			let ret = unsafe { sys::cv_TrackerVit_Params_propMeanvalue_Scalar(self.as_raw_mut_TrackerVit_Params(), &val) };
 			ret
 		}
 
 		#[inline]
 		fn set_stdvalue(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_TrackerVit_Params_propStdvalue_const_Scalar(self.as_raw_mut_TrackerVit_Params(), &val) };
+			let ret = unsafe { sys::cv_TrackerVit_Params_propStdvalue_Scalar(self.as_raw_mut_TrackerVit_Params(), &val) };
 			ret
 		}
 
 		#[inline]
 		fn set_tracking_score_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_TrackerVit_Params_propTracking_score_threshold_const_float(self.as_raw_mut_TrackerVit_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerVit_Params_propTracking_score_threshold_float(self.as_raw_mut_TrackerVit_Params(), val) };
 			ret
 		}
 
@@ -4591,7 +4591,7 @@ pub mod video {
 	/// where ![inline formula](https://latex.codecogs.com/png.latex?E%5FI%2CE%5FG%2CE%5FS) are color constancy, gradient constancy and smoothness terms
 	/// respectively. ![inline formula](https://latex.codecogs.com/png.latex?%5CPsi%28s%5E2%29%3D%5Csqrt%7Bs%5E2%2B%5Cepsilon%5E2%7D) is a robust penalizer to limit the
 	/// influence of outliers. A complete formulation and a description of the minimization
-	/// procedure can be found in [Brox2004](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Brox2004)
+	/// procedure can be found in [Brox2004](https://docs.opencv.org/5.1.0/d0/de3/citelist.html#CITEREF_Brox2004)
 	pub struct VariationalRefinement {
 		ptr: *mut c_void,
 	}

@@ -105,7 +105,10 @@ pub mod dnn_superres {
 		/// Read the model from the given path
 		/// ## Parameters
 		/// * weights: Path to the model weights file.
-		/// * definition: Path to the model definition file.
+		/// * definition: Unused. Kept for backward compatibility.
+		///
+		/// **Deprecated**: ONNX models are single-file; use readModel(const String&) instead.
+		#[deprecated = "ONNX models are single-file; use readModel(const String&) instead."]
 		#[inline]
 		fn read_model_1(&mut self, weights: &str, definition: &str) -> Result<()> {
 			extern_container_arg!(weights);
