@@ -230,7 +230,7 @@ pub fn dbg_clang_entity<'tu>(entity: impl ToEntity<'tu>) {
 				.field("is_dynamic_call", &self.0.is_dynamic_call())
 				.field("is_function_like_macro", &self.0.is_function_like_macro())
 				.field("is_inline_function", &self.0.is_inline_function())
-//				.field("is_invalid_declaration", &self.0.is_invalid_declaration())
+				//				.field("is_invalid_declaration", &self.0.is_invalid_declaration())
 				.field("is_move_constructor", &self.0.is_move_constructor())
 				.field("is_mutable", &self.0.is_mutable())
 				.field("is_pure_virtual_method", &self.0.is_pure_virtual_method())

@@ -309,11 +309,12 @@ impl<'tu> GeneratorEnv<'tu> {
 			.func_comments
 			.get(cpp_refname)
 			.and_then(|comments| {
-				comments.iter()
-				// try to find the source function comment that is closest to the requested
-				.find(|(source_line, _)| *source_line <= line)
-				// if it fails return at least something
-				.or_else(|| comments.last())
+				comments
+					.iter()
+					// try to find the source function comment that is closest to the requested
+					.find(|(source_line, _)| *source_line <= line)
+					// if it fails return at least something
+					.or_else(|| comments.last())
 			})
 			.map(|(_, comment)| comment.as_str())
 	}
