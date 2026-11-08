@@ -15,7 +15,7 @@ jobs:
       matrix:
         os-image:
           - ubuntu-26.04
-          - macos-15
+          - macos-26
         opencv-version:
           - 4.14.0
           - 5.1.0
@@ -68,7 +68,7 @@ jobs:
             vcpkg-version: 2026.10.16
             vcpkg-features-cache-key: min
             vcpkg-features: contrib
-          - os-image: macos-15
+          - os-image: macos-26
             vcpkg-version: 2026.10.16
             vcpkg-features-cache-key: full-no-opencl
             vcpkg-features: contrib,nonfree,ade
@@ -113,7 +113,7 @@ jobs:
           - os-image: ubuntu-22.04
             version:
               opencv: 4.5.4
-          - os-image: macos-15
+          - os-image: macos-26
             version:
               brew: "@5"
     runs-on: ${{ matrix.os-image }}
