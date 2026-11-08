@@ -135,6 +135,17 @@ jobs:
         run: ci/script.sh
         shell: bash
 
+  fmt:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: rustfmt
+
+      - name: Check formatting
+        run: cargo +nightly fmt --all -- --check
+
   docs-rs:
     runs-on: ubuntu-26.04
     steps:
